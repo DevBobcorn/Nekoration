@@ -1,0 +1,6 @@
+{
+    "parent": "nekoration:block/window/window",
+    "textures": {
+        "side": "nekoration:block/window/window_lancet_t2"
+    }
+}

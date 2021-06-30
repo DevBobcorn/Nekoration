@@ -1,0 +1,7 @@
+{
+    "parent": "nekoration:block/awning/awning_short",
+    "textures": {
+        "0": "block/lime_wool",
+        "1": "nekoration:block/awning/lime_pure"
+    }
+}

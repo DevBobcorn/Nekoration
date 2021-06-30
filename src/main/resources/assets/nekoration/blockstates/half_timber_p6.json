@@ -1,0 +1,52 @@
+{
+	"variants": {
+		"age=0": {
+			"model": "nekoration:block/half_timber/half_timber_black_p6"
+		},
+		"age=1": {
+			"model": "nekoration:block/half_timber/half_timber_blue_p6"
+		},
+		"age=2": {
+			"model": "nekoration:block/half_timber/half_timber_brown_p6"
+		},
+		"age=3": {
+			"model": "nekoration:block/half_timber/half_timber_cyan_p6"
+		},
+		"age=4": {
+			"model": "nekoration:block/half_timber/half_timber_gray_p6"
+		},
+		"age=5": {
+			"model": "nekoration:block/half_timber/half_timber_green_p6"
+		},
+		"age=6": {
+			"model": "nekoration:block/half_timber/half_timber_light_blue_p6"
+		},
+		"age=7": {
+			"model": "nekoration:block/half_timber/half_timber_light_gray_p6"
+		},
+		"age=8": {
+			"model": "nekoration:block/half_timber/half_timber_lime_p6"
+		},
+		"age=9": {
+			"model": "nekoration:block/half_timber/half_timber_magenta_p6"
+		},
+		"age=10": {
+			"model": "nekoration:block/half_timber/half_timber_orange_p6"
+		},
+		"age=11": {
+			"model": "nekoration:block/half_timber/half_timber_pink_p6"
+		},
+		"age=12": {
+			"model": "nekoration:block/half_timber/half_timber_purple_p6"
+		},
+		"age=13": {
+			"model": "nekoration:block/half_timber/half_timber_red_p6"
+		},
+		"age=14": {
+			"model": "nekoration:block/half_timber/half_timber_white_p6"
+		},
+		"age=15": {
+			"model": "nekoration:block/half_timber/half_timber_yellow_p6"
+		}
+	}
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "nekoration:block/candle_holder_copper",
+    "textures": {
+        "texture": "nekoration:block/candle_holder_golden"
+    }
+}

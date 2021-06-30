@@ -1,0 +1,7 @@
+{
+    "parent": "nekoration:block/awning/awning_short",
+    "textures": {
+        "0": "block/light_gray_wool",
+        "1": "nekoration:block/awning/light_gray_pure"
+    }
+}

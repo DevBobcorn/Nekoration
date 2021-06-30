@@ -1,0 +1,6 @@
+{
+    "parent": "nekoration:block/awning/awning",
+    "textures": {
+        "0": "block/cyan_wool"
+    }
+}
