@@ -17,6 +17,9 @@ public final class ModBlocks {
     public static final RegistryObject<Block> STONE_BASE = BLOCKS.register("stone_base", () -> new DyeableVerticalConnectBlock(Block.Properties.of(Material.STONE), VerticalConnectBlock.ConnectionType.PILLAR, false));
     public static final RegistryObject<Block> STONE_FRAME = BLOCKS.register("stone_frame", () -> new DyeableVerticalConnectBlock(Block.Properties.of(Material.STONE), VerticalConnectBlock.ConnectionType.PILLAR, false));
     public static final RegistryObject<Block> STONE_PILLAR = BLOCKS.register("stone_pillar", () -> new DyeableVerticalConnectBlock(Block.Properties.of(Material.STONE), VerticalConnectBlock.ConnectionType.PILLAR, false));
+    public static final RegistryObject<Block> STONE_DORIC = BLOCKS.register("stone_doric", () -> new DyeableVerticalConnectBlock(Block.Properties.of(Material.STONE), VerticalConnectBlock.ConnectionType.PILLAR, false));
+    public static final RegistryObject<Block> STONE_IONIC = BLOCKS.register("stone_ionic", () -> new DyeableVerticalConnectBlock(Block.Properties.of(Material.STONE), VerticalConnectBlock.ConnectionType.PILLAR, false));
+    public static final RegistryObject<Block> STONE_CORINTHIAN = BLOCKS.register("stone_corinthian", () -> new DyeableVerticalConnectBlock(Block.Properties.of(Material.STONE), VerticalConnectBlock.ConnectionType.PILLAR, false));
 
     public static final RegistryObject<Block> HALF_TIMBER_P0 = BLOCKS.register("half_timber_p0", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD)));
     public static final RegistryObject<Block> HALF_TIMBER_P1 = BLOCKS.register("half_timber_p1", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD)));

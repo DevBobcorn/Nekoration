@@ -13,10 +13,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class WindowBlock extends DyeableVerticalConnectBlock {
     public WindowBlock(Properties settings) {
         super(settings);
+        this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 2));
     }
     
     public WindowBlock(Properties settings, ConnectionType tp, boolean co) {
 		super(settings, tp, co);
+        this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 2));
 	}
 
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {

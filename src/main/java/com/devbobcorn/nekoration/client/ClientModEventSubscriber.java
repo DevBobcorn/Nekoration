@@ -81,7 +81,10 @@ public final class ClientModEventSubscriber {
 			return NekoColors.getColor(state.getValue(DyeableVerticalConnectBlock.COLOR));
 		},  ModBlocks.STONE_BASE.get(),
             ModBlocks.STONE_FRAME.get(),
-            ModBlocks.STONE_PILLAR.get()
+            ModBlocks.STONE_PILLAR.get(),
+            ModBlocks.STONE_DORIC.get(),
+            ModBlocks.STONE_IONIC.get(),
+            ModBlocks.STONE_CORINTHIAN.get()
         );
 
         event.getBlockColors().register((state, view, pos, tintIndex) -> {
@@ -131,7 +134,10 @@ public final class ClientModEventSubscriber {
             ModBlocks.STONE_PILLAR_BOTTOM.get().asItem(),
             ModBlocks.STONE_BASE.get().asItem(),
             ModBlocks.STONE_FRAME.get().asItem(),
-            ModBlocks.STONE_PILLAR.get().asItem()
+            ModBlocks.STONE_PILLAR.get().asItem(),
+            ModBlocks.STONE_DORIC.get().asItem(),
+            ModBlocks.STONE_IONIC.get().asItem(),
+            ModBlocks.STONE_CORINTHIAN.get().asItem()
         );
 
         event.getItemColors().register((stack, tintIndex) -> {
