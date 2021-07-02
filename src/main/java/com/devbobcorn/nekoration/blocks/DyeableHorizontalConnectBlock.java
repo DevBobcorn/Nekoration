@@ -2,8 +2,11 @@ package com.devbobcorn.nekoration.blocks;
 
 import com.devbobcorn.nekoration.common.VanillaCompat;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import java.util.Map;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -15,8 +18,21 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.Direction;
+import net.minecraft.world.IBlockReader;
 
 public class DyeableHorizontalConnectBlock extends HorizontalConnectBlock {
+	protected static Double thickness = 6.0D;
+
+	private static final Map<Direction, VoxelShape> AABBS = Maps
+			.newEnumMap(ImmutableMap.of(
+					Direction.NORTH, Block.box(0.0D, 0.0D, 16.0D - thickness, 16.0D, 16.0D, 16.0D),
+					Direction.SOUTH, Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, thickness), 
+					Direction.EAST, Block.box(0.0D, 0.0D, 0.0D, thickness, 16.0D, 16.0D),
+					Direction.WEST, Block.box(16.0D - thickness, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)));
+
 	public static final IntegerProperty COLOR = BlockStateProperties.LEVEL;
 
 	public DyeableHorizontalConnectBlock(Properties settings) {
@@ -29,13 +45,12 @@ public class DyeableHorizontalConnectBlock extends HorizontalConnectBlock {
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
 	}
 
-	@Override
-	public BlockRenderType getRenderShape(BlockState blockState) {
-		return BlockRenderType.MODEL;
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
+		s.add(CONNECTION, COLOR, FACING);
 	}
 
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
-		s.add(CONNECTION, COLOR);
+	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
+		return AABBS.get(state.getValue(FACING));
 	}
 
 	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,

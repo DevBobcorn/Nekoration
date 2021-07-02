@@ -3,7 +3,6 @@ package com.devbobcorn.nekoration.blocks;
 import com.devbobcorn.nekoration.common.VanillaCompat;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -29,11 +28,6 @@ public class DyeableVerticalConnectBlock extends VerticalConnectBlock {
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
 	}
 
-	@Override
-	public BlockRenderType getRenderShape(BlockState blockState) {
-		return BlockRenderType.MODEL;
-	}
-
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
 		s.add(CONNECTION, COLOR);
 	}
@@ -46,7 +40,7 @@ public class DyeableVerticalConnectBlock extends VerticalConnectBlock {
 			return (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) ? ActionResultType.SUCCESS
 					: ActionResultType.PASS;
 		}
-		
+
 		if (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) {
 			world.setBlock(pos, state.setValue(COLOR, VanillaCompat.COLOR_ITEMS.get(itemStack.getItem())), 3);
 			return ActionResultType.CONSUME;

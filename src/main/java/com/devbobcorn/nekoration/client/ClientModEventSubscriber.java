@@ -84,7 +84,9 @@ public final class ClientModEventSubscriber {
             ModBlocks.STONE_PILLAR.get(),
             ModBlocks.STONE_DORIC.get(),
             ModBlocks.STONE_IONIC.get(),
-            ModBlocks.STONE_CORINTHIAN.get()
+            ModBlocks.STONE_CORINTHIAN.get(),
+            ModBlocks.WINDOW_SILL.get(),
+            ModBlocks.WINDOW_TOP.get()
         );
 
         event.getBlockColors().register((state, view, pos, tintIndex) -> {
@@ -137,7 +139,9 @@ public final class ClientModEventSubscriber {
             ModBlocks.STONE_PILLAR.get().asItem(),
             ModBlocks.STONE_DORIC.get().asItem(),
             ModBlocks.STONE_IONIC.get().asItem(),
-            ModBlocks.STONE_CORINTHIAN.get().asItem()
+            ModBlocks.STONE_CORINTHIAN.get().asItem(),
+            ModBlocks.WINDOW_SILL.get().asItem(),
+            ModBlocks.WINDOW_TOP.get().asItem()
         );
 
         event.getItemColors().register((stack, tintIndex) -> {

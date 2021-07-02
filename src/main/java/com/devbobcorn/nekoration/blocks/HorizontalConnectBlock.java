@@ -22,7 +22,7 @@ public class HorizontalConnectBlock extends HorizontalBlock {
 	public static final EnumProperty<HorizontalConnection> CONNECTION  = ModStateProperties.HONRIZONTAL_CONNECTION;
 
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
-		s.add(CONNECTION);
+		s.add(CONNECTION, FACING);
 	  }
 
 	public final ConnectionType type;
@@ -48,25 +48,25 @@ public class HorizontalConnectBlock extends HorizontalBlock {
 		
 		//System.out.println("BlockPlaced!");
 		if (stateL.getBlock() instanceof HorizontalConnectBlock && (connectOthers || stateL.getBlock() == this)) {
-			//System.out.println(stateD.get(CONNECTION));
+			//System.out.println(stateL.getValue(CONNECTION));
 			switch (stateL.getValue(CONNECTION)) {
 			case S0:
-				return super.getStateForPlacement(ctx).setValue(CONNECTION, HorizontalConnection.D1);
+				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
 			case D0:
-				return super.getStateForPlacement(ctx).setValue(CONNECTION, HorizontalConnection.D1);
+				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
 			case T0:
-				return super.getStateForPlacement(ctx).setValue(CONNECTION, HorizontalConnection.D1);
+				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
 			case D1:
-				return super.getStateForPlacement(ctx).setValue(CONNECTION, type == ConnectionType.DOUBLE ? HorizontalConnection.S0 : HorizontalConnection.T2);
+				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.DOUBLE ? HorizontalConnection.S0 : HorizontalConnection.T2);
 			case T1:
-				return super.getStateForPlacement(ctx).setValue(CONNECTION, HorizontalConnection.T2);
+				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T2);
 			case T2:
-				return super.getStateForPlacement(ctx).setValue(CONNECTION, type == ConnectionType.BEAM ? HorizontalConnection.T2 : HorizontalConnection.S0);
+				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.BEAM ? HorizontalConnection.T2 : HorizontalConnection.S0);
 			default:
-				return super.getStateForPlacement(ctx).setValue(CONNECTION, HorizontalConnection.T2);
+				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T2);
 			}
 		}
-		return super.getStateForPlacement(ctx).setValue(CONNECTION, HorizontalConnection.S0);
+		return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.S0);
 	}
 
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState,

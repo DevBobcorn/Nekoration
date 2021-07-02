@@ -2,6 +2,6 @@
     "parent": "nekoration:block/column/tintable_column",
     "textures": {
         "end": "nekoration:block/column/stone_top",
-        "side": "nekoration:block/column/stone_base"
+        "side": "nekoration:block/column/stone_base_t2"
     }
 }

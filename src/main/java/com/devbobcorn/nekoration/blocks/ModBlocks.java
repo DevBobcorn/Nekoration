@@ -21,6 +21,9 @@ public final class ModBlocks {
     public static final RegistryObject<Block> STONE_IONIC = BLOCKS.register("stone_ionic", () -> new DyeableVerticalConnectBlock(Block.Properties.of(Material.STONE), VerticalConnectBlock.ConnectionType.PILLAR, false));
     public static final RegistryObject<Block> STONE_CORINTHIAN = BLOCKS.register("stone_corinthian", () -> new DyeableVerticalConnectBlock(Block.Properties.of(Material.STONE), VerticalConnectBlock.ConnectionType.PILLAR, false));
 
+    public static final RegistryObject<Block> WINDOW_TOP = BLOCKS.register("window_top", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.STONE).noOcclusion(), HorizontalConnectBlock.ConnectionType.TRIPLE, false));
+    public static final RegistryObject<Block> WINDOW_SILL = BLOCKS.register("window_sill", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.STONE).noOcclusion(), HorizontalConnectBlock.ConnectionType.BEAM, false));
+
     public static final RegistryObject<Block> HALF_TIMBER_P0 = BLOCKS.register("half_timber_p0", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD)));
     public static final RegistryObject<Block> HALF_TIMBER_P1 = BLOCKS.register("half_timber_p1", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD)));
     public static final RegistryObject<Block> HALF_TIMBER_P2 = BLOCKS.register("half_timber_p2", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD)));

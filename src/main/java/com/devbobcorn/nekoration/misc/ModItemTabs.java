@@ -13,7 +13,6 @@ import java.util.function.Supplier;
 
 public class ModItemTabs {
     public static final ItemGroup NEKORATION_GROUP = new ModItemGroup("nekoration", () -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "stone_base_bottom"))));
-	//TODO: Why write as above?
 
 	public static final class ModItemGroup extends ItemGroup {
 

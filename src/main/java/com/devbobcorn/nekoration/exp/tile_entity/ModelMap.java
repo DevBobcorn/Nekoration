@@ -1,12 +1,14 @@
 package com.devbobcorn.nekoration.exp.tile_entity;
 
-import net.minecraft.client.Minecraft;
+/*
+import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher.ChunkRender;
 import net.minecraft.client.renderer.RegionRenderCacheBuilder;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.chunk.ChunkRenderCache;
 import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher;
-import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher.ChunkRender;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+*/
 
 /**
  * A wrapper around ChunkRender.
@@ -15,18 +17,18 @@ import net.minecraft.util.math.BlockPos;
  * @author Cadiboo
  */
 public class ModelMap {
+/*
   	// We only create one of these per cache, we reset it each time we rebuild
   	public final RegionRenderCacheBuilder regionRenderCacheBuilder;
   	private final ChunkRender chunkRender;
   	//public ChunkRenderDispatcher.ChunkRender.RebuildTask generator;
-	private boolean isCompiled = false;
+	//private boolean isCompiled = false;
 
   	private ModelMap(final ChunkRender chunkRender, final RegionRenderCacheBuilder regionRenderCacheBuilder) {
   		this.chunkRender = chunkRender;
   		this.regionRenderCacheBuilder = regionRenderCacheBuilder;
   	}
 
-/*
 	public static ModelMap forTileEntity(final TileEntity tileEntity) {
   		final ChunkRender chunkRender = new ChunkRender(tileEntity.getLevel(), Minecraft.getInstance().levelRenderer);
   		final BlockPos pos = tileEntity.getBlockPos();

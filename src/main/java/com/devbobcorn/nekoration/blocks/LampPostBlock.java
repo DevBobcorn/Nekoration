@@ -52,8 +52,6 @@ public class LampPostBlock extends FourWayBlock {
 
 	public boolean canConnect(BlockState state, boolean neighborIsFullSquare, Direction dir) {
 		Block block = state.getBlock();
-		// boolean bl2 = block instanceof LampPostBlock || block instanceof LampBlock;
-		// TODO
 		boolean bl2 = block instanceof LampPostBlock;
 		return !isExceptionForConnection(block) && neighborIsFullSquare || bl2;
 	}
@@ -156,9 +154,6 @@ public class LampPostBlock extends FourWayBlock {
 	}
 
 	protected boolean isValidUpBlock(BlockState state) {
-		// return state.getBlock() instanceof LampBlock || state.getBlock() instanceof
-		// LanternBlock;
-		// TODO & BELOW
 		return state.getBlock() instanceof LanternBlock;
 	}
 
