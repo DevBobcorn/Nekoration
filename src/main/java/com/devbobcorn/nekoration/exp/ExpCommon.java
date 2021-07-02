@@ -11,6 +11,7 @@ public class ExpCommon {
    */
   public void registerCommonEvents(IEventBus eventBus) {
     eventBus.register(com.devbobcorn.nekoration.exp.dynamic_block.StartupCommon.class);
+    eventBus.register(com.devbobcorn.nekoration.exp.tile_entity.StartupCommon.class);
 
     //----------------
     //eventBus.register(minecraftbyexample.usefultools.debugging.StartupCommon.class);
