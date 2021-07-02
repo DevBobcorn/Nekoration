@@ -3,6 +3,8 @@ package com.devbobcorn.nekoration.client;
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
+import com.devbobcorn.nekoration.blocks.DyeableDoorBlock;
+import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
 import com.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
@@ -47,10 +49,17 @@ public final class ClientModEventSubscriber {
         RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P1.get(), translucentRenderType);
         RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P2.get(), translucentRenderType);
 
-        RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_ARCH.get(), translucentRenderType);
-        RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_CROSS.get(), translucentRenderType);
-        RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_SHADE.get(), translucentRenderType);
-        RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_LANCET.get(), translucentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_ARCH.get(), transparentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_CROSS.get(), transparentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_SHADE.get(), transparentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_LANCET.get(), transparentRenderType);
+
+        RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_1.get(), transparentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_2.get(), translucentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_3.get(), translucentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_TALL_1.get(), transparentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_TALL_2.get(), translucentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_TALL_3.get(), translucentRenderType);
 
         RenderTypeLookup.setRenderLayer(ModBlocks.AWNING_PURE.get(), translucentRenderType);
         RenderTypeLookup.setRenderLayer(ModBlocks.AWNING_PURE_SHORT.get(), translucentRenderType);
@@ -84,7 +93,14 @@ public final class ClientModEventSubscriber {
             ModBlocks.STONE_PILLAR.get(),
             ModBlocks.STONE_DORIC.get(),
             ModBlocks.STONE_IONIC.get(),
-            ModBlocks.STONE_CORINTHIAN.get(),
+            ModBlocks.STONE_CORINTHIAN.get()
+        );
+
+        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+			if (view == null || pos == null || !(state.getBlock() instanceof DyeableHorizontalConnectBlock))
+				return NekoColors.getColor(14);
+			return NekoColors.getColor(state.getValue(DyeableHorizontalConnectBlock.COLOR));
+        },
             ModBlocks.WINDOW_SILL.get(),
             ModBlocks.WINDOW_TOP.get()
         );
@@ -122,6 +138,18 @@ public final class ClientModEventSubscriber {
             ModBlocks.WINDOW_CROSS.get(),
             ModBlocks.WINDOW_SHADE.get(),
             ModBlocks.WINDOW_LANCET.get()
+        );
+
+        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+			if (view == null || pos == null || !(state.getBlock() instanceof DyeableDoorBlock))
+				return NekoColors.getColor(14);
+			return NekoColors.getColor(state.getValue(DyeableDoorBlock.COLOR));
+		},  ModBlocks.DOOR_1.get(),
+            ModBlocks.DOOR_2.get(),
+            ModBlocks.DOOR_3.get(),
+            ModBlocks.DOOR_TALL_1.get(),
+            ModBlocks.DOOR_TALL_2.get(),
+            ModBlocks.DOOR_TALL_3.get()
         );
 
         LOGGER.info("Block Colors Registered.");

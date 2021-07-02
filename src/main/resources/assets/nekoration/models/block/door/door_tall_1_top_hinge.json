@@ -1,0 +1,8 @@
+{
+    "parent": "nekoration:block/door/door_tall_top_rh",
+    "textures": {
+        "bottom": "nekoration:block/door/door_tall_1_bottom",
+        "top": "nekoration:block/door/door_tall_1_top",
+        "side": "nekoration:block/door/door_tall_1_top"
+    }
+}
