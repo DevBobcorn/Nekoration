@@ -1,4 +1,4 @@
-package com.devbobcorn.nekoration.misc;
+package com.devbobcorn.nekoration.tabs;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

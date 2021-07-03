@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,7 +20,9 @@ import javax.annotation.Nonnull;
 
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
-import com.devbobcorn.nekoration.misc.ModItemTabs;
+import com.devbobcorn.nekoration.particles.FlameParticleType;
+import com.devbobcorn.nekoration.particles.ModParticles;
+import com.devbobcorn.nekoration.tabs.ModItemTabs;
 
 @EventBusSubscriber(modid = Nekoration.MODID, bus = EventBusSubscriber.Bus.MOD)
 public final class CommonModEventSubSubscriber {
@@ -49,6 +52,13 @@ public final class CommonModEventSubSubscriber {
 					registry.register(blockItem);
 				});
 		LOGGER.debug("Registered BlockItems");
+	}
+
+	@SubscribeEvent
+	public static void onIParticleTypeRegistration(RegistryEvent.Register<ParticleType<?>> iParticleTypeRegisterEvent) {
+	  ModParticles.FLAME = new FlameParticleType();
+	  ModParticles.FLAME.setRegistryName(Nekoration.MODID + ":flame");
+	  iParticleTypeRegisterEvent.getRegistry().register(ModParticles.FLAME);
 	}
 
 	/**

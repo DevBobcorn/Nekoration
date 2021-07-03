@@ -1,9 +1,0 @@
-{
-    "parent": "nekoration:block/flower_pot_stone",
-	"textures": {
-		"0": "nekoration:block/pot_sandstone",
-		"1": "nekoration:block/mat_sandstone",
-		"2": "block/dirt",
-		"particle": "#1"
-	}
-}

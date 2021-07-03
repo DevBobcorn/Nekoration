@@ -28,7 +28,6 @@ import java.util.Random;
  * model for the copied blockstate, and returns its quads.
  */
 public class CamouflageBakedModel implements IBakedModel {
-
     public CamouflageBakedModel(IBakedModel unCamouflagedModel) {
         modelWhenNotCamouflaged = unCamouflagedModel;
     }

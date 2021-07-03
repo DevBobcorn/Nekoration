@@ -2,6 +2,7 @@
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
 	"textures": {
+		"particle": "#bottom",
 		"knob": "nekoration:block/door/knob_tall"
 	},
 	"elements": [
