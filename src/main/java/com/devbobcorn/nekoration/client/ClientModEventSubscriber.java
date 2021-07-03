@@ -70,6 +70,10 @@ public final class ClientModEventSubscriber {
         RenderTypeLookup.setRenderLayer(ModBlocks.LAMP_POST_GOLD.get(), transparentRenderType);
         RenderTypeLookup.setRenderLayer(ModBlocks.LAMP_POST_QUARTZ.get(), transparentRenderType);
 
+        RenderTypeLookup.setRenderLayer(ModBlocks.CANDLE_HOLDER_IRON.get(), transparentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.CANDLE_HOLDER_GOLD.get(), transparentRenderType);
+        RenderTypeLookup.setRenderLayer(ModBlocks.CANDLE_HOLDER_QUARTZ.get(), transparentRenderType);
+
         LOGGER.info("Block Render Type Registered.");
     }
 

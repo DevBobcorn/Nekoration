@@ -9,13 +9,13 @@ import net.minecraftforge.eventbus.api.IEventBus;
  */
 
 public class ExpClientOnly {
-    private final IEventBus eventBus;
+    //private final IEventBus eventBus;
 
     /**
      * @param eventBus an instance of the mod event bus
      */
     public ExpClientOnly(IEventBus eventBus) {
-        this.eventBus = eventBus;
+        //this.eventBus = eventBus;
     }
 
     /**

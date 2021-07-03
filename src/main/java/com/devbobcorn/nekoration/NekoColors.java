@@ -62,17 +62,20 @@ public class NekoColors {
 		case 0: //BLACK_DYE
 			return 0x393939;
 		case 1: //BLUE_DYE
-			return 0x53b6ff;
+			//return 0x53b6ff;
+			return 0x75aaff; // LIGHT_BLUE <-
 		case 2: //BROWN_DYE
 			return 0x673400;
 		case 3: //CYAN_DYE
-			return 0x94e2ff;
+			//return 0x94e2ff;
+			return 0x53b6ff; // BLUE <-
 		case 4: //GRAY_DYE
 			return 0x757575;
 		case 5: //GREEN_DYE
 			return 0x33b54c;
 		case 6: //LIGHT_BLUE_DYE
-			return 0x75aaff;
+			//return 0x75aaff;
+			return 0x94e2ff; // CYAN <-
 		case 7: //LIGHT_GRAY_DYE
 			return 0xbebebe;
 		case 8: //LIME_DYE
