@@ -15,6 +15,8 @@ public class VanillaCompat {
 	public static final Map<Item, Integer> COLOR_ITEMS = Maps.newHashMap();
 	
 	public static final Map<Item, Integer> RAW_COLOR_ITEMS = Maps.newHashMap();
+
+	public static final Map<Item, Integer> FLAME_ITEMS = Maps.newHashMap();
 	
     public static void Initialize()
     {
@@ -62,6 +64,17 @@ public class VanillaCompat {
     	registerRawColorItem(Items.LILY_OF_THE_VALLEY, 14);
     	registerRawColorItem(Items.DANDELION, 15);
     	registerRawColorItem(Items.SUNFLOWER, 15);
+
+		registerFlameItem(Items.TORCH, 1);
+		registerFlameItem(Items.FLINT_AND_STEEL, 1);
+		registerFlameItem(Items.LANTERN, 1);
+		registerFlameItem(Items.CAMPFIRE, 1);
+		registerFlameItem(Items.SOUL_TORCH, 2);
+		registerFlameItem(Items.SOUL_LANTERN, 2);
+		registerFlameItem(Items.SOUL_CAMPFIRE, 2);
+		registerFlameItem(Items.NETHER_STAR, 3);
+		registerFlameItem(Items.BEACON, 3);
+		registerFlameItem(Items.END_CRYSTAL, 3);
         
         Nekoration.LOGGER.debug("Vanilla Compat Initialized!");
     }
@@ -72,5 +85,9 @@ public class VanillaCompat {
     
     public static void registerRawColorItem(Item item, Integer num) {
     	RAW_COLOR_ITEMS.put(item, num);
+    }
+
+	public static void registerFlameItem(Item item, Integer num) {
+    	FLAME_ITEMS.put(item, num);
     }
 }

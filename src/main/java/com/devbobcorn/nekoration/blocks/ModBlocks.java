@@ -1,9 +1,13 @@
 package com.devbobcorn.nekoration.blocks;
 
+import java.util.function.ToIntFunction;
+
 import com.devbobcorn.nekoration.Nekoration;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -63,7 +67,14 @@ public final class ModBlocks {
     public static final RegistryObject<Block> LAMP_POST_GOLD = BLOCKS.register("lamp_post_gold", () -> new LampPostBlock(Block.Properties.of(Material.METAL)));
     public static final RegistryObject<Block> LAMP_POST_QUARTZ = BLOCKS.register("lamp_post_quartz", () -> new LampPostBlock(Block.Properties.of(Material.STONE)));
 
-    public static final RegistryObject<Block> CANDLE_HOLDER_IRON = BLOCKS.register("candle_holder_iron", () -> new CandleHolderBlock(Block.Properties.of(Material.METAL).noOcclusion()));
-    public static final RegistryObject<Block> CANDLE_HOLDER_GOLD = BLOCKS.register("candle_holder_gold", () -> new CandleHolderBlock(Block.Properties.of(Material.METAL).noOcclusion()));
-    public static final RegistryObject<Block> CANDLE_HOLDER_QUARTZ = BLOCKS.register("candle_holder_quartz", () -> new CandleHolderBlock(Block.Properties.of(Material.STONE).noOcclusion()));
+    public static final RegistryObject<Block> CANDLE_HOLDER_IRON = BLOCKS.register("candle_holder_iron", () -> new CandleHolderBlock(Block.Properties.of(Material.METAL).lightLevel(candleHolderEmission(15)).noOcclusion()));
+    public static final RegistryObject<Block> CANDLE_HOLDER_GOLD = BLOCKS.register("candle_holder_gold", () -> new CandleHolderBlock(Block.Properties.of(Material.METAL).lightLevel(candleHolderEmission(15)).noOcclusion()));
+    public static final RegistryObject<Block> CANDLE_HOLDER_QUARTZ = BLOCKS.register("candle_holder_quartz", () -> new CandleHolderBlock(Block.Properties.of(Material.STONE).lightLevel(candleHolderEmission(15)).noOcclusion()));
+
+
+	public static ToIntFunction<BlockState> candleHolderEmission(int lightlevel) {
+		return (state) -> {
+			return state.getValue(BlockStateProperties.AGE_3) > 0 ? lightlevel : 0;
+		};
+	}
 }

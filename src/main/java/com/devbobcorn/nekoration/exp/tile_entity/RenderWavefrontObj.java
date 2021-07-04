@@ -122,10 +122,9 @@ public class RenderWavefrontObj {
    // 3) the distance that the gem rises above the pedestal, which depends on player distance
    // 4) the speed at which the gem is spinning, which depends on player distance.
    */
+  @SuppressWarnings({"resource"})
   private static void applyAnimations(TileEntityMBE21 tileEntityMBE21, MatrixStack matrixStack) {
-
     // try to figure out the player's distance
-
     double playerDistance = 0.0;  // default
     ClientPlayerEntity player = Minecraft.getInstance().player;
     BlockPos blockPos = tileEntityMBE21.getBlockPos();
@@ -163,10 +162,9 @@ public class RenderWavefrontObj {
    // When the player gets closer than 8 blocks, the gem is at maximum brightness.
    // This method calculates the gem brightness (controlled by combinedLight = skylight + blocklight)
    */
+  @SuppressWarnings({"resource"})
   private static int getCombinedLight(TileEntityMBE21 tileEntityMBE21, int ambientCombinedLight) {
-
     // try to figure out the player's distance
-
     double playerDistance = 0.0;  // default
     ClientPlayerEntity player = Minecraft.getInstance().player;
     BlockPos blockPos = tileEntityMBE21.getBlockPos();

@@ -1,6 +1,7 @@
 {
     "parent": "nekoration:block/candle_holder_iron",
     "textures": {
+		"2": "nekoration:block/mat_gold",
         "texture": "nekoration:block/candle_holder_gold"
     }
 }

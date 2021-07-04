@@ -88,7 +88,7 @@ public final class ClientModEventSubscriber {
 				return NekoColors.getColor(14);
 			return NekoColors.getColor(state.getValue(DyeableBlock.COLOR));
 		}, ModBlocks.STONE_BASE_BOTTOM.get(), ModBlocks.STONE_FRAME_BOTTOM.get(), ModBlocks.STONE_PILLAR_BOTTOM.get(),
-				ModBlocks.STONE_POT.get());
+				ModBlocks.STONE_POT.get(), ModBlocks.CANDLE_HOLDER_IRON.get(), ModBlocks.CANDLE_HOLDER_GOLD.get(), ModBlocks.CANDLE_HOLDER_QUARTZ.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableVerticalConnectBlock))
@@ -145,7 +145,9 @@ public final class ClientModEventSubscriber {
 				ModBlocks.STONE_FRAME.get().asItem(), ModBlocks.STONE_PILLAR.get().asItem(),
 				ModBlocks.STONE_DORIC.get().asItem(), ModBlocks.STONE_IONIC.get().asItem(),
 				ModBlocks.STONE_CORINTHIAN.get().asItem(), ModBlocks.WINDOW_SILL.get().asItem(),
-				ModBlocks.WINDOW_TOP.get().asItem(), ModBlocks.STONE_POT.get().asItem());
+				ModBlocks.WINDOW_TOP.get().asItem(), ModBlocks.STONE_POT.get().asItem(),
+				ModBlocks.CANDLE_HOLDER_IRON.get().asItem(), ModBlocks.CANDLE_HOLDER_GOLD.get().asItem(),ModBlocks.CANDLE_HOLDER_QUARTZ.get().asItem()
+				);
 
 		event.getItemColors().register((stack, tintIndex) -> {
 			return NekoColors.getColor(2);
