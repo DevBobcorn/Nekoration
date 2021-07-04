@@ -2,7 +2,6 @@ package com.devbobcorn.nekoration.client;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
-import com.devbobcorn.nekoration.blockentities.EaselMenuBlockEnity;
 import com.devbobcorn.nekoration.blockentities.ModEntityType;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
 import com.devbobcorn.nekoration.blocks.DyeableDoorBlock;
@@ -12,7 +11,7 @@ import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
-import com.devbobcorn.nekoration.client.renderer.EaselMenuRenderer;
+import com.devbobcorn.nekoration.client.rendering.EaselMenuRenderer;
 import com.devbobcorn.nekoration.particles.FlameParticleFactory;
 import com.devbobcorn.nekoration.particles.ModParticles;
 
@@ -99,6 +98,12 @@ public final class ClientModEventSubscriber {
 				ModBlocks.STONE_POT.get(), ModBlocks.CANDLE_HOLDER_IRON.get(), ModBlocks.CANDLE_HOLDER_GOLD.get(), ModBlocks.CANDLE_HOLDER_QUARTZ.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
+			if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
+				return NekoColors.getColor(2);
+			return NekoColors.getColor(state.getValue(DyeableBlock.COLOR));
+		}, ModBlocks.EASEL_MENU.get());
+
+		event.getBlockColors().register((state, view, pos, tintIndex) -> {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableVerticalConnectBlock))
 				return NekoColors.getColor(14);
 			return NekoColors.getColor(state.getValue(DyeableVerticalConnectBlock.COLOR));
@@ -167,9 +172,9 @@ public final class ClientModEventSubscriber {
 				ModBlocks.HALF_TIMBER_PILLAR_P0.get().asItem(), ModBlocks.HALF_TIMBER_PILLAR_P1.get().asItem(),
 				ModBlocks.HALF_TIMBER_PILLAR_P2.get().asItem(), ModBlocks.WINDOW_ARCH.get().asItem(),
 				ModBlocks.WINDOW_CROSS.get().asItem(), ModBlocks.WINDOW_SHADE.get().asItem(),
-				ModBlocks.WINDOW_LANCET.get().asItem());
+				ModBlocks.WINDOW_LANCET.get().asItem(), ModBlocks.EASEL_MENU.get().asItem());
 
-		LOGGER.info("Block Colors Registered.");
+		LOGGER.info("Item Colors Registered.");
 	}
 
 	// Register the factory that will spawn our Particle from ParticleData

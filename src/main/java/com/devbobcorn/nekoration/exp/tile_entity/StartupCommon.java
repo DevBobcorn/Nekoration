@@ -23,13 +23,13 @@ public class StartupCommon {
 																			// for the TileEntityData constructor
 
 	@SubscribeEvent
-	public static void onBlocksRegistration(final RegistryEvent.Register<Block> blockRegisterEvent) {
+	public static void onBlocksRegistration(final RegistryEvent.Register<Block> event) {
 		blockMBE21 = (BlockMBE21) (new BlockMBE21().setRegistryName("exp", "hourglass"));
-		blockRegisterEvent.getRegistry().register(blockMBE21);
+		event.getRegistry().register(blockMBE21);
 	}
 
 	@SubscribeEvent
-	public static void onItemsRegistration(final RegistryEvent.Register<Item> itemRegisterEvent) {
+	public static void onItemsRegistration(final RegistryEvent.Register<Item> event) {
 		// We need to create a BlockItem so the player can carry this block in their
 		// hand and it can appear in the inventory
 		final int MAXIMUM_STACK_SIZE = 1; // player can only hold 1 of this block in their hand at once
@@ -38,7 +38,7 @@ public class StartupCommon {
 				.tab(ItemGroup.TAB_DECORATIONS); // which inventory tab?
 		itemBlockMBE21 = new BlockItem(blockMBE21, itemSimpleProperties);
 		itemBlockMBE21.setRegistryName(blockMBE21.getRegistryName());
-		itemRegisterEvent.getRegistry().register(itemBlockMBE21);
+		event.getRegistry().register(itemBlockMBE21);
 	}
 
 	@SubscribeEvent

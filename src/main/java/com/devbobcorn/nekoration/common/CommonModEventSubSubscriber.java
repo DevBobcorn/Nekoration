@@ -55,15 +55,20 @@ public final class CommonModEventSubSubscriber {
 					// Register the BlockItem
 					registry.register(blockItem);
 				});
-		LOGGER.debug("Registered BlockItems");
+		LOGGER.info("BlockItems Registered.");
 	}
 
 	@SubscribeEvent
 	public static void onTileEntityTypeRegistration(final RegistryEvent.Register<TileEntityType<?>> event) {
+		final IForgeRegistry<TileEntityType<?>> registry = event.getRegistry();
+
 		ModEntityType.EASEL_MENU_TYPE = TileEntityType.Builder.of(EaselMenuBlockEnity::new, ModBlocks.EASEL_MENU.get())
 				.build(null);
 		// you probably don't need a datafixer -> null should be fine
-		setup(ModEntityType.EASEL_MENU_TYPE, "easel_menu");
+		ModEntityType.EASEL_MENU_TYPE.setRegistryName("easel_menu");
+		registry.register(ModEntityType.EASEL_MENU_TYPE);
+
+		LOGGER.info("Tile Entity Types Registered.");
 	}
 
 	@SubscribeEvent
