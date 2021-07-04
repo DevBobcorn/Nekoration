@@ -2,6 +2,8 @@ package com.devbobcorn.nekoration.client;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
+import com.devbobcorn.nekoration.blockentities.EaselMenuBlockEnity;
+import com.devbobcorn.nekoration.blockentities.ModEntityType;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
 import com.devbobcorn.nekoration.blocks.DyeableDoorBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
@@ -10,6 +12,7 @@ import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
+import com.devbobcorn.nekoration.client.renderer.EaselMenuRenderer;
 import com.devbobcorn.nekoration.particles.FlameParticleFactory;
 import com.devbobcorn.nekoration.particles.ModParticles;
 
@@ -22,6 +25,7 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -79,6 +83,10 @@ public final class ClientModEventSubscriber {
 		RenderTypeLookup.setRenderLayer(ModBlocks.CANDLE_HOLDER_QUARTZ.get(), transparentRenderType);
 
 		LOGGER.info("Block Render Type Registered.");
+
+		ClientRegistry.bindTileEntityRenderer(ModEntityType.EASEL_MENU_TYPE, EaselMenuRenderer::new);
+
+		LOGGER.info("Block Entity Renderer Binded.");
 	}
 
 	@SubscribeEvent
