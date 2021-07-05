@@ -73,6 +73,8 @@ public final class ModBlocks {
 
     public static final RegistryObject<Block> EASEL_MENU = BLOCKS.register("easel_menu", () -> new EaselMenuBlock(Block.Properties.of(Material.WOOD).noOcclusion()));
 
+    public static final RegistryObject<Block> PHONOGRAPH = BLOCKS.register("phonograph", () -> new PhonographBlock(Block.Properties.of(Material.METAL).noOcclusion()));
+
 	public static ToIntFunction<BlockState> candleHolderEmission(int lightlevel) {
 		return (state) -> {
 			return state.getValue(BlockStateProperties.AGE_3) > 0 ? lightlevel : 0;

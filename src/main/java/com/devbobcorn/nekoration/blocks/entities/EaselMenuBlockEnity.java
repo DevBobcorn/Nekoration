@@ -1,4 +1,4 @@
-package com.devbobcorn.nekoration.blockentities;
+package com.devbobcorn.nekoration.blocks.entities;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import java.util.function.Function;
@@ -34,7 +34,7 @@ public class EaselMenuBlockEnity extends TileEntity {
 	private DyeColor color = DyeColor.BLACK;
 
 	public EaselMenuBlockEnity() {
-		super(ModEntityType.EASEL_MENU_TYPE);
+		super(ModTileEntityType.EASEL_MENU_TYPE);
 	}
 
 	public CompoundNBT save(CompoundNBT tag) {

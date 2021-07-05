@@ -1,10 +1,10 @@
 package com.devbobcorn.nekoration.client.rendering;
 
-import com.devbobcorn.nekoration.blockentities.EaselMenuBlockEnity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.*;
@@ -15,7 +15,7 @@ import java.awt.*;
 public class QuadRenderer {
     public static final ResourceLocation TEXTURE = new ResourceLocation("nekoration:textures/block/plant.png");
 
-	public static void renderCubeUsingQuads(EaselMenuBlockEnity tileEntity, float partialTicks,
+	public static void renderCubeUsingQuads(TileEntity tileEntity, float partialTicks,
 			MatrixStack matrixStack, IRenderTypeBuffer renderBuffers, int combinedLight, int combinedOverlay) {
 		// draw the object as a cube, using quads
 		// When render method is called, the origin [0,0,0] is at the current [x,y,z] of

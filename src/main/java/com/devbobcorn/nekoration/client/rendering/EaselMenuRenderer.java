@@ -1,27 +1,20 @@
 package com.devbobcorn.nekoration.client.rendering;
 
+import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEnity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.client.model.*;
-import net.minecraft.client.renderer.texture.NativeImage;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.List;
-
-import com.devbobcorn.nekoration.blockentities.EaselMenuBlockEnity;
+import net.minecraft.util.text.ITextComponent;
 
 public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEnity> {
 	private static ItemStack itemstack = new ItemStack(Items.COOKIE, 1);
@@ -33,13 +26,30 @@ public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEnity> {
 	@Override
 	public void render(EaselMenuBlockEnity tileEntity, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffers,
 			int combinedLight, int combinedOverlay) {
+		
+		/*
 		stack.pushPose();
 		double offset = Math.sin((tileEntity.getLevel().dayTime() + partialTicks) / 8.0) / 4.0;
 		stack.translate(0.5, 1.25 + offset, 0.5);
 		stack.mulPose(Vector3f.YP.rotationDegrees((tileEntity.getLevel().dayTime() + partialTicks) * 4F));
 
 		int lightAbove = WorldRenderer.getLightColor(tileEntity.getLevel(), tileEntity.getBlockPos().above());
+		Minecraft.getInstance().getItemRenderer().renderStatic(itemstack, ItemCameraTransforms.TransformType.GROUND,
+				lightAbove, OverlayTexture.NO_OVERLAY, stack, buffers);
 
+		stack.popPose();
+		*/
+
+		stack.pushPose();
+
+		stack.translate(0.5D, 0.9D, 0.56D);
+		stack.mulPose(Vector3f.XP.rotationDegrees(-22.5F));
+		stack.translate(0.0D, -0.5D, 0.0D);
+
+		float sc = 0.5F;
+		stack.scale(sc, sc, sc);
+
+		int lightAbove = WorldRenderer.getLightColor(tileEntity.getLevel(), tileEntity.getBlockPos().above());
 		Minecraft.getInstance().getItemRenderer().renderStatic(itemstack, ItemCameraTransforms.TransformType.GROUND,
 				lightAbove, OverlayTexture.NO_OVERLAY, stack, buffers);
 
@@ -49,17 +59,28 @@ public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEnity> {
 
 		stack.pushPose();
 
-		stack.translate(0.0D, 0.9D, 1.0D);
-		//stack.translate(0.0D, -0.3125D, -0.4375D);
+		stack.translate(0.17D, 0.9D, 0.55D);
   
 		FontRenderer fontrenderer = this.renderer.getFont();
 		stack.mulPose(Vector3f.XP.rotationDegrees(-22.5F));
-		//stack.translate(0.0D, (double)0.33333334F, (double)0.046666667F);
 
-		float sc = 0.1F; //0.010416667F
+		sc = 0.020F;
 		stack.scale(sc, -sc, sc);
 
-		fontrenderer.draw(stack, "TESUTOOOOOOOOOO", 1.0F, 1.0f, 65535);
+		ITextComponent itextcomponent;
+		try {
+			itextcomponent = ITextComponent.Serializer.fromJsonLenient("{\"text\":\"Cookies\", \"color\":\"white\", \"font\":\"segoesc\"}");
+		} catch (Exception exception) {
+			itextcomponent = ITextComponent.Serializer.fromJsonLenient("{\"text\":\"ERROR\", \"color\":\"red\"}");
+		}
+
+		//fontrenderer.draw(stack, "TEST", 1.0F, 1.0F, 65535);
+		fontrenderer.draw(stack, itextcomponent, 1.0F, 1.0F, 0);
+
+		sc = 2.0F;
+		stack.translate(-8.0D, -22.0, 0.0D);
+		stack.scale(sc, sc, sc);
+		fontrenderer.draw(stack, "\u00a74N\u00a7cE\u00a76K\u00a7eO\u00a7aR\u00a7bA\u00a73T\u00a79I\u00a71O\u00a75N", 1.0F, 1.0f, 65280);
 
 		/*
 		int i = tileEntity.getColor().getTextColor();
@@ -85,9 +106,7 @@ public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEnity> {
 	}
 
 	@Override
-	public boolean shouldRenderOffScreen(EaselMenuBlockEnity tileEntityMBE21) {
+	public boolean shouldRenderOffScreen(EaselMenuBlockEnity tileEntity) {
 		return false;
 	}
-
-	private static final Logger LOGGER = LogManager.getLogger();
 }

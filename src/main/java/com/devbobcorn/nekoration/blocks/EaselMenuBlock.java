@@ -1,6 +1,6 @@
 package com.devbobcorn.nekoration.blocks;
 
-import com.devbobcorn.nekoration.blockentities.EaselMenuBlockEnity;
+import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEnity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -34,11 +34,9 @@ public class EaselMenuBlock extends DyeableBlock {
 	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(worldIn, pos, state, placer, stack);
 
-        LOGGER.debug("Easel Menu Placed!");
-
 		TileEntity tileentity = worldIn.getBlockEntity(pos);
 		if (tileentity instanceof EaselMenuBlockEnity) { // prevent a crash if not the right type, or is null
-			LOGGER.info(tileentity);
+			//LOGGER.info(tileentity);
             return;
 		}
 

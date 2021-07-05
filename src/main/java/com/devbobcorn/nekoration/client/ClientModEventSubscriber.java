@@ -2,7 +2,6 @@ package com.devbobcorn.nekoration.client;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
-import com.devbobcorn.nekoration.blockentities.ModEntityType;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
 import com.devbobcorn.nekoration.blocks.DyeableDoorBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
@@ -11,7 +10,9 @@ import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
+import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
 import com.devbobcorn.nekoration.client.rendering.EaselMenuRenderer;
+import com.devbobcorn.nekoration.client.rendering.PhonographRenderer;
 import com.devbobcorn.nekoration.particles.FlameParticleFactory;
 import com.devbobcorn.nekoration.particles.ModParticles;
 
@@ -81,9 +82,12 @@ public final class ClientModEventSubscriber {
 		RenderTypeLookup.setRenderLayer(ModBlocks.CANDLE_HOLDER_GOLD.get(), transparentRenderType);
 		RenderTypeLookup.setRenderLayer(ModBlocks.CANDLE_HOLDER_QUARTZ.get(), transparentRenderType);
 
+		RenderTypeLookup.setRenderLayer(ModBlocks.PHONOGRAPH.get(), transparentRenderType);
+
 		LOGGER.info("Block Render Type Registered.");
 
-		ClientRegistry.bindTileEntityRenderer(ModEntityType.EASEL_MENU_TYPE, EaselMenuRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE, EaselMenuRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.PHONOGRAGH_TYPE, PhonographRenderer::new);
 
 		LOGGER.info("Block Entity Renderer Binded.");
 	}
