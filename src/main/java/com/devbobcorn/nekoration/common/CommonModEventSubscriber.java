@@ -2,8 +2,6 @@ package com.devbobcorn.nekoration.common;
 
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
-import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEnity;
-import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
 import com.devbobcorn.nekoration.particles.FlameParticleType;
 import com.devbobcorn.nekoration.particles.ModParticles;
 import com.devbobcorn.nekoration.tabs.ModItemTabs;
@@ -14,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.particles.ParticleType;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -23,7 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 @EventBusSubscriber(modid = Nekoration.MODID, bus = EventBusSubscriber.Bus.MOD)
-public final class CommonModEventSubSubscriber {
+public final class CommonModEventSubscriber {
 	private static final Logger LOGGER = LogManager.getLogger(Nekoration.MODID + " Mod Event Subscriber");
 
 	/**
@@ -51,19 +48,6 @@ public final class CommonModEventSubSubscriber {
 					registry.register(blockItem);
 				});
 		LOGGER.info("BlockItems Registered.");
-	}
-
-	@SubscribeEvent
-	public static void onTileEntityTypeRegistration(final RegistryEvent.Register<TileEntityType<?>> event) {
-		final IForgeRegistry<TileEntityType<?>> registry = event.getRegistry();
-
-		ModTileEntityType.EASEL_MENU_TYPE = TileEntityType.Builder.of(EaselMenuBlockEnity::new, ModBlocks.EASEL_MENU.get())
-				.build(null);
-		// you probably don't need a datafixer -> null should be fine
-		ModTileEntityType.EASEL_MENU_TYPE.setRegistryName("easel_menu");
-		registry.register(ModTileEntityType.EASEL_MENU_TYPE);
-
-		LOGGER.info("Tile Entity Types Registered.");
 	}
 
 	@SubscribeEvent

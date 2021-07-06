@@ -34,7 +34,7 @@ public class EaselMenuBlockEnity extends TileEntity {
 	private DyeColor color = DyeColor.BLACK;
 
 	public EaselMenuBlockEnity() {
-		super(ModTileEntityType.EASEL_MENU_TYPE);
+		super(ModTileEntityType.EASEL_MENU_TYPE.get());
 	}
 
 	public CompoundNBT save(CompoundNBT tag) {

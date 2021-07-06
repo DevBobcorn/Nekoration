@@ -85,7 +85,7 @@ public final class ClientModEventSubscriber {
 
 		LOGGER.info("Block Render Type Registered.");
 
-		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE, EaselMenuRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);
 
 		LOGGER.info("Block Entity Renderer Binded.");
 	}
