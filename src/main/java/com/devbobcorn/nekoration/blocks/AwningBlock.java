@@ -42,7 +42,6 @@ public class AwningBlock extends DyeableHorizontalBlock {
             //Nekoration.LOGGER.info(VanillaCompat.COLOR_ITEMS.get(itemStack.getItem()));
             return ActionResultType.CONSUME;
         } else super.use(state, world, pos, player, hand, hit);
-
         return ActionResultType.PASS;
 	}
 

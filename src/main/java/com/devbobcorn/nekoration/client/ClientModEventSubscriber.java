@@ -12,7 +12,6 @@ import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
 import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
 import com.devbobcorn.nekoration.client.rendering.EaselMenuRenderer;
-import com.devbobcorn.nekoration.client.rendering.PhonographRenderer;
 import com.devbobcorn.nekoration.particles.FlameParticleFactory;
 import com.devbobcorn.nekoration.particles.ModParticles;
 
@@ -87,7 +86,6 @@ public final class ClientModEventSubscriber {
 		LOGGER.info("Block Render Type Registered.");
 
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE, EaselMenuRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.PHONOGRAGH_TYPE, PhonographRenderer::new);
 
 		LOGGER.info("Block Entity Renderer Binded.");
 	}
