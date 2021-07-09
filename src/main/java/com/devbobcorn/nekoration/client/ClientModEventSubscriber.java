@@ -154,6 +154,7 @@ public final class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void registerItemColors(ColorHandlerEvent.Item event) {
 		event.getItemColors().register((stack, tintIndex) -> {
+			// TODO: COLOR FROM NBT...
 			return NekoColors.getColor(14);
 		}, ModBlocks.STONE_BASE_BOTTOM.get().asItem(), ModBlocks.STONE_FRAME_BOTTOM.get().asItem(),
 				ModBlocks.STONE_PILLAR_BOTTOM.get().asItem(), ModBlocks.STONE_BASE.get().asItem(),
@@ -165,6 +166,7 @@ public final class ClientModEventSubscriber {
 				);
 
 		event.getItemColors().register((stack, tintIndex) -> {
+			// TODO: COLOR FROM NBT...
 			return NekoColors.getColor(2);
 		}, ModBlocks.HALF_TIMBER_P0.get().asItem(), ModBlocks.HALF_TIMBER_P1.get().asItem(),
 				ModBlocks.HALF_TIMBER_P2.get().asItem(), ModBlocks.HALF_TIMBER_P3.get().asItem(),

@@ -82,35 +82,39 @@ public class RenderWavefrontObj {
 
 		Color artifactColour = tileEntityMBE21.getArtifactColour();
 
-		BlockState state = StartupCommon.blockMBE21.defaultBlockState().setValue(BlockMBE21.USE_WAVEFRONT_OBJ_MODEL,
-				true);
-		BlockRendererDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
-		IBakedModel model = dispatcher.getBlockModel(state);
+		try {
+			BlockState state = StartupCommon.blockMBE21.defaultBlockState().setValue(BlockMBE21.USE_WAVEFRONT_OBJ_MODEL,
+			true);
+			BlockRendererDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
+			IBakedModel model = dispatcher.getBlockModel(state);
 
-		// you can use one of the various BlockRenderer render methods depending on how
-		// much control you want to retain over the
-		// model's appearance.
-		// To render the model as if it were a block placed in the world (lighting,
-		// shading, etc) you can use
-		// the renderModel() with World (ILightReader) as the first argument.
-		// World world = tileEntityMBE21.getWorld();
-		// if (world == null) return;
-		// BlockPos blockPos = tileEntityMBE21.getPos();
+			// you can use one of the various BlockRenderer render methods depending on how
+			// much control you want to retain over the
+			// model's appearance.
+			// To render the model as if it were a block placed in the world (lighting,
+			// shading, etc) you can use
+			// the renderModel() with World (ILightReader) as the first argument.
+			// World world = tileEntityMBE21.getWorld();
+			// if (world == null) return;
+			// BlockPos blockPos = tileEntityMBE21.getPos();
 
-		// To render the model with more control over lighting, colour, etc, use the
-		// renderModel() shown below
+			// To render the model with more control over lighting, colour, etc, use the
+			// renderModel() shown below
 
-		MatrixStack.Entry currentMatrix = matrixStack.last();
+			MatrixStack.Entry currentMatrix = matrixStack.last();
 
-		float red = artifactColour.getRed() / 255.0F;
-		float green = artifactColour.getGreen() / 255.0F;
-		float blue = artifactColour.getBlue() / 255.0F;
+			float red = artifactColour.getRed() / 255.0F;
+			float green = artifactColour.getGreen() / 255.0F;
+			float blue = artifactColour.getBlue() / 255.0F;
 
-		combinedLight = getCombinedLight(tileEntityMBE21, combinedLight);
+			combinedLight = getCombinedLight(tileEntityMBE21, combinedLight);
 
-		IVertexBuilder vertexBuffer = renderBuffers.getBuffer(RenderType.solid());
-		dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, red, green, blue,
-				combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+			IVertexBuilder vertexBuffer = renderBuffers.getBuffer(RenderType.solid());
+			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, red, green, blue,
+					combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+		} catch (NullPointerException e) {
+			//Color may be null in some occasions...
+		}
 
 		matrixStack.popPose(); // restore the original transformation matrix + normals matrix
 	}

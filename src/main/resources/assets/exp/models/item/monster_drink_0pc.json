@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "exp:item/monster_drink_layer0",
+        "layer1": "exp:item/monster_drink_layer1_0pc"
+    }
+}

@@ -58,8 +58,11 @@ public class RenderQuads {
 		matrixStack.pushPose(); // push the current transformation matrix + normals matrix
 		matrixStack.translate(TRANSLATION_OFFSET.x, TRANSLATION_OFFSET.y, TRANSLATION_OFFSET.z); // translate
 		Color gemColour = tileEntityMBE21.getArtifactColour();
-
-		drawCubeQuads(matrixStack, renderBuffers, gemColour, combinedLight);
+		try {
+			drawCubeQuads(matrixStack, renderBuffers, gemColour, combinedLight);
+		} catch (NullPointerException e){
+			//Color may be null in some occasions...
+		}
 		matrixStack.popPose(); // restore the original transformation matrix + normals matrix
 	}
 

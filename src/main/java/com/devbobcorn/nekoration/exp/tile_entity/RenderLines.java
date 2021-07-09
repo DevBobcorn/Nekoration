@@ -34,9 +34,13 @@ public class RenderLines {
 
 		matrixStack.pushPose(); // push the current transformation matrix + normals matrix
 		matrixStack.translate(TRANSLATION_OFFSET.x, TRANSLATION_OFFSET.y, TRANSLATION_OFFSET.z); // translate
-		Color artifactColour = tileEntityMBE21.getArtifactColour();
 
-		drawTetrahedronWireframe(matrixStack, renderBuffers, artifactColour);
+		Color artifactColour = tileEntityMBE21.getArtifactColour();
+		try {
+			drawTetrahedronWireframe(matrixStack, renderBuffers, artifactColour);
+		} catch (NullPointerException e) {
+			//Color may be null in some occasions...
+		}
 		matrixStack.popPose(); // restore the original transformation matrix + normals matrix
 	}
 

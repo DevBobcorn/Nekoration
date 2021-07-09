@@ -79,14 +79,18 @@ public class RenderModelHourglass {
 		}
 
 		Color sandColour = tileEntityMBE21.getArtifactColour();
-		float sandColourRed = sandColour.getRed() / 255.0F;
-		float sandColourGreen = sandColour.getGreen() / 255.0F;
-		float sandColourBlue = sandColour.getBlue() / 255.0F;
-
-		IVertexBuilder renderBuffer = renderBuffers.getBuffer(model.renderType(HOURGLASS_MODEL_TEXTURE));
-		model.render(matrixStack, renderBuffer, combinedLight, combinedOverlay, sandColourRed, sandColourGreen,
-				sandColourBlue, animationState.flipRotationDegrees, animationState.fractionSandInTop,
-				animationState.fractionSandInBottom);
+		try {
+			float sandColourRed = sandColour.getRed() / 255.0F;
+			float sandColourGreen = sandColour.getGreen() / 255.0F;
+			float sandColourBlue = sandColour.getBlue() / 255.0F;
+	
+			IVertexBuilder renderBuffer = renderBuffers.getBuffer(model.renderType(HOURGLASS_MODEL_TEXTURE));
+			model.render(matrixStack, renderBuffer, combinedLight, combinedOverlay, sandColourRed, sandColourGreen,
+					sandColourBlue, animationState.flipRotationDegrees, animationState.fractionSandInTop,
+					animationState.fractionSandInBottom);	
+		} catch (NullPointerException e){
+			//Color may be null in some occasions...
+		}
 		matrixStack.popPose();
 	}
 
