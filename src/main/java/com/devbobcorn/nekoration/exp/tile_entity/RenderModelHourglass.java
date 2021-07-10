@@ -88,7 +88,7 @@ public class RenderModelHourglass {
 			model.render(matrixStack, renderBuffer, combinedLight, combinedOverlay, sandColourRed, sandColourGreen,
 					sandColourBlue, animationState.flipRotationDegrees, animationState.fractionSandInTop,
 					animationState.fractionSandInBottom);	
-		} catch (NullPointerException e){
+		} catch (Exception e){
 			//Color may be null in some occasions...
 		}
 		matrixStack.popPose();

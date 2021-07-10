@@ -112,7 +112,7 @@ public class RenderWavefrontObj {
 			IVertexBuilder vertexBuffer = renderBuffers.getBuffer(RenderType.solid());
 			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, red, green, blue,
 					combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
-		} catch (NullPointerException e) {
+		} catch (Exception e) {
 			//Color may be null in some occasions...
 		}
 

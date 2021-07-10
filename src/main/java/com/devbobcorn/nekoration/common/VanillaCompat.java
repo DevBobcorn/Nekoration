@@ -40,8 +40,8 @@ public class VanillaCompat {
     	registerRawColorItem(Items.INK_SAC, 0);
     	registerRawColorItem(Items.WITHER_ROSE, 0);
     	registerRawColorItem(Items.LAPIS_LAZULI, 1);
-    	registerRawColorItem(Items.CORNFLOWER, 1);
     	registerRawColorItem(Items.COCOA_BEANS, 2);
+		registerRawColorItem(Items.CORNFLOWER, 3);
     	registerRawColorItem(Items.STONE, 4);
     	registerRawColorItem(Items.COBBLESTONE, 4);
     	registerRawColorItem(Items.CACTUS, 5);
@@ -51,10 +51,10 @@ public class VanillaCompat {
     	registerRawColorItem(Items.WHITE_TULIP, 7);
     	registerRawColorItem(Items.SEA_PICKLE, 8);
     	registerRawColorItem(Items.LILAC, 9);
-    	registerRawColorItem(Items.ALLIUM, 9);
     	registerRawColorItem(Items.ORANGE_TULIP, 10);
     	registerRawColorItem(Items.PEONY, 11);
     	registerRawColorItem(Items.PINK_TULIP, 11);
+		registerRawColorItem(Items.ALLIUM, 12);
     	registerRawColorItem(Items.POPPY, 13);
     	registerRawColorItem(Items.ROSE_BUSH, 13);
     	registerRawColorItem(Items.RED_TULIP, 13);

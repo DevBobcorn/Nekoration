@@ -37,7 +37,7 @@ public class LiquidColor implements IItemColor {
 			case 0:
 				return Color.WHITE.getRGB();
 			case 1: {
-				ItemVariants.EnumBottleFlavor enumBottleFlavour = ItemVariants.getFlavor(stack);
+				MonsterDrinkItem.EnumBottleFlavor enumBottleFlavour = MonsterDrinkItem.getFlavor(stack);
 				return enumBottleFlavour.getRenderColor().getRGB();
 			}
 			default: {

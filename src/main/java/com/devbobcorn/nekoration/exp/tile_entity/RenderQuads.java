@@ -60,7 +60,7 @@ public class RenderQuads {
 		Color gemColour = tileEntityMBE21.getArtifactColour();
 		try {
 			drawCubeQuads(matrixStack, renderBuffers, gemColour, combinedLight);
-		} catch (NullPointerException e){
+		} catch (Exception e){
 			//Color may be null in some occasions...
 		}
 		matrixStack.popPose(); // restore the original transformation matrix + normals matrix

@@ -18,7 +18,7 @@ public class StartupClientOnly {
 		// the liquid in the bottle
 		// i.e.: when vanilla wants to know what colour to render our itemVariants
 		// instance, it calls the LiquidColour lambda function
-		event.getItemColors().register(new LiquidColor(), StartupCommon.itemVariants);
+		event.getItemColors().register(new LiquidColor(), StartupCommon.monsterDrink);
 	}
 
 	@SubscribeEvent
@@ -36,8 +36,8 @@ public class StartupClientOnly {
 	}
 
 	public static void registerPropertyOverride() {
-		ItemModelsProperties.register(StartupCommon.itemVariants, new ResourceLocation("fullness"),
-				ItemVariants::getFullnessPropertyOverride);
+		ItemModelsProperties.register(StartupCommon.monsterDrink, new ResourceLocation("fullness"),
+				MonsterDrinkItem::getFullnessPropertyOverride);
 		// use lambda function to link the NBT fullness value to a suitable property
 		// override value
 	}

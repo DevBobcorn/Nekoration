@@ -1,13 +1,17 @@
 package com.devbobcorn.nekoration;
 
+import java.util.Optional;
+
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.MathHelper;
 
 public class NekoColors {
-	public static int getBlockColorAt(int height,int min,int max,int minColor,int maxColor) {
-		if (height >= max) return maxColor;
-		else if (height <= min) return minColor;
-		double frac = ((double)height - (double)min) / ((double)max - (double)min);
+	public static int getBlockColorAt(int value,int min,int max,int minColor,int maxColor) {
+		if (value >= max) return maxColor;
+		else if (value <= min) return minColor;
+		double frac = ((double)value - (double)min) / ((double)max - (double)min);
 		
 		return getColorBetween(frac, minColor, maxColor);
 	}
@@ -57,43 +61,163 @@ public class NekoColors {
 		return (float)(c & 0xff) / 255.0F;
 	}
 	
-	public static int getColor(int num) {
-		switch(num) {
-		case 0: //BLACK_DYE
-			return 0x393939;
-		case 1: //BLUE_DYE
-			//return 0x53b6ff;
-			return 0x75aaff; // LIGHT_BLUE <-
-		case 2: //BROWN_DYE
-			return 0x673400;
-		case 3: //CYAN_DYE
-			//return 0x94e2ff;
-			return 0x53b6ff; // BLUE <-
-		case 4: //GRAY_DYE
-			return 0x757575;
-		case 5: //GREEN_DYE
-			return 0x33b54c;
-		case 6: //LIGHT_BLUE_DYE
-			//return 0x75aaff;
-			return 0x94e2ff; // CYAN <-
-		case 7: //LIGHT_GRAY_DYE
-			return 0xbebebe;
-		case 8: //LIME_DYE
-			return 0x7df494;
-		case 9: //MAGENTA_DYE
-			return 0xf976ff;
-		case 10: //ORANGE_DYE
-			return 0xffa346;
-		case 11: //PINK_DYE
-			return 0xffc0e7;
-		case 12: //PURPLE_DYE
-			return 0xbc61ff;
-		case 13: //RED_DYE
-			return 0xe03f3f;
-		case 14: //WHITE_DYE
-			return 0xFFFFFF;
-		default: //YELLOW_DYE
-			return 0xffd54f;
+    // Neko Colors... Meow~
+	public static int getNekoColorOrWhite(int id) {
+		return EnumNekoColor.getColorValueFromID((byte)id);
+	}
+
+	public enum EnumNekoColor implements IStringSerializable {
+		BLACK((byte)0, "black", 0x393939),
+		BLUE((byte)1, "blue" , 0x53b6ff),
+		BROWN((byte)2, "brown", 0x673400),
+		CYAN((byte)3, "cyan", 0x94e2ff),
+		GRAY((byte)4, "gray", 0x757575),
+		GREEN((byte)5, "green", 0x33b54c),
+		LIGHT_BLUE((byte)6, "light_blue", 0x75aaff),
+		LIGHT_GRAY((byte)7, "light_gray", 0xbebebe),
+		LIME((byte)8, "lime", 0x7aff8f), //7df494
+		MAGENTA((byte)9, "magenta", 0xf976ff),
+		ORANGE((byte)10, "orange", 0xff7700), //ff9500
+		PINK((byte)11, "pink", 0xffa3e0), //ff3baf
+		PURPLE((byte)12, "purple", 0xbc61ff),
+		RED((byte)13, "red", 0xe03f3f),
+		WHITE((byte)14, "white", 0xffffff),
+		YELLOW((byte)15, "yellow", 0xffc23c); //ffd54f
+
+		@Override
+		public String toString() {
+			return this.name;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.name;
+		}
+
+		public int getColor() {
+			return color;
+		}
+
+		public static EnumNekoColor fromNBT(CompoundNBT compoundNBT, String tagname) {
+			byte flavorID = 0; // default in case of error
+			if (compoundNBT != null && compoundNBT.contains(tagname)) {
+				flavorID = compoundNBT.getByte(tagname);
+			}
+			Optional<EnumNekoColor> color = getColorEnumFromID(flavorID);
+			return color.orElse(WHITE); // default is white
+		}
+
+		/**
+		 * Write this enum to NBT
+		 * 
+		 * @param compoundNBT
+		 * @param tagname
+		 */
+		public void putIntoNBT(CompoundNBT compoundNBT, String tagname) {
+			compoundNBT.putByte(tagname, nbtID);
+		}
+
+		private final byte nbtID;
+		private final String name;
+		private final int color;
+
+		EnumNekoColor(byte i_NBT_ID, String i_name, int i_color) {
+			this.nbtID = (byte) i_NBT_ID;
+			this.name = i_name;
+			this.color = i_color;
+		}
+
+		public static Optional<EnumNekoColor> getColorEnumFromID(byte ID) {
+			for (EnumNekoColor c : EnumNekoColor.values()) {
+				if (c.nbtID == ID)
+					return Optional.of(c);
+			}
+			return Optional.empty();
+		}
+
+		public static int getColorValueFromID(byte ID) {
+			for (EnumNekoColor c : EnumNekoColor.values()) {
+				if (c.nbtID == ID)
+					return c.color;
+			}
+			return WHITE.color;
+		}
+	}
+
+	// Wooden Colors... Woof~
+	public static int getWoodenColorOrBrown(int id) {
+		return EnumWoodenColor.getColorValueFromID((byte)id);
+	}
+
+	public enum EnumWoodenColor implements IStringSerializable {
+		BLACK((byte)0, "black", 0x3c1e00),
+		BLUE((byte)1, "blue" , 0x53b6ff),
+		BROWN((byte)2, "brown", 0x673400),
+		CYAN((byte)3, "cyan", 0x389a99),
+		GRAY((byte)4, "gray", 0xa27d64),
+		GREEN((byte)5, "green", 0x33b54c), //warped
+		LIGHT_BLUE((byte)6, "light_blue", 0x75aaff),
+		LIGHT_GRAY((byte)7, "light_gray", 0xb9955b),
+		LIME((byte)8, "lime", 0x7df494),
+		MAGENTA((byte)9, "magenta", 0xf976ff), //crimson
+		ORANGE((byte)10, "orange", 0xf0973d), //acacia
+		PINK((byte)11, "pink", 0xff97d7),
+		PURPLE((byte)12, "purple", 0x9d407b),
+		RED((byte)13, "red", 0xe03f3f), //
+		WHITE((byte)14, "white", 0xc3b27a), //birch
+		YELLOW((byte)15, "yellow", 0xffd54f); // oak
+
+		@Override
+		public String toString() {
+			return this.name;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.name;
+		}
+
+		public int getColor() {
+			return color;
+		}
+
+		public static EnumWoodenColor fromNBT(CompoundNBT compoundNBT, String tagname) {
+			byte flavorID = 0; // default in case of error
+			if (compoundNBT != null && compoundNBT.contains(tagname)) {
+				flavorID = compoundNBT.getByte(tagname);
+			}
+			Optional<EnumWoodenColor> color = getColorEnumFromID(flavorID);
+			return color.orElse(BROWN); // default is wooden brown
+		}
+
+		public void putIntoNBT(CompoundNBT compoundNBT, String tagname) {
+			compoundNBT.putByte(tagname, nbtID);
+		}
+
+		private final byte nbtID;
+		private final String name;
+		private final int color;
+
+		EnumWoodenColor(byte i_NBT_ID, String i_name, int i_color) {
+			this.nbtID = (byte) i_NBT_ID;
+			this.name = i_name;
+			this.color = i_color;
+		}
+
+		public static Optional<EnumWoodenColor> getColorEnumFromID(byte ID) {
+			for (EnumWoodenColor c : EnumWoodenColor.values()) {
+				if (c.nbtID == ID)
+					return Optional.of(c);
+			}
+			return Optional.empty();
+		}
+
+		public static int getColorValueFromID(byte ID) {
+			for (EnumWoodenColor c : EnumWoodenColor.values()) {
+				if (c.nbtID == ID)
+					return c.color;
+			}
+			return BROWN.color;
 		}
 	}
 }

@@ -77,10 +77,6 @@ public class TileEntityRendererMBE21 extends TileEntityRenderer<TileEntityMBE21>
 		TileEntityMBE21.EnumRenderStyle objectRenderStyle = tileEntityMBE21.getArtifactRenderStyle();
 
 		switch (objectRenderStyle) {
-		case WIREFRAME:
-			RenderLines.renderWireframe(tileEntityMBE21, partialTicks, matrixStack, renderBuffers, combinedLight,
-					combinedOverlay);
-			break;
 		case QUADS:
 			RenderQuads.renderCubeUsingQuads(tileEntityMBE21, partialTicks, matrixStack, renderBuffers, combinedLight,
 					combinedOverlay);

@@ -2,6 +2,12 @@ package com.devbobcorn.nekoration.common;
 
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
+import com.devbobcorn.nekoration.blocks.DyeableBlock;
+import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
+import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
+import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
+import com.devbobcorn.nekoration.items.DyeableBlockItem;
+import com.devbobcorn.nekoration.items.BiDyeableBlockItem;
 import com.devbobcorn.nekoration.particles.FlameParticleType;
 import com.devbobcorn.nekoration.particles.ModParticles;
 import com.devbobcorn.nekoration.tabs.ModItemTabs;
@@ -37,15 +43,33 @@ public final class CommonModEventSubscriber {
 				// .filter(block -> needsItemBlock(block))
 				// Register the BlockItem for the block
 				.forEach(block -> {
-					// Make the properties, and make it so that the item will be on our ItemGroup
-					// (CreativeTab)
-					Item.Properties properties = new Item.Properties().tab(ModItemTabs.NEKORATION_GROUP);
-					// Create the new BlockItem with the block and it's properties
-					final BlockItem blockItem = new BlockItem(block, properties);
-					// Set the new BlockItem's registry name to the block's registry name
-					blockItem.setRegistryName(block.getRegistryName());
-					// Register the BlockItem
-					registry.register(blockItem);
+					if (block instanceof HalfTimberBlock || block instanceof HalfTimberPillarBlock){
+						// Classes: HalfTimberBlock / HalfTimberPillarBlock
+						Item.Properties properties = new Item.Properties().tab(ModItemTabs.NEKORATION_GROUP);
+						// Create the new BlockItem with the block and it's properties
+						final BiDyeableBlockItem blockItem = new BiDyeableBlockItem(block, properties);
+						// Set the new BlockItem's registry name to the block's registry name
+						blockItem.setRegistryName(block.getRegistryName());
+						// Register the BlockItem
+						registry.register(blockItem);
+					} else if (block instanceof DyeableBlock || block instanceof DyeableHorizontalConnectBlock){
+						// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
+						Item.Properties properties = new Item.Properties().tab(ModItemTabs.NEKORATION_GROUP);
+						// Create the new BlockItem with the block and it's properties
+						final DyeableBlockItem blockItem = new DyeableBlockItem(block, properties);
+						// Set the new BlockItem's registry name to the block's registry name
+						blockItem.setRegistryName(block.getRegistryName());
+						// Register the BlockItem
+						registry.register(blockItem);
+					} else {
+						Item.Properties properties = new Item.Properties().tab(ModItemTabs.NEKORATION_GROUP);
+						// Create the new BlockItem with the block and it's properties
+						final BlockItem blockItem = new BlockItem(block, properties);
+						// Set the new BlockItem's registry name to the block's registry name
+						blockItem.setRegistryName(block.getRegistryName());
+						// Register the BlockItem
+						registry.register(blockItem);
+					}
 				});
 		LOGGER.info("BlockItems Registered.");
 	}

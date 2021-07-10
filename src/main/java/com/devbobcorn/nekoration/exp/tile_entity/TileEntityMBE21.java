@@ -198,7 +198,7 @@ public class TileEntityMBE21 extends TileEntity {
 	}
 
 	public enum EnumRenderStyle {
-		WIREFRAME(1), QUADS(2), BLOCKQUADS(3), WAVEFRONT(4);
+		QUADS(1), BLOCKQUADS(2), WAVEFRONT(3);
 
 		public EnumRenderStyle getNextStyle() {
 			int nextLargestID = nbtID + 1;
@@ -206,7 +206,7 @@ public class TileEntityMBE21 extends TileEntity {
 				if (enumRenderStyle.nbtID == nextLargestID)
 					return enumRenderStyle;
 			}
-			return WIREFRAME;
+			return QUADS;
 		}
 
 		/**
@@ -222,7 +222,7 @@ public class TileEntityMBE21 extends TileEntity {
 				renderStyleID = compoundNBT.getByte(tagname);
 			}
 			Optional<EnumRenderStyle> enumRenderStyle = getEnumRenderStyleFromID(renderStyleID);
-			return enumRenderStyle.orElse(WIREFRAME);
+			return enumRenderStyle.orElse(QUADS);
 		}
 
 		/**
@@ -262,11 +262,9 @@ public class TileEntityMBE21 extends TileEntity {
 	}
 
 	private Color artifactColour = INVALID_COLOR; // the RGB colour of the artifact
-	private EnumRenderStyle artifactRenderStyle = EnumRenderStyle.WIREFRAME; // which method should we use to render
-																				// this artifact?
+	private EnumRenderStyle artifactRenderStyle = EnumRenderStyle.QUADS; // which method should we use to render this artifact?
 
 	private final long INVALID_TIME = 0;
 	private long lastTime = INVALID_TIME; // used for animation
 	private double lastAngularPosition; // used for animation
-
 }
