@@ -1,10 +1,13 @@
 package com.devbobcorn.nekoration.blocks;
 
 import com.devbobcorn.nekoration.common.VanillaCompat;
+import com.devbobcorn.nekoration.items.DyeableBlockItem;
+import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -42,4 +45,14 @@ public class DyeableBlock extends Block {
 		}
 		return ActionResultType.PASS;
 	}
+
+	@Override
+	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
+		ItemStack stack = ctx.getItemInHand();
+		if (stack.getItem() instanceof DyeableBlockItem)
+			return this.defaultBlockState().setValue(COLOR, DyeableBlockItem.getColor(stack).getNBTId());
+		else if (stack.getItem() instanceof DyeableWoodenBlockItem)
+			return this.defaultBlockState().setValue(COLOR, DyeableWoodenBlockItem.getColor(stack).getNBTId());
+		return this.defaultBlockState();
+    }
 }

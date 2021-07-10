@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class VerticalConnectBlock extends Block {
+public class BiDyeableVerticalConnectBlock extends BiDyeableBlock {
 	public enum ConnectionType {
 		DOUBLE, TRIPLE, PILLAR;
 	}
@@ -21,19 +21,19 @@ public class VerticalConnectBlock extends Block {
 	public static final EnumProperty<VerticalConnection> CONNECTION  = ModStateProperties.VERTICAL_CONNECTION;
 
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
-		s.add(CONNECTION);
-	  }
+		s.add(COLOR0, COLOR1, CONNECTION);
+	}
 
 	public final ConnectionType type;
 	public final boolean connectOthers;
 
-	public VerticalConnectBlock(Properties settings) {
+	public BiDyeableVerticalConnectBlock(Properties settings) {
 		super(settings);
 		type = ConnectionType.TRIPLE;
 		connectOthers = false;
 	}
 
-	public VerticalConnectBlock(Properties settings, ConnectionType tp, boolean co) {
+	public BiDyeableVerticalConnectBlock(Properties settings, ConnectionType tp, boolean co) {
 		super(settings);
 		type = tp;
 		connectOthers = co;
@@ -48,7 +48,7 @@ public class VerticalConnectBlock extends Block {
 		//BlockState stateU = blockView.getBlockState(blockPosU);
 		
 		//System.out.println("BlockPlaced!");
-		if (stateD.getBlock() instanceof VerticalConnectBlock && (connectOthers || stateD.getBlock() == this)) {
+		if (stateD.getBlock() instanceof BiDyeableVerticalConnectBlock && (connectOthers || stateD.getBlock() == this)) {
 			//System.out.println(stateD.get(CONNECTION));
 			switch (stateD.getValue(CONNECTION)) {
 			case S0:
@@ -74,13 +74,13 @@ public class VerticalConnectBlock extends Block {
 			IWorld world, BlockPos pos, BlockPos posFrom) {
 		BlockState res = state;
 		
-		if (direction == Direction.UP && newState.getBlock() instanceof VerticalConnectBlock && (connectOthers || newState.getBlock() == this)) {
+		if (direction == Direction.UP && newState.getBlock() instanceof BiDyeableVerticalConnectBlock && (connectOthers || newState.getBlock() == this)) {
 			BlockState stateD = world.getBlockState(pos.below());
 			switch (newState.getValue(CONNECTION)) {
 			case D1:
 				return res.setValue(CONNECTION, VerticalConnection.D0);
 			case T1:
-				return res.setValue(CONNECTION, (type == ConnectionType.PILLAR && stateD.getBlock() instanceof VerticalConnectBlock && (connectOthers || stateD.getBlock() == this)) ? VerticalConnection.T1 : VerticalConnection.T0);
+				return res.setValue(CONNECTION, (type == ConnectionType.PILLAR && stateD.getBlock() instanceof BiDyeableVerticalConnectBlock && (connectOthers || stateD.getBlock() == this)) ? VerticalConnection.T1 : VerticalConnection.T0);
 			case T2:
 				return res.setValue(CONNECTION, VerticalConnection.T1);
 			default:

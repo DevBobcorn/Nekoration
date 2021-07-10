@@ -1,35 +1,102 @@
 {
 	"parent": "nekoration:block/awning/awning_pure_end_white",
-    "display": {
-        "gui": {
-            "rotation": [ 30, 135, 0 ],
-            "translation": [ 0, 0, 0],
-            "scale":[ 0.625, 0.625, 0.625 ]
-        },
-        "ground": {
-            "rotation": [ 0, 0, 0 ],
-            "translation": [ 0, 3, 0],
-            "scale":[ 0.25, 0.25, 0.25 ]
-        },
-        "head": {
-            "rotation": [ 0, 180, 0 ],
-            "translation": [ 0, 0, 0],
-            "scale":[ 1, 1, 1]
-        },
-        "fixed": {
-            "rotation": [ 0, 180, 0 ],
-            "translation": [ 0, 0, 0],
-            "scale":[ 0.5, 0.5, 0.5 ]
-        },
-        "thirdperson_righthand": {
-            "rotation": [ 75, 315, 0 ],
-            "translation": [ 0, 2.5, 0],
-            "scale": [ 0.375, 0.375, 0.375 ]
-        },
-        "firstperson_righthand": {
-            "rotation": [ 0, 315, 0 ],
-            "translation": [ 0, 0, 0],
-            "scale": [ 0.4, 0.4, 0.4 ]
-        }
-    }
+	"overrides": [
+		{
+			"predicate": {
+				"color": 0
+			},
+			"model": "nekoration:block/awning/awning_pure_end_black"
+		},
+		{
+			"predicate": {
+				"color": 1
+			},
+			"model": "nekoration:block/awning/awning_pure_end_blue"
+		},
+		{
+			"predicate": {
+				"color": 2
+			},
+			"model": "nekoration:block/awning/awning_pure_end_brown"
+		},
+		{
+			"predicate": {
+				"color": 3
+			},
+			"model": "nekoration:block/awning/awning_pure_end_cyan"
+		},
+		{
+			"predicate": {
+				"color": 4
+			},
+			"model": "nekoration:block/awning/awning_pure_end_gray"
+
+		},
+		{
+			"predicate": {
+				"color": 5
+			},
+			"model": "nekoration:block/awning/awning_pure_end_green"
+		},
+		{
+			"predicate": {
+				"color": 6
+			},
+			"model": "nekoration:block/awning/awning_pure_end_light_blue"
+		},
+		{
+			"predicate": {
+				"color": 7
+			},
+			"model": "nekoration:block/awning/awning_pure_end_light_gray"
+		},
+		{
+			"predicate": {
+				"color": 8
+			},
+			"model": "nekoration:block/awning/awning_pure_end_lime"
+		},
+		{
+			"predicate": {
+				"color": 9
+			},
+			"model": "nekoration:block/awning/awning_pure_end_magenta"
+		},
+		{
+			"predicate": {
+				"color": 10
+			},
+			"model": "nekoration:block/awning/awning_pure_end_orange"
+		},
+		{
+			"predicate": {
+				"color": 11
+			},
+			"model": "nekoration:block/awning/awning_pure_end_pink"
+		},
+		{
+			"predicate": {
+				"color": 12
+			},
+			"model": "nekoration:block/awning/awning_pure_end_purple"
+		},
+		{
+			"predicate": {
+				"color": 13
+			},
+			"model": "nekoration:block/awning/awning_pure_end_red"
+		},
+		{
+			"predicate": {
+				"color": 14
+			},
+			"model": "nekoration:block/awning/awning_pure_end_white"
+		},
+		{
+			"predicate": {
+				"color": 15
+			},
+			"model": "nekoration:block/awning/awning_pure_end_yellow"
+		}
+	]
 }

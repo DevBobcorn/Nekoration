@@ -6,14 +6,16 @@ import com.devbobcorn.nekoration.blocks.DyeableBlock;
 import com.devbobcorn.nekoration.blocks.DyeableDoorBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
 import com.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
-import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
-import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
+import com.devbobcorn.nekoration.blocks.BiDyeableBlock;
+import com.devbobcorn.nekoration.blocks.BiDyeableVerticalConnectBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
 import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
 import com.devbobcorn.nekoration.client.rendering.EaselMenuRenderer;
+import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.BiDyeableBlockItemColor;
 import com.devbobcorn.nekoration.items.DyeableBlockItemColor;
+import com.devbobcorn.nekoration.items.DyeableWoodenBlockItemColor;
 import com.devbobcorn.nekoration.particles.FlameParticleFactory;
 import com.devbobcorn.nekoration.particles.ModParticles;
 
@@ -23,12 +25,15 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.api.distmarker.Dist;
 
 // Client-Side Only Things...
@@ -90,6 +95,28 @@ public final class ClientModEventSubscriber {
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);
 
 		LOGGER.info("Block Entity Renderer Binded.");
+
+		// we need to attach the fullness PropertyOverride to the Item, but there are
+		// two things to be careful of:
+		// 1) We should do this on a client installation only, not on a DedicatedServer
+		// installation. Hence we need to use
+		// FMLClientSetupEvent.
+		// 2) FMLClientSetupEvent is multithreaded but ItemModelsProperties is not
+		// multithread-safe. So we need to use the enqueueWork method,
+		// which lets us register a function for synchronous execution in the main
+		// thread after the parallel processing is completed
+		event.enqueueWork(ClientModEventSubscriber::registerPropertyOverride);
+
+		LOGGER.info("Property Override Registered.");
+	}
+
+	public static void registerPropertyOverride() {
+		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_pure")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
+		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_stripe")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
+		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_pure_short")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
+		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_stripe_short")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
+		// use lambda function to link the NBT fullness value to a suitable property
+		// override value
 	}
 
 	@SubscribeEvent
@@ -121,18 +148,18 @@ public final class ClientModEventSubscriber {
 		}, ModBlocks.WINDOW_SILL.get(), ModBlocks.WINDOW_TOP.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
-			if (view == null || pos == null || !(state.getBlock() instanceof HalfTimberBlock))
+			if (view == null || pos == null || !(state.getBlock() instanceof BiDyeableBlock))
 				return NekoColors.getWoodenColorOrBrown(2);
-			return (tintIndex == 0) ? NekoColors.getWoodenColorOrBrown(state.getValue(HalfTimberBlock.COLOR)) : NekoColors.getNekoColorOrWhite(state.getValue(HalfTimberBlock.COLOR_IN));
+			return (tintIndex == 0) ? NekoColors.getWoodenColorOrBrown(state.getValue(BiDyeableBlock.COLOR0)) : NekoColors.getNekoColorOrWhite(state.getValue(BiDyeableBlock.COLOR1));
 		}, ModBlocks.HALF_TIMBER_P0.get(), ModBlocks.HALF_TIMBER_P1.get(), ModBlocks.HALF_TIMBER_P2.get(),
 				ModBlocks.HALF_TIMBER_P3.get(), ModBlocks.HALF_TIMBER_P4.get(), ModBlocks.HALF_TIMBER_P5.get(),
 				ModBlocks.HALF_TIMBER_P6.get(), ModBlocks.HALF_TIMBER_P7.get(), ModBlocks.HALF_TIMBER_P8.get(),
 				ModBlocks.HALF_TIMBER_P9.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
-			if (view == null || pos == null || !(state.getBlock() instanceof HalfTimberPillarBlock))
+			if (view == null || pos == null || !(state.getBlock() instanceof BiDyeableVerticalConnectBlock))
 				return NekoColors.getWoodenColorOrBrown(2);
-			return (tintIndex == 0) ? NekoColors.getWoodenColorOrBrown(state.getValue(HalfTimberBlock.COLOR)) : NekoColors.getNekoColorOrWhite(state.getValue(HalfTimberBlock.COLOR_IN));
+			return (tintIndex == 0) ? NekoColors.getWoodenColorOrBrown(state.getValue(BiDyeableBlock.COLOR0)) : NekoColors.getNekoColorOrWhite(state.getValue(BiDyeableBlock.COLOR1));
 		}, ModBlocks.HALF_TIMBER_PILLAR_P0.get(), ModBlocks.HALF_TIMBER_PILLAR_P1.get(),
 				ModBlocks.HALF_TIMBER_PILLAR_P2.get());
 
@@ -164,12 +191,10 @@ public final class ClientModEventSubscriber {
 		ModBlocks.STONE_CORINTHIAN.get().asItem(), ModBlocks.WINDOW_SILL.get().asItem(),
 		ModBlocks.WINDOW_TOP.get().asItem(), ModBlocks.STONE_POT.get().asItem(),
 		ModBlocks.CANDLE_HOLDER_IRON.get().asItem(), ModBlocks.CANDLE_HOLDER_GOLD.get().asItem(),
-		ModBlocks.CANDLE_HOLDER_QUARTZ.get().asItem(), ModBlocks.AWNING_PURE.get(),
-		ModBlocks.AWNING_PURE_SHORT.get(), ModBlocks.AWNING_STRIPE.get(),
-		ModBlocks.AWNING_STRIPE_SHORT.get());
+		ModBlocks.CANDLE_HOLDER_QUARTZ.get().asItem());
 
 		// Default Wooden Brown:
-		event.getItemColors().register(new DyeableBlockItemColor(), 
+		event.getItemColors().register(new DyeableWoodenBlockItemColor(), 
 		ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(), 
 		ModBlocks.WINDOW_SHADE.get().asItem(), ModBlocks.WINDOW_LANCET.get().asItem(),
 		ModBlocks.EASEL_MENU.get().asItem());

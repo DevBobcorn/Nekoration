@@ -97,6 +97,10 @@ public class NekoColors {
 		public int getColor() {
 			return color;
 		}
+		
+		public int getNBTId() {
+			return (int)nbtID;
+		}
 
 		public static EnumNekoColor fromNBT(CompoundNBT compoundNBT, String tagname) {
 			byte flavorID = 0; // default in case of error
@@ -142,6 +146,10 @@ public class NekoColors {
 			}
 			return WHITE.color;
 		}
+
+		public float getPropertyOverrideValue() {
+			return nbtID;
+		}
 	}
 
 	// Wooden Colors... Woof~
@@ -181,6 +189,10 @@ public class NekoColors {
 			return color;
 		}
 
+		public int getNBTId() {
+			return (int)nbtID;
+		}
+
 		public static EnumWoodenColor fromNBT(CompoundNBT compoundNBT, String tagname) {
 			byte flavorID = 0; // default in case of error
 			if (compoundNBT != null && compoundNBT.contains(tagname)) {
@@ -218,6 +230,10 @@ public class NekoColors {
 					return c.color;
 			}
 			return BROWN.color;
+		}
+
+		public float getPropertyOverrideValue() {
+			return nbtID;
 		}
 	}
 }
