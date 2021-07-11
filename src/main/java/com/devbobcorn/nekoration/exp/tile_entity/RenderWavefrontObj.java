@@ -33,7 +33,6 @@ import java.awt.*;
  * obj file problems
  */
 public class RenderWavefrontObj {
-
 	public static void renderWavefrontObj(TileEntityMBE21 tileEntityMBE21, float partialTicks, MatrixStack matrixStack,
 			IRenderTypeBuffer renderBuffers, int combinedLight, int combinedOverlay) {
 
@@ -83,8 +82,7 @@ public class RenderWavefrontObj {
 		Color artifactColour = tileEntityMBE21.getArtifactColour();
 
 		try {
-			BlockState state = StartupCommon.blockMBE21.defaultBlockState().setValue(BlockMBE21.USE_WAVEFRONT_OBJ_MODEL,
-			true);
+			BlockState state = StartupCommon.blockMBE21.defaultBlockState().setValue(BlockMBE21.USE_WAVEFRONT_OBJ_MODEL, true);
 			BlockRendererDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
 			IBakedModel model = dispatcher.getBlockModel(state);
 
@@ -206,5 +204,4 @@ public class RenderWavefrontObj {
 		int repackedValue = LightTexture.pack(BLOCK_LIGHT_VALUE, SKY_LIGHT_VALUE);
 		return repackedValue;
 	}
-
 }

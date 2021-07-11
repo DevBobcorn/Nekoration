@@ -8,6 +8,7 @@
  */
 package com.devbobcorn.nekoration.exp.tile_entity;
 
+import com.devbobcorn.nekoration.exp.ExpCommon;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -174,7 +175,5 @@ public class RenderModelHourglass {
 		private final float FULL_CYCLE_DURATION_TICKS = FULL_CYCLE_DURATION_SECONDS * TICKS_PER_SECOND;
 	}
 
-	public static final ResourceLocation HOURGLASS_MODEL_TEXTURE = new ResourceLocation(
-			"exp:textures/misc/hourglass.png");
-
+	public static final ResourceLocation HOURGLASS_MODEL_TEXTURE = new ResourceLocation(ExpCommon.ExpNameSpace, "textures/misc/hourglass.png");
 }

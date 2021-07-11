@@ -1,5 +1,7 @@
 package com.devbobcorn.nekoration.exp.monster_drink;
 
+import com.devbobcorn.nekoration.exp.ExpCommon;
+
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,7 +16,7 @@ public class StartupCommon {
 	@SubscribeEvent
 	public static void onItemsRegistration(final RegistryEvent.Register<Item> itemRegisterEvent) {
 		monsterDrink = new MonsterDrinkItem();
-		monsterDrink.setRegistryName("exp", "monster_drink");
+		monsterDrink.setRegistryName(ExpCommon.ExpNameSpace, "monster_drink");
 		itemRegisterEvent.getRegistry().register(monsterDrink);
 	}
 }

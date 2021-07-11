@@ -1,5 +1,6 @@
 package com.devbobcorn.nekoration.exp.tile_entity;
 
+import com.devbobcorn.nekoration.exp.ExpCommon;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.*;
@@ -41,7 +42,7 @@ public class RenderQuads {
 	// note - must include textures/ at the start and .png at the end, otherwise it
 	// will fail silently and just give you the purple & black
 	// missing texture
-	public static final ResourceLocation MBE21_CUBE_FACE_TEXTURE = new ResourceLocation("exp:textures/misc/cube.png");
+	public static final ResourceLocation MBE21_CUBE_FACE_TEXTURE = new ResourceLocation(ExpCommon.ExpNameSpace, "textures/misc/cube.png");
 
 	public static void renderCubeUsingQuads(TileEntityMBE21 tileEntityMBE21, float partialTicks,
 			MatrixStack matrixStack, IRenderTypeBuffer renderBuffers, int combinedLight, int combinedOverlay) {

@@ -26,6 +26,7 @@ public class ExpClientOnly {
         eventBus.register(com.devbobcorn.nekoration.exp.dynamic_block.StartupClientOnly.class);
         eventBus.register(com.devbobcorn.nekoration.exp.tile_entity.StartupClientOnly.class);
         eventBus.register(com.devbobcorn.nekoration.exp.monster_drink.StartupClientOnly.class);
+        eventBus.register(com.devbobcorn.nekoration.exp.foot_locker.StartupClientOnly.class);
 
         //----------------
         //eventBus.register(minecraftbyexample.usefultools.debugging.StartupClientOnly.class);

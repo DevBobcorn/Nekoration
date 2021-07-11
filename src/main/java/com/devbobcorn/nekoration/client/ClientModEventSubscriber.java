@@ -115,8 +115,7 @@ public final class ClientModEventSubscriber {
 		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_stripe")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
 		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_pure_short")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
 		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_stripe_short")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
-		// use lambda function to link the NBT fullness value to a suitable property
-		// override value
+		// use lambda function to link the NBT color value to a suitable property override value
 	}
 
 	@SubscribeEvent

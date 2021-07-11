@@ -1,5 +1,7 @@
 package com.devbobcorn.nekoration.exp.tile_entity;
 
+import com.devbobcorn.nekoration.exp.ExpCommon;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -24,7 +26,7 @@ public class StartupCommon {
 
 	@SubscribeEvent
 	public static void onBlocksRegistration(final RegistryEvent.Register<Block> event) {
-		blockMBE21 = (BlockMBE21) (new BlockMBE21().setRegistryName("exp", "hourglass"));
+		blockMBE21 = (BlockMBE21) (new BlockMBE21().setRegistryName(ExpCommon.ExpNameSpace, "hourglass"));
 		event.getRegistry().register(blockMBE21);
 	}
 
@@ -51,7 +53,7 @@ public class StartupCommon {
 																											// --> null
 																											// should be
 																											// fine
-		tileEntityDataTypeMBE21.setRegistryName("exp", "hourglass");
+		tileEntityDataTypeMBE21.setRegistryName(ExpCommon.ExpNameSpace, "hourglass");
 		event.getRegistry().register(tileEntityDataTypeMBE21);
 	}
 }
