@@ -1,10 +1,11 @@
-package com.devbobcorn.nekoration.common;
+package com.devbobcorn.nekoration.common.event;
 
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.PotBlock;
 import com.devbobcorn.nekoration.blocks.CandleHolderBlock;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
+import com.devbobcorn.nekoration.common.VanillaCompat;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
 import com.devbobcorn.nekoration.blocks.DyeableDoorBlock;
 import com.devbobcorn.nekoration.blocks.EaselMenuBlock;

@@ -1,5 +1,7 @@
 package com.devbobcorn.nekoration.items;
 
+import java.util.ArrayList;
+
 import com.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import com.devbobcorn.nekoration.NekoColors.EnumWoodenColor;
 
@@ -26,6 +28,17 @@ public class BiDyeableBlockItem extends BlockItem {
 				ItemStack subItemStack = new ItemStack(this, 1);
 				setColor0(subItemStack, EnumWoodenColor.BROWN);
                 setColor1(subItemStack, color);
+				subItems.add(subItemStack);
+			}
+		}
+	}
+
+	public void fillItemCategoryWithWoodType(ItemGroup tab, EnumWoodenColor type, NonNullList<ItemStack> subItems) {
+		if (this.allowdedIn(tab)) {
+			for (EnumNekoColor color : EnumNekoColor.values()){
+				ItemStack subItemStack = new ItemStack(this, 1);
+				setColor0(subItemStack, type);
+				setColor1(subItemStack, color);
 				subItems.add(subItemStack);
 			}
 		}

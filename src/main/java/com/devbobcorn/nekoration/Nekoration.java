@@ -25,14 +25,14 @@ public class Nekoration
     public static final Logger LOGGER = LogManager.getLogger();
 
     public Nekoration() {
-        LOGGER.info("Hello Neko!");
+        LOGGER.info("Meow~~ Miaow~~~"); //Translation: Hello World!
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
 		//final ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		//Experiment stuff...
+		//Experimental stuff...
 		final ExpClientOnly ExpClient = new ExpClientOnly(modEventBus);
 		final ExpCommon ExpCommon = new ExpCommon();
 

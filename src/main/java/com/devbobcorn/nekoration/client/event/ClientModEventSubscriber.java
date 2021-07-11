@@ -1,4 +1,4 @@
-package com.devbobcorn.nekoration.client;
+package com.devbobcorn.nekoration.client.event;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
@@ -29,6 +29,7 @@ import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -44,6 +45,7 @@ public final class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void onClientSetupEvent(FMLClientSetupEvent event) {
 		LOGGER.info("Client Side Setup.");
+
 		RenderType transparentRenderType = RenderType.cutoutMipped();
 		// RenderType cutoutRenderType = RenderType.cutout();
 		RenderType translucentRenderType = RenderType.translucent();
@@ -90,11 +92,15 @@ public final class ClientModEventSubscriber {
 
 		RenderTypeLookup.setRenderLayer(ModBlocks.PHONOGRAPH.get(), transparentRenderType);
 
-		LOGGER.info("Block Render Type Registered.");
+		LOGGER.info("Block Render Types Registered.");
 
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);
 
-		LOGGER.info("Block Entity Renderer Binded.");
+		LOGGER.info("Block Entity Renderers Binded.");
+
+		MinecraftForge.EVENT_BUS.register(new CreativeInventoryEvents());
+
+		LOGGER.info("CreativeInv Events Registered.");
 
 		// we need to attach the fullness PropertyOverride to the Item, but there are
 		// two things to be careful of:
@@ -107,7 +113,7 @@ public final class ClientModEventSubscriber {
 		// thread after the parallel processing is completed
 		event.enqueueWork(ClientModEventSubscriber::registerPropertyOverride);
 
-		LOGGER.info("Property Override Registered.");
+		LOGGER.info("Property Overrides Registered.");
 	}
 
 	public static void registerPropertyOverride() {
