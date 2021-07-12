@@ -1,6 +1,6 @@
 package com.devbobcorn.nekoration.client.rendering;
 
-import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEnity;
+import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
@@ -16,7 +16,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 
-public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEnity> {
+public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEntity> {
 	private static ItemStack itemstack = new ItemStack(Items.COOKIE, 1);
 
 	public EaselMenuRenderer(TileEntityRendererDispatcher tileEntityRendererDispatcher) {
@@ -24,7 +24,7 @@ public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEnity> {
 	}
 
 	@Override
-	public void render(EaselMenuBlockEnity tileEntity, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffers,
+	public void render(EaselMenuBlockEntity tileEntity, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffers,
 			int combinedLight, int combinedOverlay) {
 		
 		/*
@@ -106,7 +106,7 @@ public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEnity> {
 	}
 
 	@Override
-	public boolean shouldRenderOffScreen(EaselMenuBlockEnity tileEntity) {
+	public boolean shouldRenderOffScreen(EaselMenuBlockEntity tileEntity) {
 		return false;
 	}
 }

@@ -10,7 +10,9 @@ import com.devbobcorn.nekoration.blocks.BiDyeableBlock;
 import com.devbobcorn.nekoration.blocks.BiDyeableVerticalConnectBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
+import com.devbobcorn.nekoration.blocks.containers.ModContainerType;
 import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
+import com.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import com.devbobcorn.nekoration.client.rendering.EaselMenuRenderer;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.BiDyeableBlockItemColor;
@@ -23,6 +25,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemModelsProperties;
@@ -114,6 +117,10 @@ public final class ClientModEventSubscriber {
 		event.enqueueWork(ClientModEventSubscriber::registerPropertyOverride);
 
 		LOGGER.info("Property Overrides Registered.");
+
+		ScreenManager.register(ModContainerType.EASEL_MENU_TYPE.get(), EaselMenuScreen::new);
+
+		LOGGER.info("Nekoration Screens Registered.");
 	}
 
 	public static void registerPropertyOverride() {

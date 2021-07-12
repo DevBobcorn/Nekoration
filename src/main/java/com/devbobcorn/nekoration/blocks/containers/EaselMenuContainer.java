@@ -1,4 +1,4 @@
-package com.devbobcorn.nekoration.exp.foot_locker;
+package com.devbobcorn.nekoration.blocks.containers;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -7,46 +7,31 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
+
+import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * User: brandon3055 Date: 06/01/2015
- *
- * The container is used to link the client side gui to the server side
- * inventory and it is where you add the slots to your gui. It can also be used
- * to sync server side data with the client but that will be covered in a later
- * tutorial
- *
- * Vanilla Containers use IInventory to communicate with the parent TileEntity:
- * markDirty(); isUsableByPlayer(); openInventory(); closeInventory(); For this
- * example, we only need markDirty() and isUsableByPlayer(). I've chosen to
- * implement these as callback functions (lambdas) because I think it's clearer
- * than providing an Optional<TileEntityBasic>, but it could easily be done that
- * way as well, because the functions are only needed on the server side, when
- * the TileEntity is available. On the client side, there is no TileEntity
- * available.
- */
-public class ContainerBasic extends Container {
-	public static ContainerBasic createContainerServerSide(int windowID, PlayerInventory playerInventory,
-			ChestContents chestContents) {
-		return new ContainerBasic(windowID, playerInventory, chestContents);
+public class EaselMenuContainer extends Container {
+	public static EaselMenuContainer createContainerServerSide(int windowID, PlayerInventory playerInventory,
+			ContainerContents easelMenuContents) {
+		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents);
 	}
 
-	public static ContainerBasic createContainerClientSide(int windowID, PlayerInventory playerInventory,
+	public static EaselMenuContainer createContainerClientSide(int windowID, PlayerInventory playerInventory,
 			net.minecraft.network.PacketBuffer extraData) {
 		// don't need extraData for this example; if you want you can use it to provide
 		// extra information from the server, that you can use
 		// when creating the client container
 		// eg String detailedDescription = extraData.readString(128);
-		ChestContents chestContents = ChestContents
-				.createForClientSideContainer(TileEntityInventoryBasic.NUMBER_OF_SLOTS);
+		ContainerContents easelMenuContents = ContainerContents
+				.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
 
 		// on the client side there is no parent TileEntity to communicate with, so we:
 		// 1) use a dummy inventory
-		// 2) use "do nothing" lambda functions for canPlayerAccessInventory and
-		// markDirty
-		return new ContainerBasic(windowID, playerInventory, chestContents);
+		// 2) use "do nothing" lambda functions for canPlayerAccessInventory and markDirty
+		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents);
 	}
 
 	// must assign a slot number to each of the slots used by the GUI.
@@ -69,10 +54,10 @@ public class ContainerBasic extends Container {
 
 	private static final int VANILLA_FIRST_SLOT_INDEX = 0;
 	private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-	private static final int TE_INVENTORY_SLOT_COUNT = TileEntityInventoryBasic.NUMBER_OF_SLOTS; // must match TileEntityInventoryBasic.NUMBER_OF_SLOTS
+	private static final int TE_INVENTORY_SLOT_COUNT = EaselMenuBlockEntity.NUMBER_OF_SLOTS; // must match EaselMenuBlockEntity.NUMBER_OF_SLOTS
 
-	public static final int TILE_INVENTORY_YPOS = 20; // the ContainerScreenBasic needs to know these so it can tell where to draw the Tiles
-	public static final int PLAYER_INVENTORY_YPOS = 51;
+	public static final int TILE_INVENTORY_YPOS = 18; // the ContainerScreenBasic needs to know these so it can tell where to draw the Tiles
+	public static final int PLAYER_INVENTORY_YPOS = 140;
 
 	/**
 	 * Creates a container suitable for server side or client side
@@ -81,24 +66,23 @@ public class ContainerBasic extends Container {
 	 *            ID of the container
 	 * @param playerInventory
 	 *            the inventory of the player
-	 * @param chestContents
+	 * @param easelMenuContents
 	 *            the inventory stored in the chest
 	 */
-	private ContainerBasic(int windowID, PlayerInventory playerInventory, ChestContents chestContents) {
-		super(StartupCommon.containerTypeContainerBasic, windowID);
-		if (StartupCommon.containerTypeContainerBasic == null)
-			throw new IllegalStateException("Must initialise containerBasicContainerType before constructing a ContainerBasic!");
+	private EaselMenuContainer(int windowID, PlayerInventory playerInventory, ContainerContents easelMenuContents) {
+		super(ModContainerType.EASEL_MENU_TYPE.get(), windowID);
+		if (ModContainerType.EASEL_MENU_TYPE.get() == null)
+			throw new IllegalStateException("Must initialize Container Type before constructing a Container!");
 
-		PlayerInvWrapper playerInventoryForge = new PlayerInvWrapper(playerInventory); // wrap the IInventory in a Forge
-																						// IItemHandler.
+		PlayerInvWrapper playerInventoryForge = new PlayerInvWrapper(playerInventory); // wrap the IInventory in a Forge IItemHandler.
 		// Not actually necessary - can use Slot(playerInventory) instead of
 		// SlotItemHandler(playerInventoryForge)
-		this.chestContents = chestContents;
+		this.easelMenuContents = easelMenuContents;
 
 		final int SLOT_X_SPACING = 18;
 		final int SLOT_Y_SPACING = 18;
 		final int HOTBAR_XPOS = 8;
-		final int HOTBAR_YPOS = 109;
+		final int HOTBAR_YPOS = 198;
 		// Add the players hotbar to the gui - the [xpos, ypos] location of each item
 		for (int x = 0; x < HOTBAR_SLOT_COUNT; x++) {
 			int slotNumber = x;
@@ -117,15 +101,16 @@ public class ContainerBasic extends Container {
 			}
 		}
 
-		if (TE_INVENTORY_SLOT_COUNT != chestContents.getContainerSize()) {
+		if (TE_INVENTORY_SLOT_COUNT != easelMenuContents.getContainerSize()) {
 			LOGGER.warn("Mismatched slot count in ContainerBasic(" + TE_INVENTORY_SLOT_COUNT + ") and TileInventory ("
-					+ chestContents.getContainerSize() + ")");
+					+ easelMenuContents.getContainerSize() + ")");
 		}
 		final int TILE_INVENTORY_XPOS = 8;
 		// Add the tile inventory container to the gui
 		for (int x = 0; x < TE_INVENTORY_SLOT_COUNT; x++) {
 			int slotNumber = x;
-			addSlot(new Slot(chestContents, slotNumber, TILE_INVENTORY_XPOS + SLOT_X_SPACING * x, TILE_INVENTORY_YPOS));
+			addSlot(new Slot(easelMenuContents, slotNumber, TILE_INVENTORY_XPOS + SLOT_X_SPACING * (x > 3 ? x + 1 : x), TILE_INVENTORY_YPOS));
+            // 0 1 2 3 _ 4 5 6 7, leave an empty space in the middle....
 		}
 	}
 
@@ -148,7 +133,7 @@ public class ContainerBasic extends Container {
 		// Sometimes it perform an additional check (eg for EnderChests - the player
 		// owns the chest)
 
-		return chestContents.stillValid(playerEntity);
+		return easelMenuContents.stillValid(playerEntity);
 	}
 
 	// This is where you specify what happens when a player shift clicks a slot in
@@ -211,6 +196,6 @@ public class ContainerBasic extends Container {
 		super.removed(playerIn);
 	}
 
-	private ChestContents chestContents;
+	private ContainerContents easelMenuContents;
 	private static final Logger LOGGER = LogManager.getLogger();
 }

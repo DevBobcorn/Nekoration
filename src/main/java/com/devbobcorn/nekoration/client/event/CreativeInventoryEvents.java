@@ -32,6 +32,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 // Creative Screen Things, adapted from MrCrayfish's Furniture Mod...
+@SuppressWarnings("unused")
 public class CreativeInventoryEvents
 {
     private static final ResourceLocation ICONS = new ResourceLocation(Nekoration.MODID, "textures/gui/icons.png");
@@ -61,7 +62,7 @@ public class CreativeInventoryEvents
     {
         if(event.getGui() instanceof CreativeScreen)
         {
-            LOGGER.info("Creative Screen Inited");
+            //LOGGER.info("Creative Screen Inited");
             if(this.filters == null)
             {
                 this.compileItems();
@@ -82,7 +83,7 @@ public class CreativeInventoryEvents
                 this.updateTagButtons();
             }, ICONS, 80, 0));
 
-            event.addWidget(this.btnEnableAll = new IconButton(this.guiCenterX + 176 + 22, this.guiCenterY + 10, new TranslationTextComponent("gui.button.cfm.enable_filters"), button -> {
+            event.addWidget(this.btnEnableAll = new IconButton(this.guiCenterX + 32, this.guiCenterY - 50, new TranslationTextComponent("gui.button.cfm.enable_filters"), button -> {
                 this.filters.forEach(filters -> filters.setEnabled(true));
                 this.buttons.forEach(WoodTypeButton::updateState);
                 Screen screen = Minecraft.getInstance().screen;
@@ -92,7 +93,7 @@ public class CreativeInventoryEvents
                 }
             }, ICONS, 96, 0));
 
-            event.addWidget(this.btnDisableAll = new IconButton(this.guiCenterX + 176 + 22, this.guiCenterY + 32, new TranslationTextComponent("gui.button.cfm.disable_filters"), button -> {
+            event.addWidget(this.btnDisableAll = new IconButton(this.guiCenterX + 144, this.guiCenterY - 50, new TranslationTextComponent("gui.button.cfm.disable_filters"), button -> {
                 this.filters.forEach(filters -> filters.setEnabled(false));
                 this.buttons.forEach(WoodTypeButton::updateState);
                 Screen screen = Minecraft.getInstance().screen;
@@ -250,7 +251,7 @@ public class CreativeInventoryEvents
         .filter(item -> item.getRegistryName().getNamespace().equals(Nekoration.MODID))
         .forEach(item ->
         {
-            LOGGER.info(item.toString());
+            //LOGGER.info(item.toString());
             for(WoodFilter filter : filters)
             {
                 if (filter.isEnabled() && item instanceof BiDyeableBlockItem){

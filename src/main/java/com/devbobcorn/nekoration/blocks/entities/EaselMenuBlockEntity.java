@@ -1,5 +1,8 @@
 package com.devbobcorn.nekoration.blocks.entities;
 
+import com.devbobcorn.nekoration.Nekoration;
+import com.devbobcorn.nekoration.blocks.containers.EaselMenuContainer;
+import com.devbobcorn.nekoration.blocks.containers.ContainerContents;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import java.util.function.Function;
 import javax.annotation.Nullable;
@@ -8,24 +11,34 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.ICommandSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IReorderingProcessor;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentUtils;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EaselMenuBlockEnity extends TileEntity {
+public class EaselMenuBlockEntity extends TileEntity implements INamedContainerProvider {
+	public static final int NUMBER_OF_SLOTS = 8;
+	private final ContainerContents contents;
+
 	private final ITextComponent[] messages = new ITextComponent[] { StringTextComponent.EMPTY,
 			StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY };
 	private boolean isEditable = true;
@@ -33,8 +46,25 @@ public class EaselMenuBlockEnity extends TileEntity {
 	private final IReorderingProcessor[] renderMessages = new IReorderingProcessor[4];
 	private DyeColor color = DyeColor.BLACK;
 
-	public EaselMenuBlockEnity() {
+	public EaselMenuBlockEntity() {
 		super(ModTileEntityType.EASEL_MENU_TYPE.get());
+		contents = ContainerContents.createForTileEntity(NUMBER_OF_SLOTS, this::canPlayerAccessInventory,
+				this::setChanged);
+	}
+
+	// Return true if the given player is able to use this block. In this case it
+	// checks that
+	// 1) the world tileentity hasn't been replaced in the meantime, and
+	// 2) the player isn't too far away from the centre of the block
+	public boolean canPlayerAccessInventory(PlayerEntity player) {
+		if (this.level.getBlockEntity(this.worldPosition) != this)
+			return false;
+		final double X_CENTRE_OFFSET = 0.5;
+		final double Y_CENTRE_OFFSET = 0.5;
+		final double Z_CENTRE_OFFSET = 0.5;
+		final double MAXIMUM_DISTANCE_SQ = 8.0 * 8.0;
+		return player.distanceToSqr(worldPosition.getX() + X_CENTRE_OFFSET, worldPosition.getY() + Y_CENTRE_OFFSET,
+				worldPosition.getZ() + Z_CENTRE_OFFSET) < MAXIMUM_DISTANCE_SQ;
 	}
 
 	public CompoundNBT save(CompoundNBT tag) {
@@ -45,12 +75,20 @@ public class EaselMenuBlockEnity extends TileEntity {
 			tag.putString("Text" + (i + 1), s);
 		}
 		tag.putString("Color", this.color.getName());
+		CompoundNBT inventoryNBT = contents.serializeNBT();
+		tag.put("Contents", inventoryNBT);
 		return tag;
 	}
 
 	public void load(BlockState state, CompoundNBT tag) {
 		this.isEditable = false;
 		super.load(state, tag);
+		//Items...
+		CompoundNBT inventoryNBT = tag.getCompound("Contents");
+		contents.deserializeNBT(inventoryNBT);
+		if (contents.getContainerSize() != NUMBER_OF_SLOTS)
+			throw new IllegalArgumentException("Corrupted NBT: Number of inventory slots did not match expected.");
+		// Texts...
 		this.color = DyeColor.byName(tag.getString("Color"), DyeColor.BLACK);
 
 		for (int i = 0; i < 4; ++i) {
@@ -158,5 +196,22 @@ public class EaselMenuBlockEnity extends TileEntity {
 		} else {
 			return false;
 		}
+	}
+
+
+	// Container...
+	public void dropAllContents(World world, BlockPos blockPos) {
+		InventoryHelper.dropContents(world, blockPos, contents);
+	}
+
+	@Nullable
+	@Override
+	public Container createMenu(int windowID, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+		return EaselMenuContainer.createContainerServerSide(windowID, playerInventory, contents);
+	}
+
+	@Override
+	public ITextComponent getDisplayName() {
+		return new TranslationTextComponent("container." + Nekoration.MODID + ".easel_menu");
 	}
 }

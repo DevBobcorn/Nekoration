@@ -68,7 +68,7 @@ public class NekoColors {
 
 	public enum EnumNekoColor implements IStringSerializable {
 		BLACK((byte)0, "black", 0x393939),
-		BLUE((byte)1, "blue" , 0x53b6ff),
+		BLUE((byte)1, "blue" , 0x2891ff),
 		BROWN((byte)2, "brown", 0x673400),
 		CYAN((byte)3, "cyan", 0x94e2ff),
 		GRAY((byte)4, "gray", 0x757575),
@@ -82,7 +82,7 @@ public class NekoColors {
 		PURPLE((byte)12, "purple", 0xbc61ff),
 		RED((byte)13, "red", 0xe03f3f),
 		WHITE((byte)14, "white", 0xffffff),
-		YELLOW((byte)15, "yellow", 0xffc23c); //ffd54f
+		YELLOW((byte)15, "yellow", 0xffc80a); //ffd54f
 
 		@Override
 		public String toString() {
@@ -158,21 +158,21 @@ public class NekoColors {
 	}
 
 	public enum EnumWoodenColor implements IStringSerializable {
-		BLACK((byte)0, "black", 0x3c1e00),
+		BLACK((byte)0, "black", 0x5c3c1b), // dark_oak
 		BLUE((byte)1, "blue" , 0x53b6ff),
-		BROWN((byte)2, "brown", 0x673400),
-		CYAN((byte)3, "cyan", 0x389a99),
-		GRAY((byte)4, "gray", 0xa27d64),
-		GREEN((byte)5, "green", 0x33b54c), //warped
+		BROWN((byte)2, "brown", 0x886541), // spruce
+		CYAN((byte)3, "cyan", 0x389a99), // warped
+		GRAY((byte)4, "gray", 0xa27d64), // jungle
+		GREEN((byte)5, "green", 0x33b54c),
 		LIGHT_BLUE((byte)6, "light_blue", 0x75aaff),
-		LIGHT_GRAY((byte)7, "light_gray", 0xb9955b),
+		LIGHT_GRAY((byte)7, "light_gray", 0xb9955b), // oak
 		LIME((byte)8, "lime", 0x7df494),
-		MAGENTA((byte)9, "magenta", 0xf976ff), //crimson
-		ORANGE((byte)10, "orange", 0xf0973d), //acacia
+		MAGENTA((byte)9, "magenta", 0xbd0bab), // crimson
+		ORANGE((byte)10, "orange", 0xf0973d), // acacia
 		PINK((byte)11, "pink", 0xff97d7),
-		PURPLE((byte)12, "purple", 0x9d407b),
-		RED((byte)13, "red", 0xe03f3f), //
-		WHITE((byte)14, "white", 0xc3b27a), //birch
+		PURPLE((byte)12, "purple", 0x873468),
+		RED((byte)13, "red", 0xe03f3f),
+		WHITE((byte)14, "white", 0xe8d699), // birch
 		YELLOW((byte)15, "yellow", 0xffd54f); // oak
 
 		@Override

@@ -11,6 +11,5 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModTileEntityType {
     public static final DeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Nekoration.MODID);
 
-    public static final RegistryObject<TileEntityType<EaselMenuBlockEnity>> EASEL_MENU_TYPE = TILE_ENTITY_TYPES.register("easel_menu", () -> TileEntityType.Builder.of(EaselMenuBlockEnity::new, ModBlocks.EASEL_MENU.get())
-    .build(null));
+    public static final RegistryObject<TileEntityType<EaselMenuBlockEntity>> EASEL_MENU_TYPE = TILE_ENTITY_TYPES.register("easel_menu", () -> TileEntityType.Builder.of(EaselMenuBlockEntity::new, ModBlocks.EASEL_MENU.get()).build(null));
 }

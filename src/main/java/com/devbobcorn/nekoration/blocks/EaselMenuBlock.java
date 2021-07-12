@@ -1,14 +1,23 @@
 package com.devbobcorn.nekoration.blocks;
 
-import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEnity;
+import javax.annotation.Nullable;
+
+import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class EaselMenuBlock extends DyeableBlock {
     public EaselMenuBlock(Properties settings) {
@@ -26,7 +35,7 @@ public class EaselMenuBlock extends DyeableBlock {
 	// Should return a new instance of the tile entity for the block
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new EaselMenuBlockEnity();
+		return new EaselMenuBlockEntity();
 	}
 
     // Called just after the player places a block.
@@ -35,11 +44,48 @@ public class EaselMenuBlock extends DyeableBlock {
 		super.setPlacedBy(worldIn, pos, state, placer, stack);
 
 		TileEntity tileentity = worldIn.getBlockEntity(pos);
-		if (tileentity instanceof EaselMenuBlockEnity) { // prevent a crash if not the right type, or is null
-			//LOGGER.info(tileentity);
+		if (tileentity instanceof EaselMenuBlockEntity) { // prevent a crash if not the right type, or is null
             return;
 		}
+        //LOGGER.error("Tile Entity NOT Found!");
+		System.out.println("Tile Entity NOT Found!");
+	}
 
-        LOGGER.error("Tile Entity NOT Found!");
+	@Override
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+			Hand hand, BlockRayTraceResult rayTraceResult) {
+		if (worldIn.isClientSide())
+			return ActionResultType.SUCCESS; // on client side, don't do anything
+		INamedContainerProvider namedContainerProvider = this.getMenuProvider(state, worldIn, pos);
+		if (namedContainerProvider != null) {
+			if (!(player instanceof ServerPlayerEntity))
+				return ActionResultType.FAIL; // should always be true, but just in case...
+				ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
+				NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer) -> {
+			});
+			// (packetBuffer)->{} is just a do-nothing because we have no extra data to send
+		}
+		return ActionResultType.SUCCESS;
+	}
+
+	// This is where you can do something when the block is broken. In this case
+	// drop the inventory's contents
+	// Code is copied directly from vanilla eg ChestBlock, CampfireBlock
+	public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+		if (state.getBlock() != newState.getBlock()) {
+			TileEntity tileentity = world.getBlockEntity(blockPos);
+			if (tileentity instanceof EaselMenuBlockEntity) {
+				EaselMenuBlockEntity tileEntityInventoryBasic = (EaselMenuBlockEntity) tileentity;
+				tileEntityInventoryBasic.dropAllContents(world, blockPos);
+			}
+			// worldIn.updateComparatorOutputLevel(pos, this); if the inventory is used to set redstone power for comparators
+			super.onRemove(state, world, blockPos, newState, isMoving); // call it last, because it removes the TileEntity
+		}
+	}
+
+	@Nullable
+	public INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
+	   TileEntity tileentity = world.getBlockEntity(pos);
+	   return tileentity instanceof INamedContainerProvider ? (INamedContainerProvider)tileentity : null;
 	}
 }
