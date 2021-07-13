@@ -4,7 +4,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
@@ -14,24 +17,43 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class EaselMenuContainer extends Container {
+	public ITextComponent[] texts = new ITextComponent[8];
+	public DyeColor[] colors = new DyeColor[8];
+
+
 	public static EaselMenuContainer createContainerServerSide(int windowID, PlayerInventory playerInventory,
-			ContainerContents easelMenuContents) {
-		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents);
+			ContainerContents easelMenuContents, EaselMenuBlockEntity te) {
+		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, te.getBlockPos(), te.getMessages(), te.getColor());
 	}
 
 	public static EaselMenuContainer createContainerClientSide(int windowID, PlayerInventory playerInventory,
-			net.minecraft.network.PacketBuffer extraData) {
-		// don't need extraData for this example; if you want you can use it to provide
-		// extra information from the server, that you can use
-		// when creating the client container
-		// eg String detailedDescription = extraData.readString(128);
-		ContainerContents easelMenuContents = ContainerContents
-				.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
+		net.minecraft.network.PacketBuffer extraData) {
+			try {
+				// don't need extraData for this example; if you want you can use it to provide
+				// extra information from the server, that you can use
+				// when creating the client container
+				// eg String detailedDescription = extraData.readString(128);
+				ContainerContents easelMenuContents = ContainerContents
+						.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
 
-		// on the client side there is no parent TileEntity to communicate with, so we:
-		// 1) use a dummy inventory
-		// 2) use "do nothing" lambda functions for canPlayerAccessInventory and markDirty
-		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents);
+				// on the client side there is no parent TileEntity to communicate with, so we:
+				// 1) use a dummy inventory
+				// 2) use "do nothing" lambda functions for canPlayerAccessInventory and markDirty
+				BlockPos p = extraData.readBlockPos();
+				ITextComponent[] t = new ITextComponent[8];
+				DyeColor[] c = new DyeColor[8];
+				for (int i = 0;i < 8;i++)
+					t[i] = extraData.readComponent();
+				for (int i = 0;i < 8;i++)
+					c[i] = extraData.readEnum(DyeColor.class);
+				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, p, t, c);
+			} catch (Exception e) {
+				LOGGER.warn("Invalid data in packet buffer", e);
+				ContainerContents easelMenuContents = ContainerContents
+						.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
+
+				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, BlockPos.ZERO, new ITextComponent[8], new DyeColor[8]);
+			}
 	}
 
 	// must assign a slot number to each of the slots used by the GUI.
@@ -59,6 +81,8 @@ public class EaselMenuContainer extends Container {
 	public static final int TILE_INVENTORY_YPOS = 18; // the ContainerScreenBasic needs to know these so it can tell where to draw the Tiles
 	public static final int PLAYER_INVENTORY_YPOS = 140;
 
+	public BlockPos pos = BlockPos.ZERO;
+
 	/**
 	 * Creates a container suitable for server side or client side
 	 * 
@@ -69,7 +93,7 @@ public class EaselMenuContainer extends Container {
 	 * @param easelMenuContents
 	 *            the inventory stored in the chest
 	 */
-	private EaselMenuContainer(int windowID, PlayerInventory playerInventory, ContainerContents easelMenuContents) {
+	private EaselMenuContainer(int windowID, PlayerInventory playerInventory, ContainerContents easelMenuContents, BlockPos pos, ITextComponent[] texts, DyeColor[] colors) {
 		super(ModContainerType.EASEL_MENU_TYPE.get(), windowID);
 		if (ModContainerType.EASEL_MENU_TYPE.get() == null)
 			throw new IllegalStateException("Must initialize Container Type before constructing a Container!");
@@ -112,6 +136,9 @@ public class EaselMenuContainer extends Container {
 			addSlot(new Slot(easelMenuContents, slotNumber, TILE_INVENTORY_XPOS + SLOT_X_SPACING * (x > 3 ? x + 1 : x), TILE_INVENTORY_YPOS));
             // 0 1 2 3 _ 4 5 6 7, leave an empty space in the middle....
 		}
+		this.pos = pos;
+		this.texts = texts;
+		this.colors = colors;
 	}
 
 	// Vanilla calls this method every tick to make sure the player is still able to

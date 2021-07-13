@@ -6,12 +6,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class ContainerContents implements IInventory {
+	TileEntity tien;
+
 	public static ContainerContents createForTileEntity(int size, Predicate<PlayerEntity> canPlayerAccessInventoryLambda,
-			Notify markDirtyNotificationLambda) {
-		return new ContainerContents(size, canPlayerAccessInventoryLambda, markDirtyNotificationLambda);
+			Notify markDirtyNotificationLambda, TileEntity te) {
+		return new ContainerContents(size, canPlayerAccessInventoryLambda, markDirtyNotificationLambda, te);
 	}
 
 	public static ContainerContents createForClientSideContainer(int size) {
@@ -42,7 +45,7 @@ public class ContainerContents implements IInventory {
 	// and via the container directly poking
 	// around in the inventory contents.
 	// I've used lambdas to make the decoupling more explicit. You could instead
-	// * provide an Optional TileEntity to the ChestContents constructor (and ignore
+	// * provide an Optional TileEntity to the ContainerContents constructor (and ignore
 	// the markDirty() etc calls), or
 	// * implement IInventory directly in your TileEntity, and construct your
 	// client-side container using an Inventory
@@ -107,8 +110,7 @@ public class ContainerContents implements IInventory {
 	// of responsibilities more clearly.
 
 	@FunctionalInterface
-	public interface Notify { // Some folks use Runnable, but I prefer not to use it for non-thread-related
-								// tasks
+	public interface Notify { // Some folks use Runnable, but I prefer not to use it for non-thread-related tasks
 		void invoke();
 	}
 
@@ -179,10 +181,11 @@ public class ContainerContents implements IInventory {
 	}
 
 	private ContainerContents(int size, Predicate<PlayerEntity> canPlayerAccessInventoryLambda,
-			Notify markDirtyNotificationLambda) {
+			Notify markDirtyNotificationLambda, TileEntity te) {
 		this.contents = new ItemStackHandler(size);
 		this.canPlayerAccessInventoryLambda = canPlayerAccessInventoryLambda;
 		this.markDirtyNotificationLambda = markDirtyNotificationLambda;
+		this.tien = te;
 	}
 
 	// the function that the container should call in order to decide if the
@@ -211,6 +214,12 @@ public class ContainerContents implements IInventory {
 	// container has been closed by a player
 	// default is "do nothing"
 	private Notify closeInventoryNotificationLambda = () -> {
+		System.out.println("Contents Closed!");
+		/*
+		if (tien.getLevel().isClientSide)
+			System.out.println("This is Client Side.");
+		else System.out.println("This is Server Side.");
+		*/
 	};
 
 	private final ItemStackHandler contents;

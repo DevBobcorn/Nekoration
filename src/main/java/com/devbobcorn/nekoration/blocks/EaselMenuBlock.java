@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -19,7 +20,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class EaselMenuBlock extends DyeableBlock {
+public class EaselMenuBlock extends DyeableHorizontalBlock {
     public EaselMenuBlock(Properties settings) {
         super(settings);
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 2));
@@ -60,10 +61,16 @@ public class EaselMenuBlock extends DyeableBlock {
 		if (namedContainerProvider != null) {
 			if (!(player instanceof ServerPlayerEntity))
 				return ActionResultType.FAIL; // should always be true, but just in case...
-				ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
-				NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer) -> {
+			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
+			NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer) -> {
+				// Prepare Data for EaselMenuContainer: createContainerClientSide(), which will then be used to initialize the screen with old data(old texts and colors)
+				EaselMenuBlockEntity te = (EaselMenuBlockEntity) worldIn.getBlockEntity(pos);
+				packetBuffer.writeBlockPos(pos);
+				for (int i = 0;i < 8;i++)
+					packetBuffer.writeComponent(te.getMessage(i));
+				for (int i = 0;i < 8;i++)
+					packetBuffer.writeEnum(te.getColor()[i]);
 			});
-			// (packetBuffer)->{} is just a do-nothing because we have no extra data to send
 		}
 		return ActionResultType.SUCCESS;
 	}
@@ -71,15 +78,14 @@ public class EaselMenuBlock extends DyeableBlock {
 	// This is where you can do something when the block is broken. In this case
 	// drop the inventory's contents
 	// Code is copied directly from vanilla eg ChestBlock, CampfireBlock
-	public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = world.getBlockEntity(blockPos);
+			TileEntity tileentity = world.getBlockEntity(pos);
 			if (tileentity instanceof EaselMenuBlockEntity) {
 				EaselMenuBlockEntity tileEntityInventoryBasic = (EaselMenuBlockEntity) tileentity;
-				tileEntityInventoryBasic.dropAllContents(world, blockPos);
+				tileEntityInventoryBasic.dropAllContents(world, pos);
 			}
-			// worldIn.updateComparatorOutputLevel(pos, this); if the inventory is used to set redstone power for comparators
-			super.onRemove(state, world, blockPos, newState, isMoving); // call it last, because it removes the TileEntity
+			world.removeBlockEntity(pos);
 		}
 	}
 

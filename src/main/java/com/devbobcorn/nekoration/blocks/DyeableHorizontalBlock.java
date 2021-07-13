@@ -19,6 +19,6 @@ public abstract class DyeableHorizontalBlock extends DyeableBlock {
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+        return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 }
