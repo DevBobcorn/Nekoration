@@ -1,8 +1,11 @@
 package com.devbobcorn.nekoration.blocks;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
+import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
+import com.devbobcorn.nekoration.NekoColors;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -10,12 +13,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -94,4 +97,12 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 	   TileEntity tileentity = world.getBlockEntity(pos);
 	   return tileentity instanceof INamedContainerProvider ? (INamedContainerProvider)tileentity : null;
 	}
+
+	@Nonnull
+    @Override
+    public ItemStack getPickBlock(@Nonnull BlockState state, RayTraceResult target, @Nonnull IBlockReader world, @Nonnull BlockPos pos, PlayerEntity player) {
+		ItemStack stack = new ItemStack(this.asItem());
+		DyeableWoodenBlockItem.setColor(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
+        return stack;
+    }
 }

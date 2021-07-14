@@ -1,5 +1,8 @@
 package com.devbobcorn.nekoration.blocks;
 
+import javax.annotation.Nonnull;
+
+import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.common.VanillaCompat;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
@@ -16,6 +19,8 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class DyeableBlock extends Block {
@@ -54,5 +59,13 @@ public class DyeableBlock extends Block {
 		else if (stack.getItem() instanceof DyeableWoodenBlockItem)
 			return this.defaultBlockState().setValue(COLOR, DyeableWoodenBlockItem.getColor(stack).getNBTId());
 		return this.defaultBlockState();
+    }
+
+	@Nonnull
+    @Override
+    public ItemStack getPickBlock(@Nonnull BlockState state, RayTraceResult target, @Nonnull IBlockReader world, @Nonnull BlockPos pos, PlayerEntity player) {
+		ItemStack stack = new ItemStack(this.asItem());
+		DyeableBlockItem.setColor(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
+        return stack;
     }
 }

@@ -1,5 +1,8 @@
 package com.devbobcorn.nekoration.blocks;
 
+import javax.annotation.Nonnull;
+
+import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.common.VanillaCompat;
 import com.devbobcorn.nekoration.items.BiDyeableBlockItem;
 
@@ -15,6 +18,8 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BiDyeableBlock extends Block {
@@ -56,5 +61,14 @@ public class BiDyeableBlock extends Block {
 		if (stack.getItem() instanceof BiDyeableBlockItem)
 			return this.defaultBlockState().setValue(COLOR0, BiDyeableBlockItem.getColor0(stack).getNBTId()).setValue(COLOR1, BiDyeableBlockItem.getColor1(stack).getNBTId());
 		return this.defaultBlockState();
+    }
+
+	@Nonnull
+    @Override
+    public ItemStack getPickBlock(@Nonnull BlockState state, RayTraceResult target, @Nonnull IBlockReader world, @Nonnull BlockPos pos, PlayerEntity player) {
+		ItemStack stack = new ItemStack(this.asItem());
+		BiDyeableBlockItem.setColor0(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR0).byteValue()));
+		BiDyeableBlockItem.setColor1(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR1).byteValue()));
+        return stack;
     }
 }

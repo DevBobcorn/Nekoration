@@ -1,7 +1,5 @@
 package com.devbobcorn.nekoration;
 
-import java.util.Optional;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IStringSerializable;
@@ -107,8 +105,8 @@ public class NekoColors {
 			if (compoundNBT != null && compoundNBT.contains(tagname)) {
 				flavorID = compoundNBT.getByte(tagname);
 			}
-			Optional<EnumNekoColor> color = getColorEnumFromID(flavorID);
-			return color.orElse(WHITE); // default is white
+			EnumNekoColor color = getColorEnumFromID(flavorID);
+			return color; // default is white
 		}
 
 		/**
@@ -131,12 +129,12 @@ public class NekoColors {
 			this.color = i_color;
 		}
 
-		public static Optional<EnumNekoColor> getColorEnumFromID(byte ID) {
+		public static EnumNekoColor getColorEnumFromID(byte ID) {
 			for (EnumNekoColor c : EnumNekoColor.values()) {
 				if (c.nbtID == ID)
-					return Optional.of(c);
+					return c;
 			}
-			return Optional.empty();
+			return EnumNekoColor.WHITE;
 		}
 
 		public static int getColorValueFromID(byte ID) {
@@ -198,8 +196,8 @@ public class NekoColors {
 			if (compoundNBT != null && compoundNBT.contains(tagname)) {
 				flavorID = compoundNBT.getByte(tagname);
 			}
-			Optional<EnumWoodenColor> color = getColorEnumFromID(flavorID);
-			return color.orElse(BROWN); // default is wooden brown
+			EnumWoodenColor color = getColorEnumFromID(flavorID);
+			return color; // default is wooden brown
 		}
 
 		public void putIntoNBT(CompoundNBT compoundNBT, String tagname) {
@@ -216,12 +214,12 @@ public class NekoColors {
 			this.color = i_color;
 		}
 
-		public static Optional<EnumWoodenColor> getColorEnumFromID(byte ID) {
+		public static EnumWoodenColor getColorEnumFromID(byte ID) {
 			for (EnumWoodenColor c : EnumWoodenColor.values()) {
 				if (c.nbtID == ID)
-					return Optional.of(c);
+					return c;
 			}
-			return Optional.empty();
+			return EnumWoodenColor.BROWN;
 		}
 
 		public static int getColorValueFromID(byte ID) {
