@@ -1,0 +1,335 @@
+# Blender MTL File: 'Haku Static.blend'
+# Material Count: 32
+
+newmtl Black
+map_Kd nekoration:block/custom/tex/t011
+Ns 181.205606
+Ka 0.114896 0.114896 0.114896
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Body
+map_Kd nekoration:block/custom/data/skin_haku
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Bottom
+map_Kd nekoration:block/custom/heels
+Ns 181.205606
+Ka 0.114896 0.114896 0.114896
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl EYES
+map_Kd nekoration:block/custom/data/eye
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Garter
+map_Kd nekoration:block/custom/data/g_lace
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Heels
+map_Kd nekoration:block/custom/heels
+Ns 181.205606
+Ka 0.114896 0.114896 0.114896
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Lace
+map_Kd nekoration:block/custom/tex/t014
+Ns 181.205606
+Ka 0.114896 0.114896 0.114896
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Material001
+map_Kd nekoration:block/custom/data/kamikazari2
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Metal
+map_Kd nekoration:block/custom/tex/t013
+Ns 181.205606
+Ka 0.114896 0.114896 0.114896
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Neck
+map_Kd nekoration:block/custom/data/face_hakuop_bc
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Panty
+map_Kd nekoration:block/custom/tex/panty
+Ns 181.205606
+Ka 0.114896 0.114896 0.114896
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Skirt
+map_Kd nekoration:block/custom/tex/clothes
+Ns 181.205606
+Ka 0.114896 0.114896 0.114896
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Stockings
+map_Kd nekoration:block/custom/data/tights3
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl Top
+map_Kd nekoration:block/custom/tex/clothes
+Ns 181.205606
+Ka 0.114896 0.114896 0.114896
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl cheek
+map_Kd nekoration:block/custom/data/face_hakuop_bc
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl eye_hi
+map_Kd nekoration:block/custom/data/face_hakuop
+Ns 607.058777
+Ka 0.587671 0.587671 0.587671
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl eye_hi2
+map_Kd nekoration:block/custom/data/face_hakuop_bc
+Ns 604.213271
+Ka 0.583955 0.583955 0.583955
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl face00
+map_Kd nekoration:block/custom/data/face_haku_r
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl face01
+map_Kd nekoration:block/custom/data/face_haku_r2
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl face02
+map_Kd nekoration:block/custom/data/face2_hakuap
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl hair00
+map_Kd nekoration:block/custom/data/hair_hakunt
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl hair01
+map_Kd nekoration:block/custom/data/hair_hakunt
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl hairband
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 0.206863 0.206863 0.231863
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl hairshadow
+map_Kd nekoration:block/custom/data/face_hakuop_bc
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl kamikazari
+map_Kd nekoration:block/custom/data/kamikazari
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl kuma
+map_Kd nekoration:block/custom/data/face2_hakuap
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl leg
+map_Kd nekoration:block/custom/data/skin_haku
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl nekomimi1
+map_Kd nekoration:block/custom/data/nekomimi_haku
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl nekomimi2
+map_Kd nekoration:block/custom/data/nekomimi_haku
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl nekomimi3
+map_Kd nekoration:block/custom/data/nekomimi_haku
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+
+newmtl ribbon01
+map_Kd nekoration:block/custom/data/ribbon
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl ribbon02
+map_Kd nekoration:block/custom/data/ribbon
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl New1
+map_Kd nekoration:block/custom/data/skin_haku
+Ns 526.469042
+Ka 0.484871 0.484871 0.484871
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000

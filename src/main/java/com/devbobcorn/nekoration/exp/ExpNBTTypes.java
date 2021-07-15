@@ -1,7 +1,6 @@
 package com.devbobcorn.nekoration.exp;
 
 import net.minecraft.nbt.*;
-
 /**
  * Created by TGG on 21/02/2020. Just used to make the code more readable due to
  * obfuscated names Once the mapping is updated to something nicer, we can

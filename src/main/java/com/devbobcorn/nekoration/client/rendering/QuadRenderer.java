@@ -16,7 +16,7 @@ public class QuadRenderer {
     public static final ResourceLocation TEXTURE = new ResourceLocation("nekoration:textures/block/plant.png");
 
 	public static void renderCubeUsingQuads(TileEntity tileEntity, float partialTicks,
-			MatrixStack matrixStack, IRenderTypeBuffer renderBuffers, int combinedLight, int combinedOverlay) {
+			MatrixStack stack, IRenderTypeBuffer buffers, int combinedLight, int combinedOverlay) {
 		// draw the object as a cube, using quads
 		// When render method is called, the origin [0,0,0] is at the current [x,y,z] of
 		// the block.
@@ -27,27 +27,27 @@ public class QuadRenderer {
 		// so we need to translate up by one block, i.e. by [0,1,0]
 		final Vector3d TRANSLATION_OFFSET = new Vector3d(0, 1, 0);
 
-		matrixStack.pushPose(); // push the current transformation matrix + normals matrix
-		matrixStack.translate(TRANSLATION_OFFSET.x, TRANSLATION_OFFSET.y, TRANSLATION_OFFSET.z); // translate
+		stack.pushPose(); // push the current transformation matrix + normals matrix
+		stack.translate(TRANSLATION_OFFSET.x, TRANSLATION_OFFSET.y, TRANSLATION_OFFSET.z); // translate
 		Color color = Color.WHITE;
 
-		drawCubeQuads(matrixStack, renderBuffers, color, combinedLight);
-		matrixStack.popPose(); // restore the original transformation matrix + normals matrix
+		drawCubeQuads(stack, buffers, color, combinedLight);
+		stack.popPose(); // restore the original transformation matrix + normals matrix
 	}
 
 	/**
 	 * Draw a cube from [0,0,0] to [1,1,1], same texture on all sides, using a
 	 * supplied texture
 	 */
-	private static void drawCubeQuads(MatrixStack matrixStack, IRenderTypeBuffer renderBuffer, Color color,
+	private static void drawCubeQuads(MatrixStack stack, IRenderTypeBuffer buffers, Color color,
 			int combinedLight) {
-		IVertexBuilder vertexBuilderBlockQuads = renderBuffer
+		IVertexBuilder vertexBuilderBlockQuads = buffers
 				.getBuffer(RenderType.entitySolid(TEXTURE));
 		// other typical RenderTypes used by TER are:
 		// getEntityCutout, getBeaconBeam (which has translucency),
 
-		Matrix4f matrixPos = matrixStack.last().pose(); // retrieves the current transformation matrix
-		Matrix3f matrixNormal = matrixStack.last().normal(); // retrieves the current transformation matrix for the
+		Matrix4f matrixPos = stack.last().pose(); // retrieves the current transformation matrix
+		Matrix3f matrixNormal = stack.last().normal(); // retrieves the current transformation matrix for the
 																// normal vector
 
 		// we use the whole texture
@@ -81,7 +81,7 @@ public class QuadRenderer {
 	}
 
 	private static void addFace(Direction whichFace, Matrix4f matrixPos, Matrix3f matrixNormal,
-			IVertexBuilder renderBuffer, Color color, Vector3d centrePos, float width, float height,
+			IVertexBuilder buffers, Color color, Vector3d centrePos, float width, float height,
 			Vector2f bottomLeftUV, float texUwidth, float texVheight, int lightmapValue) {
 		// the Direction class has a bunch of methods which can help you rotate quads
 		// I've written the calculations out long hand, and based them on a centre
@@ -167,7 +167,7 @@ public class QuadRenderer {
 
 		Vector3f normalVector = whichFace.step(); // gives us the normal to the face
 
-		addQuad(matrixPos, matrixNormal, renderBuffer, bottomLeftPos, bottomRightPos, topRightPos, topLeftPos,
+		addQuad(matrixPos, matrixNormal, buffers, bottomLeftPos, bottomRightPos, topRightPos, topLeftPos,
 				bottomLeftUVpos, bottomRightUVpos, topLeftUVpos, topRightUVpos, normalVector, color, lightmapValue);
 	}
 
@@ -180,19 +180,19 @@ public class QuadRenderer {
 	 * http://greyminecraftcoder.blogspot.com/2014/12/the-tessellator-and-worldrenderer-18.html
 	 * http://greyminecraftcoder.blogspot.com/2014/12/block-models-texturing-quads-faces.html
 	 */
-	private static void addQuad(Matrix4f matrixPos, Matrix3f matrixNormal, IVertexBuilder renderBuffer, Vector3f blpos,
+	private static void addQuad(Matrix4f matrixPos, Matrix3f matrixNormal, IVertexBuilder buffers, Vector3f blpos,
 			Vector3f brpos, Vector3f trpos, Vector3f tlpos, Vector2f blUVpos, Vector2f brUVpos, Vector2f trUVpos,
 			Vector2f tlUVpos, Vector3f normalVector, Color color, int lightmapValue) {
-		addQuadVertex(matrixPos, matrixNormal, renderBuffer, blpos, blUVpos, normalVector, color, lightmapValue);
-		addQuadVertex(matrixPos, matrixNormal, renderBuffer, brpos, brUVpos, normalVector, color, lightmapValue);
-		addQuadVertex(matrixPos, matrixNormal, renderBuffer, trpos, trUVpos, normalVector, color, lightmapValue);
-		addQuadVertex(matrixPos, matrixNormal, renderBuffer, tlpos, tlUVpos, normalVector, color, lightmapValue);
+		addQuadVertex(matrixPos, matrixNormal, buffers, blpos, blUVpos, normalVector, color, lightmapValue);
+		addQuadVertex(matrixPos, matrixNormal, buffers, brpos, brUVpos, normalVector, color, lightmapValue);
+		addQuadVertex(matrixPos, matrixNormal, buffers, trpos, trUVpos, normalVector, color, lightmapValue);
+		addQuadVertex(matrixPos, matrixNormal, buffers, tlpos, tlUVpos, normalVector, color, lightmapValue);
 	}
 
 	// suitable for vertexbuilders using the DefaultVertexFormats.ENTITY format
-	private static void addQuadVertex(Matrix4f matrixPos, Matrix3f matrixNormal, IVertexBuilder renderBuffer,
+	private static void addQuadVertex(Matrix4f matrixPos, Matrix3f matrixNormal, IVertexBuilder buffers,
 			Vector3f pos, Vector2f texUV, Vector3f normalVector, Color color, int lightmapValue) {
-		renderBuffer.vertex(matrixPos, pos.x(), pos.y(), pos.z()) // position coordinate
+		buffers.vertex(matrixPos, pos.x(), pos.y(), pos.z()) // position coordinate
 				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()) // color
 				.uv(texUV.x, texUV.y) // texel coordinate
 				.overlayCoords(OverlayTexture.NO_OVERLAY) // only relevant for rendering Entities (Living)

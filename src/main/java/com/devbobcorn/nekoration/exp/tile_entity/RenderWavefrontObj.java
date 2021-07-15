@@ -70,12 +70,9 @@ public class RenderWavefrontObj {
 		final Vector3d TRANSLATION_OFFSET = HOPPER_MIDDLE_OF_TOP.subtract(OBJ_MODEL_BOTTOM_APEX_WORLD_SPACE);
 
 		matrixStack.pushPose(); // push the current transformation matrix + normals matrix
-		matrixStack.translate(TRANSLATION_OFFSET.x, TRANSLATION_OFFSET.y, TRANSLATION_OFFSET.z); // translate to put the
-																									// gem in the right
-																									// place
+		matrixStack.translate(TRANSLATION_OFFSET.x, TRANSLATION_OFFSET.y, TRANSLATION_OFFSET.z); // translate to put the gem in the right place
 
-		applyAnimations(tileEntityMBE21, matrixStack); // apply further translation and a rotation based on animation
-														// parameters
+		applyAnimations(tileEntityMBE21, matrixStack); // apply further translation and a rotation based on animation parameters
 
 		matrixStack.scale((float) scaleX, (float) scaleY, (float) scaleZ);
 
@@ -108,8 +105,7 @@ public class RenderWavefrontObj {
 			combinedLight = getCombinedLight(tileEntityMBE21, combinedLight);
 
 			IVertexBuilder vertexBuffer = renderBuffers.getBuffer(RenderType.solid());
-			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, red, green, blue,
-					combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, red, green, blue, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
 		} catch (Exception e) {
 			//Color may be null in some occasions...
 		}

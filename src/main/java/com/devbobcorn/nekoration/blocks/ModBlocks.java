@@ -74,6 +74,7 @@ public final class ModBlocks {
     public static final RegistryObject<Block> EASEL_MENU = BLOCKS.register("easel_menu", () -> new EaselMenuBlock(Block.Properties.of(Material.WOOD).noOcclusion()));
 
     public static final RegistryObject<Block> PHONOGRAPH = BLOCKS.register("phonograph", () -> new Block(Block.Properties.of(Material.METAL).noOcclusion()));
+    public static final RegistryObject<Block> CUSTOM = BLOCKS.register("custom", () -> new CustomBlock(Block.Properties.of(Material.STONE).noOcclusion()));
 
     public static final RegistryObject<Block> PUMPKIN_TABLE = BLOCKS.register("pumpkin_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).noOcclusion()));
     public static final RegistryObject<Block> PUMPKIN_CHAIR = BLOCKS.register("pumpkin_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).noOcclusion()));

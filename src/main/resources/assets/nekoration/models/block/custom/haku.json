@@ -1,0 +1,6 @@
+{
+  "loader": "forge:obj",
+  "flip-v": true,
+  "ambientToFullbright": false,
+  "model" : "nekoration:models/block/custom/haku.obj"
+}
