@@ -95,6 +95,8 @@ public final class ClientModEventSubscriber {
 
 		RenderTypeLookup.setRenderLayer(ModBlocks.PHONOGRAPH.get(), transparentRenderType);
 
+		RenderTypeLookup.setRenderLayer(ModBlocks.PUMPKIN_TABLE.get(), transparentRenderType);
+
 		LOGGER.info("Block Render Types Registered.");
 
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);

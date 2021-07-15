@@ -10,7 +10,7 @@ import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.client.gui.widget.IconButton;
 import com.devbobcorn.nekoration.client.gui.widget.WoodTypeButton;
 import com.devbobcorn.nekoration.items.BiDyeableBlockItem;
-import com.devbobcorn.nekoration.tabs.ModItemTabs;
+import com.devbobcorn.nekoration.items.ModItemTabs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

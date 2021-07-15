@@ -3,6 +3,8 @@ package com.devbobcorn.nekoration.common.event;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.PotBlock;
+import com.devbobcorn.nekoration.blocks.ChairBlock;
+import com.devbobcorn.nekoration.blocks.TableBlock;
 import com.devbobcorn.nekoration.blocks.CandleHolderBlock;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
 import com.devbobcorn.nekoration.common.VanillaCompat;
@@ -16,9 +18,9 @@ import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.BiDyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
+import com.devbobcorn.nekoration.items.ModItemTabs;
 import com.devbobcorn.nekoration.particles.FlameParticleType;
 import com.devbobcorn.nekoration.particles.ModParticles;
-import com.devbobcorn.nekoration.tabs.ModItemTabs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,24 +54,23 @@ public final class CommonModEventSubscriber {
 			// Register the BlockItem for the block
 			.forEach(block -> {
 				Item.Properties properties;
-				if (block instanceof BiDyeableBlock || block instanceof BiDyeableVerticalConnectBlock){
+				BlockItem blockItem;
+				if (block instanceof TableBlock || block instanceof ChairBlock){
+					// Classes: HalfTimberBlock / HalfTimberPillarBlock
+					properties = new Item.Properties().tab(ModItemTabs.FURNITURE_GROUP);
+					if (block == ModBlocks.PUMPKIN_TABLE.get() || block == ModBlocks.PUMPKIN_CHAIR.get()){
+						blockItem = new BlockItem(block, properties);
+					} else {
+						blockItem = new DyeableBlockItem(block, properties);
+					}
+				} else if (block instanceof BiDyeableBlock || block instanceof BiDyeableVerticalConnectBlock){
 					// Classes: HalfTimberBlock / HalfTimberPillarBlock
 					properties = new Item.Properties().tab(ModItemTabs.WOODEN_GROUP);
-					// Create the new BlockItem with the block and it's properties
-					final BiDyeableBlockItem blockItem = new BiDyeableBlockItem(block, properties);
-					// Set the new BlockItem's registry name to the block's registry name
-					blockItem.setRegistryName(block.getRegistryName());
-					// Register the BlockItem
-					registry.register(blockItem);
+					blockItem = new BiDyeableBlockItem(block, properties);
 				} else if (block instanceof WindowBlock || block instanceof EaselMenuBlock){
 					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
 					properties = new Item.Properties().tab(block instanceof WindowBlock ? ModItemTabs.WINDOW_GROUP : ModItemTabs.DECOR_GROUP);
-					// Create the new BlockItem with the block and it's properties
-					final DyeableWoodenBlockItem blockItem = new DyeableWoodenBlockItem(block, properties);
-					// Set the new BlockItem's registry name to the block's registry name
-					blockItem.setRegistryName(block.getRegistryName());
-					// Register the BlockItem
-					registry.register(blockItem);
+					blockItem = new DyeableWoodenBlockItem(block, properties);
 				} else if (block instanceof DyeableBlock || block instanceof DyeableHorizontalConnectBlock){
 					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
 					if (block instanceof PotBlock || block instanceof CandleHolderBlock)
@@ -79,23 +80,17 @@ public final class CommonModEventSubscriber {
 							properties = new Item.Properties().tab(ModItemTabs.WINDOW_GROUP);
 						else properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP); // Awning...
 					} else properties = new Item.Properties().tab(ModItemTabs.STONE_GROUP);
-					// Create the new BlockItem with the block and it's properties
-					final DyeableBlockItem blockItem = new DyeableBlockItem(block, properties);
-					// Set the new BlockItem's registry name to the block's registry name
-					blockItem.setRegistryName(block.getRegistryName());
-					// Register the BlockItem
-					registry.register(blockItem);
+					blockItem = new DyeableBlockItem(block, properties);
 				} else {
 					if (block instanceof DyeableDoorBlock)
 						properties = new Item.Properties().tab(ModItemTabs.DOOR_GROUP);
 					else properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
-					// Create the new BlockItem with the block and it's properties
-					final BlockItem blockItem = new BlockItem(block, properties);
-					// Set the new BlockItem's registry name to the block's registry name
-					blockItem.setRegistryName(block.getRegistryName());
-					// Register the BlockItem
-					registry.register(blockItem);
+					blockItem = new BlockItem(block, properties);
 				}
+				//Set its Registry Name...
+				blockItem.setRegistryName(block.getRegistryName());
+				//And register it...
+				registry.register(blockItem);
 			});
 		LOGGER.info("BlockItems Registered.");
 	}

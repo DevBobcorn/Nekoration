@@ -1,4 +1,4 @@
-package com.devbobcorn.nekoration.tabs;
+package com.devbobcorn.nekoration.items;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -10,9 +10,6 @@ import javax.annotation.Nonnull;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import com.devbobcorn.nekoration.NekoColors.EnumWoodenColor;
-import com.devbobcorn.nekoration.items.DyeableBlockItem;
-import com.devbobcorn.nekoration.items.BiDyeableBlockItem;
-import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 
 import java.util.function.Supplier;
 
@@ -41,6 +38,13 @@ public class ModItemTabs {
 
 	public static final ItemGroup DOOR_GROUP = new ModItemGroup("door", () -> {
 			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "door_1")));
+			return icoStack;
+		}
+	);
+
+	public static final ItemGroup FURNITURE_GROUP = new ModItemGroup("furniture", () -> {
+			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "pumpkin_table")));
+			//DyeableBlockItem.setColor(icoStack, EnumNekoColor.WHITE);
 			return icoStack;
 		}
 	);
