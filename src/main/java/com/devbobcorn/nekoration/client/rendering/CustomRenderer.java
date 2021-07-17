@@ -31,15 +31,30 @@ public class CustomRenderer extends TileEntityRenderer<CustomBlockEntity> {
 		
 		// and then we rendering models with our TE renderer...
 		if (tileEntity.model > 15 || tileEntity.model <= 0){
+			stack.pushPose(); // push the current transformation matrix + normals matrix
+			stack.translate(0.5, 0.0, 0.5); // Change its pivot point before rotation...
+			stack.mulPose(Vector3f.YP.rotationDegrees(tileEntity.dir * 15F));
+			stack.translate(-0.5, 0.0, -0.5); // Then just get it back...
+
+			// To translate 1 here is to translate 2 meters(blocks), so we translate 1/32 for a single-voxel-long offset(1/16 block)...
+			double frac = 1.0D / 32.0D; // TODO
+			stack.translate(tileEntity.offset[0] * frac, tileEntity.offset[1] * frac, tileEntity.offset[2] * frac); // Offset by certain voxels (1 block = 16 * 16 * 16 voxels)
+
 			QuadRenderer.renderCubeUsingQuads(tileEntity, partialTicks, stack, buffers, combinedLight, combinedOverlay);
+
+			stack.popPose(); // restore the original transformation matrix + normals matrix
 		} else {
 			stack.pushPose();
 
 			stack.translate(0.5, 0.0, 0.5);
 
-			stack.mulPose(Vector3f.YP.rotationDegrees(3 - tileEntity.getBlockState().getValue(CustomBlock.FACING).get2DDataValue() * 90.0F));
-
+			// BED stack.translate(0.0F, -0.4375, 0.0F);
+			// CARPET stack.translate(0.0F, -0.875, 0.0F);
+			stack.mulPose(Vector3f.YP.rotationDegrees(tileEntity.dir * 15F));
 			stack.scale(0.1F, 0.1F, 0.1F);
+			double frac = 10.0D / 32.0D;
+
+			stack.translate(tileEntity.offset[0] * frac, tileEntity.offset[1] * frac, tileEntity.offset[2] * frac);
 
 			BlockState state = ModBlocks.CUSTOM.get().defaultBlockState().setValue(CustomBlock.MODEL, tileEntity.model);
 			BlockRendererDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();

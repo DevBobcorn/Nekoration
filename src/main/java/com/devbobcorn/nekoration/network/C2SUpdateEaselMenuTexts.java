@@ -68,7 +68,7 @@ public class C2SUpdateEaselMenuTexts {
                         // tHEN UPDATE ITEMSTACKS ON CLIENT SIDE, USED FOR RENDERING...
                         final S2CUpdateEaselMenuItems packet = new S2CUpdateEaselMenuItems(msg.pos, its, msg.texts, msg.colors);
                         ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
-                        System.out.println("ITEM UPDATE Packet Sent from SERVER");
+                        //System.out.println("ITEM UPDATE Packet Sent from SERVER");
                     }
                 }
             }

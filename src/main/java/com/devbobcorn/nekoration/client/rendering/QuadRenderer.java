@@ -20,12 +20,8 @@ public class QuadRenderer {
 		// draw the object as a cube, using quads
 		// When render method is called, the origin [0,0,0] is at the current [x,y,z] of
 		// the block.
-
-		stack.pushPose(); // push the current transformation matrix + normals matrix
 		Color color = Color.WHITE;
-
 		drawCubeQuads(stack, buffers, color, combinedLight);
-		stack.popPose(); // restore the original transformation matrix + normals matrix
 	}
 
 	/**

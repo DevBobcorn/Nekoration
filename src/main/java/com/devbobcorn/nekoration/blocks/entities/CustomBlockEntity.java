@@ -12,6 +12,8 @@ import com.devbobcorn.nekoration.exp.ExpNBTTypes;
 
 public class CustomBlockEntity extends TileEntity {
     public Integer model = 0;
+	public Byte dir = 0;
+	public int[] offset = { 0, 0, 0 };
 
     public CustomBlockEntity() {
         super(ModTileEntityType.CUSTOM_TYPE.get());
@@ -21,6 +23,8 @@ public class CustomBlockEntity extends TileEntity {
 	public CompoundNBT save(CompoundNBT tag) {
 		super.save(tag); // The super call is required to save the tile's location
 		tag.putInt("Model", model);
+		tag.putByte("Dir", dir);
+		tag.putIntArray("Offset", offset);
 		return tag;
 	}
 
@@ -32,6 +36,12 @@ public class CustomBlockEntity extends TileEntity {
 		if (tag.contains("Model", ExpNBTTypes.INT_NBT_ID)) {
 			model = tag.getInt("Model");
 		}
+		if (tag.contains("Dir", ExpNBTTypes.BYTE_NBT_ID)) {
+			dir = tag.getByte("Dir");
+		}
+		if (tag.contains("Offset", ExpNBTTypes.INT_ARRAY_NBT_ID)) {
+			offset = tag.getIntArray("Offset");
+		}
 	}
 
     @Override
@@ -41,6 +51,10 @@ public class CustomBlockEntity extends TileEntity {
 		save(nbtTagCompound);
 		int tileEntityType = 1024; // arbitrary number for only vanilla TileEntities. You can use it, or not.
 		return new SUpdateTileEntityPacket(this.worldPosition, tileEntityType, nbtTagCompound);
+	}
+
+	public CompoundNBT getUpdateTag() {
+		return this.save(new CompoundNBT());
 	}
 
 	@Override

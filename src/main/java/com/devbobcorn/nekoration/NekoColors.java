@@ -171,7 +171,7 @@ public class NekoColors {
 		PURPLE((byte)12, "purple", 0x873468),
 		RED((byte)13, "red", 0xe03f3f),
 		WHITE((byte)14, "white", 0xe8d699), // birch
-		YELLOW((byte)15, "yellow", 0xffd54f); // oak
+		YELLOW((byte)15, "yellow", 0xffd54f);
 
 		@Override
 		public String toString() {

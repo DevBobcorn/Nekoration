@@ -58,11 +58,7 @@ public final class CommonModEventSubscriber {
 				if (block instanceof TableBlock || block instanceof ChairBlock){
 					// Classes: HalfTimberBlock / HalfTimberPillarBlock
 					properties = new Item.Properties().tab(ModItemTabs.FURNITURE_GROUP);
-					if (block == ModBlocks.PUMPKIN_TABLE.get() || block == ModBlocks.PUMPKIN_CHAIR.get()){
-						blockItem = new BlockItem(block, properties);
-					} else {
-						blockItem = new DyeableBlockItem(block, properties);
-					}
+					blockItem = new BlockItem(block, properties);
 				} else if (block instanceof BiDyeableBlock || block instanceof BiDyeableVerticalConnectBlock){
 					// Classes: HalfTimberBlock / HalfTimberPillarBlock
 					properties = new Item.Properties().tab(ModItemTabs.WOODEN_GROUP);

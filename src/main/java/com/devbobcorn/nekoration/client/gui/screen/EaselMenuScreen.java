@@ -72,7 +72,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 
 			final C2SUpdateEaselMenuTexts packet = new C2SUpdateEaselMenuTexts(this.menu.pos, tx, cl);
 			ModPacketHandler.CHANNEL.sendToServer(packet);
-			System.out.println("Packet Sent");
+			//System.out.println("Packet Sent");
 		} catch (Exception e){
 			e.printStackTrace();
 		}

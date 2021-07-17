@@ -78,6 +78,10 @@ public final class ModBlocks {
 
     public static final RegistryObject<Block> PUMPKIN_TABLE = BLOCKS.register("pumpkin_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).noOcclusion()));
     public static final RegistryObject<Block> PUMPKIN_CHAIR = BLOCKS.register("pumpkin_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).noOcclusion()));
+    public static final RegistryObject<Block> OAK_TABLE = BLOCKS.register("oak_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).noOcclusion()));
+    public static final RegistryObject<Block> OAK_CHAIR = BLOCKS.register("oak_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).noOcclusion()));
+    public static final RegistryObject<Block> JUNGLE_TABLE = BLOCKS.register("jungle_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).noOcclusion()));
+    public static final RegistryObject<Block> JUNGLE_CHAIR = BLOCKS.register("jungle_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).noOcclusion()));
 
 	public static ToIntFunction<BlockState> candleHolderEmission(int lightlevel) {
 		return (state) -> {
