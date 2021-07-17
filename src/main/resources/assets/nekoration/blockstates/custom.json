@@ -1,20 +1,20 @@
 {
 	"variants": {
-		"level=0": { "model": "nekoration:block/custom/custom" },
-		"level=1": { "model": "nekoration:block/custom/cubic" },
-		"level=2": { "model": "nekoration:block/custom/haku" },
-		"level=3": { "model": "nekoration:block/custom/cubic" },
-		"level=4": { "model": "nekoration:block/custom/custom" },
-		"level=5": { "model": "nekoration:block/custom/cubic" },
-		"level=6": { "model": "nekoration:block/custom/custom" },
-		"level=7": { "model": "nekoration:block/custom/cubic" },
-		"level=8": { "model": "nekoration:block/custom/custom" },
-		"level=9": { "model": "nekoration:block/custom/cubic" },
-		"level=10": { "model": "nekoration:block/custom/custom" },
-		"level=11": { "model": "nekoration:block/custom/cubic" },
-		"level=12": { "model": "nekoration:block/custom/custom" },
-		"level=13": { "model": "nekoration:block/custom/cubic" },
-		"level=14": { "model": "nekoration:block/custom/custom" },
-		"level=15": { "model": "nekoration:block/custom/cubic" }
+		"level=0": { "model": "nekoration:block/blank" },
+		"level=1": { "model": "nekoration:block/custom/custom" },
+		"level=2": { "model": "nekoration:block/custom/base" },
+		"level=3": { "model": "nekoration:block/custom/base" },
+		"level=4": { "model": "nekoration:block/custom/base" },
+		"level=5": { "model": "nekoration:block/custom/base" },
+		"level=6": { "model": "nekoration:block/custom/base" },
+		"level=7": { "model": "nekoration:block/custom/base" },
+		"level=8": { "model": "nekoration:block/custom/base" },
+		"level=9": { "model": "nekoration:block/custom/base" },
+		"level=10": { "model": "nekoration:block/custom/base" },
+		"level=11": { "model": "nekoration:block/custom/base" },
+		"level=12": { "model": "nekoration:block/custom/base" },
+		"level=13": { "model": "nekoration:block/custom/base" },
+		"level=14": { "model": "nekoration:block/custom/base" },
+		"level=15": { "model": "nekoration:block/custom/base" }
 	}
 }

@@ -21,14 +21,7 @@ public class QuadRenderer {
 		// When render method is called, the origin [0,0,0] is at the current [x,y,z] of
 		// the block.
 
-		// The cube-drawing method draws the cube in the region from [0,0,0] to [1,1,1]
-		// but we want it
-		// to be in the block one above this, i.e. from [0,1,0] to [1,2,1],
-		// so we need to translate up by one block, i.e. by [0,1,0]
-		final Vector3d TRANSLATION_OFFSET = new Vector3d(0, 1, 0);
-
 		stack.pushPose(); // push the current transformation matrix + normals matrix
-		stack.translate(TRANSLATION_OFFSET.x, TRANSLATION_OFFSET.y, TRANSLATION_OFFSET.z); // translate
 		Color color = Color.WHITE;
 
 		drawCubeQuads(stack, buffers, color, combinedLight);
