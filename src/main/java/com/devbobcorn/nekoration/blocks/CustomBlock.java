@@ -1,12 +1,15 @@
 package com.devbobcorn.nekoration.blocks;
 
+import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -70,35 +73,34 @@ public class CustomBlock extends Block {
 	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
 	BlockRayTraceResult hit) {
 			ItemStack itemStack = player.getItemInHand(hand);
+			Item item = itemStack.getItem();
 			CustomBlockEntity te = (CustomBlockEntity)world.getBlockEntity(pos);
 
 			// Both Sides Changes...
-			if (itemStack.getItem() == Items.NETHER_STAR){
+			if (item == ModItems.PAW_15.get()){
 				te.dir = ((byte)((te.dir + 1) % 24));
 				return ActionResultType.CONSUME;
-			}
-			if (itemStack.getItem() == Items.DIAMOND){
+			} else if (item == ModItems.PAW_90.get()){
 				te.dir = ((byte)((te.dir + 6) % 24));
 				return ActionResultType.CONSUME;
-			}
-			if (itemStack.getItem() == Items.RED_DYE){
+			} else if (item == ModItems.PAW_LEFT.get()){
 				te.offset[0]--;
-			}
-			if (itemStack.getItem() == Items.GREEN_DYE){
+			} else if (item == ModItems.PAW_RIGHT.get()){
 				te.offset[0]++;
-			}
-			if (itemStack.getItem() == Items.ORANGE_DYE){
+			} else if (item == ModItems.PAW_UP.get()){
 				te.offset[1]++;
-			}
-			if (itemStack.getItem() == Items.LIME_DYE){
+			} else if (item == ModItems.PAW_DOWN.get()){
 				te.offset[1]--;
-			}
-			if (itemStack.getItem() == Items.PINK_DYE){
+			} else if (item == ModItems.PAW_NEAR.get()){
 				te.offset[2]++;
-			}
-			if (itemStack.getItem() == Items.LIGHT_BLUE_DYE){
+			} else if (item == ModItems.PAW_FAR.get()){
 				te.offset[2]--;
-			}
-			return ActionResultType.PASS;
+			} else if (item instanceof BlockItem){
+				System.out.println("Block Item.");
+				te.model = 16;
+				te.displayBlock = ((BlockItem)item).getBlock().getStateForPlacement(new BlockItemUseContext(player, hand, itemStack, hit));
+			} else return ActionResultType.PASS;
+
+			return ActionResultType.sidedSuccess(world.isClientSide);
 		}
 }

@@ -33,6 +33,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 	}
 
 	@Override
+	@SuppressWarnings({"resource"})
 	public void init(){
 		super.init();
 		Objects.requireNonNull(this.minecraft).keyboardHandler.setSendRepeatsToGui(true);

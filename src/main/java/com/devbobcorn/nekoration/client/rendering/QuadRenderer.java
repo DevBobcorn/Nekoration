@@ -13,7 +13,7 @@ import net.minecraft.util.math.vector.Vector2f;
 import java.awt.*;
 
 public class QuadRenderer {
-    public static final ResourceLocation TEXTURE = new ResourceLocation("nekoration:textures/block/plant.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation("nekoration:textures/block/custom.png");
 
 	public static void renderCubeUsingQuads(TileEntity tileEntity, float partialTicks,
 			MatrixStack stack, IRenderTypeBuffer buffers, int combinedLight, int combinedOverlay) {

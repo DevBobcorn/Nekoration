@@ -1,7 +1,5 @@
 package com.devbobcorn.nekoration.items;
 
-import java.util.ArrayList;
-
 import com.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import com.devbobcorn.nekoration.NekoColors.EnumWoodenColor;
 

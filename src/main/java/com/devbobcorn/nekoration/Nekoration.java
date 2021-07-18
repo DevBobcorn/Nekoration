@@ -15,6 +15,7 @@ import com.devbobcorn.nekoration.blocks.containers.ModContainerType;
 import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
 import com.devbobcorn.nekoration.exp.ExpClientOnly;
 import com.devbobcorn.nekoration.exp.ExpCommon;
+import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuTexts;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.devbobcorn.nekoration.network.S2CUpdateEaselMenuItems;
@@ -44,7 +45,7 @@ public class Nekoration
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ExpClient::registerClientOnlyEvents);
 
 		ModBlocks.BLOCKS.register(modEventBus);
-		//ModItems.ITEMS.register(modEventBus);
+		ModItems.ITEMS.register(modEventBus);
 		//ModContainerType.CONTAINER_TYPES.register(modEventBus);
 		//ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 		ModContainerType.CONTAINER_TYPES.register(modEventBus);

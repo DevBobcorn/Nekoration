@@ -43,16 +43,21 @@ public class ModItemTabs {
 	);
 
 	public static final ItemGroup FURNITURE_GROUP = new ModItemGroup("furniture", () -> {
-			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "pumpkin_table")));
+			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "oak_table")));
 			//DyeableBlockItem.setColor(icoStack, EnumNekoColor.WHITE);
 			return icoStack;
 		}
 	);
 
 	public static final ItemGroup DECOR_GROUP = new ModItemGroup("decor", () -> {
-			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "stone_pot")));
+			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "easel_menu")));
 			DyeableBlockItem.setColor(icoStack, EnumNekoColor.WHITE);
 			return icoStack;
+		}
+	);
+
+	public static final ItemGroup ITEMS_GROUP = new ModItemGroup("items", () -> {
+			return new ItemStack(ModItems.PAW.get());
 		}
 	);
 

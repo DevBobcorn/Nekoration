@@ -160,8 +160,7 @@ public class RenderWavefrontObj {
 				DISTANCE_FOR_MAX_SPIN, MIN_REV_PER_SEC, MAX_REV_PER_SEC);
 		double angularPositionInDegrees = tileEntityMBE21.getNextAngularPosition(revsPerSecond);
 
-		matrixStack.mulPose(Vector3f.YP.rotationDegrees((float) angularPositionInDegrees)); // rotate around the
-																							// vertical axis
+		matrixStack.mulPose(Vector3f.YP.rotationDegrees((float) angularPositionInDegrees)); // rotate around the vertical axis
 	}
 
 	/**
