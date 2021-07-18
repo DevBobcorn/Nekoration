@@ -68,7 +68,7 @@ public class CustomRenderer extends TileEntityRenderer<CustomBlockEntity> {
 		} else {
 			stack.pushPose();
 			stack.translate(0.5, 0.0, 0.5);
-			stack.mulPose(Vector3f.YP.rotationDegrees(180F + tileEntity.dir * 15F));
+			stack.mulPose(Vector3f.YP.rotationDegrees(tileEntity.dir * 15F));
 			stack.translate(-0.5, 0.0, -0.5); // Then just get it back...
 			stack.translate(tileEntity.offset[0] * frac, tileEntity.offset[1] * frac, tileEntity.offset[2] * frac);
 
@@ -79,7 +79,7 @@ public class CustomRenderer extends TileEntityRenderer<CustomBlockEntity> {
 			MatrixStack.Entry currentMatrix = stack.last();
 
 			IVertexBuilder vertexBuffer = buffers.getBuffer(RenderType.solid());
-			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, 0.0F, 1.0F, 1.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, state, model, 0.0F, 1.0F, 1.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
 
 			stack.popPose();
 		}

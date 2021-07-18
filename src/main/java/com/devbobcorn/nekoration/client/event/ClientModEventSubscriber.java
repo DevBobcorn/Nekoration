@@ -102,6 +102,8 @@ public final class ClientModEventSubscriber {
 		RenderTypeLookup.setRenderLayer(ModBlocks.OAK_CHAIR.get(), transparentRenderType);
 		RenderTypeLookup.setRenderLayer(ModBlocks.JUNGLE_TABLE.get(), transparentRenderType);
 		RenderTypeLookup.setRenderLayer(ModBlocks.JUNGLE_CHAIR.get(), transparentRenderType);
+		RenderTypeLookup.setRenderLayer(ModBlocks.ACACIA_TABLE.get(), transparentRenderType);
+		RenderTypeLookup.setRenderLayer(ModBlocks.ACACIA_CHAIR.get(), transparentRenderType);
 
 		LOGGER.info("Block Render Types Registered.");
 

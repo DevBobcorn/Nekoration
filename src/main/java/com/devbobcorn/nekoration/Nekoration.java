@@ -37,7 +37,7 @@ public class Nekoration
 		//final ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		//Experimental stuff...
+		// Experimental stuffs...
 		final ExpClientOnly ExpClient = new ExpClientOnly(modEventBus);
 		final ExpCommon ExpCommon = new ExpCommon();
 

@@ -36,8 +36,7 @@ public class QuadRenderer {
 		// getEntityCutout, getBeaconBeam (which has translucency),
 
 		Matrix4f matrixPos = stack.last().pose(); // retrieves the current transformation matrix
-		Matrix3f matrixNormal = stack.last().normal(); // retrieves the current transformation matrix for the
-																// normal vector
+		Matrix3f matrixNormal = stack.last().normal(); // retrieves the current transformation matrix for the normal vector
 
 		// we use the whole texture
 		Vector2f bottomLeftUV = new Vector2f(0.0F, 1.0F);
