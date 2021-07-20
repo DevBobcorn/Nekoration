@@ -69,7 +69,7 @@ public final class CommonModEventSubscriber {
 					blockItem = new DyeableWoodenBlockItem(block, properties);
 				} else if (block instanceof DyeableBlock || block instanceof DyeableHorizontalConnectBlock){
 					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
-					if (block instanceof PotBlock || block instanceof CandleHolderBlock)
+					if (block instanceof CandleHolderBlock)
 						properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
 					else if (block instanceof DyeableHorizontalBlock) {
 						if (block instanceof DyeableHorizontalConnectBlock) // Window Frame...

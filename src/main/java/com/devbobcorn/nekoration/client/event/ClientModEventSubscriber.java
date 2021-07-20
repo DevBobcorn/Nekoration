@@ -244,8 +244,7 @@ public final class ClientModEventSubscriber {
 		// with no console errors
 		Minecraft.getInstance().particleEngine.register(ModParticles.FLAME, sprite -> new FlameParticleFactory(sprite));
 		// This lambda may not be obvious: its purpose is:
-		// the registerFactory method creates an IAnimatedSprite, then passes it to the
-		// constructor of FlameParticleFactory
+		// the registerFactory method creates an IAnimatedSprite, then passes it to the constructor of FlameParticleFactory
 
 		// General rule of thumb:
 		// If you are creating a TextureParticle with a corresponding json to specify

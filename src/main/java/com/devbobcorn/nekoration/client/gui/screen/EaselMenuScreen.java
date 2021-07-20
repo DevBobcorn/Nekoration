@@ -81,6 +81,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
     }
 
 	@Override
+	@SuppressWarnings({"resource"})
     public boolean keyPressed(int keyCode, int scanCode, int modifier) {
 		if (keyCode == GLFW.GLFW_KEY_E) {
 			// I DONT GET IT, WHY THE HELL PRESSING 'E' CAN CLOSE THE SCREEN...

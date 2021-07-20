@@ -62,7 +62,8 @@ public class CustomRenderer extends TileEntityRenderer<CustomBlockEntity> {
 			MatrixStack.Entry currentMatrix = stack.last();
 
 			IVertexBuilder vertexBuffer = buffers.getBuffer(RenderType.solid());
-			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, 1.0F, 1.0F, 1.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+			int[] colors = tileEntity.color;
+			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, colors[0] / 255.0F, colors[0] / 255.0F, colors[0] / 255.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
 
 			stack.popPose();
 		} else {
@@ -79,7 +80,8 @@ public class CustomRenderer extends TileEntityRenderer<CustomBlockEntity> {
 			MatrixStack.Entry currentMatrix = stack.last();
 
 			IVertexBuilder vertexBuffer = buffers.getBuffer(RenderType.solid());
-			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, state, model, 0.0F, 1.0F, 1.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+			int[] colors = tileEntity.color;
+			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, colors[0] / 255.0F, colors[0] / 255.0F, colors[0] / 255.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
 
 			stack.popPose();
 		}

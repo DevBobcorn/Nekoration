@@ -5,21 +5,22 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.MathHelper;
 
+import java.awt.Color;
 public class NekoColors {
 	public static int getBlockColorAt(int value,int min,int max,int minColor,int maxColor) {
 		if (value >= max) return maxColor;
 		else if (value <= min) return minColor;
 		double frac = ((double)value - (double)min) / ((double)max - (double)min);
 		
-		return getColorBetween(frac, minColor, maxColor);
+		return getRGBColorBetween(frac, minColor, maxColor);
 	}
 	
 	public static int getItemColor(ItemStack stack,int lc,int rc) {
 		double frac = (double)stack.getCount() / stack.getMaxStackSize();
-		return getColorBetween(frac,lc,rc);
+		return getRGBColorBetween(frac,lc,rc);
 	}
 	
-	public static int getColorBetween(double frac,int lc,int rc) {
+	public static int getRGBColorBetween(double frac,int lc,int rc) {
 		int red1 = (lc & 0xff0000) >> 16;
     	int green1 = (lc & 0xff00) >> 8;
     	int blue1 = lc & 0xff;
@@ -33,6 +34,10 @@ public class NekoColors {
     	int blue3 = (int)MathHelper.lerp(frac,blue1,blue2);
     	
     	return (red3 << 16) + (green3 << 8) + blue3;
+	}
+
+	public static Color getRGBColorBetween(double frac,Color lc,Color rc) {
+    	return new Color((int)MathHelper.lerp(frac, lc.getRed(), rc.getRed()), (int)MathHelper.lerp(frac, lc.getGreen(), rc.getGreen()), (int)MathHelper.lerp(frac, lc.getBlue(), rc.getBlue()));
 	}
 	
 	public static int getRed(int c) {

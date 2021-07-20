@@ -17,6 +17,7 @@ import com.devbobcorn.nekoration.exp.ExpClientOnly;
 import com.devbobcorn.nekoration.exp.ExpCommon;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuTexts;
+import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.devbobcorn.nekoration.network.S2CUpdateEaselMenuItems;
 
@@ -67,6 +68,12 @@ public class Nekoration
 			S2CUpdateEaselMenuItems::encode,
 			S2CUpdateEaselMenuItems::decode,
 			S2CUpdateEaselMenuItems::handle
+		);
+		ModPacketHandler.CHANNEL.registerMessage(networkId++,
+			C2SUpdatePaletteData.class,
+			C2SUpdatePaletteData::encode,
+			C2SUpdatePaletteData::decode,
+			C2SUpdatePaletteData::handle
 		);
     }
 }
