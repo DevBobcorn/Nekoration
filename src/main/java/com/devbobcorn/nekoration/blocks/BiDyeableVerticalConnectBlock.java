@@ -43,9 +43,7 @@ public class BiDyeableVerticalConnectBlock extends BiDyeableBlock {
 		World blockView = ctx.getLevel();
 		BlockPos blockPos = ctx.getClickedPos();
 		BlockPos blockPosD = blockPos.below();
-		//BlockPos blockPosU = blockPos.up();
 		BlockState stateD = blockView.getBlockState(blockPosD);
-		//BlockState stateU = blockView.getBlockState(blockPosU);
 		
 		//System.out.println("BlockPlaced!");
 		if (stateD.getBlock() instanceof BiDyeableVerticalConnectBlock && (connectOthers || stateD.getBlock() == this)) {

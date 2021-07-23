@@ -1,6 +1,8 @@
 package com.devbobcorn.nekoration.blocks;
 
-public class TableBlock extends DyeableBlock {
+import net.minecraft.block.Block;
+
+public class TableBlock extends Block {
     public TableBlock(Properties settings) {
         super(settings);
     }
