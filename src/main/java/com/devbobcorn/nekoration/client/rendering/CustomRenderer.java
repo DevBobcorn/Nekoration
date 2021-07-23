@@ -62,8 +62,8 @@ public class CustomRenderer extends TileEntityRenderer<CustomBlockEntity> {
 			MatrixStack.Entry currentMatrix = stack.last();
 
 			IVertexBuilder vertexBuffer = buffers.getBuffer(RenderType.solid());
-			int[] colors = tileEntity.color;
-			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, colors[0] / 255.0F, colors[0] / 255.0F, colors[0] / 255.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+			int[] theColor = tileEntity.color;
+			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, (float)theColor[0] / 255.0F, (float)theColor[1] / 255.0F, (float)theColor[2] / 255.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
 
 			stack.popPose();
 		} else {
@@ -80,9 +80,9 @@ public class CustomRenderer extends TileEntityRenderer<CustomBlockEntity> {
 			MatrixStack.Entry currentMatrix = stack.last();
 
 			IVertexBuilder vertexBuffer = buffers.getBuffer(RenderType.solid());
-			int[] colors = tileEntity.color;
-			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, colors[0] / 255.0F, colors[0] / 255.0F, colors[0] / 255.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
-
+			int[] theColor = tileEntity.color;
+			dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, ((float)theColor[0]) / 255.0F, ((float)theColor[1]) / 255.0F, ((float)theColor[2]) / 255.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
+			//dispatcher.getModelRenderer().renderModel(currentMatrix, vertexBuffer, null, model, 0.0F, 1.0F, 1.0F, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
 			stack.popPose();
 		}
 	}

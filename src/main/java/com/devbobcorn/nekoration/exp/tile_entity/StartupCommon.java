@@ -36,8 +36,8 @@ public class StartupCommon {
 		// hand and it can appear in the inventory
 		final int MAXIMUM_STACK_SIZE = 1; // player can only hold 1 of this block in their hand at once
 
-		Item.Properties itemSimpleProperties = new Item.Properties().stacksTo(MAXIMUM_STACK_SIZE)
-				.tab(ItemGroup.TAB_DECORATIONS); // which inventory tab?
+		Item.Properties itemSimpleProperties = new Item.Properties().stacksTo(MAXIMUM_STACK_SIZE);
+		//		.tab(ItemGroup.TAB_DECORATIONS); // which inventory tab?
 		itemBlockMBE21 = new BlockItem(blockMBE21, itemSimpleProperties);
 		itemBlockMBE21.setRegistryName(blockMBE21.getRegistryName());
 		event.getRegistry().register(itemBlockMBE21);

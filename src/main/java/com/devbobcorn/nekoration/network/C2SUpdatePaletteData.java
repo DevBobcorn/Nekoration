@@ -3,6 +3,7 @@ package com.devbobcorn.nekoration.network;
 import java.util.function.Supplier;
 
 import com.devbobcorn.nekoration.items.ModItems;
+import com.devbobcorn.nekoration.items.PaletteItem;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -43,8 +44,8 @@ public class C2SUpdatePaletteData {
                 // ...
                 ItemStack updated = new ItemStack(ModItems.PALETTE.get());
                 CompoundNBT nbt = updated.getOrCreateTag();
-                nbt.putByte("Active", msg.active);
-                nbt.putIntArray("Colors", msg.colors);
+                nbt.putByte(PaletteItem.ACTIVE, msg.active);
+                nbt.putIntArray(PaletteItem.COLORS, msg.colors);
                 updated.setTag(nbt);
                 player.setItemInHand(msg.hand, updated);
             }

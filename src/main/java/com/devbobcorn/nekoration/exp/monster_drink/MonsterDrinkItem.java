@@ -35,7 +35,7 @@ public class MonsterDrinkItem extends Item {
 	static private final int MAXIMUM_NUMBER_OF_BOTTLES = 1; // maximum stack size
 
 	public MonsterDrinkItem() {
-		super(new Item.Properties().stacksTo(MAXIMUM_NUMBER_OF_BOTTLES).tab(ItemGroup.TAB_BREWING));
+		super(new Item.Properties().stacksTo(MAXIMUM_NUMBER_OF_BOTTLES));
 	}
 
 	/**

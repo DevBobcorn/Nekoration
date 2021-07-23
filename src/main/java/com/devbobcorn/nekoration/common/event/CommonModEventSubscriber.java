@@ -2,7 +2,6 @@ package com.devbobcorn.nekoration.common.event;
 
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
-import com.devbobcorn.nekoration.blocks.PotBlock;
 import com.devbobcorn.nekoration.blocks.ChairBlock;
 import com.devbobcorn.nekoration.blocks.TableBlock;
 import com.devbobcorn.nekoration.blocks.CandleHolderBlock;
@@ -65,7 +64,7 @@ public final class CommonModEventSubscriber {
 					blockItem = new BiDyeableBlockItem(block, properties);
 				} else if (block instanceof WindowBlock || block instanceof EaselMenuBlock){
 					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
-					properties = new Item.Properties().tab(block instanceof WindowBlock ? ModItemTabs.WINDOW_GROUP : ModItemTabs.DECOR_GROUP);
+					properties = new Item.Properties().tab(block instanceof WindowBlock ? ModItemTabs.WINDOW_N_DOOR_GROUP : ModItemTabs.DECOR_GROUP);
 					blockItem = new DyeableWoodenBlockItem(block, properties);
 				} else if (block instanceof DyeableBlock || block instanceof DyeableHorizontalConnectBlock){
 					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
@@ -73,13 +72,13 @@ public final class CommonModEventSubscriber {
 						properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
 					else if (block instanceof DyeableHorizontalBlock) {
 						if (block instanceof DyeableHorizontalConnectBlock) // Window Frame...
-							properties = new Item.Properties().tab(ModItemTabs.WINDOW_GROUP);
+							properties = new Item.Properties().tab(ModItemTabs.WINDOW_N_DOOR_GROUP);
 						else properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP); // Awning...
 					} else properties = new Item.Properties().tab(ModItemTabs.STONE_GROUP);
 					blockItem = new DyeableBlockItem(block, properties);
 				} else {
 					if (block instanceof DyeableDoorBlock)
-						properties = new Item.Properties().tab(ModItemTabs.DOOR_GROUP);
+						properties = new Item.Properties().tab(ModItemTabs.WINDOW_N_DOOR_GROUP);
 					else properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
 					blockItem = new BlockItem(block, properties);
 				}

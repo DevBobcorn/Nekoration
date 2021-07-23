@@ -14,7 +14,7 @@
         "MOD_CLASSES": "nekoration%%${workspaceFolder}\\bin\\main;nekoration%%${workspaceFolder}\\bin\\main",
         "MCP_MAPPINGS": "official_1.16.5",
         "MCP_VERSION": "20210115.111550",
-        "FORGE_VERSION": "36.1.0",
+        "FORGE_VERSION": "36.2.0",
         "assetIndex": "1.16",
         "assetDirectory": "C:\\Users\\Administrator\\.gradle\\caches\\forge_gradle\\assets",
         "nativesDirectory": "${workspaceFolder}\\build\\natives",
@@ -36,7 +36,9 @@
         "MOD_CLASSES": "nekoration%%${workspaceFolder}\\bin\\main;nekoration%%${workspaceFolder}\\bin\\main",
         "MCP_MAPPINGS": "official_1.16.5",
         "MCP_VERSION": "20210115.111550",
-        "FORGE_VERSION": "36.1.0",
+        "FORGE_VERSION": "36.2.0",
+        "assetIndex": "1.16",
+        "assetDirectory": "C:\\Users\\Administrator\\.gradle\\caches\\forge_gradle\\assets",
         "FORGE_GROUP": "net.minecraftforge",
         "target": "fmluserdevdata",
         "MC_VERSION": "1.16.5"
@@ -55,7 +57,7 @@
         "MOD_CLASSES": "nekoration%%${workspaceFolder}\\bin\\main;nekoration%%${workspaceFolder}\\bin\\main",
         "MCP_MAPPINGS": "official_1.16.5",
         "MCP_VERSION": "20210115.111550",
-        "FORGE_VERSION": "36.1.0",
+        "FORGE_VERSION": "36.2.0",
         "FORGE_GROUP": "net.minecraftforge",
         "target": "fmluserdevserver",
         "MC_VERSION": "1.16.5"

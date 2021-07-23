@@ -29,15 +29,9 @@ public class ModItemTabs {
 		}
 	);
 
-	public static final ItemGroup WINDOW_GROUP = new ModItemGroup("window", () -> {
+	public static final ItemGroup WINDOW_N_DOOR_GROUP = new ModItemGroup("window_n_door", () -> {
 			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "window_lancet")));
 			DyeableWoodenBlockItem.setColor(icoStack, EnumWoodenColor.WHITE);
-			return icoStack;
-		}
-	);
-
-	public static final ItemGroup DOOR_GROUP = new ModItemGroup("door", () -> {
-			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "door_1")));
 			return icoStack;
 		}
 	);

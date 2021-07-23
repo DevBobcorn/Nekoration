@@ -33,8 +33,8 @@ public class StartupCommon
     final int MAXIMUM_STACK_SIZE = 64;  // player can hold 64 of this block in their hand at once
 
     Item.Properties itemProperties = new Item.Properties()
-            .stacksTo(MAXIMUM_STACK_SIZE)
-            .tab(ItemGroup.TAB_BUILDING_BLOCKS);  // which inventory tab?
+            .stacksTo(MAXIMUM_STACK_SIZE);
+    //        .tab(ItemGroup.TAB_BUILDING_BLOCKS);  // which inventory tab?
     itemBlockCamouflage = new BlockItem(blockCamouflage, itemProperties);
     itemBlockCamouflage.setRegistryName(blockCamouflage.getRegistryName());
     itemRegisterEvent.getRegistry().register(itemBlockCamouflage);

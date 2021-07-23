@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 
 import com.devbobcorn.nekoration.NekoColors;
+import com.devbobcorn.nekoration.client.ClientHelper;
 import com.devbobcorn.nekoration.client.gui.screen.PaletteScreen;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,6 +21,9 @@ import net.minecraftforge.fml.DistExecutor;
 public class PaletteItem extends Item {
     public final Color[] DEFAULT_COLOR_SET = { Color.RED, Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.MAGENTA };
 
+    public static final String ACTIVE = "Active";
+    public static final String COLORS = "Colors";
+
     public PaletteItem(Properties settings) {
         super(settings);
     }
@@ -29,20 +33,25 @@ public class PaletteItem extends Item {
     @SuppressWarnings("deprecation")
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!world.isClientSide) {  // server only!
+        if (!world.isClientSide) {
             // First get the existing data in this palette...
             CompoundNBT nbt = stack.getTag();
-            byte a = nbt.getByte("Active");
-            int[] c = nbt.getIntArray("Colors");
+            byte a = nbt.getByte(ACTIVE); // 0 By Default...
+            int[] c = nbt.getIntArray(COLORS);
             
-            if (c.length == 6){
+            if (c.length == 6){ // Make sure the data's valid...
                 Color[] col = new Color[6];
                 for (int i = 0;i < 6;i++){
                     col[i] = new Color(NekoColors.getRed(c[i]), NekoColors.getGreen(c[i]), NekoColors.getBlue(c[i]));
                 }
-                DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, col)); });
-            } else DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, DEFAULT_COLOR_SET)); });
-            
+                DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { 
+                    //Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, col));
+                    ClientHelper.showGuiDraw(hand, a, col);
+                });
+            } else DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { 
+                //Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, DEFAULT_COLOR_SET));
+                ClientHelper.showGuiDraw(hand, a, DEFAULT_COLOR_SET);
+            });
 		}
         return ActionResult.success(stack);
 	}
