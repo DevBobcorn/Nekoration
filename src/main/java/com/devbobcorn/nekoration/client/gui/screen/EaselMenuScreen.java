@@ -37,15 +37,17 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 	public void init(){
 		super.init();
 		Objects.requireNonNull(this.minecraft).keyboardHandler.setSendRepeatsToGui(true);
+		final int extraOffsetX = 14;
+		final int extraOffsetY = 10;
 		for (int i = 0;i < 8;i++){
-			this.textInputs[i] = new TextFieldWidget(this.font, this.leftPos + (i < 4 ? 8 : 98), this.topPos + 36 + (i % 4) * 18, 70, 18, new TranslationTextComponent("gui.nekoration.color"));
+			this.textInputs[i] = new TextFieldWidget(this.font, this.leftPos + extraOffsetX + (i < 4 ? 8 : 98), this.topPos + extraOffsetY + 36 + (i % 4) * 18, 70, 18, new TranslationTextComponent("gui.nekoration.color"));
 			this.textInputs[i].setMaxLength(8);
 			final int j = i;
 			this.textInputs[j].setResponder(input -> {
 				this.texts[j] = input;
 			});
 			this.textInputs[i].setVisible(true);
-			this.textInputs[i].setTextColor(65535);
+			this.textInputs[i].setTextColor(16777215);
 			this.textInputs[i].setBordered(false);
 			//this.textInputs[i].setValue("TEXT " + i);
 			this.textInputs[i].setValue(this.menu.texts[i].getContents());
