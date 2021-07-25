@@ -2,15 +2,20 @@ package com.devbobcorn.nekoration.blocks;
 
 import net.minecraft.block.DoorBlock;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.devbobcorn.nekoration.common.VanillaCompat;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -42,5 +47,11 @@ public class DyeableDoorBlock extends DoorBlock {
 			return ActionResultType.CONSUME;
 		}
 		return super.use(state, world, pos, player, hand, hit);
+	}
+
+	@Override
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		// Drop only when the lower part's broken, or we'll get 2 dropped items...
+		return state.getValue(HALF) == DoubleBlockHalf.LOWER ? Collections.singletonList(new ItemStack(this.asItem())) : Collections.emptyList();
 	}
 }

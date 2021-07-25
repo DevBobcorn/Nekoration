@@ -1,5 +1,8 @@
 package com.devbobcorn.nekoration.blocks;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.devbobcorn.nekoration.blocks.states.LampPostType;
 import com.devbobcorn.nekoration.blocks.states.ModStateProperties;
 
@@ -15,6 +18,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.LeadItem;
+import net.minecraft.loot.LootContext;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
@@ -161,5 +165,10 @@ public class LampPostBlock extends FourWayBlock {
 		// return state.getBlock() instanceof ChainBlock || state.getBlock() instanceof
 		// LanternBlock || state.getBlock() instanceof LampBlock;
 		return state.getBlock() instanceof ChainBlock || state.getBlock() instanceof LanternBlock;
+	}
+
+	@Override
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		return Collections.singletonList(new ItemStack(this.asItem()));
 	}
 }

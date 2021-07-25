@@ -1,5 +1,8 @@
 package com.devbobcorn.nekoration.blocks;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import com.devbobcorn.nekoration.NekoColors;
@@ -12,6 +15,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -68,4 +72,12 @@ public class DyeableBlock extends Block {
 		DyeableBlockItem.setColor(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
         return stack;
     }
+
+	
+	@Override
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		ItemStack stack = new ItemStack(this.asItem());
+		DyeableBlockItem.setColor(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
+		return Collections.singletonList(stack);
+	}
 }

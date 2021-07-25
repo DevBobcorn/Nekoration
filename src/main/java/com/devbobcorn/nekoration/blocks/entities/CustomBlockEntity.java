@@ -4,11 +4,14 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 
 import com.devbobcorn.nekoration.exp.ExpNBTTypes;
 
@@ -19,6 +22,7 @@ public class CustomBlockEntity extends TileEntity {
 	public int[] color = { 255, 255, 255 }; // RGB Color...
 
 	public BlockState displayBlock = Blocks.AIR.defaultBlockState();
+	public ItemStack containItem = new ItemStack(Blocks.AIR);
 
     public CustomBlockEntity() {
         super(ModTileEntityType.CUSTOM_TYPE.get());
@@ -32,6 +36,8 @@ public class CustomBlockEntity extends TileEntity {
 		tag.putIntArray("Offset", offset);
 		tag.putIntArray("Color", color);
 		tag.put("Display", NBTUtil.writeBlockState(displayBlock));
+		CompoundNBT itm = new CompoundNBT();
+		tag.put("Contain", containItem.save(itm));
 		return tag;
 	}
 
@@ -56,6 +62,10 @@ public class CustomBlockEntity extends TileEntity {
 			CompoundNBT dat = tag.getCompound("Display");
 			displayBlock = NBTUtil.readBlockState(dat);
 		}
+		if (tag.contains("Contain", ExpNBTTypes.COMPOUND_NBT_ID)) {
+			CompoundNBT dat = tag.getCompound("Contain");
+			containItem = ItemStack.of(dat);
+		}
 	}
 
     @Override
@@ -75,5 +85,12 @@ public class CustomBlockEntity extends TileEntity {
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
 		BlockState blockState = level.getBlockState(worldPosition);
 		load(blockState, pkt.getTag()); // read from the nbt in the packet
+	}
+
+	@Override
+	public void setRemoved() {
+		super.setRemoved();
+		BlockPos pos = getBlockPos();
+		InventoryHelper.dropItemStack(getLevel(), (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), containItem);
 	}
 }
