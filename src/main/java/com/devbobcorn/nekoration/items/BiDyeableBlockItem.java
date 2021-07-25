@@ -9,6 +9,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class BiDyeableBlockItem extends BlockItem {
     public static final String NBT_TAG_NAME_COLOR_0 = "color_0"; // Color of outer layer
@@ -60,5 +62,13 @@ public class BiDyeableBlockItem extends BlockItem {
     public static void setColor1(ItemStack stack, EnumNekoColor color) {
         CompoundNBT compoundNBT = stack.getOrCreateTag();
         color.putIntoNBT(compoundNBT, NBT_TAG_NAME_COLOR_1);
+	}
+
+	@Override
+	public ITextComponent getName(ItemStack stack) {
+		String color0Text = (new TranslationTextComponent("color.wooden." + getColor0(stack).getSerializedName())).getString();
+		String color1Text = (new TranslationTextComponent("color.nekoration." + getColor1(stack).getSerializedName())).getString();
+
+		return new TranslationTextComponent(this.getDescriptionId(stack), color0Text, color1Text); 
 	}
 }

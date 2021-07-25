@@ -1,12 +1,12 @@
 package com.devbobcorn.nekoration.items;
 
 import java.awt.Color;
+
 import javax.annotation.Nonnull;
-import net.minecraft.client.Minecraft;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.client.ClientHelper;
-import com.devbobcorn.nekoration.client.gui.screen.PaletteScreen;
+import com.devbobcorn.nekoration.exp.ExpNBTTypes;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -36,10 +36,11 @@ public class PaletteItem extends Item {
         if (!world.isClientSide) {
             // First get the existing data in this palette...
             CompoundNBT nbt = stack.getTag();
-            byte a = nbt.getByte(ACTIVE); // 0 By Default...
-            int[] c = nbt.getIntArray(COLORS);
-            
-            if (c.length == 6){ // Make sure the data's valid...
+
+            if (nbt != null && nbt.contains(ACTIVE, ExpNBTTypes.BYTE_NBT_ID)){
+                byte a = nbt.getByte(ACTIVE);
+                int[] c = nbt.getIntArray(COLORS);
+
                 Color[] col = new Color[6];
                 for (int i = 0;i < 6;i++){
                     col[i] = new Color(NekoColors.getRed(c[i]), NekoColors.getGreen(c[i]), NekoColors.getBlue(c[i]));
@@ -50,7 +51,7 @@ public class PaletteItem extends Item {
                 });
             } else DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { 
                 //Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, DEFAULT_COLOR_SET));
-                ClientHelper.showGuiDraw(hand, a, DEFAULT_COLOR_SET);
+                ClientHelper.showGuiDraw(hand, (byte)0, DEFAULT_COLOR_SET);
             });
 		}
         return ActionResult.success(stack);

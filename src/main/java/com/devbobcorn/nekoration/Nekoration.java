@@ -23,8 +23,7 @@ import com.devbobcorn.nekoration.network.S2CUpdateEaselMenuItems;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Nekoration.MODID)
-public class Nekoration
-{
+public class Nekoration {
     public static final String MODID = "nekoration";
 
     // Directly reference a log4j logger.

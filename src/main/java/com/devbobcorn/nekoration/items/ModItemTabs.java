@@ -50,7 +50,7 @@ public class ModItemTabs {
 		}
 	);
 
-	public static final ItemGroup ITEMS_GROUP = new ModItemGroup("items", () -> {
+	public static final ItemGroup TOOL_GROUP = new ModItemGroup("tool", () -> {
 			return new ItemStack(ModItems.PAW.get());
 		}
 	);

@@ -8,6 +8,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class DyeableWoodenBlockItem extends BlockItem {
     public static final String NBT_TAG_NAME_COLOR = "color";
@@ -35,5 +37,12 @@ public class DyeableWoodenBlockItem extends BlockItem {
     public static void setColor(ItemStack stack, EnumWoodenColor color) {
         CompoundNBT compoundNBT = stack.getOrCreateTag();
         color.putIntoNBT(compoundNBT, NBT_TAG_NAME_COLOR);
+	}
+
+	@Override
+	public ITextComponent getName(ItemStack stack) {
+		String colorText = (new TranslationTextComponent("color.wooden." + getColor(stack).getSerializedName())).getString();
+
+		return new TranslationTextComponent(this.getDescriptionId(stack), colorText);
 	}
 }

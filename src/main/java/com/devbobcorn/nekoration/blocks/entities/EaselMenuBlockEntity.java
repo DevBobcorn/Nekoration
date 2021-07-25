@@ -126,7 +126,7 @@ public class EaselMenuBlockEntity extends TileEntity implements INamedContainerP
 
 	@Nullable
 	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(this.worldPosition, 9, this.getUpdateTag());
+		return new SUpdateTileEntityPacket(this.worldPosition, 2020, this.getUpdateTag());
 	}
 
 	public CompoundNBT getUpdateTag() {

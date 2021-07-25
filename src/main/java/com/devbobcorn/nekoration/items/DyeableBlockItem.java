@@ -11,6 +11,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class DyeableBlockItem extends BlockItem {
@@ -45,5 +47,12 @@ public class DyeableBlockItem extends BlockItem {
 		@Nullable LivingEntity livingEntity) {
 		EnumNekoColor color = DyeableBlockItem.getColor(itemStack);
 		return color.getPropertyOverrideValue();
+	}
+
+	@Override
+	public ITextComponent getName(ItemStack stack) {
+		String colorText = (new TranslationTextComponent("color.nekoration." + getColor(stack).getSerializedName())).getString();
+
+		return new TranslationTextComponent(this.getDescriptionId(stack), colorText);
 	}
 }
