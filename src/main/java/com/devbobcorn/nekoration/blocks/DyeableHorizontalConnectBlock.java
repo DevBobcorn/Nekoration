@@ -62,8 +62,8 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 
 	public DyeableHorizontalConnectBlock(Properties settings, ConnectionType tp, boolean co) {
 		super(settings);
-		type = ConnectionType.TRIPLE;
-		connectOthers = false;
+		type = tp;
+		connectOthers = co;
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
 	}
 
@@ -94,6 +94,7 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 		BlockState stateL = blockView.getBlockState(blockPosL);
 		
 		//System.out.println("BlockPlaced!");
+		//System.out.println("Is Beam? " + String.valueOf(type == ConnectionType.BEAM));
 		if (stateL.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOthers || stateL.getBlock() == this)) {
 			//System.out.println(stateL.getValue(CONNECTION));
 			switch (stateL.getValue(CONNECTION)) {

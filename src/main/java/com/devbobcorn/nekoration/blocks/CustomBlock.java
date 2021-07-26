@@ -1,6 +1,5 @@
 package com.devbobcorn.nekoration.blocks;
 
-import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.items.PaletteItem;
 

@@ -15,6 +15,7 @@ import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
 import com.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import com.devbobcorn.nekoration.client.rendering.CustomRenderer;
 import com.devbobcorn.nekoration.client.rendering.EaselMenuRenderer;
+import com.devbobcorn.nekoration.client.rendering.PhonographRenderer;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.BiDyeableBlockItemColor;
 import com.devbobcorn.nekoration.items.DyeableBlockItemColor;
@@ -113,6 +114,7 @@ public final class ClientModEventSubscriber {
 
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.CUSTOM_TYPE.get(), CustomRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.PHONOGRAPH_TYPE.get(), PhonographRenderer::new);
 
 		LOGGER.info("Block Entity Renderers Binded.");
 
