@@ -35,9 +35,13 @@ public class DebugBlockVoxelShapeHighlighter {
 	public static final String Param2 = "showrendershape";
 	public static final String Param3 = "showcollisionshape";
 	public static final String Param4 = "showraytraceshape";
+	// Used on Client-Side only...
+	public static boolean HoldingPalette = false;
+	public static Color PaletteColor = Color.RED;
 
 
 	@SubscribeEvent
+	@SuppressWarnings({"deprecation", "resource"})
 	public static void onDrawBlockHighlightEvent(DrawHighlightEvent.HighlightBlock event) {
 		RayTraceResult rayTraceResult = event.getTarget();
 		if (rayTraceResult.getType() != RayTraceResult.Type.BLOCK)
@@ -62,18 +66,20 @@ public class DebugBlockVoxelShapeHighlighter {
 		// Palette Color Preview...
 		if (itemStack.getItem() == ModItems.PALETTE.get()){
 			// Render Frame in that color...
-			CompoundNBT nbt = itemStack.getTag();
-
-            if (nbt != null && nbt.contains(PaletteItem.ACTIVE, ExpNBTTypes.BYTE_NBT_ID)){
-                byte a = nbt.getByte(PaletteItem.ACTIVE);
-                int[] c = nbt.getIntArray(PaletteItem.COLORS);
-				
-				ActiveRenderInfo ari = event.getInfo();
-				VoxelShape shape = blockstate.getShape(world, blockpos, ISelectionContext.of(ari.getEntity()));
-				drawSelectionBox(event.getContext(), event.getBuffers(), event.getMatrix(), blockpos, ari, shape, NekoColors.getRGBColor(c[a]));
-				return;
-            };
-		}
+			if (!HoldingPalette){ // Update palette color...
+				CompoundNBT nbt = itemStack.getTag();
+				if (nbt != null && nbt.contains(PaletteItem.ACTIVE, ExpNBTTypes.BYTE_NBT_ID)){
+					byte a = nbt.getByte(PaletteItem.ACTIVE);
+					int[] c = nbt.getIntArray(PaletteItem.COLORS);
+					PaletteColor = NekoColors.getRGBColor(c[a]);
+					return;
+				};
+				HoldingPalette = true;
+			}
+			ActiveRenderInfo ari = event.getInfo();
+			VoxelShape shape = blockstate.getShape(world, blockpos, ISelectionContext.of(ari.getEntity()));
+			drawSelectionBox(event.getContext(), event.getBuffers(), event.getMatrix(), blockpos, ari, shape, PaletteColor);
+		} else if (HoldingPalette) HoldingPalette = false;
 
 		boolean showshape = DebugSettings.getDebugParameter(Param1).isPresent() || DebugSettings.getDebugParameterVec3d(Param1).isPresent();
 		boolean showrendershape = DebugSettings.getDebugParameter(Param2).isPresent() || DebugSettings.getDebugParameterVec3d(Param2).isPresent();

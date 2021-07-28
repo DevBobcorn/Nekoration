@@ -1,4 +1,4 @@
-#This is a Python 3 Script used to generate language files for this mod
+#This is a Python3 Script used to generate language files for this mod
 import json
 
 colors = ["black","blue","brown","cyan","gray","green","light_blue","light_gray","lime","magenta","orange","pink","purple","red","white","yellow"]
@@ -11,11 +11,12 @@ chair_us = "Chair"
 table_us = "Table"
 chair_cn = "桌"
 table_cn = "椅"
-stones = ["stone_base","stone_base_bottom","stone_frame","stone_frame_bottom","stone_pillar","stone_pillar_bottom","stone_doric","stone_ionic","stone_corinthian","stone_pot"]
-stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底座","多立克石柱","爱奥尼石柱","科林斯石柱","石质花盆"]
+stones = ["stone_base","stone_base_bottom","stone_frame","stone_frame_bottom","stone_pillar","stone_pillar_bottom","stone_doric","stone_ionic","stone_corinthian","stone_layered","stone_pot"]
+stones_us = ["Stone Base","Stone Base Bottom","Stone Frame","Stone Frame Bottom","Stone Pillar","Stone Pillar Bottom","Doric Stone Pillar","Ionic Stone Pillar","Corinthian Stone Pillar","Layered Stone","Stone Pot"]
+stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底座","多立克石柱","爱奥尼石柱","科林斯石柱","叠层石壁","石质花盆"]
 half_timbers = ["half_timber_p0","half_timber_p1","half_timber_p2","half_timber_p3","half_timber_p4","half_timber_p5","half_timber_p6","half_timber_p7","half_timber_p8","half_timber_p9","half_timber_pillar_p0","half_timber_pillar_p1","half_timber_pillar_p2"]
-half_timbers_us = ["Half Timber","Slash Half Timber","Backslash Half Timber","Bi-Slash Half Timber","Bi-Backslash Half Timber","Center Half Timber","Cross Half Timber","Diamond Half Timber","Checkered Half Timber","Double Half Timber","Half Timber Pillar","Slash Half Timber Pillar","Backslash Half Timber Pillar"]
-half_timbers_cn = ["半露木","斜纹半露木","反斜纹半露木","双斜纹半露木","双反斜纹半露木","中心半露木","十字半露木","菱形半露木","方格半露木","双格半露木","半露木柱","斜纹半露木柱","反斜纹半露木柱"]
+half_timbers_us = ["%s Half Timber","Slash %s Half Timber","Backslash %s Half Timber","Bi-Slash %s Half Timber","Bi-Backslash %s Half Timber","Center %s Half Timber","Cross %s Half Timber","Diamond %s Half Timber","Checkered %s Half Timber","Double %s Half Timber","%s Half Timber Pillar","Slash %s Half Timber Pillar","Backslash %s Half Timber Pillar"]
+half_timbers_cn = ["%s半露木","斜纹%s半露木","反斜纹%s半露木","双斜纹%s半露木","双反斜纹%s半露木","中心%s半露木","十字%s半露木","菱形%s半露木","方格%s半露木","双格%s半露木","%s半露木柱","斜纹%s半露木柱","反斜纹%s半露木柱"]
 windows = ["window_arch","window_cross","window_lancet","window_shade","window_top","window_sill"]
 windows_us = ["Arch Window","Plain Window","Lancet Window","Shade Window","Window Top","Window Sill"]
 windows_cn = ["拱形窗","玻璃窗","尖头窗","百叶窗","窗顶","窗台"]
@@ -72,14 +73,14 @@ for col in range(0, len(colors)):
 # [STONE TAB]
 for stn in range(0, len(stones)):
     ## Include color translation, note if a space should follow (neko_color)
-    obj_us['block.nekoration.' + stones[stn]] = "%s " + getEnName(stones[stn])
+    obj_us['block.nekoration.' + stones[stn]] = "%s " + stones_us[stn]
     obj_cn['block.nekoration.' + stones[stn]] = "%s" + stones_cn[stn]
 
 # [WOODEN TAB]
 for h_t in range(0, len(half_timbers)):
     # (wooden_color, neko_color)
-    obj_us['block.nekoration.' + half_timbers[h_t]] = "%s %s " + half_timbers_us[h_t]
-    obj_cn['block.nekoration.' + half_timbers[h_t]] = "%s%s" + half_timbers_cn[h_t]
+    obj_us['block.nekoration.' + half_timbers[h_t]] = "%s " + half_timbers_us[h_t]
+    obj_cn['block.nekoration.' + half_timbers[h_t]] = "%s" + half_timbers_cn[h_t]
 
 # [WINDOW TAB]
 for win in range(0, len(windows)):

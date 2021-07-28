@@ -9,7 +9,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class CommonForgeEventSubscriber {
 	@SubscribeEvent
 	public static void onCommonSetupEvent(FMLCommonSetupEvent event) {
-		MinecraftForge.EVENT_BUS.register(new Shakaraka());
 		MinecraftForge.EVENT_BUS.register(RegisterDebugCommandEvent.class);
 	}
 }

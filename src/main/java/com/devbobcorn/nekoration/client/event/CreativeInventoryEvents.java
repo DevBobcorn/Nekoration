@@ -9,7 +9,7 @@ import com.devbobcorn.nekoration.NekoColors.EnumWoodenColor;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.client.gui.widget.IconButton;
 import com.devbobcorn.nekoration.client.gui.widget.WoodTypeButton;
-import com.devbobcorn.nekoration.items.BiDyeableBlockItem;
+import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.ModItemTabs;
 
 import org.apache.logging.log4j.LogManager;
@@ -254,8 +254,8 @@ public class CreativeInventoryEvents
             //LOGGER.info(item.toString());
             for(WoodFilter filter : filters)
             {
-                if (filter.isEnabled() && item instanceof BiDyeableBlockItem){
-                    ((BiDyeableBlockItem)item).fillItemCategoryWithWoodType(ModItemTabs.WOODEN_GROUP, filter.getWood(), newItems);
+                if (filter.isEnabled() && item instanceof HalfTimberBlockItem){
+                    ((HalfTimberBlockItem)item).fillItemCategoryWithWoodType(ModItemTabs.WOODEN_GROUP, filter.getWood(), newItems);
                 }
             }
         });

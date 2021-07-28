@@ -1,15 +1,25 @@
 package com.devbobcorn.nekoration.common;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 
 import com.devbobcorn.nekoration.Nekoration;
+import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.google.common.collect.Maps;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FireBlock;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class VanillaCompat {
+	private static final Logger LOGGER = LogManager.getLogger(Nekoration.MODID + " Vanilla Compat");
+
 	public static final Map<Block, Block> BLOCK_STRIPPING_MAP_PLUS = Maps.newHashMap();
 	
 	public static final Map<Item, Integer> COLOR_ITEMS = Maps.newHashMap();
@@ -65,18 +75,20 @@ public class VanillaCompat {
     	registerRawColorItem(Items.DANDELION, 15);
     	registerRawColorItem(Items.SUNFLOWER, 15);
 
-		registerFlameItem(Items.TORCH, 1);
-		registerFlameItem(Items.FLINT_AND_STEEL, 1);
-		registerFlameItem(Items.LANTERN, 1);
-		registerFlameItem(Items.CAMPFIRE, 1);
-		registerFlameItem(Items.SOUL_TORCH, 2);
-		registerFlameItem(Items.SOUL_LANTERN, 2);
-		registerFlameItem(Items.SOUL_CAMPFIRE, 2);
-		registerFlameItem(Items.NETHER_STAR, 3);
-		registerFlameItem(Items.BEACON, 3);
-		registerFlameItem(Items.END_CRYSTAL, 3);
+		registerCandleFlameItem(Items.TORCH, 1);
+		registerCandleFlameItem(Items.FLINT_AND_STEEL, 1);
+		registerCandleFlameItem(Items.LANTERN, 1);
+		registerCandleFlameItem(Items.CAMPFIRE, 1);
+		registerCandleFlameItem(Items.SOUL_TORCH, 2);
+		registerCandleFlameItem(Items.SOUL_LANTERN, 2);
+		registerCandleFlameItem(Items.SOUL_CAMPFIRE, 2);
+		registerCandleFlameItem(Items.NETHER_STAR, 3);
+		registerCandleFlameItem(Items.BEACON, 3);
+		registerCandleFlameItem(Items.END_CRYSTAL, 3);
+
+		registerFlammablity();
         
-        Nekoration.LOGGER.debug("Vanilla Compat Initialized!");
+        LOGGER.debug("Vanilla Compat Initialized!");
     }
 	
     public static void registerColorItem(Item item, Integer num) {
@@ -87,7 +99,65 @@ public class VanillaCompat {
     	RAW_COLOR_ITEMS.put(item, num);
     }
 
-	public static void registerFlameItem(Item item, Integer num) {
+	public static void registerCandleFlameItem(Item item, Integer num) {
     	FLAME_ITEMS.put(item, num);
     }
+
+	public static void registerFlammablity(){
+		try{
+			Method setFlammable = ObfuscationReflectionHelper.findMethod(FireBlock.class, "func_180686_a", Block.class, int.class, int.class);
+			// Half-Timber Blocks...
+			final FireBlock fire = (FireBlock)Blocks.FIRE;
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P0.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P1.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P2.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P3.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P4.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P5.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P6.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P7.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P8.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P9.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_PILLAR_P0.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_PILLAR_P1.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_PILLAR_P2.get(), 5, 20);
+			// Tables & Chairs...
+			setFlammable.invoke(fire, ModBlocks.PUMPKIN_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.PUMPKIN_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.OAK_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.OAK_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.JUNGLE_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.JUNGLE_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.ACACIA_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.ACACIA_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.BIRCH_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.BIRCH_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DARK_OAK_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DARK_OAK_TABLE.get(), 5, 20);
+			// Windows & Doors...
+			setFlammable.invoke(fire, ModBlocks.WINDOW_ARCH.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.WINDOW_CROSS.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.WINDOW_LANCET.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.WINDOW_SHADE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.WINDOW_SILL.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.WINDOW_TOP.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DOOR_1.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DOOR_2.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DOOR_3.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DOOR_TALL_1.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DOOR_TALL_2.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DOOR_TALL_3.get(), 5, 20);
+			// Awning...
+			setFlammable.invoke(fire, ModBlocks.AWNING_PURE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.AWNING_PURE_SHORT.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.AWNING_STRIPE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.AWNING_STRIPE_SHORT.get(), 5, 20);
+			// Easel Menu...
+			setFlammable.invoke(fire, ModBlocks.EASEL_MENU.get(), 5, 20);
+			LOGGER.info("Flammability Registered!");
+		} catch (Exception e){
+			LOGGER.info("Failed to Register Flammability");
+			e.printStackTrace();
+		}
+	}
 }

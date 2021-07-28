@@ -2,7 +2,7 @@ package com.devbobcorn.nekoration.items;
 
 import javax.annotation.Nullable;
 
-import com.devbobcorn.nekoration.NekoColors.EnumNekoColor;
+import com.devbobcorn.nekoration.NekoColors.EnumStoneColor;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
@@ -15,50 +15,37 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class DyeableBlockItem extends BlockItem {
+public class DyeableStoneBlockItem extends BlockItem {
     public static final String NBT_TAG_NAME_COLOR = "color";
-	private final boolean showAllVariants;
 
-    public DyeableBlockItem(Block block, Properties settings) {
+    public DyeableStoneBlockItem(Block block, Properties settings) {
         super(block, settings);
-		showAllVariants = true;
-    }
-
-	public DyeableBlockItem(Block block, Properties settings, boolean allVariants) {
-        super(block, settings);
-		showAllVariants = allVariants;
     }
 
 	@Override
 	public void fillItemCategory(ItemGroup tab, NonNullList<ItemStack> subItems) {
 		if (this.allowdedIn(tab)) {
-			if (showAllVariants)
-				for (EnumNekoColor color : EnumNekoColor.values()) {
-					ItemStack subItemStack = new ItemStack(this, 1);
-					setColor(subItemStack, color);
-					subItems.add(subItemStack);
-				}
-			else {
+			for (EnumStoneColor color : EnumStoneColor.values()) {
 				ItemStack subItemStack = new ItemStack(this, 1);
-				setColor(subItemStack, EnumNekoColor.WHITE);
+				setColor(subItemStack, color);
 				subItems.add(subItemStack);
 			}
 		}
 	}
 
-    public static EnumNekoColor getColor(ItemStack stack) {
+    public static EnumStoneColor getColor(ItemStack stack) {
 		CompoundNBT compoundNBT = stack.getOrCreateTag();
-		return EnumNekoColor.fromNBT(compoundNBT, NBT_TAG_NAME_COLOR);
+		return EnumStoneColor.fromNBT(compoundNBT, NBT_TAG_NAME_COLOR);
 	}
 
-    public static void setColor(ItemStack stack, EnumNekoColor color) {
+    public static void setColor(ItemStack stack, EnumStoneColor color) {
         CompoundNBT compoundNBT = stack.getOrCreateTag();
         color.putIntoNBT(compoundNBT, NBT_TAG_NAME_COLOR);
 	}
 
 	public static float getColorPropertyOverride(ItemStack itemStack, @Nullable World world,
 		@Nullable LivingEntity livingEntity) {
-		EnumNekoColor color = DyeableBlockItem.getColor(itemStack);
+		EnumStoneColor color = DyeableStoneBlockItem.getColor(itemStack);
 		return color.getPropertyOverrideValue();
 	}
 

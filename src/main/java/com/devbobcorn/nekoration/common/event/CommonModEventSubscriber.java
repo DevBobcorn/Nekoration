@@ -1,8 +1,10 @@
 package com.devbobcorn.nekoration.common.event;
 
 import com.devbobcorn.nekoration.Nekoration;
-import com.devbobcorn.nekoration.blocks.BiDyeableBlock;
-import com.devbobcorn.nekoration.blocks.BiDyeableVerticalConnectBlock;
+import com.devbobcorn.nekoration.blocks.StoneBlock;
+import com.devbobcorn.nekoration.blocks.StonePillarBlock;
+import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
+import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
 import com.devbobcorn.nekoration.blocks.CandleHolderBlock;
 import com.devbobcorn.nekoration.blocks.ChairBlock;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
@@ -14,8 +16,9 @@ import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.TableBlock;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
 import com.devbobcorn.nekoration.common.VanillaCompat;
-import com.devbobcorn.nekoration.items.BiDyeableBlockItem;
+import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
+import com.devbobcorn.nekoration.items.DyeableStoneBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.items.ModItemTabs;
 import com.devbobcorn.nekoration.particles.FlameParticleType;
@@ -58,23 +61,29 @@ public final class CommonModEventSubscriber {
 					// Classes: HalfTimberBlock / HalfTimberPillarBlock
 					properties = new Item.Properties().tab(ModItemTabs.FURNITURE_GROUP);
 					blockItem = new BlockItem(block, properties);
-				} else if (block instanceof BiDyeableBlock || block instanceof BiDyeableVerticalConnectBlock){
+				} else if (block instanceof HalfTimberBlock || block instanceof HalfTimberPillarBlock){
 					// Classes: HalfTimberBlock / HalfTimberPillarBlock
 					properties = new Item.Properties().tab(ModItemTabs.WOODEN_GROUP);
-					blockItem = new BiDyeableBlockItem(block, properties);
+					blockItem = new HalfTimberBlockItem(block, properties);
 				} else if (block instanceof WindowBlock || block instanceof EaselMenuBlock){
 					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
 					properties = new Item.Properties().tab(block instanceof WindowBlock ? ModItemTabs.WINDOW_N_DOOR_GROUP : ModItemTabs.DECOR_GROUP);
 					blockItem = new DyeableWoodenBlockItem(block, properties);
-				} else if (block instanceof DyeableBlock || block instanceof DyeableHorizontalConnectBlock){
+				} else if (block instanceof StoneBlock || block instanceof StonePillarBlock){
+					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: Light Gray
+					properties = new Item.Properties().tab(ModItemTabs.STONE_GROUP);
+					blockItem = new DyeableStoneBlockItem(block, properties);
+				}else out:if (block instanceof DyeableBlock || block instanceof DyeableHorizontalConnectBlock){
 					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
-					if (block instanceof CandleHolderBlock)
+					if (block instanceof CandleHolderBlock){
 						properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
-					else if (block instanceof DyeableHorizontalBlock) {
+						blockItem = new DyeableBlockItem(block, properties, false);
+						break out;
+					} else if (block instanceof DyeableHorizontalBlock) {
 						if (block instanceof DyeableHorizontalConnectBlock) // Window Frame...
 							properties = new Item.Properties().tab(ModItemTabs.WINDOW_N_DOOR_GROUP);
 						else properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP); // Awning...
-					} else properties = new Item.Properties().tab(ModItemTabs.STONE_GROUP);
+					} else properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
 					blockItem = new DyeableBlockItem(block, properties);
 				} else {
 					if (block instanceof DyeableDoorBlock)

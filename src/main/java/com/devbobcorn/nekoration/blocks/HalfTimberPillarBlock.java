@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class BiDyeableVerticalConnectBlock extends BiDyeableBlock {
+public class HalfTimberPillarBlock extends HalfTimberBlock {
 	public enum ConnectionType {
 		DOUBLE, TRIPLE, PILLAR;
 	}
@@ -27,13 +27,13 @@ public class BiDyeableVerticalConnectBlock extends BiDyeableBlock {
 	public final ConnectionType type;
 	public final boolean connectOthers;
 
-	public BiDyeableVerticalConnectBlock(Properties settings) {
+	public HalfTimberPillarBlock(Properties settings) {
 		super(settings);
 		type = ConnectionType.TRIPLE;
 		connectOthers = false;
 	}
 
-	public BiDyeableVerticalConnectBlock(Properties settings, ConnectionType tp, boolean co) {
+	public HalfTimberPillarBlock(Properties settings, ConnectionType tp, boolean co) {
 		super(settings);
 		type = tp;
 		connectOthers = co;
@@ -46,7 +46,7 @@ public class BiDyeableVerticalConnectBlock extends BiDyeableBlock {
 		BlockState stateD = blockView.getBlockState(blockPosD);
 		
 		//System.out.println("BlockPlaced!");
-		if (stateD.getBlock() instanceof BiDyeableVerticalConnectBlock && (connectOthers || stateD.getBlock() == this)) {
+		if (stateD.getBlock() instanceof HalfTimberPillarBlock && (connectOthers || stateD.getBlock() == this)) {
 			//System.out.println(stateD.get(CONNECTION));
 			switch (stateD.getValue(CONNECTION)) {
 			case S0:
@@ -72,13 +72,13 @@ public class BiDyeableVerticalConnectBlock extends BiDyeableBlock {
 			IWorld world, BlockPos pos, BlockPos posFrom) {
 		BlockState res = state;
 		
-		if (direction == Direction.UP && newState.getBlock() instanceof BiDyeableVerticalConnectBlock && (connectOthers || newState.getBlock() == this)) {
+		if (direction == Direction.UP && newState.getBlock() instanceof HalfTimberPillarBlock && (connectOthers || newState.getBlock() == this)) {
 			BlockState stateD = world.getBlockState(pos.below());
 			switch (newState.getValue(CONNECTION)) {
 			case D1:
 				return res.setValue(CONNECTION, VerticalConnection.D0);
 			case T1:
-				return res.setValue(CONNECTION, (type == ConnectionType.PILLAR && stateD.getBlock() instanceof BiDyeableVerticalConnectBlock && (connectOthers || stateD.getBlock() == this)) ? VerticalConnection.T1 : VerticalConnection.T0);
+				return res.setValue(CONNECTION, (type == ConnectionType.PILLAR && stateD.getBlock() instanceof HalfTimberPillarBlock && (connectOthers || stateD.getBlock() == this)) ? VerticalConnection.T1 : VerticalConnection.T0);
 			case T2:
 				return res.setValue(CONNECTION, VerticalConnection.T1);
 			default:

@@ -7,7 +7,7 @@ import java.awt.*;
 
 import com.devbobcorn.nekoration.NekoColors;
 
-public class BiDyeableBlockItemColor implements IItemColor {
+public class HalfTimberBlockItemColor implements IItemColor {
 	@Override
 	public int getColor(ItemStack stack, int tintIndex) {
 		// when rendering, choose the colour multiplier based on the contents
@@ -17,10 +17,10 @@ public class BiDyeableBlockItemColor implements IItemColor {
 		{
 			switch (tintIndex) {
 				case 0:
-					NekoColors.EnumWoodenColor color0 = BiDyeableBlockItem.getColor0(stack);
+					NekoColors.EnumWoodenColor color0 = HalfTimberBlockItem.getColor0(stack);
 					return color0.getColor();
                 case 1:
-					NekoColors.EnumNekoColor color1 = BiDyeableBlockItem.getColor1(stack);
+					NekoColors.EnumNekoColor color1 = HalfTimberBlockItem.getColor1(stack);
 					return color1.getColor();
 				default: {
 					// oops! should never get here.

@@ -89,22 +89,22 @@ public class NekoColors {
 	}
 
 	public enum EnumNekoColor implements IStringSerializable {
-		BLACK((byte)0, "black", 0x393939),
+		BLACK((byte)0, "black", 0x5c5c5c),
 		BLUE((byte)1, "blue" , 0x2891ff),
 		BROWN((byte)2, "brown", 0x673400),
 		CYAN((byte)3, "cyan", 0x94e2ff),
-		GRAY((byte)4, "gray", 0x757575),
+		GRAY((byte)4, "gray", 0x9f9f9f),
 		GREEN((byte)5, "green", 0x33b54c),
 		LIGHT_BLUE((byte)6, "light_blue", 0x75aaff),
 		LIGHT_GRAY((byte)7, "light_gray", 0xbebebe),
-		LIME((byte)8, "lime", 0x7aff8f), //7df494
+		LIME((byte)8, "lime", 0x7aff8f),
 		MAGENTA((byte)9, "magenta", 0xf976ff),
-		ORANGE((byte)10, "orange", 0xff7700), //ff9500
-		PINK((byte)11, "pink", 0xffa3e0), //ff3baf
+		ORANGE((byte)10, "orange", 0xff7700),
+		PINK((byte)11, "pink", 0xffa3e0),
 		PURPLE((byte)12, "purple", 0xbc61ff),
 		RED((byte)13, "red", 0xe03f3f),
 		WHITE((byte)14, "white", 0xffffff),
-		YELLOW((byte)15, "yellow", 0xffc80a); //ffd54f
+		YELLOW((byte)15, "yellow", 0xffc80a);
 
 		@Override
 		public String toString() {
@@ -158,7 +158,7 @@ public class NekoColors {
 				if (c.nbtID == ID)
 					return c;
 			}
-			return EnumNekoColor.WHITE;
+			return EnumNekoColor.LIGHT_GRAY;
 		}
 
 		public static int getColorValueFromID(byte ID) {
@@ -166,7 +166,98 @@ public class NekoColors {
 				if (c.nbtID == ID)
 					return c.color;
 			}
-			return WHITE.color;
+			return LIGHT_GRAY.color;
+		}
+
+		public float getPropertyOverrideValue() {
+			return nbtID;
+		}
+	}
+
+    // Stone Colors...
+	public static int getStoneColorOrLightGray(int id) {
+		return EnumStoneColor.getColorValueFromID((byte)id);
+	}
+
+	public enum EnumStoneColor implements IStringSerializable {
+		BLACK((byte)0, "black", 0x5c5c5c),
+		BLUE((byte)1, "blue" , 0x6b95b5), //0x497cbc
+		BROWN((byte)2, "brown", 0xa37864),
+		CYAN((byte)3, "cyan", 0x8ebcce), //0x70afc7
+		GRAY((byte)4, "gray", 0x9f9f9f),
+		GREEN((byte)5, "green", 0x6ca274),
+		LIGHT_BLUE((byte)6, "light_blue", 0xa5b7d5), //0x7893c2
+		LIGHT_GRAY((byte)7, "light_gray", 0xbebebe),
+		LIME((byte)8, "lime", 0x8fc28f),
+		MAGENTA((byte)9, "magenta", 0xca7fce),
+		ORANGE((byte)10, "orange", 0xc9987b),
+		PINK((byte)11, "pink", 0xd791bf),
+		PURPLE((byte)12, "purple", 0xb180d7),
+		RED((byte)13, "red", 0xcd8585),
+		WHITE((byte)14, "white", 0xffffff),
+		YELLOW((byte)15, "yellow", 0xe4d6ad); //0xdbc37f
+
+		@Override
+		public String toString() {
+			return this.name;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.name;
+		}
+
+		public int getColor() {
+			return color;
+		}
+		
+		public int getNBTId() {
+			return (int)nbtID;
+		}
+
+		public static EnumStoneColor fromNBT(CompoundNBT compoundNBT, String tagname) {
+			byte flavorID = 0; // default in case of error
+			if (compoundNBT != null && compoundNBT.contains(tagname)) {
+				flavorID = compoundNBT.getByte(tagname);
+			}
+			EnumStoneColor color = getColorEnumFromID(flavorID);
+			return color; // default is light gray
+		}
+
+		/**
+		 * Write this enum to NBT
+		 * 
+		 * @param compoundNBT
+		 * @param tagname
+		 */
+		public void putIntoNBT(CompoundNBT compoundNBT, String tagname) {
+			compoundNBT.putByte(tagname, nbtID);
+		}
+
+		private final byte nbtID;
+		private final String name;
+		private final int color;
+
+		EnumStoneColor(byte i_NBT_ID, String i_name, int i_color) {
+			this.nbtID = (byte) i_NBT_ID;
+			this.name = i_name;
+			this.color = i_color;
+		}
+
+		public static EnumStoneColor getColorEnumFromID(byte ID) {
+			for (EnumStoneColor c : EnumStoneColor.values()) {
+				if (c.nbtID == ID)
+					return c;
+			}
+			return EnumStoneColor.LIGHT_GRAY;
+		}
+
+		public static int getColorValueFromID(byte ID) {
+			for (EnumStoneColor c : EnumStoneColor.values()) {
+				if (c.nbtID == ID)
+					return c.color;
+			}
+			return LIGHT_GRAY.color;
 		}
 
 		public float getPropertyOverrideValue() {

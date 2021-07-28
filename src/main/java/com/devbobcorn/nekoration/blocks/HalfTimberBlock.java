@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.common.VanillaCompat;
-import com.devbobcorn.nekoration.items.BiDyeableBlockItem;
+import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -26,11 +26,11 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class BiDyeableBlock extends Block {
+public class HalfTimberBlock extends Block {
 	public static final IntegerProperty COLOR0 = BlockStateProperties.LEVEL;
 	public static final IntegerProperty COLOR1 = BlockStateProperties.AGE_15;
 
-	public BiDyeableBlock(Properties settings) {
+	public HalfTimberBlock(Properties settings) {
 		super(settings);
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR0, 2).setValue(COLOR1, 14));
 	}
@@ -62,8 +62,8 @@ public class BiDyeableBlock extends Block {
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
 		ItemStack stack = ctx.getItemInHand();
-		if (stack.getItem() instanceof BiDyeableBlockItem)
-			return this.defaultBlockState().setValue(COLOR0, BiDyeableBlockItem.getColor0(stack).getNBTId()).setValue(COLOR1, BiDyeableBlockItem.getColor1(stack).getNBTId());
+		if (stack.getItem() instanceof HalfTimberBlockItem)
+			return this.defaultBlockState().setValue(COLOR0, HalfTimberBlockItem.getColor0(stack).getNBTId()).setValue(COLOR1, HalfTimberBlockItem.getColor1(stack).getNBTId());
 		return this.defaultBlockState();
     }
 
@@ -71,16 +71,16 @@ public class BiDyeableBlock extends Block {
     @Override
     public ItemStack getPickBlock(@Nonnull BlockState state, RayTraceResult target, @Nonnull IBlockReader world, @Nonnull BlockPos pos, PlayerEntity player) {
 		ItemStack stack = new ItemStack(this.asItem());
-		BiDyeableBlockItem.setColor0(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR0).byteValue()));
-		BiDyeableBlockItem.setColor1(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR1).byteValue()));
+		HalfTimberBlockItem.setColor0(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR0).byteValue()));
+		HalfTimberBlockItem.setColor1(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR1).byteValue()));
         return stack;
     }
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack stack = new ItemStack(this.asItem());
-		BiDyeableBlockItem.setColor0(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR0).byteValue()));
-		BiDyeableBlockItem.setColor1(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR1).byteValue()));
+		HalfTimberBlockItem.setColor0(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR0).byteValue()));
+		HalfTimberBlockItem.setColor1(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR1).byteValue()));
 		return Collections.singletonList(stack);
 	}
 }

@@ -12,11 +12,11 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class BiDyeableBlockItem extends BlockItem {
+public class HalfTimberBlockItem extends BlockItem {
     public static final String NBT_TAG_NAME_COLOR_0 = "color_0"; // Color of outer layer
     public static final String NBT_TAG_NAME_COLOR_1 = "color_1"; // Color of inner layer
 
-    public BiDyeableBlockItem(Block block, Properties settings) {
+    public HalfTimberBlockItem(Block block, Properties settings) {
         super(block, settings);
     }
 
