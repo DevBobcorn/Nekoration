@@ -16,6 +16,7 @@ import com.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import com.devbobcorn.nekoration.client.rendering.CustomRenderer;
 import com.devbobcorn.nekoration.client.rendering.EaselMenuRenderer;
 import com.devbobcorn.nekoration.client.rendering.PhonographRenderer;
+import com.devbobcorn.nekoration.debug.DebugBlockVoxelShapeHighlighter;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.BiDyeableBlockItemColor;
 import com.devbobcorn.nekoration.items.DyeableBlockItemColor;
@@ -131,16 +132,20 @@ public final class ClientModEventSubscriber {
 		// multithread-safe. So we need to use the enqueueWork method,
 		// which lets us register a function for synchronous execution in the main
 		// thread after the parallel processing is completed
-		event.enqueueWork(ClientModEventSubscriber::registerPropertyOverride);
+		event.enqueueWork(ClientModEventSubscriber::registerPropertyOverrides);
 
 		LOGGER.info("Property Overrides Registered.");
 
 		ScreenManager.register(ModContainerType.EASEL_MENU_TYPE.get(), EaselMenuScreen::new);
 
 		LOGGER.info("Nekoration Screens Registered.");
+
+		MinecraftForge.EVENT_BUS.register(DebugBlockVoxelShapeHighlighter.class);
+
+		LOGGER.info("OutlineHighlighter Registered.");
 	}
 
-	public static void registerPropertyOverride() {
+	public static void registerPropertyOverrides() {
 		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_pure")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
 		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_stripe")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
 		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_pure_short")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
@@ -244,7 +249,7 @@ public final class ClientModEventSubscriber {
 	// Register the factory that will spawn our Particle from ParticleData
 	@SubscribeEvent
 	@SuppressWarnings({ "resource" })
-	public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
+	public static void onRegisterParticleFactories(ParticleFactoryRegisterEvent event) {
 		// beware - there are two registerFactory methods with different signatures.
 		// If you use the wrong one it will put Minecraft into an infinite loading loop
 		// with no console errors

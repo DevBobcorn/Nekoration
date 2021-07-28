@@ -3,15 +3,17 @@ package com.devbobcorn.nekoration.client.rendering;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RegionRenderCacheBuilder;
+import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher;
 import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher.ChunkRender;
+import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher.ChunkRender.RebuildTask;
 import net.minecraft.tileentity.TileEntity;
-//import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.vector.Vector3d;
 
 // A wrapper around ChunkRender.
 // Stores the a render of the chunk (16x16x16) surrounding a TileEntity
-
 @SuppressWarnings("unused")
 public class MiniMapModel {
 	/*
@@ -30,7 +32,8 @@ public class MiniMapModel {
 	}
 
 	public static MiniMapModel forTileEntity(final TileEntity tileEntity) {
-		final ChunkRender chunkRender = new ChunkRender();
+		final ChunkRenderDispatcher.ChunkRender.RebuildTask task = new RebuildTask(new ChunkPos(tileEntity.getBlockPos()), 64.0D, regionRenderCacheBuilder.builder());
+		final ChunkRender chunkRender = ChunkRenderDispatcher.ChunkRenderTask
 		final BlockPos pos = tileEntity.getBlockPos();
 
 		// We want to render everything in a 16x16x16 radius, with the centre being the TileEntity

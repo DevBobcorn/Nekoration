@@ -1,21 +1,21 @@
 package com.devbobcorn.nekoration.common.event;
 
 import com.devbobcorn.nekoration.Nekoration;
-import com.devbobcorn.nekoration.blocks.ModBlocks;
-import com.devbobcorn.nekoration.blocks.ChairBlock;
-import com.devbobcorn.nekoration.blocks.TableBlock;
+import com.devbobcorn.nekoration.blocks.BiDyeableBlock;
+import com.devbobcorn.nekoration.blocks.BiDyeableVerticalConnectBlock;
 import com.devbobcorn.nekoration.blocks.CandleHolderBlock;
-import com.devbobcorn.nekoration.blocks.WindowBlock;
-import com.devbobcorn.nekoration.common.VanillaCompat;
+import com.devbobcorn.nekoration.blocks.ChairBlock;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
 import com.devbobcorn.nekoration.blocks.DyeableDoorBlock;
-import com.devbobcorn.nekoration.blocks.EaselMenuBlock;
-import com.devbobcorn.nekoration.blocks.BiDyeableBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalBlock;
-import com.devbobcorn.nekoration.blocks.BiDyeableVerticalConnectBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
-import com.devbobcorn.nekoration.items.DyeableBlockItem;
+import com.devbobcorn.nekoration.blocks.EaselMenuBlock;
+import com.devbobcorn.nekoration.blocks.ModBlocks;
+import com.devbobcorn.nekoration.blocks.TableBlock;
+import com.devbobcorn.nekoration.blocks.WindowBlock;
+import com.devbobcorn.nekoration.common.VanillaCompat;
 import com.devbobcorn.nekoration.items.BiDyeableBlockItem;
+import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.items.ModItemTabs;
 import com.devbobcorn.nekoration.particles.FlameParticleType;
@@ -91,10 +91,10 @@ public final class CommonModEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void onIParticleTypeRegistration(RegistryEvent.Register<ParticleType<?>> iParticleTypeRegisterEvent) {
+	public static void onRegisterIParticleTypes(RegistryEvent.Register<ParticleType<?>> event) {
 		ModParticles.FLAME = new FlameParticleType();
 		ModParticles.FLAME.setRegistryName(Nekoration.MODID, "flame");
-		iParticleTypeRegisterEvent.getRegistry().register(ModParticles.FLAME);
+		event.getRegistry().register(ModParticles.FLAME);
 	}
 
 	@SubscribeEvent

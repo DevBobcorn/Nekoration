@@ -4,6 +4,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
 
 import java.awt.Color;
 public class NekoColors {
@@ -20,6 +22,23 @@ public class NekoColors {
 		return getRGBColorBetween(frac,lc,rc);
 	}
 	
+	public static final Color getRGBColor(Vector3i vec){
+		return new Color(Math.min(Math.max(vec.getX(), 0), 255), Math.min(Math.max(vec.getY(), 0), 255), Math.min(Math.max(vec.getZ(), 0), 255));
+	}
+
+	public static final Color getRGBColor(Vector3d vec){
+		return new Color(Math.min(Math.max((int)vec.x, 0), 255), Math.min(Math.max((int)vec.y, 0), 255), Math.min(Math.max((int)vec.z, 0), 255));
+	}
+
+	public static Color getRGBColor(double col){
+		int col1 = (int)col;
+		return new Color((col1 & 0xff0000) >> 16, (col1 & 0xff00) >> 8, col1 & 0xff);
+	}
+
+	public static Color getRGBColor(int col){
+		return new Color((col & 0xff0000) >> 16, (col & 0xff00) >> 8, col & 0xff);
+	}
+
 	public static int getRGBColorBetween(double frac,int lc,int rc) {
 		int red1 = (lc & 0xff0000) >> 16;
     	int green1 = (lc & 0xff00) >> 8;

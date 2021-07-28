@@ -13,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.containers.ModContainerType;
 import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
+import com.devbobcorn.nekoration.common.event.CommonForgeEventSubscriber;
+import com.devbobcorn.nekoration.debug.RegisterDebugCommandEvent;
 import com.devbobcorn.nekoration.exp.ExpClientOnly;
 import com.devbobcorn.nekoration.exp.ExpCommon;
 import com.devbobcorn.nekoration.items.ModItems;
@@ -50,6 +52,8 @@ public class Nekoration {
 		//ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 		ModContainerType.CONTAINER_TYPES.register(modEventBus);
 		ModTileEntityType.TILE_ENTITY_TYPES.register(modEventBus);
+
+		modEventBus.register(CommonForgeEventSubscriber.class);
 
 		// Register Configs
 		//modLoadingContext.registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);
