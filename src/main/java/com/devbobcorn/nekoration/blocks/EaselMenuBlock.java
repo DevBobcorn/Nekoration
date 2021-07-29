@@ -7,6 +7,7 @@ import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.NekoColors;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,16 +20,24 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class EaselMenuBlock extends DyeableHorizontalBlock {
+	private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+
     public EaselMenuBlock(Properties settings) {
         super(settings);
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 2));
     }
     
+	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
+        return SHAPE;
+    }
+	
     @Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;

@@ -181,21 +181,21 @@ public class NekoColors {
 
 	public enum EnumStoneColor implements IStringSerializable {
 		BLACK((byte)0, "black", 0x5c5c5c),
-		BLUE((byte)1, "blue" , 0x6b95b5), //0x497cbc
+		BLUE((byte)1, "blue" , 0x609cc9), //0x497cbc
 		BROWN((byte)2, "brown", 0xa37864),
-		CYAN((byte)3, "cyan", 0x8ebcce), //0x70afc7
+		CYAN((byte)3, "cyan", 0x82c0d9), //0x70afc7
 		GRAY((byte)4, "gray", 0x9f9f9f),
-		GREEN((byte)5, "green", 0x6ca274),
-		LIGHT_BLUE((byte)6, "light_blue", 0xa5b7d5), //0x7893c2
+		GREEN((byte)5, "green", 0x56a362),
+		LIGHT_BLUE((byte)6, "light_blue", 0xaec3e5), //0x7893c2
 		LIGHT_GRAY((byte)7, "light_gray", 0xbebebe),
-		LIME((byte)8, "lime", 0x8fc28f),
-		MAGENTA((byte)9, "magenta", 0xca7fce),
-		ORANGE((byte)10, "orange", 0xc9987b),
-		PINK((byte)11, "pink", 0xd791bf),
+		LIME((byte)8, "lime", 0x97d297),
+		MAGENTA((byte)9, "magenta", 0xde97e2),
+		ORANGE((byte)10, "orange", 0xdaa57c),
+		PINK((byte)11, "pink", 0xde95c5),
 		PURPLE((byte)12, "purple", 0xb180d7),
-		RED((byte)13, "red", 0xcd8585),
-		WHITE((byte)14, "white", 0xffffff),
-		YELLOW((byte)15, "yellow", 0xe4d6ad); //0xdbc37f
+		RED((byte)13, "red", 0xe07272),
+		WHITE((byte)14, "white", 0xfef8ec),
+		YELLOW((byte)15, "yellow", 0xe8d294); //0xdbc37f
 
 		@Override
 		public String toString() {
@@ -272,18 +272,18 @@ public class NekoColors {
 
 	public enum EnumWoodenColor implements IStringSerializable {
 		BLACK((byte)0, "black", 0x5c3c1b), // dark_oak
-		BLUE((byte)1, "blue" , 0x53b6ff),
+		BLUE((byte)1, "blue" , 0x446184),
 		BROWN((byte)2, "brown", 0x886541), // spruce
 		CYAN((byte)3, "cyan", 0x389a99), // warped
 		GRAY((byte)4, "gray", 0xa27d64), // jungle
-		GREEN((byte)5, "green", 0x33b54c),
-		LIGHT_BLUE((byte)6, "light_blue", 0x75aaff),
+		GREEN((byte)5, "green", 0x179930),
+		LIGHT_BLUE((byte)6, "light_blue", 0x53b6ff),
 		LIGHT_GRAY((byte)7, "light_gray", 0xb9955b), // oak
-		LIME((byte)8, "lime", 0x7df494),
-		MAGENTA((byte)9, "magenta", 0xbd0bab), // crimson
+		LIME((byte)8, "lime", 0x33b54c),
+		MAGENTA((byte)9, "magenta", 0x873468),  // crimson
 		ORANGE((byte)10, "orange", 0xf0973d), // acacia
-		PINK((byte)11, "pink", 0xff97d7),
-		PURPLE((byte)12, "purple", 0x873468),
+		PINK((byte)11, "pink", 0xcc89b2),
+		PURPLE((byte)12, "purple", 0x6a2a9d),
 		RED((byte)13, "red", 0xe03f3f),
 		WHITE((byte)14, "white", 0xe8d699), // birch
 		YELLOW((byte)15, "yellow", 0xffd54f);

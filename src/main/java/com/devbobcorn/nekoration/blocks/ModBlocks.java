@@ -78,17 +78,17 @@ public final class ModBlocks {
     public static final RegistryObject<Block> CUSTOM = BLOCKS.register("custom", () -> new CustomBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion()));
 
     public static final RegistryObject<Block> PUMPKIN_TABLE = BLOCKS.register("pumpkin_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
-    public static final RegistryObject<Block> PUMPKIN_CHAIR = BLOCKS.register("pumpkin_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> PUMPKIN_CHAIR = BLOCKS.register("pumpkin_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 8, 24));
     public static final RegistryObject<Block> OAK_TABLE = BLOCKS.register("oak_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
-    public static final RegistryObject<Block> OAK_CHAIR = BLOCKS.register("oak_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> OAK_CHAIR = BLOCKS.register("oak_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 9, 24));
     public static final RegistryObject<Block> JUNGLE_TABLE = BLOCKS.register("jungle_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
-    public static final RegistryObject<Block> JUNGLE_CHAIR = BLOCKS.register("jungle_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> JUNGLE_CHAIR = BLOCKS.register("jungle_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 10, 26));
     public static final RegistryObject<Block> ACACIA_TABLE = BLOCKS.register("acacia_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
-    public static final RegistryObject<Block> ACACIA_CHAIR = BLOCKS.register("acacia_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> ACACIA_CHAIR = BLOCKS.register("acacia_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 10, 22));
     public static final RegistryObject<Block> BIRCH_TABLE = BLOCKS.register("birch_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
-    public static final RegistryObject<Block> BIRCH_CHAIR = BLOCKS.register("birch_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> BIRCH_CHAIR = BLOCKS.register("birch_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 10, 26));
     public static final RegistryObject<Block> DARK_OAK_TABLE = BLOCKS.register("dark_oak_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
-    public static final RegistryObject<Block> DARK_OAK_CHAIR = BLOCKS.register("dark_oak_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> DARK_OAK_CHAIR = BLOCKS.register("dark_oak_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 8, 21));
 
 	public static ToIntFunction<BlockState> candleHolderEmission(int lightlevel) {
 		return (state) -> {

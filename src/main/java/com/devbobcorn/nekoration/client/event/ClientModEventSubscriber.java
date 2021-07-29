@@ -213,8 +213,8 @@ public final class ClientModEventSubscriber {
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableDoorBlock))
-				return NekoColors.getStoneColorOrLightGray(7);
-			return NekoColors.getStoneColorOrLightGray(state.getValue(DyeableDoorBlock.COLOR));
+				return NekoColors.getNekoColorOrWhite(14);
+			return NekoColors.getNekoColorOrWhite(state.getValue(DyeableDoorBlock.COLOR));
 		}, ModBlocks.DOOR_1.get(), ModBlocks.DOOR_2.get(), ModBlocks.DOOR_3.get(), ModBlocks.DOOR_TALL_1.get(),
 				ModBlocks.DOOR_TALL_2.get(), ModBlocks.DOOR_TALL_3.get());
 
