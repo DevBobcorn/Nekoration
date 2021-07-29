@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.common.VanillaCompat;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
-import com.devbobcorn.nekoration.items.DyeableStoneBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 
 import net.minecraft.block.Block;
@@ -60,8 +59,6 @@ public class DyeableBlock extends Block {
 		ItemStack stack = ctx.getItemInHand();
 		if (stack.getItem() instanceof DyeableBlockItem)
 			return this.defaultBlockState().setValue(COLOR, DyeableBlockItem.getColor(stack).getNBTId());
-		else if (stack.getItem() instanceof DyeableStoneBlockItem)
-			return this.defaultBlockState().setValue(COLOR, DyeableStoneBlockItem.getColor(stack).getNBTId());
 		else if (stack.getItem() instanceof DyeableWoodenBlockItem)
 			return this.defaultBlockState().setValue(COLOR, DyeableWoodenBlockItem.getColor(stack).getNBTId());
 		return this.defaultBlockState();

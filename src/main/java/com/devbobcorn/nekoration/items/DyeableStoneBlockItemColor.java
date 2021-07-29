@@ -17,8 +17,7 @@ public class DyeableStoneBlockItemColor implements IItemColor {
 		{
 			switch (tintIndex) {
 				case 0:
-					NekoColors.EnumStoneColor color = DyeableStoneBlockItem.getColor(stack);
-					return color.getColor();
+					return NekoColors.getStoneFromNeko(DyeableBlockItem.getColor(stack)).getColor();
 				default: {
 					// oops! should never get here.
 					return Color.BLACK.getRGB();

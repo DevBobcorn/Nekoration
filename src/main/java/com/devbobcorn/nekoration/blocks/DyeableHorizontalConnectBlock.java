@@ -48,7 +48,7 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
 		s.add(COLOR, FACING, CONNECTION);
-	  }
+	}
 
 	public final ConnectionType type;
 	public final boolean connectOthers;

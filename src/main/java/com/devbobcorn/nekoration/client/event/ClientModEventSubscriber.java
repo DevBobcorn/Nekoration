@@ -112,6 +112,8 @@ public final class ClientModEventSubscriber {
 		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_OAK_TABLE.get(), transparentRenderType);
 		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_OAK_CHAIR.get(), transparentRenderType);
 
+		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_OAK_CHAIR.get(), transparentRenderType);
+
 		LOGGER.info("Block Render Types Registered.");
 
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);

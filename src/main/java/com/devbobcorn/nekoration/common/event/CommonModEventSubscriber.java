@@ -18,7 +18,6 @@ import com.devbobcorn.nekoration.blocks.WindowBlock;
 import com.devbobcorn.nekoration.common.VanillaCompat;
 import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
-import com.devbobcorn.nekoration.items.DyeableStoneBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.items.ModItemTabs;
 import com.devbobcorn.nekoration.particles.FlameParticleType;
@@ -72,8 +71,8 @@ public final class CommonModEventSubscriber {
 				} else if (block instanceof StoneBlock || block instanceof StonePillarBlock){
 					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: Light Gray
 					properties = new Item.Properties().tab(ModItemTabs.STONE_GROUP);
-					blockItem = new DyeableStoneBlockItem(block, properties);
-				}else out:if (block instanceof DyeableBlock || block instanceof DyeableHorizontalConnectBlock){
+					blockItem = new DyeableBlockItem(block, properties);
+				} else out:if (block instanceof DyeableBlock || block instanceof DyeableHorizontalConnectBlock){
 					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
 					if (block instanceof CandleHolderBlock){
 						properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);

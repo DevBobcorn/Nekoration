@@ -82,6 +82,10 @@ public class NekoColors {
 	public static float getBluef(int c) {
 		return (float)(c & 0xff) / 255.0F;
 	}
+
+	public static EnumStoneColor getStoneFromNeko(EnumNekoColor col){
+		return EnumStoneColor.getColorEnumFromID(col.nbtID); // TODO: WOODEN
+	}
 	
     // Neko Colors... Meow~
 	public static int getNekoColorOrWhite(int id) {
