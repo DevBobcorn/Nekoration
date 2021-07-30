@@ -28,9 +28,11 @@ public final class ModBlocks {
 
     public static final RegistryObject<Block> WINDOW_TOP = BLOCKS.register("window_top", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.TRIPLE, false));
     public static final RegistryObject<Block> WINDOW_SILL = BLOCKS.register("window_sill", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
-    public static final RegistryObject<Block> WINDOW_PLANT = BLOCKS.register("window_plant", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.PLANT).strength(0.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
+    public static final RegistryObject<Block> WINDOW_PLANT = BLOCKS.register("window_plant", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.LEAVES).strength(0.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
 
-    public static final RegistryObject<Block> STONE_POT = BLOCKS.register("stone_pot", () -> new PotBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion()));
+    public static final RegistryObject<Block> FLOWER_BASKET = BLOCKS.register("flower_basket", () -> new PotBlock(Block.Properties.of(Material.METAL).strength(0.0F).noOcclusion(), 6.0D));
+
+    public static final RegistryObject<Block> STONE_POT = BLOCKS.register("stone_pot", () -> new PotBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), 6.0D));
 
     public static final RegistryObject<Block> HALF_TIMBER_P0 = BLOCKS.register("half_timber_p0", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F)));
     public static final RegistryObject<Block> HALF_TIMBER_P1 = BLOCKS.register("half_timber_p1", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F)));

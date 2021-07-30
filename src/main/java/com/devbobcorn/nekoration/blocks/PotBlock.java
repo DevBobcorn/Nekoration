@@ -11,15 +11,17 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.PlantType;
 
 public class PotBlock extends DyeableBlock {
-    private static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    public final VoxelShape Shape;
+    public final double Radius = 6.0D;
 
-    public PotBlock(Properties settings) {
+    public PotBlock(Properties settings, double radius) {
 		super(settings);
+        Shape = Block.box(8.0D - Radius, 0.0D, 8.0D - Radius, 8.0D + Radius, 16.0D, 8.0 + Radius);
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
 	}
 
     public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
-        return SHAPE;
+        return Shape;
     }
 
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {

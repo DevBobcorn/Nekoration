@@ -9,7 +9,6 @@ import javax.annotation.Nonnull;
 
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.NekoColors.EnumNekoColor;
-import com.devbobcorn.nekoration.NekoColors.EnumStoneColor;
 import com.devbobcorn.nekoration.NekoColors.EnumWoodenColor;
 
 import java.util.function.Supplier;
@@ -17,7 +16,7 @@ import java.util.function.Supplier;
 public class ModItemTabs {
     public static final ItemGroup STONE_GROUP = new ModItemGroup("stone", () -> {
 			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "stone_frame_bottom")));
-			DyeableStoneBlockItem.setColor(icoStack, EnumStoneColor.WHITE);
+			DyeableBlockItem.setColor(icoStack, EnumNekoColor.WHITE);
 			return icoStack;
 		}
 	);
@@ -39,14 +38,13 @@ public class ModItemTabs {
 
 	public static final ItemGroup FURNITURE_GROUP = new ModItemGroup("furniture", () -> {
 			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "oak_table")));
-			//DyeableBlockItem.setColor(icoStack, EnumNekoColor.WHITE);
 			return icoStack;
 		}
 	);
 
 	public static final ItemGroup DECOR_GROUP = new ModItemGroup("decor", () -> {
 			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "easel_menu")));
-			DyeableStoneBlockItem.setColor(icoStack, EnumStoneColor.WHITE);
+			DyeableBlockItem.setColor(icoStack, EnumNekoColor.WHITE);
 			return icoStack;
 		}
 	);

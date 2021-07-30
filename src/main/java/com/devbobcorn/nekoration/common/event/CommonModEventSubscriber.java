@@ -65,15 +65,12 @@ public final class CommonModEventSubscriber {
 					properties = new Item.Properties().tab(ModItemTabs.WOODEN_GROUP);
 					blockItem = new HalfTimberBlockItem(block, properties);
 				} else if (block instanceof WindowBlock || block instanceof EaselMenuBlock){
-					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
 					properties = new Item.Properties().tab(block instanceof WindowBlock ? ModItemTabs.WINDOW_N_DOOR_GROUP : ModItemTabs.DECOR_GROUP);
 					blockItem = new DyeableWoodenBlockItem(block, properties);
 				} else if (block instanceof StoneBlock || block instanceof StonePillarBlock){
-					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: Light Gray
 					properties = new Item.Properties().tab(ModItemTabs.STONE_GROUP);
 					blockItem = new DyeableBlockItem(block, properties);
 				} else out:if (block instanceof DyeableBlock || block instanceof DyeableHorizontalConnectBlock){
-					// Classes: DyeableBlock / CandleHolderBlock / PotBlock / DyeableHorizontalBlock, Default: White
 					if (block instanceof CandleHolderBlock){
 						properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
 						blockItem = new DyeableBlockItem(block, properties, false);
