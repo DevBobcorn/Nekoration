@@ -133,6 +133,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX,
 			int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);

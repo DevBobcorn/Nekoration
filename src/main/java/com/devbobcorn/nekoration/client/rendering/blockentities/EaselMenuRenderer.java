@@ -1,4 +1,4 @@
-package com.devbobcorn.nekoration.client.rendering;
+package com.devbobcorn.nekoration.client.rendering.blockentities;
 
 import com.devbobcorn.nekoration.blocks.EaselMenuBlock;
 import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;

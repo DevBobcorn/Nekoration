@@ -21,17 +21,17 @@ import net.minecraft.util.text.ITextComponent;
 public class PaletteScreen extends Screen {
     public static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(Nekoration.MODID, "textures/gui/palette.png");
 
-    public final int COLORMAP_LEFT = 9;
-    public final int COLORMAP_TOP = 32;
-    public final int COLORMAP_WIDTH = 128;
-    public final int COLORMAP_HEIGHT = 128;
+    public static final int COLORMAP_LEFT = 9;
+    public static final int COLORMAP_TOP = 32;
+    public static final int COLORMAP_WIDTH = 128;
+    public static final int COLORMAP_HEIGHT = 128;
 
-    public final int HUE_LEFT = 141;
-    public final int HUE_TOP = 32;
-    public final int HUE_WIDTH = 6;
-    public final int HUE_HEIGHT = 128;
-    public final int white = (255 << 24) + (255 << 16) + (255 << 8) + 255; // a, r, g, b...
-    public final int black = 255 << 24; // a, r, g, b...
+    public static final int HUE_LEFT = 141;
+    public static final int HUE_TOP = 32;
+    public static final int HUE_WIDTH = 6;
+    public static final int HUE_HEIGHT = 128;
+    public static final int white = (255 << 24) + (255 << 16) + (255 << 8) + 255; // a, r, g, b...
+    public static final int black = 255 << 24; // a, r, g, b...
 
     private final int imageWidth = 156;
     private final int imageHeight = 166;
@@ -93,12 +93,14 @@ public class PaletteScreen extends Screen {
         return super.keyPressed(keyCode, scanCode, modifier);
     }
 
+    @SuppressWarnings("deprecation")
     public void render(MatrixStack stack, int x, int y, float partialTicks) {
         int i = this.leftPos;
         int j = this.topPos;
 
         super.render(stack, x, y, partialTicks);
-
+        // Step 0: Fill the back ground...
+        this.fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...
         this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
 		for (int idx = 0;idx < 6;idx++){
@@ -125,7 +127,7 @@ public class PaletteScreen extends Screen {
         this.fillGradient(stack, i + COLORMAP_LEFT, j + COLORMAP_TOP, i + COLORMAP_LEFT + 128, j + COLORMAP_TOP + 128, 0, black);
         // Step 5: Render Hue & Color cursors...
         if (huePos >= 0)
-            this.blit(stack, i + 140, huePos + this.topPos - 1, 156, 48, 8, 4); // Hue Cursor...
+            this.blit(stack, i + HUE_LEFT - 1, huePos + this.topPos - 1, 156, 48, 8, 4); // Hue Cursor...
         if (colorPos[0] >= 0)
             this.blit(stack, this.leftPos + colorPos[0] - 2, this.topPos + colorPos[1] - 2, 172, 48, 4, 4); // Color Cursor...
         // Step 6: Render Debug Color Value...
@@ -137,6 +139,7 @@ public class PaletteScreen extends Screen {
         else this.font.draw(stack, "Press 'E' to toggle Color Info.", 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
 
+    @SuppressWarnings("deprecation")
 	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE); //We've bound this before...
@@ -145,8 +148,9 @@ public class PaletteScreen extends Screen {
 		this.blit(stack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
 	}
 
+    @Override
     public boolean mouseClicked(double x, double y, int type){
-        if (type == 0 && !updateActiveSlot(x, y)){ // Middle Mouse Only, and first update slots...
+        if (type == 0 && !updateActiveSlot(x, y)){ // Left Mouse Only, and first update slots...
             //System.out.println((isOnColorMap(x, y) ? getColor(x, y) : "Not on ColorMap...") + " type: " + type);
             if (isOnColorMap(x, y))
                 getColor(x, y);
@@ -154,6 +158,17 @@ public class PaletteScreen extends Screen {
                 getHue(x, y);
         }
         return super.mouseClicked(x, y, type);
+    }
+
+    @Override
+    public boolean mouseDragged(double x, double y, int type, double dx, double dy){
+        if (type == 0){
+            if (isOnColorMap(x, y))
+                getColor(x, y);
+            if (isOnHuePicker(x, y))
+                getHue(x, y);
+        }
+        return super.mouseDragged(x, y, type, dx, dy);
     }
 
     private boolean isOnColorMap(double x, double y){

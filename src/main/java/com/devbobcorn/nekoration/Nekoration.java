@@ -14,11 +14,12 @@ import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.containers.ModContainerType;
 import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
 import com.devbobcorn.nekoration.common.event.CommonForgeEventSubscriber;
-import com.devbobcorn.nekoration.debug.RegisterDebugCommandEvent;
+import com.devbobcorn.nekoration.entities.ModEntityType;
 import com.devbobcorn.nekoration.exp.ExpClientOnly;
 import com.devbobcorn.nekoration.exp.ExpCommon;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuTexts;
+import com.devbobcorn.nekoration.network.C2SUpdatePaintingData;
 import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.devbobcorn.nekoration.network.S2CUpdateEaselMenuItems;
@@ -49,7 +50,7 @@ public class Nekoration {
 		ModBlocks.BLOCKS.register(modEventBus);
 		ModItems.ITEMS.register(modEventBus);
 		//ModContainerType.CONTAINER_TYPES.register(modEventBus);
-		//ModEntityTypes.ENTITY_TYPES.register(modEventBus);
+		ModEntityType.ENTITY_TYPES.register(modEventBus);
 		ModContainerType.CONTAINER_TYPES.register(modEventBus);
 		ModTileEntityType.TILE_ENTITY_TYPES.register(modEventBus);
 
@@ -78,5 +79,11 @@ public class Nekoration {
 			C2SUpdatePaletteData::decode,
 			C2SUpdatePaletteData::handle
 		);
+		ModPacketHandler.CHANNEL.registerMessage(networkId++,
+		C2SUpdatePaintingData.class,
+		C2SUpdatePaintingData::encode,
+		C2SUpdatePaintingData::decode,
+		C2SUpdatePaintingData::handle
+	);
     }
 }

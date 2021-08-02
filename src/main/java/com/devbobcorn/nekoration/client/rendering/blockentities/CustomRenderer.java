@@ -1,8 +1,9 @@
-package com.devbobcorn.nekoration.client.rendering;
+package com.devbobcorn.nekoration.client.rendering.blockentities;
 
 import com.devbobcorn.nekoration.blocks.CustomBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
+import com.devbobcorn.nekoration.client.rendering.QuadRenderer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 

@@ -49,7 +49,7 @@ public class S2CUpdateEaselMenuItems {
 		return new S2CUpdateEaselMenuItems(pos, t, x, c);
 	}
 
-    @SuppressWarnings({"resource"})
+    @SuppressWarnings("resource")
 	public static void handle(final S2CUpdateEaselMenuItems msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on CLIENT SIDE...

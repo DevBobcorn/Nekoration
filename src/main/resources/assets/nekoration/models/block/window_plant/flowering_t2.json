@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "nekoration:block/vanilla/oak_leaves",
+		"0": "nekoration:block/leaves_blob",
 		"1": "nekoration:block/flowers",
-		"particle": "nekoration:block/vanilla/oak_leaves"
+		"particle": "nekoration:block/leaves_blob"
 	},
 	"elements": [
 		{

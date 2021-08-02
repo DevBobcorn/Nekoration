@@ -39,6 +39,11 @@ public class NekoColors {
 		return new Color((col & 0xff0000) >> 16, (col & 0xff00) >> 8, col & 0xff);
 	}
 
+	public static int[] getRGBArray(int col){
+		int[] arr = {((col & 0xff0000) >> 16), ((col & 0xff00) >> 8), (col & 0xff)};
+		return arr;
+	}
+
 	public static int getRGBColorBetween(double frac,int lc,int rc) {
 		int red1 = (lc & 0xff0000) >> 16;
     	int green1 = (lc & 0xff00) >> 8;
