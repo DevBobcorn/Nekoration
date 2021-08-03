@@ -34,7 +34,7 @@ public class PaletteItem extends Item {
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, @Nonnull Hand hand) {
         System.out.println("Used Palette Item!");
         ItemStack stack = player.getItemInHand(hand);
-        if (!world.isClientSide) {
+        if (world.isClientSide) {
             // First get the existing data in this palette...
             CompoundNBT nbt = stack.getTag();
 
@@ -49,10 +49,12 @@ public class PaletteItem extends Item {
                 DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { 
                     //Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, col));
                     ClientHelper.showPaletteScreen(hand, a, col);
+                    //System.out.println("Open Palette GUI1.");
                 });
             } else DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { 
                 //Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, DEFAULT_COLOR_SET));
                 ClientHelper.showPaletteScreen(hand, (byte)0, DEFAULT_COLOR_SET);
+                //System.out.println("Open Palette GUI2.");
             });
 		}
         return ActionResult.success(stack);
