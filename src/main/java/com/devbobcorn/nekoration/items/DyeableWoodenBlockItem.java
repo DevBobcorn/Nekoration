@@ -12,7 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class DyeableWoodenBlockItem extends BlockItem {
-    public static final String NBT_TAG_NAME_COLOR = "color";
+    public static final String COLOR = "color";
 
     public DyeableWoodenBlockItem(Block block, Properties settings) {
         super(block, settings);
@@ -31,12 +31,12 @@ public class DyeableWoodenBlockItem extends BlockItem {
 
     public static EnumWoodenColor getColor(ItemStack stack) {
 		CompoundNBT compoundNBT = stack.getOrCreateTag();
-		return EnumWoodenColor.fromNBT(compoundNBT, NBT_TAG_NAME_COLOR);
+		return EnumWoodenColor.fromNBT(compoundNBT, COLOR);
 	}
 
     public static void setColor(ItemStack stack, EnumWoodenColor color) {
         CompoundNBT compoundNBT = stack.getOrCreateTag();
-        color.putIntoNBT(compoundNBT, NBT_TAG_NAME_COLOR);
+        color.putIntoNBT(compoundNBT, COLOR);
 	}
 
 	@Override

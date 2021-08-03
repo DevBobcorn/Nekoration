@@ -45,7 +45,6 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 		return Minecraft.getInstance().getPaintingTextures().getBackSprite().atlas().location();
 	}
 
-	@SuppressWarnings("resource")
 	private void renderPainting(MatrixStack stack, IRenderTypeBuffer buffers, PaintingEntity entity, int width, int height, TextureAtlasSprite woodTex) {
 		MatrixStack.Entry matrixstack$entry = stack.last();
 		Matrix4f pose = matrixstack$entry.pose();
@@ -139,11 +138,13 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 						vertexPaint(pose, normal, vb2, left + posi + 1.0F, bottom + posj + 1.0F, -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // >A
 					}
 				// Draw Debug Text...
+				/*
 				stack.pushPose();
 				stack.translate(-LEFT - 2.0D, -5.0D, -0.6D);
 				stack.scale(-0.2F, -0.2F, 0.2F);
 				Minecraft.getInstance().font.draw(stack, "Ceci n'est pas une painting!", 1.0F, 1.0F, 0xFFFFFF);
 				stack.popPose();
+				*/
 			}
 		}
 

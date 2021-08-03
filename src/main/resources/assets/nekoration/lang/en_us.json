@@ -102,6 +102,7 @@
     "gui.button.nekoration.enable_all": "Enable All",
     "gui.button.nekoration.scroll_down": "Scroll Down",
     "gui.button.nekoration.scroll_up": "Scroll Up",
+    "item.nekoration.painting": "Painting (%sx%s)",
     "item.nekoration.palette": "Palette",
     "item.nekoration.paw": "Cat's Paw",
     "item.nekoration.paw_15": "Rotate 15 Degrees",

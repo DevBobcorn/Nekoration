@@ -94,7 +94,6 @@ public class PaintingScreen extends Screen {
     }
 
 	@Override
-    @SuppressWarnings({"resource"})
     public void onClose() {
 		try {
             // Update Color Data...

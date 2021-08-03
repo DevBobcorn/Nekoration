@@ -21,8 +21,8 @@ import net.minecraftforge.fml.DistExecutor;
 public class PaletteItem extends Item {
     public final static Color[] DEFAULT_COLOR_SET = { Color.RED, Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.MAGENTA };
 
-    public static final String ACTIVE = "Active";
-    public static final String COLORS = "Colors";
+    public static final String ACTIVE = "active";
+    public static final String COLORS = "colors";
 
     public PaletteItem(Properties settings) {
         super(settings);
@@ -32,7 +32,7 @@ public class PaletteItem extends Item {
 	@Override
     @SuppressWarnings("deprecation")
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, @Nonnull Hand hand) {
-        System.out.println("Used Palette Item!");
+        //System.out.println("Used Palette Item!");
         ItemStack stack = player.getItemInHand(hand);
         if (world.isClientSide) {
             // First get the existing data in this palette...
@@ -49,12 +49,10 @@ public class PaletteItem extends Item {
                 DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { 
                     //Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, col));
                     ClientHelper.showPaletteScreen(hand, a, col);
-                    //System.out.println("Open Palette GUI1.");
                 });
             } else DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { 
                 //Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, DEFAULT_COLOR_SET));
                 ClientHelper.showPaletteScreen(hand, (byte)0, DEFAULT_COLOR_SET);
-                //System.out.println("Open Palette GUI2.");
             });
 		}
         return ActionResult.success(stack);

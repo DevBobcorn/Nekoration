@@ -63,7 +63,6 @@ public class PaletteScreen extends Screen {
     }
 
 	@Override
-    @SuppressWarnings({"resource"})
     public void onClose() {
 		try {
 			// Update Color Data...
@@ -100,40 +99,40 @@ public class PaletteScreen extends Screen {
 
         super.render(stack, x, y, partialTicks);
         // Step 0: Fill the back ground...
-        this.fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
+        fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...
-        this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
+        minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
 		for (int idx = 0;idx < 6;idx++){
             RenderSystem.color4f(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
-            this.blit(stack, i + 8 + 18 * idx + (idx > 2 ? 34: 0), j + 13, 172, 32, 16, 16); // Tinted Pure White Quad...
+            blit(stack, i + 8 + 18 * idx + (idx > 2 ? 34: 0), j + 13, 172, 32, 16, 16); // Tinted Pure White Quad...
             if (idx == activeSlot){
-                this.blit(stack, i + 70, j + 13, 172, 32, 16, 16);
+                blit(stack, i + 70, j + 13, 172, 32, 16, 16);
             }
         }
         // Step 2: Render the back ground...
-        this.renderBg(stack, partialTicks, x, y);
+        renderBg(stack, partialTicks, x, y);
         // Step 3: Render Active Slot Indicator...
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.blit(stack, i + 8 + 18 * activeSlot + (activeSlot > 2 ? 34: 0), j + 13, 172, 16, 16, 16); // Slot Indicator...
+        blit(stack, i + 8 + 18 * activeSlot + (activeSlot > 2 ? 34: 0), j + 13, 172, 16, 16, 16); // Slot Indicator...
         // Step 4: Render the color map...
         RenderSystem.glMultiTexCoord2f(33986, 240.0F, 240.0F);
         //int col = (255 << 24) + (255 << 16) + (0 << 8) + 0; // [RED] a, r, g, b...
         stack.pushPose();
         stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
         stack.translate(j + 32, -i - 137, 0);
-        //this.fillGradient(stack, i, j, i + 128, j + 128, col, black);
-        this.fillGradient(stack, 0, 0, 128, 128, colorMapColor.getRGB(), white);
+        //fillGradient(stack, i, j, i + 128, j + 128, col, black);
+        fillGradient(stack, 0, 0, 128, 128, colorMapColor.getRGB(), white);
         stack.popPose();
-        this.fillGradient(stack, i + COLORMAP_LEFT, j + COLORMAP_TOP, i + COLORMAP_LEFT + 128, j + COLORMAP_TOP + 128, 0, black);
+        fillGradient(stack, i + COLORMAP_LEFT, j + COLORMAP_TOP, i + COLORMAP_LEFT + 128, j + COLORMAP_TOP + 128, 0, black);
         // Step 5: Render Hue & Color cursors...
         if (huePos >= 0)
-            this.blit(stack, i + HUE_LEFT - 1, huePos + this.topPos - 1, 156, 48, 8, 4); // Hue Cursor...
+            blit(stack, i + HUE_LEFT - 1, huePos + this.topPos - 1, 156, 48, 8, 4); // Hue Cursor...
         if (colorPos[0] >= 0)
-            this.blit(stack, this.leftPos + colorPos[0] - 2, this.topPos + colorPos[1] - 2, 172, 48, 4, 4); // Color Cursor...
+            blit(stack, this.leftPos + colorPos[0] - 2, this.topPos + colorPos[1] - 2, 172, 48, 4, 4); // Color Cursor...
         // Step 6: Render Debug Color Value...
         stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
         stack.translate(j, -i - 167, 0);
-        //this.fillGradient(stack, i, j, i + 128, j + 128, col, black);
+        //fillGradient(stack, i, j, i + 128, j + 128, col, black);
         if (renderColorText)
             this.font.draw(stack, "Color: " + colors[activeSlot].getRGB() + " R:" +  + colors[activeSlot].getRed() + " G:" +  + colors[activeSlot].getGreen() + " B:" +  + colors[activeSlot].getBlue(), 1.0F, 1.0F, colors[activeSlot].getRGB());
         else this.font.draw(stack, "Press 'E' to toggle Color Info.", 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
@@ -145,7 +144,7 @@ public class PaletteScreen extends Screen {
 		this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE); //We've bound this before...
 		int edgeSpacingX = (this.width - this.imageWidth) / 2;
 		int edgeSpacingY = (this.height - this.imageHeight) / 2;
-		this.blit(stack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
+		blit(stack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
 	}
 
     @Override

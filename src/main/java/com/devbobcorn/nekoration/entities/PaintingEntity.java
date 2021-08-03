@@ -63,17 +63,11 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	@Override
 	public void tick() {
 		super.tick();
-		/*
-		 * tickCount++; this.width = (int)((tickCount / 2L) % 80) + 16;
-		 * recalculateBoundingBox();
-		 */
 	}
 
 	@Override
 	public void addAdditionalSaveData(CompoundNBT tag) {
 		tag.putByte("Facing", (byte) direction.get2DDataValue());
-		//tag.putInt("Width", width);
-		//tag.putInt("Height", height);
 		PaintingData.writeTo(data, tag);
 		super.addAdditionalSaveData(tag);
 	}
@@ -81,8 +75,6 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	@Override
 	public void readAdditionalSaveData(CompoundNBT tag) {
 		this.direction = Direction.from2DDataValue((int) (tag.getByte("Facing")));
-		//this.width = tag.getInt("Width");
-		//this.height = tag.getInt("Height");
 		data = PaintingData.readFrom(tag);
 		super.readAdditionalSaveData(tag);
 		this.setDirection(this.direction);
@@ -174,11 +166,11 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 		buffer.writeShort(data.getHeight());
 		buffer.writeVarIntArray(data.getPixels());
 		// Also a more accurate position, maybe...
-		buffer.writeBlockPos(this.blockPosition());
 		buffer.writeDouble(this.position().x);
 		buffer.writeDouble(this.position().y);
 		buffer.writeDouble(this.position().z);
 
+		buffer.writeBlockPos(this.blockPosition());
 		buffer.writeByte(direction.get2DDataValue());
 
 		buffer.writeDouble(this.getBoundingBox().minX);
@@ -187,18 +179,17 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 		buffer.writeDouble(this.getBoundingBox().maxX);
 		buffer.writeDouble(this.getBoundingBox().maxY);
 		buffer.writeDouble(this.getBoundingBox().maxZ);
-		/*
-		System.out.println("SERVER: " + this.getBoundingBox() + " isClient: " + this.level.isClientSide);
-		System.out.println(this.position());
-		System.out.println(this.pos);
-		*/
+		//System.out.println("SERVER: " + this.getBoundingBox() + " isClient: " + this.level.isClientSide);
+		//System.out.println(this.position());
+		//System.out.println(this.pos);
 	}
 
 	@Override
 	public void readSpawnData(PacketBuffer additionalData) {
 		this.data = new PaintingData(additionalData.readShort(), additionalData.readShort(), additionalData.readVarIntArray());
-		this.pos = additionalData.readBlockPos();
+
 		this.setPosRaw(additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble());
+		this.pos = additionalData.readBlockPos();
 		byte dir = additionalData.readByte();
 
 		//this.setDirection(Direction.from2DDataValue(dir)); This will call recalcuateBoundingBox, which isn't what we want
@@ -208,10 +199,8 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 		
 		//this.recalculateBoundingBox(); To use this we'll need the original position data, which we don't have on the client-side
 		this.setBoundingBox(new AxisAlignedBB(additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble()));
-		/*
-		System.out.println("CLIENT: " + this.getBoundingBox() + " isClient: " + this.level.isClientSide);
-		System.out.println(this.position());
-		System.out.println(this.pos);
-		*/
+		//System.out.println("CLIENT: " + this.getBoundingBox() + " isClient: " + this.level.isClientSide);
+		//System.out.println(this.position());
+		//System.out.println(this.pos);
 	}
 }

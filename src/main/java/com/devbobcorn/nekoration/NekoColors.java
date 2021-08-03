@@ -89,7 +89,7 @@ public class NekoColors {
 	}
 
 	public static EnumStoneColor getStoneFromNeko(EnumNekoColor col){
-		return EnumStoneColor.getColorEnumFromID(col.nbtID); // TODO: WOODEN
+		return EnumStoneColor.getColorEnumFromID(col.nbtID);
 	}
 	
     // Neko Colors... Meow~

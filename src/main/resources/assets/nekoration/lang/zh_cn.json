@@ -102,6 +102,7 @@
     "gui.button.nekoration.enable_all": "选中所有",
     "gui.button.nekoration.scroll_down": "向下",
     "gui.button.nekoration.scroll_up": "向上",
+    "item.nekoration.painting": "画(%sx%s)",
     "item.nekoration.palette": "调色板",
     "item.nekoration.paw": "猫爪",
     "item.nekoration.paw_15": "旋转15度",

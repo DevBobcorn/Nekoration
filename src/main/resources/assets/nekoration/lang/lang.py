@@ -27,9 +27,9 @@ decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short
 decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu"]
 decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","%s展架"]
 # Find it a bit strange to say "Candle Holder with XXX candle", so I just ignore their color
-items = ["paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette"]
-items_us = ["Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette"]
-items_cn = ["猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板"]
+items = ["paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette", "painting"]
+items_us = ["Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Painting (%sx%s)"]
+items_cn = ["猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","画(%sx%s)"]
 
 miscs = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iron","candle_holder_gold","candle_holder_quartz","phonograph","custom"]
 miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Phonograph [WIP]","Custom Block"]

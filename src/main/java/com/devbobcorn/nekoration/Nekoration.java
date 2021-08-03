@@ -20,6 +20,7 @@ import com.devbobcorn.nekoration.exp.ExpCommon;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuTexts;
 import com.devbobcorn.nekoration.network.C2SUpdatePaintingData;
+import com.devbobcorn.nekoration.network.C2SUpdatePaintingSize;
 import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.devbobcorn.nekoration.network.S2CUpdateEaselMenuItems;
@@ -80,10 +81,16 @@ public class Nekoration {
 			C2SUpdatePaletteData::handle
 		);
 		ModPacketHandler.CHANNEL.registerMessage(networkId++,
-		C2SUpdatePaintingData.class,
-		C2SUpdatePaintingData::encode,
-		C2SUpdatePaintingData::decode,
-		C2SUpdatePaintingData::handle
-	);
+			C2SUpdatePaintingData.class,
+			C2SUpdatePaintingData::encode,
+			C2SUpdatePaintingData::decode,
+			C2SUpdatePaintingData::handle
+		);
+		ModPacketHandler.CHANNEL.registerMessage(networkId++,
+			C2SUpdatePaintingSize.class,
+			C2SUpdatePaintingSize::encode,
+			C2SUpdatePaintingSize::decode,
+			C2SUpdatePaintingSize::handle
+		);
     }
 }

@@ -16,7 +16,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class DyeableBlockItem extends BlockItem {
-    public static final String NBT_TAG_NAME_COLOR = "color";
+    public static final String COLOR = "color";
 	private final boolean showAllVariants;
 
     public DyeableBlockItem(Block block, Properties settings) {
@@ -48,12 +48,12 @@ public class DyeableBlockItem extends BlockItem {
 
     public static EnumNekoColor getColor(ItemStack stack) {
 		CompoundNBT compoundNBT = stack.getOrCreateTag();
-		return EnumNekoColor.fromNBT(compoundNBT, NBT_TAG_NAME_COLOR);
+		return EnumNekoColor.fromNBT(compoundNBT, COLOR);
 	}
 
     public static void setColor(ItemStack stack, EnumNekoColor color) {
         CompoundNBT compoundNBT = stack.getOrCreateTag();
-        color.putIntoNBT(compoundNBT, NBT_TAG_NAME_COLOR);
+        color.putIntoNBT(compoundNBT, COLOR);
 	}
 
 	public static float getColorPropertyOverride(ItemStack itemStack, @Nullable World world,
