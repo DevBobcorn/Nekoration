@@ -131,7 +131,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 				int[] color;
 				for (short posi = 0;posi < 16;posi++)
 					for (short posj = 0;posj < 16;posj++) {
-						color = NekoColors.getRGBArray(entity.data.getPixel(width - 1 - (blocHor * 16 + posi), height - 1 - (blocVer * 16 + posj)));
+						color = NekoColors.getRGBArray(entity.data.getCompositeAt(width - 1 - (blocHor * 16 + posi), height - 1 - (blocVer * 16 + posj)));
 						vertexPaint(pose, normal, vb2, left + posi + 1.0F, bottom + posj,        -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // >V
 						vertexPaint(pose, normal, vb2, left + posi, bottom + posj,               -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // <V
 						vertexPaint(pose, normal, vb2, left + posi, bottom + posj + 1.0F,        -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // <A

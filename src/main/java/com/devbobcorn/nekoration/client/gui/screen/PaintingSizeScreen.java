@@ -15,8 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class PaintingSizeScreen extends Screen {
-	public static final ResourceLocation PAINTING_SIZE_BACKGROUND = new ResourceLocation(Nekoration.MODID,
-			"textures/gui/painting_size.png");
+	public static final ResourceLocation PAINTING_SIZE_BACKGROUND = new ResourceLocation(Nekoration.MODID, "textures/gui/painting_size.png");
 	public static final int BACKGROUND_WIDTH = 124;
 	public static final int BACKGROUND_HEIGHT = 146;
 	public static final int GRID_LEFT = 8;

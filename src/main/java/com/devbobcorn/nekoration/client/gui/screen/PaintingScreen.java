@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
+import com.devbobcorn.nekoration.entities.PaintingData;
 import com.devbobcorn.nekoration.entities.PaintingEntity;
 import com.devbobcorn.nekoration.items.PaletteItem;
 import com.devbobcorn.nekoration.network.C2SUpdatePaintingData;
@@ -25,18 +26,23 @@ public class PaintingScreen extends Screen {
 
     public static final int PAINTING_LEFT = 9;
     public static final int PAINTING_TOP = 38;
-    public static final int PAINTING_WIDTH = 177;
-    public static final int PAINTING_HEIGHT = 128;
+    public static final int PAINTING_WIDTH = 225;
+    public static final int PAINTING_HEIGHT = 145;
 
-    public static final int HUE_LEFT = 189;
-    public static final int HUE_TOP = 38;
-    public static final int HUE_WIDTH = 6;
-    public static final int HUE_HEIGHT = 128;
+    public static final int OPACITY_LEFT = 241;
+    public static final int OPACITY_TOP = 38;
+    public static final int OPACITY_WIDTH = 6;
+    public static final int OPACITY_HEIGHT = 145;
+
+    public static final int TOOLS_LEFT = 148;
+    public static final int TOOLS_TOP = 13;
+    public static final int TOOLS_NUM = 4;
+
     public static final int white = (255 << 24) + (255 << 16) + (255 << 8) + 255; // a, r, g, b...
     public static final int black = 255 << 24; // a, r, g, b...
 
-    private final int imageWidth = 204;
-    private final int imageHeight = 175;
+    private final int imageWidth = 256;
+    private final int imageHeight = 192;
 
     private int leftPos;
     private int topPos;
@@ -44,11 +50,13 @@ public class PaintingScreen extends Screen {
     //private Color colorMapColor = Color.RED;
     private Color[] colors = new Color[6];
     private byte activeSlot = 0;
-    private int huePos = -1;
-    private int[] colorPos = { -1, -1 };
+    private int opacity = 255;
+    private int opacityPos = -1;
+    private byte activeTool = 0; // 0: Pencil, 1: Pen, 2: Eraser, 3: Bucket Fill
+    private int[] pointerPos = { -1, -1 };
     public boolean renderColorText = false;
 
-    private int[] pixels;
+    private PaintingData paintingData;
     private short paintingWidth;
     private short paintingHeight;
 
@@ -63,7 +71,7 @@ public class PaintingScreen extends Screen {
         entityId = pt;
         try {
             PaintingEntity painting = (PaintingEntity) Minecraft.getInstance().level.getEntity(entityId);
-            pixels = painting.data.getPixels();
+            paintingData = painting.data;
             paintingWidth  = painting.data.getWidth();
             paintingHeight = painting.data.getHeight();
         } catch (Exception e){
@@ -79,7 +87,7 @@ public class PaintingScreen extends Screen {
         entityId = pt;
         try {
             PaintingEntity painting = (PaintingEntity) Minecraft.getInstance().level.getEntity(entityId);
-            pixels = painting.data.getPixels();
+            paintingData = painting.data;
             paintingWidth  = painting.data.getWidth();
             paintingHeight = painting.data.getHeight();
         } catch (Exception e){
@@ -97,7 +105,7 @@ public class PaintingScreen extends Screen {
     public void onClose() {
 		try {
             // Update Color Data...
-            final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId, pixels);
+            final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId, paintingData.getPixels());
             ModPacketHandler.CHANNEL.sendToServer(packet);
 		} catch (Exception e){
 			e.printStackTrace();
@@ -113,6 +121,11 @@ public class PaintingScreen extends Screen {
             this.renderColorText = !this.renderColorText;
             return true;
         }
+        if (keyCode == GLFW.GLFW_KEY_W){
+            // Switch Tool...
+            activeTool = (byte)((activeTool + 1) % TOOLS_NUM);
+            return true;
+        }
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).closeContainer();
             //return true;
@@ -120,7 +133,7 @@ public class PaintingScreen extends Screen {
         return super.keyPressed(keyCode, scanCode, modifier);
     }
 
-    private String funtext = "Fun, yeah.";
+    private String debugText = "Debug Text.";
 
     @SuppressWarnings("deprecation")
     public void render(MatrixStack stack, int x, int y, float partialTicks) {
@@ -134,12 +147,12 @@ public class PaintingScreen extends Screen {
         this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
 		for (int idx = 0;idx < 6;idx++){
             RenderSystem.color4f(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
-            this.blit(stack, i + 34 + 18 * idx, j + 13, 220, 32, 16, 16); // Tinted Pure White Quad...
+            this.blit(stack, i + 34 + 18 * idx, j + 13, 16, 224, 16, 16); // Tinted Pure White Quad...
             if (idx == activeSlot){
-                this.blit(stack, i + 8, j + 13, 220, 32, 16, 16);
+                this.blit(stack, i + 8, j + 13, 16, 224, 16, 16);
             }
         }
-        // Step 1.5: Render the painting...
+        // Step 2: Render the painting...
         try {
             Color color;
             for (short posi = 0;posi < paintingWidth;posi++){
@@ -148,29 +161,33 @@ public class PaintingScreen extends Screen {
                 for (short posj = 0;posj < paintingHeight;posj++) {
                     if (ver + (posj + 1) * pixsize < 0 || ver + posj * pixsize > PAINTING_HEIGHT)
                         continue;
-                    color = NekoColors.getRGBColor(pixels[posi + paintingWidth * posj]);
+                    color = NekoColors.getRGBColor(paintingData.getCompositeAt(posi, posj));
                     RenderSystem.color4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
-                    this.blit(stack, i + PAINTING_LEFT + (int)hor + posi * pixsize, j + PAINTING_TOP + (int)ver + posj * pixsize, 220, 32, pixsize, pixsize); // Tinted Pure White Quad...
+                    this.blit(stack, i + PAINTING_LEFT + (int)hor + posi * pixsize, j + PAINTING_TOP + (int)ver + posj * pixsize, 16, 224, pixsize, pixsize); // Tinted Pure White Quad...
                 }
             }
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         } catch (Exception e){
 
         }
-        // Step 2: Render the back ground...
+        // Step 3: Render the back ground...
         this.renderBg(stack, partialTicks, x, y);
-        // Step 3: Render Active Slot Indicator...
+        // Step 4: Render Active Slot Indicator...
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.blit(stack, i + 34 + 18 * activeSlot, j + 13, 220, 16, 16, 16); // Slot Indicator...
-        // Step 5: Render Hue cursor...
-        if (huePos >= 0)
-            this.blit(stack, i + HUE_LEFT - 1, huePos + this.topPos - 1, 204, 48, 8, 4); // Hue Cursor...
-        // Step 6: Render Debug Color Value...
+        this.blit(stack, i + 34 + 18 * activeSlot, j + 13, 16, 208, 16, 16); // Slot Indicator...
+        // Step 5: Render Opacity Bar...
+        this.fillGradient(stack, i + OPACITY_LEFT, j + OPACITY_TOP, i + OPACITY_LEFT + OPACITY_WIDTH, j + OPACITY_TOP + OPACITY_HEIGHT, colors[activeSlot].getRGB(), colors[activeSlot].getRGB() & 0xffffff);
+        // Step 6: Render Opacity cursor...
+        if (opacityPos >= 0)
+        this.blit(stack, i + OPACITY_LEFT - 1, opacityPos + this.topPos - 1, 0, 240, 8, 4); // Opacity Cursor...
+        // Step 7: Render Active Tool Icon...
+        this.blit(stack, i + TOOLS_LEFT + activeTool * 17, j + TOOLS_TOP, 32 + activeTool * 16, 208, 16, 16);
+        // Step 8: Render Debug Text...
         stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
-        stack.translate(j + 5, -i - 215, 0);
+        stack.translate(j + 5, -i - 265, 0);
         //this.fillGradient(stack, i, j, i + 128, j + 128, col, black);
         if (renderColorText)
-            this.font.draw(stack, funtext, 1.0F, 1.0F, 0xFFFFFF);
+            this.font.draw(stack, debugText, 1.0F, 1.0F, 0xFFFFFF);
             //this.font.draw(stack, "Color: " + colors[activeSlot].getRGB() + " R:" +  + colors[activeSlot].getRed() + " G:" +  + colors[activeSlot].getGreen() + " B:" +  + colors[activeSlot].getBlue(), 1.0F, 1.0F, colors[activeSlot].getRGB());
         else this.font.draw(stack, "Press 'E' to view operations.", 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
@@ -187,14 +204,33 @@ public class PaintingScreen extends Screen {
     @Override
     public boolean mouseClicked(double x, double y, int type){
         if (type == 0 && !updateActiveSlot(x, y)){ // Left Mouse Only, and first update slots...
-            double areax = x - this.leftPos - PAINTING_LEFT;
-            double areay = y - this.topPos - PAINTING_TOP;
-            double pixX = (areax - hor) / (double)pixsize;
-            double pixY = (areay - ver) / (double)pixsize;
-            funtext = String.format("Draw: [%.2f, %.2f]", pixX, pixY);
-            usePencil(pixX, pixY);
-            if (isOnHuePicker(x, y))
-                getHue(x, y);
+            if (isOnOpacityPicker(x, y)){
+                getOpacity(x, y);
+                debugText = "Opacity: " + opacity;
+            } else if (isOnPainting(x, y)){
+                double areax = x - this.leftPos - PAINTING_LEFT;
+                double areay = y - this.topPos - PAINTING_TOP;
+                double pixX = (areax - hor) / (double)pixsize;
+                double pixY = (areay - ver) / (double)pixsize;
+                switch (activeTool){
+                    case 0: // Pencil
+                        debugText = String.format("Stroke: [%.2f, %.2f]", pixX, pixY);
+                        usePencil(pixX, pixY);
+                        break;
+                    case 1: // Pen
+                        debugText = String.format("Draw: [%.2f, %.2f]", pixX, pixY);
+                        usePen(pixX, pixY);
+                        break;
+                    case 2: // Eraser
+                        debugText = String.format("Erase: [%.2f, %.2f]", pixX, pixY);
+                        useEraser(pixX, pixY);
+                        break;
+                    case 3: // Bucket
+                        debugText = String.format("Fill: [%.2f, %.2f]", pixX, pixY);
+                        // useBucket(pixX, pixY);
+                        break;
+                }
+            }
         }
         return super.mouseClicked(x, y, type);
     }
@@ -202,37 +238,65 @@ public class PaintingScreen extends Screen {
     @Override
     public boolean mouseDragged(double x, double y, int type, double dx, double dy){
         //getColor(x, y);
-        if (type == 0 && isOnPainting(x, y)) { // Left Button, draw...
+        if (type == 0) { // Left Button, draw...
             if (isOnPainting(x, y)) {
                 double areax = x - this.leftPos - PAINTING_LEFT;
                 double areay = y - this.topPos - PAINTING_TOP;
                 double pixX = (areax - hor) / (double)pixsize;
                 double pixY = (areay - ver) / (double)pixsize;
-                funtext = String.format("Draw: [%.2f, %.2f]", pixX, pixY);
-                usePencil(pixX, pixY);
+                switch (activeTool){
+                    case 0: // Pencil
+                        debugText = String.format("Stroke: [%.2f, %.2f]", pixX, pixY);
+                        usePencil(pixX, pixY);
+                        break;
+                    case 1: // Pen
+                        debugText = String.format("Draw: [%.2f, %.2f]", pixX, pixY);
+                        usePen(pixX, pixY);
+                        break;
+                    case 2: // Eraser
+                        debugText = String.format("Erase: [%.2f, %.2f]", pixX, pixY);
+                        useEraser(pixX, pixY);
+                        break;
+                    case 3: // Bucket
+                        debugText = String.format("Fill: [%.2f, %.2f]", pixX, pixY);
+                        // useBucket(pixX, pixY);
+                        break;
+                }
             }
-            else if (isOnHuePicker(x, y)) getHue(x, y);
+            else if (isOnOpacityPicker(x, y)) {
+                getOpacity(x, y);
+                debugText = "Opacity: " + opacity;
+            }
         } else if (type == 2){ // Middle Button, drag...
             hor += dx;
             ver += dy;
-            funtext = "Position: " + x + ", " + y + " -> " + dx + ", " + dy;
+            debugText = "Position: " + x + ", " + y + " -> " + dx + ", " + dy;
         }
         return super.mouseDragged(x, y, type, dx, dy);
     }
 
     private void usePencil(double x, double y){
         int pixX = (int)x, pixY = (int)y;
-        if (legal(pixX, pixY))
-            pixels[pixY * paintingWidth + pixX] = colors[activeSlot].getRGB();
+        paintingData.setPixel(pixX, pixY, (opacity << 24) + colors[activeSlot].getRGB());
     }
 
-    private boolean legal(int x, int y){
-        return x >= 0 && y >= 0 && x < paintingWidth && y < paintingHeight;
+    private void usePen(double x, double y){
+        int pixX = (int)x, pixY = (int)y;
+        paintingData.setPixel(pixX, pixY, (opacity << 24) + colors[activeSlot].getRGB());
+    }
+
+    private static final int radius = 2;
+
+    private void useEraser(double x, double y){
+        int pixX = (int)x, pixY = (int)y;
+        for (int i = -radius;i < radius;i++)
+            for (int j = -radius;j < radius;j++)
+                paintingData.setPixel(pixX + i, pixY + j, 0x00000000);
     }
 
     @Override
     public boolean mouseScrolled(double x, double y, double d2){
-        funtext = "Scroll: " + x + ", " + y + ", " + d2;
+        debugText = "Scroll: " + x + ", " + y + ", " + d2;
         double areax = x - this.leftPos - PAINTING_LEFT;
         double areay = y - this.topPos - PAINTING_TOP;
 
@@ -264,7 +328,7 @@ public class PaintingScreen extends Screen {
                 // And also update that hue picker & color map...
                 Color nw = colors[idx];
                 float[] fl = Color.RGBtoHSB(nw.getRed(), nw.getGreen(), nw.getBlue(), null); // Hue, Saturation, Value(or to say Brightness)...
-                this.huePos = HUE_TOP + (int)((1.0F - fl[0]) * HUE_HEIGHT);
+                this.opacityPos = OPACITY_TOP + (int)((1.0F - fl[0]) * OPACITY_HEIGHT);
                 //this.colorMapColor = Color.getHSBColor(fl[0], 1.0F, 1.0F);
                 return true;
             }
@@ -272,18 +336,15 @@ public class PaintingScreen extends Screen {
         return false;
     }
 
-    private boolean isOnHuePicker(double x, double y){
-        double dx = x - this.leftPos - HUE_LEFT;
-        double dy = y - this.topPos - HUE_TOP;
-        return dx >= 0.0D && dy >= 0.0D && dx <= HUE_WIDTH && dy <= HUE_HEIGHT;
+    private boolean isOnOpacityPicker(double x, double y){
+        double dx = x - this.leftPos - OPACITY_LEFT;
+        double dy = y - this.topPos - OPACITY_TOP;
+        return dx >= 0.0D && dy >= 0.0D && dx <= OPACITY_WIDTH && dy <= OPACITY_HEIGHT;
     }
 
-    private void getHue(double x, double y){
-        //double yi = 1.0D - (y - this.topPos - PAINTING_TOP) / PAINTING_WIDTH;
-        //this.colorMapColor = Color.getHSBColor((float)yi, 1.0F, 1.0F);
-        this.colorPos[0] = -1;
-        this.colorPos[1] = -1;
-        this.huePos = (int)y - this.topPos;
+    private void getOpacity(double x, double y){
+        opacity = (int)((1.0D - (y - this.topPos - OPACITY_TOP) / (double)OPACITY_HEIGHT) * 255.0D);
+        this.opacityPos = (int)y - this.topPos;
     }
 
     @Override

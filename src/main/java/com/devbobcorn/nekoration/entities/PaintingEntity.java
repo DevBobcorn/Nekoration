@@ -43,7 +43,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 		// Constructor 2: the one for server-side to create PaintingEntity Objects
 		super(ModEntityType.$PAINTING_TYPE.get(), world, pos);
 		this.setDirection(dir);
-		data = new PaintingData(w, h);
+		data = new PaintingData(w, h, false, 20021222);
 	}
 
 	public PaintingEntity(FMLPlayMessages.SpawnEntity packet, World world) {
@@ -160,8 +160,8 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 
 	@Override
 	public void writeSpawnData(PacketBuffer buffer) {
-		// We need the size direction on client-side to get the right Bounding box, so
-		// we pass 'em over
+		// Server sends...
+		// We need the size direction on client-side to get the right Bounding box, so we pass 'em over
 		buffer.writeShort(data.getWidth());
 		buffer.writeShort(data.getHeight());
 		buffer.writeVarIntArray(data.getPixels());
@@ -186,7 +186,8 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 
 	@Override
 	public void readSpawnData(PacketBuffer additionalData) {
-		this.data = new PaintingData(additionalData.readShort(), additionalData.readShort(), additionalData.readVarIntArray());
+		// Client receives...
+		this.data = new PaintingData(additionalData.readShort(), additionalData.readShort(), additionalData.readVarIntArray(), true, this.getId());
 
 		this.setPosRaw(additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble());
 		this.pos = additionalData.readBlockPos();
