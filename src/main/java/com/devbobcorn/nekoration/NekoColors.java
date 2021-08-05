@@ -190,21 +190,21 @@ public class NekoColors {
 
 	public enum EnumStoneColor implements IStringSerializable {
 		BLACK((byte)0, "black", 0x5c5c5c),
-		BLUE((byte)1, "blue" , 0x609cc9), //0x497cbc
+		BLUE((byte)1, "blue" , 0x549ae5),
 		BROWN((byte)2, "brown", 0xa37864),
-		CYAN((byte)3, "cyan", 0x82c0d9), //0x70afc7
+		CYAN((byte)3, "cyan", 0x8ed2ed),
 		GRAY((byte)4, "gray", 0x9f9f9f),
-		GREEN((byte)5, "green", 0x56a362),
-		LIGHT_BLUE((byte)6, "light_blue", 0xaec3e5), //0x7893c2
+		GREEN((byte)5, "green", 0x50ae5f),
+		LIGHT_BLUE((byte)6, "light_blue", 0x7eaeff),
 		LIGHT_GRAY((byte)7, "light_gray", 0xbebebe),
-		LIME((byte)8, "lime", 0x97d297),
-		MAGENTA((byte)9, "magenta", 0xde97e2),
-		ORANGE((byte)10, "orange", 0xdaa57c),
-		PINK((byte)11, "pink", 0xde95c5),
+		LIME((byte)8, "lime", 0x8de996),
+		MAGENTA((byte)9, "magenta", 0xe58dea),
+		ORANGE((byte)10, "orange", 0xeb9965),
+		PINK((byte)11, "pink", 0xe79acd),
 		PURPLE((byte)12, "purple", 0xb180d7),
-		RED((byte)13, "red", 0xe07272),
+		RED((byte)13, "red", 0xe15252),
 		WHITE((byte)14, "white", 0xfef8ec),
-		YELLOW((byte)15, "yellow", 0xe8d294); //0xdbc37f
+		YELLOW((byte)15, "yellow", 0xf1cf7b);
 
 		@Override
 		public String toString() {
