@@ -1,51 +1,27 @@
-# This is an example mods.toml file. It contains the data relating to the loading mods.
-# There are several mandatory fields (#mandatory), and many more that are optional (#optional).
-# The overall format is standard TOML format, v0.5.0.
-# Note that there are a couple of TOML lists in this file.
-# Find more information on toml format here:  https://github.com/toml-lang/toml
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
-# A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[36,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
-# The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
-# Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
+loaderVersion="[36,37)"
 license="Apache-2.0"
 # A URL to refer people to when problems occur with this mod
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="nekoration" #mandatory
-version="1.2.3" #mandatory
- # A display name for the mod
-displayName="Nekoration" #mandatory
+modId="nekoration"
+version="1.2.3"
+displayName="Nekoration"
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
-#updateJSONURL="https://change.me.example.invalid/updates.json" #optional
-# A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="https://gitee.com/DevBobcorn/nekoration" #optional
-# A file name (in the root of the mod JAR) containing a logo for display
-logoFile="nekoration.png" #optional
-# A text field displayed in the mod UI
+#updateJSONURL="https://change.me.example.invalid/updates.json"
+displayURL="https://gitee.com/DevBobcorn/nekoration"
+logoFile="nekoration.png"
 credits="DevBobcorn, W163▫84 (Voxel Art support)" #optional
-# A text field displayed in the mod UI
-authors="DevBobcorn" #optional
-# The description text for the mod (multi line!) (#mandatory)
+authors="DevBobcorn"
 description='''
-A Decoration Mod for Minecraft
-Introduction
-Nekoration is a mod which adds numerous decorational blocks to the game, allowing players to have a wider choice of blocks when building.
+A decoration mod for Minecraft
+The name 'Nekoration' is a compound of 'cat' in Japanese(ねこ, neko) and 'decoration', suggesting that the mod is both ornamental and cats-friendly... Meow~ ^._.^= ∫
 
-About Its Name
-The name 'Nekoration' is a compound of 'cat' in Japanese(ねこ, neko) and 'decoration', being made up for fun, the name doesn't really stand for anything...
-
-Features
-Dyeing
-Most of Nekoration's blocks are dyeable using vanilla dyes, so that you can turn almost everything in this mod to your favorite shade!
-
-Auto-Connecting Model (without Texture-connecting mods)
-Many blocks in Nekoration supports model auto connecting, to name a few, Half-Timber Pillars and Lamp Posts. When being placed by players, they'll automatically adapt to connect to adjacent blocks.
 Special Thanks:
-TheGreyGhost (Amazing Tutorial & Example Code which helped me a lot)
+TheGreyGhost (whose amazing tutorial & example code helped me a lot)
 '''
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="[1.16.5,1.17)"
