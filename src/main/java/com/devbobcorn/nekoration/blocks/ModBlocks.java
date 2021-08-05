@@ -30,7 +30,7 @@ public final class ModBlocks {
     public static final RegistryObject<Block> WINDOW_SILL = BLOCKS.register("window_sill", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
     public static final RegistryObject<Block> WINDOW_PLANT = BLOCKS.register("window_plant", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.LEAVES).strength(0.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
 
-    public static final RegistryObject<Block> FLOWER_BASKET = BLOCKS.register("flower_basket", () -> new BasketBlock(Block.Properties.of(Material.METAL).strength(0.0F).noOcclusion(), 6.0D));
+    public static final RegistryObject<Block> FLOWER_BASKET_IRON = BLOCKS.register("flower_basket_iron", () -> new BasketBlock(Block.Properties.of(Material.METAL).strength(0.0F).noOcclusion(), 6.0D));
 
     public static final RegistryObject<Block> STONE_POT = BLOCKS.register("stone_pot", () -> new PotBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), 6.0D));
 

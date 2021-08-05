@@ -66,6 +66,7 @@ public class PaintingScreen extends Screen {
     @SuppressWarnings("resource")
     public PaintingScreen(int pt) {
         super(ITextComponent.nullToEmpty("PAINTING"));
+        opacityPos = topPos + OPACITY_TOP;
         activeSlot = 0;
         colors = PaletteItem.DEFAULT_COLOR_SET;
         entityId = pt;
@@ -82,6 +83,7 @@ public class PaintingScreen extends Screen {
     @SuppressWarnings("resource")
     public PaintingScreen(int pt, byte active, Color[] paletteColors) {
         super(ITextComponent.nullToEmpty("PAINTING"));
+        opacityPos = topPos + OPACITY_TOP;
         activeSlot = active;
         colors = paletteColors;
         entityId = pt;
@@ -330,11 +332,6 @@ public class PaintingScreen extends Screen {
             int b = t + 16;
             if (x >= l && x <= r && y >= t && y <= b && this.activeSlot != idx){
                 this.activeSlot = (byte)idx;
-                // And also update that hue picker & color map...
-                Color nw = colors[idx];
-                float[] fl = Color.RGBtoHSB(nw.getRed(), nw.getGreen(), nw.getBlue(), null); // Hue, Saturation, Value(or to say Brightness)...
-                this.opacityPos = OPACITY_TOP + (int)((1.0F - fl[0]) * OPACITY_HEIGHT);
-                //this.colorMapColor = Color.getHSBColor(fl[0], 1.0F, 1.0F);
                 return true;
             }
         }

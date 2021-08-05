@@ -23,7 +23,7 @@ windows_cn = ["拱形窗","玻璃窗","尖头窗","百叶窗","窗顶","窗台"]
 doors = ["door_1","door_2","door_3","door_tall_1","door_tall_2","door_tall_3"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Brick Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Brick Door"]
 doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
-decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","easel_menu","flower_basket"]
+decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","easel_menu","flower_basket_iron"]
 decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu","Hanging Plants [WIP]"]
 decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","%s展架","吊盆植物[WIP]"]
 # Find it a bit strange to say "Candle Holder with XXX candle", so I just ignore their color

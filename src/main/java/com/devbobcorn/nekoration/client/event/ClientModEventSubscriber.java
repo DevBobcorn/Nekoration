@@ -79,7 +79,7 @@ public final class ClientModEventSubscriber {
 
 		RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_PLANT.get(), transparentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER_BASKET.get(), transparentRenderType);
+		RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER_BASKET_IRON.get(), transparentRenderType);
 
 		RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_1.get(), transparentRenderType);
 		RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_2.get(), translucentRenderType);
