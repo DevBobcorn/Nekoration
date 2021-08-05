@@ -65,7 +65,7 @@ public class S2CUpdateEaselMenuItems {
                     te.setColor(msg.colors);
                     //world.getChunkSource().blockChanged(msg.pos);
                     tileEntity.setChanged();
-                    //System.out.println("ITEM UPDATE Packet Received fROM sERVER.");
+                    //System.out.println("ITEM UPDATE Packet Received From Server.");
                 }
             }
         });

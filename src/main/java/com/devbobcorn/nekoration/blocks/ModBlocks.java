@@ -30,7 +30,7 @@ public final class ModBlocks {
     public static final RegistryObject<Block> WINDOW_SILL = BLOCKS.register("window_sill", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
     public static final RegistryObject<Block> WINDOW_PLANT = BLOCKS.register("window_plant", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.LEAVES).strength(0.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
 
-    public static final RegistryObject<Block> FLOWER_BASKET = BLOCKS.register("flower_basket", () -> new PotBlock(Block.Properties.of(Material.METAL).strength(0.0F).noOcclusion(), 6.0D));
+    public static final RegistryObject<Block> FLOWER_BASKET = BLOCKS.register("flower_basket", () -> new BasketBlock(Block.Properties.of(Material.METAL).strength(0.0F).noOcclusion(), 6.0D));
 
     public static final RegistryObject<Block> STONE_POT = BLOCKS.register("stone_pot", () -> new PotBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), 6.0D));
 
@@ -58,9 +58,9 @@ public final class ModBlocks {
     public static final RegistryObject<Block> DOOR_2 = BLOCKS.register("door_2", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> DOOR_3 = BLOCKS.register("door_3", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
 
-    public static final RegistryObject<Block> DOOR_TALL_1 = BLOCKS.register("door_tall_1", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
-    public static final RegistryObject<Block> DOOR_TALL_2 = BLOCKS.register("door_tall_2", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
-    public static final RegistryObject<Block> DOOR_TALL_3 = BLOCKS.register("door_tall_3", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> DOOR_TALL_1 = BLOCKS.register("door_tall_1", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true));
+    public static final RegistryObject<Block> DOOR_TALL_2 = BLOCKS.register("door_tall_2", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true));
+    public static final RegistryObject<Block> DOOR_TALL_3 = BLOCKS.register("door_tall_3", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true));
 
     public static final RegistryObject<Block> AWNING_PURE = BLOCKS.register("awning_pure", () -> new AwningBlock(Block.Properties.of(Material.WOOL).strength(0.8F)));
     public static final RegistryObject<Block> AWNING_STRIPE = BLOCKS.register("awning_stripe", () -> new AwningBlock(Block.Properties.of(Material.WOOL).strength(0.8F)));

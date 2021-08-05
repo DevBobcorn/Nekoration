@@ -23,13 +23,13 @@ windows_cn = ["拱形窗","玻璃窗","尖头窗","百叶窗","窗顶","窗台"]
 doors = ["door_1","door_2","door_3","door_tall_1","door_tall_2","door_tall_3"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Brick Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Brick Door"]
 doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
-decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","easel_menu"]
-decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu"]
-decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","%s展架"]
+decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","easel_menu","flower_basket"]
+decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu","Hanging Plants [WIP]"]
+decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","%s展架","吊盆植物[WIP]"]
 # Find it a bit strange to say "Candle Holder with XXX candle", so I just ignore their color
 items = ["paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette", "painting"]
-items_us = ["Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Painting (%sx%s)"]
-items_cn = ["猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","画(%sx%s)"]
+items_us = ["Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Painting (%sx%s) [WIP]"]
+items_cn = ["猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","画(%sx%s)[WIP]"]
 
 miscs = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iron","candle_holder_gold","candle_holder_quartz","phonograph","custom"]
 miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Phonograph [WIP]","Custom Block"]
@@ -87,6 +87,9 @@ for win in range(0, len(windows)):
     # (wooden_color / nekocolor)
     obj_us['block.nekoration.' + windows[win]] = "%s " + windows_us[win]
     obj_cn['block.nekoration.' + windows[win]] = "%s" + windows_cn[win]
+
+obj_us['block.nekoration.window_plant'] = "%s Flowering Window Plant"
+obj_cn['block.nekoration.window_plant'] = "开%s花的窗边植物"
 
 # [DOOR TAB]
 for dor in range(0, len(doors)):

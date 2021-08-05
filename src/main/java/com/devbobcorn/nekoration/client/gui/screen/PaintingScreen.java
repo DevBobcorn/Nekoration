@@ -53,7 +53,7 @@ public class PaintingScreen extends Screen {
     private int opacity = 255;
     private int opacityPos = -1;
     private byte activeTool = 0; // 0: Pencil, 1: Pen, 2: Eraser, 3: Bucket Fill
-    private int[] pointerPos = { -1, -1 };
+    // private int[] pointerPos = { -1, -1 };
     public boolean renderColorText = false;
 
     private PaintingData paintingData;
@@ -229,6 +229,11 @@ public class PaintingScreen extends Screen {
                         debugText = String.format("Fill: [%.2f, %.2f]", pixX, pixY);
                         // useBucket(pixX, pixY);
                         break;
+                }
+            } else {
+                for (byte idx = 0;idx < TOOLS_NUM;idx++){
+                    if (x > leftPos + TOOLS_LEFT + idx * 17 && x < leftPos + TOOLS_LEFT + idx * 17 + 16 && y > topPos + TOOLS_TOP && y < topPos + TOOLS_TOP + 16)
+                        activeTool = idx;
                 }
             }
         }
