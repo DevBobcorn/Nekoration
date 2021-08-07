@@ -2,7 +2,7 @@ package com.devbobcorn.nekoration.client.gui.screen;
 
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.containers.EaselMenuContainer;
-import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuTexts;
+import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -73,7 +73,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 			for (int i = 0;i < 8;i++)
 				tx[i] = ITextComponent.nullToEmpty(textInputs[i].getValue());
 
-			final C2SUpdateEaselMenuTexts packet = new C2SUpdateEaselMenuTexts(this.menu.pos, tx, cl);
+			final C2SUpdateEaselMenuData packet = new C2SUpdateEaselMenuData(this.menu.pos, tx, cl);
 			ModPacketHandler.CHANNEL.sendToServer(packet);
 			//System.out.println("Packet Sent");
 		} catch (Exception e){

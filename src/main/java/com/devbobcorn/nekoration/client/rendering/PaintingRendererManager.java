@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.client.renderer.texture.TextureManager;
 
 public class PaintingRendererManager {
-    private static final String SAVED_PATH = "paintings/composite/";
+    private static final String SAVED_PATH = "nekocache/";
 
     private static final Logger LOGGER = LogManager.getLogger(Nekoration.MODID + " Painting Manager");
 
@@ -33,7 +33,7 @@ public class PaintingRendererManager {
 
     public static LoadingCache<Integer, AtomicReference<AbstractPaintingRenderer>> PAINTING_RENDERERS = CacheBuilder.newBuilder()
         .<Integer, AtomicReference<AbstractPaintingRenderer>>removalListener(old -> old.getValue().get().close())
-        .expireAfterWrite(60 * 20, TimeUnit.SECONDS).build(new CacheLoader<Integer, AtomicReference<AbstractPaintingRenderer>>(){
+        .expireAfterWrite(600, TimeUnit.SECONDS).build(new CacheLoader<Integer, AtomicReference<AbstractPaintingRenderer>>(){
             @Override
             public AtomicReference<AbstractPaintingRenderer> load(Integer key) throws Exception {
                 try {
@@ -60,12 +60,7 @@ public class PaintingRendererManager {
     public static AbstractPaintingRenderer get(Integer hash) {
         try{
             AtomicReference<AbstractPaintingRenderer> rd = PAINTING_RENDERERS.getIfPresent(hash);
-            // return (rd == null) ? PAINTING_RENDERERS.getUnchecked(hash).get() : rd;
-            if (rd == null) {
-                System.out.println("Painting Image Not Exist, Create.");
-                return PAINTING_RENDERERS.get(hash).get();
-            }
-            return rd.get();
+            return (rd == null) ? PAINTING_RENDERERS.get(hash).get() : rd.get();
         } catch (Exception e){
             e.printStackTrace();
             return null;

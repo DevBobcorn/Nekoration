@@ -60,6 +60,8 @@ public class PaintingScreen extends Screen {
     private final short paintingWidth;
     private final short paintingHeight;
 
+    private final int oldHash;
+
     private double hor = 0.0D, ver = 0.0D;
     private int pixsize = 8;
 
@@ -79,6 +81,7 @@ public class PaintingScreen extends Screen {
         paintingWidth  = painting.data.getWidth();
         paintingHeight = painting.data.getHeight();
         paintingData.imageReady = false;
+        oldHash = paintingData.getPaintingHash();
     }
 
     protected void init() {
@@ -90,11 +93,13 @@ public class PaintingScreen extends Screen {
 	@Override
     public void onClose() {
 		try {
-            // Update Painting Data...
-            final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId, paintingData.getPixels());
-            ModPacketHandler.CHANNEL.sendToServer(packet);
-            // Save the Painting Image on client for rendering...
-            paintingData.save(String.valueOf(paintingData.getPaintingHash()), true);
+            if (oldHash != paintingData.getPaintingHash()){ // Check if the painting was changed...
+                // Clear obsoleted cache of itself (the Server can't help it to)...
+                paintingData.clearCache(oldHash);
+                // Update Painting Data to the Server, and then the Server will notify clients(including this one) to update their cache...
+                final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId, paintingData.getPixels(), paintingData.getPaintingHash());
+                ModPacketHandler.CHANNEL.sendToServer(packet);
+            }
 		} catch (Exception e){
 			e.printStackTrace();
 		}
@@ -115,7 +120,7 @@ public class PaintingScreen extends Screen {
         } else if (keyCode == GLFW.GLFW_KEY_A){
             // Save Image...
             try{
-                paintingData.save(String.valueOf(paintingData.getPaintingHash()), true);
+                paintingData.save("paintings/canvas", String.valueOf(paintingData.getPaintingHash()), true, true);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -123,7 +128,7 @@ public class PaintingScreen extends Screen {
         } else if (keyCode == GLFW.GLFW_KEY_S){
             // Save Image Content...
             try{
-                paintingData.save(String.valueOf(paintingData.getPaintingHash()), false);
+                paintingData.save("paintings/content", String.valueOf(paintingData.getPaintingHash()), false, true);
             } catch (Exception e){
                 e.printStackTrace();
             }

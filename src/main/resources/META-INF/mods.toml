@@ -8,7 +8,7 @@ license="Apache-2.0"
 [[mods]] #mandatory
 # The modid of the mod
 modId="nekoration"
-version="1.2.3"
+version="1.2.4"
 displayName="Nekoration"
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
 #updateJSONURL="https://change.me.example.invalid/updates.json"
@@ -18,7 +18,7 @@ credits="DevBobcorn, W163▫84 (Voxel Art support)" #optional
 authors="DevBobcorn"
 description='''
 A decoration mod for Minecraft
-The name 'Nekoration' is a compound of 'cat' in Japanese(ねこ, neko) and 'decoration', suggesting that the mod is both ornamental and cats-friendly... Meow~ ^._.^= ∫
+The name 'Nekoration' is a compound of 'cat' in Japanese(ねこ, neko) and 'decoration', suggesting that the mod is both ornamental and cats-friendly... Meow~ ^._.^=∫
 
 Special Thanks:
 TheGreyGhost (whose amazing tutorial & example code helped me a lot)

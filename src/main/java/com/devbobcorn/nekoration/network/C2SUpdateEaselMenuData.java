@@ -16,18 +16,18 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class C2SUpdateEaselMenuTexts {
+public class C2SUpdateEaselMenuData {
 	public ITextComponent[] texts = new ITextComponent[8];
     public DyeColor[] colors = new DyeColor[8];
     public BlockPos pos = BlockPos.ZERO;
 
-	public C2SUpdateEaselMenuTexts(BlockPos pos, ITextComponent[] texts, DyeColor[] colors) {
+	public C2SUpdateEaselMenuData(BlockPos pos, ITextComponent[] texts, DyeColor[] colors) {
         this.pos = pos;
 		this.texts = texts;
         this.colors = colors;
 	}
 
-	public static void encode(final C2SUpdateEaselMenuTexts msg, final PacketBuffer packetBuffer) {
+	public static void encode(final C2SUpdateEaselMenuData msg, final PacketBuffer packetBuffer) {
         packetBuffer.writeBlockPos(msg.pos);
         for (int i = 0;i < 8;i++)
 		    packetBuffer.writeComponent(msg.texts[i]);
@@ -35,7 +35,7 @@ public class C2SUpdateEaselMenuTexts {
 		    packetBuffer.writeEnum(msg.colors[i]);
 	}
 
-	public static C2SUpdateEaselMenuTexts decode(final PacketBuffer packetBuffer) {
+	public static C2SUpdateEaselMenuData decode(final PacketBuffer packetBuffer) {
         BlockPos pos = packetBuffer.readBlockPos();
         ITextComponent[] t = new ITextComponent[8];
         DyeColor[] c = new DyeColor[8];
@@ -43,10 +43,10 @@ public class C2SUpdateEaselMenuTexts {
 		    t[i] = packetBuffer.readComponent();
         for (int i = 0;i < 8;i++)
             c[i] = packetBuffer.readEnum(DyeColor.class);
-		return new C2SUpdateEaselMenuTexts(pos, t,c);
+		return new C2SUpdateEaselMenuData(pos, t,c);
 	}
 
-	public static void handle(final C2SUpdateEaselMenuTexts msg, final Supplier<NetworkEvent.Context> contextSupplier) {
+	public static void handle(final C2SUpdateEaselMenuData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on SERVER SIDE...
             ServerPlayerEntity player = contextSupplier.get().getSender();
@@ -65,8 +65,8 @@ public class C2SUpdateEaselMenuTexts {
                         for (int i = 0;i < 8;i++){
                             its[i] = cts.getItem(i);
                         }
-                        // tHEN UPDATE ITEMSTACKS ON CLIENT SIDE, USED FOR RENDERING...
-                        final S2CUpdateEaselMenuItems packet = new S2CUpdateEaselMenuItems(msg.pos, its, msg.texts, msg.colors);
+                        // Then update items on Client Side, used for rendering...
+                        final S2CUpdateEaselMenuData packet = new S2CUpdateEaselMenuData(msg.pos, its, msg.texts, msg.colors);
                         ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
                         //System.out.println("ITEM UPDATE Packet Sent from SERVER");
                     }

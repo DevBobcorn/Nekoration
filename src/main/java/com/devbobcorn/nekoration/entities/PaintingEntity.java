@@ -58,13 +58,6 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 		// this.entityData.define(Dir, (byte)0);
 	}
 
-	protected long tickCount = 0L;
-
-	@Override
-	public void tick() {
-		super.tick();
-	}
-
 	@Override
 	public void addAdditionalSaveData(CompoundNBT tag) {
 		tag.putByte("Facing", (byte) direction.get2DDataValue());
@@ -169,10 +162,8 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 		buffer.writeDouble(this.position().x);
 		buffer.writeDouble(this.position().y);
 		buffer.writeDouble(this.position().z);
-
 		buffer.writeBlockPos(this.blockPosition());
 		buffer.writeByte(direction.get2DDataValue());
-
 		buffer.writeDouble(this.getBoundingBox().minX);
 		buffer.writeDouble(this.getBoundingBox().minY);
 		buffer.writeDouble(this.getBoundingBox().minZ);
@@ -188,20 +179,23 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	public void readSpawnData(PacketBuffer additionalData) {
 		// Client receives...
 		this.data = new PaintingData(additionalData.readShort(), additionalData.readShort(), additionalData.readVarIntArray(), true, this.getUUID().hashCode());
-
 		this.setPosRaw(additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble());
 		this.pos = additionalData.readBlockPos();
 		byte dir = additionalData.readByte();
-
 		//this.setDirection(Direction.from2DDataValue(dir)); This will call recalcuateBoundingBox, which isn't what we want
 		this.direction = Direction.from2DDataValue(dir);
 		this.yRot = (float) (this.direction.get2DDataValue() * 90);
 		this.yRotO = this.yRot;
-		
 		//this.recalculateBoundingBox(); To use this we'll need the original position data, which we don't have on the client-side
 		this.setBoundingBox(new AxisAlignedBB(additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble()));
-		//System.out.println("CLIENT: " + this.getBoundingBox() + " isClient: " + this.level.isClientSide);
-		//System.out.println(this.position());
-		//System.out.println(this.pos);
+	}
+
+	@Override
+	public void remove(){
+		super.remove();
+		if (this.level.isClientSide){
+			// Don't forget to Delete the cached Image of it...
+			data.clearCache(data.getPaintingHash());
+		}
 	}
 }

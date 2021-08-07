@@ -18,12 +18,13 @@ import com.devbobcorn.nekoration.entities.ModEntityType;
 import com.devbobcorn.nekoration.exp.ExpClientOnly;
 import com.devbobcorn.nekoration.exp.ExpCommon;
 import com.devbobcorn.nekoration.items.ModItems;
-import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuTexts;
+import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuData;
 import com.devbobcorn.nekoration.network.C2SUpdatePaintingData;
 import com.devbobcorn.nekoration.network.C2SUpdatePaintingSize;
 import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
-import com.devbobcorn.nekoration.network.S2CUpdateEaselMenuItems;
+import com.devbobcorn.nekoration.network.S2CUpdateEaselMenuData;
+import com.devbobcorn.nekoration.network.S2CUpdatePaintingData;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Nekoration.MODID)
@@ -63,16 +64,16 @@ public class Nekoration {
 
 		int networkId = 0;
 		ModPacketHandler.CHANNEL.registerMessage(networkId++,
-			C2SUpdateEaselMenuTexts.class,
-			C2SUpdateEaselMenuTexts::encode,
-			C2SUpdateEaselMenuTexts::decode,
-			C2SUpdateEaselMenuTexts::handle
+			C2SUpdateEaselMenuData.class,
+			C2SUpdateEaselMenuData::encode,
+			C2SUpdateEaselMenuData::decode,
+			C2SUpdateEaselMenuData::handle
 		);
 		ModPacketHandler.CHANNEL.registerMessage(networkId++,
-			S2CUpdateEaselMenuItems.class,
-			S2CUpdateEaselMenuItems::encode,
-			S2CUpdateEaselMenuItems::decode,
-			S2CUpdateEaselMenuItems::handle
+			S2CUpdateEaselMenuData.class,
+			S2CUpdateEaselMenuData::encode,
+			S2CUpdateEaselMenuData::decode,
+			S2CUpdateEaselMenuData::handle
 		);
 		ModPacketHandler.CHANNEL.registerMessage(networkId++,
 			C2SUpdatePaletteData.class,
@@ -91,6 +92,12 @@ public class Nekoration {
 			C2SUpdatePaintingSize::encode,
 			C2SUpdatePaintingSize::decode,
 			C2SUpdatePaintingSize::handle
+		);
+		ModPacketHandler.CHANNEL.registerMessage(networkId++,
+			S2CUpdatePaintingData.class,
+			S2CUpdatePaintingData::encode,
+			S2CUpdatePaintingData::decode,
+			S2CUpdatePaintingData::handle
 		);
     }
 }

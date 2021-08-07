@@ -8,25 +8,30 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class C2SUpdatePaintingData {
     public int paintingId;
     public int[] pixels;
+    public int compositeHash;
 
-	public C2SUpdatePaintingData(int id, int[] pixels) {
+	public C2SUpdatePaintingData(int id, int[] pixels, int hash) {
         this.paintingId = id;
         this.pixels = pixels;
+        this.compositeHash = hash; // Used by other clients to check if the data's right...
 	}
 
 	public static void encode(final C2SUpdatePaintingData msg, final PacketBuffer packetBuffer) {
         packetBuffer.writeInt(msg.paintingId);
         packetBuffer.writeVarIntArray(msg.pixels);
+        packetBuffer.writeInt(msg.compositeHash);
 	}
 
 	public static C2SUpdatePaintingData decode(final PacketBuffer packetBuffer) {
         int i = packetBuffer.readInt();
         int[] p = packetBuffer.readVarIntArray();
-		return new C2SUpdatePaintingData(i, p);
+        int hash = packetBuffer.readInt();
+		return new C2SUpdatePaintingData(i, p, hash);
 	}
 
 	public static void handle(final C2SUpdatePaintingData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
@@ -39,6 +44,8 @@ public class C2SUpdatePaintingData {
                 if (entity instanceof PaintingEntity){
                     ((PaintingEntity)entity).data.setPixels(msg.pixels);
                     System.out.println("Painting Updated!");
+                    final S2CUpdatePaintingData packet = new S2CUpdatePaintingData(msg.paintingId, msg.pixels, msg.compositeHash);
+                    ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
                 }
             }
         });

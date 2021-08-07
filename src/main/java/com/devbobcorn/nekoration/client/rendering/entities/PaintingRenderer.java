@@ -32,7 +32,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 		stack.pushPose();
 		stack.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotation));
 
-		stack.scale(0.0625F, 0.0625F, 0.0625F); 
+		stack.scale(0.0625F, 0.0625F, 0.0625F);
 		PaintingSpriteUploader paintingspriteuploader = Minecraft.getInstance().getPaintingTextures();
 		//renderPainting(stack, ivertexbuilder, entity, paintingtype.getWidth(), paintingtype.getHeight(), paintingspriteuploader.get(paintingtype), paintingspriteuploader.getBackSprite());
 		renderPainting(stack, buffers, entity, entity.getWidth(), entity.getHeight(), paintingspriteuploader.getBackSprite());

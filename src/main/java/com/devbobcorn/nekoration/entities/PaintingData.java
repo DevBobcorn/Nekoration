@@ -58,7 +58,7 @@ public class PaintingData {
                 composite[right + j * w] = canvas[right + j * w] = (172 + random.nextInt(30) << 16) + (116 + random.nextInt(30) << 8) + 38 + random.nextInt(18);
             }
             updatePaintingHash();
-            save(String.valueOf(getPaintingHash()), true);
+            cache();
         }
     }
 
@@ -89,11 +89,27 @@ public class PaintingData {
             composite = new int[w * h];
             recalculateComposite();
             updatePaintingHash();
-            imageReady = true;
+            imageReady = cache();
         }
     }
     
-    public boolean save(String name, boolean composite){
+    private static final String CACHE_PATH = "nekocache";
+
+    public boolean cache(){
+        // First check if the file's already cached
+        Minecraft minecraft = Minecraft.getInstance();
+        final File pathCheck = new File(minecraft.gameDirectory, CACHE_PATH);
+        if (pathCheck.isDirectory()){
+            final File fileCheck = new File(pathCheck, getPaintingHash() + ".png");
+            if (fileCheck.exists()){
+                System.out.println("Image #" + getPaintingHash() + " already cached.");
+                return true;
+            }
+        }
+        return save(CACHE_PATH, String.valueOf(getPaintingHash()), true, false);
+    }
+
+    public boolean save(String path, String name, boolean composite, boolean showMessage){
         try {
             Minecraft minecraft = Minecraft.getInstance();
         
@@ -103,23 +119,37 @@ public class PaintingData {
                     // The composite layer does not contain alpha values, and we need to make it fully opaque here...
                     image.setRGB(i, j, composite ? 0xff000000 + getCompositeAt(i, j) : getPixelAt(i, j));
                 }
-            File file = new File(new File(minecraft.gameDirectory, "paintings"), composite ? "composite" : "pixels");
+            File file = new File(minecraft.gameDirectory, path);
             if (!file.exists() && !file.mkdir())
                 throw new IOException("Could not create folder");
             final File finalFile = new File(file, name + ".png");
+            System.out.println("Image cached to " + finalFile.getAbsolutePath());
             if (!ImageIO.write(image, "png", finalFile))
                 throw new IOException("Could not encode image as png!");
-            /*
-            IFormattableTextComponent component = new StringTextComponent(finalFile.getName());
-            component = component.withStyle(TextFormatting.UNDERLINE).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, finalFile.getAbsolutePath())));
-            minecraft.player.displayClientMessage(new TranslationTextComponent("gui.nekoration.message." + (composite ? "painting_saved" : "painting_content_saved"), component), false);
-            */
+            if (showMessage){
+                IFormattableTextComponent component = new StringTextComponent(finalFile.getName());
+                component = component.withStyle(TextFormatting.UNDERLINE).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, finalFile.getAbsolutePath())));
+                minecraft.player.displayClientMessage(new TranslationTextComponent("gui.nekoration.message." + (composite ? "painting_saved" : "painting_content_saved"), component), false);
+            }
             imageReady = true;
             return true;
         } catch (IOException e) {
             imageReady = false;
             return false;
         }
+    }
+
+    public boolean clearCache(int target){
+        Minecraft minecraft = Minecraft.getInstance();
+        final File path = new File(minecraft.gameDirectory, CACHE_PATH);
+        if (path.isDirectory()){
+            final File file = new File(path, target + ".png");
+            if (file.delete()){
+                System.out.println("Image #" + target + " cache cleared.");
+                return true;
+            }
+        }
+        return false;
     }
 
     private void updatePaintingHash(){
