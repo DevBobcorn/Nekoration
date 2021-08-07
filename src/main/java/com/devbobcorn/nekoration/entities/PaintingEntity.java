@@ -187,7 +187,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	@Override
 	public void readSpawnData(PacketBuffer additionalData) {
 		// Client receives...
-		this.data = new PaintingData(additionalData.readShort(), additionalData.readShort(), additionalData.readVarIntArray(), true, this.getId());
+		this.data = new PaintingData(additionalData.readShort(), additionalData.readShort(), additionalData.readVarIntArray(), true, this.getUUID().hashCode());
 
 		this.setPosRaw(additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble());
 		this.pos = additionalData.readBlockPos();

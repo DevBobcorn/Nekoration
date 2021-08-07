@@ -56,28 +56,15 @@ public class PaintingScreen extends Screen {
     // private int[] pointerPos = { -1, -1 };
     public boolean renderColorText = false;
 
-    private PaintingData paintingData;
-    private short paintingWidth;
-    private short paintingHeight;
+    private final PaintingData paintingData;
+    private final short paintingWidth;
+    private final short paintingHeight;
 
     private double hor = 0.0D, ver = 0.0D;
     private int pixsize = 8;
 
-    @SuppressWarnings("resource")
     public PaintingScreen(int pt) {
-        super(ITextComponent.nullToEmpty("PAINTING"));
-        opacityPos = topPos + OPACITY_TOP;
-        activeSlot = 0;
-        colors = PaletteItem.DEFAULT_COLOR_SET;
-        entityId = pt;
-        try {
-            PaintingEntity painting = (PaintingEntity) Minecraft.getInstance().level.getEntity(entityId);
-            paintingData = painting.data;
-            paintingWidth  = painting.data.getWidth();
-            paintingHeight = painting.data.getHeight();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        this(pt, (byte)0, PaletteItem.DEFAULT_COLOR_SET);
     }
 
     @SuppressWarnings("resource")
@@ -87,14 +74,11 @@ public class PaintingScreen extends Screen {
         activeSlot = active;
         colors = paletteColors;
         entityId = pt;
-        try {
-            PaintingEntity painting = (PaintingEntity) Minecraft.getInstance().level.getEntity(entityId);
-            paintingData = painting.data;
-            paintingWidth  = painting.data.getWidth();
-            paintingHeight = painting.data.getHeight();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        PaintingEntity painting = (PaintingEntity) Minecraft.getInstance().level.getEntity(entityId);
+        paintingData = painting.data;
+        paintingWidth  = painting.data.getWidth();
+        paintingHeight = painting.data.getHeight();
+        paintingData.imageReady = false;
     }
 
     protected void init() {
@@ -106,9 +90,11 @@ public class PaintingScreen extends Screen {
 	@Override
     public void onClose() {
 		try {
-            // Update Color Data...
+            // Update Painting Data...
             final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId, paintingData.getPixels());
             ModPacketHandler.CHANNEL.sendToServer(packet);
+            // Save the Painting Image on client for rendering...
+            paintingData.save(String.valueOf(paintingData.getPaintingHash()), true);
 		} catch (Exception e){
 			e.printStackTrace();
 		}
@@ -122,20 +108,34 @@ public class PaintingScreen extends Screen {
 			// I DONT GET IT, WHY THE HELL PRESSING 'E' CAN CLOSE THE SCREEN...
             this.renderColorText = !this.renderColorText;
             return true;
-        }
-        if (keyCode == GLFW.GLFW_KEY_W){
+        } else if (keyCode == GLFW.GLFW_KEY_W){
             // Switch Tool...
             activeTool = (byte)((activeTool + 1) % TOOLS_NUM);
             return true;
-        }
-        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+        } else if (keyCode == GLFW.GLFW_KEY_A){
+            // Save Image...
+            try{
+                paintingData.save(String.valueOf(paintingData.getPaintingHash()), true);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            return true;
+        } else if (keyCode == GLFW.GLFW_KEY_S){
+            // Save Image Content...
+            try{
+                paintingData.save(String.valueOf(paintingData.getPaintingHash()), false);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            return true;
+        } else if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).closeContainer();
             //return true;
         }
         return super.keyPressed(keyCode, scanCode, modifier);
     }
 
-    private String debugText = "Debug Text.";
+    private String debugText = "A nice line of debug text, isn't it?";
 
     @SuppressWarnings("deprecation")
     public void render(MatrixStack stack, int x, int y, float partialTicks) {
@@ -210,28 +210,7 @@ public class PaintingScreen extends Screen {
                 getOpacity(x, y);
                 debugText = "Opacity: " + opacity;
             } else if (isOnPainting(x, y)){
-                double areax = x - this.leftPos - PAINTING_LEFT;
-                double areay = y - this.topPos - PAINTING_TOP;
-                double pixX = (areax - hor) / (double)pixsize;
-                double pixY = (areay - ver) / (double)pixsize;
-                switch (activeTool){
-                    case 0: // Pencil
-                        debugText = String.format("Stroke: [%.2f, %.2f]", pixX, pixY);
-                        usePencil(pixX, pixY);
-                        break;
-                    case 1: // Pen
-                        debugText = String.format("Draw: [%.2f, %.2f]", pixX, pixY);
-                        usePen(pixX, pixY);
-                        break;
-                    case 2: // Eraser
-                        debugText = String.format("Erase: [%.2f, %.2f]", pixX, pixY);
-                        useEraser(pixX, pixY);
-                        break;
-                    case 3: // Bucket
-                        debugText = String.format("Fill: [%.2f, %.2f]", pixX, pixY);
-                        // useBucket(pixX, pixY);
-                        break;
-                }
+                useTool(x, y);
             } else {
                 for (byte idx = 0;idx < TOOLS_NUM;idx++){
                     if (x > leftPos + TOOLS_LEFT + idx * 17 && x < leftPos + TOOLS_LEFT + idx * 17 + 16 && y > topPos + TOOLS_TOP && y < topPos + TOOLS_TOP + 16)
@@ -247,28 +226,7 @@ public class PaintingScreen extends Screen {
         //getColor(x, y);
         if (type == 0) { // Left Button, draw...
             if (isOnPainting(x, y)) {
-                double areax = x - this.leftPos - PAINTING_LEFT;
-                double areay = y - this.topPos - PAINTING_TOP;
-                double pixX = (areax - hor) / (double)pixsize;
-                double pixY = (areay - ver) / (double)pixsize;
-                switch (activeTool){
-                    case 0: // Pencil
-                        debugText = String.format("Stroke: [%.2f, %.2f]", pixX, pixY);
-                        usePencil(pixX, pixY);
-                        break;
-                    case 1: // Pen
-                        debugText = String.format("Draw: [%.2f, %.2f]", pixX, pixY);
-                        usePen(pixX, pixY);
-                        break;
-                    case 2: // Eraser
-                        debugText = String.format("Erase: [%.2f, %.2f]", pixX, pixY);
-                        useEraser(pixX, pixY);
-                        break;
-                    case 3: // Bucket
-                        debugText = String.format("Fill: [%.2f, %.2f]", pixX, pixY);
-                        // useBucket(pixX, pixY);
-                        break;
-                }
+                useTool(x, y);
             }
             else if (isOnOpacityPicker(x, y)) {
                 getOpacity(x, y);
@@ -282,12 +240,38 @@ public class PaintingScreen extends Screen {
         return super.mouseDragged(x, y, type, dx, dy);
     }
 
+    private void useTool(double x, double y){
+        double areax = x - this.leftPos - PAINTING_LEFT;
+        double areay = y - this.topPos - PAINTING_TOP;
+        double pixX = (areax - hor) / (double)pixsize;
+        double pixY = (areay - ver) / (double)pixsize;
+        switch (activeTool){
+            case 0: // Pencil
+                debugText = String.format("Stroke: [%.2f, %.2f]", pixX, pixY);
+                usePencil(pixX, pixY);
+                break;
+            case 1: // Pen
+                debugText = String.format("Draw: [%.2f, %.2f]", pixX, pixY);
+                usePen(pixX, pixY);
+                break;
+            case 2: // Eraser
+                debugText = String.format("Erase: [%.2f, %.2f]", pixX, pixY);
+                useEraser(pixX, pixY);
+                break;
+            case 3: // Bucket
+                debugText = String.format("Fill: [%.2f, %.2f]", pixX, pixY);
+                // useBucket(pixX, pixY);
+                break;
+        }
+    }
+
     private void usePencil(double x, double y){
         int pixX = (int)x, pixY = (int)y;
         paintingData.setPixel(pixX, pixY, (opacity << 24) + colors[activeSlot].getRGB());
     }
 
     private void usePen(double x, double y){
+        // TODO: Implement
         int pixX = (int)x, pixY = (int)y;
         paintingData.setPixel(pixX, pixY, (opacity << 24) + colors[activeSlot].getRGB());
     }

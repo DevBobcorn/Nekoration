@@ -39,8 +39,9 @@ tabs = ["stone","wooden","window_n_door","furniture","decor","tool"]
 tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Furnitures","Small Decors","Tools"]
 tabs_cn = ["石质方块","木质方块","门窗","家具","装饰","工具"]
 
-buttons = ["scroll_up","scroll_down","enable_all","disable_all"]
-buttons_cn = ["向上","向下","选中所有","清除所有"]
+guis = ["button.scroll_up","button.scroll_down","button.enable_all","button.disable_all","message.painting_saved","message.painting_content_saved"]
+guis_us = ["Scroll Up","Scroll Down","Enable All","Disable All","Painting saved as %s","Painting content saved as %s"]
+guis_cn = ["向上","向下","选中所有","清除所有","已将绘画保存至%s","已将绘画内容保存至%s"]
 
 def getEnNameMine(instr):
     strlst = list(instr)
@@ -126,10 +127,10 @@ for tab in range(0, len(tabs)):
     obj_us['itemGroup.' + tabs[tab]] = tabs_us[tab]
     obj_cn['itemGroup.' + tabs[tab]] = tabs_cn[tab]
 
-# [BUTTON]
-for btn in range(0, len(buttons)):
-    obj_us['gui.button.nekoration.' + buttons[btn]] = getEnName(buttons[btn])
-    obj_cn['gui.button.nekoration.' + buttons[btn]] = buttons_cn[btn]
+# [GUI]
+for gui in range(0, len(guis)):
+    obj_us['gui.nekoration.' + guis[gui]] = guis_us[gui]
+    obj_cn['gui.nekoration.' + guis[gui]] = guis_cn[gui]
     
 # ...
 

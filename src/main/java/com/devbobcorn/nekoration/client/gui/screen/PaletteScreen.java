@@ -175,7 +175,7 @@ public class PaletteScreen extends Screen {
         double dy = y - this.topPos - COLORMAP_TOP;
         return dx >= 0.0D && dy >= 0.0D && dx <= COLORMAP_WIDTH && dy <= COLORMAP_HEIGHT;
     }
-    
+
     private boolean updateActiveSlot(double x, double y){
         for (int idx = 0;idx < 6;idx++){
             int l = this.leftPos + 8 + 18 * idx + (idx > 2 ? 34: 0);
@@ -197,14 +197,24 @@ public class PaletteScreen extends Screen {
 
     private void getColor(double x, double y){
         double xi = (x - this.leftPos - COLORMAP_LEFT) / COLORMAP_WIDTH;
-        double yi = (y - this.topPos - COLORMAP_TOP) / COLORMAP_WIDTH;
+        double yi = (y - this.topPos - COLORMAP_TOP) / COLORMAP_HEIGHT;
         if (xi >= 0.0D && xi <= 1.0D && yi >= 0.0D && yi <= 1.0D){
-            //Color.getHSBColor(0.0F,xi, yi);
             Color c1 = NekoColors.getRGBColorBetween(xi, Color.WHITE, colorMapColor);
             if (activeSlot >= 0 && activeSlot < colors.length) {
                 colors[activeSlot] = NekoColors.getRGBColorBetween(yi, c1, Color.BLACK);
                 colorPos[0] = (int)x - leftPos;
                 colorPos[1] = (int)y - topPos;
+            }
+        }
+    }
+
+    private void updateColor(){
+        double xi = (double)(colorPos[0] - COLORMAP_LEFT) / COLORMAP_WIDTH;
+        double yi = (double)(colorPos[1] - COLORMAP_TOP) / COLORMAP_HEIGHT;
+        if (xi >= 0.0D && xi <= 1.0D && yi >= 0.0D && yi <= 1.0D){
+            Color c1 = NekoColors.getRGBColorBetween(xi, Color.WHITE, colorMapColor);
+            if (activeSlot >= 0 && activeSlot < colors.length) {
+                colors[activeSlot] = NekoColors.getRGBColorBetween(yi, c1, Color.BLACK);
             }
         }
     }
@@ -218,8 +228,8 @@ public class PaletteScreen extends Screen {
     private void getHue(double x, double y){
         double yi = 1.0D - (y - this.topPos - COLORMAP_TOP) / COLORMAP_WIDTH;
         this.colorMapColor = Color.getHSBColor((float)yi, 1.0F, 1.0F);
-        this.colorPos[0] = -1;
-        this.colorPos[1] = -1;
+        // Update Active Color...
+        updateColor();
         this.huePos = (int)y - this.topPos;
     }
 

@@ -73,17 +73,17 @@ public class CreativeInventoryEvents
             this.guiCenterY = ((CreativeScreen) event.getGui()).getGuiTop();
             this.buttons = new ArrayList<>();
 
-            event.addWidget(this.btnScrollUp = new IconButton(this.guiCenterX - 22, this.guiCenterY - 12, new TranslationTextComponent("gui.button.nekoration.scroll_up"), button -> {
+            event.addWidget(this.btnScrollUp = new IconButton(this.guiCenterX - 22, this.guiCenterY - 12, new TranslationTextComponent("gui.nekoration.button.scroll_up"), button -> {
                 if(startIndex > 0) startIndex--;
                 this.updateTagButtons();
             }, ICONS, 64, 0));
 
-            event.addWidget(this.btnScrollDown = new IconButton(this.guiCenterX - 22, this.guiCenterY + 127, new TranslationTextComponent("gui.button.nekoration.scroll_down"), button -> {
+            event.addWidget(this.btnScrollDown = new IconButton(this.guiCenterX - 22, this.guiCenterY + 127, new TranslationTextComponent("gui.nekoration.button.scroll_down"), button -> {
                 if(startIndex <= filters.size() - 4 - 1) startIndex++;
                 this.updateTagButtons();
             }, ICONS, 80, 0));
 
-            event.addWidget(this.btnEnableAll = new IconButton(this.guiCenterX + 32, this.guiCenterY - 50, new TranslationTextComponent("gui.button.nekoration.enable_all"), button -> {
+            event.addWidget(this.btnEnableAll = new IconButton(this.guiCenterX + 32, this.guiCenterY - 50, new TranslationTextComponent("gui.nekoration.button.enable_all"), button -> {
                 this.filters.forEach(filters -> filters.setEnabled(true));
                 this.buttons.forEach(WoodTypeButton::updateState);
                 Screen screen = Minecraft.getInstance().screen;
@@ -93,7 +93,7 @@ public class CreativeInventoryEvents
                 }
             }, ICONS, 96, 0));
 
-            event.addWidget(this.btnDisableAll = new IconButton(this.guiCenterX + 144, this.guiCenterY - 50, new TranslationTextComponent("gui.button.nekoration.disable_all"), button -> {
+            event.addWidget(this.btnDisableAll = new IconButton(this.guiCenterX + 144, this.guiCenterY - 50, new TranslationTextComponent("gui.nekoration.button.disable_all"), button -> {
                 this.filters.forEach(filters -> filters.setEnabled(false));
                 this.buttons.forEach(WoodTypeButton::updateState);
                 Screen screen = Minecraft.getInstance().screen;

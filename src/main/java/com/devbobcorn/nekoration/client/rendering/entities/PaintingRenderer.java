@@ -1,7 +1,7 @@
 package com.devbobcorn.nekoration.client.rendering.entities;
 
-import com.devbobcorn.nekoration.NekoColors;
-import com.devbobcorn.nekoration.client.rendering.RenderTypeHelper;
+import com.devbobcorn.nekoration.client.rendering.AbstractPaintingRenderer;
+import com.devbobcorn.nekoration.client.rendering.PaintingRendererManager;
 import com.devbobcorn.nekoration.entities.PaintingEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -45,6 +45,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 		return Minecraft.getInstance().getPaintingTextures().getBackSprite().atlas().location();
 	}
 
+	@SuppressWarnings("resource")
 	private void renderPainting(MatrixStack stack, IRenderTypeBuffer buffers, PaintingEntity entity, int width, int height, TextureAtlasSprite woodTex) {
 		MatrixStack.Entry matrixstack$entry = stack.last();
 		Matrix4f pose = matrixstack$entry.pose();
@@ -61,8 +62,6 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 
 		short blocHorCount = (short)(width / 16);
 		short blocVerCount = (short)(height / 16);
-		// double d0 = 16.0D / (double) blocWidth;
-		// double d1 = 16.0D / (double) blocHeight;
 
 		for (short blocHor = 0; blocHor < blocHorCount; ++blocHor) { // BlockCount Horizontally...
 			for (short blocVer = 0; blocVer < blocVerCount; ++blocVer) { // BlockCount Vertically...
@@ -113,38 +112,25 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 				vertexFrame(pose, normal, vb1, left,  bottom, woodU_, woodV1, -0.5F,  1, 0, 0, light);
 				vertexFrame(pose, normal, vb1, left,  bottom, woodU0, woodV1,  0.5F,  1, 0, 0, light);
 				vertexFrame(pose, normal, vb1, left,  top,    woodU0, woodV0,  0.5F,  1, 0, 0, light);
-				// Then render the artwork // The code commented out is the vanilla implementation to draw
-				// a painting from its texture image...
-				// float paintU0 = paintingTex.getU(d0 * (double) (blocWidth - blocHor));
-				// float paintU1 = paintingTex.getU(d0 * (double) (blocWidth - (blocHor + 1)));
-				// float paintV0 = paintingTex.getV(d1 * (double) (blocHeight - blocVer));
-				// float paintV1 = paintingTex.getV(d1 * (double) (blocHeight - (blocVer + 1)));
-				// Neg[Z] // F[ront]
-				// vertex(pose, normal, vertexBuilder, right, bottom, paintU1, paintV0, -0.5F, 0, 0, -1, light);
-				// vertex(pose, normal, vertexBuilder, left,  bottom, paintU0, paintV0, -0.5F, 0, 0, -1, light);
-				// vertex(pose, normal, vertexBuilder, left,  top,    paintU0, paintV1, -0.5F, 0, 0, -1, light);
-				// vertex(pose, normal, vertexBuilder, right, top,    paintU1, paintV1, -0.5F, 0, 0, -1, light);
-				// We don't need textures when rendering the artwork, so we use another RenderType(PAINTING),
-				// Which uses vertices which don't have uv data but need rgb color values...
-				// Get the VertexBuffer for Image Rendering...
-				IVertexBuilder vb2 = buffers.getBuffer(RenderTypeHelper.PAINTING);
-				int[] color;
-				for (short posi = 0;posi < 16;posi++)
-					for (short posj = 0;posj < 16;posj++) {
-						color = NekoColors.getRGBArray(entity.data.getCompositeAt(width - 1 - (blocHor * 16 + posi), height - 1 - (blocVer * 16 + posj)));
-						vertexPaint(pose, normal, vb2, left + posi + 1.0F, bottom + posj,        -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // >V
-						vertexPaint(pose, normal, vb2, left + posi, bottom + posj,               -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // <V
-						vertexPaint(pose, normal, vb2, left + posi, bottom + posj + 1.0F,        -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // <A
-						vertexPaint(pose, normal, vb2, left + posi + 1.0F, bottom + posj + 1.0F, -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // >A
+				// Then render the artwork
+				AbstractPaintingRenderer rd = null;
+				if (entity.data.imageReady) {
+					rd = PaintingRendererManager.get(entity.data.getPaintingHash());
+					if (rd == null){
+						// Reset and the Pixel Renderer...
+						System.err.println("Image Renderer Not Ready!");
+						entity.data.imageReady = false;
+						rd = PaintingRendererManager.PixelsRenderer();
 					}
+				} else rd = PaintingRendererManager.PixelsRenderer();
+				rd.render(stack, pose, normal, buffers, entity.data, blocHor, blocVer, left, bottom, light);
 				// Draw Debug Text...
-				/*
 				stack.pushPose();
-				stack.translate(-LEFT - 2.0D, -5.0D, -0.6D);
+				stack.translate(-LEFT - 1.0D, TOP + 3.0D, -0.6D);
 				stack.scale(-0.2F, -0.2F, 0.2F);
-				Minecraft.getInstance().font.draw(stack, "Ceci n'est pas une painting!", 1.0F, 1.0F, 0xFFFFFF);
+				//Minecraft.getInstance().font.draw(stack, "Ceci n'est pas une painting!", 1.0F, 1.0F, 0xFFFFFF);
+				Minecraft.getInstance().font.draw(stack, "P:" + String.valueOf(entity.data.getPaintingHash()) + (entity.data.imageReady ? "T" : "F"), 1.0F, 1.0F, 0xFFFFFF);
 				stack.popPose();
-				*/
 			}
 		}
 
@@ -154,7 +140,4 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 		vertexBuilder.vertex(pose, x, y, z).color(255, 255, 255, 255).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, (float)nx, (float)ny, (float)nz).endVertex();
 	}
 
-	private static void vertexPaint(Matrix4f pose, Matrix3f normal, IVertexBuilder vertexBuilder, float x, float y, float z, int nx, int ny, int nz, int light, int r, int g, int b) {
-		vertexBuilder.vertex(pose, x, y, z).color(r, g, b, 255).uv2(light).normal(normal, (float)nx, (float)ny, (float)nz).endVertex();
-	}
 }
