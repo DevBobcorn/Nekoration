@@ -17,13 +17,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class EaselMenuContainer extends Container {
+	public final boolean white;
 	public ITextComponent[] texts = new ITextComponent[8];
 	public DyeColor[] colors = new DyeColor[8];
 
-
 	public static EaselMenuContainer createContainerServerSide(int windowID, PlayerInventory playerInventory,
 			ContainerContents easelMenuContents, EaselMenuBlockEntity te) {
-		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, te.getBlockPos(), te.getMessages(), te.getColor());
+		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, te.getBlockPos(), te.getMessages(), te.getColor(), te.white);
 	}
 
 	public static EaselMenuContainer createContainerClientSide(int windowID, PlayerInventory playerInventory,
@@ -46,13 +46,14 @@ public class EaselMenuContainer extends Container {
 					t[i] = extraData.readComponent();
 				for (int i = 0;i < 8;i++)
 					c[i] = extraData.readEnum(DyeColor.class);
-				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, p, t, c);
+				boolean w = extraData.readBoolean();
+				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, p, t, c, w);
 			} catch (Exception e) {
 				LOGGER.warn("Invalid data in packet buffer", e);
 				ContainerContents easelMenuContents = ContainerContents
-						.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
+					.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
 
-				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, BlockPos.ZERO, new ITextComponent[8], new DyeColor[8]);
+				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, BlockPos.ZERO, new ITextComponent[8], new DyeColor[8], false);
 			}
 	}
 
@@ -93,7 +94,7 @@ public class EaselMenuContainer extends Container {
 	 * @param easelMenuContents
 	 *            the inventory stored in the chest
 	 */
-	private EaselMenuContainer(int windowID, PlayerInventory playerInventory, ContainerContents easelMenuContents, BlockPos pos, ITextComponent[] texts, DyeColor[] colors) {
+	private EaselMenuContainer(int windowID, PlayerInventory playerInventory, ContainerContents easelMenuContents, BlockPos pos, ITextComponent[] texts, DyeColor[] colors, boolean white) {
 		super(ModContainerType.EASEL_MENU_TYPE.get(), windowID);
 		if (ModContainerType.EASEL_MENU_TYPE.get() == null)
 			throw new IllegalStateException("Must initialize Container Type before constructing a Container!");
@@ -102,6 +103,8 @@ public class EaselMenuContainer extends Container {
 		// Not actually necessary - can use Slot(playerInventory) instead of
 		// SlotItemHandler(playerInventoryForge)
 		this.easelMenuContents = easelMenuContents;
+
+		this.white = white;
 
 		final int SLOT_X_SPACING = 18;
 		final int SLOT_Y_SPACING = 18;

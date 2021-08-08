@@ -80,6 +80,8 @@ public final class ClientModEventSubscriber {
 		RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_PLANT.get(), transparentRenderType);
 
 		RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER_BASKET_IRON.get(), transparentRenderType);
+		RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER_BASKET_GOLD.get(), transparentRenderType);
+		RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER_BASKET_QUARTZ.get(), transparentRenderType);
 
 		RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_1.get(), transparentRenderType);
 		RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_2.get(), translucentRenderType);
@@ -177,7 +179,7 @@ public final class ClientModEventSubscriber {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
 				return NekoColors.getWoodenColorOrBrown(2);
 			return NekoColors.getWoodenColorOrBrown(state.getValue(DyeableBlock.COLOR));
-		}, ModBlocks.EASEL_MENU.get());
+		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableVerticalConnectBlock))
@@ -270,7 +272,7 @@ public final class ClientModEventSubscriber {
 		}, 
 		ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
 		ModBlocks.WINDOW_SHADE.get().asItem(), ModBlocks.WINDOW_LANCET.get().asItem(),
-		ModBlocks.EASEL_MENU.get().asItem());
+		ModBlocks.EASEL_MENU.get().asItem(), ModBlocks.EASEL_MENU_WHITE.get().asItem());
 
 		// Default Wooden Brown, BiDyeable:
 		event.getItemColors().register((stack, tintIndex) -> {

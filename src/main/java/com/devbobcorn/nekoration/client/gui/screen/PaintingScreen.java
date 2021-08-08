@@ -20,6 +20,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class PaintingScreen extends Screen {
     public static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(Nekoration.MODID, "textures/gui/painting.png");
@@ -65,6 +66,8 @@ public class PaintingScreen extends Screen {
     private double hor = 0.0D, ver = 0.0D;
     private int pixsize = 8;
 
+    private TranslationTextComponent tipMessage;
+
     public PaintingScreen(int pt) {
         this(pt, (byte)0, PaletteItem.DEFAULT_COLOR_SET);
     }
@@ -82,6 +85,7 @@ public class PaintingScreen extends Screen {
         paintingHeight = painting.data.getHeight();
         paintingData.imageReady = false;
         oldHash = paintingData.getPaintingHash();
+        tipMessage = new TranslationTextComponent("gui.nekoration.message.press_e_debug_info");
     }
 
     protected void init() {
@@ -99,6 +103,8 @@ public class PaintingScreen extends Screen {
                 // Update Painting Data to the Server, and then the Server will notify clients(including this one) to update their cache...
                 final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId, paintingData.getPixels(), paintingData.getPaintingHash());
                 ModPacketHandler.CHANNEL.sendToServer(packet);
+            } else {// Not Edited, still ready...
+                paintingData.imageReady = true;
             }
 		} catch (Exception e){
 			e.printStackTrace();
@@ -196,7 +202,7 @@ public class PaintingScreen extends Screen {
         if (renderColorText)
             this.font.draw(stack, debugText, 1.0F, 1.0F, 0xFFFFFF);
             //this.font.draw(stack, "Color: " + colors[activeSlot].getRGB() + " R:" +  + colors[activeSlot].getRed() + " G:" +  + colors[activeSlot].getGreen() + " B:" +  + colors[activeSlot].getBlue(), 1.0F, 1.0F, colors[activeSlot].getRGB());
-        else this.font.draw(stack, "Press 'E' to view operations.", 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
+        else this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
 
     @SuppressWarnings("deprecation")

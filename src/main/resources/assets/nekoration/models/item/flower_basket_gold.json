@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "nekoration:block/flower_basket_iron"
+        "layer0": "nekoration:block/flower_basket_gold"
     }
 }

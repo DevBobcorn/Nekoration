@@ -25,9 +25,12 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 
 	private String[] texts = {"", "", "", "", "", "", "", "" };
 
-	public EaselMenuScreen(EaselMenuContainer containerBasic, PlayerInventory playerInventory, ITextComponent title) {
-		super(containerBasic, playerInventory, title);
+	private final boolean white;
+
+	public EaselMenuScreen(EaselMenuContainer container, PlayerInventory playerInventory, ITextComponent title) {
+		super(container, playerInventory, title);
 		// Set the width and height of the gui. Should match the size of the texture!
+		white = container.white;
 		imageWidth = 176;
 		imageHeight = 222;
 	}
@@ -47,7 +50,9 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 				this.texts[j] = input;
 			});
 			this.textInputs[i].setVisible(true);
-			this.textInputs[i].setTextColor(16777215);
+			this.textInputs[i].setTextColor(this.menu.colors[i].getColorValue());
+			this.textInputs[i].setTextColorUneditable(DyeColor.LIGHT_GRAY.getColorValue());
+			//this.textInputs[i].setFGColor(16777215);
 			this.textInputs[i].setBordered(false);
 			//this.textInputs[i].setValue("TEXT " + i);
 			this.textInputs[i].setValue(this.menu.texts[i].getContents());
@@ -68,12 +73,12 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
     public void onClose() {
 		try {
 			//Send a packet to the Server tu update data...
-			DyeColor[] cl = { DyeColor.PURPLE, DyeColor.PINK, DyeColor.ORANGE, DyeColor.YELLOW, DyeColor.LIME, DyeColor.LIGHT_BLUE, DyeColor.CYAN, DyeColor.BLUE };
+			// DyeColor[] cl = { DyeColor.PURPLE, DyeColor.PINK, DyeColor.ORANGE, DyeColor.YELLOW, DyeColor.LIME, DyeColor.LIGHT_BLUE, DyeColor.CYAN, DyeColor.BLUE };
 			ITextComponent[] tx = new ITextComponent[8];
 			for (int i = 0;i < 8;i++)
 				tx[i] = ITextComponent.nullToEmpty(textInputs[i].getValue());
 
-			final C2SUpdateEaselMenuData packet = new C2SUpdateEaselMenuData(this.menu.pos, tx, cl);
+			final C2SUpdateEaselMenuData packet = new C2SUpdateEaselMenuData(this.menu.pos, tx, this.menu.colors);
 			ModPacketHandler.CHANNEL.sendToServer(packet);
 			//System.out.println("Packet Sent");
 		} catch (Exception e){
@@ -106,7 +111,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 		this.renderBackground(stack);
 		super.render(stack, mouseX, mouseY, partialTicks);
 		for (int i = 0;i < 8;i++){
-        	this.textInputs[i].render(stack, mouseX, mouseY, partialTicks);
+			this.textInputs[i].render(stack, mouseX, mouseY, partialTicks);
 		}
 		this.renderTooltip(stack, mouseX, mouseY);
 	}
@@ -137,7 +142,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX,
 			int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE); // this.minecraft.getTextureManager()
+		this.minecraft.getTextureManager().bind(white ? WHITE_BACKGROUND_TEXTURE : BACKGROUND_TEXTURE); // this.minecraft.getTextureManager()
 		// width and height are the size provided to the window when initialised after
 		// creation.
 		// xSize, ySize are the expected size of the texture-? usually seems to be left
@@ -152,4 +157,5 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 
 	// This is the resource location for the background image for the GUI
 	private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(Nekoration.MODID, "textures/gui/easel_menu.png");
+	private static final ResourceLocation WHITE_BACKGROUND_TEXTURE = new ResourceLocation(Nekoration.MODID, "textures/gui/easel_menu_white.png");
 }

@@ -129,7 +129,9 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 				stack.translate(-LEFT - 1.0D, TOP + 3.0D, -0.6D);
 				stack.scale(-0.2F, -0.2F, 0.2F);
 				//Minecraft.getInstance().font.draw(stack, "Ceci n'est pas une painting!", 1.0F, 1.0F, 0xFFFFFF);
-				Minecraft.getInstance().font.draw(stack, "P:" + String.valueOf(entity.data.getPaintingHash()) + (entity.data.imageReady ? "T" : "F"), 1.0F, 1.0F, 0xFFFFFF);
+				Minecraft.getInstance().font.draw(stack, (entity.data.imageReady) ? "Rendered with Image" : "Rendered Pixel-by-Pixel", 1.0F, 1.0F, 0xFFFFFF);
+				stack.translate(0.0D, -10.0D, 0.0D);
+				Minecraft.getInstance().font.draw(stack, "#" + String.valueOf(entity.data.getPaintingHash()), 1.0F, 1.0F, 0xFFFFFF);
 				stack.popPose();
 			}
 		}

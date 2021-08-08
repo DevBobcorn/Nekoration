@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "nekoration:block/flower_basket_iron",
+		"0": "nekoration:block/flower_basket_quartz",
 		"1": "nekoration:block/plant",
-		"2": "nekoration:block/mat_iron",
-		"particle": "nekoration:block/flower_basket_iron"
+		"2": "nekoration:block/mat_quartz",
+		"particle": "nekoration:block/flower_basket_quartz"
 	},
 	"elements": [
 		{

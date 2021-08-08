@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "nekoration:block/flower_basket" }
+        "": { "model": "nekoration:block/flower_basket_iron" }
     }
 }

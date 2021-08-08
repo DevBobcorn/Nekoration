@@ -17,6 +17,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class PaletteScreen extends Screen {
     public static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(Nekoration.MODID, "textures/gui/palette.png");
@@ -49,11 +50,14 @@ public class PaletteScreen extends Screen {
 
     public boolean renderColorText = false;
 
+    private TranslationTextComponent tipMessage;
+
     public PaletteScreen(Hand hand, byte active, Color[] oldColors) {
         super(ITextComponent.nullToEmpty("PALETTE"));
         this.hand = hand;
         this.activeSlot = active;
         this.colors = oldColors;
+        tipMessage = new TranslationTextComponent("gui.nekoration.message.press_e_color_info");
     }
 
     protected void init() {
@@ -134,8 +138,8 @@ public class PaletteScreen extends Screen {
         stack.translate(j, -i - 167, 0);
         //fillGradient(stack, i, j, i + 128, j + 128, col, black);
         if (renderColorText)
-            this.font.draw(stack, "Color: " + colors[activeSlot].getRGB() + " R:" +  + colors[activeSlot].getRed() + " G:" +  + colors[activeSlot].getGreen() + " B:" +  + colors[activeSlot].getBlue(), 1.0F, 1.0F, colors[activeSlot].getRGB());
-        else this.font.draw(stack, "Press 'E' to toggle Color Info.", 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
+            this.font.draw(stack, new TranslationTextComponent("gui.nekoration.message.color_info", colors[activeSlot].getRGB(), colors[activeSlot].getRed(), colors[activeSlot].getGreen(), colors[activeSlot].getBlue()), 1.0F, 1.0F, colors[activeSlot].getRGB());
+        else this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
 
     @SuppressWarnings("deprecation")

@@ -46,8 +46,17 @@ public class EaselMenuBlockEntity extends TileEntity implements INamedContainerP
 	private PlayerEntity playerWhoMayEdit;
 	private DyeColor[] textColors = { DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY };
 
+	public final boolean white; // Not saved or synced between clients and server, just temporarily stores the variant type...
+
 	public EaselMenuBlockEntity() {
 		super(ModTileEntityType.EASEL_MENU_TYPE.get());
+		white = false;
+		contents = ContainerContents.createForTileEntity(NUMBER_OF_SLOTS, this::canPlayerAccessInventory, this::setChanged, this);
+	}
+
+	public EaselMenuBlockEntity(boolean w) {
+		super(ModTileEntityType.EASEL_MENU_TYPE.get());
+		white = w;
 		contents = ContainerContents.createForTileEntity(NUMBER_OF_SLOTS, this::canPlayerAccessInventory, this::setChanged, this);
 	}
 
@@ -75,7 +84,7 @@ public class EaselMenuBlockEntity extends TileEntity implements INamedContainerP
 		}
 		
 		for (int i = 0; i < 8; ++i) {
-			tag.putString("Color", this.textColors[i].getName());
+			tag.putString("Color" + i, this.textColors[i].getName());
 		}
 		CompoundNBT inventoryNBT = contents.serializeNBT();
 		tag.put("Contents", inventoryNBT);
@@ -92,7 +101,7 @@ public class EaselMenuBlockEntity extends TileEntity implements INamedContainerP
 			throw new IllegalArgumentException("Corrupted NBT: Number of inventory slots did not match expected.");
 		// Texts...
 		for (int i = 0;i < 8;++i)
-			this.textColors[i] = DyeColor.byName(tag.getString("Color"), DyeColor.GRAY);
+			this.textColors[i] = DyeColor.byName(tag.getString("Color" + i), DyeColor.GRAY);
 
 		for (int i = 0; i < 8; ++i) {
 			String s = tag.getString("Text" + (i + 1));

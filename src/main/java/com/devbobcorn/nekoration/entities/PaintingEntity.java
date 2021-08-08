@@ -21,6 +21,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -87,37 +88,31 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	public ActionResultType interact(PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		World world = player.level;
-		if (world.isClientSide && stack.getItem() == ModItems.PALETTE.get()) {
-			//System.out.println("Open Painting using Palette Item.");
-			// First get the existing data in this palette...
-			CompoundNBT nbt = stack.getTag();
-			if (nbt != null && nbt.contains(PaletteItem.ACTIVE, ExpNBTTypes.BYTE_NBT_ID)){
-				byte a = nbt.getByte(PaletteItem.ACTIVE);
-				int[] c = nbt.getIntArray(PaletteItem.COLORS);
-				Color[] col = new Color[6];
-				for (int i = 0;i < 6;i++){
-					col[i] = new Color(NekoColors.getRed(c[i]), NekoColors.getGreen(c[i]), NekoColors.getBlue(c[i]));
-				}
-				DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-					//Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, col));
-					ClientHelper.showPaintingScreen(this.getId(), a, col);
-					//System.out.println("Open Painting GUI1.");
-				});
-			} else DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { 
-				//Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, DEFAULT_COLOR_SET));
-				ClientHelper.showPaintingScreen(this.getId());
-				//System.out.println("Open Painting GUI2.");
-			});
-			return ActionResultType.SUCCESS;
+		if (world.isClientSide) {
+			if (stack.getItem() == ModItems.PALETTE.get()){
+				//System.out.println("Open Painting using Palette Item.");
+				// First get the existing data in this palette...
+				CompoundNBT nbt = stack.getTag();
+				if (nbt != null && nbt.contains(PaletteItem.ACTIVE, ExpNBTTypes.BYTE_NBT_ID)){
+					byte a = nbt.getByte(PaletteItem.ACTIVE);
+					int[] c = nbt.getIntArray(PaletteItem.COLORS);
+					Color[] col = new Color[6];
+					for (int i = 0;i < 6;i++){
+						col[i] = new Color(NekoColors.getRed(c[i]), NekoColors.getGreen(c[i]), NekoColors.getBlue(c[i]));
+					}
+					DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+						//Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, col));
+						ClientHelper.showPaintingScreen(this.getId(), a, col);
+						//System.out.println("Open Painting GUI1.");
+					});
+				} else ClientHelper.showPaintingScreen(this.getId());
+				return ActionResultType.SUCCESS;
+			} else {
+				player.displayClientMessage(new TranslationTextComponent("gui.nekoration.message.paint_with_palette"), true);
+				return ActionResultType.PASS;
+			}
 		}
-        if (world.isClientSide) {
-			//System.out.println("Interacted with Painting!");
-            DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { 
-				//Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, col));
-				ClientHelper.showPaintingScreen(this.getId());
-			});
-		}
-        return ActionResultType.SUCCESS;
+        return (stack.getItem() == ModItems.PALETTE.get()) ? ActionResultType.SUCCESS : ActionResultType.PASS;
 	}
 
 	@Override

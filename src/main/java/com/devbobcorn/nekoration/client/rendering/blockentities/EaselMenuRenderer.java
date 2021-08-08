@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.item.DyeColor;
 import net.minecraft.util.math.vector.Vector3f;
 
 public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEntity> {
@@ -68,9 +69,11 @@ public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEntity> 
 	
 			sc = 0.015F;
 			stack.scale(sc, -sc, sc);
+
+			DyeColor[] colors = tileEntity.getColor();
 			
 			for (int i = 0;i < 4;i++) {
-				fontrenderer.draw(stack, tileEntity.getMessage(i + rot * 4), 1.0F, 1.0F, 16777215);
+				fontrenderer.draw(stack, tileEntity.getMessage(i + rot * 4), 1.0F, 1.0F, colors[i + rot * 4].getColorValue());
 				stack.translate(0.0F, 12.0F, 0.0F);
 			}
 

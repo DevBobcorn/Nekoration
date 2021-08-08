@@ -13,7 +13,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -28,10 +30,12 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class EaselMenuBlock extends DyeableHorizontalBlock {
 	private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+	public final boolean white;
 
-    public EaselMenuBlock(Properties settings) {
+    public EaselMenuBlock(Properties settings, boolean w) {
         super(settings);
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 2));
+		white = w;
     }
     
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
@@ -48,20 +52,28 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 	// Should return a new instance of the tile entity for the block
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new EaselMenuBlockEntity();
+		EaselMenuBlockEntity te = new EaselMenuBlockEntity(white);
+		return te;
 	}
 
     // Called just after the player places a block.
 	@Override
 	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(worldIn, pos, state, placer, stack);
-
+		// Set default text colors...
 		TileEntity tileentity = worldIn.getBlockEntity(pos);
 		if (tileentity instanceof EaselMenuBlockEntity) { // prevent a crash if not the right type, or is null
+			EaselMenuBlockEntity te = (EaselMenuBlockEntity) tileentity;
+			if (white){
+				final DyeColor[] colors = { DyeColor.YELLOW, DyeColor.LIME, DyeColor.CYAN, DyeColor.PINK, DyeColor.MAGENTA, DyeColor.PURPLE, DyeColor.BLUE, DyeColor.CYAN };
+				te.setColor(colors);
+			} else {
+				final DyeColor[] colors = { DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE };
+				te.setColor(colors);
+			}
             return;
 		}
-        //LOGGER.error("Tile Entity NOT Found!");
-		System.out.println("Tile Entity NOT Found!");
+		System.err.println("Tile Entity NOT Found!");
 	}
 
 	@Override
@@ -82,6 +94,7 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 					packetBuffer.writeComponent(te.getMessage(i));
 				for (int i = 0;i < 8;i++)
 					packetBuffer.writeEnum(te.getColor()[i]);
+				packetBuffer.writeBoolean(white);
 			});
 		}
 		return ActionResultType.SUCCESS;

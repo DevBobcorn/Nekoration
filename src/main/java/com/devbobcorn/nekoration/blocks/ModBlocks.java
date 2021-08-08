@@ -30,8 +30,6 @@ public final class ModBlocks {
     public static final RegistryObject<Block> WINDOW_SILL = BLOCKS.register("window_sill", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
     public static final RegistryObject<Block> WINDOW_PLANT = BLOCKS.register("window_plant", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.LEAVES).strength(0.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
 
-    public static final RegistryObject<Block> FLOWER_BASKET_IRON = BLOCKS.register("flower_basket_iron", () -> new BasketBlock(Block.Properties.of(Material.METAL).strength(0.0F).noOcclusion(), 6.0D));
-
     public static final RegistryObject<Block> STONE_POT = BLOCKS.register("stone_pot", () -> new PotBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), 6.0D));
 
     public static final RegistryObject<Block> HALF_TIMBER_P0 = BLOCKS.register("half_timber_p0", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F)));
@@ -75,7 +73,12 @@ public final class ModBlocks {
     public static final RegistryObject<Block> CANDLE_HOLDER_GOLD = BLOCKS.register("candle_holder_gold", () -> new CandleHolderBlock(Block.Properties.of(Material.METAL).strength(3.0F, 6.0F).lightLevel(candleHolderEmission(15)).noOcclusion()));
     public static final RegistryObject<Block> CANDLE_HOLDER_QUARTZ = BLOCKS.register("candle_holder_quartz", () -> new CandleHolderBlock(Block.Properties.of(Material.STONE).strength(0.8F).lightLevel(candleHolderEmission(15)).noOcclusion()));
 
-    public static final RegistryObject<Block> EASEL_MENU = BLOCKS.register("easel_menu", () -> new EaselMenuBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> FLOWER_BASKET_IRON = BLOCKS.register("flower_basket_iron", () -> new BasketBlock(Block.Properties.of(Material.METAL).strength(0.0F).noOcclusion(), 6.0D));
+    public static final RegistryObject<Block> FLOWER_BASKET_GOLD = BLOCKS.register("flower_basket_gold", () -> new BasketBlock(Block.Properties.of(Material.METAL).strength(0.0F).noOcclusion(), 6.0D));
+    public static final RegistryObject<Block> FLOWER_BASKET_QUARTZ = BLOCKS.register("flower_basket_quartz", () -> new BasketBlock(Block.Properties.of(Material.STONE).strength(0.0F).noOcclusion(), 6.0D));
+
+    public static final RegistryObject<Block> EASEL_MENU = BLOCKS.register("easel_menu", () -> new EaselMenuBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), false));
+    public static final RegistryObject<Block> EASEL_MENU_WHITE = BLOCKS.register("easel_menu_white", () -> new EaselMenuBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true));
 
     public static final RegistryObject<Block> PHONOGRAPH = BLOCKS.register("phonograph", () -> new Block(Block.Properties.of(Material.METAL).noOcclusion()));
     public static final RegistryObject<Block> CUSTOM = BLOCKS.register("custom", () -> new CustomBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion()));
