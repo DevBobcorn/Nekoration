@@ -19,12 +19,14 @@ public class S2CUpdateEaselMenuData {
     public BlockPos pos = BlockPos.ZERO;
     public ITextComponent[] texts = new ITextComponent[8];
     public DyeColor[] colors = new DyeColor[8];
+    public boolean glow;
 
-	public S2CUpdateEaselMenuData(BlockPos pos, ItemStack[] items, ITextComponent[] texts, DyeColor[] colors) {
+	public S2CUpdateEaselMenuData(BlockPos pos, ItemStack[] items, ITextComponent[] texts, DyeColor[] colors, boolean glowing) {
         this.pos = pos;
 		this.items = items;
         this.texts = texts;
         this.colors = colors;
+        this.glow = glowing;
 	}
 
 	public static void encode(final S2CUpdateEaselMenuData msg, final PacketBuffer packetBuffer) {
@@ -34,6 +36,7 @@ public class S2CUpdateEaselMenuData {
 		    packetBuffer.writeComponent(msg.texts[i]);
 		    packetBuffer.writeEnum(msg.colors[i]);
         }
+        packetBuffer.writeBoolean(msg.glow);
 	}
 
 	public static S2CUpdateEaselMenuData decode(final PacketBuffer packetBuffer) {
@@ -46,7 +49,7 @@ public class S2CUpdateEaselMenuData {
             x[i] = packetBuffer.readComponent();
             c[i] = packetBuffer.readEnum(DyeColor.class);
         }
-		return new S2CUpdateEaselMenuData(pos, t, x, c);
+		return new S2CUpdateEaselMenuData(pos, t, x, c, packetBuffer.readBoolean());
 	}
 
     @SuppressWarnings("resource")
@@ -63,9 +66,10 @@ public class S2CUpdateEaselMenuData {
                         te.setMessage(i, msg.texts[i]);
                     }
                     te.setColor(msg.colors);
+                    te.setGlowing(msg.glow);
                     //world.getChunkSource().blockChanged(msg.pos);
                     tileEntity.setChanged();
-                    //System.out.println("ITEM UPDATE Packet Received From Server.");
+                    //System.out.println("Item Update Packet Received From Server.");
                 }
             }
         });

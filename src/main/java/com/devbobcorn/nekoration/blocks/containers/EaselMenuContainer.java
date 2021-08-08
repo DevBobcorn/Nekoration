@@ -20,10 +20,11 @@ public class EaselMenuContainer extends Container {
 	public final boolean white;
 	public ITextComponent[] texts = new ITextComponent[8];
 	public DyeColor[] colors = new DyeColor[8];
+	public boolean glow;
 
 	public static EaselMenuContainer createContainerServerSide(int windowID, PlayerInventory playerInventory,
 			ContainerContents easelMenuContents, EaselMenuBlockEntity te) {
-		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, te.getBlockPos(), te.getMessages(), te.getColor(), te.white);
+		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, te.getBlockPos(), te.getMessages(), te.getColor(), te.white, te.getGlowing());
 	}
 
 	public static EaselMenuContainer createContainerClientSide(int windowID, PlayerInventory playerInventory,
@@ -34,7 +35,7 @@ public class EaselMenuContainer extends Container {
 				// when creating the client container
 				// eg String detailedDescription = extraData.readString(128);
 				ContainerContents easelMenuContents = ContainerContents
-						.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
+					.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
 
 				// on the client side there is no parent TileEntity to communicate with, so we:
 				// 1) use a dummy inventory
@@ -47,13 +48,14 @@ public class EaselMenuContainer extends Container {
 				for (int i = 0;i < 8;i++)
 					c[i] = extraData.readEnum(DyeColor.class);
 				boolean w = extraData.readBoolean();
-				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, p, t, c, w);
+				boolean g = extraData.readBoolean();
+				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, p, t, c, w, g);
 			} catch (Exception e) {
 				LOGGER.warn("Invalid data in packet buffer", e);
 				ContainerContents easelMenuContents = ContainerContents
 					.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
 
-				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, BlockPos.ZERO, new ITextComponent[8], new DyeColor[8], false);
+				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, BlockPos.ZERO, new ITextComponent[8], new DyeColor[8], false, true);
 			}
 	}
 
@@ -94,7 +96,7 @@ public class EaselMenuContainer extends Container {
 	 * @param easelMenuContents
 	 *            the inventory stored in the chest
 	 */
-	private EaselMenuContainer(int windowID, PlayerInventory playerInventory, ContainerContents easelMenuContents, BlockPos pos, ITextComponent[] texts, DyeColor[] colors, boolean white) {
+	private EaselMenuContainer(int windowID, PlayerInventory playerInventory, ContainerContents easelMenuContents, BlockPos pos, ITextComponent[] texts, DyeColor[] colors, boolean white, boolean glow) {
 		super(ModContainerType.EASEL_MENU_TYPE.get(), windowID);
 		if (ModContainerType.EASEL_MENU_TYPE.get() == null)
 			throw new IllegalStateException("Must initialize Container Type before constructing a Container!");
@@ -105,6 +107,7 @@ public class EaselMenuContainer extends Container {
 		this.easelMenuContents = easelMenuContents;
 
 		this.white = white;
+		this.glow = glow;
 
 		final int SLOT_X_SPACING = 18;
 		final int SLOT_Y_SPACING = 18;

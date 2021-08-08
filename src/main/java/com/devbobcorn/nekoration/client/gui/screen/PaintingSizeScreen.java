@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class PaintingSizeScreen extends Screen {
-	public static final ResourceLocation PAINTING_SIZE_BACKGROUND = new ResourceLocation(Nekoration.MODID, "textures/gui/painting_size.png");
+	public static final ResourceLocation PAINTING_SIZE = new ResourceLocation(Nekoration.MODID, "textures/gui/painting_size.png");
 	public static final int BACKGROUND_WIDTH = 124;
 	public static final int BACKGROUND_HEIGHT = 146;
 	public static final int GRID_LEFT = 8;
@@ -46,7 +46,7 @@ public class PaintingSizeScreen extends Screen {
 	public void render(MatrixStack stack, int x, int y, float partialTicks) {
 		stack.pushPose();
 		RenderSystem.enableBlend();
-		this.minecraft.getTextureManager().bind(PAINTING_SIZE_BACKGROUND);
+		this.minecraft.getTextureManager().bind(PAINTING_SIZE);
 		int i = leftPos, j = topPos;
 		blit(stack, i, j, 0, 0, 124, 146);
 		stack.popPose();

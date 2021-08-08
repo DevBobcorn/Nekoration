@@ -19,6 +19,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
@@ -41,22 +42,26 @@ public class EaselMenuBlockEntity extends TileEntity implements INamedContainerP
 	public final ContainerContents contents;
 
 	private final ITextComponent[] messages = new ITextComponent[] { StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY };
-	public ItemStack[] renderItems = new ItemStack[8];
+	private final ItemStack airStack = new ItemStack(Items.AIR);
+	public ItemStack[] renderItems = { airStack, airStack, airStack, airStack, airStack, airStack, airStack, airStack };
 	private boolean isEditable = true;
 	private PlayerEntity playerWhoMayEdit;
 	private DyeColor[] textColors = { DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY };
+	private boolean isGlowing;
 
 	public final boolean white; // Not saved or synced between clients and server, just temporarily stores the variant type...
 
 	public EaselMenuBlockEntity() {
 		super(ModTileEntityType.EASEL_MENU_TYPE.get());
 		white = false;
+		isGlowing = false;
 		contents = ContainerContents.createForTileEntity(NUMBER_OF_SLOTS, this::canPlayerAccessInventory, this::setChanged, this);
 	}
 
 	public EaselMenuBlockEntity(boolean w) {
 		super(ModTileEntityType.EASEL_MENU_TYPE.get());
 		white = w;
+		isGlowing = false;
 		contents = ContainerContents.createForTileEntity(NUMBER_OF_SLOTS, this::canPlayerAccessInventory, this::setChanged, this);
 	}
 
@@ -88,6 +93,7 @@ public class EaselMenuBlockEntity extends TileEntity implements INamedContainerP
 		}
 		CompoundNBT inventoryNBT = contents.serializeNBT();
 		tag.put("Contents", inventoryNBT);
+		tag.putBoolean("Glowing", isGlowing);
 		return tag;
 	}
 
@@ -119,6 +125,7 @@ public class EaselMenuBlockEntity extends TileEntity implements INamedContainerP
 		}
 		for (int i = 0;i < 8;i++)
 			renderItems[i] = this.contents.getItem(i);
+		isGlowing = tag.getBoolean("Glowing");
 	}
 
 	public ITextComponent getMessage(int line) {
@@ -131,6 +138,14 @@ public class EaselMenuBlockEntity extends TileEntity implements INamedContainerP
 
 	public ITextComponent[] getMessages(){
 		return this.messages;
+	}
+
+	public boolean getGlowing(){
+		return this.isGlowing;
+	}
+
+	public void setGlowing(boolean glow){
+		this.isGlowing = glow;
 	}
 
 	@Nullable

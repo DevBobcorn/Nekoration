@@ -23,7 +23,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class PaintingScreen extends Screen {
-    public static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(Nekoration.MODID, "textures/gui/painting.png");
+    public static final ResourceLocation BACKGROUND = new ResourceLocation(Nekoration.MODID, "textures/gui/painting.png");
 
     public static final int PAINTING_LEFT = 9;
     public static final int PAINTING_TOP = 38;
@@ -85,7 +85,7 @@ public class PaintingScreen extends Screen {
         paintingHeight = painting.data.getHeight();
         paintingData.imageReady = false;
         oldHash = paintingData.getPaintingHash();
-        tipMessage = new TranslationTextComponent("gui.nekoration.message.press_e_debug_info");
+        tipMessage = new TranslationTextComponent("gui.nekoration.message.press_key_debug_info", "'E'");
     }
 
     protected void init() {
@@ -157,7 +157,7 @@ public class PaintingScreen extends Screen {
         // Step 0: Fill the back ground...
         this.fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...
-        this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
+        this.minecraft.getTextureManager().bind(BACKGROUND);
 		for (int idx = 0;idx < 6;idx++){
             RenderSystem.color4f(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
             this.blit(stack, i + 34 + 18 * idx, j + 13, 16, 224, 16, 16); // Tinted Pure White Quad...
@@ -201,17 +201,14 @@ public class PaintingScreen extends Screen {
         //this.fillGradient(stack, i, j, i + 128, j + 128, col, black);
         if (renderColorText)
             this.font.draw(stack, debugText, 1.0F, 1.0F, 0xFFFFFF);
-            //this.font.draw(stack, "Color: " + colors[activeSlot].getRGB() + " R:" +  + colors[activeSlot].getRed() + " G:" +  + colors[activeSlot].getGreen() + " B:" +  + colors[activeSlot].getBlue(), 1.0F, 1.0F, colors[activeSlot].getRGB());
         else this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
 
     @SuppressWarnings("deprecation")
 	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE); //We've bound this before...
-		int edgeSpacingX = (this.width - this.imageWidth) / 2;
-		int edgeSpacingY = (this.height - this.imageHeight) / 2;
-		this.blit(stack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
+		this.minecraft.getTextureManager().bind(BACKGROUND); //We've bound this before...
+		this.blit(stack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
 	}
 
     @Override
@@ -224,12 +221,20 @@ public class PaintingScreen extends Screen {
                 useTool(x, y);
             } else {
                 for (byte idx = 0;idx < TOOLS_NUM;idx++){
-                    if (x > leftPos + TOOLS_LEFT + idx * 17 && x < leftPos + TOOLS_LEFT + idx * 17 + 16 && y > topPos + TOOLS_TOP && y < topPos + TOOLS_TOP + 16)
+                    // if (x > leftPos + TOOLS_LEFT + idx * 17 && x < leftPos + TOOLS_LEFT + idx * 17 + 16 && y > topPos + TOOLS_TOP && y < topPos + TOOLS_TOP + 16)
+                    //     activeTool = idx;
+                    if (isOn(x - TOOLS_LEFT - idx * 17, y - TOOLS_TOP, 16, 16))
                         activeTool = idx;
                 }
             }
         }
         return super.mouseClicked(x, y, type);
+    }
+
+    private boolean isOn(double x, double y, double w, double h){
+        double dx = x - this.leftPos;
+        double dy = y - this.topPos;
+        return dx >= 0.0D && dy >= 0.0D && dx <= w && dy <= h;
     }
 
     @Override

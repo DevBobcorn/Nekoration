@@ -15,7 +15,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -61,11 +60,11 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(worldIn, pos, state, placer, stack);
 		// Set default text colors...
-		TileEntity tileentity = worldIn.getBlockEntity(pos);
-		if (tileentity instanceof EaselMenuBlockEntity) { // prevent a crash if not the right type, or is null
-			EaselMenuBlockEntity te = (EaselMenuBlockEntity) tileentity;
+		TileEntity tileEntity = worldIn.getBlockEntity(pos);
+		if (tileEntity instanceof EaselMenuBlockEntity) { // prevent a crash if not the right type, or is null
+			EaselMenuBlockEntity te = (EaselMenuBlockEntity) tileEntity;
 			if (white){
-				final DyeColor[] colors = { DyeColor.YELLOW, DyeColor.LIME, DyeColor.CYAN, DyeColor.PINK, DyeColor.MAGENTA, DyeColor.PURPLE, DyeColor.BLUE, DyeColor.CYAN };
+				final DyeColor[] colors = { DyeColor.PURPLE, DyeColor.PINK, DyeColor.ORANGE, DyeColor.YELLOW, DyeColor.LIME, DyeColor.LIGHT_BLUE, DyeColor.CYAN, DyeColor.BLUE };
 				te.setColor(colors);
 			} else {
 				final DyeColor[] colors = { DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE };
@@ -77,24 +76,25 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player,
 			Hand hand, BlockRayTraceResult rayTraceResult) {
-		if (worldIn.isClientSide())
+		if (world.isClientSide())
 			return ActionResultType.SUCCESS; // on client side, don't do anything
-		INamedContainerProvider namedContainerProvider = this.getMenuProvider(state, worldIn, pos);
+		INamedContainerProvider namedContainerProvider = this.getMenuProvider(state, world, pos);
 		if (namedContainerProvider != null) {
 			if (!(player instanceof ServerPlayerEntity))
 				return ActionResultType.FAIL; // should always be true, but just in case...
 			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
 			NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer) -> {
 				// Prepare Data for EaselMenuContainer: createContainerClientSide(), which will then be used to initialize the screen with old data(old texts and colors)
-				EaselMenuBlockEntity te = (EaselMenuBlockEntity) worldIn.getBlockEntity(pos);
+				EaselMenuBlockEntity te = (EaselMenuBlockEntity) world.getBlockEntity(pos);
 				packetBuffer.writeBlockPos(pos);
 				for (int i = 0;i < 8;i++)
 					packetBuffer.writeComponent(te.getMessage(i));
 				for (int i = 0;i < 8;i++)
 					packetBuffer.writeEnum(te.getColor()[i]);
 				packetBuffer.writeBoolean(white);
+				packetBuffer.writeBoolean(te.getGlowing());
 			});
 		}
 		return ActionResultType.SUCCESS;

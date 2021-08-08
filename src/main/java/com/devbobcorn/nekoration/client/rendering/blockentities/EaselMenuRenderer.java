@@ -21,8 +21,7 @@ public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEntity> 
 	}
 
 	@Override
-	public void render(EaselMenuBlockEntity tileEntity, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffers,
-			int combinedLight, int combinedOverlay) {
+	public void render(EaselMenuBlockEntity tileEntity, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffers, int combinedLight, int combinedOverlay) {
 		for (int rot = 0;rot < 2;rot++){
 			stack.pushPose();
 			// Items on Front Side...
@@ -38,24 +37,20 @@ public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEntity> 
 			// 0 1  // 4 5
 			// 2 3  // 6 7
 			stack.translate(-0.3D, 0.0D, 0.4D);
-			try {
-				Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[0 + rot * 4], ItemCameraTransforms.TransformType.GROUND,
-						lightAbove, OverlayTexture.NO_OVERLAY, stack, buffers);
-		
-				stack.translate(0.6D, 0.0D, 0.0D);
-				Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[1 + rot * 4], ItemCameraTransforms.TransformType.GROUND,
-						lightAbove, OverlayTexture.NO_OVERLAY, stack, buffers);
-		
-				stack.translate(0.0D, -0.6D, 0.0D);
-				Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[3 + rot * 4], ItemCameraTransforms.TransformType.GROUND,
-						lightAbove, OverlayTexture.NO_OVERLAY, stack, buffers);
-		
-				stack.translate(-0.6D, 0.0D, 0.0D);
-				Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[2 + rot * 4], ItemCameraTransforms.TransformType.GROUND,
-						lightAbove, OverlayTexture.NO_OVERLAY, stack, buffers);
-			} catch (Exception e){
+			Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[0 + rot * 4], ItemCameraTransforms.TransformType.GROUND,
+					lightAbove, OverlayTexture.NO_OVERLAY, stack, buffers);
 	
-			}
+			stack.translate(0.6D, 0.0D, 0.0D);
+			Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[1 + rot * 4], ItemCameraTransforms.TransformType.GROUND,
+					lightAbove, OverlayTexture.NO_OVERLAY, stack, buffers);
+	
+			stack.translate(0.0D, -0.6D, 0.0D);
+			Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[3 + rot * 4], ItemCameraTransforms.TransformType.GROUND,
+					lightAbove, OverlayTexture.NO_OVERLAY, stack, buffers);
+	
+			stack.translate(-0.6D, 0.0D, 0.0D);
+			Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[2 + rot * 4], ItemCameraTransforms.TransformType.GROUND,
+					lightAbove, OverlayTexture.NO_OVERLAY, stack, buffers);
 	
 			stack.popPose();
 			// Texts on Front Side
@@ -72,9 +67,17 @@ public class EaselMenuRenderer extends TileEntityRenderer<EaselMenuBlockEntity> 
 
 			DyeColor[] colors = tileEntity.getColor();
 			
-			for (int i = 0;i < 4;i++) {
-				fontrenderer.draw(stack, tileEntity.getMessage(i + rot * 4), 1.0F, 1.0F, colors[i + rot * 4].getColorValue());
-				stack.translate(0.0F, 12.0F, 0.0F);
+			if (tileEntity.getGlowing()) {
+				for (int i = 0;i < 4;i++) {
+					fontrenderer.draw(stack, tileEntity.getMessage(i + rot * 4), 1.0F, 1.0F, colors[i + rot * 4].getColorValue());
+					stack.translate(0.0F, 12.0F, 0.0F);
+				}
+			} else {
+				for (int i = 0;i < 4;i++) {
+					//Params:                                                    left  top   color
+					fontrenderer.drawInBatch(tileEntity.getMessage(i + rot * 4), 1.0F, 1.0F, colors[i + rot * 4].getColorValue(), false, stack.last().pose(), buffers, false, 0, combinedLight);
+					stack.translate(0.0F, 12.0F, 0.0F);
+				}
 			}
 
 			stack.popPose();

@@ -40,11 +40,14 @@ tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Furnitures","Small 
 tabs_cn = ["石质方块","木质方块","门窗","家具","装饰","工具"]
 
 guis = ["button.scroll_up","button.scroll_down","button.enable_all","button.disable_all","message.painting_saved","message.painting_content_saved","message.paint_with_palette",
-        "message.press_e_color_info","message.color_info","message.press_e_debug_info"]
+        "message.press_key_color_info","message.color_info","message.press_key_debug_info","message.press_key_color_picker_on","message.press_key_color_picker_off",
+        "button.enable_glow","button.disable_glow"]
 guis_us = ["Scroll Up","Scroll Down","Enable All","Disable All","Painting saved as %s","Painting content saved as %s","Edit painting with a palette",
-           "Press 'E' to toggle Color Info.","Color: %s R:%s G:%s B:%s","Press 'E' to view debug info."]
+           "Press %s to toggle Color Info.","Color: %s R:%s G:%s B:%s","Press %s to view debug info.","Press %s to show color picker.","Press %s to hide color picker.",
+           "Enable Glowing Text", "Disable Glowing Text"]
 guis_cn = ["向上","向下","选中所有","清除所有","已将绘画保存至%s","已将绘画内容保存至%s","请使用调色板编辑画作",
-           "可按下'E'键查看颜色信息","颜色：%s 红：%s 绿：%s 蓝：%s","可按下'E'键查看调试信息"]
+           "可按下%s键查看颜色信息","颜色：%s 红：%s 绿：%s 蓝：%s","可按下%s键查看调试信息","可按下%s键显示颜色选择器","可按下%s键隐藏颜色选择器",
+           "启用发光文本","禁用发光文本"]
 
 def getEnNameMine(instr):
     strlst = list(instr)

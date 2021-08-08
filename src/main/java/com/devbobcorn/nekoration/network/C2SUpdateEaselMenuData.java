@@ -20,11 +20,13 @@ public class C2SUpdateEaselMenuData {
 	public ITextComponent[] texts = new ITextComponent[8];
     public DyeColor[] colors = new DyeColor[8];
     public BlockPos pos = BlockPos.ZERO;
+    public boolean glow = false;
 
-	public C2SUpdateEaselMenuData(BlockPos pos, ITextComponent[] texts, DyeColor[] colors) {
+	public C2SUpdateEaselMenuData(BlockPos pos, ITextComponent[] texts, DyeColor[] colors, boolean glowing) {
         this.pos = pos;
 		this.texts = texts;
         this.colors = colors;
+        this.glow = glowing;
 	}
 
 	public static void encode(final C2SUpdateEaselMenuData msg, final PacketBuffer packetBuffer) {
@@ -33,6 +35,7 @@ public class C2SUpdateEaselMenuData {
 		    packetBuffer.writeComponent(msg.texts[i]);
         for (int i = 0;i < 8;i++)
 		    packetBuffer.writeEnum(msg.colors[i]);
+        packetBuffer.writeBoolean(msg.glow);
 	}
 
 	public static C2SUpdateEaselMenuData decode(final PacketBuffer packetBuffer) {
@@ -43,7 +46,8 @@ public class C2SUpdateEaselMenuData {
 		    t[i] = packetBuffer.readComponent();
         for (int i = 0;i < 8;i++)
             c[i] = packetBuffer.readEnum(DyeColor.class);
-		return new C2SUpdateEaselMenuData(pos, t,c);
+        boolean g = packetBuffer.readBoolean();
+		return new C2SUpdateEaselMenuData(pos, t, c, g);
 	}
 
 	public static void handle(final C2SUpdateEaselMenuData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
@@ -55,20 +59,24 @@ public class C2SUpdateEaselMenuData {
                 if (world.isLoaded(msg.pos)) {
                     TileEntity tileEntity = world.getBlockEntity(msg.pos);
                     if (tileEntity instanceof EaselMenuBlockEntity) {
+                        EaselMenuBlockEntity te = ((EaselMenuBlockEntity) tileEntity);
                         for (int i = 0;i < 8;i++)
-                            ((EaselMenuBlockEntity) tileEntity).setMessage(i, msg.texts[i]);
+                            te.setMessage(i, msg.texts[i]);
+                        te.setColor(msg.colors);
+                        te.setGlowing(msg.glow);
                         world.getChunkSource().blockChanged(msg.pos);
                         tileEntity.setChanged();
-                        //System.out.println("TEXT UPDATE Packet Received FROM Client");
+                        //System.out.println("TEXT UPDATE Packet Received From Client");
+                        
                         ItemStack[] its = new ItemStack[8];
-                        ContainerContents cts = ((EaselMenuBlockEntity) tileEntity).contents;
+                        ContainerContents cts = te.contents;
                         for (int i = 0;i < 8;i++){
                             its[i] = cts.getItem(i);
                         }
                         // Then update items on Client Side, used for rendering...
-                        final S2CUpdateEaselMenuData packet = new S2CUpdateEaselMenuData(msg.pos, its, msg.texts, msg.colors);
+                        final S2CUpdateEaselMenuData packet = new S2CUpdateEaselMenuData(msg.pos, its, msg.texts, msg.colors, msg.glow);
                         ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
-                        //System.out.println("ITEM UPDATE Packet Sent from SERVER");
+                        //System.out.println("Item Update Packet Sent From Server");
                     }
                 }
             }

@@ -87,8 +87,7 @@ public class CreativeInventoryEvents
                 this.filters.forEach(filters -> filters.setEnabled(true));
                 this.buttons.forEach(WoodTypeButton::updateState);
                 Screen screen = Minecraft.getInstance().screen;
-                if(screen instanceof CreativeScreen)
-                {
+                if(screen instanceof CreativeScreen) {
                     this.updateItems((CreativeScreen) screen);
                 }
             }, ICONS, 96, 0));
@@ -97,8 +96,7 @@ public class CreativeInventoryEvents
                 this.filters.forEach(filters -> filters.setEnabled(false));
                 this.buttons.forEach(WoodTypeButton::updateState);
                 Screen screen = Minecraft.getInstance().screen;
-                if(screen instanceof CreativeScreen)
-                {
+                if(screen instanceof CreativeScreen) {
                     this.updateItems((CreativeScreen) screen);
                 }
             }, ICONS, 112, 0));

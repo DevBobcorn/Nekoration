@@ -20,7 +20,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class PaletteScreen extends Screen {
-    public static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(Nekoration.MODID, "textures/gui/palette.png");
+    public static final ResourceLocation BACKGROUND = new ResourceLocation(Nekoration.MODID, "textures/gui/palette.png");
 
     public static final int COLORMAP_LEFT = 9;
     public static final int COLORMAP_TOP = 32;
@@ -57,7 +57,7 @@ public class PaletteScreen extends Screen {
         this.hand = hand;
         this.activeSlot = active;
         this.colors = oldColors;
-        tipMessage = new TranslationTextComponent("gui.nekoration.message.press_e_color_info");
+        tipMessage = new TranslationTextComponent("gui.nekoration.message.press_key_color_info", "'E'");
     }
 
     protected void init() {
@@ -105,7 +105,7 @@ public class PaletteScreen extends Screen {
         // Step 0: Fill the back ground...
         fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...
-        minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
+        minecraft.getTextureManager().bind(BACKGROUND);
 		for (int idx = 0;idx < 6;idx++){
             RenderSystem.color4f(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
             blit(stack, i + 8 + 18 * idx + (idx > 2 ? 34: 0), j + 13, 172, 32, 16, 16); // Tinted Pure White Quad...
@@ -145,7 +145,7 @@ public class PaletteScreen extends Screen {
     @SuppressWarnings("deprecation")
 	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE); //We've bound this before...
+		this.minecraft.getTextureManager().bind(BACKGROUND); //We've bound this before...
 		int edgeSpacingX = (this.width - this.imageWidth) / 2;
 		int edgeSpacingY = (this.height - this.imageHeight) / 2;
 		blit(stack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
