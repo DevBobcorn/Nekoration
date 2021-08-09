@@ -123,26 +123,6 @@ public class EaselMenuBlockEntity extends BlockEntity {
 		isGlowing = tag.getBoolean("Glowing");
 	}
 
-	public Component getMessage(int line) {
-		return this.messages[line];
-	}
-
-	public void setMessage(int line, Component text) {
-		this.messages[line] = text;
-	}
-
-	public Component[] getMessages(){
-		return this.messages;
-	}
-
-	public boolean getGlowing(){
-		return this.isGlowing;
-	}
-
-	public void setGlowing(boolean glow){
-		this.isGlowing = glow;
-	}
-
 	@Nullable
 	public SUpdateTileEntityPacket getUpdatePacket() {
 		return new SUpdateTileEntityPacket(this.worldPosition, 2020, this.getUpdateTag());
@@ -199,21 +179,6 @@ public class EaselMenuBlockEntity extends BlockEntity {
 				(ServerLevel) this.level, 2, s, itextcomponent, this.level.getServer(), player);
 	}
 
-	public DyeColor[] getColor() {
-		return this.textColors;
-	}
-
-	public boolean setColor(DyeColor[] color) {
-		if (color != this.getColor()) {
-			this.textColors = color;
-			this.setChanged();
-			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	// Container...
 	public void dropAllContents(World world, BlockPos blockPos) {
 		InventoryHelper.dropContents(world, blockPos, contents);
@@ -230,4 +195,39 @@ public class EaselMenuBlockEntity extends BlockEntity {
 		return new TranslatableComponent("container." + Nekoration.MODID + ".easel_menu");
 	}
 	*/
+
+	public Component getMessage(int line) {
+		return this.messages[line];
+	}
+
+	public void setMessage(int line, Component text) {
+		this.messages[line] = text;
+	}
+
+	public Component[] getMessages(){
+		return this.messages;
+	}
+
+	public boolean getGlowing(){
+		return this.isGlowing;
+	}
+
+	public void setGlowing(boolean glow){
+		this.isGlowing = glow;
+	}
+
+	public DyeColor[] getColor() {
+		return this.textColors;
+	}
+
+	public boolean setColor(DyeColor[] color) {
+		if (color != this.getColor()) {
+			this.textColors = color;
+			this.setChanged();
+			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

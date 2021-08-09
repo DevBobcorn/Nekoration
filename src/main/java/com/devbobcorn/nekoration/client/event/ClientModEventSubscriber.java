@@ -10,31 +10,31 @@ import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
-import com.devbobcorn.nekoration.blocks.containers.ModMenuType;
-import com.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
-import com.devbobcorn.nekoration.client.rendering.blockentities.CustomRenderer;
-import com.devbobcorn.nekoration.client.rendering.blockentities.EaselMenuRenderer;
-import com.devbobcorn.nekoration.client.rendering.blockentities.PhonographRenderer;
+import com.devbobcorn.nekoration.blocks.entities.ModBlockEntityType;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
-import com.mojang.blaze3d.platform.ScreenManager;
+import com.devbobcorn.nekoration.client.rendering.blockentities.EaselMenuRenderer;
+import com.devbobcorn.nekoration.client.rendering.entities.PaintingRenderer;
+import com.devbobcorn.nekoration.entities.ModEntityType;
+import com.devbobcorn.nekoration.client.rendering.blockentities.CustomRenderer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
 import net.minecraftforge.registries.ForgeRegistries;
 
 // Client-Side Only Things...
@@ -50,76 +50,77 @@ public final class ClientModEventSubscriber {
 		// RenderType cutoutRenderType = RenderType.cutout();
 		RenderType translucentRenderType = RenderType.translucent();
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_P0.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_P1.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_P2.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_P3.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_P4.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_P5.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_P6.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_P7.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_P8.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_P9.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P0.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P1.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P2.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P3.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P4.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P5.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P6.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P7.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P8.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P9.get(), translucentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P0.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P1.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P2.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P0.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P1.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P2.get(), translucentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_ARCH.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_CROSS.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_SHADE.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_LANCET.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_ARCH.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_CROSS.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_SHADE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_LANCET.get(), transparentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW_PLANT.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_PLANT.get(), transparentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER_BASKET_IRON.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER_BASKET_GOLD.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER_BASKET_QUARTZ.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLOWER_BASKET_IRON.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLOWER_BASKET_GOLD.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLOWER_BASKET_QUARTZ.get(), transparentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_1.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_2.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_3.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_TALL_1.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_TALL_2.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DOOR_TALL_3.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_1.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_2.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_3.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_TALL_1.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_TALL_2.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_TALL_3.get(), translucentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.AWNING_PURE.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.AWNING_PURE_SHORT.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.AWNING_STRIPE.get(), translucentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.AWNING_STRIPE_SHORT.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_PURE.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_PURE_SHORT.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_STRIPE.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_STRIPE_SHORT.get(), translucentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.LAMP_POST_IRON.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.LAMP_POST_GOLD.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.LAMP_POST_QUARTZ.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.LAMP_POST_IRON.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.LAMP_POST_GOLD.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.LAMP_POST_QUARTZ.get(), transparentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.CANDLE_HOLDER_IRON.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.CANDLE_HOLDER_GOLD.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.CANDLE_HOLDER_QUARTZ.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CANDLE_HOLDER_IRON.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CANDLE_HOLDER_GOLD.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CANDLE_HOLDER_QUARTZ.get(), transparentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.PHONOGRAPH.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PHONOGRAPH.get(), transparentRenderType);
 
-		RenderTypeLookup.setRenderLayer(ModBlocks.PUMPKIN_TABLE.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.PUMPKIN_CHAIR.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.OAK_TABLE.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.OAK_CHAIR.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.JUNGLE_TABLE.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.JUNGLE_CHAIR.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.ACACIA_TABLE.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.ACACIA_CHAIR.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.BIRCH_TABLE.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.BIRCH_CHAIR.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_OAK_TABLE.get(), transparentRenderType);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_OAK_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PUMPKIN_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PUMPKIN_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.OAK_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.OAK_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.ACACIA_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.ACACIA_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BIRCH_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BIRCH_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DARK_OAK_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DARK_OAK_CHAIR.get(), transparentRenderType);
 
 		LOGGER.info("Block Render Types Registered.");
 
-		/*
-		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.CUSTOM_TYPE.get(), CustomRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.PHONOGRAPH_TYPE.get(), PhonographRenderer::new);
+		BlockEntityRenderers.register(ModBlockEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);
+		BlockEntityRenderers.register(ModBlockEntityType.CUSTOM_TYPE.get(), CustomRenderer::new);
 
 		LOGGER.info("BlockEntities' Renderer Bound.");
-		*/
+
+		EntityRenderers.register(ModEntityType.PAINTING_TYPE, PaintingRenderer::new);
+
+		LOGGER.info("Then Entities' Renderer Bound.");
 
 		MinecraftForge.EVENT_BUS.register(new CreativeInventoryEvents());
 
@@ -146,10 +147,10 @@ public final class ClientModEventSubscriber {
 	}
 
 	public static void registerPropertyOverrides() {
-		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_pure")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
-		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_stripe")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
-		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_pure_short")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
-		ItemModelsProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_stripe_short")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
+		ItemProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_pure")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
+		ItemProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_stripe")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
+		ItemProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_pure_short")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
+		ItemProperties.register(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "awning_stripe_short")), new ResourceLocation("color"), DyeableBlockItem::getColorPropertyOverride);
 		// use lambda function to link the NBT color value to a suitable property override value
 	}
 
@@ -205,7 +206,7 @@ public final class ClientModEventSubscriber {
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
-				return (tintIndex == 0) ? FoliageColors.getDefaultColor() : NekoColors.getNekoColorOrWhite(14);
+				return (tintIndex == 0) ? NekoColors.EnumNekoColor.PURPLE.getColor() : NekoColors.getNekoColorOrWhite(14);
 			return (tintIndex == 0) ? BiomeColors.getAverageFoliageColor(view, pos) : NekoColors.getNekoColorOrWhite(state.getValue(DyeableBlock.COLOR));
 		}, ModBlocks.WINDOW_PLANT.get());
 
@@ -252,7 +253,7 @@ public final class ClientModEventSubscriber {
 			switch (tintIndex) {
 				case 0:
 				default:
-					return FoliageColors.getDefaultColor();
+					return NekoColors.EnumNekoColor.PURPLE.getColor();
                 case 1:
 					return DyeableBlockItem.getColor(stack).getColor();
 			}

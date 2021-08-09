@@ -1,8 +1,8 @@
 package com.devbobcorn.nekoration.client.gui.widget;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
@@ -11,6 +11,7 @@ import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.client.event.CreativeInventoryEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -52,13 +53,9 @@ public class WoodTypeButton extends Button
     public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
     {
         Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bindForSetup(TABS);
-
+        RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+        RenderSystem.setShaderTexture(0, TABS);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
-        // RenderSystem.disableLighting(); TODO & below
-        RenderSystem.enableBlend();
-        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 
         int width = this.toggled ? 32 : 28;
         int textureX = 28;

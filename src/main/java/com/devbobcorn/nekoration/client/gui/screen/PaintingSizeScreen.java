@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -46,7 +47,8 @@ public class PaintingSizeScreen extends Screen {
 	public void render(PoseStack stack, int x, int y, float partialTicks) {
 		stack.pushPose();
 		RenderSystem.enableBlend();
-		this.minecraft.getTextureManager().bindForSetup(PAINTING_SIZE);
+		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+        RenderSystem.setShaderTexture(0, PAINTING_SIZE);
 		int i = leftPos, j = topPos;
 		blit(stack, i, j, 0, 0, 124, 146);
 		stack.popPose();

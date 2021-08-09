@@ -10,9 +10,12 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.PaintingTextureManager;
@@ -22,8 +25,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
-	public PaintingRenderer(EntityRendererManager manager) {
-		super(manager);
+	Font font;
+	public PaintingRenderer(EntityRendererProvider.Context ctx) {
+		super(ctx);
+		font = ctx.getFont();
 	}
 
 	public void render(PaintingEntity entity, float rotation, float partialTicks, PoseStack stack, MultiBufferSource buffers, int packedLight) {
@@ -43,7 +48,6 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 		return Minecraft.getInstance().getPaintingTextures().getBackSprite().atlas().location();
 	}
 
-	@SuppressWarnings("resource")
 	private void renderPainting(PoseStack stack, MultiBufferSource buffers, PaintingEntity entity, int width, int height, TextureAtlasSprite woodTex) {
 		PoseStack.Pose PoseStack$entry = stack.last();
 		Matrix4f pose = PoseStack$entry.pose();
@@ -84,7 +88,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 					blocx = Mth.floor(entity.getX() - (double) ((right + left) / 2.0F / 16.0F));
 				if (direction == Direction.EAST)
 					blocz = Mth.floor(entity.getZ() + (double) ((right + left) / 2.0F / 16.0F));
-				int light = WorldRenderer.getLightColor(entity.level, new BlockPos(blocx, blocy, blocz));
+				int light = LevelRenderer.getLightColor(entity.level, new BlockPos(blocx, blocy, blocz));
 				// Pos[Z] // B[ack]
 				vertexFrame(pose, normal, vb1, right, top,    woodU0, woodV0,  0.5F, 0, 0,  1, light);
 				vertexFrame(pose, normal, vb1, left,  top,    woodU1, woodV0,  0.5F, 0, 0,  1, light);
@@ -111,6 +115,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 				vertexFrame(pose, normal, vb1, left,  bottom, woodU0, woodV1,  0.5F,  1, 0, 0, light);
 				vertexFrame(pose, normal, vb1, left,  top,    woodU0, woodV0,  0.5F,  1, 0, 0, light);
 				// Then render the artwork
+				/*
 				AbstractPaintingRenderer rd = null;
 				if (entity.data.imageReady) {
 					rd = PaintingRendererManager.get(entity.data.getPaintingHash());
@@ -122,14 +127,15 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 					}
 				} else rd = PaintingRendererManager.PixelsRenderer();
 				rd.render(stack, pose, normal, buffers, entity.data, blocHor, blocVer, left, bottom, light);
+				*/
 				// Draw Debug Text...
 				stack.pushPose();
 				stack.translate(-LEFT - 1.0D, TOP + 3.0D, -0.6D);
 				stack.scale(-0.2F, -0.2F, 0.2F);
-				//Minecraft.getInstance().font.draw(stack, "Ceci n'est pas une painting!", 1.0F, 1.0F, 0xFFFFFF);
-				Minecraft.getInstance().font.draw(stack, (entity.data.imageReady) ? "Rendered with Image" : "Rendered Pixel-by-Pixel", 1.0F, 1.0F, 0xFFFFFF);
+				//font.draw(stack, "Ceci n'est pas une painting!", 1.0F, 1.0F, 0xFFFFFF);
+				font.draw(stack, (entity.data.imageReady) ? "Rendered with Image" : "Rendered Pixel-by-Pixel", 1.0F, 1.0F, 0xFFFFFF);
 				stack.translate(0.0D, -10.0D, 0.0D);
-				Minecraft.getInstance().font.draw(stack, "#" + String.valueOf(entity.data.getPaintingHash()), 1.0F, 1.0F, 0xFFFFFF);
+				font.draw(stack, "#" + String.valueOf(entity.data.getPaintingHash()), 1.0F, 1.0F, 0xFFFFFF);
 				stack.popPose();
 			}
 		}

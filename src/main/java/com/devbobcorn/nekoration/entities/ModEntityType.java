@@ -42,14 +42,4 @@ public class ModEntityType {
         //event.put($CHOX, MobEntity.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.3).add(Attributes.MAX_HEALTH, 10).add(Attributes.ARMOR, 0).add(Attributes.ATTACK_DAMAGE, 3).build());
         //LOGGER.info("Entity Attributes Registered.");
     }
-
-    /*
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void registerModels(ModelRegistryEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityType.PAINTING_TYPE, renderManager -> new PaintingRenderer(renderManager));
-
-        LOGGER.info("Entity Renderer Registered.");
-    }
-    */
 }
