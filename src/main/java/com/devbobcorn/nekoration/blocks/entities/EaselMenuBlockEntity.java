@@ -7,46 +7,27 @@ import com.devbobcorn.nekoration.blocks.containers.ContainerContents;
 import com.devbobcorn.nekoration.blocks.containers.EaselMenuContainer;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.ICommandSource;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector2f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentUtils;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EaselMenuBlockEntity extends BlockEntity implements INamedContainerProvider {
+public class EaselMenuBlockEntity extends BlockEntity implements net.minecraft.world.Container, net.minecraft.world.MenuProvider, net.minecraft.world.Nameable {
 	public static final int NUMBER_OF_SLOTS = 8;
 	public final ContainerContents contents;
 
-	private final ITextComponent[] messages = new ITextComponent[] { StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY, StringTextComponent.EMPTY };
+	private final Component[] messages = new Component[] { TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY };
 	private final ItemStack airStack = new ItemStack(Items.AIR);
 	public ItemStack[] renderItems = { airStack, airStack, airStack, airStack, airStack, airStack, airStack, airStack };
 	private boolean isEditable = true;
-	private PlayerEntity playerWhoMayEdit;
+	private Player playerWhoMayEdit;
 	private DyeColor[] textColors = { DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY, DyeColor.GRAY };
 	private boolean isGlowing;
 
@@ -70,7 +51,7 @@ public class EaselMenuBlockEntity extends BlockEntity implements INamedContainer
 	// checks that
 	// 1) the world tileentity hasn't been replaced in the meantime, and
 	// 2) the player isn't too far away from the centre of the block
-	public boolean canPlayerAccessInventory(PlayerEntity player) {
+	public boolean canPlayerAccessInventory(Player player) {
 		if (this.level.getBlockEntity(this.worldPosition) != this)
 			return false;
 		final double X_CENTRE_OFFSET = 0.5;
@@ -81,28 +62,28 @@ public class EaselMenuBlockEntity extends BlockEntity implements INamedContainer
 				worldPosition.getZ() + Z_CENTRE_OFFSET) < MAXIMUM_DISTANCE_SQ;
 	}
 
-	public CompoundNBT save(CompoundNBT tag) {
+	public CompoundTag save(CompoundTag tag) {
 		super.save(tag);
 
 		for (int i = 0; i < 8; ++i) {
-			String s = ITextComponent.Serializer.toJson(this.messages[i]);
+			String s = Component.Serializer.toJson(this.messages[i]);
 			tag.putString("Text" + (i + 1), s);
 		}
 		
 		for (int i = 0; i < 8; ++i) {
 			tag.putString("Color" + i, this.textColors[i].getName());
 		}
-		CompoundNBT inventoryNBT = contents.serializeNBT();
+		CompoundTag inventoryNBT = contents.serializeNBT();
 		tag.put("Contents", inventoryNBT);
 		tag.putBoolean("Glowing", isGlowing);
 		return tag;
 	}
 
-	public void load(BlockState state, CompoundNBT tag) {
+	public void load(CompoundTag tag) {
 		this.isEditable = false;
-		super.load(state, tag);
+		super.load(tag);
 		//Items...
-		CompoundNBT inventoryNBT = tag.getCompound("Contents");
+		CompoundTag inventoryNBT = tag.getCompound("Contents");
 		contents.deserializeNBT(inventoryNBT);
 		if (contents.getContainerSize() != NUMBER_OF_SLOTS)
 			throw new IllegalArgumentException("Corrupted NBT: Number of inventory slots did not match expected.");
@@ -112,8 +93,8 @@ public class EaselMenuBlockEntity extends BlockEntity implements INamedContainer
 
 		for (int i = 0; i < 8; ++i) {
 			String s = tag.getString("Text" + (i + 1));
-			ITextComponent itextcomponent = ITextComponent.Serializer.fromJson(s.isEmpty() ? "\"\"" : s);
-			if (this.level instanceof ServerWorld) {
+			Component itextcomponent = Component.Serializer.fromJson(s.isEmpty() ? "\"\"" : s);
+			if (this.level instanceof ServerLevel) {
 				try {
 					this.messages[i] = TextComponentUtils.updateForEntity(
 							this.createCommandSourceStack((ServerPlayerEntity) null), itextcomponent, (Entity) null, 0);
@@ -129,15 +110,15 @@ public class EaselMenuBlockEntity extends BlockEntity implements INamedContainer
 		isGlowing = tag.getBoolean("Glowing");
 	}
 
-	public ITextComponent getMessage(int line) {
+	public Component getMessage(int line) {
 		return this.messages[line];
 	}
 
-	public void setMessage(int line, ITextComponent text) {
+	public void setMessage(int line, Component text) {
 		this.messages[line] = text;
 	}
 
-	public ITextComponent[] getMessages(){
+	public Component[] getMessages(){
 		return this.messages;
 	}
 
@@ -154,8 +135,8 @@ public class EaselMenuBlockEntity extends BlockEntity implements INamedContainer
 		return new SUpdateTileEntityPacket(this.worldPosition, 2020, this.getUpdateTag());
 	}
 
-	public CompoundNBT getUpdateTag() {
-		return this.save(new CompoundNBT());
+	public CompoundTag getUpdateTag() {
+		return this.save(new CompoundTag());
 	}
 
 	public boolean onlyOpCanSetNbt() {

@@ -2,16 +2,12 @@ package com.devbobcorn.nekoration.blocks.containers;
 
 import java.util.function.Predicate;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class ContainerContents implements IInventory {
-	TileEntity tien;
+	BlockEntity tien;
 
 	public static ContainerContents createForTileEntity(int size, Predicate<PlayerEntity> canPlayerAccessInventoryLambda,
 			Notify markDirtyNotificationLambda, TileEntity te) {

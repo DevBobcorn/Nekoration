@@ -1,15 +1,11 @@
 package com.devbobcorn.nekoration.blocks.containers;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
@@ -20,17 +16,17 @@ import org.apache.logging.log4j.Logger;
 
 public class EaselMenuContainer extends AbstractContainerMenu {
 	public final boolean white;
-	public ITextComponent[] texts = new ITextComponent[8];
+	public Component[] texts = new Component[8];
 	public DyeColor[] colors = new DyeColor[8];
 	public boolean glow;
 
-	public static EaselMenuContainer createContainerServerSide(int windowID, PlayerInventory playerInventory,
+	public static EaselMenuContainer createContainerServerSide(int windowID, Inventory playerInventory,
 			ContainerContents easelMenuContents, EaselMenuBlockEntity te) {
-		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, te.getBlockPos(), te.getMessages(), te.getColor(), te.white, te.getGlowing());
+		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, te.getBlockPos(), te.getMesssages(), te.getColor(), te.white, te.getGlowing());
 	}
 
-	public static EaselMenuContainer createContainerClientSide(int windowID, PlayerInventory playerInventory,
-		net.minecraft.network.PacketBuffer extraData) {
+	public static EaselMenuContainer createContainerClientSide(int windowID, Inventory playerInventory,
+		FriendlyByteBuf extraData) {
 			try {
 				// don't need extraData for this example; if you want you can use it to provide
 				// extra information from the server, that you can use
