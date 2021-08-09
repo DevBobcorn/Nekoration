@@ -1,6 +1,6 @@
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
-loaderVersion="[36,37)"
+loaderVersion="[37,)"
 license="Apache-2.0"
 # A URL to refer people to when problems occur with this mod
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
@@ -24,6 +24,6 @@ Special Thanks:
 TheGreyGhost (whose amazing tutorial & example code helped me a lot)
 '''
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="[1.16.5,1.17)"
+    versionRange="[1.17.1,1.18)"
     ordering="NONE"
     side="BOTH"

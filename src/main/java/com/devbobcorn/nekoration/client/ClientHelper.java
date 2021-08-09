@@ -6,14 +6,14 @@ import com.devbobcorn.nekoration.client.gui.screen.PaletteScreen;
 import java.awt.Color;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
 
 public class ClientHelper {
-    public static void showPaletteScreen(Hand hand, byte active, Color[] colors) {
+    public static void showPaletteScreen(InteractionHand hand, byte active, Color[] colors) {
         Minecraft.getInstance().setScreen(new PaletteScreen(hand, active, colors));
     }
 
-    public static void showPaintingSizeScreen(Hand hand) {
+    public static void showPaintingSizeScreen(InteractionHand hand) {
         Minecraft.getInstance().setScreen(new PaintingSizeScreen(hand));
     }
 

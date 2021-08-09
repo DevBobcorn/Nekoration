@@ -5,23 +5,23 @@ import java.util.function.Supplier;
 import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class S2CUpdateEaselMenuData {
     public ItemStack[] items = new ItemStack[8];
     public BlockPos pos = BlockPos.ZERO;
-    public ITextComponent[] texts = new ITextComponent[8];
+    public Component[] texts = new Component[8];
     public DyeColor[] colors = new DyeColor[8];
     public boolean glow;
 
-	public S2CUpdateEaselMenuData(BlockPos pos, ItemStack[] items, ITextComponent[] texts, DyeColor[] colors, boolean glowing) {
+	public S2CUpdateEaselMenuData(BlockPos pos, ItemStack[] items, Component[] texts, DyeColor[] colors, boolean glowing) {
         this.pos = pos;
 		this.items = items;
         this.texts = texts;
@@ -29,7 +29,7 @@ public class S2CUpdateEaselMenuData {
         this.glow = glowing;
 	}
 
-	public static void encode(final S2CUpdateEaselMenuData msg, final PacketBuffer packetBuffer) {
+	public static void encode(final S2CUpdateEaselMenuData msg, final FriendlyByteBuf packetBuffer) {
         packetBuffer.writeBlockPos(msg.pos);
         for (int i = 0;i < 8;i++){
 		    packetBuffer.writeItemStack(msg.items[i], false);
@@ -39,10 +39,10 @@ public class S2CUpdateEaselMenuData {
         packetBuffer.writeBoolean(msg.glow);
 	}
 
-	public static S2CUpdateEaselMenuData decode(final PacketBuffer packetBuffer) {
+	public static S2CUpdateEaselMenuData decode(final FriendlyByteBuf packetBuffer) {
         BlockPos pos = packetBuffer.readBlockPos();
         ItemStack[] t = new ItemStack[8];
-        ITextComponent[] x = new ITextComponent[8];
+        Component[] x = new Component[8];
         DyeColor[] c = new DyeColor[8];
         for (int i = 0;i < 8;i++){
             t[i] = packetBuffer.readItem();
@@ -56,9 +56,9 @@ public class S2CUpdateEaselMenuData {
 	public static void handle(final S2CUpdateEaselMenuData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on CLIENT SIDE...
-            ClientWorld world = Minecraft.getInstance().level;
+            ClientLevel world = Minecraft.getInstance().level;
             if (world.isLoaded(msg.pos)) {
-                TileEntity tileEntity = world.getBlockEntity(msg.pos);
+                BlockEntity tileEntity = world.getBlockEntity(msg.pos);
                 if (tileEntity instanceof EaselMenuBlockEntity) {
                         EaselMenuBlockEntity te = (EaselMenuBlockEntity) tileEntity;
                     for (int i = 0;i < 8;i++){

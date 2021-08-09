@@ -1,9 +1,7 @@
 package com.devbobcorn.nekoration;
 
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -15,8 +13,6 @@ import com.devbobcorn.nekoration.blocks.containers.ModContainerType;
 import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
 import com.devbobcorn.nekoration.common.event.CommonForgeEventSubscriber;
 import com.devbobcorn.nekoration.entities.ModEntityType;
-import com.devbobcorn.nekoration.exp.ExpClientOnly;
-import com.devbobcorn.nekoration.exp.ExpCommon;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuData;
 import com.devbobcorn.nekoration.network.C2SUpdatePaintingData;
@@ -42,19 +38,12 @@ public class Nekoration {
 		//final ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		// Experimental stuffs...
-		final ExpClientOnly ExpClient = new ExpClientOnly(modEventBus);
-		final ExpCommon ExpCommon = new ExpCommon();
-
-		ExpCommon.registerCommonEvents(modEventBus);
-		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ExpClient::registerClientOnlyEvents);
-
 		ModBlocks.BLOCKS.register(modEventBus);
 		ModItems.ITEMS.register(modEventBus);
-		//ModContainerType.CONTAINER_TYPES.register(modEventBus);
 		ModEntityType.ENTITY_TYPES.register(modEventBus);
-		ModContainerType.CONTAINER_TYPES.register(modEventBus);
-		ModTileEntityType.TILE_ENTITY_TYPES.register(modEventBus);
+		// TODO
+		//ModContainerType.CONTAINER_TYPES.register(modEventBus);
+		//ModTileEntityType.TILE_ENTITY_TYPES.register(modEventBus);
 
 		modEventBus.register(CommonForgeEventSubscriber.class);
 

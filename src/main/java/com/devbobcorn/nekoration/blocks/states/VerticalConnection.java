@@ -1,8 +1,8 @@
 package com.devbobcorn.nekoration.blocks.states;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum VerticalConnection implements IStringSerializable {
+public enum VerticalConnection implements StringRepresentable {
     S0("s0"), //Single
     D0("d0"), //Double
     D1("d1"),

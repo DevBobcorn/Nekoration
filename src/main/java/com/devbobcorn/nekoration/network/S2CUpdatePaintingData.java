@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 import com.devbobcorn.nekoration.entities.PaintingEntity;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.Entity;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class S2CUpdatePaintingData {
     public int paintingId;
@@ -21,13 +21,13 @@ public class S2CUpdatePaintingData {
         this.compositeHash = hash;
 	}
 
-	public static void encode(final S2CUpdatePaintingData msg, final PacketBuffer packetBuffer) {
+	public static void encode(final S2CUpdatePaintingData msg, final FriendlyByteBuf packetBuffer) {
         packetBuffer.writeInt(msg.paintingId);
         packetBuffer.writeVarIntArray(msg.pixels);
         packetBuffer.writeInt(msg.compositeHash);
 	}
 
-	public static S2CUpdatePaintingData decode(final PacketBuffer packetBuffer) {
+	public static S2CUpdatePaintingData decode(final FriendlyByteBuf packetBuffer) {
         int id = packetBuffer.readInt();
         int[] p = packetBuffer.readVarIntArray();
         int hash = packetBuffer.readInt();
@@ -38,7 +38,7 @@ public class S2CUpdatePaintingData {
 	public static void handle(final S2CUpdatePaintingData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on CLIENT SIDE...
-            ClientWorld world = Minecraft.getInstance().level;
+            ClientLevel world = Minecraft.getInstance().level;
                 Entity entity = world.getEntity(msg.paintingId);
                 if (entity instanceof PaintingEntity) {
                     PaintingEntity pe = (PaintingEntity) entity;

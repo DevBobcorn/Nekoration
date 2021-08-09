@@ -1,8 +1,8 @@
 package com.devbobcorn.nekoration.blocks.states;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum LampPostType implements IStringSerializable {
+public enum LampPostType implements StringRepresentable {
    TOP("top"),
    SIDE_UP("side_up"),
    SIDE_DOWN("side_down"),

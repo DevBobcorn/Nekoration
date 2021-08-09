@@ -1,11 +1,11 @@
 package com.devbobcorn.nekoration.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ShortAwningBlock extends DyeableHorizontalBlock {
 	public static final VoxelShape SHAPE = Block.box(0.1D, 2.0D, 0.1D, 15.9D, 15.9D, 15.9D);
@@ -14,16 +14,16 @@ public class ShortAwningBlock extends DyeableHorizontalBlock {
 		super(settings);
 	}
 
-	public VoxelShape getInteractionShape(BlockState state, IBlockReader world, BlockPos pos) {
+	public VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
 		return SHAPE;
 	}
 
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos) {
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos) {
 		return SHAPE;
 	}
 
-	public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_,
-			ISelectionContext p_220053_4_) {
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos,
+			CollisionContext ctx) {
 		return SHAPE;
 	}
 }

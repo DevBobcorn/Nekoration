@@ -1,6 +1,6 @@
 package com.devbobcorn.nekoration.blocks.states;
 
-import net.minecraft.state.EnumProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 public class ModStateProperties {
 	public static final EnumProperty<LampPostType> LAMP_POST_TYPE = EnumProperty.create("post_type", LampPostType.class);

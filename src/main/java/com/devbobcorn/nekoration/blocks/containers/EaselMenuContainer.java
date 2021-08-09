@@ -8,6 +8,8 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
@@ -16,7 +18,7 @@ import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class EaselMenuContainer extends Container {
+public class EaselMenuContainer extends AbstractContainerMenu {
 	public final boolean white;
 	public ITextComponent[] texts = new ITextComponent[8];
 	public DyeColor[] colors = new DyeColor[8];
@@ -151,7 +153,7 @@ public class EaselMenuContainer extends Container {
 	// access the inventory, and if not closes the gui
 	// Called on the SERVER side only
 	@Override
-	public boolean stillValid(PlayerEntity playerEntity) {
+	public boolean stillValid(Player playerEntity) {
 		// This is typically a check that the player is within 8 blocks of the
 		// container.
 		// Some containers perform it using just the block placement:

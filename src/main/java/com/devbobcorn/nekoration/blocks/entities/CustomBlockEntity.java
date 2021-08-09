@@ -12,10 +12,11 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import com.devbobcorn.nekoration.exp.ExpNBTTypes;
 
-public class CustomBlockEntity extends TileEntity {
+public class CustomBlockEntity extends BlockEntity {
     public Integer model = 0;
 	public Byte dir = 0;
 	public int[] offset = { 0, 0, 0 };

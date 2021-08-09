@@ -1,21 +1,21 @@
 package com.devbobcorn.nekoration.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AwningBlock extends DyeableHorizontalBlock {
     public static final VoxelShape SHAPE = Block.box(0.1D, 0.1D, 0.1D, 15.9D, 15.9D, 15.9D);
@@ -26,35 +26,35 @@ public class AwningBlock extends DyeableHorizontalBlock {
 		super(settings);
 	}
 
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
         s.add(COLOR, FACING, IS_END);
     }
 
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
-			BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+			BlockHitResult hit) {
 		ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.getItem() == Items.WOODEN_AXE){
             if (world.isClientSide) {
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             
             world.setBlock(pos, state.cycle(IS_END), 3);
             //Nekoration.LOGGER.info(VanillaCompat.COLOR_ITEMS.get(itemStack.getItem()));
-            return ActionResultType.CONSUME;
+            return InteractionResult.CONSUME;
         } else super.use(state, world, pos, player, hand, hit);
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
 	}
 
-    public VoxelShape getInteractionShape(BlockState state, IBlockReader world, BlockPos pos) {
+    public VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
 		return SHAPE;
 	}
 
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos) {
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos) {
 		return SHAPE;
 	}
 
-	public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_,
-			ISelectionContext p_220053_4_) {
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos,
+		CollisionContext ctx) {
 		return SHAPE;
 	}
 }

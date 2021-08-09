@@ -1,22 +1,22 @@
 package com.devbobcorn.nekoration.entities;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import java.util.Arrays;
 import java.util.Random;
 
-import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 import com.devbobcorn.nekoration.NekoColors;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class PaintingData {
     private short width;
@@ -127,9 +127,9 @@ public class PaintingData {
             if (!ImageIO.write(image, "png", finalFile))
                 throw new IOException("Could not encode image as png!");
             if (showMessage){
-                IFormattableTextComponent component = new StringTextComponent(finalFile.getName());
-                component = component.withStyle(TextFormatting.UNDERLINE).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, finalFile.getAbsolutePath())));
-                minecraft.player.displayClientMessage(new TranslationTextComponent("gui.nekoration.message." + (composite ? "painting_saved" : "painting_content_saved"), component), false);
+                MutableComponent component = new TextComponent(finalFile.getName());
+                component = component.withStyle(ChatFormatting.UNDERLINE).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, finalFile.getAbsolutePath())));
+                minecraft.player.displayClientMessage(new TranslatableComponent("gui.nekoration.message." + (composite ? "painting_saved" : "painting_content_saved"), component), false);
             }
             imageReady = true;
             return true;
@@ -160,14 +160,14 @@ public class PaintingData {
         return paintingHash;
     }
 
-    public static void writeTo(PaintingData data, CompoundNBT tag){
+    public static void writeTo(PaintingData data, CompoundTag tag){
         tag.putShort("Width", data.width);
         tag.putShort("Height", data.height);
         tag.putIntArray("Pixels", data.pixels);
         tag.putInt("Seed", data.seed);
     }
 
-    public static PaintingData readFrom(CompoundNBT tag){
+    public static PaintingData readFrom(CompoundTag tag){
         // Used on server to initialize a Painting...
         return new PaintingData(tag.getShort("Width"), tag.getShort("Height"), tag.getIntArray("Pixels"), false, tag.getInt("Seed"));
     }

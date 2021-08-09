@@ -7,25 +7,29 @@ import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.NekoColors;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 public class EaselMenuBlock extends DyeableHorizontalBlock {
 	private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
@@ -37,10 +41,11 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 		white = w;
     }
     
-	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
         return SHAPE;
     }
 	
+	/*
     @Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
@@ -50,17 +55,17 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 	// for the block
 	// Should return a new instance of the tile entity for the block
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
 		EaselMenuBlockEntity te = new EaselMenuBlockEntity(white);
 		return te;
 	}
 
     // Called just after the player places a block.
 	@Override
-	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(worldIn, pos, state, placer, stack);
 		// Set default text colors...
-		TileEntity tileEntity = worldIn.getBlockEntity(pos);
+		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
 		if (tileEntity instanceof EaselMenuBlockEntity) { // prevent a crash if not the right type, or is null
 			EaselMenuBlockEntity te = (EaselMenuBlockEntity) tileEntity;
 			if (white){
@@ -76,15 +81,15 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player,
-			Hand hand, BlockRayTraceResult rayTraceResult) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player,
+			InteractionHand hand, BlockHitResult rayTraceResult) {
 		if (world.isClientSide())
-			return ActionResultType.SUCCESS; // on client side, don't do anything
+			return InteractionResult.SUCCESS; // on client side, don't do anything
 		INamedContainerProvider namedContainerProvider = this.getMenuProvider(state, world, pos);
 		if (namedContainerProvider != null) {
-			if (!(player instanceof ServerPlayerEntity))
-				return ActionResultType.FAIL; // should always be true, but just in case...
-			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
+			if (!(player instanceof ServerPlayer))
+				return InteractionResult.FAIL; // should always be true, but just in case...
+			ServerPlayer serverPlayerEntity = (ServerPlayer) player;
 			NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer) -> {
 				// Prepare Data for EaselMenuContainer: createContainerClientSide(), which will then be used to initialize the screen with old data(old texts and colors)
 				EaselMenuBlockEntity te = (EaselMenuBlockEntity) world.getBlockEntity(pos);
@@ -97,15 +102,15 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 				packetBuffer.writeBoolean(te.getGlowing());
 			});
 		}
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	// This is where you can do something when the block is broken. In this case
 	// drop the inventory's contents
 	// Code is copied directly from vanilla eg ChestBlock, CampfireBlock
-	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = world.getBlockEntity(pos);
+			BlockEntity tileentity = world.getBlockEntity(pos);
 			if (tileentity instanceof EaselMenuBlockEntity) {
 				EaselMenuBlockEntity tileEntityInventoryBasic = (EaselMenuBlockEntity) tileentity;
 				tileEntityInventoryBasic.dropAllContents(world, pos);
@@ -115,14 +120,16 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 	}
 
 	@Nullable
-	public INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
-	   TileEntity tileentity = world.getBlockEntity(pos);
+	public INamedContainerProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
+	   BlockEntity tileentity = world.getBlockEntity(pos);
 	   return tileentity instanceof INamedContainerProvider ? (INamedContainerProvider)tileentity : null;
 	}
 
+	*/
+	
 	@Nonnull
     @Override
-    public ItemStack getPickBlock(@Nonnull BlockState state, RayTraceResult target, @Nonnull IBlockReader world, @Nonnull BlockPos pos, PlayerEntity player) {
+    public ItemStack getPickBlock(@Nonnull BlockState state, HitResult target, @Nonnull BlockGetter world, @Nonnull BlockPos pos, Player player) {
 		ItemStack stack = new ItemStack(this.asItem());
 		DyeableWoodenBlockItem.setColor(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
         return stack;

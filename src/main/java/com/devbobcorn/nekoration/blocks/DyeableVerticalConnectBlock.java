@@ -3,15 +3,15 @@ package com.devbobcorn.nekoration.blocks;
 import com.devbobcorn.nekoration.blocks.states.ModStateProperties;
 import com.devbobcorn.nekoration.blocks.states.VerticalConnection;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 public class DyeableVerticalConnectBlock extends DyeableBlock {
 	public enum ConnectionType {
@@ -20,7 +20,7 @@ public class DyeableVerticalConnectBlock extends DyeableBlock {
 
 	public static final EnumProperty<VerticalConnection> CONNECTION  = ModStateProperties.VERTICAL_CONNECTION;
 
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
 		s.add(COLOR, CONNECTION);
 	}
 
@@ -39,8 +39,8 @@ public class DyeableVerticalConnectBlock extends DyeableBlock {
 		connectOthers = co;
 	}
 
-	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-		World blockView = ctx.getLevel();
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		Level blockView = ctx.getLevel();
 		BlockPos blockPos = ctx.getClickedPos();
 		BlockPos blockPosD = blockPos.below();
 		//BlockPos blockPosU = blockPos.up();
@@ -71,7 +71,7 @@ public class DyeableVerticalConnectBlock extends DyeableBlock {
 	}
 
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState,
-			IWorld world, BlockPos pos, BlockPos posFrom) {
+			LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		BlockState res = state;
 		
 		if (direction == Direction.UP && newState.getBlock() instanceof DyeableVerticalConnectBlock && (connectOthers || newState.getBlock() == this)) {

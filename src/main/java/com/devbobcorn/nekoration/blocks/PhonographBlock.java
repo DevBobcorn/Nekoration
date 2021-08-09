@@ -5,21 +5,21 @@ import java.util.List;
 
 import com.devbobcorn.nekoration.blocks.entities.PhonographBlockEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
 
-public class PhonographBlock extends Block{
+public class PhonographBlock extends Block {
     public PhonographBlock(Properties settings) {
         super(settings);
     }
 
+	/*
     @Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
@@ -29,16 +29,17 @@ public class PhonographBlock extends Block{
 	// for the block
 	// Should return a new instance of the tile entity for the block
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public BlockGetter createTileEntity(BlockState state, BlockGetter world) {
 		return new PhonographBlockEntity();
 	}
+	*/
 
     // Called just after the player places a block.
 	@Override
-	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(worldIn, pos, state, placer, stack);
 
-		TileEntity tileentity = worldIn.getBlockEntity(pos);
+		BlockEntity tileentity = worldIn.getBlockEntity(pos);
 		if (tileentity instanceof PhonographBlockEntity) { // prevent a crash if not the right type, or is null
             return;
 		}

@@ -10,12 +10,12 @@ import com.google.common.collect.Maps;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FireBlock;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FireBlock;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class VanillaCompat {
 	private static final Logger LOGGER = LogManager.getLogger(Nekoration.MODID + " Vanilla Compat");
@@ -105,6 +105,7 @@ public class VanillaCompat {
 
 	public static void registerFlammablity(){
 		try{
+			// TODO
 			Method setFlammable = ObfuscationReflectionHelper.findMethod(FireBlock.class, "func_180686_a", Block.class, int.class, int.class);
 			// Half-Timber Blocks...
 			final FireBlock fire = (FireBlock)Blocks.FIRE;

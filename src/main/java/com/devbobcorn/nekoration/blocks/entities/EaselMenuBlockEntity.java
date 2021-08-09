@@ -33,11 +33,12 @@ import net.minecraft.util.text.TextComponentUtils;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.world.World;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EaselMenuBlockEntity extends TileEntity implements INamedContainerProvider {
+public class EaselMenuBlockEntity extends BlockEntity implements INamedContainerProvider {
 	public static final int NUMBER_OF_SLOTS = 8;
 	public final ContainerContents contents;
 

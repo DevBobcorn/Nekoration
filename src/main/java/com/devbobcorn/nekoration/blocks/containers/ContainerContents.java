@@ -7,6 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class ContainerContents implements IInventory {
@@ -93,7 +94,7 @@ public class ContainerContents implements IInventory {
 	// or ask the parent TileEntity.
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return canPlayerAccessInventoryLambda.test(player); // on the client, this does nothing. on the server, ask our
 															// parent TileEntity.
 	}
@@ -120,12 +121,12 @@ public class ContainerContents implements IInventory {
 	}
 
 	@Override
-	public void startOpen(PlayerEntity player) {
+	public void startOpen(Player player) {
 		openInventoryNotificationLambda.invoke();
 	}
 
 	@Override
-	public void stopOpen(PlayerEntity player) {
+	public void stopOpen(Player player) {
 		closeInventoryNotificationLambda.invoke();
 	}
 

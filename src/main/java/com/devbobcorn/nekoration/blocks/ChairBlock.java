@@ -3,20 +3,20 @@ package com.devbobcorn.nekoration.blocks;
 import java.util.Collections;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class ChairBlock extends HorizontalBlock {
+public class ChairBlock extends HorizontalDirectionalBlock {
     public final double SideSpace = 1.0D;
     public final double SeatHeight;
     public final double BackRestHeight;
@@ -40,18 +40,18 @@ public class ChairBlock extends HorizontalBlock {
         BackRestShapes[0] = Block.box(SideSpace, 0.0D, SideSpace, 16.0D - SideSpace, BackRestHeight, BackRestThickness);                 // South +Z
         BackRestShapes[2] = Block.box(SideSpace, 0.0D, 16.0D - BackRestThickness, 16.0D - SideSpace, BackRestHeight, 16.0D - SideSpace); // North -Z
         for (int i = 0;i < 4;i++)
-            ChairShapes[i] = VoxelShapes.or(BackRestShapes[i], SeatShape);
+            ChairShapes[i] = Shapes.or(BackRestShapes[i], SeatShape);
     }
 
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
         return ChairShapes[state.getValue(FACING).get2DDataValue()];
     }
     
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
         s.add(FACING);
     }
 
-    public BlockState getStateForPlacement(BlockItemUseContext ctx) {
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 

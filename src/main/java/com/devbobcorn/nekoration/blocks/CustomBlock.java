@@ -9,26 +9,30 @@ import java.util.List;
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CustomBlock extends Block {
 	public static final IntegerProperty MODEL = BlockStateProperties.LEVEL;
@@ -37,25 +41,27 @@ public class CustomBlock extends Block {
 		super(settings);
 	}
 	
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
 		s.add(MODEL);
 	}
 	
+	/*
 	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
 		return new CustomBlockEntity();
 	}
+	*/
 
 	@Override
-	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(worldIn, pos, state, placer, stack);
 
-		TileEntity tileEntity = worldIn.getBlockEntity(pos);
+		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
 		if (tileEntity instanceof CustomBlockEntity) { // prevent a crash if not the right type, or is null
 			// LOGGER.info(tileentity);
 			CustomBlockEntity te = (CustomBlockEntity)tileEntity;
@@ -78,8 +84,9 @@ public class CustomBlock extends Block {
 		LOGGER.error("Tile Entity NOT Found!");
 	}
 
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
-	BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+	BlockHitResult hit) {
+		/*
 		ItemStack itemStack = player.getItemInHand(hand);
 		Item item = itemStack.getItem();
 		CustomBlockEntity te = (CustomBlockEntity)world.getBlockEntity(pos);
@@ -87,10 +94,10 @@ public class CustomBlock extends Block {
 		// Both Sides Changes...
 		if (item == ModItems.PAW_15.get()){
 			te.dir = ((byte)((te.dir + 1) % 24));
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 		} else if (item == ModItems.PAW_90.get()){
 			te.dir = ((byte)((te.dir + 6) % 24));
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 		} else if (item == ModItems.PAW_LEFT.get()){
 			te.offset[0]--;
 		} else if (item == ModItems.PAW_RIGHT.get()){
@@ -105,7 +112,7 @@ public class CustomBlock extends Block {
 			te.offset[2]--;
 		} else if (item == ModItems.PALETTE.get()){
 			// Dye me!
-			CompoundNBT nbt = itemStack.getTag();
+			CompoundTag nbt = itemStack.getTag();
 			byte a = nbt.getByte(PaletteItem.ACTIVE);
 			int[] c = nbt.getIntArray(PaletteItem.COLORS);
 			// So c[a] is the color we need...
@@ -117,20 +124,20 @@ public class CustomBlock extends Block {
 		} else if (item instanceof BlockItem){
 			//System.out.println("Block Item.");
 			if (((BlockItem)item).getBlock() instanceof CustomBlock)
-				return ActionResultType.PASS;
+				return InteractionResult.PASS;
 			te.model = 16;
-			BlockState newState = ((BlockItem)item).getBlock().getStateForPlacement(new BlockItemUseContext(player, hand, itemStack, hit));
+			BlockState newState = ((BlockItem)item).getBlock().getStateForPlacement(new BlockPlaceContext(player, hand, itemStack, hit));
 			if (te.displayBlock == newState)
-				return ActionResultType.PASS;
+				return InteractionResult.PASS;
 			else {
 				te.displayBlock = newState;
 				ItemStack newStack = itemStack.copy();
 				newStack.setCount(1);
 				te.containItem = newStack;
 			}
-		} else return ActionResultType.PASS;
-
-		return ActionResultType.sidedSuccess(world.isClientSide);
+		} else return InteractionResult.PASS;
+		*/
+		return InteractionResult.sidedSuccess(world.isClientSide);
 	}
 
 	@Override

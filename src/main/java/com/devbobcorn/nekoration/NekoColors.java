@@ -1,13 +1,14 @@
 package com.devbobcorn.nekoration;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
-
 import java.awt.Color;
+
+import com.mojang.math.Vector3d;
+import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.ItemStack;
+
 public class NekoColors {
 	public static int getBlockColorAt(int value,int min,int max,int minColor,int maxColor) {
 		if (value >= max) return maxColor;
@@ -22,7 +23,7 @@ public class NekoColors {
 		return getRGBColorBetween(frac,lc,rc);
 	}
 	
-	public static final Color getRGBColor(Vector3i vec){
+	public static final Color getRGBColor(Vec3i vec){
 		return new Color(Math.min(Math.max(vec.getX(), 0), 255), Math.min(Math.max(vec.getY(), 0), 255), Math.min(Math.max(vec.getZ(), 0), 255));
 	}
 
@@ -53,15 +54,15 @@ public class NekoColors {
     	int green2 = (rc & 0xff00) >> 8;
     	int blue2 = rc & 0xff;
     	
-    	int red3 = (int)MathHelper.lerp(frac,red1,red2);
-    	int green3 = (int)MathHelper.lerp(frac,green1,green2);
-    	int blue3 = (int)MathHelper.lerp(frac,blue1,blue2);
+    	int red3 = (int)Mth.lerp(frac,red1,red2);
+    	int green3 = (int)Mth.lerp(frac,green1,green2);
+    	int blue3 = (int)Mth.lerp(frac,blue1,blue2);
     	
     	return (red3 << 16) + (green3 << 8) + blue3;
 	}
 
 	public static Color getRGBColorBetween(double frac,Color lc,Color rc) {
-    	return new Color((int)MathHelper.lerp(frac, lc.getRed(), rc.getRed()), (int)MathHelper.lerp(frac, lc.getGreen(), rc.getGreen()), (int)MathHelper.lerp(frac, lc.getBlue(), rc.getBlue()));
+    	return new Color((int)Mth.lerp(frac, lc.getRed(), rc.getRed()), (int)Mth.lerp(frac, lc.getGreen(), rc.getGreen()), (int)Mth.lerp(frac, lc.getBlue(), rc.getBlue()));
 	}
 	
 	public static int getRed(int c) {
@@ -97,7 +98,7 @@ public class NekoColors {
 		return EnumNekoColor.getColorValueFromID((byte)id);
 	}
 
-	public enum EnumNekoColor implements IStringSerializable {
+	public enum EnumNekoColor implements StringRepresentable {
 		BLACK((byte)0, "black", 0x5c5c5c),
 		BLUE((byte)1, "blue" , 0x2891ff),
 		BROWN((byte)2, "brown", 0x673400),
@@ -133,7 +134,7 @@ public class NekoColors {
 			return (int)nbtID;
 		}
 
-		public static EnumNekoColor fromNBT(CompoundNBT compoundNBT, String tagname) {
+		public static EnumNekoColor fromNBT(CompoundTag compoundNBT, String tagname) {
 			byte flavorID = 0; // default in case of error
 			if (compoundNBT != null && compoundNBT.contains(tagname)) {
 				flavorID = compoundNBT.getByte(tagname);
@@ -148,7 +149,7 @@ public class NekoColors {
 		 * @param compoundNBT
 		 * @param tagname
 		 */
-		public void putIntoNBT(CompoundNBT compoundNBT, String tagname) {
+		public void putIntoNBT(CompoundTag compoundNBT, String tagname) {
 			compoundNBT.putByte(tagname, nbtID);
 		}
 
@@ -188,7 +189,7 @@ public class NekoColors {
 		return EnumStoneColor.getColorValueFromID((byte)id);
 	}
 
-	public enum EnumStoneColor implements IStringSerializable {
+	public enum EnumStoneColor implements StringRepresentable {
 		BLACK((byte)0, "black", 0x5c5c5c),
 		BLUE((byte)1, "blue" , 0x549ae5),
 		BROWN((byte)2, "brown", 0xa37864),
@@ -224,7 +225,7 @@ public class NekoColors {
 			return (int)nbtID;
 		}
 
-		public static EnumStoneColor fromNBT(CompoundNBT compoundNBT, String tagname) {
+		public static EnumStoneColor fromNBT(CompoundTag compoundNBT, String tagname) {
 			byte flavorID = 0; // default in case of error
 			if (compoundNBT != null && compoundNBT.contains(tagname)) {
 				flavorID = compoundNBT.getByte(tagname);
@@ -239,7 +240,7 @@ public class NekoColors {
 		 * @param compoundNBT
 		 * @param tagname
 		 */
-		public void putIntoNBT(CompoundNBT compoundNBT, String tagname) {
+		public void putIntoNBT(CompoundTag compoundNBT, String tagname) {
 			compoundNBT.putByte(tagname, nbtID);
 		}
 
@@ -279,7 +280,7 @@ public class NekoColors {
 		return EnumWoodenColor.getColorValueFromID((byte)id);
 	}
 
-	public enum EnumWoodenColor implements IStringSerializable {
+	public enum EnumWoodenColor implements StringRepresentable {
 		BLACK((byte)0, "black", 0x5c3c1b), // dark_oak
 		BLUE((byte)1, "blue" , 0x446184),
 		BROWN((byte)2, "brown", 0x886541), // spruce
@@ -315,7 +316,7 @@ public class NekoColors {
 			return (int)nbtID;
 		}
 
-		public static EnumWoodenColor fromNBT(CompoundNBT compoundNBT, String tagname) {
+		public static EnumWoodenColor fromNBT(CompoundTag compoundNBT, String tagname) {
 			byte flavorID = 0; // default in case of error
 			if (compoundNBT != null && compoundNBT.contains(tagname)) {
 				flavorID = compoundNBT.getByte(tagname);
@@ -324,7 +325,7 @@ public class NekoColors {
 			return color; // default is wooden brown
 		}
 
-		public void putIntoNBT(CompoundNBT compoundNBT, String tagname) {
+		public void putIntoNBT(CompoundTag compoundNBT, String tagname) {
 			compoundNBT.putByte(tagname, nbtID);
 		}
 

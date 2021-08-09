@@ -8,8 +8,9 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class PhonographBlockEntity extends TileEntity implements ITickableTileEntity {
+public class PhonographBlockEntity extends BlockEntity implements ITickableTileEntity {
     public PhonographBlockEntity() {
         super(ModTileEntityType.PHONOGRAPH_TYPE.get());
     }

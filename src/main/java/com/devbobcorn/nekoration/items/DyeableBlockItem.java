@@ -4,16 +4,17 @@ import javax.annotation.Nullable;
 
 import com.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+
 
 public class DyeableBlockItem extends BlockItem {
     public static final String COLOR = "color";
@@ -30,7 +31,7 @@ public class DyeableBlockItem extends BlockItem {
     }
 
 	@Override
-	public void fillItemCategory(ItemGroup tab, NonNullList<ItemStack> subItems) {
+	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
 		if (this.allowdedIn(tab)) {
 			if (showAllVariants)
 				for (EnumNekoColor color : EnumNekoColor.values()) {
@@ -47,25 +48,25 @@ public class DyeableBlockItem extends BlockItem {
 	}
 
     public static EnumNekoColor getColor(ItemStack stack) {
-		CompoundNBT compoundNBT = stack.getOrCreateTag();
+		CompoundTag compoundNBT = stack.getOrCreateTag();
 		return EnumNekoColor.fromNBT(compoundNBT, COLOR);
 	}
 
     public static void setColor(ItemStack stack, EnumNekoColor color) {
-        CompoundNBT compoundNBT = stack.getOrCreateTag();
+        CompoundTag compoundNBT = stack.getOrCreateTag();
         color.putIntoNBT(compoundNBT, COLOR);
 	}
 
-	public static float getColorPropertyOverride(ItemStack itemStack, @Nullable World world,
+	public static float getColorPropertyOverride(ItemStack itemStack, @Nullable Level world,
 		@Nullable LivingEntity livingEntity) {
 		EnumNekoColor color = DyeableBlockItem.getColor(itemStack);
 		return color.getPropertyOverrideValue();
 	}
 
 	@Override
-	public ITextComponent getName(ItemStack stack) {
-		String colorText = (new TranslationTextComponent("color.nekoration." + getColor(stack).getSerializedName())).getString();
+	public Component getName(ItemStack stack) {
+		String colorText = (new TranslatableComponent("color.nekoration." + getColor(stack).getSerializedName())).getString();
 
-		return new TranslationTextComponent(this.getDescriptionId(stack), colorText);
+		return new TranslatableComponent(this.getDescriptionId(stack), colorText);
 	}
 }

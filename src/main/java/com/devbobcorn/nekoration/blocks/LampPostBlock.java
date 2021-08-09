@@ -6,36 +6,37 @@ import java.util.List;
 import com.devbobcorn.nekoration.blocks.states.LampPostType;
 import com.devbobcorn.nekoration.blocks.states.ModStateProperties;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ChainBlock;
-import net.minecraft.block.FourWayBlock;
-import net.minecraft.block.LanternBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.LeadItem;
-import net.minecraft.loot.LootContext;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.LeadItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChainBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.block.CrossCollisionBlock;
+import net.minecraft.world.level.block.LanternBlock;
 
-public class LampPostBlock extends FourWayBlock {
+public class LampPostBlock extends CrossCollisionBlock {
 	private final VoxelShape[] occlusionByIndex;
 
-	public static final net.minecraft.state.EnumProperty<LampPostType> TYPE = ModStateProperties.LAMP_POST_TYPE;
+	public static final EnumProperty<LampPostType> TYPE = ModStateProperties.LAMP_POST_TYPE;
 
 	public static final VoxelShape SHAPE = Block.box(4.0D, 4.0D, 4.0D, 12.0D, 12.0d, 12.0D);
 
@@ -50,25 +51,24 @@ public class LampPostBlock extends FourWayBlock {
 		this.occlusionByIndex = this.makeShapes(2.0F, 1.0F, 16.0F, 6.0F, 15.0F);
 	}
 
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
 		s.add(NORTH, EAST, WEST, SOUTH, WATERLOGGED, TYPE);
 	}
 
 	public boolean canConnect(BlockState state, boolean neighborIsFullSquare, Direction dir) {
-		Block block = state.getBlock();
-		boolean bl2 = block instanceof LampPostBlock;
-		return !isExceptionForConnection(block) && neighborIsFullSquare || bl2;
+		boolean bl2 = state.getBlock() instanceof LampPostBlock;
+		return !isExceptionForConnection(state) && neighborIsFullSquare || bl2;
 	}
 
-	public VoxelShape getOcclusionShape(BlockState state, IBlockReader world, BlockPos pos) {
+	public VoxelShape getOcclusionShape(BlockState state, BlockGetter world, BlockPos pos) {
 		return this.occlusionByIndex[this.getAABBIndex(state)];
 	}
 
-	public VoxelShape getVisualShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
+	public VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
 		return this.getShape(state, world, pos, ctx);
 	}
 
-	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, IWorld world,
+	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world,
 			BlockPos pos, BlockPos posFrom) {
 		if ((Boolean) state.getValue(WATERLOGGED)) {
 			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
@@ -88,11 +88,11 @@ public class LampPostBlock extends FourWayBlock {
 														: state.getValue(TYPE));
 	}
 
-	public boolean isPathfindable(BlockState state, IBlockReader world, BlockPos pos, PathType type) {
+	public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
 		return false;
 	}
 
-	public LampPostType getType(World blockView, BlockPos blockPos) {
+	public LampPostType getType(Level blockView, BlockPos blockPos) {
 		BlockPos blockPosD = blockPos.below();
 		BlockPos blockPosU = blockPos.above();
 		BlockState stateD = blockView.getBlockState(blockPosD);
@@ -118,18 +118,17 @@ public class LampPostBlock extends FourWayBlock {
 		return LampPostType.POLE;
 	}
 
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
-			BlockRayTraceResult hit) {
-		if (world.isClientSide()) {
-			ItemStack itemStack = player.getItemInHand(hand);
-			return itemStack.getItem() == Items.LEAD ? ActionResultType.SUCCESS : ActionResultType.PASS;
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+		if (world.isClientSide) {
+		   ItemStack itemstack = player.getItemInHand(hand);
+		   return itemstack.is(Items.LEAD) ? InteractionResult.SUCCESS : InteractionResult.PASS;
 		} else {
-			return LeadItem.bindPlayerMobs(player, world, pos);
+		   return LeadItem.bindPlayerMobs(player, world, pos);
 		}
-	}
+	 }
 
-	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-		World blockView = ctx.getLevel();
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		Level blockView = ctx.getLevel();
 		BlockPos blockPos = ctx.getClickedPos();
 		FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
 		BlockPos blockPos1 = blockPos.north();

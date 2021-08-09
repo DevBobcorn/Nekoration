@@ -3,7 +3,7 @@ package com.devbobcorn.nekoration.client.gui.screen;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.network.C2SUpdatePaintingSize;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.Screen;
@@ -43,7 +43,7 @@ public class PaintingSizeScreen extends Screen {
 		topPos = (this.height - BACKGROUND_HEIGHT) / 2;
 	}
 
-	public void render(MatrixStack stack, int x, int y, float partialTicks) {
+	public void render(PoseStack stack, int x, int y, float partialTicks) {
 		stack.pushPose();
 		RenderSystem.enableBlend();
 		this.minecraft.getTextureManager().bind(PAINTING_SIZE);

@@ -7,7 +7,7 @@ import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.glfw.GLFW;
@@ -97,7 +97,7 @@ public class PaletteScreen extends Screen {
     }
 
     @SuppressWarnings("deprecation")
-    public void render(MatrixStack stack, int x, int y, float partialTicks) {
+    public void render(PoseStack stack, int x, int y, float partialTicks) {
         int i = this.leftPos;
         int j = this.topPos;
 
@@ -143,7 +143,7 @@ public class PaletteScreen extends Screen {
     }
 
     @SuppressWarnings("deprecation")
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bind(BACKGROUND); //We've bound this before...
 		int edgeSpacingX = (this.width - this.imageWidth) / 2;

@@ -20,18 +20,15 @@ import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.items.ModItemTabs;
-import com.devbobcorn.nekoration.particles.FlameParticleType;
-import com.devbobcorn.nekoration.particles.ModParticles;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -93,13 +90,6 @@ public final class CommonModEventSubscriber {
 				registry.register(blockItem);
 			});
 		LOGGER.info("BlockItems Registered.");
-	}
-
-	@SubscribeEvent
-	public static void onRegisterIParticleTypes(RegistryEvent.Register<ParticleType<?>> event) {
-		ModParticles.FLAME = new FlameParticleType();
-		ModParticles.FLAME.setRegistryName(Nekoration.MODID, "flame");
-		event.getRegistry().register(ModParticles.FLAME);
 	}
 
 	@SubscribeEvent

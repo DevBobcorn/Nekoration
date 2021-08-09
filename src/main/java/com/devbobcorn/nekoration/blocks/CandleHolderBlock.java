@@ -4,20 +4,20 @@ import java.util.Random;
 
 import com.devbobcorn.nekoration.common.VanillaCompat;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -28,29 +28,29 @@ public class CandleHolderBlock extends DyeableBlock {
 		super(settings);
 	}
 
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
 		s.add(COLOR, FLAME);
 	}
 
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
-			BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+			BlockHitResult hit) {
 		ItemStack itemStack = player.getItemInHand(hand);
 
 		if (world.isClientSide) {
 			return (VanillaCompat.FLAME_ITEMS.containsKey(itemStack.getItem())) ? super.use(state, world, pos, player, hand, hit)
-					: ActionResultType.PASS;
+					: InteractionResult.PASS;
 		}
 		
 		if (VanillaCompat.FLAME_ITEMS.containsKey(itemStack.getItem())) {
 			world.setBlock(pos, state.setValue(FLAME, VanillaCompat.FLAME_ITEMS.get(itemStack.getItem())), 3);
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 		return super.use(state, world, pos, player, hand, hit);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
 		if (stateIn.getValue(FLAME) > 0) {
 			double x = (double) pos.getX() + 0.5D;
 			double y = (double) pos.getY() + 1.2D;
@@ -65,7 +65,7 @@ public class CandleHolderBlock extends DyeableBlock {
 			double z1 = z + r;
 			double z2 = z - r;
 
-			BasicParticleType type;
+			SimpleParticleType type;
 
 			switch (stateIn.getValue(FLAME)) {
 			case 1:

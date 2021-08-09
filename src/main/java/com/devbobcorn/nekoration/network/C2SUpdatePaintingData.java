@@ -4,11 +4,12 @@ import java.util.function.Supplier;
 
 import com.devbobcorn.nekoration.entities.PaintingEntity;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
+
 
 public class C2SUpdatePaintingData {
     public int paintingId;
@@ -21,13 +22,13 @@ public class C2SUpdatePaintingData {
         this.compositeHash = hash; // Used by other clients to check if the data's right...
 	}
 
-	public static void encode(final C2SUpdatePaintingData msg, final PacketBuffer packetBuffer) {
+	public static void encode(final C2SUpdatePaintingData msg, final FriendlyByteBuf packetBuffer) {
         packetBuffer.writeInt(msg.paintingId);
         packetBuffer.writeVarIntArray(msg.pixels);
         packetBuffer.writeInt(msg.compositeHash);
 	}
 
-	public static C2SUpdatePaintingData decode(final PacketBuffer packetBuffer) {
+	public static C2SUpdatePaintingData decode(final FriendlyByteBuf packetBuffer) {
         int i = packetBuffer.readInt();
         int[] p = packetBuffer.readVarIntArray();
         int hash = packetBuffer.readInt();
@@ -37,7 +38,7 @@ public class C2SUpdatePaintingData {
 	public static void handle(final C2SUpdatePaintingData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on SERVER SIDE...
-            ServerPlayerEntity player = contextSupplier.get().getSender();
+            ServerPlayer player = contextSupplier.get().getSender();
             if (player != null) {
                 // ...
                 Entity entity = player.level.getEntity(msg.paintingId);

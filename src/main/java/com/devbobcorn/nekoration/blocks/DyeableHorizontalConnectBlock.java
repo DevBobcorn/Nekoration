@@ -1,32 +1,32 @@
 package com.devbobcorn.nekoration.blocks;
 
+import java.util.Map;
+
 import com.devbobcorn.nekoration.blocks.states.HorizontalConnection;
 import com.devbobcorn.nekoration.blocks.states.ModStateProperties;
 import com.devbobcorn.nekoration.common.VanillaCompat;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import java.util.Map;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.Direction;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 	protected static Double thickness = 6.0D;
@@ -46,7 +46,7 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 
 	public static final EnumProperty<HorizontalConnection> CONNECTION  = ModStateProperties.HONRIZONTAL_CONNECTION;
 
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> s) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
 		s.add(COLOR, FACING, CONNECTION);
 	}
 
@@ -67,28 +67,28 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
 	}
 
-	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
 		return AABBS.get(state.getValue(FACING));
 	}
 
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
-			BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+			BlockHitResult hit) {
 		ItemStack itemStack = player.getItemInHand(hand);
 
 		if (world.isClientSide) {
-			return (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) ? ActionResultType.SUCCESS
-					: ActionResultType.PASS;
+			return (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) ? InteractionResult.SUCCESS
+					: InteractionResult.PASS;
 		}
 		
 		if (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) {
 			world.setBlock(pos, state.setValue(COLOR, VanillaCompat.COLOR_ITEMS.get(itemStack.getItem())), 3);
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 		}
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
-	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-		World blockView = ctx.getLevel();
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		Level blockView = ctx.getLevel();
 		BlockPos blockPos = ctx.getClickedPos();
 		BlockPos blockPosL = getLeftBlock(blockPos, ctx.getHorizontalDirection().getOpposite());
 		BlockState stateL = blockView.getBlockState(blockPosL);
@@ -118,7 +118,7 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 	}
 
 	public BlockState updateShape(BlockState state, Direction direction, BlockState newState,
-			IWorld world, BlockPos pos, BlockPos posFrom) {
+			LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		BlockState res = state;
 		
 		if (direction == getRightDir(state.getValue(FACING)) && newState.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOthers || newState.getBlock() == this)) {

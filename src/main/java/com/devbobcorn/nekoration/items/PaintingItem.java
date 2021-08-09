@@ -1,22 +1,22 @@
 package com.devbobcorn.nekoration.items;
 
-import com.devbobcorn.nekoration.entities.PaintingEntity;
 import com.devbobcorn.nekoration.client.ClientHelper;
+import com.devbobcorn.nekoration.entities.PaintingEntity;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 
@@ -28,21 +28,21 @@ public class PaintingItem extends Item {
 		super(settings);
 	}
 
-	public ActionResultType useOn(ItemUseContext ctx) {
+	public InteractionResult useOn(UseOnContext ctx) {
 		BlockPos blockpos = ctx.getClickedPos();
 		Direction direction = ctx.getClickedFace();
 		BlockPos blockpos1 = blockpos.relative(direction);
-		PlayerEntity playerentity = ctx.getPlayer();
+		Player playerentity = ctx.getPlayer();
 		ItemStack stack = ctx.getItemInHand();
 		if (playerentity != null && !this.mayPlace(playerentity, direction, stack, blockpos1)) {
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 		} else {
-			World world = ctx.getLevel();
+			Level world = ctx.getLevel();
 			PaintingEntity hangingentity;
 			hangingentity = new PaintingEntity(world, blockpos1, direction, (short)(PaintingItem.getWidth(stack) * 16), (short)(PaintingItem.getHeight(stack) * 16));
 			hangingentity.setPos(blockpos1.getX(), blockpos1.getY(), blockpos1.getZ());
 
-			CompoundNBT compoundnbt = stack.getTag();
+			CompoundTag compoundnbt = stack.getTag();
 			if (compoundnbt != null) {
 				EntityType.updateCustomEntityTag(world, playerentity, hangingentity, compoundnbt);
 			}
@@ -53,15 +53,15 @@ public class PaintingItem extends Item {
 					//hangingentity.recalculateBoundingBox();
 					world.addFreshEntity(hangingentity);
 				}
-				return ActionResultType.sidedSuccess(world.isClientSide);
+				return InteractionResult.sidedSuccess(world.isClientSide);
 			} else {
-				return ActionResultType.CONSUME;
+				return InteractionResult.CONSUME;
 			}
 		}
 	}
 
 	@SuppressWarnings("deprecation")
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (world.isClientSide) {
 			//System.out.println("Interacted with Painting!");
@@ -70,10 +70,10 @@ public class PaintingItem extends Item {
 				ClientHelper.showPaintingSizeScreen(hand);
 			});
 		}
-		return ActionResult.<ItemStack>success(stack);
+		return InteractionResultHolder.<ItemStack>success(stack);
 	 }
 
-	protected boolean mayPlace(PlayerEntity player, Direction dir, ItemStack stack, BlockPos pos) {
+	protected boolean mayPlace(Player player, Direction dir, ItemStack stack, BlockPos pos) {
 		return !dir.getAxis().isVertical() && player.mayUseItemAt(pos, dir, stack);
 	}
 
@@ -83,7 +83,7 @@ public class PaintingItem extends Item {
 	}
 
     public static void setWidth(ItemStack stack, short w) {
-        CompoundNBT tag = stack.getOrCreateTag();
+        CompoundTag tag = stack.getOrCreateTag();
         tag.putShort(WIDTH, w);
 	}
 
@@ -93,12 +93,12 @@ public class PaintingItem extends Item {
 	}
 
     public static void setHeight(ItemStack stack, short h) {
-        CompoundNBT tag = stack.getOrCreateTag();
+        CompoundTag tag = stack.getOrCreateTag();
         tag.putShort(HEIGHT, h);
 	}
 
 	@Override
-	public ITextComponent getName(ItemStack stack) {
-		return new TranslationTextComponent(this.getDescriptionId(stack), getWidth(stack), getHeight(stack));
+	public Component getName(ItemStack stack) {
+		return new TranslatableComponent(this.getDescriptionId(stack), getWidth(stack), getHeight(stack));
 	}
 }

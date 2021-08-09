@@ -2,9 +2,9 @@ package com.devbobcorn.nekoration.network;
 
 import com.devbobcorn.nekoration.Nekoration;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fmllegacy.network.NetworkRegistry;
+import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
 
 public class ModPacketHandler {
     private static final String PROTOCOL_VERSION = "1";

@@ -10,17 +10,16 @@ import com.devbobcorn.nekoration.entities.PaintingEntity;
 import com.devbobcorn.nekoration.items.PaletteItem;
 import com.devbobcorn.nekoration.network.C2SUpdatePaintingData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 
 public class PaintingScreen extends Screen {
     public static final ResourceLocation BACKGROUND = new ResourceLocation(Nekoration.MODID, "textures/gui/painting.png");
@@ -66,7 +65,7 @@ public class PaintingScreen extends Screen {
     private double hor = 0.0D, ver = 0.0D;
     private int pixsize = 8;
 
-    private TranslationTextComponent tipMessage;
+    private TranslatableComponent tipMessage;
 
     public PaintingScreen(int pt) {
         this(pt, (byte)0, PaletteItem.DEFAULT_COLOR_SET);
@@ -74,7 +73,7 @@ public class PaintingScreen extends Screen {
 
     @SuppressWarnings("resource")
     public PaintingScreen(int pt, byte active, Color[] paletteColors) {
-        super(ITextComponent.nullToEmpty("PAINTING"));
+        super(Component.nullToEmpty("PAINTING"));
         opacityPos = topPos + OPACITY_TOP;
         activeSlot = active;
         colors = paletteColors;
@@ -85,7 +84,7 @@ public class PaintingScreen extends Screen {
         paintingHeight = painting.data.getHeight();
         paintingData.imageReady = false;
         oldHash = paintingData.getPaintingHash();
-        tipMessage = new TranslationTextComponent("gui.nekoration.message.press_key_debug_info", "'E'");
+        tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_debug_info", "'E'");
     }
 
     protected void init() {
@@ -149,7 +148,7 @@ public class PaintingScreen extends Screen {
     private String debugText = "A nice line of debug text, isn't it?";
 
     @SuppressWarnings("deprecation")
-    public void render(MatrixStack stack, int x, int y, float partialTicks) {
+    public void render(PoseStack stack, int x, int y, float partialTicks) {
         int i = this.leftPos;
         int j = this.topPos;
 
@@ -157,7 +156,7 @@ public class PaintingScreen extends Screen {
         // Step 0: Fill the back ground...
         this.fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...
-        this.minecraft.getTextureManager().bind(BACKGROUND);
+        this.minecraft.getTextureManager().bindForSetup(BACKGROUND);
 		for (int idx = 0;idx < 6;idx++){
             RenderSystem.color4f(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
             this.blit(stack, i + 34 + 18 * idx, j + 13, 16, 224, 16, 16); // Tinted Pure White Quad...
@@ -205,7 +204,7 @@ public class PaintingScreen extends Screen {
     }
 
     @SuppressWarnings("deprecation")
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bind(BACKGROUND); //We've bound this before...
 		this.blit(stack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);

@@ -6,25 +6,20 @@ import com.devbobcorn.nekoration.blocks.containers.EaselMenuContainer;
 import com.devbobcorn.nekoration.client.gui.widget.IconButton;
 import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.glfw.GLFW;
 
-import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.DyeColor;
 
 import java.awt.*;
 import java.util.Objects;
 
-public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
+public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuContainer> {
 	private TextFieldWidget[] textInputs = new TextFieldWidget[8];
 
 	private IconButton glowButton;
@@ -36,10 +31,10 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 	private int editingText = 0;
 
 	public boolean showColorPicker = false;
-	private TranslationTextComponent tipMessage1;
-	private TranslationTextComponent tipMessage2;
+	private TranslatableComponent tipMessage1;
+	private TranslatableComponent tipMessage2;
 
-	public EaselMenuScreen(EaselMenuContainer container, PlayerInventory playerInventory, ITextComponent title) {
+	public EaselMenuScreen(EaselMenuContainer container, PlayerInventory playerInventory, Component title) {
 		super(container, playerInventory, title);
 		// Set the width and height of the gui. Should match the size of the texture!
 		imageWidth = 176;
@@ -50,8 +45,8 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 			COLOR_SET[i][1] = NekoColors.getGreenf(color);
 			COLOR_SET[i][2] = NekoColors.getBluef(color);
 		}
-		tipMessage1 = new TranslationTextComponent("gui.nekoration.message.press_key_color_picker_on", "'F1'");
-		tipMessage2 = new TranslationTextComponent("gui.nekoration.message.press_key_color_picker_off", "'F1'");
+		tipMessage1 = new TranslatableComponent("gui.nekoration.message.press_key_color_picker_on", "'F1'");
+		tipMessage2 = new TranslatableComponent("gui.nekoration.message.press_key_color_picker_off", "'F1'");
 	}
 
 	@Override
@@ -64,7 +59,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 		final int extraOffsetX = 14;
 		final int extraOffsetY = 10;
 		for (int i = 0;i < 8;i++) {
-			this.textInputs[i] = new TextFieldWidget(this.font, this.leftPos + extraOffsetX + (i < 4 ? 8 : 98), this.topPos + extraOffsetY + 36 + (i % 4) * 18, 70, 18, new TranslationTextComponent("gui.nekoration.color"));
+			this.textInputs[i] = new TextFieldWidget(this.font, this.leftPos + extraOffsetX + (i < 4 ? 8 : 98), this.topPos + extraOffsetY + 36 + (i % 4) * 18, 70, 18, new TranslatableComponent("gui.nekoration.color"));
 			this.textInputs[i].setMaxLength(8);
 			final int j = i;
 			this.textInputs[j].setResponder(input -> {
@@ -77,8 +72,8 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 			this.textInputs[i].setValue(this.menu.texts[i].getContents());
 			this.children.add(this.textInputs[i]);
 		}
-		final TranslationTextComponent enableGlow = new TranslationTextComponent("gui.nekoration.button.enable_glow");
-		final TranslationTextComponent disableGlow = new TranslationTextComponent("gui.nekoration.button.disable_glow");
+		final TranslatableComponent enableGlow = new TranslatableComponent("gui.nekoration.button.enable_glow");
+		final TranslatableComponent disableGlow = new TranslatableComponent("gui.nekoration.button.disable_glow");
 
 		glowButton = new IconButton(leftPos + imageWidth + 2, topPos + 4, menu.glow ? disableGlow : enableGlow, button -> {
 			menu.glow = !menu.glow;
@@ -179,7 +174,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bind(menu.white ? WHITE_BACKGROUND : BACKGROUND); // this.minecraft.getTextureManager()
 		this.renderBackground(stack);
@@ -209,7 +204,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 	 * items) Taken directly from ContainerScreen
 	 */
 	@Override
-	protected void renderLabels(MatrixStack stack, int mouseX, int mouseY) {
+	protected void renderLabels(PoseStack stack, int mouseX, int mouseY) {
 		final float LABEL_XPOS_1 = 6;
 		final float FONT_Y_SPACING = 10;
 		final float CHEST_LABEL_YPOS = EaselMenuContainer.TILE_INVENTORY_YPOS - FONT_Y_SPACING;
@@ -220,7 +215,7 @@ public class EaselMenuScreen extends ContainerScreen<EaselMenuContainer> {
 	}
 
 	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX,
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX,
 			int mouseY) {
 		this.blit(stack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
 	}
