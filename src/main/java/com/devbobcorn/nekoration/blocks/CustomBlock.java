@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.devbobcorn.nekoration.NekoColors;
-import com.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -55,7 +54,6 @@ public class CustomBlock extends Block {
 	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
 		return new CustomBlockEntity();
 	}
-	*/
 
 	@Override
 	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
@@ -86,7 +84,6 @@ public class CustomBlock extends Block {
 
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
 	BlockHitResult hit) {
-		/*
 		ItemStack itemStack = player.getItemInHand(hand);
 		Item item = itemStack.getItem();
 		CustomBlockEntity te = (CustomBlockEntity)world.getBlockEntity(pos);
@@ -136,7 +133,6 @@ public class CustomBlock extends Block {
 				te.containItem = newStack;
 			}
 		} else return InteractionResult.PASS;
-		*/
 		return InteractionResult.sidedSuccess(world.isClientSide);
 	}
 
@@ -145,4 +141,5 @@ public class CustomBlock extends Block {
 		ItemStack stack = new ItemStack(this.asItem());
 		return Collections.singletonList(stack);
 	}
+	*/
 }

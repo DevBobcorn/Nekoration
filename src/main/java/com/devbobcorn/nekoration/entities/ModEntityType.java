@@ -16,6 +16,7 @@ import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.api.distmarker.Dist;
 
 @EventBusSubscriber(modid = Nekoration.MODID, bus = EventBusSubscriber.Bus.MOD)
@@ -24,7 +25,7 @@ public class ModEntityType {
 
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, Nekoration.MODID);
 
-    public static final EntityType<PaintingEntity> PAINTING_TYPE = EntityType.Builder.<PaintingEntity>of(PaintingEntity::new, EntityClassification.MISC).setCustomClientFactory(PaintingEntity::new).sized(0.5F, 0.5F).clientTrackingRange(10).updateInterval(Integer.MAX_VALUE).build(Nekoration.MODID + ":painting");
+    public static final EntityType<PaintingEntity> PAINTING_TYPE = EntityType.Builder.<PaintingEntity>of(PaintingEntity::new, MobCategory.MISC).setCustomClientFactory(PaintingEntity::new).sized(0.5F, 0.5F).clientTrackingRange(10).updateInterval(Integer.MAX_VALUE).build(Nekoration.MODID + ":painting");
     public static final RegistryObject<EntityType<PaintingEntity>> $PAINTING_TYPE = ENTITY_TYPES.register("painting", () -> PAINTING_TYPE);
 
     @SubscribeEvent
@@ -42,6 +43,7 @@ public class ModEntityType {
         //LOGGER.info("Entity Attributes Registered.");
     }
 
+    /*
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void registerModels(ModelRegistryEvent event) {
@@ -49,4 +51,5 @@ public class ModEntityType {
 
         LOGGER.info("Entity Renderer Registered.");
     }
+    */
 }

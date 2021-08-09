@@ -1,3 +1,4 @@
+/*
 package com.devbobcorn.nekoration.client.gui.screen;
 
 import java.awt.Color;
@@ -353,3 +354,4 @@ public class PaintingScreen extends Screen {
         return false; // returns ture by default... interesting...
     }
 }
+*/

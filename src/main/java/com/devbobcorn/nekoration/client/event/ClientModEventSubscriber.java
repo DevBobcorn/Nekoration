@@ -10,39 +10,32 @@ import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
-import com.devbobcorn.nekoration.blocks.containers.ModContainerType;
-import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
+import com.devbobcorn.nekoration.blocks.containers.ModMenuType;
 import com.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import com.devbobcorn.nekoration.client.rendering.blockentities.CustomRenderer;
 import com.devbobcorn.nekoration.client.rendering.blockentities.EaselMenuRenderer;
 import com.devbobcorn.nekoration.client.rendering.blockentities.PhonographRenderer;
-import com.devbobcorn.nekoration.debug.DebugBlockVoxelShapeHighlighter;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
-import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
-import com.devbobcorn.nekoration.particles.FlameParticleFactory;
-import com.devbobcorn.nekoration.particles.ModParticles;
+import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
+import com.mojang.blaze3d.platform.ScreenManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.world.FoliageColors;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraft.world.biome.BiomeColors;
 
 // Client-Side Only Things...
 @EventBusSubscriber(modid = Nekoration.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -120,11 +113,13 @@ public final class ClientModEventSubscriber {
 
 		LOGGER.info("Block Render Types Registered.");
 
+		/*
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.CUSTOM_TYPE.get(), CustomRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityType.PHONOGRAPH_TYPE.get(), PhonographRenderer::new);
 
 		LOGGER.info("BlockEntities' Renderer Bound.");
+		*/
 
 		MinecraftForge.EVENT_BUS.register(new CreativeInventoryEvents());
 
@@ -143,13 +138,11 @@ public final class ClientModEventSubscriber {
 
 		LOGGER.info("Property Overrides Registered.");
 
-		ScreenManager.register(ModContainerType.EASEL_MENU_TYPE.get(), EaselMenuScreen::new);
+		/*
+		ScreenManager.register(ModMenuType.EASEL_MENU_TYPE.get(), EaselMenuScreen::new);
 
 		LOGGER.info("Nekoration Screens Registered.");
-
-		MinecraftForge.EVENT_BUS.register(DebugBlockVoxelShapeHighlighter.class);
-
-		LOGGER.info("OutlineHighlighter Registered.");
+		*/
 	}
 
 	public static void registerPropertyOverrides() {
@@ -293,26 +286,5 @@ public final class ClientModEventSubscriber {
 		ModBlocks.HALF_TIMBER_PILLAR_P2.get().asItem());
 
 		LOGGER.info("Item Colors Registered.");
-	}
-
-	// Register the factory that will spawn our Particle from ParticleData
-	@SubscribeEvent
-	@SuppressWarnings({ "resource" })
-	public static void onRegisterParticleFactories(ParticleFactoryRegisterEvent event) {
-		// beware - there are two registerFactory methods with different signatures.
-		// If you use the wrong one it will put Minecraft into an infinite loading loop
-		// with no console errors
-		Minecraft.getInstance().particleEngine.register(ModParticles.FLAME, sprite -> new FlameParticleFactory(sprite));
-		// This lambda may not be obvious: its purpose is:
-		// the registerFactory method creates an IAnimatedSprite, then passes it to the constructor of FlameParticleFactory
-
-		// General rule of thumb:
-		// If you are creating a TextureParticle with a corresponding json to specify
-		// textures which will be stitched into the
-		// particle texture sheet, then use the 1-parameter constructor method
-		// If you're supplying the render yourself, or using a texture from the block
-		// sheet, use the 0-parameter constructor method
-		// (examples are MobAppearanceParticle, DiggingParticle). See
-		// ParticleManager::registerFactories for more.
 	}
 }

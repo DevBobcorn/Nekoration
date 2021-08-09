@@ -1,49 +1,47 @@
+/*
 package com.devbobcorn.nekoration.blocks.containers;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
-
-import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class EaselMenuContainer extends AbstractContainerMenu {
+public class EaselMenuMenu extends AbstractContainerMenu {
 	public final boolean white;
-	public ITextComponent[] texts = new ITextComponent[8];
+	public Component[] texts = new Component[8];
 	public DyeColor[] colors = new DyeColor[8];
 	public boolean glow;
 
-	public static EaselMenuContainer createContainerServerSide(int windowID, PlayerInventory playerInventory,
-			ContainerContents easelMenuContents, EaselMenuBlockEntity te) {
-		return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, te.getBlockPos(), te.getMessages(), te.getColor(), te.white, te.getGlowing());
+	public static EaselMenuMenu createContainerServerSide(int windowID, Inventory playerInventory, EaselMenuBlockEntity te) {
+		return new EaselMenuMenu(windowID, playerInventory, new SimpleContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS), te.getBlockPos(), te.getMesssages(), te.getColor(), te.white, te.getGlowing());
 	}
 
-	public static EaselMenuContainer createContainerClientSide(int windowID, PlayerInventory playerInventory,
-		net.minecraft.network.PacketBuffer extraData) {
+	public static EaselMenuMenu createContainerClientSide(int windowID, Inventory playerInventory,
+		FriendlyByteBuf extraData) {
 			try {
 				// don't need extraData for this example; if you want you can use it to provide
 				// extra information from the server, that you can use
 				// when creating the client container
 				// eg String detailedDescription = extraData.readString(128);
-				ContainerContents easelMenuContents = ContainerContents
-					.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
+				SimpleContainer easelMenuContainer = new SimpleContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
 
 				// on the client side there is no parent TileEntity to communicate with, so we:
 				// 1) use a dummy inventory
 				// 2) use "do nothing" lambda functions for canPlayerAccessInventory and markDirty
 				BlockPos p = extraData.readBlockPos();
-				ITextComponent[] t = new ITextComponent[8];
+				Component[] t = new Component[8];
 				DyeColor[] c = new DyeColor[8];
 				for (int i = 0;i < 8;i++)
 					t[i] = extraData.readComponent();
@@ -51,13 +49,12 @@ public class EaselMenuContainer extends AbstractContainerMenu {
 					c[i] = extraData.readEnum(DyeColor.class);
 				boolean w = extraData.readBoolean();
 				boolean g = extraData.readBoolean();
-				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, p, t, c, w, g);
+				return new EaselMenuMenu(windowID, playerInventory, easelMenuContainer, p, t, c, w, g);
 			} catch (Exception e) {
 				LOGGER.warn("Invalid data in packet buffer", e);
-				ContainerContents easelMenuContents = ContainerContents
-					.createForClientSideContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
+				SimpleContainer easelMenuContents = new SimpleContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
 
-				return new EaselMenuContainer(windowID, playerInventory, easelMenuContents, BlockPos.ZERO, new ITextComponent[8], new DyeColor[8], false, true);
+				return new EaselMenuMenu(windowID, playerInventory, easelMenuContents, BlockPos.ZERO, new Component[8], new DyeColor[8], false, true);
 			}
 	}
 
@@ -88,25 +85,15 @@ public class EaselMenuContainer extends AbstractContainerMenu {
 
 	public BlockPos pos = BlockPos.ZERO;
 
-	/**
-	 * Creates a container suitable for server side or client side
-	 * 
-	 * @param windowID
-	 *            ID of the container
-	 * @param playerInventory
-	 *            the inventory of the player
-	 * @param easelMenuContents
-	 *            the inventory stored in the chest
-	 */
-	private EaselMenuContainer(int windowID, PlayerInventory playerInventory, ContainerContents easelMenuContents, BlockPos pos, ITextComponent[] texts, DyeColor[] colors, boolean white, boolean glow) {
-		super(ModContainerType.EASEL_MENU_TYPE.get(), windowID);
-		if (ModContainerType.EASEL_MENU_TYPE.get() == null)
+	private EaselMenuMenu(int windowID, Inventory playerInventory, SimpleContainer menuContainer, BlockPos pos, Component[] texts, DyeColor[] colors, boolean white, boolean glow) {
+		super(ModMenuType.EASEL_MENU_TYPE.get(), windowID);
+		if (ModMenuType.EASEL_MENU_TYPE.get() == null)
 			throw new IllegalStateException("Must initialize Container Type before constructing a Container!");
 
 		PlayerInvWrapper playerInventoryForge = new PlayerInvWrapper(playerInventory); // wrap the IInventory in a Forge IItemHandler.
 		// Not actually necessary - can use Slot(playerInventory) instead of
 		// SlotItemHandler(playerInventoryForge)
-		this.easelMenuContents = easelMenuContents;
+		this.container = menuContainer;
 
 		this.white = white;
 		this.glow = glow;
@@ -133,15 +120,15 @@ public class EaselMenuContainer extends AbstractContainerMenu {
 			}
 		}
 
-		if (TE_INVENTORY_SLOT_COUNT != easelMenuContents.getContainerSize()) {
+		if (TE_INVENTORY_SLOT_COUNT != menuContainer.getContainerSize()) {
 			LOGGER.warn("Mismatched slot count in ContainerBasic(" + TE_INVENTORY_SLOT_COUNT + ") and TileInventory ("
-					+ easelMenuContents.getContainerSize() + ")");
+					+ menuContainer.getContainerSize() + ")");
 		}
 		final int TILE_INVENTORY_XPOS = 8;
 		// Add the tile inventory container to the gui
 		for (int x = 0; x < TE_INVENTORY_SLOT_COUNT; x++) {
 			int slotNumber = x;
-			addSlot(new Slot(easelMenuContents, slotNumber, TILE_INVENTORY_XPOS + SLOT_X_SPACING * (x > 3 ? x + 1 : x), TILE_INVENTORY_YPOS));
+			addSlot(new Slot(menuContainer, slotNumber, TILE_INVENTORY_XPOS + SLOT_X_SPACING * (x > 3 ? x + 1 : x), TILE_INVENTORY_YPOS));
             // 0 1 2 3 _ 4 5 6 7, leave an empty space in the middle....
 		}
 		this.pos = pos;
@@ -168,7 +155,7 @@ public class EaselMenuContainer extends AbstractContainerMenu {
 		// Sometimes it perform an additional check (eg for EnderChests - the player
 		// owns the chest)
 
-		return easelMenuContents.stillValid(playerEntity);
+		return container.stillValid(playerEntity);
 	}
 
 	// This is where you specify what happens when a player shift clicks a slot in
@@ -184,7 +171,7 @@ public class EaselMenuContainer extends AbstractContainerMenu {
 	// source slot item could be moved
 	// otherwise, returns a copy of the source stack
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerEntity, int sourceSlotIndex) {
+	public ItemStack quickMoveStack(Player playerEntity, int sourceSlotIndex) {
 		Slot sourceSlot = slots.get(sourceSlotIndex);
 		if (sourceSlot == null || !sourceSlot.hasItem())
 			return ItemStack.EMPTY; // EMPTY_ITEM
@@ -227,10 +214,11 @@ public class EaselMenuContainer extends AbstractContainerMenu {
 	// see ContainerChest and TileEntityChest - used to animate the lid when no
 	// players are accessing the chest any more
 	@Override
-	public void removed(PlayerEntity playerIn) {
+	public void removed(Player playerIn) {
 		super.removed(playerIn);
 	}
 
-	private ContainerContents easelMenuContents;
+	private SimpleContainer container;
 	private static final Logger LOGGER = LogManager.getLogger();
 }
+*/

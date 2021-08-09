@@ -2,9 +2,6 @@ package com.devbobcorn.nekoration.network;
 
 import java.util.function.Supplier;
 
-import com.devbobcorn.nekoration.blocks.containers.ContainerContents;
-import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -58,6 +55,7 @@ public class C2SUpdateEaselMenuData {
                 ServerLevel world = player.getLevel();
                 if (world.isLoaded(msg.pos)) {
                     BlockEntity tileEntity = world.getBlockEntity(msg.pos);
+                    /*
                     if (tileEntity instanceof EaselMenuBlockEntity) {
                         EaselMenuBlockEntity te = ((EaselMenuBlockEntity) tileEntity);
                         for (int i = 0;i < 8;i++)
@@ -69,7 +67,7 @@ public class C2SUpdateEaselMenuData {
                         //System.out.println("TEXT UPDATE Packet Received From Client");
                         
                         ItemStack[] its = new ItemStack[8];
-                        ContainerContents cts = te.contents;
+                        MyContainerMenu cts = te.contents;
                         for (int i = 0;i < 8;i++){
                             its[i] = cts.getItem(i);
                         }
@@ -78,6 +76,7 @@ public class C2SUpdateEaselMenuData {
                         ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
                         //System.out.println("Item Update Packet Sent From Server");
                     }
+                    */
                 }
             }
         });

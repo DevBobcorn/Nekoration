@@ -1,3 +1,4 @@
+/*
 package com.devbobcorn.nekoration.client.gui.screen;
 
 import java.awt.Color;
@@ -8,16 +9,16 @@ import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.glfw.GLFW;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 
 public class PaletteScreen extends Screen {
     public static final ResourceLocation BACKGROUND = new ResourceLocation(Nekoration.MODID, "textures/gui/palette.png");
@@ -46,18 +47,18 @@ public class PaletteScreen extends Screen {
 
     private int huePos = -1;
     private int[] colorPos = { -1, -1 };
-    private Hand hand;
+    private InteractionHand hand;
 
     public boolean renderColorText = false;
 
-    private TranslationTextComponent tipMessage;
+    private TranslatableComponent tipMessage;
 
-    public PaletteScreen(Hand hand, byte active, Color[] oldColors) {
-        super(ITextComponent.nullToEmpty("PALETTE"));
+    public PaletteScreen(InteractionHand hand, byte active, Color[] oldColors) {
+        super(Component.nullToEmpty("PALETTE"));
         this.hand = hand;
         this.activeSlot = active;
         this.colors = oldColors;
-        tipMessage = new TranslationTextComponent("gui.nekoration.message.press_key_color_info", "'E'");
+        tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_color_info", "'E'");
     }
 
     protected void init() {
@@ -105,7 +106,7 @@ public class PaletteScreen extends Screen {
         // Step 0: Fill the back ground...
         fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...
-        minecraft.getTextureManager().bind(BACKGROUND);
+        minecraft.getTextureManager().bindForSetup(BACKGROUND);
 		for (int idx = 0;idx < 6;idx++){
             RenderSystem.color4f(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
             blit(stack, i + 8 + 18 * idx + (idx > 2 ? 34: 0), j + 13, 172, 32, 16, 16); // Tinted Pure White Quad...
@@ -138,14 +139,14 @@ public class PaletteScreen extends Screen {
         stack.translate(j, -i - 167, 0);
         //fillGradient(stack, i, j, i + 128, j + 128, col, black);
         if (renderColorText)
-            this.font.draw(stack, new TranslationTextComponent("gui.nekoration.message.color_info", colors[activeSlot].getRGB(), colors[activeSlot].getRed(), colors[activeSlot].getGreen(), colors[activeSlot].getBlue()), 1.0F, 1.0F, colors[activeSlot].getRGB());
+            this.font.draw(stack, new TranslatableComponent("gui.nekoration.message.color_info", colors[activeSlot].getRGB(), colors[activeSlot].getRed(), colors[activeSlot].getGreen(), colors[activeSlot].getBlue()), 1.0F, 1.0F, colors[activeSlot].getRGB());
         else this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
 
     @SuppressWarnings("deprecation")
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(BACKGROUND); //We've bound this before...
+		this.minecraft.getTextureManager().bindForSetup(BACKGROUND); //We've bound this before...
 		int edgeSpacingX = (this.width - this.imageWidth) / 2;
 		int edgeSpacingY = (this.height - this.imageHeight) / 2;
 		blit(stack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
@@ -242,3 +243,4 @@ public class PaletteScreen extends Screen {
         return false; // returns ture by default... interesting...
     }
 }
+*/

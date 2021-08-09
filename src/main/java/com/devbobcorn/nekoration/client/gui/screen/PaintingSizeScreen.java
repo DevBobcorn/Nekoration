@@ -6,10 +6,10 @@ import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -25,13 +25,13 @@ public class PaintingSizeScreen extends Screen {
 	private int leftPos;
 	private int topPos;
 
-	private Hand hand;
+	private InteractionHand hand;
 
 	private short pickedWidth; // 1-6
 	private short pickedHeight; // 1-6
 
-	public PaintingSizeScreen(Hand hand) {
-		super(ITextComponent.nullToEmpty("PAINTING_SIZE"));
+	public PaintingSizeScreen(InteractionHand hand) {
+		super(Component.nullToEmpty("PAINTING_SIZE"));
 		this.hand = hand;
 	}
 
@@ -46,7 +46,7 @@ public class PaintingSizeScreen extends Screen {
 	public void render(PoseStack stack, int x, int y, float partialTicks) {
 		stack.pushPose();
 		RenderSystem.enableBlend();
-		this.minecraft.getTextureManager().bind(PAINTING_SIZE);
+		this.minecraft.getTextureManager().bindForSetup(PAINTING_SIZE);
 		int i = leftPos, j = topPos;
 		blit(stack, i, j, 0, 0, 124, 146);
 		stack.popPose();

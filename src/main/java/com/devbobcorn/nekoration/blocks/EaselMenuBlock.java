@@ -3,7 +3,6 @@ package com.devbobcorn.nekoration.blocks;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.NekoColors;
 

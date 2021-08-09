@@ -9,9 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.devbobcorn.nekoration.blocks.ModBlocks;
-import com.devbobcorn.nekoration.blocks.containers.ModContainerType;
-import com.devbobcorn.nekoration.blocks.entities.ModTileEntityType;
-import com.devbobcorn.nekoration.common.event.CommonForgeEventSubscriber;
+import com.devbobcorn.nekoration.blocks.containers.ModMenuType;
+import com.devbobcorn.nekoration.blocks.entities.ModBlockEntityType;
 import com.devbobcorn.nekoration.entities.ModEntityType;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuData;
@@ -41,11 +40,8 @@ public class Nekoration {
 		ModBlocks.BLOCKS.register(modEventBus);
 		ModItems.ITEMS.register(modEventBus);
 		ModEntityType.ENTITY_TYPES.register(modEventBus);
-		// TODO
-		//ModContainerType.CONTAINER_TYPES.register(modEventBus);
-		//ModTileEntityType.TILE_ENTITY_TYPES.register(modEventBus);
-
-		modEventBus.register(CommonForgeEventSubscriber.class);
+		ModMenuType.MENU_TYPES.register(modEventBus);
+		ModBlockEntityType.TILE_ENTITY_TYPES.register(modEventBus);
 
 		// Register Configs
 		//modLoadingContext.registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);

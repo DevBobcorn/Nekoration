@@ -2,8 +2,6 @@ package com.devbobcorn.nekoration.network;
 
 import java.util.function.Supplier;
 
-import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -59,6 +57,7 @@ public class S2CUpdateEaselMenuData {
             ClientLevel world = Minecraft.getInstance().level;
             if (world.isLoaded(msg.pos)) {
                 BlockEntity tileEntity = world.getBlockEntity(msg.pos);
+                /*
                 if (tileEntity instanceof EaselMenuBlockEntity) {
                         EaselMenuBlockEntity te = (EaselMenuBlockEntity) tileEntity;
                     for (int i = 0;i < 8;i++){
@@ -71,6 +70,7 @@ public class S2CUpdateEaselMenuData {
                     tileEntity.setChanged();
                     //System.out.println("Item Update Packet Received From Server.");
                 }
+                */
             }
         });
         contextSupplier.get().setPacketHandled(true);

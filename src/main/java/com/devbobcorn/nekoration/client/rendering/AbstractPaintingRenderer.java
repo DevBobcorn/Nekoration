@@ -2,34 +2,35 @@ package com.devbobcorn.nekoration.client.rendering;
 
 import java.io.Closeable;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.math.vector.Matrix3f;
-import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraftforge.client.model.b3d.B3DModel.Vertex;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.entities.PaintingData;
+import com.mojang.blaze3d.platform.NativeImage;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
 
 public abstract class AbstractPaintingRenderer implements Closeable {
-    public abstract void render(MatrixStack stack, Matrix4f pose, Matrix3f normal, IRenderTypeBuffer buffers, PaintingData data, short blocHor, short blocVer, float left, float bottom, int light);
+    public abstract void render(PoseStack stack, Matrix4f pose, Matrix3f normal, MultiBufferSource buffers, PaintingData data, short blocHor, short blocVer, float left, float bottom, int light);
 
     @Override
     public void close() {}
 
     public static class PixelsPaintingRenderer extends AbstractPaintingRenderer {
-        public void render(MatrixStack stack, Matrix4f pose, Matrix3f normal, IRenderTypeBuffer buffers, PaintingData data, short blocHor, short blocVer, float left, float bottom, int light){
+        public void render(PoseStack stack, Matrix4f pose, Matrix3f normal, MultiBufferSource buffers, PaintingData data, short blocHor, short blocVer, float left, float bottom, int light){
             // Use Pixel-by-Pixel Rendering...
             // We don't need textures when rendering the artwork, so we use another RenderType(PAINTING),
 			// Which uses vertices which don't have uv data but need rgb color values...
 			// Get the VertexBuffer for Image Rendering...
-            IVertexBuilder vb = buffers.getBuffer(RenderTypeHelper.paintingPixels());
+            VertexConsumer vb = buffers.getBuffer(RenderTypeHelper.paintingPixels());
             int[] color;
             for (short posi = 0;posi < 16;posi++)
                 for (short posj = 0;posj < 16;posj++) {
@@ -56,9 +57,9 @@ public abstract class AbstractPaintingRenderer implements Closeable {
             this.renderType = RenderTypeHelper.paintingTexture(manager.register("painting", this.texture));
         }
 
-        public void render(MatrixStack stack, Matrix4f pose, Matrix3f normal, IRenderTypeBuffer buffers, PaintingData data, short blocHor, short blocVer, float left, float bottom, int light){
+        public void render(PoseStack stack, Matrix4f pose, Matrix3f normal, MultiBufferSource buffers, PaintingData data, short blocHor, short blocVer, float left, float bottom, int light){
             // a painting from its texture image...
-            IVertexBuilder vb = buffers.getBuffer(renderType);
+            VertexConsumer vb = buffers.getBuffer(renderType);
             
             short blocHorCount = (short)(data.getWidth() / 16);
             short blocVerCount = (short)(data.getHeight() / 16);
@@ -84,11 +85,11 @@ public abstract class AbstractPaintingRenderer implements Closeable {
         }
     }
 
-    private static void vertexPixel(Matrix4f pose, Matrix3f normal, IVertexBuilder vertexBuilder, float x, float y, float z, int nx, int ny, int nz, int light, int r, int g, int b) {
+    private static void vertexPixel(Matrix4f pose, Matrix3f normal, VertexConsumer vertexBuilder, float x, float y, float z, int nx, int ny, int nz, int light, int r, int g, int b) {
 		vertexBuilder.vertex(pose, x, y, z).color(r, g, b, 255).uv2(light).normal(normal, (float)nx, (float)ny, (float)nz).endVertex();
 	}
 
-    private static void vertexImage(Matrix4f pose, Matrix3f normal, IVertexBuilder vertexBuilder, float x, float y, float u, float v, float z, int nx, int ny, int nz, int light) {
+    private static void vertexImage(Matrix4f pose, Matrix3f normal, VertexConsumer vertexBuilder, float x, float y, float u, float v, float z, int nx, int ny, int nz, int light) {
 		vertexBuilder.vertex(pose, x, y, z).color(255, 255, 255, 255).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, (float)nx, (float)ny, (float)nz).endVertex();
 	}
 }

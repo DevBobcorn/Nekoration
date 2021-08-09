@@ -3,37 +3,35 @@ package com.devbobcorn.nekoration.client.rendering.entities;
 import com.devbobcorn.nekoration.client.rendering.AbstractPaintingRenderer;
 import com.devbobcorn.nekoration.client.rendering.PaintingRendererManager;
 import com.devbobcorn.nekoration.entities.PaintingEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.PaintingSpriteUploader;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Matrix3f;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.resources.PaintingTextureManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 	public PaintingRenderer(EntityRendererManager manager) {
 		super(manager);
 	}
 
-	public void render(PaintingEntity entity, float rotation, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffers, int packedLight) {
+	public void render(PaintingEntity entity, float rotation, float partialTicks, PoseStack stack, MultiBufferSource buffers, int packedLight) {
 		stack.pushPose();
 		stack.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotation));
 
 		stack.scale(0.0625F, 0.0625F, 0.0625F);
-		PaintingSpriteUploader paintingspriteuploader = Minecraft.getInstance().getPaintingTextures();
+		PaintingTextureManager paintingspriteuploader = Minecraft.getInstance().getPaintingTextures();
 		//renderPainting(stack, ivertexbuilder, entity, paintingtype.getWidth(), paintingtype.getHeight(), paintingspriteuploader.get(paintingtype), paintingspriteuploader.getBackSprite());
 		renderPainting(stack, buffers, entity, entity.getWidth(), entity.getHeight(), paintingspriteuploader.getBackSprite());
 		stack.popPose();
@@ -46,10 +44,10 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 	}
 
 	@SuppressWarnings("resource")
-	private void renderPainting(MatrixStack stack, IRenderTypeBuffer buffers, PaintingEntity entity, int width, int height, TextureAtlasSprite woodTex) {
-		MatrixStack.Entry matrixstack$entry = stack.last();
-		Matrix4f pose = matrixstack$entry.pose();
-		Matrix3f normal = matrixstack$entry.normal();
+	private void renderPainting(PoseStack stack, MultiBufferSource buffers, PaintingEntity entity, int width, int height, TextureAtlasSprite woodTex) {
+		PoseStack.Pose PoseStack$entry = stack.last();
+		Matrix4f pose = PoseStack$entry.pose();
+		Matrix3f normal = PoseStack$entry.normal();
 		float LEFT = (float) (-width) / 2.0F;
 		float TOP = (float) (-height) / 2.0F;
 
@@ -66,7 +64,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 		for (short blocHor = 0; blocHor < blocHorCount; ++blocHor) { // BlockCount Horizontally...
 			for (short blocVer = 0; blocVer < blocVerCount; ++blocVer) { // BlockCount Vertically...
 				// Get the VertexBuffer for Frame Rendering...
-				IVertexBuilder vb1 = buffers.getBuffer(RenderType.entitySolid(this.getTextureLocation(entity)));
+				VertexConsumer vb1 = buffers.getBuffer(RenderType.entitySolid(this.getTextureLocation(entity)));
 				// Draw a 16 * 16 sized painting section at a time...
 				// This allows us to render different sections with more specific lighting values...
 				float right  = LEFT + (float) ((blocHor + 1) * 16);
@@ -74,21 +72,21 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 				float top    = TOP + (float) ((blocVer + 1) * 16);
 				float bottom = TOP + (float) (blocVer * 16);
 				// Get the accurate Block Position, thus get a better lighting value
-				int blocx = MathHelper.floor(entity.getX());
-				int blocy = MathHelper.floor(entity.getY() + (double) ((top + bottom) / 2.0F / 16.0F));
-				int blocz = MathHelper.floor(entity.getZ());
+				int blocx = Mth.floor(entity.getX());
+				int blocy = Mth.floor(entity.getY() + (double) ((top + bottom) / 2.0F / 16.0F));
+				int blocz = Mth.floor(entity.getZ());
 				Direction direction = entity.getDirection();
 				if (direction == Direction.NORTH)
-					blocx = MathHelper.floor(entity.getX() + (double) ((right + left) / 2.0F / 16.0F));
+					blocx = Mth.floor(entity.getX() + (double) ((right + left) / 2.0F / 16.0F));
 				if (direction == Direction.WEST)
-					blocz = MathHelper.floor(entity.getZ() - (double) ((right + left) / 2.0F / 16.0F));
+					blocz = Mth.floor(entity.getZ() - (double) ((right + left) / 2.0F / 16.0F));
 				if (direction == Direction.SOUTH)
-					blocx = MathHelper.floor(entity.getX() - (double) ((right + left) / 2.0F / 16.0F));
+					blocx = Mth.floor(entity.getX() - (double) ((right + left) / 2.0F / 16.0F));
 				if (direction == Direction.EAST)
-					blocz = MathHelper.floor(entity.getZ() + (double) ((right + left) / 2.0F / 16.0F));
+					blocz = Mth.floor(entity.getZ() + (double) ((right + left) / 2.0F / 16.0F));
 				int light = WorldRenderer.getLightColor(entity.level, new BlockPos(blocx, blocy, blocz));
 				// Pos[Z] // B[ack]
-				vertexFrame(pose, normal, vb1, right, top,    woodU0, woodV0,  0.5F, 0, 0,  1, light); 
+				vertexFrame(pose, normal, vb1, right, top,    woodU0, woodV0,  0.5F, 0, 0,  1, light);
 				vertexFrame(pose, normal, vb1, left,  top,    woodU1, woodV0,  0.5F, 0, 0,  1, light);
 				vertexFrame(pose, normal, vb1, left,  bottom, woodU1, woodV1,  0.5F, 0, 0,  1, light);
 				vertexFrame(pose, normal, vb1, right, bottom, woodU0, woodV1,  0.5F, 0, 0,  1, light);
@@ -138,7 +136,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 
 	}
 
-	private static void vertexFrame(Matrix4f pose, Matrix3f normal, IVertexBuilder vertexBuilder, float x, float y, float u, float v, float z, int nx, int ny, int nz, int light) {
+	private static void vertexFrame(Matrix4f pose, Matrix3f normal, VertexConsumer vertexBuilder, float x, float y, float u, float v, float z, int nx, int ny, int nz, int light) {
 		vertexBuilder.vertex(pose, x, y, z).color(255, 255, 255, 255).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, (float)nx, (float)ny, (float)nz).endVertex();
 	}
 
