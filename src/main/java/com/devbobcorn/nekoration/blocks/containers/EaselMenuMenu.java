@@ -1,74 +1,21 @@
-/*
 package com.devbobcorn.nekoration.blocks.containers;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.PlayerInvWrapper;
+import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.items.wrapper.PlayerInvWrapper;
+
 public class EaselMenuMenu extends AbstractContainerMenu {
-	public final boolean white;
-	public Component[] texts = new Component[8];
-	public DyeColor[] colors = new DyeColor[8];
-	public boolean glow;
-
-	public static EaselMenuMenu createContainerServerSide(int windowID, Inventory playerInventory, EaselMenuBlockEntity te) {
-		return new EaselMenuMenu(windowID, playerInventory, new SimpleContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS), te.getBlockPos(), te.getMesssages(), te.getColor(), te.white, te.getGlowing());
-	}
-
-	public static EaselMenuMenu createContainerClientSide(int windowID, Inventory playerInventory,
-		FriendlyByteBuf extraData) {
-			try {
-				// don't need extraData for this example; if you want you can use it to provide
-				// extra information from the server, that you can use
-				// when creating the client container
-				// eg String detailedDescription = extraData.readString(128);
-				SimpleContainer easelMenuContainer = new SimpleContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
-
-				// on the client side there is no parent TileEntity to communicate with, so we:
-				// 1) use a dummy inventory
-				// 2) use "do nothing" lambda functions for canPlayerAccessInventory and markDirty
-				BlockPos p = extraData.readBlockPos();
-				Component[] t = new Component[8];
-				DyeColor[] c = new DyeColor[8];
-				for (int i = 0;i < 8;i++)
-					t[i] = extraData.readComponent();
-				for (int i = 0;i < 8;i++)
-					c[i] = extraData.readEnum(DyeColor.class);
-				boolean w = extraData.readBoolean();
-				boolean g = extraData.readBoolean();
-				return new EaselMenuMenu(windowID, playerInventory, easelMenuContainer, p, t, c, w, g);
-			} catch (Exception e) {
-				LOGGER.warn("Invalid data in packet buffer", e);
-				SimpleContainer easelMenuContents = new SimpleContainer(EaselMenuBlockEntity.NUMBER_OF_SLOTS);
-
-				return new EaselMenuMenu(windowID, playerInventory, easelMenuContents, BlockPos.ZERO, new Component[8], new DyeColor[8], false, true);
-			}
-	}
-
-	// must assign a slot number to each of the slots used by the GUI.
-	// For this container, we can see both the tile inventory's slots as well as the
-	// player inventory slots and the hotbar.
-	// Each time we add a Slot to the container, it automatically increases the
-	// slotIndex, which means
-	// 0 - 8 = hotbar slots (which will map to the InventoryPlayer slot numbers 0 -
-	// 8)
-	// 9 - 35 = player inventory slots (which map to the InventoryPlayer slot
-	// numbers 9 - 35)
-	// 36 - 44 = TileInventory slots, which map to our TileEntity slot numbers 0 -
-	// 8)
+	public final EaselMenuBlockEntity easel;
 
 	private static final int HOTBAR_SLOT_COUNT = 9;
 	private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
@@ -83,20 +30,13 @@ public class EaselMenuMenu extends AbstractContainerMenu {
 	public static final int TILE_INVENTORY_YPOS = 18; // the ContainerScreenBasic needs to know these so it can tell where to draw the Tiles
 	public static final int PLAYER_INVENTORY_YPOS = 140;
 
-	public BlockPos pos = BlockPos.ZERO;
-
-	private EaselMenuMenu(int windowID, Inventory playerInventory, SimpleContainer menuContainer, BlockPos pos, Component[] texts, DyeColor[] colors, boolean white, boolean glow) {
-		super(ModMenuType.EASEL_MENU_TYPE.get(), windowID);
-		if (ModMenuType.EASEL_MENU_TYPE.get() == null)
-			throw new IllegalStateException("Must initialize Container Type before constructing a Container!");
+	// Create Container(Menu) Server Side
+	public EaselMenuMenu(int windowId, Inventory playerInventory, EaselMenuBlockEntity blockEntity){
+		super(ModMenuType.EASEL_MENU_TYPE.get(), windowId);
+		this.easel = blockEntity;
 
 		PlayerInvWrapper playerInventoryForge = new PlayerInvWrapper(playerInventory); // wrap the IInventory in a Forge IItemHandler.
-		// Not actually necessary - can use Slot(playerInventory) instead of
-		// SlotItemHandler(playerInventoryForge)
-		this.container = menuContainer;
-
-		this.white = white;
-		this.glow = glow;
+		// Not actually necessary - can use Slot(playerInventory) instead of SlotItemHandler(playerInventoryForge)
 
 		final int SLOT_X_SPACING = 18;
 		final int SLOT_Y_SPACING = 18;
@@ -120,56 +60,25 @@ public class EaselMenuMenu extends AbstractContainerMenu {
 			}
 		}
 
-		if (TE_INVENTORY_SLOT_COUNT != menuContainer.getContainerSize()) {
-			LOGGER.warn("Mismatched slot count in ContainerBasic(" + TE_INVENTORY_SLOT_COUNT + ") and TileInventory ("
-					+ menuContainer.getContainerSize() + ")");
-		}
 		final int TILE_INVENTORY_XPOS = 8;
 		// Add the tile inventory container to the gui
 		for (int x = 0; x < TE_INVENTORY_SLOT_COUNT; x++) {
 			int slotNumber = x;
-			addSlot(new Slot(menuContainer, slotNumber, TILE_INVENTORY_XPOS + SLOT_X_SPACING * (x > 3 ? x + 1 : x), TILE_INVENTORY_YPOS));
+			addSlot(new Slot(easel, slotNumber, TILE_INVENTORY_XPOS + SLOT_X_SPACING * (x > 3 ? x + 1 : x), TILE_INVENTORY_YPOS));
             // 0 1 2 3 _ 4 5 6 7, leave an empty space in the middle....
 		}
-		this.pos = pos;
-		this.texts = texts;
-		this.colors = colors;
 	}
 
-	// Vanilla calls this method every tick to make sure the player is still able to
-	// access the inventory, and if not closes the gui
-	// Called on the SERVER side only
+	// Create Container(Menu) Client Side
+	public EaselMenuMenu(int windowId, Inventory playerInventory, FriendlyByteBuf buf) {
+		this(windowId, playerInventory, (EaselMenuBlockEntity) playerInventory.player.level.getBlockEntity(buf.readBlockPos()));
+	}
+
 	@Override
 	public boolean stillValid(Player playerEntity) {
-		// This is typically a check that the player is within 8 blocks of the
-		// container.
-		// Some containers perform it using just the block placement:
-		// return isWithinUsableDistance(this.iWorldPosCallable, playerIn,
-		// Blocks.MYBLOCK); eg see BeaconContainer
-		// where iWorldPosCallable is a lambda that retrieves the blockstate at a
-		// particular world blockpos
-		// for other containers, it defers to the IInventory provided to the Container
-		// (i.e. the TileEntity) which does the same
-		// calculation
-		// return this.furnaceInventory.isUsableByPlayer(playerEntity);
-		// Sometimes it perform an additional check (eg for EnderChests - the player
-		// owns the chest)
-
-		return container.stillValid(playerEntity);
+		return easel.stillValid(playerEntity);
 	}
 
-	// This is where you specify what happens when a player shift clicks a slot in
-	// the gui
-	// (when you shift click a slot in the TileEntity Inventory, it moves it to the
-	// first available position in the hotbar and/or
-	// player inventory. When you you shift-click a hotbar or player inventory item,
-	// it moves it to the first available
-	// position in the TileEntity inventory)
-	// At the very least you must override this and return ItemStack.EMPTY or the
-	// game will crash when the player shift clicks a slot
-	// returns ItemStack.EMPTY if the source slot is empty, or if none of the the
-	// source slot item could be moved
-	// otherwise, returns a copy of the source stack
 	@Override
 	public ItemStack quickMoveStack(Player playerEntity, int sourceSlotIndex) {
 		Slot sourceSlot = slots.get(sourceSlotIndex);
@@ -209,16 +118,10 @@ public class EaselMenuMenu extends AbstractContainerMenu {
 		return copyOfSourceStack;
 	}
 
-	// pass the close container message to the parent inventory (not strictly needed
-	// for this example)
-	// see ContainerChest and TileEntityChest - used to animate the lid when no
-	// players are accessing the chest any more
 	@Override
 	public void removed(Player playerIn) {
 		super.removed(playerIn);
 	}
 
-	private SimpleContainer container;
 	private static final Logger LOGGER = LogManager.getLogger();
 }
-*/

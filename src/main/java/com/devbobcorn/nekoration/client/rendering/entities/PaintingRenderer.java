@@ -1,7 +1,5 @@
 package com.devbobcorn.nekoration.client.rendering.entities;
 
-import com.devbobcorn.nekoration.client.rendering.AbstractPaintingRenderer;
-import com.devbobcorn.nekoration.client.rendering.PaintingRendererManager;
 import com.devbobcorn.nekoration.entities.PaintingEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -37,8 +35,9 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 
 		stack.scale(0.0625F, 0.0625F, 0.0625F);
 		PaintingTextureManager paintingspriteuploader = Minecraft.getInstance().getPaintingTextures();
-		//renderPainting(stack, ivertexbuilder, entity, paintingtype.getWidth(), paintingtype.getHeight(), paintingspriteuploader.get(paintingtype), paintingspriteuploader.getBackSprite());
-		renderPainting(stack, buffers, entity, entity.getWidth(), entity.getHeight(), paintingspriteuploader.getBackSprite());
+		VertexConsumer vb = buffers.getBuffer(RenderType.entitySolid(this.getTextureLocation(entity)));
+		//renderPainting(stack, vb, entity, paintingtype.getWidth(), paintingtype.getHeight(), paintingspriteuploader.get(paintingtype), paintingspriteuploader.getBackSprite());
+		renderPainting(stack, vb, entity, entity.getWidth(), entity.getHeight(), paintingspriteuploader.getBackSprite());
 		stack.popPose();
 		super.render(entity, rotation, partialTicks, stack, buffers, packedLight);
 	}
@@ -48,7 +47,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 		return Minecraft.getInstance().getPaintingTextures().getBackSprite().atlas().location();
 	}
 
-	private void renderPainting(PoseStack stack, MultiBufferSource buffers, PaintingEntity entity, int width, int height, TextureAtlasSprite woodTex) {
+	private void renderPainting(PoseStack stack, VertexConsumer vb, PaintingEntity entity, int width, int height, TextureAtlasSprite woodTex) {
 		PoseStack.Pose PoseStack$entry = stack.last();
 		Matrix4f pose = PoseStack$entry.pose();
 		Matrix3f normal = PoseStack$entry.normal();
@@ -68,7 +67,6 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 		for (short blocHor = 0; blocHor < blocHorCount; ++blocHor) { // BlockCount Horizontally...
 			for (short blocVer = 0; blocVer < blocVerCount; ++blocVer) { // BlockCount Vertically...
 				// Get the VertexBuffer for Frame Rendering...
-				VertexConsumer vb1 = buffers.getBuffer(RenderType.entitySolid(this.getTextureLocation(entity)));
 				// Draw a 16 * 16 sized painting section at a time...
 				// This allows us to render different sections with more specific lighting values...
 				float right  = LEFT + (float) ((blocHor + 1) * 16);
@@ -90,30 +88,30 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 					blocz = Mth.floor(entity.getZ() + (double) ((right + left) / 2.0F / 16.0F));
 				int light = LevelRenderer.getLightColor(entity.level, new BlockPos(blocx, blocy, blocz));
 				// Pos[Z] // B[ack]
-				vertexFrame(pose, normal, vb1, right, top,    woodU0, woodV0,  0.5F, 0, 0,  1, light);
-				vertexFrame(pose, normal, vb1, left,  top,    woodU1, woodV0,  0.5F, 0, 0,  1, light);
-				vertexFrame(pose, normal, vb1, left,  bottom, woodU1, woodV1,  0.5F, 0, 0,  1, light);
-				vertexFrame(pose, normal, vb1, right, bottom, woodU0, woodV1,  0.5F, 0, 0,  1, light);
+				vertexFrame(pose, normal, vb, right, top,    woodU0, woodV0,  0.5F, 0, 0,  1, light);
+				vertexFrame(pose, normal, vb, left,  top,    woodU1, woodV0,  0.5F, 0, 0,  1, light);
+				vertexFrame(pose, normal, vb, left,  bottom, woodU1, woodV1,  0.5F, 0, 0,  1, light);
+				vertexFrame(pose, normal, vb, right, bottom, woodU0, woodV1,  0.5F, 0, 0,  1, light);
 				// Pos[Y] // U[p]
-				vertexFrame(pose, normal, vb1, right, top,    woodU0, woodV0, -0.5F, 0,  1, 0, light);
-				vertexFrame(pose, normal, vb1, left,  top,    woodU1, woodV0, -0.5F, 0,  1, 0, light);
-				vertexFrame(pose, normal, vb1, left,  top,    woodU1, woodV_,  0.5F, 0,  1, 0, light);
-				vertexFrame(pose, normal, vb1, right, top,    woodU0, woodV_,  0.5F, 0,  1, 0, light);
+				vertexFrame(pose, normal, vb, right, top,    woodU0, woodV0, -0.5F, 0,  1, 0, light);
+				vertexFrame(pose, normal, vb, left,  top,    woodU1, woodV0, -0.5F, 0,  1, 0, light);
+				vertexFrame(pose, normal, vb, left,  top,    woodU1, woodV_,  0.5F, 0,  1, 0, light);
+				vertexFrame(pose, normal, vb, right, top,    woodU0, woodV_,  0.5F, 0,  1, 0, light);
 				// Neg[Y] // D[own]
-				vertexFrame(pose, normal, vb1, right, bottom, woodU0, woodV0,  0.5F, 0, -1, 0, light);
-				vertexFrame(pose, normal, vb1, left,  bottom, woodU1, woodV0,  0.5F, 0, -1, 0, light);
-				vertexFrame(pose, normal, vb1, left,  bottom, woodU1, woodV_, -0.5F, 0, -1, 0, light);
-				vertexFrame(pose, normal, vb1, right, bottom, woodU0, woodV_, -0.5F, 0, -1, 0, light);
+				vertexFrame(pose, normal, vb, right, bottom, woodU0, woodV0,  0.5F, 0, -1, 0, light);
+				vertexFrame(pose, normal, vb, left,  bottom, woodU1, woodV0,  0.5F, 0, -1, 0, light);
+				vertexFrame(pose, normal, vb, left,  bottom, woodU1, woodV_, -0.5F, 0, -1, 0, light);
+				vertexFrame(pose, normal, vb, right, bottom, woodU0, woodV_, -0.5F, 0, -1, 0, light);
 				// Neg[X] // L[eft]
-				vertexFrame(pose, normal, vb1, right, top,    woodU_, woodV0,  0.5F, -1, 0, 0, light);
-				vertexFrame(pose, normal, vb1, right, bottom, woodU_, woodV1,  0.5F, -1, 0, 0, light);
-				vertexFrame(pose, normal, vb1, right, bottom, woodU0, woodV1, -0.5F, -1, 0, 0, light);
-				vertexFrame(pose, normal, vb1, right, top,    woodU0, woodV0, -0.5F, -1, 0, 0, light);
+				vertexFrame(pose, normal, vb, right, top,    woodU_, woodV0,  0.5F, -1, 0, 0, light);
+				vertexFrame(pose, normal, vb, right, bottom, woodU_, woodV1,  0.5F, -1, 0, 0, light);
+				vertexFrame(pose, normal, vb, right, bottom, woodU0, woodV1, -0.5F, -1, 0, 0, light);
+				vertexFrame(pose, normal, vb, right, top,    woodU0, woodV0, -0.5F, -1, 0, 0, light);
 				// Pos[X] // R[ight]
-				vertexFrame(pose, normal, vb1, left,  top,    woodU_, woodV0, -0.5F,  1, 0, 0, light);
-				vertexFrame(pose, normal, vb1, left,  bottom, woodU_, woodV1, -0.5F,  1, 0, 0, light);
-				vertexFrame(pose, normal, vb1, left,  bottom, woodU0, woodV1,  0.5F,  1, 0, 0, light);
-				vertexFrame(pose, normal, vb1, left,  top,    woodU0, woodV0,  0.5F,  1, 0, 0, light);
+				vertexFrame(pose, normal, vb, left,  top,    woodU_, woodV0, -0.5F,  1, 0, 0, light);
+				vertexFrame(pose, normal, vb, left,  bottom, woodU_, woodV1, -0.5F,  1, 0, 0, light);
+				vertexFrame(pose, normal, vb, left,  bottom, woodU0, woodV1,  0.5F,  1, 0, 0, light);
+				vertexFrame(pose, normal, vb, left,  top,    woodU0, woodV0,  0.5F,  1, 0, 0, light);
 				// Then render the artwork
 				/*
 				AbstractPaintingRenderer rd = null;

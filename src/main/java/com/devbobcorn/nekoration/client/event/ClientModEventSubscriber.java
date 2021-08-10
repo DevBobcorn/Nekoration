@@ -10,18 +10,21 @@ import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
+import com.devbobcorn.nekoration.blocks.containers.ModMenuType;
 import com.devbobcorn.nekoration.blocks.entities.ModBlockEntityType;
-import com.devbobcorn.nekoration.items.DyeableBlockItem;
-import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
-import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
+import com.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
+import com.devbobcorn.nekoration.client.rendering.blockentities.CustomRenderer;
 import com.devbobcorn.nekoration.client.rendering.blockentities.EaselMenuRenderer;
 import com.devbobcorn.nekoration.client.rendering.entities.PaintingRenderer;
 import com.devbobcorn.nekoration.entities.ModEntityType;
-import com.devbobcorn.nekoration.client.rendering.blockentities.CustomRenderer;
+import com.devbobcorn.nekoration.items.DyeableBlockItem;
+import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
+import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -139,11 +142,9 @@ public final class ClientModEventSubscriber {
 
 		LOGGER.info("Property Overrides Registered.");
 
-		/*
-		ScreenManager.register(ModMenuType.EASEL_MENU_TYPE.get(), EaselMenuScreen::new);
+		MenuScreens.register(ModMenuType.EASEL_MENU_TYPE.get(), EaselMenuScreen::new);
 
 		LOGGER.info("Nekoration Screens Registered.");
-		*/
 	}
 
 	public static void registerPropertyOverrides() {

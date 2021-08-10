@@ -157,7 +157,8 @@ public class PaintingScreen extends Screen {
         // Step 0: Fill the back ground...
         this.fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...
-        this.minecraft.getTextureManager().bindForSetup(BACKGROUND);
+        RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+        RenderSystem.setShaderTexture(0, BACKGROUND);
 		for (int idx = 0;idx < 6;idx++){
             RenderSystem.setShaderColor(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
             this.blit(stack, i + 34 + 18 * idx, j + 13, 16, 224, 16, 16); // Tinted Pure White Quad...

@@ -2,7 +2,10 @@ package com.devbobcorn.nekoration.network;
 
 import java.util.function.Supplier;
 
+import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
+
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -55,28 +58,25 @@ public class C2SUpdateEaselMenuData {
                 ServerLevel world = player.getLevel();
                 if (world.isLoaded(msg.pos)) {
                     BlockEntity tileEntity = world.getBlockEntity(msg.pos);
-                    /*
                     if (tileEntity instanceof EaselMenuBlockEntity) {
                         EaselMenuBlockEntity te = ((EaselMenuBlockEntity) tileEntity);
                         for (int i = 0;i < 8;i++)
                             te.setMessage(i, msg.texts[i]);
-                        te.setColor(msg.colors);
+                        te.setColors(msg.colors);
                         te.setGlowing(msg.glow);
                         world.getChunkSource().blockChanged(msg.pos);
                         tileEntity.setChanged();
                         //System.out.println("TEXT UPDATE Packet Received From Client");
                         
                         ItemStack[] its = new ItemStack[8];
-                        MyContainerMenu cts = te.contents;
                         for (int i = 0;i < 8;i++){
-                            its[i] = cts.getItem(i);
+                            its[i] = te.getItem(i);
                         }
                         // Then update items on Client Side, used for rendering...
                         final S2CUpdateEaselMenuData packet = new S2CUpdateEaselMenuData(msg.pos, its, msg.texts, msg.colors, msg.glow);
                         ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
                         //System.out.println("Item Update Packet Sent From Server");
                     }
-                    */
                 }
             }
         });

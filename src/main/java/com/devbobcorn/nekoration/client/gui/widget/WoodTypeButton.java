@@ -62,10 +62,9 @@ public class WoodTypeButton extends Button
         int textureY = this.toggled ? 32 : 0;
         this.drawRotatedTexture(this.x, this.y, textureX, textureY, width, 28);
 
-        // RenderSystem.enableRescaleNormal();
         ItemRenderer renderer = mc.getItemRenderer();
         renderer.blitOffset = 100.0F;
-        renderer.renderGuiItem(this.stack, x + 8, y + 6);
+        renderer.renderAndDecorateItem(this.stack, x + 8, y + 6);
         renderer.renderGuiItemDecorations(mc.font, this.stack, x + 8, y + 6);
         renderer.blitOffset = 0.0F;
     }
@@ -74,14 +73,15 @@ public class WoodTypeButton extends Button
     {
         float scaleX = 0.00390625F;
         float scaleY = 0.00390625F;
-        Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder buffer = tessellator.getBuilder();
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        BufferBuilder buffer = Tesselator.getInstance().getBuilder();
         buffer.begin(Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
         buffer.vertex(x, y + height, 0.0).uv(((float) (textureX + height) * scaleX), ((float) (textureY) * scaleY)).endVertex();
         buffer.vertex(x + width, y + height, 0.0).uv(((float) (textureX + height) * scaleX), ((float) (textureY + width) * scaleY)).endVertex();
         buffer.vertex(x + width, y, 0.0).uv(((float) (textureX) * scaleX), ((float) (textureY + width) * scaleY)).endVertex();
         buffer.vertex(x, y, 0.0).uv(((float) (textureX) * scaleX), ((float) (textureY) * scaleY)).endVertex();
-        tessellator.end();
+        buffer.end();
+        BufferUploader.end(buffer);
     }
 
     public void updateState()

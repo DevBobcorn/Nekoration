@@ -64,7 +64,7 @@ public class EaselMenuRenderer implements BlockEntityRenderer<EaselMenuBlockEnti
 			sc = 0.015F;
 			stack.scale(sc, -sc, sc);
 
-			DyeColor[] colors = BlockEntity.getColor();
+			DyeColor[] colors = BlockEntity.getColors();
 			
 			if (BlockEntity.getGlowing()) {
 				for (int i = 0;i < 4;i++) {

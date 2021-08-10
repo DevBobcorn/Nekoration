@@ -12,12 +12,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.EmptyModelData;
 
 public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
@@ -36,6 +34,7 @@ public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
 		
 		// and then we rendering models with our TE renderer...
 		if (tileEntity.model <= 0){
+			/*
 			stack.pushPose(); // push the current transformation matrix + normals matrix
 			stack.translate(0.5, 0.0, 0.5); // Change its pivot point before rotation...
 			stack.mulPose(Vector3f.YP.rotationDegrees(tileEntity.dir * 15F));
@@ -46,6 +45,7 @@ public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
 			QuadRenderer.renderCubeUsingQuads(tileEntity, partialTicks, stack, buffers, combinedLight, combinedOverlay);
 
 			stack.popPose(); // restore the original transformation matrix + normals matrix
+			*/
 		} else if (tileEntity.model <= 15) {
 			stack.pushPose();
 
@@ -92,17 +92,5 @@ public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
 	@Override
 	public boolean shouldRenderOffScreen(CustomBlockEntity tileEntity) {
 		return true;
-	}
-
-	@Override
-	public int getViewDistance() {
-		// TODO Auto-generated method stub
-		return BlockEntityRenderer.super.getViewDistance();
-	}
-
-	@Override
-	public boolean shouldRender(CustomBlockEntity p_173568_, Vec3 p_173569_) {
-		// TODO Auto-generated method stub
-		return BlockEntityRenderer.super.shouldRender(p_173568_, p_173569_);
 	}
 }
