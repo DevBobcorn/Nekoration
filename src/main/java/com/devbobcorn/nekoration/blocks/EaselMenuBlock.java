@@ -46,7 +46,7 @@ public class EaselMenuBlock extends DyeableHorizontalBlock implements EntityBloc
 	
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new EaselMenuBlockEntity(pos, state);
+		return new EaselMenuBlockEntity(white, pos, state);
 	}
 
     // Called just after the player places a block.

@@ -17,9 +17,9 @@ stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底
 half_timbers = ["half_timber_p0","half_timber_p1","half_timber_p2","half_timber_p3","half_timber_p4","half_timber_p5","half_timber_p6","half_timber_p7","half_timber_p8","half_timber_p9","half_timber_pillar_p0","half_timber_pillar_p1","half_timber_pillar_p2"]
 half_timbers_us = ["%s Half Timber","Slash %s Half Timber","Backslash %s Half Timber","Bi-Slash %s Half Timber","Bi-Backslash %s Half Timber","Center %s Half Timber","Cross %s Half Timber","Diamond %s Half Timber","Checkered %s Half Timber","Double %s Half Timber","%s Half Timber Pillar","Slash %s Half Timber Pillar","Backslash %s Half Timber Pillar"]
 half_timbers_cn = ["%s半露木","斜纹%s半露木","反斜纹%s半露木","双斜纹%s半露木","双反斜纹%s半露木","中心%s半露木","十字%s半露木","菱形%s半露木","方格%s半露木","双格%s半露木","%s半露木柱","斜纹%s半露木柱","反斜纹%s半露木柱"]
-windows = ["window_arch","window_cross","window_lancet","window_shade","window_top","window_sill"]
-windows_us = ["Arch Window","Plain Window","Lancet Window","Shade Window","Window Top","Window Sill"]
-windows_cn = ["拱形窗","玻璃窗","尖头窗","百叶窗","窗顶","窗台"]
+windows = ["window_arch","window_cross","window_lancet","window_shade","window_top","window_sill","window_frame"]
+windows_us = ["Arch Window","Plain Window","Lancet Window","Shade Window","Window Top","Window Sill","Window Frame"]
+windows_cn = ["拱形窗","玻璃窗","尖头窗","百叶窗","窗顶","窗台","窗框"]
 doors = ["door_1","door_2","door_3","door_tall_1","door_tall_2","door_tall_3"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Brick Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Brick Door"]
 doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
@@ -32,8 +32,8 @@ items_us = ["Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Nea
 items_cn = ["猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","画(%sx%s)[WIP]"]
 
 miscs = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iron","candle_holder_gold","candle_holder_quartz","flower_basket_iron","flower_basket_gold","flower_basket_quartz","phonograph","custom"]
-miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants [WIP]","Hanging Plants [WIP]","Hanging Plants [WIP]","Phonograph [WIP]","Custom Block"]
-miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物[WIP]","吊盆植物[WIP]","吊盆植物[WIP]","留声机[WIP]","自定义方块"]
+miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Phonograph [WIP]","Custom Block"]
+miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","留声机[WIP]","自定义方块"]
 
 tabs = ["stone","wooden","window_n_door","furniture","decor","tool"]
 tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Furnitures","Small Decors","Tools"]

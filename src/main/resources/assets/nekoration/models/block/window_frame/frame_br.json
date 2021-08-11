@@ -1,0 +1,20 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "nekoration:block/window_frame",
+		"particle": "nekoration:block/window_frame"
+	},
+	"elements": [
+		{
+			"from": [12, 12, 12],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 1, 4, 5], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [0, 1, 4, 5], "texture": "#0", "cullface": "east", "tintindex": 0},
+				"west": {"uv": [0, 1, 4, 5], "texture": "#0", "tintindex": 0},
+				"up": {"uv": [0, 9, 4, 13], "texture": "#0", "tintindex": 0},
+				"down": {"uv": [0, 9, 4, 13], "texture": "#0", "tintindex": 0}
+			}
+		}
+	]
+}
