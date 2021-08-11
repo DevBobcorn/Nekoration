@@ -106,7 +106,7 @@ public class VanillaCompat {
 	public static void registerFlammablity(){
 		try{
 			// TODO
-			Method setFlammable = ObfuscationReflectionHelper.findMethod(FireBlock.class, "func_180686_a", Block.class, int.class, int.class);
+			Method setFlammable = ObfuscationReflectionHelper.findMethod(FireBlock.class, "m_53444_", Block.class, int.class, int.class);
 			// Half-Timber Blocks...
 			final FireBlock fire = (FireBlock)Blocks.FIRE;
 			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_P0.get(), 5, 20);
@@ -142,12 +142,7 @@ public class VanillaCompat {
 			setFlammable.invoke(fire, ModBlocks.WINDOW_SHADE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.WINDOW_SILL.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.WINDOW_TOP.get(), 5, 20);
-			setFlammable.invoke(fire, ModBlocks.DOOR_1.get(), 5, 20);
-			setFlammable.invoke(fire, ModBlocks.DOOR_2.get(), 5, 20);
-			setFlammable.invoke(fire, ModBlocks.DOOR_3.get(), 5, 20);
-			setFlammable.invoke(fire, ModBlocks.DOOR_TALL_1.get(), 5, 20);
-			setFlammable.invoke(fire, ModBlocks.DOOR_TALL_2.get(), 5, 20);
-			setFlammable.invoke(fire, ModBlocks.DOOR_TALL_3.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.WINDOW_PLANT.get(), 5, 20);
 			// Awning...
 			setFlammable.invoke(fire, ModBlocks.AWNING_PURE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.AWNING_PURE_SHORT.get(), 5, 20);
@@ -155,6 +150,7 @@ public class VanillaCompat {
 			setFlammable.invoke(fire, ModBlocks.AWNING_STRIPE_SHORT.get(), 5, 20);
 			// Easel Menu...
 			setFlammable.invoke(fire, ModBlocks.EASEL_MENU.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.EASEL_MENU_WHITE.get(), 5, 20);
 			LOGGER.info("Flammability Registered!");
 		} catch (Exception e){
 			LOGGER.info("Failed to Register Flammability");

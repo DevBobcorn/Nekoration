@@ -8,16 +8,17 @@ import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.glfw.GLFW;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 
 public class PaletteScreen extends Screen {
     public static final ResourceLocation BACKGROUND = new ResourceLocation(Nekoration.MODID, "textures/gui/palette.png");
@@ -46,18 +47,18 @@ public class PaletteScreen extends Screen {
 
     private int huePos = -1;
     private int[] colorPos = { -1, -1 };
-    private Hand hand;
+    private InteractionHand hand;
 
     public boolean renderColorText = false;
 
-    private TranslationTextComponent tipMessage;
+    private TranslatableComponent tipMessage;
 
-    public PaletteScreen(Hand hand, byte active, Color[] oldColors) {
-        super(ITextComponent.nullToEmpty("PALETTE"));
+    public PaletteScreen(InteractionHand hand, byte active, Color[] oldColors) {
+        super(Component.nullToEmpty("PALETTE"));
         this.hand = hand;
         this.activeSlot = active;
         this.colors = oldColors;
-        tipMessage = new TranslationTextComponent("gui.nekoration.message.press_key_color_info", "'E'");
+        tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_color_info", "'E'");
     }
 
     protected void init() {
@@ -96,7 +97,6 @@ public class PaletteScreen extends Screen {
         return super.keyPressed(keyCode, scanCode, modifier);
     }
 
-    @SuppressWarnings("deprecation")
     public void render(PoseStack stack, int x, int y, float partialTicks) {
         int i = this.leftPos;
         int j = this.topPos;
@@ -105,9 +105,11 @@ public class PaletteScreen extends Screen {
         // Step 0: Fill the back ground...
         fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...
-        minecraft.getTextureManager().bind(BACKGROUND);
+        RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+        RenderSystem.setShaderTexture(0, BACKGROUND);
+        
 		for (int idx = 0;idx < 6;idx++){
-            RenderSystem.color4f(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
+            RenderSystem.setShaderColor(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
             blit(stack, i + 8 + 18 * idx + (idx > 2 ? 34: 0), j + 13, 172, 32, 16, 16); // Tinted Pure White Quad...
             if (idx == activeSlot){
                 blit(stack, i + 70, j + 13, 172, 32, 16, 16);
@@ -116,10 +118,10 @@ public class PaletteScreen extends Screen {
         // Step 2: Render the back ground...
         renderBg(stack, partialTicks, x, y);
         // Step 3: Render Active Slot Indicator...
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         blit(stack, i + 8 + 18 * activeSlot + (activeSlot > 2 ? 34: 0), j + 13, 172, 16, 16, 16); // Slot Indicator...
         // Step 4: Render the color map...
-        RenderSystem.glMultiTexCoord2f(33986, 240.0F, 240.0F);
+        // RenderSystem.glMultiTexCoord2f(33986, 240.0F, 240.0F); TODO: What's this
         //int col = (255 << 24) + (255 << 16) + (0 << 8) + 0; // [RED] a, r, g, b...
         stack.pushPose();
         stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
@@ -138,14 +140,12 @@ public class PaletteScreen extends Screen {
         stack.translate(j, -i - 167, 0);
         //fillGradient(stack, i, j, i + 128, j + 128, col, black);
         if (renderColorText)
-            this.font.draw(stack, new TranslationTextComponent("gui.nekoration.message.color_info", colors[activeSlot].getRGB(), colors[activeSlot].getRed(), colors[activeSlot].getGreen(), colors[activeSlot].getBlue()), 1.0F, 1.0F, colors[activeSlot].getRGB());
+            this.font.draw(stack, new TranslatableComponent("gui.nekoration.message.color_info", colors[activeSlot].getRGB(), colors[activeSlot].getRed(), colors[activeSlot].getGreen(), colors[activeSlot].getBlue()), 1.0F, 1.0F, colors[activeSlot].getRGB());
         else this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
 
-    @SuppressWarnings("deprecation")
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(BACKGROUND); //We've bound this before...
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		int edgeSpacingX = (this.width - this.imageWidth) / 2;
 		int edgeSpacingY = (this.height - this.imageHeight) / 2;
 		blit(stack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);

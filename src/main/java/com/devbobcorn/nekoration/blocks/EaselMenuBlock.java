@@ -3,35 +3,34 @@ package com.devbobcorn.nekoration.blocks;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
-import com.devbobcorn.nekoration.NekoColors;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class EaselMenuBlock extends DyeableHorizontalBlock {
+public class EaselMenuBlock extends DyeableHorizontalBlock implements EntityBlock {
 	private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
 	public final boolean white;
 
@@ -45,19 +44,9 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
         return SHAPE;
     }
 	
-	/*
-    @Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-
-	// Called when the block is placed or loaded client side to get the tile entity
-	// for the block
-	// Should return a new instance of the tile entity for the block
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-		EaselMenuBlockEntity te = new EaselMenuBlockEntity(white);
-		return te;
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new EaselMenuBlockEntity(white, pos, state);
 	}
 
     // Called just after the player places a block.
@@ -70,10 +59,10 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 			EaselMenuBlockEntity te = (EaselMenuBlockEntity) tileEntity;
 			if (white){
 				final DyeColor[] colors = { DyeColor.PURPLE, DyeColor.PINK, DyeColor.ORANGE, DyeColor.YELLOW, DyeColor.LIME, DyeColor.LIGHT_BLUE, DyeColor.CYAN, DyeColor.BLUE };
-				te.setColor(colors);
+				te.setColors(colors);
 			} else {
 				final DyeColor[] colors = { DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE, DyeColor.WHITE };
-				te.setColor(colors);
+				te.setColors(colors);
 			}
             return;
 		}
@@ -83,25 +72,11 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player,
 			InteractionHand hand, BlockHitResult rayTraceResult) {
-		if (world.isClientSide())
-			return InteractionResult.SUCCESS; // on client side, don't do anything
-		INamedContainerProvider namedContainerProvider = this.getMenuProvider(state, world, pos);
-		if (namedContainerProvider != null) {
-			if (!(player instanceof ServerPlayer))
-				return InteractionResult.FAIL; // should always be true, but just in case...
-			ServerPlayer serverPlayerEntity = (ServerPlayer) player;
-			NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer) -> {
-				// Prepare Data for EaselMenuContainer: createContainerClientSide(), which will then be used to initialize the screen with old data(old texts and colors)
-				EaselMenuBlockEntity te = (EaselMenuBlockEntity) world.getBlockEntity(pos);
-				packetBuffer.writeBlockPos(pos);
-				for (int i = 0;i < 8;i++)
-					packetBuffer.writeComponent(te.getMessage(i));
-				for (int i = 0;i < 8;i++)
-					packetBuffer.writeEnum(te.getColor()[i]);
-				packetBuffer.writeBoolean(white);
-				packetBuffer.writeBoolean(te.getGlowing());
-			});
-		}
+			if(!world.isClientSide()) {
+				if(world.getBlockEntity(pos) instanceof EaselMenuBlockEntity blockEntity) {
+					NetworkHooks.openGui((ServerPlayer) player, blockEntity, pos);
+				}
+			}
 		return InteractionResult.SUCCESS;
 	}
 
@@ -110,22 +85,19 @@ public class EaselMenuBlock extends DyeableHorizontalBlock {
 	// Code is copied directly from vanilla eg ChestBlock, CampfireBlock
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			BlockEntity tileentity = world.getBlockEntity(pos);
-			if (tileentity instanceof EaselMenuBlockEntity) {
-				EaselMenuBlockEntity tileEntityInventoryBasic = (EaselMenuBlockEntity) tileentity;
-				tileEntityInventoryBasic.dropAllContents(world, pos);
-			}
-			world.removeBlockEntity(pos);
+            if(world.getBlockEntity(pos) instanceof Container container)
+            {
+                Containers.dropContents(world, pos, container);
+                world.updateNeighbourForOutputSignal(pos, this);
+            }
 		}
 	}
 
 	@Nullable
-	public INamedContainerProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-	   BlockEntity tileentity = world.getBlockEntity(pos);
-	   return tileentity instanceof INamedContainerProvider ? (INamedContainerProvider)tileentity : null;
+	public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
+	   BlockEntity blockEntity = world.getBlockEntity(pos);
+	   return blockEntity instanceof MenuProvider ? (MenuProvider)blockEntity : null;
 	}
-
-	*/
 	
 	@Nonnull
     @Override

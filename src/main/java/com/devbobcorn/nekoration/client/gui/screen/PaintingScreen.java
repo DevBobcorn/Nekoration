@@ -12,11 +12,13 @@ import com.devbobcorn.nekoration.network.C2SUpdatePaintingData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -147,7 +149,6 @@ public class PaintingScreen extends Screen {
 
     private String debugText = "A nice line of debug text, isn't it?";
 
-    @SuppressWarnings("deprecation")
     public void render(PoseStack stack, int x, int y, float partialTicks) {
         int i = this.leftPos;
         int j = this.topPos;
@@ -156,9 +157,10 @@ public class PaintingScreen extends Screen {
         // Step 0: Fill the back ground...
         this.fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...
-        this.minecraft.getTextureManager().bindForSetup(BACKGROUND);
+        RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+        RenderSystem.setShaderTexture(0, BACKGROUND);
 		for (int idx = 0;idx < 6;idx++){
-            RenderSystem.color4f(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
+            RenderSystem.setShaderColor(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
             this.blit(stack, i + 34 + 18 * idx, j + 13, 16, 224, 16, 16); // Tinted Pure White Quad...
             if (idx == activeSlot){
                 this.blit(stack, i + 8, j + 13, 16, 224, 16, 16);
@@ -174,18 +176,18 @@ public class PaintingScreen extends Screen {
                     if (ver + (posj + 1) * pixsize < 0 || ver + posj * pixsize > PAINTING_HEIGHT)
                         continue;
                     color = NekoColors.getRGBColor(paintingData.getCompositeAt(posi, posj));
-                    RenderSystem.color4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
+                    RenderSystem.setShaderColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
                     this.blit(stack, i + PAINTING_LEFT + (int)hor + posi * pixsize, j + PAINTING_TOP + (int)ver + posj * pixsize, 16, 224, pixsize, pixsize); // Tinted Pure White Quad...
                 }
             }
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         } catch (Exception e){
 
         }
         // Step 3: Render the back ground...
         this.renderBg(stack, partialTicks, x, y);
         // Step 4: Render Active Slot Indicator...
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         this.blit(stack, i + 34 + 18 * activeSlot, j + 13, 16, 208, 16, 16); // Slot Indicator...
         // Step 5: Render Opacity Bar...
         this.fillGradient(stack, i + OPACITY_LEFT, j + OPACITY_TOP, i + OPACITY_LEFT + OPACITY_WIDTH, j + OPACITY_TOP + OPACITY_HEIGHT, colors[activeSlot].getRGB(), colors[activeSlot].getRGB() & 0xffffff);
@@ -203,10 +205,10 @@ public class PaintingScreen extends Screen {
         else this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
 
-    @SuppressWarnings("deprecation")
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(BACKGROUND); //We've bound this before...
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+        RenderSystem.setShaderTexture(0, BACKGROUND);
 		this.blit(stack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
 	}
 

@@ -1,12 +1,13 @@
 package com.devbobcorn.nekoration.client.gui.widget;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -20,7 +21,7 @@ public class IconButton extends Button
     private int iconU;
     private int iconV;
 
-    public IconButton(int x, int y, ITextComponent message, IPressable pressable, ResourceLocation iconResource, int iconU, int iconV)
+    public IconButton(int x, int y, Component message, OnPress pressable, ResourceLocation iconResource, int iconU, int iconV)
     {
         super(x, y, 20, 20, message, pressable);
         this.iconResource = iconResource;
@@ -36,21 +37,22 @@ public class IconButton extends Button
     }
 
     @Override
-    public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
+    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
     {
-        Minecraft.getInstance().getTextureManager().bind(WIDGETS_LOCATION);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+        RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
+
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int offset = this.getYImage(this.isHovered());
         this.blit(matrixStack, this.x, this.y, 0, 46 + offset * 20, this.width / 2, this.height);
         this.blit(matrixStack, this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + offset * 20, this.width / 2, this.height);
-        if(!this.active)
-        {
-            RenderSystem.color4f(0.5F, 0.5F, 0.5F, 1.0F);
+        if(!this.active) {
+            RenderSystem.setShaderColor(0.5F, 0.5F, 0.5F, 1.0F);
         }
-        Minecraft.getInstance().getTextureManager().bind(this.iconResource);
+        RenderSystem.setShaderTexture(0, this.iconResource);
         this.blit(matrixStack, this.x + 2, this.y + 2, this.iconU, this.iconV, 16, 16);
     }
 }

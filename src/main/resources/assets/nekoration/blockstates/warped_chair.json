@@ -1,0 +1,20 @@
+{
+  "ambientocclusion": false,
+  "variants": {
+    "facing=east": {
+      "model": "nekoration:block/furniture/warped_chair",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "nekoration:block/furniture/warped_chair"
+    },
+    "facing=south": {
+      "model": "nekoration:block/furniture/warped_chair",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nekoration:block/furniture/warped_chair",
+      "y": 270
+    }
+  }
+}

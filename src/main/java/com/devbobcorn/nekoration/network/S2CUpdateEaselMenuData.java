@@ -65,7 +65,7 @@ public class S2CUpdateEaselMenuData {
                         te.renderItems[i] = msg.items[i];
                         te.setMessage(i, msg.texts[i]);
                     }
-                    te.setColor(msg.colors);
+                    te.setColors(msg.colors);
                     te.setGlowing(msg.glow);
                     //world.getChunkSource().blockChanged(msg.pos);
                     tileEntity.setChanged();

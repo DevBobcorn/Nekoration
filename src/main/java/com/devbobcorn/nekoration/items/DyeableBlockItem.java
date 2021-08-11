@@ -57,8 +57,7 @@ public class DyeableBlockItem extends BlockItem {
         color.putIntoNBT(compoundNBT, COLOR);
 	}
 
-	public static float getColorPropertyOverride(ItemStack itemStack, @Nullable Level world,
-		@Nullable LivingEntity livingEntity) {
+	public static float getColorPropertyOverride(ItemStack itemStack, @Nullable Level world, @Nullable LivingEntity livingEntity, int what) {
 		EnumNekoColor color = DyeableBlockItem.getColor(itemStack);
 		return color.getPropertyOverrideValue();
 	}

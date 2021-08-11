@@ -16,16 +16,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.inventory.CreativeScreen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -60,7 +60,7 @@ public class CreativeInventoryEvents
     @SuppressWarnings({"resource"})
     public void onScreenInit(GuiScreenEvent.InitGuiEvent.Post event)
     {
-        if(event.getGui() instanceof CreativeScreen)
+        if(event.getGui() instanceof CreativeModeInventoryScreen)
         {
             //LOGGER.info("Creative Screen Inited");
             if(this.filters == null)
@@ -69,35 +69,35 @@ public class CreativeInventoryEvents
             }
 
             this.viewingFurnitureTab = false;
-            this.guiCenterX = ((CreativeScreen) event.getGui()).getGuiLeft();
-            this.guiCenterY = ((CreativeScreen) event.getGui()).getGuiTop();
+            this.guiCenterX = ((CreativeModeInventoryScreen) event.getGui()).getGuiLeft();
+            this.guiCenterY = ((CreativeModeInventoryScreen) event.getGui()).getGuiTop();
             this.buttons = new ArrayList<>();
 
-            event.addWidget(this.btnScrollUp = new IconButton(this.guiCenterX - 22, this.guiCenterY - 12, new TranslationTextComponent("gui.nekoration.button.scroll_up"), button -> {
+            event.addWidget(this.btnScrollUp = new IconButton(this.guiCenterX - 22, this.guiCenterY - 12, new TranslatableComponent("gui.nekoration.button.scroll_up"), button -> {
                 if(startIndex > 0) startIndex--;
                 this.updateTagButtons();
             }, ICONS, 64, 0));
 
-            event.addWidget(this.btnScrollDown = new IconButton(this.guiCenterX - 22, this.guiCenterY + 127, new TranslationTextComponent("gui.nekoration.button.scroll_down"), button -> {
+            event.addWidget(this.btnScrollDown = new IconButton(this.guiCenterX - 22, this.guiCenterY + 127, new TranslatableComponent("gui.nekoration.button.scroll_down"), button -> {
                 if(startIndex <= filters.size() - 4 - 1) startIndex++;
                 this.updateTagButtons();
             }, ICONS, 80, 0));
 
-            event.addWidget(this.btnEnableAll = new IconButton(this.guiCenterX + 32, this.guiCenterY - 50, new TranslationTextComponent("gui.nekoration.button.enable_all"), button -> {
+            event.addWidget(this.btnEnableAll = new IconButton(this.guiCenterX + 32, this.guiCenterY - 50, new TranslatableComponent("gui.nekoration.button.enable_all"), button -> {
                 this.filters.forEach(filters -> filters.setEnabled(true));
                 this.buttons.forEach(WoodTypeButton::updateState);
                 Screen screen = Minecraft.getInstance().screen;
-                if(screen instanceof CreativeScreen) {
-                    this.updateItems((CreativeScreen) screen);
+                if(screen instanceof CreativeModeInventoryScreen) {
+                    this.updateItems((CreativeModeInventoryScreen) screen);
                 }
             }, ICONS, 96, 0));
 
-            event.addWidget(this.btnDisableAll = new IconButton(this.guiCenterX + 144, this.guiCenterY - 50, new TranslationTextComponent("gui.nekoration.button.disable_all"), button -> {
+            event.addWidget(this.btnDisableAll = new IconButton(this.guiCenterX + 144, this.guiCenterY - 50, new TranslatableComponent("gui.nekoration.button.disable_all"), button -> {
                 this.filters.forEach(filters -> filters.setEnabled(false));
                 this.buttons.forEach(WoodTypeButton::updateState);
                 Screen screen = Minecraft.getInstance().screen;
-                if(screen instanceof CreativeScreen) {
-                    this.updateItems((CreativeScreen) screen);
+                if(screen instanceof CreativeModeInventoryScreen) {
+                    this.updateItems((CreativeModeInventoryScreen) screen);
                 }
             }, ICONS, 112, 0));
 
@@ -108,7 +108,7 @@ public class CreativeInventoryEvents
 
             this.updateTagButtons();
 
-            CreativeScreen screen = (CreativeScreen) event.getGui();
+            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getGui();
             if(screen.getSelectedTab() == ModItemTabs.WOODEN_GROUP.getId())
             {
                 this.btnScrollUp.visible = true;
@@ -128,7 +128,7 @@ public class CreativeInventoryEvents
         if(event.getButton() != GLFW.GLFW_MOUSE_BUTTON_LEFT)
             return;
 
-        if(event.getGui() instanceof CreativeScreen)
+        if(event.getGui() instanceof CreativeModeInventoryScreen)
         {
             for(Button button : this.buttons)
             {
@@ -146,9 +146,9 @@ public class CreativeInventoryEvents
     @SubscribeEvent
     public void onScreenDrawPre(GuiScreenEvent.DrawScreenEvent.Pre event)
     {
-        if(event.getGui() instanceof CreativeScreen)
+        if(event.getGui() instanceof CreativeModeInventoryScreen)
         {
-            CreativeScreen screen = (CreativeScreen) event.getGui();
+            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getGui();
             if(screen.getSelectedTab() == ModItemTabs.WOODEN_GROUP.getId())
             {
                 if(!this.viewingFurnitureTab)
@@ -167,9 +167,9 @@ public class CreativeInventoryEvents
     @SubscribeEvent
     public void onScreenDrawPost(GuiScreenEvent.DrawScreenEvent.Post event)
     {
-        if(event.getGui() instanceof CreativeScreen)
+        if(event.getGui() instanceof CreativeModeInventoryScreen)
         {
-            CreativeScreen screen = (CreativeScreen) event.getGui();
+            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getGui();
             this.guiCenterX = screen.getGuiLeft();
             this.guiCenterY = screen.getGuiTop();
 
@@ -220,12 +220,12 @@ public class CreativeInventoryEvents
     @SuppressWarnings({"resource"})
     private void updateTagButtons()
     {
-        final Button.IPressable pressable = button ->
+        final Button.OnPress pressable = button ->
         {
             Screen screen = Minecraft.getInstance().screen;
-            if(screen instanceof CreativeScreen)
+            if(screen instanceof CreativeModeInventoryScreen)
             {
-                this.updateItems((CreativeScreen) screen);
+                this.updateItems((CreativeModeInventoryScreen) screen);
             }
         };
         this.buttons.clear();
@@ -238,9 +238,9 @@ public class CreativeInventoryEvents
         this.btnScrollDown.active = startIndex <= this.filters.size() - 4 - 1;
     }
 
-    private void updateItems(CreativeScreen screen)
+    private void updateItems(CreativeModeInventoryScreen screen)
     {
-        CreativeScreen.CreativeContainer container = screen.getMenu();
+        CreativeModeInventoryScreen.ItemPickerMenu container = screen.getMenu();
 
         NonNullList<ItemStack> newItems = NonNullList.create();
 
@@ -284,14 +284,14 @@ public class CreativeInventoryEvents
     public static class WoodFilter
     {
         private final EnumWoodenColor wood;
-        private final TranslationTextComponent name;
+        private final TranslatableComponent name;
         private final ItemStack icon;
         private boolean enabled = true;
 
         public WoodFilter(EnumWoodenColor type, ItemStack icon)
         {
             this.wood = type;
-            this.name = new TranslationTextComponent(String.format("color.wooden.%s", type.getSerializedName().replace("/", ".")));
+            this.name = new TranslatableComponent(String.format("color.wooden.%s", type.getSerializedName().replace("/", ".")));
             this.icon = icon;
         }
 
@@ -305,7 +305,7 @@ public class CreativeInventoryEvents
             return this.icon;
         }
 
-        public TranslationTextComponent getName()
+        public TranslatableComponent getName()
         {
             return this.name;
         }

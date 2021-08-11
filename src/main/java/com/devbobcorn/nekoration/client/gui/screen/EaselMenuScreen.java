@@ -1,26 +1,31 @@
 package com.devbobcorn.nekoration.client.gui.screen;
 
+import java.util.Objects;
+
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
-import com.devbobcorn.nekoration.blocks.containers.EaselMenuContainer;
+import com.devbobcorn.nekoration.blocks.containers.EaselMenuMenu;
 import com.devbobcorn.nekoration.client.gui.widget.IconButton;
 import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 
 import org.lwjgl.glfw.GLFW;
 
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.DyeColor;
 
-import java.awt.*;
-import java.util.Objects;
-
-public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuContainer> {
-	private TextFieldWidget[] textInputs = new TextFieldWidget[8];
+public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
+	private EditBox[] textInputs = new EditBox[8];
 
 	private IconButton glowButton;
 
@@ -34,13 +39,13 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuContainer>
 	private TranslatableComponent tipMessage1;
 	private TranslatableComponent tipMessage2;
 
-	public EaselMenuScreen(EaselMenuContainer container, PlayerInventory playerInventory, Component title) {
+	public EaselMenuScreen(EaselMenuMenu container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
 		// Set the width and height of the gui. Should match the size of the texture!
 		imageWidth = 176;
 		imageHeight = 222;
 		for (int i = 0;i < COLOR_NUM;i++){
-			int color = DyeColor.byId(i).getColorValue();
+			int color = DyeColor.byId(i).getTextColor();
 			COLOR_SET[i][0] = NekoColors.getRedf(color);
 			COLOR_SET[i][1] = NekoColors.getGreenf(color);
 			COLOR_SET[i][2] = NekoColors.getBluef(color);
@@ -59,40 +64,40 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuContainer>
 		final int extraOffsetX = 14;
 		final int extraOffsetY = 10;
 		for (int i = 0;i < 8;i++) {
-			this.textInputs[i] = new TextFieldWidget(this.font, this.leftPos + extraOffsetX + (i < 4 ? 8 : 98), this.topPos + extraOffsetY + 36 + (i % 4) * 18, 70, 18, new TranslatableComponent("gui.nekoration.color"));
+			this.textInputs[i] = new EditBox(this.font, this.leftPos + extraOffsetX + (i < 4 ? 8 : 98), this.topPos + extraOffsetY + 36 + (i % 4) * 18, 70, 18, new TranslatableComponent("gui.nekoration.color"));
 			this.textInputs[i].setMaxLength(8);
 			final int j = i;
 			this.textInputs[j].setResponder(input -> {
-				this.menu.texts[j] = ITextComponent.nullToEmpty(input);
+				this.menu.easel.setMessage(j, Component.nullToEmpty(input));
 			});
 			this.textInputs[i].setVisible(true);
-			this.textInputs[i].setTextColor(this.menu.colors[i].getColorValue());
-			this.textInputs[i].setTextColorUneditable(DyeColor.LIGHT_GRAY.getColorValue());
+			this.textInputs[i].setTextColor(this.menu.easel.getColor(i).getTextColor());
+			this.textInputs[i].setTextColorUneditable(DyeColor.LIGHT_GRAY.getTextColor());
 			this.textInputs[i].setBordered(false);
-			this.textInputs[i].setValue(this.menu.texts[i].getContents());
-			this.children.add(this.textInputs[i]);
+			this.textInputs[i].setValue(this.menu.easel.getMessage(i).getContents());
+			this.addWidget(this.textInputs[i]);
 		}
 		final TranslatableComponent enableGlow = new TranslatableComponent("gui.nekoration.button.enable_glow");
 		final TranslatableComponent disableGlow = new TranslatableComponent("gui.nekoration.button.disable_glow");
 
-		glowButton = new IconButton(leftPos + imageWidth + 2, topPos + 4, menu.glow ? disableGlow : enableGlow, button -> {
-			menu.glow = !menu.glow;
-			button.setMessage(menu.glow ? disableGlow : enableGlow);
-			((IconButton)button).setIcon(ICONS, menu.glow ? 0 : 16, 0);
-		}, ICONS, menu.glow ? 0 : 16, 0);
-		this.children.add(glowButton);
+		glowButton = new IconButton(leftPos + imageWidth + 2, topPos + 4, menu.easel.getGlowing() ? disableGlow : enableGlow, button -> {
+			boolean glow = menu.easel.toggleGlowing();
+			button.setMessage(glow ? disableGlow : enableGlow);
+			((IconButton)button).setIcon(ICONS, glow ? 0 : 16, 0);
+		}, ICONS, menu.easel.getGlowing() ? 0 : 16, 0);
+		this.addWidget(glowButton);
 		this.setFocused(this.textInputs[0]);
 	}
 
 	@Override
-	public void setFocused(IGuiEventListener widgeti){
+	public void setFocused(GuiEventListener widgeti){
 		super.setFocused(widgeti);
-		if (widgeti instanceof TextFieldWidget){
-			TextFieldWidget widget = (TextFieldWidget) getFocused();
+		if (widgeti instanceof EditBox){
+			EditBox widget = (EditBox) getFocused();
 			for (int i = 0;i < textInputs.length;i++){
 				if (textInputs[i] == widget){
 					editingText = i;
-					selectedColor = menu.colors[i].getId();
+					selectedColor = menu.easel.getColor(i).getId();
 				} else if (textInputs[i].isFocused()) // Avoid Faulty Multi-Focus...
 					textInputs[i].setFocus(false);
 			}
@@ -100,8 +105,7 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuContainer>
 	}
 
 	@Override
-	public void tick(){
-		super.tick();
+	public void containerTick(){
 		for (int i = 0;i < 8;i++){
 			textInputs[i].tick();
 		}
@@ -111,13 +115,7 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuContainer>
     public void onClose() {
 		try {
 			//Send a packet to the Server tu update data...
-			// DyeColor[] cl = { DyeColor.PURPLE, DyeColor.PINK, DyeColor.ORANGE, DyeColor.YELLOW, DyeColor.LIME, DyeColor.LIGHT_BLUE, DyeColor.CYAN, DyeColor.BLUE };
-			ITextComponent[] tx = new ITextComponent[8];
-			for (int i = 0;i < 8;i++)
-				//tx[i] = ITextComponent.nullToEmpty(textInputs[i].getValue());
-				tx[i] = menu.texts[i];
-
-			final C2SUpdateEaselMenuData packet = new C2SUpdateEaselMenuData(this.menu.pos, tx, this.menu.colors, this.menu.glow);
+			final C2SUpdateEaselMenuData packet = new C2SUpdateEaselMenuData(menu.easel.getBlockPos(), menu.easel.getMessages(), menu.easel.getColors(), menu.easel.getGlowing());
 			ModPacketHandler.CHANNEL.sendToServer(packet);
 			//System.out.println("Packet Sent");
 		} catch (Exception e){
@@ -156,8 +154,8 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuContainer>
 				if (i == selectedColor)
 					continue;
 				if (isOn(x + 16, y - 8 - i * 14, 12, 12)){
-					menu.colors[editingText] = DyeColor.byId(i);
-					textInputs[editingText].setTextColor(DyeColor.byId(i).getColorValue());
+					menu.easel.setColor(editingText, DyeColor.byId(i));
+					textInputs[editingText].setTextColor(DyeColor.byId(i).getTextColor());
 					selectedColor = i;
 					setFocused(textInputs[editingText]);
 					textInputs[editingText].setFocus(true);
@@ -173,17 +171,17 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuContainer>
     }
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(menu.white ? WHITE_BACKGROUND : BACKGROUND); // this.minecraft.getTextureManager()
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+        RenderSystem.setShaderTexture(0, menu.easel.white ? WHITE_BACKGROUND : BACKGROUND);
 		this.renderBackground(stack);
 		if (showColorPicker){
 			for (int i = 0;i < COLOR_NUM;i++) {
-				RenderSystem.color4f(COLOR_SET[i][0], COLOR_SET[i][1], COLOR_SET[i][2], 1.0F);
+				RenderSystem.setShaderColor(COLOR_SET[i][0], COLOR_SET[i][1], COLOR_SET[i][2], 1.0F);
 				this.blit(stack, leftPos - 16 - (i == selectedColor ? 4 : 0), topPos + 8 + i * 14, 0, 240, 12, 12);
 			}
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		}
 		super.render(stack, mouseX, mouseY, partialTicks);
 		for (int i = 0;i < 8;i++)
@@ -199,19 +197,14 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuContainer>
 		this.font.draw(stack, showColorPicker ? tipMessage2 : tipMessage1, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
 	}
 
-	/**
-	 * Draw the foreground layer for the GuiContainer (everything in front of the
-	 * items) Taken directly from ContainerScreen
-	 */
+	// Draw the foreground layer for the GuiContainer (everything in front of the
+	// items) Taken directly from ContainerScreen
 	@Override
 	protected void renderLabels(PoseStack stack, int mouseX, int mouseY) {
-		final float LABEL_XPOS_1 = 6;
+		final float LABEL_XPOS = 6;
 		final float FONT_Y_SPACING = 10;
-		final float CHEST_LABEL_YPOS = EaselMenuContainer.TILE_INVENTORY_YPOS - FONT_Y_SPACING;
-		this.font.draw(stack, this.title, LABEL_XPOS_1, CHEST_LABEL_YPOS, Color.darkGray.getRGB()); // this.font.drawString;
-
-		final float LABEL_XPOS_2 = 96;
-		this.font.draw(stack, this.menu.pos.getX() + " " + this.menu.pos.getY() + " " + this.menu.pos.getZ(), LABEL_XPOS_2, CHEST_LABEL_YPOS, Color.darkGray.getRGB()); // this.font.drawString;
+		final float CHEST_LABEL_YPOS = EaselMenuMenu.TILE_INVENTORY_YPOS - FONT_Y_SPACING;
+		this.font.draw(stack, this.title, LABEL_XPOS, CHEST_LABEL_YPOS, DyeColor.GRAY.getTextColor());
 	}
 
 	@Override

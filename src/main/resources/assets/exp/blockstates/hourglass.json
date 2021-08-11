@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "use_wavefront_obj_model=false": { "model": "block/hopper" },
-    "use_wavefront_obj_model=true": { "model": "exp:block/gem_wavefront" }
-  }
-}
