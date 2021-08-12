@@ -101,6 +101,7 @@ public final class ClientModEventSubscriber {
 
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PHONOGRAPH.get(), transparentRenderType);
 
+		// Not actually necessary for some models, just to keep them unified
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PUMPKIN_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PUMPKIN_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.OAK_TABLE.get(), transparentRenderType);
@@ -113,6 +114,12 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BIRCH_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DARK_OAK_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DARK_OAK_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPRUCE_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPRUCE_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRIMSON_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRIMSON_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_TABLE.get(), transparentRenderType);
 
 		LOGGER.info("Block Render Types Registered.");
 

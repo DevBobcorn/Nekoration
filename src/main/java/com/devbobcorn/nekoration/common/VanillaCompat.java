@@ -105,7 +105,6 @@ public class VanillaCompat {
 
 	public static void registerFlammablity(){
 		try{
-			// TODO
 			Method setFlammable = ObfuscationReflectionHelper.findMethod(FireBlock.class, "m_53444_", Block.class, int.class, int.class);
 			// Half-Timber Blocks...
 			final FireBlock fire = (FireBlock)Blocks.FIRE;
@@ -135,7 +134,13 @@ public class VanillaCompat {
 			setFlammable.invoke(fire, ModBlocks.BIRCH_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.DARK_OAK_CHAIR.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.DARK_OAK_TABLE.get(), 5, 20);
-			// Windows & Doors...
+			setFlammable.invoke(fire, ModBlocks.SPRUCE_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.SPRUCE_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.CRIMSON_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.CRIMSON_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.WARPED_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.WARPED_TABLE.get(), 5, 20);
+			// Windows...
 			setFlammable.invoke(fire, ModBlocks.WINDOW_ARCH.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.WINDOW_CROSS.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.WINDOW_LANCET.get(), 5, 20);

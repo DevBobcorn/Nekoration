@@ -3,6 +3,8 @@ package com.devbobcorn.nekoration.blocks;
 import java.util.function.ToIntFunction;
 
 import com.devbobcorn.nekoration.Nekoration;
+import com.devbobcorn.nekoration.blocks.frames.DyeableWindowSillBlock;
+import com.devbobcorn.nekoration.blocks.frames.DyeableWindowTopBlock;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,8 +28,8 @@ public final class ModBlocks {
     public static final RegistryObject<Block> STONE_IONIC = BLOCKS.register("stone_ionic", () -> new StonePillarBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
     public static final RegistryObject<Block> STONE_CORINTHIAN = BLOCKS.register("stone_corinthian", () -> new StonePillarBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
 
-    public static final RegistryObject<Block> WINDOW_TOP = BLOCKS.register("window_top", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.TRIPLE, false));
-    public static final RegistryObject<Block> WINDOW_SILL = BLOCKS.register("window_sill", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
+    public static final RegistryObject<Block> WINDOW_TOP = BLOCKS.register("window_top", () -> new DyeableWindowTopBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.TRIPLE, false));
+    public static final RegistryObject<Block> WINDOW_SILL = BLOCKS.register("window_sill", () -> new DyeableWindowSillBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
     public static final RegistryObject<Block> WINDOW_PLANT = BLOCKS.register("window_plant", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.LEAVES).strength(0.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
 
     public static final RegistryObject<Block> STONE_POT = BLOCKS.register("stone_pot", () -> new PotBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), 6.0D));
@@ -95,6 +97,12 @@ public final class ModBlocks {
     public static final RegistryObject<Block> BIRCH_CHAIR = BLOCKS.register("birch_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 10, 26));
     public static final RegistryObject<Block> DARK_OAK_TABLE = BLOCKS.register("dark_oak_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> DARK_OAK_CHAIR = BLOCKS.register("dark_oak_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 8, 21));
+    public static final RegistryObject<Block> SPRUCE_TABLE = BLOCKS.register("spruce_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> SPRUCE_CHAIR = BLOCKS.register("spruce_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 10, 26));
+    public static final RegistryObject<Block> CRIMSON_TABLE = BLOCKS.register("crimson_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> CRIMSON_CHAIR = BLOCKS.register("crimson_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 10, 26));
+    public static final RegistryObject<Block> WARPED_TABLE = BLOCKS.register("warped_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> WARPED_CHAIR = BLOCKS.register("warped_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 10, 26));
 
 	public static ToIntFunction<BlockState> candleHolderEmission(int lightlevel) {
 		return (state) -> {
