@@ -3,6 +3,7 @@ package com.devbobcorn.nekoration.blocks;
 import java.util.function.ToIntFunction;
 
 import com.devbobcorn.nekoration.Nekoration;
+import com.devbobcorn.nekoration.blocks.frames.DyeableWindowFrameBlock;
 import com.devbobcorn.nekoration.blocks.frames.DyeableWindowSillBlock;
 import com.devbobcorn.nekoration.blocks.frames.DyeableWindowTopBlock;
 
@@ -31,6 +32,8 @@ public final class ModBlocks {
     public static final RegistryObject<Block> WINDOW_TOP = BLOCKS.register("window_top", () -> new DyeableWindowTopBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.TRIPLE, false));
     public static final RegistryObject<Block> WINDOW_SILL = BLOCKS.register("window_sill", () -> new DyeableWindowSillBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
     public static final RegistryObject<Block> WINDOW_PLANT = BLOCKS.register("window_plant", () -> new DyeableHorizontalConnectBlock(Block.Properties.of(Material.LEAVES).strength(0.0F).noOcclusion(), DyeableHorizontalConnectBlock.ConnectionType.BEAM, false));
+
+    public static final RegistryObject<Block> WINDOW_FRAME = BLOCKS.register("window_frame", () -> new DyeableWindowFrameBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion()));
 
     public static final RegistryObject<Block> STONE_POT = BLOCKS.register("stone_pot", () -> new PotBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), 6.0D));
 

@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;

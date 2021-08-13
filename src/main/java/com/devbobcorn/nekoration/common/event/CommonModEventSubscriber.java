@@ -7,6 +7,8 @@ import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
 import com.devbobcorn.nekoration.blocks.CandleHolderBlock;
 import com.devbobcorn.nekoration.blocks.ChairBlock;
+import com.devbobcorn.nekoration.blocks.AwningBlock;
+import com.devbobcorn.nekoration.blocks.ShortAwningBlock;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
 import com.devbobcorn.nekoration.blocks.DyeableDoorBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalBlock;
@@ -73,9 +75,9 @@ public final class CommonModEventSubscriber {
 						blockItem = new DyeableBlockItem(block, properties, false);
 						break out;
 					} else if (block instanceof DyeableHorizontalBlock) {
-						if (block instanceof DyeableHorizontalConnectBlock) // Window Frame...
-							properties = new Item.Properties().tab(ModItemTabs.WINDOW_N_DOOR_GROUP);
-						else properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP); // Awning...
+						if (block instanceof AwningBlock || block instanceof ShortAwningBlock) // Awning...
+							properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
+						else properties = new Item.Properties().tab(ModItemTabs.WINDOW_N_DOOR_GROUP); // Window Frame...
 					} else properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
 					blockItem = new DyeableBlockItem(block, properties);
 				} else {

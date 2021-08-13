@@ -4,7 +4,7 @@ import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
 import com.devbobcorn.nekoration.blocks.DyeableDoorBlock;
-import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
+import com.devbobcorn.nekoration.blocks.DyeableHorizontalBlock;
 import com.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
 import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
@@ -126,11 +126,11 @@ public final class ClientModEventSubscriber {
 		BlockEntityRenderers.register(ModBlockEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);
 		BlockEntityRenderers.register(ModBlockEntityType.CUSTOM_TYPE.get(), CustomRenderer::new);
 
-		LOGGER.info("BlockEntities' Renderer Bound.");
+		LOGGER.info("BlockEntities Renderers Bound.");
 
 		EntityRenderers.register(ModEntityType.PAINTING_TYPE, PaintingRenderer::new);
 
-		LOGGER.info("Then Entities' Renderer Bound.");
+		LOGGER.info("Then Entities Renderers Bound.");
 
 		MinecraftForge.EVENT_BUS.register(new CreativeInventoryEvents());
 
@@ -191,10 +191,10 @@ public final class ClientModEventSubscriber {
 				ModBlocks.STONE_DORIC.get(), ModBlocks.STONE_IONIC.get(), ModBlocks.STONE_CORINTHIAN.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
-			if (view == null || pos == null || !(state.getBlock() instanceof DyeableHorizontalConnectBlock))
+			if (view == null || pos == null || !(state.getBlock() instanceof DyeableHorizontalBlock))
 				return NekoColors.getStoneColorOrLightGray(7);
-			return NekoColors.getStoneColorOrLightGray(state.getValue(DyeableHorizontalConnectBlock.COLOR));
-		}, ModBlocks.WINDOW_SILL.get(), ModBlocks.WINDOW_TOP.get());
+			return NekoColors.getStoneColorOrLightGray(state.getValue(DyeableHorizontalBlock.COLOR));
+		}, ModBlocks.WINDOW_SILL.get(), ModBlocks.WINDOW_TOP.get(), ModBlocks.WINDOW_FRAME.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
 			if (view == null || pos == null || !(state.getBlock() instanceof HalfTimberBlock))
@@ -246,7 +246,8 @@ public final class ClientModEventSubscriber {
 		ModBlocks.STONE_FRAME.get().asItem(), ModBlocks.STONE_PILLAR.get().asItem(),
 		ModBlocks.STONE_DORIC.get().asItem(), ModBlocks.STONE_IONIC.get().asItem(),
 		ModBlocks.STONE_CORINTHIAN.get().asItem(), ModBlocks.WINDOW_SILL.get().asItem(),
-		ModBlocks.WINDOW_TOP.get().asItem(), ModBlocks.STONE_LAYERED.get().asItem(), ModBlocks.STONE_POT.get().asItem());
+		ModBlocks.WINDOW_TOP.get().asItem(), ModBlocks.WINDOW_FRAME.get().asItem(),
+		ModBlocks.STONE_LAYERED.get().asItem(), ModBlocks.STONE_POT.get().asItem());
 
 		// Default White:
 		event.getItemColors().register((stack, tintIndex) -> {
