@@ -118,12 +118,12 @@ public class EaselMenuBlockEntity extends ContainerBlockEntity {
 
 	@Override
 	public Component getDisplayName() {
-		return new TranslatableComponent("container." + Nekoration.MODID + ".easel_menu");
+		return new TranslatableComponent("block." + Nekoration.MODID + ".easel_menu");
 	}
 
 	@Override
 	protected Component getDefaultName() {
-		return new TranslatableComponent("container." + Nekoration.MODID + ".easel_menu");
+		return new TranslatableComponent("block." + Nekoration.MODID + ".easel_menu");
 	}
 
 	@Override
