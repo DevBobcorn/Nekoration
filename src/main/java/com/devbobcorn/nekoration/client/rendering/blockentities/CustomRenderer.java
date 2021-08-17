@@ -32,20 +32,7 @@ public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
 			return;
 		
 		// and then we rendering models with our TE renderer...
-		if (tileEntity.model <= 0){
-			/*
-			stack.pushPose(); // push the current transformation matrix + normals matrix
-			stack.translate(0.5, 0.0, 0.5); // Change its pivot point before rotation...
-			stack.mulPose(Vector3f.YP.rotationDegrees(tileEntity.dir * 15F));
-			stack.translate(-0.5, 0.0, -0.5); // Then just get it back...
-			// To translate 1 here is to translate 2 meters(blocks), so we translate 1/32 for a single-voxel-long offset(1/16 block)...
-			stack.translate(tileEntity.offset[0] * frac, tileEntity.offset[1] * frac, tileEntity.offset[2] * frac); // Offset by certain voxels (1 block = 16 * 16 * 16 voxels)
-
-			QuadRenderer.renderCubeUsingQuads(tileEntity, partialTicks, stack, buffers, combinedLight, combinedOverlay);
-
-			stack.popPose(); // restore the original transformation matrix + normals matrix
-			*/
-		} else if (tileEntity.model <= 15) {
+		if (tileEntity.model > 0 && tileEntity.model <= 15) {
 			stack.pushPose();
 
 			stack.translate(0.5, 0.0, 0.5);
@@ -74,7 +61,10 @@ public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
 			stack.translate(-0.5, 0.0, -0.5); // Then just get it back...
 			stack.translate(tileEntity.offset[0] * frac, tileEntity.offset[1] * frac, tileEntity.offset[2] * frac);
 
-			BlockState state = tileEntity.displayBlock;
+			BlockState state;
+			if (tileEntity.model <= 1) // 0 or 1, just apply default block model
+				state = ModBlocks.CUSTOM.get().defaultBlockState().setValue(CustomBlock.MODEL, 1);
+			else state = tileEntity.displayBlock;
 			BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
 			BakedModel model = dispatcher.getBlockModel(state);
 
