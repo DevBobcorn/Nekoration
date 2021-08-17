@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.client.ClientHelper;
-import com.devbobcorn.nekoration.common.TagTypes;
+import com.devbobcorn.nekoration.utils.TagTypes;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;

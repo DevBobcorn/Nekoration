@@ -86,7 +86,7 @@ public final class ModBlocks {
     public static final RegistryObject<Block> EASEL_MENU_WHITE = BLOCKS.register("easel_menu_white", () -> new EaselMenuBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true));
 
     public static final RegistryObject<Block> PHONOGRAPH = BLOCKS.register("phonograph", () -> new Block(Block.Properties.of(Material.METAL).noOcclusion()));
-    public static final RegistryObject<Block> CUSTOM = BLOCKS.register("custom", () -> new CustomBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion()));
+    public static final RegistryObject<Block> CUSTOM = BLOCKS.register("custom", () -> new CustomBlock(Block.Properties.of(Material.WOOD).strength(1.5F, 6.0F).noOcclusion()));
 
     public static final RegistryObject<Block> PUMPKIN_TABLE = BLOCKS.register("pumpkin_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> PUMPKIN_CHAIR = BLOCKS.register("pumpkin_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 8, 24));

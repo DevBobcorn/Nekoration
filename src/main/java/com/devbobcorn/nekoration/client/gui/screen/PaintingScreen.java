@@ -277,7 +277,7 @@ public class PaintingScreen extends Screen {
                 break;
             case 3: // Bucket
                 debugText = String.format("Fill: [%.2f, %.2f]", pixX, pixY);
-                // useBucket(pixX, pixY);
+                useBucket(pixX, pixY);
                 break;
         }
     }
@@ -293,12 +293,17 @@ public class PaintingScreen extends Screen {
         paintingData.setPixel(pixX, pixY, (opacity << 24) + colors[activeSlot].getRGB());
     }
 
+    private void useBucket(double x, double y){
+        int pixX = (int)x, pixY = (int)y;
+        paintingData.fill(pixX, pixY, colors[activeSlot].getRGB(), opacity);
+    }
+
     private static final int radius = 2;
 
     private void useEraser(double x, double y){
         int pixX = (int)x, pixY = (int)y;
-        for (int i = -radius;i < radius;i++)
-            for (int j = -radius;j < radius;j++)
+        for (int i = -radius;i <= radius;i++)
+            for (int j = -radius;j <= radius;j++)
                 paintingData.setPixel(pixX + i, pixY + j, 0x00000000);
     }
 

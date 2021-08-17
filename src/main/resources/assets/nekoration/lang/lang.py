@@ -1,12 +1,13 @@
 #This is a Python3 Script used to generate language files for this mod
 import json
 
-colors = ["black","blue","brown","cyan","gray","green","light_blue","light_gray","lime","magenta","orange","pink","purple","red","white","yellow"]
-wooden_us = ["Dark Oak","Blue Wooden","Spruce","Warped","Jungle","Green Wooden","Light Blue Wooden","Oak","Lime Wooden","Crimson","Acacia","Pink Wooden","Purple Wooden","Red Wooden","Birch","Yellow Wooden"]
-colors_cn = ["黑色","蓝色","棕色","青色","灰色","绿色","淡蓝色","淡灰色","黄绿色","品红色","橙色","粉色","紫色","红色","白色","黄色"]
-wooden_cn = ["深色橡木","蓝木","云杉","诡异","丛林","绿木","淡蓝木","橡木","黄绿木","绯红","金合欢","粉木","紫木","红木","白桦","黄木"]
+colors = ["black","blue","brown","cyan","gray","green","light_blue","light_gray","lime","magenta","orange","pink","purple","red","white","yellow","unknown"]
+colors_us = ["Black","Blue","Brown","Cyan","Gray","Green","Light Blue","Light Gray","Lime","Magenta","Orange","Pink","Purple","Red","White","Yellow","Some"]
+wooden_us = ["Dark Oak","Blue Wood","Spruce","Warped","Jungle","Green Wood","Magic","Oak","Willow","Crimson","Acacia","Mahogany","Umbran","Cherry","Birch","Palm","Some"]
+colors_cn = ["黑色","蓝色","棕色","青色","灰色","绿色","淡蓝色","淡灰色","黄绿色","品红色","橙色","粉色","紫色","红色","白色","黄色",""]
+wooden_cn = ["深色橡木","蓝木","云杉木","诡异木","丛林木","绿木","魔法木","橡木","柳木","绯红木","金合欢木","桃花心木","暗影木","樱木","白桦木","棕榈木",""]
 woods = ["pumpkin","dark_oak","spruce","warped","jungle","oak","crimson","acacia","birch"]
-woods_cn = ["南瓜","深色橡木","云杉","诡异","丛林","橡木","绯红","金合欢","白桦"]
+woods_cn = ["南瓜","深色橡木","云杉木","诡异木","丛林木","橡木","绯红木","金合欢木","白桦木"]
 chair_us = "Chair"
 table_us = "Table"
 chair_cn = "桌"
@@ -35,9 +36,9 @@ miscs = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iro
 miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Phonograph [WIP]","Custom Block"]
 miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","留声机[WIP]","自定义方块"]
 
-tabs = ["stone","wooden","window_n_door","furniture","decor","tool"]
-tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Furnitures","Small Decors","Tools"]
-tabs_cn = ["石质方块","木质方块","门窗","家具","装饰","工具"]
+tabs = ["stone","wooden","window_n_door","decor","neko_tool"]
+tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Decors","Neko Tools"]
+tabs_cn = ["石质方块","木质方块","门窗","装饰","工具"]
 
 guis = ["button.scroll_up","button.scroll_down","button.enable_all","button.disable_all","message.painting_saved","message.painting_content_saved","message.paint_with_palette",
         "message.press_key_color_info","message.color_info","message.press_key_debug_info","message.press_key_color_picker_on","message.press_key_color_picker_off",
@@ -72,7 +73,7 @@ obj_cn = {}
 
 # Color Names...
 for col in range(0, len(colors)):
-    obj_us['color.nekoration.' + colors[col]] = getEnName(colors[col])
+    obj_us['color.nekoration.' + colors[col]] = colors_us[col]
     obj_us['color.wooden.' + colors[col]] = wooden_us[col]
     obj_cn['color.nekoration.' + colors[col]] = colors_cn[col]
     obj_cn['color.wooden.' + colors[col]] = wooden_cn[col]

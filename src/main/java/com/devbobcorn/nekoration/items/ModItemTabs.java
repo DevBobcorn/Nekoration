@@ -31,25 +31,19 @@ public class ModItemTabs {
 
 	public static final CreativeModeTab WINDOW_N_DOOR_GROUP = new ModItemGroup("window_n_door", () -> {
 			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "window_lancet")));
-			DyeableWoodenBlockItem.setColor(icoStack, EnumWoodenColor.WHITE);
-			return icoStack;
-		}
-	);
-
-	public static final CreativeModeTab FURNITURE_GROUP = new ModItemGroup("furniture", () -> {
-			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "oak_table")));
+			DyeableWoodenBlockItem.setColor(icoStack, EnumWoodenColor.BROWN);
 			return icoStack;
 		}
 	);
 
 	public static final CreativeModeTab DECOR_GROUP = new ModItemGroup("decor", () -> {
 			ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "easel_menu")));
-			DyeableBlockItem.setColor(icoStack, EnumNekoColor.WHITE);
+			DyeableWoodenBlockItem.setColor(icoStack, EnumWoodenColor.BROWN);
 			return icoStack;
 		}
 	);
 
-	public static final CreativeModeTab TOOL_GROUP = new ModItemGroup("tool", () -> {
+	public static final CreativeModeTab TOOL_GROUP = new ModItemGroup("neko_tool", () -> {
 			return new ItemStack(ModItems.PAW.get());
 		}
 	);

@@ -2,7 +2,7 @@ package com.devbobcorn.nekoration.blocks.entities;
 
 import javax.annotation.Nullable;
 
-import com.devbobcorn.nekoration.common.TagTypes;
+import com.devbobcorn.nekoration.utils.TagTypes;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

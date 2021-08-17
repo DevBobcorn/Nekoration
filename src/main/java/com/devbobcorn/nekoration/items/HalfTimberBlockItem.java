@@ -44,6 +44,10 @@ public class HalfTimberBlockItem extends BlockItem {
 		}
 	}
 
+	public static boolean hasColor(ItemStack stack) {
+		return stack.getOrCreateTag().contains(COLOR_0) && stack.getOrCreateTag().contains(COLOR_1);
+	}
+
     public static EnumWoodenColor getColor0(ItemStack stack) {
 		CompoundTag tag = stack.getOrCreateTag();
 		return EnumWoodenColor.fromNBT(tag, COLOR_0);
@@ -66,9 +70,10 @@ public class HalfTimberBlockItem extends BlockItem {
 
 	@Override
 	public Component getName(ItemStack stack) {
-		String color0Text = (new TranslatableComponent("color.wooden." + getColor0(stack).getSerializedName())).getString();
-		String color1Text = (new TranslatableComponent("color.nekoration." + getColor1(stack).getSerializedName())).getString();
+		boolean hasColor = hasColor(stack);
+		String color0Text = (new TranslatableComponent("color.wooden." + (hasColor ? getColor0(stack).getSerializedName() : "unknown"))).getString();
+		String color1Text = (new TranslatableComponent("color.nekoration." + (hasColor ? getColor1(stack).getSerializedName() : "unknown"))).getString();
 
-		return new TranslatableComponent(this.getDescriptionId(stack), color0Text, color1Text); 
+		return new TranslatableComponent(this.getDescriptionId(stack), color0Text, color1Text);
 	}
 }

@@ -30,6 +30,10 @@ public class DyeableWoodenBlockItem extends BlockItem {
 			}
 		}
 	}
+	
+	public static boolean hasColor(ItemStack stack) {
+		return stack.getOrCreateTag().contains(COLOR);
+	}
 
     public static EnumWoodenColor getColor(ItemStack stack) {
 		CompoundTag compoundNBT = stack.getOrCreateTag();
@@ -43,8 +47,6 @@ public class DyeableWoodenBlockItem extends BlockItem {
 
 	@Override
 	public Component getName(ItemStack stack) {
-		String colorText = (new TranslatableComponent("color.wooden." + getColor(stack).getSerializedName())).getString();
-
-		return new TranslatableComponent(this.getDescriptionId(stack), colorText);
+		return new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.wooden." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString());
 	}
 }

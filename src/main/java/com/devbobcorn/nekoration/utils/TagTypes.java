@@ -1,4 +1,4 @@
-package com.devbobcorn.nekoration.common;
+package com.devbobcorn.nekoration.utils;
 
 import net.minecraft.nbt.*;
 /**

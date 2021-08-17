@@ -225,25 +225,6 @@ public class NekoColors {
 			return (int)nbtID;
 		}
 
-		public static EnumStoneColor fromNBT(CompoundTag compoundNBT, String tagname) {
-			byte flavorID = 0; // default in case of error
-			if (compoundNBT != null && compoundNBT.contains(tagname)) {
-				flavorID = compoundNBT.getByte(tagname);
-			}
-			EnumStoneColor color = getColorEnumFromID(flavorID);
-			return color; // default is light gray
-		}
-
-		/**
-		 * Write this enum to NBT
-		 * 
-		 * @param compoundNBT
-		 * @param tagname
-		 */
-		public void putIntoNBT(CompoundTag compoundNBT, String tagname) {
-			compoundNBT.putByte(tagname, nbtID);
-		}
-
 		private final byte nbtID;
 		private final String name;
 		private final int color;
@@ -287,16 +268,16 @@ public class NekoColors {
 		CYAN((byte)3, "cyan", 0x389a99), // warped
 		GRAY((byte)4, "gray", 0xa27d64), // jungle
 		GREEN((byte)5, "green", 0x179930),
-		LIGHT_BLUE((byte)6, "light_blue", 0x53b6ff),
+		LIGHT_BLUE((byte)6, "light_blue", 0x4d71b0), // +magic
 		LIGHT_GRAY((byte)7, "light_gray", 0xb9955b), // oak
-		LIME((byte)8, "lime", 0x33b54c),
+		LIME((byte)8, "lime", 0x9fad81), // +willow
 		MAGENTA((byte)9, "magenta", 0x873468),  // crimson
 		ORANGE((byte)10, "orange", 0xf0973d), // acacia
-		PINK((byte)11, "pink", 0xcc89b2),
-		PURPLE((byte)12, "purple", 0x6a2a9d),
-		RED((byte)13, "red", 0xe03f3f),
-		WHITE((byte)14, "white", 0xe8d699), // birch
-		YELLOW((byte)15, "yellow", 0xffd54f);
+		PINK((byte)11, "pink", 0xcb8684), // +mahogany
+		PURPLE((byte)12, "purple", 0x7b688c), // +umbran
+		RED((byte)13, "red", 0x9c2525), // +cherry
+		WHITE((byte)14, "white", 0x8f2f2b), // birch
+		YELLOW((byte)15, "yellow", 0xcd9144); // +palm
 
 		@Override
 		public String toString() {

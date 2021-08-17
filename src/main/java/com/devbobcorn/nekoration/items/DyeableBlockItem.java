@@ -47,6 +47,10 @@ public class DyeableBlockItem extends BlockItem {
 		}
 	}
 
+	public static boolean hasColor(ItemStack stack) {
+		return stack.getOrCreateTag().contains(COLOR);
+	}
+
     public static EnumNekoColor getColor(ItemStack stack) {
 		CompoundTag compoundNBT = stack.getOrCreateTag();
 		return EnumNekoColor.fromNBT(compoundNBT, COLOR);
@@ -64,8 +68,6 @@ public class DyeableBlockItem extends BlockItem {
 
 	@Override
 	public Component getName(ItemStack stack) {
-		String colorText = (new TranslatableComponent("color.nekoration." + getColor(stack).getSerializedName())).getString();
-
-		return new TranslatableComponent(this.getDescriptionId(stack), colorText);
+		return new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.nekoration." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString());
 	}
 }

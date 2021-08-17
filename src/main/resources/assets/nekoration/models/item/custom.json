@@ -1,3 +1,41 @@
 {
-	"parent": "nekoration:block/custom/custom"
+	"parent": "nekoration:block/custom/custom",
+	"overrides": [
+		{
+			"predicate": {
+				"custom_model_data": 10001
+			},
+			"model": "nekoration:block/custom/magic_planks"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 10002
+			},
+			"model": "nekoration:block/custom/willow_planks"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 10003
+			},
+			"model": "nekoration:block/custom/mahogany_planks"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 10004
+			},
+			"model": "nekoration:block/custom/umbran_planks"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 10005
+			},
+			"model": "nekoration:block/custom/cherry_planks"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 10006
+			},
+			"model": "nekoration:block/custom/palm_planks"
+		}
+	]
 }

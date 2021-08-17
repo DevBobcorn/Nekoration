@@ -4,11 +4,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import com.devbobcorn.nekoration.NekoColors;
+import com.devbobcorn.nekoration.utils.PixelPos;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -106,7 +109,7 @@ public class PaintingData {
                 return true;
             }
         }
-        return save(CACHE_PATH, String.valueOf(getPaintingHash()), true, false);
+        return (imageReady = save(CACHE_PATH, String.valueOf(getPaintingHash()), true, false));
     }
 
     public boolean save(String path, String name, boolean composite, boolean showMessage){
@@ -131,7 +134,6 @@ public class PaintingData {
                 component = component.withStyle(ChatFormatting.UNDERLINE).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, finalFile.getAbsolutePath())));
                 minecraft.player.displayClientMessage(new TranslatableComponent("gui.nekoration.message." + (composite ? "painting_saved" : "painting_content_saved"), component), false);
             }
-            imageReady = true;
             return true;
         } catch (IOException e) {
             imageReady = false;
@@ -191,13 +193,6 @@ public class PaintingData {
             recalculateComposite();
     }
 
-    private void recalculateComposite(){
-        for (int x = 0;x < width;x++)
-            for (int y = 0;y < height;y++)
-                composite[y * width + x] = NekoColors.getRGBColorBetween(((pixels[y * width + x] >> 24) & 0xff) / 255.0D, canvas[y * width + x] , pixels[y * width + x]);
-        updatePaintingHash();
-    }
-
     public void setPixel(int x, int y, int color){
         if (isLegal(x, y)){
             pixels[y * width + x] = color;
@@ -206,6 +201,75 @@ public class PaintingData {
             if (isClient)
                 recalculateCompositeAt(x, y);
         }
+    }
+    private static final int canvasize = 128;
+    boolean[][] visited = new boolean[canvasize][canvasize];
+
+    public int fill(int x, int y, int color, int opacity){
+        if (!isLegal(x, y))
+            return 0;
+
+        for (int i = 0;i < canvasize;i++)
+            for (int j = 0;j < canvasize;j++){
+                visited[i][j] = false;
+            }
+        
+        pixSearch(x, y);
+        int cnt = 0;
+        for (int i = 0;i < width;i++)
+            for (int j = 0;j < height;j++) {
+                if (visited[i][j]) {
+                    cnt++;
+                    pixels[i + j * width] = (opacity << 24) + color;
+                }
+            }
+        recalculateComposite();
+        return cnt;
+    }
+
+    private boolean checkAvailable(PixelPos pix){
+        if (!isLegal(pix.x, pix.y))
+            return false;
+        return !visited[pix.x][pix.y];
+    }
+
+    private void setVisited(PixelPos pix){
+        visited[pix.x][pix.y] = true;
+    }
+
+    private boolean checkColor(int origin, PixelPos pix){
+        return origin == getCompositeAt(pix.x, pix.y);
+    }
+
+    private static final int[] offsetX = { 1,-1, 0, 0, 1,-1, 1,-1 };
+    private static final int[] offsetY = { 0, 0, 1,-1, 1, 1,-1,-1 };
+    private boolean connectDiagonal = false;
+
+    private void pixSearch(int x, int y){
+        final int originColor = getCompositeAt(x, y);
+        // BFS...
+        Queue<PixelPos> queue = new LinkedList<PixelPos>();
+        queue.add(new PixelPos(x, y));
+        visited[x][y] = true;
+        
+        while (!queue.isEmpty()){
+            PixelPos pix = queue.poll();
+            for (int i = 0;i < (connectDiagonal ? 8 : 4);i++){
+                PixelPos tar = pix.offset(offsetX[i], offsetY[i]);
+
+                if (checkAvailable(tar) && checkColor(originColor, tar)) {
+                    queue.add(tar);
+                    setVisited(tar);
+                }
+            }
+        }
+    }
+
+    private void recalculateComposite(){
+        for (int x = 0;x < width;x++)
+            for (int y = 0;y < height;y++)
+                composite[y * width + x] = NekoColors.getRGBColorBetween(((pixels[y * width + x] >> 24) & 0xff) / 255.0D, canvas[y * width + x] , pixels[y * width + x]);
+        updatePaintingHash();
     }
 
     private void recalculateCompositeAt(int x, int y){

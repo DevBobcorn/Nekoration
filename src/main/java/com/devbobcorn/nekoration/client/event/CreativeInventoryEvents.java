@@ -11,6 +11,7 @@ import com.devbobcorn.nekoration.client.gui.widget.IconButton;
 import com.devbobcorn.nekoration.client.gui.widget.WoodTypeButton;
 import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.ModItemTabs;
+import com.devbobcorn.nekoration.utils.ItemIconHelper;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -267,6 +268,7 @@ public class CreativeInventoryEvents
 
     private void compileItems()
     {
+        // Vanilla Wood Type
         final WoodFilter OAK = new WoodFilter(EnumWoodenColor.LIGHT_GRAY, new ItemStack(Blocks.OAK_PLANKS));
         final WoodFilter BIRCH = new WoodFilter(EnumWoodenColor.WHITE, new ItemStack(Blocks.BIRCH_PLANKS));
         final WoodFilter ACACIA = new WoodFilter(EnumWoodenColor.ORANGE, new ItemStack(Blocks.ACACIA_PLANKS));
@@ -275,10 +277,20 @@ public class CreativeInventoryEvents
         final WoodFilter WARPED = new WoodFilter(EnumWoodenColor.CYAN, new ItemStack(Blocks.WARPED_PLANKS));
         final WoodFilter CRIMSON = new WoodFilter(EnumWoodenColor.MAGENTA, new ItemStack(Blocks.CRIMSON_PLANKS));
         final WoodFilter DARK_OAK = new WoodFilter(EnumWoodenColor.BLACK, new ItemStack(Blocks.DARK_OAK_PLANKS));
-        WoodFilter[] filters = new WoodFilter[] { OAK, BIRCH, ACACIA, JUNGLE, SPRUCE, WARPED, CRIMSON, DARK_OAK };
+        // BOP Wood Type
+        final WoodFilter MAGIC = new WoodFilter(EnumWoodenColor.LIGHT_BLUE, ItemIconHelper.getCustomBlockItem(10001));
+        final WoodFilter WILLOW = new WoodFilter(EnumWoodenColor.LIME, ItemIconHelper.getCustomBlockItem(10002));
+        final WoodFilter MAHOGANY = new WoodFilter(EnumWoodenColor.PINK, ItemIconHelper.getCustomBlockItem(10003));
+        final WoodFilter UMBRAN = new WoodFilter(EnumWoodenColor.PURPLE, ItemIconHelper.getCustomBlockItem(10004));
+        final WoodFilter CHERRY = new WoodFilter(EnumWoodenColor.RED, ItemIconHelper.getCustomBlockItem(10005));
+        final WoodFilter PALM = new WoodFilter(EnumWoodenColor.YELLOW, ItemIconHelper.getCustomBlockItem(10006));
+
+        WoodFilter[] vanilla = new WoodFilter[] { OAK, BIRCH, ACACIA, JUNGLE, SPRUCE, WARPED, CRIMSON, DARK_OAK };
+        WoodFilter[] extra   = new WoodFilter[] { MAGIC, WILLOW, MAHOGANY, UMBRAN, CHERRY, PALM };
 
         this.filters = new ArrayList<>();
-        this.filters.addAll(Arrays.asList(filters));
+        this.filters.addAll(Arrays.asList(vanilla));
+        this.filters.addAll(Arrays.asList(extra));
     }
 
     public static class WoodFilter

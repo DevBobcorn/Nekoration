@@ -48,12 +48,12 @@ public class HalfTimberBlock extends Block {
 			InteractionResult.SUCCESS : InteractionResult.PASS;
 		}
 
-		if (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) {
-			world.setBlock(pos, state.setValue(COLOR1, VanillaCompat.COLOR_ITEMS.get(itemStack.getItem())), 3);
+		if (VanillaCompat.RAW_COLOR_ITEMS.containsKey(itemStack.getItem())) {
+			world.setBlock(pos, state.setValue(COLOR1, VanillaCompat.RAW_COLOR_ITEMS.get(itemStack.getItem())), 3);
 			return InteractionResult.SUCCESS;
 		}
-		if (VanillaCompat.RAW_COLOR_ITEMS.containsKey(itemStack.getItem())) {
-			world.setBlock(pos, state.setValue(COLOR0, VanillaCompat.RAW_COLOR_ITEMS.get(itemStack.getItem())), 3);
+		if (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) {
+			world.setBlock(pos, state.setValue(COLOR0, VanillaCompat.COLOR_ITEMS.get(itemStack.getItem())), 3);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.PASS;

@@ -3,6 +3,7 @@ package com.devbobcorn.nekoration.entities;
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.items.PaletteItem;
+import com.devbobcorn.nekoration.utils.TagTypes;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,7 +30,6 @@ import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import com.devbobcorn.nekoration.client.ClientHelper;
-import com.devbobcorn.nekoration.common.TagTypes;
 
 import java.awt.Color;
 
