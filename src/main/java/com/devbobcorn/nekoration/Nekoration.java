@@ -20,6 +20,7 @@ import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.devbobcorn.nekoration.network.S2CUpdateEaselMenuData;
 import com.devbobcorn.nekoration.network.S2CUpdatePaintingData;
+import com.devbobcorn.nekoration.recipes.ModRecipes;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Nekoration.MODID)
@@ -42,6 +43,7 @@ public class Nekoration {
 		ModEntityType.ENTITY_TYPES.register(modEventBus);
 		ModMenuType.MENU_TYPES.register(modEventBus);
 		ModBlockEntityType.TILE_ENTITY_TYPES.register(modEventBus);
+		ModRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 
 		// Register Configs
 		//modLoadingContext.registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);
