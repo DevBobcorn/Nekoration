@@ -16,6 +16,7 @@ import com.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import com.devbobcorn.nekoration.client.rendering.blockentities.CustomRenderer;
 import com.devbobcorn.nekoration.client.rendering.blockentities.EaselMenuRenderer;
 import com.devbobcorn.nekoration.client.rendering.entities.PaintingRenderer;
+import com.devbobcorn.nekoration.client.rendering.entities.SeatRenderer;
 import com.devbobcorn.nekoration.entities.ModEntityType;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
@@ -129,6 +130,7 @@ public final class ClientModEventSubscriber {
 		LOGGER.info("BlockEntities Renderers Bound.");
 
 		EntityRenderers.register(ModEntityType.PAINTING_TYPE, PaintingRenderer::new);
+		EntityRenderers.register(ModEntityType.SEAT_TYPE, SeatRenderer::new);
 
 		LOGGER.info("Then Entities Renderers Bound.");
 

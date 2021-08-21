@@ -26,7 +26,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
-public class HalfTimberRecipe extends CustomRecipe
+public class NekoShapedRecipe extends CustomRecipe
 		implements net.minecraftforge.common.crafting.IShapedRecipe<CraftingContainer> {
 	private static final Ingredient HALF_TIMBERS = Ingredient.of(ModBlocks.HALF_TIMBER_P0.get().asItem(),
 			ModBlocks.HALF_TIMBER_P1.get().asItem(), ModBlocks.HALF_TIMBER_P2.get().asItem(),
@@ -62,7 +62,7 @@ public class HalfTimberRecipe extends CustomRecipe
 	private final ItemStack result;
 	private final String group;
 
-	public HalfTimberRecipe(ResourceLocation id, String group, int w, int h,
+	public NekoShapedRecipe(ResourceLocation id, String group, int w, int h,
 			NonNullList<Ingredient> in, ItemStack out) {
 		super(id);
 		this.group = group;
@@ -73,7 +73,7 @@ public class HalfTimberRecipe extends CustomRecipe
 	}
 
 	public RecipeSerializer<?> getSerializer() {
-		return ModRecipes.HALF_TIMBER.get();
+		return ModRecipes.NEKO_SHAPED.get();
 	}
 
 	public String getGroup() {
@@ -295,22 +295,22 @@ public class HalfTimberRecipe extends CustomRecipe
 	}
 
 	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>>
-			implements RecipeSerializer<HalfTimberRecipe> {
-		public HalfTimberRecipe fromJson(ResourceLocation id, JsonObject json) {
+			implements RecipeSerializer<NekoShapedRecipe> {
+		public NekoShapedRecipe fromJson(ResourceLocation id, JsonObject json) {
             System.out.println("Reading Recipe " + id + " from Json");
 			String s = GsonHelper.getAsString(json, "group", "");
-			Map<String, Ingredient> ingredientKeys = HalfTimberRecipe
+			Map<String, Ingredient> ingredientKeys = NekoShapedRecipe
 					.keyFromJson(GsonHelper.getAsJsonObject(json, "key"));
-			String[] astring = HalfTimberRecipe
-					.shrink(HalfTimberRecipe.patternFromJson(GsonHelper.getAsJsonArray(json, "pattern")));
+			String[] astring = NekoShapedRecipe
+					.shrink(NekoShapedRecipe.patternFromJson(GsonHelper.getAsJsonArray(json, "pattern")));
 			int i = astring[0].length();
 			int j = astring.length;
-			NonNullList<Ingredient> nonnulllist = HalfTimberRecipe.dissolvePattern(astring, ingredientKeys, i, j);
-			ItemStack itemstack = HalfTimberRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result"));
-			return new HalfTimberRecipe(id, s, i, j, nonnulllist, itemstack);
+			NonNullList<Ingredient> nonnulllist = NekoShapedRecipe.dissolvePattern(astring, ingredientKeys, i, j);
+			ItemStack itemstack = NekoShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result"));
+			return new NekoShapedRecipe(id, s, i, j, nonnulllist, itemstack);
 		}
 
-		public HalfTimberRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf packet) {
+		public NekoShapedRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf packet) {
 			int i = packet.readVarInt();
 			int j = packet.readVarInt();
 			String s = packet.readUtf(32767);
@@ -321,10 +321,10 @@ public class HalfTimberRecipe extends CustomRecipe
 			}
 
 			ItemStack itemstack = packet.readItem();
-			return new HalfTimberRecipe(id, s, i, j, nonnulllist, itemstack);
+			return new NekoShapedRecipe(id, s, i, j, nonnulllist, itemstack);
 		}
 
-		public void toNetwork(FriendlyByteBuf packet, HalfTimberRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf packet, NekoShapedRecipe recipe) {
 			packet.writeVarInt(recipe.width);
 			packet.writeVarInt(recipe.height);
 			packet.writeUtf(recipe.group);
