@@ -18,11 +18,11 @@ stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底
 half_timbers = ["half_timber_p0","half_timber_p1","half_timber_p2","half_timber_p3","half_timber_p4","half_timber_p5","half_timber_p6","half_timber_p7","half_timber_p8","half_timber_p9","half_timber_pillar_p0","half_timber_pillar_p1","half_timber_pillar_p2"]
 half_timbers_us = ["%s Half Timber","Slash %s Half Timber","Backslash %s Half Timber","Bi-Slash %s Half Timber","Bi-Backslash %s Half Timber","Center %s Half Timber","Cross %s Half Timber","Diamond %s Half Timber","Checkered %s Half Timber","Double %s Half Timber","%s Half Timber Pillar","Slash %s Half Timber Pillar","Backslash %s Half Timber Pillar"]
 half_timbers_cn = ["%s半露木","斜纹%s半露木","反斜纹%s半露木","双斜纹%s半露木","双反斜纹%s半露木","中心%s半露木","十字%s半露木","菱形%s半露木","方格%s半露木","双格%s半露木","%s半露木柱","斜纹%s半露木柱","反斜纹%s半露木柱"]
-windows = ["window_arch","window_cross","window_lancet","window_shade","window_top","window_sill","window_frame"]
-windows_us = ["Arch Window","Plain Window","Lancet Window","Shade Window","Window Top","Window Sill","Window Frame"]
-windows_cn = ["拱形窗","玻璃窗","尖头窗","百叶窗","窗顶","窗台","窗框"]
+windows = ["window_simple","window_arch","window_cross","window_lancet","window_shade","window_top","window_sill","window_frame"]
+windows_us = ["Simple Window","Arch Window","Cross Window","Lancet Window","Shade Window","Window Top","Window Sill","Window Frame"]
+windows_cn = ["简易窗","拱形窗","玻璃窗","尖头窗","百叶窗","窗顶","窗台","窗框"]
 doors = ["door_1","door_2","door_3","door_tall_1","door_tall_2","door_tall_3"]
-doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Brick Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Brick Door"]
+doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
 doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
 decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","easel_menu","easel_menu_white"]
 decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu","%s White Easel Menu"]
@@ -37,7 +37,7 @@ miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Ho
 miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","留声机[WIP]","自定义方块"]
 
 tabs = ["stone","wooden","window_n_door","decor","neko_tool"]
-tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Decors","Neko Tools"]
+tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Decorations","Neko Tools"]
 tabs_cn = ["石质方块","木质方块","门窗","装饰","工具"]
 
 guis = ["button.scroll_up","button.scroll_down","button.enable_all","button.disable_all","message.painting_saved","message.painting_content_saved","message.paint_with_palette",
