@@ -51,7 +51,7 @@ public final class ClientModEventSubscriber {
 		LOGGER.info("Client Side Setup.");
 
 		RenderType transparentRenderType = RenderType.cutoutMipped();
-		// RenderType cutoutRenderType = RenderType.cutout();
+		RenderType cutoutRenderType = RenderType.cutout();
 		RenderType translucentRenderType = RenderType.translucent();
 
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P0.get(), translucentRenderType);
@@ -69,10 +69,11 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P1.get(), translucentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P2.get(), translucentRenderType);
 
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_ARCH.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_CROSS.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_SHADE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_LANCET.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_SIMPLE.get(), cutoutRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_ARCH.get(), cutoutRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_CROSS.get(), cutoutRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_SHADE.get(), cutoutRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_LANCET.get(), cutoutRenderType);
 
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_PLANT.get(), transparentRenderType);
 

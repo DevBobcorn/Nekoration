@@ -7,6 +7,8 @@ import com.devbobcorn.nekoration.blocks.frames.DyeableWindowFrameBlock;
 import com.devbobcorn.nekoration.blocks.frames.DyeableWindowSillBlock;
 import com.devbobcorn.nekoration.blocks.frames.DyeableWindowTopBlock;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -51,11 +53,12 @@ public final class ModBlocks {
 	public static final RegistryObject<Block> HALF_TIMBER_PILLAR_P0 = BLOCKS.register("half_timber_pillar_p0", () -> new HalfTimberPillarBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F), HalfTimberPillarBlock.ConnectionType.PILLAR, false));
     public static final RegistryObject<Block> HALF_TIMBER_PILLAR_P1 = BLOCKS.register("half_timber_pillar_p1", () -> new HalfTimberPillarBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F), HalfTimberPillarBlock.ConnectionType.TRIPLE, false));
     public static final RegistryObject<Block> HALF_TIMBER_PILLAR_P2 = BLOCKS.register("half_timber_pillar_p2", () -> new HalfTimberPillarBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F), HalfTimberPillarBlock.ConnectionType.TRIPLE, false));
-
-    public static final RegistryObject<Block> WINDOW_ARCH = BLOCKS.register("window_arch", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion(), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
-    public static final RegistryObject<Block> WINDOW_CROSS = BLOCKS.register("window_cross", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion(), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
-    public static final RegistryObject<Block> WINDOW_SHADE = BLOCKS.register("window_shade", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion(), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
-    public static final RegistryObject<Block> WINDOW_LANCET = BLOCKS.register("window_lancet", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion(), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
+    
+    public static final RegistryObject<Block> WINDOW_SIMPLE = BLOCKS.register("window_simple", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion().isSuffocating(ModBlocks::never).isViewBlocking(ModBlocks::never), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
+    public static final RegistryObject<Block> WINDOW_ARCH = BLOCKS.register("window_arch", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion().isSuffocating(ModBlocks::never).isViewBlocking(ModBlocks::never), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
+    public static final RegistryObject<Block> WINDOW_CROSS = BLOCKS.register("window_cross", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion().isSuffocating(ModBlocks::never).isViewBlocking(ModBlocks::never), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
+    public static final RegistryObject<Block> WINDOW_SHADE = BLOCKS.register("window_shade", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion().isSuffocating(ModBlocks::never).isViewBlocking(ModBlocks::never), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
+    public static final RegistryObject<Block> WINDOW_LANCET = BLOCKS.register("window_lancet", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion().isSuffocating(ModBlocks::never).isViewBlocking(ModBlocks::never), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
 
     public static final RegistryObject<Block> DOOR_1 = BLOCKS.register("door_1", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> DOOR_2 = BLOCKS.register("door_2", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
@@ -112,4 +115,8 @@ public final class ModBlocks {
 			return state.getValue(BlockStateProperties.AGE_3) > 0 ? lightlevel : 0;
 		};
 	}
+
+    private static boolean never(BlockState state, BlockGetter world, BlockPos pos){
+        return false;
+    }
 }

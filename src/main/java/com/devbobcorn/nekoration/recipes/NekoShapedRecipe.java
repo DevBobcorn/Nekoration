@@ -5,6 +5,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.devbobcorn.nekoration.blocks.ModBlocks;
+import com.devbobcorn.nekoration.items.DyeableBlockItem;
+import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Maps;
@@ -36,6 +38,14 @@ public class NekoShapedRecipe extends CustomRecipe
 			ModBlocks.HALF_TIMBER_P9.get().asItem(), ModBlocks.HALF_TIMBER_PILLAR_P0.get().asItem(),
 			ModBlocks.HALF_TIMBER_PILLAR_P1.get().asItem(), ModBlocks.HALF_TIMBER_PILLAR_P2.get().asItem());
 
+	private static final Ingredient WOODEN = Ingredient.of(ModBlocks.WINDOW_SIMPLE.get().asItem(),
+			ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
+			ModBlocks.WINDOW_LANCET.get().asItem(), ModBlocks.WINDOW_SHADE.get().asItem());	
+
+	private static final Ingredient DYEABLES = Ingredient.of(
+			ModBlocks.AWNING_PURE.get().asItem(), ModBlocks.AWNING_PURE_SHORT.get().asItem(),
+			ModBlocks.AWNING_STRIPE.get().asItem(), ModBlocks.AWNING_STRIPE_SHORT.get().asItem());	
+	
 	static int MAX_WIDTH = 3;
 	static int MAX_HEIGHT = 3;
 
@@ -95,9 +105,12 @@ public class NekoShapedRecipe extends CustomRecipe
 	public boolean matches(CraftingContainer inv, Level world) {
 		for (int i = 0; i <= inv.getWidth() - this.width; ++i) {
 			for (int j = 0; j <= inv.getHeight() - this.height; ++j) {
-				/*
-				 * Disable Mirrored Recipes if (this.matches(inv, i, j, true)) { return true; }
-				 */
+				// Disable Mirrored Recipes for Half-Timber Blocks
+				if (!HALF_TIMBERS.test(this.result))
+					if (this.matches(inv, i, j, true)) {
+						return true;
+					}
+
 				if (this.matches(inv, i, j, false)) {
 					return true;
 				}
@@ -140,6 +153,25 @@ public class NekoShapedRecipe extends CustomRecipe
 				if (HALF_TIMBERS.test(cur)) {
 					HalfTimberBlockItem.setColor0(finalResult, HalfTimberBlockItem.getColor0(cur));
 					HalfTimberBlockItem.setColor1(finalResult, HalfTimberBlockItem.getColor1(cur));
+					break;
+				}
+			}
+		// Wooden Dyeable Color Inheritance
+		else if (WOODEN.test(finalResult))
+			for (int i = 0; i < inv.getContainerSize(); ++i) { // Go through every item in the crafting grid
+				ItemStack cur = inv.getItem(i);
+				if (WOODEN.test(cur)) {
+					DyeableWoodenBlockItem.setColor(finalResult, DyeableWoodenBlockItem.getColor(cur));
+					break;
+				}
+			}
+		// Dyeable Color Inheritance
+		else if (DYEABLES.test(finalResult))
+			for (int i = 0; i < inv.getContainerSize(); ++i) { // Go through every item in the crafting grid
+				ItemStack cur = inv.getItem(i);
+				if (DYEABLES.test(cur)) {
+					DyeableBlockItem.setColor(finalResult, DyeableBlockItem.getColor(cur));
+					break;
 				}
 			}
 		return finalResult;

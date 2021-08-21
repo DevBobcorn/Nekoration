@@ -33,8 +33,8 @@ public class WindowBlock extends DyeableVerticalConnectBlock {
 	}
 
     @OnlyIn(Dist.CLIENT)
-	public static boolean shouldRenderFace(BlockState state, BlockGetter world, BlockPos from, Direction dir) {
-		return !(world.getBlockState(from).getBlock() instanceof WindowBlock);
+	public boolean skipRendering(BlockState state, BlockState from, Direction dir) {
+		return (from.getBlock() instanceof WindowBlock);
 	}
 
     @OnlyIn(Dist.CLIENT)
