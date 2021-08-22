@@ -329,7 +329,6 @@ public class NekoShapedRecipe extends CustomRecipe
 	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>>
 			implements RecipeSerializer<NekoShapedRecipe> {
 		public NekoShapedRecipe fromJson(ResourceLocation id, JsonObject json) {
-            System.out.println("Reading Recipe " + id + " from Json");
 			String s = GsonHelper.getAsString(json, "group", "");
 			Map<String, Ingredient> ingredientKeys = NekoShapedRecipe
 					.keyFromJson(GsonHelper.getAsJsonObject(json, "key"));

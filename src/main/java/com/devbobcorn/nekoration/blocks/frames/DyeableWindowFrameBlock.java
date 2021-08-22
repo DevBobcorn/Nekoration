@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
-import com.devbobcorn.nekoration.blocks.ModBlockTags;
+import com.devbobcorn.nekoration.blocks.WindowBlock;
 import com.devbobcorn.nekoration.blocks.states.FramePart;
 import com.devbobcorn.nekoration.blocks.states.HorizontalConnection;
 import com.devbobcorn.nekoration.blocks.states.ModStateProperties;
@@ -33,8 +33,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-
+import net.minecraftforge.common.Tags;
 
 public class DyeableWindowFrameBlock extends DyeableHorizontalBlock {
 	protected static Double thickness = 6.0D;
@@ -84,7 +83,7 @@ public class DyeableWindowFrameBlock extends DyeableHorizontalBlock {
 	}
 
 	private boolean checkWindowBlock(BlockState state){
-		return state.getMaterial() == Material.AIR || state.is(ModBlockTags.WINDOWS);
+		return state.getMaterial() == Material.AIR || state.getBlock() instanceof WindowBlock || state.is(Tags.Blocks.GLASS) || state.is(Tags.Blocks.GLASS_PANES);
 	}
 
 	private boolean checkFrameBlock(BlockState state){

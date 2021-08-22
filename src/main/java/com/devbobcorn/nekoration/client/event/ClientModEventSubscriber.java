@@ -225,7 +225,7 @@ public final class ClientModEventSubscriber {
 			if (view == null || pos == null || !(state.getBlock() instanceof WindowBlock))
 				return NekoColors.getWoodenColorOrBrown(2);
 			return NekoColors.getWoodenColorOrBrown(state.getValue(WindowBlock.COLOR));
-		}, ModBlocks.WINDOW_ARCH.get(), ModBlocks.WINDOW_CROSS.get(), ModBlocks.WINDOW_SHADE.get(),
+		}, ModBlocks.WINDOW_SIMPLE.get(), ModBlocks.WINDOW_ARCH.get(), ModBlocks.WINDOW_CROSS.get(), ModBlocks.WINDOW_SHADE.get(),
 				ModBlocks.WINDOW_LANCET.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
@@ -276,7 +276,7 @@ public final class ClientModEventSubscriber {
 		event.getItemColors().register((stack, tintIndex) -> {
 			return DyeableWoodenBlockItem.getColor(stack).getColor();
 		}, 
-		ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
+		ModBlocks.WINDOW_SIMPLE.get().asItem(), ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
 		ModBlocks.WINDOW_SHADE.get().asItem(), ModBlocks.WINDOW_LANCET.get().asItem(),
 		ModBlocks.EASEL_MENU.get().asItem(), ModBlocks.EASEL_MENU_WHITE.get().asItem());
 

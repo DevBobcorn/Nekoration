@@ -2,13 +2,16 @@ package com.devbobcorn.nekoration.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -80,20 +83,49 @@ public class DyeableDoorBlock extends DoorBlock {
 			case NORTH:
 				return flag ? NORTH_AABB : (flag1 ? WEST_AABB : EAST_AABB);
 		}
-	 }
+	}
+
+	private Block getTallerOne(Block door){
+		if (door == ModBlocks.DOOR_1.get())
+			return ModBlocks.DOOR_TALL_1.get();
+		if (door == ModBlocks.DOOR_2.get())
+			return ModBlocks.DOOR_TALL_2.get();
+		if (door == ModBlocks.DOOR_3.get())
+			return ModBlocks.DOOR_TALL_3.get();
+		return ModBlocks.DOOR_TALL_1.get();
+	}
 
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
 			BlockHitResult hit) {
 		ItemStack itemStack = player.getItemInHand(hand);
-		if (world.isClientSide) {
-			return (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) ? InteractionResult.SUCCESS
-					: super.use(state, world, pos, player, hand, hit);
-		}
-		
+
 		if (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) {
 			world.setBlock(pos, state.setValue(COLOR, VanillaCompat.COLOR_ITEMS.get(itemStack.getItem())), 3);
-			return InteractionResult.CONSUME;
+			return InteractionResult.sidedSuccess(world.isClientSide);
 		}
+
+		if (itemStack.getItem() == Items.BONE_MEAL && !isTall){
+			// Make it grow... LOL
+			Direction facing = state.getValue(FACING);
+			DoorHingeSide hinge = state.getValue(HINGE);
+			boolean open = state.getValue(OPEN);
+			boolean powered = state.getValue(POWERED);
+			int color = state.getValue(COLOR);
+			Block block = getTallerOne(state.getBlock());
+			BlockState bs = block.defaultBlockState().setValue(FACING, facing).setValue(HINGE, hinge).setValue(OPEN, open).setValue(POWERED, powered).setValue(COLOR, color).setValue(HALF, DoubleBlockHalf.LOWER);
+			if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+				world.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3, 0); // Prevent Droppings...
+				world.setBlock(pos, bs, 3);
+				world.setBlock(pos.above(), bs.setValue(HALF, DoubleBlockHalf.UPPER), 3);
+			} else {
+				world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3, 0); // Prevent Droppings...
+				world.setBlock(pos.below(), bs, 3);
+				world.setBlock(pos, bs.setValue(HALF, DoubleBlockHalf.UPPER), 3);
+			}
+			world.addParticle(ParticleTypes.EXPLOSION_EMITTER, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+			return InteractionResult.sidedSuccess(world.isClientSide);
+		}
+
 		return super.use(state, world, pos, player, hand, hit);
 	}
 
