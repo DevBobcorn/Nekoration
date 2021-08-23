@@ -34,8 +34,7 @@ public class Nekoration {
         LOGGER.info("Meow~~ Miaow~~~"); //Translation: Hello World!
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-
-		//final ModLoadingContext modLoadingContext = ModLoadingContext.get();
+		
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		ModBlocks.BLOCKS.register(modEventBus);

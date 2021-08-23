@@ -7,6 +7,7 @@ import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
+import com.devbobcorn.nekoration.utils.VoxelShapeHighlighter;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -56,9 +57,9 @@ public class PaletteScreen extends Screen {
     public PaletteScreen(InteractionHand hand, byte active, Color[] oldColors) {
         super(Component.nullToEmpty("PALETTE"));
         this.hand = hand;
-        this.activeSlot = active;
         this.colors = oldColors;
         tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_color_info", "'E'");
+        setActiveSlot(active);
     }
 
     protected void init() {
@@ -70,6 +71,8 @@ public class PaletteScreen extends Screen {
 	@Override
     public void onClose() {
 		try {
+            // Reset Highlight Color...
+            VoxelShapeHighlighter.PaletteColor = colors[activeSlot];
 			// Update Color Data...
             int[] cls = new int[6];
             for (int idx = 0;idx < 6;idx++)
@@ -187,16 +190,20 @@ public class PaletteScreen extends Screen {
             int t = this.topPos  + 13;
             int b = t + 16;
             if (x >= l && x <= r && y >= t && y <= b && this.activeSlot != idx){
-                this.activeSlot = (byte)idx;
-                // And also update that hue picker & color map...
-                Color nw = colors[idx];
-                float[] fl = Color.RGBtoHSB(nw.getRed(), nw.getGreen(), nw.getBlue(), null); // Hue, Saturation, Value(or to say Brightness)...
-                this.huePos = HUE_TOP + (int)((1.0F - fl[0]) * HUE_HEIGHT);
-                this.colorMapColor = Color.getHSBColor(fl[0], 1.0F, 1.0F);
+                setActiveSlot(idx);
                 return true;
             }
         }
         return false;
+    }
+
+    private void setActiveSlot(int slot){
+        this.activeSlot = (byte)slot;
+        // And also update that hue picker & color map...
+        Color nw = colors[slot];
+        float[] fl = Color.RGBtoHSB(nw.getRed(), nw.getGreen(), nw.getBlue(), null); // Hue, Saturation, Value(or to say Brightness)...
+        this.huePos = HUE_TOP + (int)((1.0F - fl[0]) * HUE_HEIGHT);
+        this.colorMapColor = Color.getHSBColor(fl[0], 1.0F, 1.0F);
     }
 
     private void getColor(double x, double y){
