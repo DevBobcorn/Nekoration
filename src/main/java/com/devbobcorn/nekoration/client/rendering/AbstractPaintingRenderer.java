@@ -5,13 +5,11 @@ import java.io.Closeable;
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.entities.PaintingData;
 import com.mojang.blaze3d.platform.NativeImage;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -30,7 +28,6 @@ public abstract class AbstractPaintingRenderer implements Closeable {
             // We don't need textures when rendering the artwork, so we use another RenderType(PAINTING),
 			// Which uses vertices which don't have uv data but need rgb color values...
 			// Get the VertexBuffer for Image Rendering...
-            RenderSystem.setShader(() -> GameRenderer.getPositionColorLightmapShader());
             VertexConsumer vb = buffers.getBuffer(RenderTypeHelper.paintingPixels());
             int[] color;
             for (short posi = 0;posi < 16;posi++)
@@ -60,7 +57,6 @@ public abstract class AbstractPaintingRenderer implements Closeable {
 
         public void render(PoseStack stack, Matrix4f pose, Matrix3f normal, MultiBufferSource buffers, PaintingData data, short blocHor, short blocVer, float left, float bottom, int light){
             // a painting from its texture image...
-            RenderSystem.setShader(() -> GameRenderer.getPositionColorTexLightmapShader());
             VertexConsumer vb = buffers.getBuffer(renderType);
             
             short blocHorCount = (short)(data.getWidth() / 16);

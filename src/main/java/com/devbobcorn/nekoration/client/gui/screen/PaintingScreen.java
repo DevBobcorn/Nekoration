@@ -64,8 +64,10 @@ public class PaintingScreen extends Screen {
 
     private final int oldHash;
 
-    private double hor = 0.0D, ver = 0.0D;
-    private int pixsize = 8;
+    // Used on Client-Side only
+    private static double hor = 0.0D, ver = 0.0D;
+    private static int pixsize = 8;
+    private static int lastEdited = 0;
 
     private TranslatableComponent tipMessage;
 
@@ -86,6 +88,11 @@ public class PaintingScreen extends Screen {
         paintingHeight = painting.data.getHeight();
         paintingData.imageReady = false;
         oldHash = paintingData.getPaintingHash();
+        if (oldHash != lastEdited) {
+            // Reset editor window position and scale...
+            hor = ver = 0.0D;
+            pixsize = 8;
+        } // Or if we're editing the painting this client last edited, just keep the editor's transforms.
         tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_debug_info", "'E'");
     }
 
@@ -110,6 +117,8 @@ public class PaintingScreen extends Screen {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+        // Update last edited...
+        lastEdited = paintingData.getPaintingHash();
         super.onClose();
     }
 

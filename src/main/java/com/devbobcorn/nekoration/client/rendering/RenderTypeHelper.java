@@ -2,10 +2,12 @@ package com.devbobcorn.nekoration.client.rendering;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderStateShard.CullStateShard;
@@ -23,23 +25,25 @@ public class RenderTypeHelper {
     public static final DepthTestStateShard DEPTH_ALWAYS = new RenderStateShard.DepthTestStateShard("always", GL11.GL_ALWAYS);
     public static final WriteMaskStateShard COLOR_WRITE = new RenderStateShard.WriteMaskStateShard(/*color*/true, /*depth*/false);
     public static final TransparencyStateShard TRANSLUCENT = new RenderStateShard.TransparencyStateShard("translucent", RenderTypeHelper::enableTransparency, RenderTypeHelper::disableTransparency);
+    public static final TransparencyStateShard NO_TRANSPARENCY = new RenderStateShard.TransparencyStateShard("translucent", RenderTypeHelper::enableTransparency, RenderTypeHelper::disableTransparency);
+    public static final RenderStateShard.OverlayStateShard OVERLAY = new RenderStateShard.OverlayStateShard(true);
+
+    public static final RenderStateShard.ShaderStateShard IMAGE_SHADER = new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeEntitySolidShader);
+    public static final RenderStateShard.ShaderStateShard PIXEL_SHADER = new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeLeashShader);
 
     private static RenderType PAINTING_PIXELS =
         RenderType.create("painting_pixels",
             DefaultVertexFormat.POSITION_COLOR_LIGHTMAP, Mode.QUADS,
             /*buffer size*/256, /*no delegate*/false, /*need sorting data*/true,
-            RenderType.CompositeState.builder().setLightmapState(ENABLE_LIGHTMAP).setTransparencyState(TRANSLUCENT).createCompositeState(/*outline*/false));
+            RenderType.CompositeState.builder().setShaderState(PIXEL_SHADER).setLightmapState(ENABLE_LIGHTMAP).setTransparencyState(TRANSLUCENT).createCompositeState(/*outline*/false));
 
     public static RenderType paintingPixels(){
         return PAINTING_PIXELS;
     }
 
     public static RenderType paintingTexture(ResourceLocation location){
-        return RenderType.create("painting_texture",
-            DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, Mode.QUADS,
-            /*buffer size*/256, /*no delegate*/false, /*need sorting data*/true,
-            RenderType.CompositeState.builder().setLightmapState(ENABLE_LIGHTMAP).setTransparencyState(TRANSLUCENT)
-                .setTextureState(new RenderStateShard.TextureStateShard(location, /*blur*/false, /*mipmap*/true)).createCompositeState(/*outline*/false));
+        RenderType.CompositeState rendertype$compositestate = RenderType.CompositeState.builder().setShaderState(IMAGE_SHADER).setTextureState(new RenderStateShard.TextureStateShard(location, /*blur*/false, /*mipmap*/true)).setTransparencyState(NO_TRANSPARENCY).setLightmapState(ENABLE_LIGHTMAP).setOverlayState(OVERLAY).createCompositeState(true);
+        return RenderType.create("painting", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, /*buffer size*/256, /*no delegate*/false, /*need sorting data*/true, rendertype$compositestate);
     }
 
     private static void enableTransparency() {
