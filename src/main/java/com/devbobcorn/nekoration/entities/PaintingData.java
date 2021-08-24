@@ -1,6 +1,7 @@
 package com.devbobcorn.nekoration.entities;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,7 +12,9 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import com.devbobcorn.nekoration.NekoColors;
+import com.devbobcorn.nekoration.client.rendering.LocalImageLoader;
 import com.devbobcorn.nekoration.utils.PixelPos;
+import com.mojang.blaze3d.platform.NativeImage;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -137,6 +140,35 @@ public class PaintingData {
             return true;
         } catch (IOException e) {
             imageReady = false;
+            return false;
+        }
+    }
+
+    public boolean load(String name){
+        Minecraft minecraft = Minecraft.getInstance();
+        try {
+            final File file = new File(minecraft.gameDirectory, "nekopaint");
+            if (!file.exists())
+                throw new IOException("Could not find folder");
+            
+            final File finalFile = new File(file, name + ".png");
+            if (!finalFile.exists())
+                throw new IOException("Could not find file");
+
+            byte[] arr = LocalImageLoader.read(finalFile.getAbsolutePath());
+            NativeImage image = NativeImage.read(new ByteArrayInputStream(arr));
+            for (int i = 0;i < Math.min(image.getWidth(), width);i++)
+                for (int j = 0;j < Math.min(image.getHeight(), height);j++){
+                    int color = image.getPixelRGBA(i, j);
+                    pixels[j * width + i] = (color & 0xFF00FF00) + ((color & 0xFF0000) >> 16) + ((color & 0xFF) << 16);
+                }
+            recalculateComposite();
+            System.out.println(String.format("Painting '%s' Loaded: %s x %s", name, image.getWidth(), image.getHeight()));
+            return true;
+        } catch (IOException e) {
+            //e.printStackTrace();
+            MutableComponent component = new TextComponent(name);
+            minecraft.player.displayClientMessage(new TranslatableComponent("gui.nekoration.message.painting_load_failed", component), false);
             return false;
         }
     }

@@ -29,6 +29,9 @@ public abstract class AbstractPaintingRenderer implements Closeable {
 			// Which uses vertices which don't have uv data but need rgb color values...
 			// Get the VertexBuffer for Image Rendering...
             VertexConsumer vb = buffers.getBuffer(RenderTypeHelper.paintingPixels());
+            // Compensate for the obvious lighting difFerence caused by different shaders...
+            // TODO: There might be a better way to do this.
+            light = Math.max(0, light - 0x300000);
             int[] color;
             for (short posi = 0;posi < 16;posi++)
                 for (short posj = 0;posj < 16;posj++) {

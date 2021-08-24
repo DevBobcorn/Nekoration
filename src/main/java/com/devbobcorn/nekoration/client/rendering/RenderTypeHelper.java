@@ -3,7 +3,6 @@ package com.devbobcorn.nekoration.client.rendering;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 
 import org.lwjgl.opengl.GL11;
 
@@ -28,14 +27,20 @@ public class RenderTypeHelper {
     public static final TransparencyStateShard NO_TRANSPARENCY = new RenderStateShard.TransparencyStateShard("translucent", RenderTypeHelper::enableTransparency, RenderTypeHelper::disableTransparency);
     public static final RenderStateShard.OverlayStateShard OVERLAY = new RenderStateShard.OverlayStateShard(true);
 
+    public static final RenderStateShard.EmptyTextureStateShard NO_TEXTURE = new RenderStateShard.EmptyTextureStateShard(() -> { }, () -> { });
+
     public static final RenderStateShard.ShaderStateShard IMAGE_SHADER = new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeEntitySolidShader);
     public static final RenderStateShard.ShaderStateShard PIXEL_SHADER = new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeLeashShader);
 
-    private static RenderType PAINTING_PIXELS =
-        RenderType.create("painting_pixels",
-            DefaultVertexFormat.POSITION_COLOR_LIGHTMAP, Mode.QUADS,
-            /*buffer size*/256, /*no delegate*/false, /*need sorting data*/true,
-            RenderType.CompositeState.builder().setShaderState(PIXEL_SHADER).setLightmapState(ENABLE_LIGHTMAP).setTransparencyState(TRANSLUCENT).createCompositeState(/*outline*/false));
+    public static final RenderStateShard.CullStateShard NO_CULL = new RenderStateShard.CullStateShard(false);
+
+    //private static RenderType PAINTING_PIXELS =
+    //    RenderType.create("painting_pixels",
+    //        DefaultVertexFormat.POSITION_COLOR_LIGHTMAP, Mode.QUADS,
+    //        /*buffer size*/256, /*no delegate*/false, /*need sorting data*/true,
+    //        RenderType.CompositeState.builder().setShaderState(PIXEL_SHADER).setLightmapState(ENABLE_LIGHTMAP).setTransparencyState(TRANSLUCENT).createCompositeState(/*outline*/false));
+
+    private static RenderType PAINTING_PIXELS = RenderType.create("painting_pixels", DefaultVertexFormat.POSITION_COLOR_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, false, RenderType.CompositeState.builder().setShaderState(PIXEL_SHADER).setTextureState(NO_TEXTURE).setCullState(NO_CULL).setLightmapState(ENABLE_LIGHTMAP).createCompositeState(false));
 
     public static RenderType paintingPixels(){
         return PAINTING_PIXELS;

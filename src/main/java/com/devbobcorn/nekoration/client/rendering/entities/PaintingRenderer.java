@@ -126,18 +126,18 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 					}
 				} else rd = PaintingRendererManager.PixelsRenderer();
 				rd.render(stack, pose, normal, buffers, entity.data, blocHor, blocVer, left, bottom, light);
-				// Draw Debug Text...
-				stack.pushPose();
-				stack.translate(-LEFT - 1.0D, TOP + 3.0D, -0.6D);
-				stack.scale(-0.2F, -0.2F, 0.2F);
-				//font.draw(stack, "Ceci n'est pas une painting!", 1.0F, 1.0F, 0xFFFFFF);
-				font.draw(stack, (entity.data.imageReady) ? "Rendered with Image" : "Rendered Pixel-by-Pixel", 1.0F, 1.0F, 0xFFFFFF);
-				stack.translate(0.0D, -10.0D, 0.0D);
-				font.draw(stack, "#" + String.valueOf(entity.data.getPaintingHash()), 1.0F, 1.0F, 0xFFFFFF);
-				stack.popPose();
 			}
 		}
-
+		// Draw Debug Text...
+		stack.pushPose();
+		stack.translate(-LEFT - 1.0D, TOP + 3.0D, -0.6D);
+		stack.scale(-0.2F, -0.2F, 0.2F);
+		//font.draw(stack, "Ceci n'est pas une painting!", 1.0F, 1.0F, 0xFFFFFF);
+		font.draw(stack, (entity.data.imageReady) ? "Rendered with Image" : "Rendered Pixel-by-Pixel", 1.0F, 1.0F, 0xFFFFFF);
+		stack.translate(0.0D, -10.0D, 0.0D);
+		int light = LevelRenderer.getLightColor(entity.level, entity.getPos());
+		font.draw(stack, "#" + String.valueOf(entity.data.getPaintingHash()) + String.format(" L: %x", light), 1.0F, 1.0F, 0xFFFFFF);
+		stack.popPose();
 	}
 
 	private static void vertexFrame(Matrix4f pose, Matrix3f normal, VertexConsumer vertexBuilder, float x, float y, float u, float v, float z, int nx, int ny, int nz, int light) {

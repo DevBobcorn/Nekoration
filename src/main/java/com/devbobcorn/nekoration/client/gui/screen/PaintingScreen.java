@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
+import com.devbobcorn.nekoration.client.gui.widget.IconButton;
 import com.devbobcorn.nekoration.entities.PaintingData;
 import com.devbobcorn.nekoration.entities.PaintingEntity;
 import com.devbobcorn.nekoration.items.PaletteItem;
@@ -17,14 +18,17 @@ import com.mojang.math.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 public class PaintingScreen extends Screen {
     public static final ResourceLocation BACKGROUND = new ResourceLocation(Nekoration.MODID, "textures/gui/painting.png");
+    public static final ResourceLocation ICONS = new ResourceLocation(Nekoration.MODID, "textures/gui/icons.png");
 
     public static final int PAINTING_LEFT = 9;
     public static final int PAINTING_TOP = 38;
@@ -64,12 +68,18 @@ public class PaintingScreen extends Screen {
 
     private final int oldHash;
 
+    private EditBox nameInput;
+    private boolean nameError;
+    private IconButton[] buttons = new IconButton[3];
+
     // Used on Client-Side only
     private static double hor = 0.0D, ver = 0.0D;
     private static int pixsize = 8;
     private static int lastEdited = 0;
 
     private TranslatableComponent tipMessage;
+    private static final String[] buttonKeys = { "save_painting", "save_painting_content", "load_image", "clear" };
+    private TranslatableComponent[] buttonMessages = new TranslatableComponent[buttonKeys.length];
 
     public PaintingScreen(int pt) {
         this(pt, (byte)0, PaletteItem.DEFAULT_COLOR_SET);
@@ -93,13 +103,78 @@ public class PaintingScreen extends Screen {
             hor = ver = 0.0D;
             pixsize = 8;
         } // Or if we're editing the painting this client last edited, just keep the editor's transforms.
-        tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_debug_info", "'E'");
+        tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_debug_info", "'F1'");
+        for (int idx = 0;idx < buttonKeys.length;idx++)
+            buttonMessages[idx] = new TranslatableComponent("gui.nekoration.button." + buttonKeys[idx]);
+    }
+
+    private String getSaveName(){
+        if (nameInput.getValue().equals(""))
+            return String.valueOf(paintingData.getPaintingHash());
+        else return nameInput.getValue();
     }
 
     protected void init() {
         super.init();
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (this.height - this.imageHeight) / 2;
+        this.nameInput = new EditBox(this.font, leftPos + 36, topPos - 18, 120, 16, new TranslatableComponent("gui.nekoration.color"));
+        this.nameInput.setResponder(input -> {
+            if (nameError) {
+                this.nameInput.setTextColor(0xFFFFFF); // No more Red Error text if text changed.
+                nameError = false;
+                // Get the Load Button back...
+                buttons[2].setIcon(ICONS, 32, 16);
+                buttons[2].setMessage(buttonMessages[2]);
+            }
+        });
+        buttons[0] = new IconButton(leftPos + 160, topPos - 20, buttonMessages[0], button -> {
+            // Save Image...
+            try{
+                paintingData.save("nekopaint", getSaveName(), true, true);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+		}, ICONS, 0, 16);
+        buttons[1] = new IconButton(leftPos + 180, topPos - 20, buttonMessages[1], button -> {
+            // Save Image Content...
+            try{
+                paintingData.save("nekopaint", getSaveName(), false, true);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+		}, ICONS, 16, 16);
+        buttons[2] = new IconButton(leftPos + 200, topPos - 20, buttonMessages[2], button -> {
+            if (nameError) { // It's a 'Clear' Button
+                nameInput.setValue("");
+                nameInput.setTextColor(0xFFFFFF);
+                nameError = false;
+                // Get the Load Button back...
+                buttons[2].setIcon(ICONS, 32, 16);
+                buttons[2].setMessage(buttonMessages[2]);
+                return;
+            }
+			// Load Image File...
+            if (nameInput.getValue().equals("")) {
+                nameInput.setValue("Input the name here...");
+                nameError = true;
+            } else nameError = !paintingData.load(nameInput.getValue());
+            if (nameError) {
+                // Make the text Red...
+                nameInput.setTextColor(0xFF0000);
+                // Turn the 3rd button into a clear button...
+                buttons[2].setIcon(ICONS, 32, 0);
+                buttons[2].setMessage(new TextComponent("Clear"));
+            }
+		}, ICONS, 32, 16);
+        this.addWidget(nameInput);
+        for (int btn = 0;btn < 3;btn++)
+            this.addWidget(buttons[btn]);
+    }
+
+    @Override
+    public void tick() {
+        nameInput.tick();
     }
 
 	@Override
@@ -125,7 +200,7 @@ public class PaintingScreen extends Screen {
 	@Override
 	@SuppressWarnings({"resource"})
     public boolean keyPressed(int keyCode, int scanCode, int modifier) {
-		if (keyCode == GLFW.GLFW_KEY_E) {
+		if (keyCode == GLFW.GLFW_KEY_F1) {
 			// I DONT GET IT, WHY THE HELL PRESSING 'E' CAN CLOSE THE SCREEN...
             this.renderColorText = !this.renderColorText;
             return true;
@@ -133,25 +208,8 @@ public class PaintingScreen extends Screen {
             // Switch Tool...
             activeTool = (byte)((activeTool + 1) % TOOLS_NUM);
             return true;
-        } else if (keyCode == GLFW.GLFW_KEY_A){
-            // Save Image...
-            try{
-                paintingData.save("paintings/canvas", String.valueOf(paintingData.getPaintingHash()), true, true);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            return true;
-        } else if (keyCode == GLFW.GLFW_KEY_S){
-            // Save Image Content...
-            try{
-                paintingData.save("paintings/content", String.valueOf(paintingData.getPaintingHash()), false, true);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            return true;
         } else if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).closeContainer();
-            //return true;
         }
         return super.keyPressed(keyCode, scanCode, modifier);
     }
@@ -205,7 +263,17 @@ public class PaintingScreen extends Screen {
         this.blit(stack, i + OPACITY_LEFT - 1, opacityPos + this.topPos - 1, 0, 240, 8, 4); // Opacity Cursor...
         // Step 7: Render Active Tool Icon...
         this.blit(stack, i + TOOLS_LEFT + activeTool * 17, j + TOOLS_TOP, 32 + activeTool * 16, 208, 16, 16);
-        // Step 8: Render Debug Text...
+        // Step 8: Render Import/Export Controls...
+        nameInput.render(stack, x, y, partialTicks);
+        for (int btn = 0;btn < 3;btn++) {
+            buttons[btn].render(stack, x, y, partialTicks);
+        }
+        for (int tip = 0;tip < 3;tip++) {
+            if(buttons[tip].isMouseOver(x, y)) {
+                renderTooltip(stack, buttons[tip].getMessage(), x, y);
+            }
+        }
+        // Step 9: Render Debug Text...
         stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
         stack.translate(j + 5, -i - 265, 0);
         //this.fillGradient(stack, i, j, i + 128, j + 128, col, black);
