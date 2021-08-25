@@ -34,12 +34,6 @@ public class RenderTypeHelper {
 
     public static final RenderStateShard.CullStateShard NO_CULL = new RenderStateShard.CullStateShard(false);
 
-    //private static RenderType PAINTING_PIXELS =
-    //    RenderType.create("painting_pixels",
-    //        DefaultVertexFormat.POSITION_COLOR_LIGHTMAP, Mode.QUADS,
-    //        /*buffer size*/256, /*no delegate*/false, /*need sorting data*/true,
-    //        RenderType.CompositeState.builder().setShaderState(PIXEL_SHADER).setLightmapState(ENABLE_LIGHTMAP).setTransparencyState(TRANSLUCENT).createCompositeState(/*outline*/false));
-
     private static RenderType PAINTING_PIXELS = RenderType.create("painting_pixels", DefaultVertexFormat.POSITION_COLOR_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, false, RenderType.CompositeState.builder().setShaderState(PIXEL_SHADER).setTextureState(NO_TEXTURE).setCullState(NO_CULL).setLightmapState(ENABLE_LIGHTMAP).createCompositeState(false));
 
     public static RenderType paintingPixels(){

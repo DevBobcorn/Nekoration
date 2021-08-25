@@ -108,7 +108,7 @@ public class PaintingData {
         if (pathCheck.isDirectory()){
             final File fileCheck = new File(pathCheck, getPaintingHash() + ".png");
             if (fileCheck.exists()){
-                System.out.println("Image #" + getPaintingHash() + " already cached.");
+                System.out.println("Painting #" + getPaintingHash() + " already cached.");
                 return true;
             }
         }
@@ -125,16 +125,16 @@ public class PaintingData {
                     // The composite layer does not contain alpha values, and we need to make it fully opaque here...
                     image.setRGB(i, j, composite ? 0xff000000 + getCompositeAt(i, j) : getPixelAt(i, j));
                 }
-            File file = new File(minecraft.gameDirectory, path);
-            if (!file.exists() && !file.mkdir())
+            File folder = new File(minecraft.gameDirectory, path);
+            if (!folder.exists() && !folder.mkdir())
                 throw new IOException("Could not create folder");
-            final File finalFile = new File(file, name + ".png");
-            System.out.println("Image cached to " + finalFile.getAbsolutePath());
-            if (!ImageIO.write(image, "png", finalFile))
+            final File file = new File(folder, name + ".png");
+            System.out.println("Painting cached to " + file.getAbsolutePath());
+            if (!ImageIO.write(image, "png", file))
                 throw new IOException("Could not encode image as png!");
             if (showMessage){
-                MutableComponent component = new TextComponent(finalFile.getName());
-                component = component.withStyle(ChatFormatting.UNDERLINE).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, finalFile.getAbsolutePath())));
+                MutableComponent component = new TextComponent(file.getName());
+                component = component.withStyle(ChatFormatting.UNDERLINE).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath())));
                 minecraft.player.displayClientMessage(new TranslatableComponent("gui.nekoration.message." + (composite ? "painting_saved" : "painting_content_saved"), component), false);
             }
             return true;
@@ -144,18 +144,18 @@ public class PaintingData {
         }
     }
 
-    public boolean load(String name){
+    public boolean load(String path, String name){
         Minecraft minecraft = Minecraft.getInstance();
         try {
-            final File file = new File(minecraft.gameDirectory, "nekopaint");
-            if (!file.exists())
+            final File folder = new File(minecraft.gameDirectory, path);
+            if (!folder.exists())
                 throw new IOException("Could not find folder");
             
-            final File finalFile = new File(file, name + ".png");
-            if (!finalFile.exists())
+            final File file = new File(folder, name + ".png");
+            if (!file.exists())
                 throw new IOException("Could not find file");
 
-            byte[] arr = LocalImageLoader.read(finalFile.getAbsolutePath());
+            byte[] arr = LocalImageLoader.read(file.getAbsolutePath());
             NativeImage image = NativeImage.read(new ByteArrayInputStream(arr));
             for (int i = 0;i < Math.min(image.getWidth(), width);i++)
                 for (int j = 0;j < Math.min(image.getHeight(), height);j++){
@@ -167,6 +167,7 @@ public class PaintingData {
             return true;
         } catch (IOException e) {
             //e.printStackTrace();
+            System.out.println(e.getMessage());
             MutableComponent component = new TextComponent(name);
             minecraft.player.displayClientMessage(new TranslatableComponent("gui.nekoration.message.painting_load_failed", component), false);
             return false;
@@ -179,7 +180,7 @@ public class PaintingData {
         if (path.isDirectory()){
             final File file = new File(path, target + ".png");
             if (file.delete()){
-                System.out.println("Image #" + target + " cache cleared.");
+                System.out.println("Painting #" + target + " cache cleared.");
                 return true;
             }
         }
@@ -221,6 +222,20 @@ public class PaintingData {
     public void setPixels(int[] pixels){
         if (pixels.length == this.pixels.length)
             this.pixels = pixels;
+        if (isClient)
+            recalculateComposite();
+    }
+    
+    public void setAreaPixels(byte partX, byte partY, byte partW, byte partH, int[] pixels){
+        for (int i = 0;i < partW * 16;i++)
+            for (int j = 0;j < partH * 16;j++) {
+                int x = partX * 3 * 16 + i;
+                int y = partY * 3 * 16 + j;
+                if (!isLegal(x, y))
+                    System.out.println(x + " 0.0 " + y);
+                this.pixels[y * width + x] = pixels[j * partW * 16 + i];
+                // Painting Coord.         => Part Coord.
+            }
         if (isClient)
             recalculateComposite();
     }

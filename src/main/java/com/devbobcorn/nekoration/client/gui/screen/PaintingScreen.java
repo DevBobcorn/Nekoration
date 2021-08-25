@@ -22,7 +22,6 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
@@ -69,7 +68,7 @@ public class PaintingScreen extends Screen {
     private final int oldHash;
 
     private EditBox nameInput;
-    private boolean nameError;
+    private boolean nameError = false;
     private IconButton[] buttons = new IconButton[3];
 
     // Used on Client-Side only
@@ -108,10 +107,14 @@ public class PaintingScreen extends Screen {
             buttonMessages[idx] = new TranslatableComponent("gui.nekoration.button." + buttonKeys[idx]);
     }
 
-    private String getSaveName(){
-        if (nameInput.getValue().equals(""))
-            return String.valueOf(paintingData.getPaintingHash());
-        else return nameInput.getValue();
+    private String[] getFileLocation(){
+        String file = nameInput.getValue().trim();
+        if (file.equals(""))
+            return new String[]{ "nekopaint", String.valueOf(paintingData.getPaintingHash()) };
+        int slashIdx = Math.max(file.lastIndexOf("/"), file.lastIndexOf("\\"));
+        if (slashIdx == -1)
+            return new String[]{ "nekopaint", file };
+        else return new String[]{ "nekopaint/" + file.substring(0, slashIdx + 1), file.substring(slashIdx + 1) };
     }
 
     protected void init() {
@@ -131,7 +134,8 @@ public class PaintingScreen extends Screen {
         buttons[0] = new IconButton(leftPos + 160, topPos - 20, buttonMessages[0], button -> {
             // Save Image...
             try{
-                paintingData.save("nekopaint", getSaveName(), true, true);
+                String[] location = getFileLocation();
+                paintingData.save(location[0], location[1], true, true);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -139,7 +143,8 @@ public class PaintingScreen extends Screen {
         buttons[1] = new IconButton(leftPos + 180, topPos - 20, buttonMessages[1], button -> {
             // Save Image Content...
             try{
-                paintingData.save("nekopaint", getSaveName(), false, true);
+                String[] location = getFileLocation();
+                paintingData.save(location[0], location[1], false, true);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -158,13 +163,16 @@ public class PaintingScreen extends Screen {
             if (nameInput.getValue().equals("")) {
                 nameInput.setValue("Input the name here...");
                 nameError = true;
-            } else nameError = !paintingData.load(nameInput.getValue());
+            } else {
+                String[] location = getFileLocation();
+                nameError = !paintingData.load(location[0], location[1]);
+            }
             if (nameError) {
                 // Make the text Red...
                 nameInput.setTextColor(0xFF0000);
                 // Turn the 3rd button into a clear button...
                 buttons[2].setIcon(ICONS, 32, 0);
-                buttons[2].setMessage(new TextComponent("Clear"));
+                buttons[2].setMessage(buttonMessages[3]);
             }
 		}, ICONS, 32, 16);
         this.addWidget(nameInput);
@@ -183,9 +191,33 @@ public class PaintingScreen extends Screen {
             if (oldHash != paintingData.getPaintingHash()){ // Check if the painting was changed...
                 // Clear obsoleted cache of itself (the Server can't help it to)...
                 paintingData.clearCache(oldHash);
-                // Update Painting Data to the Server, and then the Server will notify clients(including this one) to update their cache...
-                final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId, paintingData.getPixels(), paintingData.getPaintingHash());
-                ModPacketHandler.CHANNEL.sendToServer(packet);
+                byte blocW = (byte)(paintingWidth / 16);
+                byte blocH = (byte)(paintingHeight / 16);
+                int partCount = 0;
+                for (byte blocX = 0;blocX < blocW;blocX += 3)
+                    for (byte blocY = 0;blocY < blocH;blocY += 3){
+                        // Prepare a Part of the painting...
+                        byte ptW = (byte)Math.min(blocW - blocX, 3);
+                        byte ptH = (byte)Math.min(blocH - blocY, 3);
+
+                        final int[] partPixels = new int[ptW * 16 * ptH * 16];
+                        // Prepare pixel data for this Part...
+                        for (int i = 0;i < ptW * 16;i++)
+                            for (int j = 0;j < ptH * 16;j++) {
+                                int x = blocX * 16 + i;
+                                int y = blocY * 16 + j;
+                                partPixels[j * ptW * 16 + i] = paintingData.getPixelAt(x, y);
+                                // Part Coord.               => Painting Coord.
+                            }
+                        // Update Painting Data to the Server, and then the Server will notify clients(including this one) to update their cache...
+                        //final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId,  paintingData.getPixels(), paintingData.getPaintingHash());
+                        System.out.println(String.format("[%s] Sending Painting(%s) Part: %s, %s (%s x %s)", partCount, paintingData.getPaintingHash(), blocX / 3, blocY / 3, ptW, ptH));
+                        final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId, (byte)(blocX / 3), (byte)(blocY / 3), ptW, ptH, partPixels, paintingData.getPaintingHash());
+                        ModPacketHandler.CHANNEL.sendToServer(packet);
+                        partCount++;
+                    }
+                // Cache on this client...
+                paintingData.cache();
             } else {// Not Edited, still ready...
                 paintingData.imageReady = true;
             }
@@ -434,6 +466,6 @@ public class PaintingScreen extends Screen {
 
     @Override
     public boolean isPauseScreen() {
-        return false; // returns ture by default... interesting...
+        return false; // returns true by default... interesting...
     }
 }

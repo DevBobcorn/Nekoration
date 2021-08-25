@@ -186,11 +186,10 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	}
 
 	@Override
-	public void remove(Entity.RemovalReason reason){
-		super.remove(reason);
-		if (this.level.isClientSide){
-			// Don't forget to Delete the cached Image of it...
-			data.clearCache(data.getPaintingHash());
-		}
+	public void onRemovedFromWorld(){
+		// In 1.17, remove(Entity.RemovalReason reason) is called on server-side only, and this method is instead called on clients...
+		super.onRemovedFromWorld();
+		// Don't forget to Delete the cached Image of it...
+		data.clearCache(data.getPaintingHash());
 	}
 }

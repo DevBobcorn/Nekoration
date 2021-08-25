@@ -12,26 +12,42 @@ import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class S2CUpdatePaintingData {
     public int paintingId;
+    public byte partX;
+    public byte partY;
+    public byte partW;
+    public byte partH;
     public int[] pixels;
     public int compositeHash;
 
-	public S2CUpdatePaintingData(int id, int[] p, int hash) {
+	public S2CUpdatePaintingData(int id, byte x, byte y, byte w, byte h, int[] p, int hash) {
         this.paintingId = id;
+        this.partX = x;
+        this.partY = y;
+        this.partW = w;
+        this.partH = h;
         this.pixels = p;
         this.compositeHash = hash;
 	}
 
 	public static void encode(final S2CUpdatePaintingData msg, final FriendlyByteBuf packetBuffer) {
         packetBuffer.writeInt(msg.paintingId);
+        packetBuffer.writeByte(msg.partX);
+        packetBuffer.writeByte(msg.partY);
+        packetBuffer.writeByte(msg.partW);
+        packetBuffer.writeByte(msg.partH);
         packetBuffer.writeVarIntArray(msg.pixels);
         packetBuffer.writeInt(msg.compositeHash);
 	}
 
 	public static S2CUpdatePaintingData decode(final FriendlyByteBuf packetBuffer) {
         int id = packetBuffer.readInt();
+        byte x = packetBuffer.readByte();
+        byte y = packetBuffer.readByte();
+        byte w = packetBuffer.readByte();
+        byte h = packetBuffer.readByte();
         int[] p = packetBuffer.readVarIntArray();
         int hash = packetBuffer.readInt();
-		return new S2CUpdatePaintingData(id, p, hash);
+		return new S2CUpdatePaintingData(id, x, y, w, h, p, hash);
 	}
 
     @SuppressWarnings("resource")
@@ -46,11 +62,13 @@ public class S2CUpdatePaintingData {
                         // Cached image already obsoleted, clear...
                         pe.data.clearCache(pe.data.getPaintingHash());
                         // Update pixels, meanwhile updating the hash value...
-                        pe.data.setPixels(msg.pixels);
+                        //pe.data.setPixels(msg.pixels);
+                        pe.data.setAreaPixels(msg.partX, msg.partY, msg.partW, msg.partH, msg.pixels);
+                        boolean synced = pe.data.getPaintingHash() == msg.compositeHash;
+                        System.out.println(String.format("Painting %s Synced: %s", msg.compositeHash, synced));
+                        if (synced) // The whole picture synced, then re-cache the updated painting...
+                            pe.data.cache();
                     }
-                    // Then re-cache the updated painting...
-                    pe.data.cache();
-                    System.out.println("Data Synced: " + String.valueOf(pe.data.getPaintingHash() == msg.compositeHash));
                 }
         });
         contextSupplier.get().setPacketHandled(true);

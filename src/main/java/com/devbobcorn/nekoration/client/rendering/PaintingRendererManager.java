@@ -33,7 +33,7 @@ public class PaintingRendererManager {
 
     public static LoadingCache<Integer, AtomicReference<AbstractPaintingRenderer>> PAINTING_RENDERERS = CacheBuilder.newBuilder()
         .<Integer, AtomicReference<AbstractPaintingRenderer>>removalListener(old -> old.getValue().get().close())
-        .expireAfterWrite(600, TimeUnit.SECONDS).build(new CacheLoader<Integer, AtomicReference<AbstractPaintingRenderer>>(){
+        .expireAfterWrite(360000, TimeUnit.SECONDS).build(new CacheLoader<Integer, AtomicReference<AbstractPaintingRenderer>>(){
             @Override
             public AtomicReference<AbstractPaintingRenderer> load(Integer key) throws Exception {
                 try {
