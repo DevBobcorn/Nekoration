@@ -49,15 +49,9 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	}
 
 	public PaintingEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
-		// Constructor 3: the one for client-side, creating instances with data packets
-		// from the Server
+		// Constructor 3: the one for client-side, creating instances with data packets from the Server
 		// Enable by adding 'setCustomClientFactory' when building the entity type
 		super(ModEntityType.PAINTING_TYPE, world);
-	}
-
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		// this.entityData.define(Dir, (byte)0);
 	}
 
 	@Override
@@ -123,14 +117,12 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	public void dropItem(Entity entity) {
 		if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 			this.playSound(SoundEvents.PAINTING_BREAK, 1.0F, 1.0F);
-			/*
 			if (entity instanceof Player) {
 				Player playerentity = (Player) entity;
-				if (playerentity.abilities.instabuild) {
+				if (playerentity.getAbilities().instabuild) {
 					return;
 				}
 			}
-			*/ // TODO
 			this.spawnAtLocation(ModItems.PAINTING.get());
 		}
 	}

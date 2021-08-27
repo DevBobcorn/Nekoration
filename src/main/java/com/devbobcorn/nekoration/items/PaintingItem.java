@@ -32,27 +32,28 @@ public class PaintingItem extends Item {
 		BlockPos blockpos = ctx.getClickedPos();
 		Direction direction = ctx.getClickedFace();
 		BlockPos blockpos1 = blockpos.relative(direction);
-		Player playerentity = ctx.getPlayer();
+		Player player = ctx.getPlayer();
 		ItemStack stack = ctx.getItemInHand();
-		if (playerentity != null && !this.mayPlace(playerentity, direction, stack, blockpos1)) {
+		if (player != null && !this.mayPlace(player, direction, stack, blockpos1)) {
 			return InteractionResult.FAIL;
 		} else {
 			Level world = ctx.getLevel();
-			PaintingEntity hangingentity;
-			hangingentity = new PaintingEntity(world, blockpos1, direction, (short)(PaintingItem.getWidth(stack) * 16), (short)(PaintingItem.getHeight(stack) * 16));
-			hangingentity.setPos(blockpos1.getX(), blockpos1.getY(), blockpos1.getZ());
+			PaintingEntity painting;
+			painting = new PaintingEntity(world, blockpos1, direction, (short)(PaintingItem.getWidth(stack) * 16), (short)(PaintingItem.getHeight(stack) * 16));
+			painting.setPos(blockpos1.getX(), blockpos1.getY(), blockpos1.getZ());
 
 			CompoundTag compoundnbt = stack.getTag();
 			if (compoundnbt != null) {
-				EntityType.updateCustomEntityTag(world, playerentity, hangingentity, compoundnbt);
+				EntityType.updateCustomEntityTag(world, player, painting, compoundnbt);
 			}
 
-			if (hangingentity.survives()) {
+			if (painting.survives()) {
 				if (!world.isClientSide) {
-					hangingentity.playPlacementSound();
+					painting.playPlacementSound();
 					//hangingentity.recalculateBoundingBox();
-					world.addFreshEntity(hangingentity);
+					world.addFreshEntity(painting);
 				}
+				stack.shrink(1);
 				return InteractionResult.sidedSuccess(world.isClientSide);
 			} else {
 				return InteractionResult.CONSUME;

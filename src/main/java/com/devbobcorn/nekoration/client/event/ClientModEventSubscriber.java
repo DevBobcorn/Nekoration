@@ -17,6 +17,7 @@ import com.devbobcorn.nekoration.client.rendering.blockentities.CustomRenderer;
 import com.devbobcorn.nekoration.client.rendering.blockentities.EaselMenuRenderer;
 import com.devbobcorn.nekoration.client.rendering.entities.PaintingRenderer;
 import com.devbobcorn.nekoration.client.rendering.entities.SeatRenderer;
+import com.devbobcorn.nekoration.client.rendering.entities.WallPaperRenderer;
 import com.devbobcorn.nekoration.entities.ModEntityType;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
@@ -26,6 +27,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -35,6 +37,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -131,6 +134,7 @@ public final class ClientModEventSubscriber {
 		LOGGER.info("BlockEntities Renderers Bound.");
 
 		EntityRenderers.register(ModEntityType.PAINTING_TYPE, PaintingRenderer::new);
+		EntityRenderers.register(ModEntityType.WALLPAPER_TYPE, WallPaperRenderer::new);
 		EntityRenderers.register(ModEntityType.SEAT_TYPE, SeatRenderer::new);
 
 		LOGGER.info("Then Entities Renderers Bound.");
@@ -299,5 +303,16 @@ public final class ClientModEventSubscriber {
 		ModBlocks.HALF_TIMBER_PILLAR_P2.get().asItem());
 
 		LOGGER.info("Item Colors Registered.");
+	}
+
+	private static ModelLayerLocation createLocation(String name, String type) {
+		return new ModelLayerLocation(new ResourceLocation(Nekoration.MODID, name), type);
+	}
+
+	public static final ModelLayerLocation WALLPAPER = createLocation("wallpaper", "main");
+
+	@SubscribeEvent
+	public static void RegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+		event.registerLayerDefinition(WALLPAPER, WallPaperRenderer::createBodyLayer);
 	}
 }

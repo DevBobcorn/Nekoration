@@ -18,6 +18,9 @@ public class ModEntityType {
     public static final EntityType<PaintingEntity> PAINTING_TYPE = EntityType.Builder.<PaintingEntity>of(PaintingEntity::new, MobCategory.MISC).setCustomClientFactory(PaintingEntity::new).sized(0.5F, 0.5F).updateInterval(Integer.MAX_VALUE).build(Nekoration.MODID + ":painting");
     public static final RegistryObject<EntityType<PaintingEntity>> $PAINTING_TYPE = ENTITY_TYPES.register("painting", () -> PAINTING_TYPE);
 
+    public static final EntityType<WallPaperEntity> WALLPAPER_TYPE = EntityType.Builder.<WallPaperEntity>of(WallPaperEntity::new, MobCategory.MISC).setCustomClientFactory(WallPaperEntity::new).sized(0.5F, 0.5F).updateInterval(Integer.MAX_VALUE).build(Nekoration.MODID + ":wallpaper");
+    public static final RegistryObject<EntityType<WallPaperEntity>> $WALLPAPER_TYPE = ENTITY_TYPES.register("wallpaper", () -> WALLPAPER_TYPE);
+
     public static final EntityType<SeatEntity> SEAT_TYPE = EntityType.Builder.<SeatEntity>of((type, world) -> new SeatEntity(world), MobCategory.MISC).setCustomClientFactory((spawnEntity, world) -> new SeatEntity(world)).sized(0.0F, 0.0F).updateInterval(Integer.MAX_VALUE).build(Nekoration.MODID + ":seat");
     public static final RegistryObject<EntityType<SeatEntity>> $SEAT_TYPE = ENTITY_TYPES.register("seat", () -> SEAT_TYPE);
 

@@ -7,7 +7,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nullable;
 
 import com.devbobcorn.nekoration.Nekoration;
-import com.devbobcorn.nekoration.client.rendering.AbstractPaintingRenderer.*;
+import com.devbobcorn.nekoration.client.rendering.entities.AbstractPaintingRenderer;
+import com.devbobcorn.nekoration.client.rendering.entities.AbstractPaintingRenderer.*;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;

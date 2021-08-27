@@ -25,4 +25,6 @@ public class ModItems {
     public static final RegistryObject<Item> PALETTE = ITEMS.register("palette", () -> new PaletteItem(new Item.Properties().tab(ModItemTabs.TOOL_GROUP)));
 
     public static final RegistryObject<Item> PAINTING = ITEMS.register("painting", () -> new PaintingItem(new Item.Properties().tab(ModItemTabs.DECOR_GROUP)));
+
+    public static final RegistryObject<Item> WALLPAPER = ITEMS.register("wallpaper", () -> new WallPaperItem(new Item.Properties().tab(ModItemTabs.DECOR_GROUP)));
 }

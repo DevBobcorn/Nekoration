@@ -1,6 +1,5 @@
 package com.devbobcorn.nekoration.client.rendering.entities;
 
-import com.devbobcorn.nekoration.client.rendering.AbstractPaintingRenderer;
 import com.devbobcorn.nekoration.client.rendering.PaintingRendererManager;
 import com.devbobcorn.nekoration.entities.PaintingEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
