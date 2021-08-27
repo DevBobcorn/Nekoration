@@ -1,11 +1,11 @@
 #This is a Python3 Script used to generate language files for this mod
 import json
 
-colors = ["black","blue","brown","cyan","gray","green","light_blue","light_gray","lime","magenta","orange","pink","purple","red","white","yellow","unknown"]
-colors_us = ["Black","Blue","Brown","Cyan","Gray","Green","Light Blue","Light Gray","Lime","Magenta","Orange","Pink","Purple","Red","White","Yellow","Some"]
-wooden_us = ["Dark Oak","Blue Wood","Spruce","Warped","Jungle","Green Wood","Magic","Oak","Willow","Crimson","Acacia","Mahogany","Umbran","Cherry","Birch","Palm","Some"]
-colors_cn = ["黑色","蓝色","棕色","青色","灰色","绿色","淡蓝色","淡灰色","黄绿色","品红色","橙色","粉色","紫色","红色","白色","黄色",""]
-wooden_cn = ["深色橡木","蓝木","云杉木","诡异木","丛林木","绿木","魔法木","橡木","柳木","绯红木","金合欢木","桃花心木","暗影木","樱木","白桦木","棕榈木",""]
+colors = ["black","blue","brown","cyan","gray","green","light_blue","light_gray","lime","magenta","orange","pink","purple","red","white","yellow","unknown","blank"]
+colors_us = ["Black","Blue","Brown","Cyan","Gray","Green","Light Blue","Light Gray","Lime","Magenta","Orange","Pink","Purple","Red","White","Yellow","Some","Blank"]
+wooden_us = ["Dark Oak","Blue Wood","Spruce","Warped","Jungle","Green Wood","Magic","Oak","Willow","Crimson","Acacia","Mahogany","Umbran","Cherry","Birch","Palm","Some","Air"]
+colors_cn = ["黑色","蓝色","棕色","青色","灰色","绿色","淡蓝色","淡灰色","黄绿色","品红色","橙色","粉色","紫色","红色","白色","黄色","","空白"]
+wooden_cn = ["深色橡木","蓝木","云杉木","诡异木","丛林木","绿木","魔法木","橡木","柳木","绯红木","金合欢木","桃花心木","暗影木","樱木","白桦木","棕榈木","","空气"]
 woods = ["pumpkin","dark_oak","spruce","warped","jungle","oak","crimson","acacia","birch"]
 woods_cn = ["南瓜","深色橡木","云杉木","诡异木","丛林木","橡木","绯红木","金合欢木","白桦木"]
 chair_us = "Chair"
@@ -28,9 +28,9 @@ decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short
 decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu","%s White Easel Menu"]
 decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","%s展架","%s白色展架"]
 # Find it a bit strange to say "Candle Holder with %s candle", so I just ignore their color
-items = ["paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette", "painting"]
-items_us = ["Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Painting (%sx%s) [WIP]"]
-items_cn = ["猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","画(%sx%s)[WIP]"]
+items = ["paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette", "painting","wallpaper"]
+items_us = ["Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Painting (%sx%s) [WIP]","%s Wallpaper"]
+items_cn = ["猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","画(%sx%s)[WIP]","%s墙纸"]
 
 miscs = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iron","candle_holder_gold","candle_holder_quartz","flower_basket_iron","flower_basket_gold","flower_basket_quartz","phonograph","custom"]
 miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Phonograph [WIP]","Custom Block"]
@@ -42,15 +42,15 @@ tabs_cn = ["石质方块","木质方块","门窗","装饰","工具"]
 
 guis = ["button.scroll_up","button.scroll_down","button.enable_all","button.disable_all","button.save_painting","button.save_painting_content","button.load_image","button.clear",
         "message.painting_saved","message.painting_content_saved","message.paint_with_palette","message.painting_load_failed",
-        "message.press_key_color_info","message.color_info","message.press_key_debug_info","message.press_key_color_picker_on","message.press_key_color_picker_off",
+        "message.press_key_color_info","message.color_info","message.press_key_debug_info","message.press_key_color_picker_on","message.press_key_color_picker_off","message.press_key_change_grid","message.size",
         "button.enable_glow","button.disable_glow"]
 guis_us = ["Scroll Up","Scroll Down","Enable All","Disable All","Save Painting","Save Painting Content","Load Image File","Clear",
            "Painting saved as %s","Painting content saved as %s","Edit painting with a palette","Failed to load painting %s",
-           "Press %s to toggle Color Info.","Color: %s R:%s G:%s B:%s","Press %s to view debug info.","Press %s to show color picker.","Press %s to hide color picker.",
+           "Press %s to toggle Color Info.","Color: %s R:%s G:%s B:%s","Press %s to view debug info.","Press %s to show color picker.","Press %s to hide color picker.","Press %s to change grid size.","Size:  %sx%s",
            "Enable Glowing Text", "Disable Glowing Text"]
 guis_cn = ["向上","向下","选中所有","清除所有","保存绘画","保存绘画内容","读取图像文件","清除",
            "已将绘画保存至%s","已将绘画内容保存至%s","请使用调色板编辑画作","绘画%s加载失败",
-           "可按下%s键查看颜色信息","颜色：%s 红：%s 绿：%s 蓝：%s","可按下%s键查看调试信息","可按下%s键显示颜色选择器","可按下%s键隐藏颜色选择器",
+           "可按下%s键查看颜色信息","颜色：%s 红：%s 绿：%s 蓝：%s","可按下%s键查看调试信息","可按下%s键显示颜色选择器","可按下%s键隐藏颜色选择器","可按下%s键切换网格尺寸","尺寸:  %sx%s",
            "启用发光文本","禁用发光文本"]
 
 def getEnNameMine(instr):
@@ -141,8 +141,7 @@ for tab in range(0, len(tabs)):
 for gui in range(0, len(guis)):
     obj_us['gui.nekoration.' + guis[gui]] = guis_us[gui]
     obj_cn['gui.nekoration.' + guis[gui]] = guis_cn[gui]
-    
-# ...
+
 
 # Write these objects into files in JSON format
 with open("en_us.json", "w+") as f:

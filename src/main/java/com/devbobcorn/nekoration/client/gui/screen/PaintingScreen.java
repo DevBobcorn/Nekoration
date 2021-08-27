@@ -59,7 +59,7 @@ public class PaintingScreen extends Screen {
     private int opacityPos = -1;
     private byte activeTool = 0; // 0: Pencil, 1: Pen, 2: Eraser, 3: Bucket Fill
     // private int[] pointerPos = { -1, -1 };
-    public boolean renderColorText = false;
+    public boolean renderDebugText = false;
 
     private final PaintingData paintingData;
     private final short paintingWidth;
@@ -234,7 +234,7 @@ public class PaintingScreen extends Screen {
     public boolean keyPressed(int keyCode, int scanCode, int modifier) {
 		if (keyCode == GLFW.GLFW_KEY_F1) {
 			// I DONT GET IT, WHY THE HELL PRESSING 'E' CAN CLOSE THE SCREEN...
-            this.renderColorText = !this.renderColorText;
+            this.renderDebugText = !this.renderDebugText;
             return true;
         } else if (keyCode == GLFW.GLFW_KEY_W){
             // Switch Tool...
@@ -309,7 +309,7 @@ public class PaintingScreen extends Screen {
         stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
         stack.translate(j + 5, -i - 265, 0);
         //this.fillGradient(stack, i, j, i + 128, j + 128, col, black);
-        if (renderColorText)
+        if (renderDebugText)
             this.font.draw(stack, debugText, 1.0F, 1.0F, 0xFFFFFF);
         else this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
