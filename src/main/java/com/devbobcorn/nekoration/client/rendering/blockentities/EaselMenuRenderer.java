@@ -73,7 +73,7 @@ public class EaselMenuRenderer implements BlockEntityRenderer<EaselMenuBlockEnti
 				}
 			} else {
 				for (int i = 0;i < 4;i++) {
-					//Params:                                                    left  top   color
+					//Params:                                             left  top   color
 					font.drawInBatch(BlockEntity.getMessage(i + rot * 4), 1.0F, 1.0F, colors[i + rot * 4].getTextColor(), false, stack.last().pose(), buffers, false, 0, combinedLight);
 					stack.translate(0.0F, 12.0F, 0.0F);
 				}

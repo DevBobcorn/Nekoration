@@ -1,8 +1,14 @@
 package com.devbobcorn.nekoration.items;
 
-import com.devbobcorn.nekoration.Nekoration;
+import java.util.function.Consumer;
 
+import com.devbobcorn.nekoration.Nekoration;
+import com.devbobcorn.nekoration.client.rendering.items.WallPaperItemRenderer;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,5 +32,15 @@ public class ModItems {
 
     public static final RegistryObject<Item> PAINTING = ITEMS.register("painting", () -> new PaintingItem(new Item.Properties().tab(ModItemTabs.DECOR_GROUP)));
 
-    public static final RegistryObject<Item> WALLPAPER = ITEMS.register("wallpaper", () -> new WallPaperItem(new Item.Properties().tab(ModItemTabs.DECOR_GROUP)));
+    public static final RegistryObject<Item> WALLPAPER = ITEMS.register("wallpaper", () -> new WallPaperItem(new Item.Properties().tab(ModItemTabs.DECOR_GROUP)){
+        @Override
+        public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+            consumer.accept(new IItemRenderProperties(){
+                @Override
+                public BlockEntityWithoutLevelRenderer getItemStackRenderer(){
+                    return new WallPaperItemRenderer(null, Minecraft.getInstance().getEntityModels());
+                }
+            });
+        }
+    });
 }

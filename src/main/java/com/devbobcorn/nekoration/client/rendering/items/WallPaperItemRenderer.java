@@ -24,13 +24,11 @@ import net.minecraft.world.level.block.entity.BannerPattern;
 
 
 public class WallPaperItemRenderer extends BlockEntityWithoutLevelRenderer {
-    protected BlockEntityRenderDispatcher dispatcher;
     protected EntityModelSet modelSet;
     public final ModelPart paperFull;
 
     public WallPaperItemRenderer(BlockEntityRenderDispatcher dispatcher, EntityModelSet set) {
         super(dispatcher, set);
-        this.dispatcher = dispatcher;
         this.modelSet = set;
         this.paperFull = modelSet.bakeLayer(ClientModEventSubscriber.WALLPAPER).getChild("full");
     }
