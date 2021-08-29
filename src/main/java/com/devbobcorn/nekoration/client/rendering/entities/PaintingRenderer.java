@@ -136,6 +136,10 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 		stack.translate(0.0D, -10.0D, 0.0D);
 		int light = LevelRenderer.getLightColor(entity.level, entity.getPos());
 		font.draw(stack, "#" + String.valueOf(entity.data.getPaintingHash()) + String.format(" L: %x", light), 1.0F, 1.0F, 0xFFFFFF);
+		stack.translate(0.0D, 30.0D, 0.0D);
+		font.draw(stack, String.valueOf(entity.data.getUUID()), 1.0F, 1.0F, 0xFFFFFF);
+		stack.translate(0.0D, 10.0D, 0.0D);
+		font.draw(stack, String.valueOf(entity.getUUID()), 1.0F, 1.0F, 0xFFFFFF);
 		stack.popPose();
 	}
 

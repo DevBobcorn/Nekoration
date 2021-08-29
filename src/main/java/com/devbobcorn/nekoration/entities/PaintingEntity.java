@@ -2,6 +2,7 @@ package com.devbobcorn.nekoration.entities;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.items.ModItems;
+import com.devbobcorn.nekoration.items.PaintingItem;
 import com.devbobcorn.nekoration.items.PaletteItem;
 import com.devbobcorn.nekoration.utils.TagTypes;
 
@@ -32,6 +33,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import com.devbobcorn.nekoration.client.ClientHelper;
 
 import java.awt.Color;
+import java.util.UUID;
 
 public class PaintingEntity extends HangingEntity implements IEntityAdditionalSpawnData {
 	public PaintingData data;
@@ -42,10 +44,17 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	}
 
 	public PaintingEntity(Level world, BlockPos pos, Direction dir, short w, short h) {
-		// Constructor 2: the one for server-side to create PaintingEntity Objects
+		// Constructor 2: the one for server-side to create brand-new PaintingEntity Objects
 		super(ModEntityType.$PAINTING_TYPE.get(), world, pos);
 		this.setDirection(dir);
-		data = new PaintingData(w, h, false, 20021222);
+		data = new PaintingData(w, h, false, this.uuid);
+	}
+
+	public PaintingEntity(Level world, BlockPos pos, Direction dir, short w, short h, UUID existingId) {
+		// Constructor 3: the one for server-side to duplicate PaintingEntity Objects
+		super(ModEntityType.$PAINTING_TYPE.get(), world, pos);
+		this.setDirection(dir);
+		data = new PaintingData(w, h, false, existingId);
 	}
 
 	public PaintingEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
@@ -64,7 +73,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	@Override
 	public void readAdditionalSaveData(CompoundTag tag) {
 		this.direction = Direction.from2DDataValue((int) (tag.getByte("Facing")));
-		data = PaintingData.readFrom(tag);
+		data = PaintingData.readFrom(tag, this.uuid);
 		super.readAdditionalSaveData(tag);
 		this.setDirection(this.direction);
 	}
@@ -101,16 +110,46 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 						//System.out.println("Open Painting GUI1.");
 					});
 				} else ClientHelper.showPaintingScreen(this.getId());
-			} else {
+			} else if (stack.getItem() == ModItems.PAINTING.get()) {
 				player.displayClientMessage(new TranslatableComponent("gui.nekoration.message.paint_with_palette"), true);
+			}
+		} else {
+			if (stack.getItem() == ModItems.PAINTING.get()){
+				if (PaintingItem.getType(stack) == PaintingItem.Type.BLANK.id) { // A blank painting...
+					// Turn it into a link to itself...
+					PaintingItem.setLink(stack, (short)(getWidth() / 16), (short)(getHeight() / 16), data.getUUID(), getId());
+				}
 			}
 		}
         return InteractionResult.SUCCESS;
 	}
 
+
+	public ItemStack getPickItem(){
+		ItemStack result = new ItemStack(ModItems.PAINTING.get());
+		if (getWidth() <= 96 && getHeight() <= 96) // The painting with its content
+			PaintingItem.setContent(result, (short)(getWidth() / 16), (short)(getHeight() / 16), data.getUUID(), data.getPixels());
+		else {
+			// Create a link to this Painting Entity...
+			PaintingItem.setLink(result, (short)(getWidth() / 16), (short)(getHeight() / 16), data.getUUID(), getId());
+		}
+		return result;
+	}
+
 	@Override
 	public ItemStack getPickedResult(HitResult target) {
-		return new ItemStack(ModItems.PAINTING.get());
+		return getPickItem();
+	}
+
+	public ItemStack getDropItem(){
+		ItemStack result = new ItemStack(ModItems.PAINTING.get());
+		if (getWidth() <= 96 && getHeight() <= 96) // The painting with its content
+			PaintingItem.setContent(result, (short)(getWidth() / 16), (short)(getHeight() / 16), data.getUUID(), data.getPixels());
+		else {
+			// Create a blank painting of the same size...
+			PaintingItem.setSize(result, (short)(getWidth() / 16), (short)(getHeight() / 16));
+		}
+		return result;
 	}
 
 	@Override
@@ -123,7 +162,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 					return;
 				}
 			}
-			this.spawnAtLocation(ModItems.PAINTING.get());
+			this.spawnAtLocation(getDropItem());
 		}
 	}
 
@@ -140,11 +179,13 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 
 	@Override
 	public void writeSpawnData(FriendlyByteBuf buffer) {
-		// Server sends...
-		// We need the size direction on client-side to get the right Bounding box, so we pass 'em over
+		// We cannot get the same bounding box output with different position inputs,
+		// because server makes adjustments to that. As a result, we need to pass the
+		// right position and hitbox straight over to the clients...
 		buffer.writeShort(data.getWidth());
 		buffer.writeShort(data.getHeight());
 		buffer.writeVarIntArray(data.getPixels());
+		buffer.writeUUID(data.getUUID());
 		// Also a more accurate position, maybe...
 		buffer.writeDouble(this.position().x);
 		buffer.writeDouble(this.position().y);
@@ -165,7 +206,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 	@Override
 	public void readSpawnData(FriendlyByteBuf additionalData) {
 		// Client receives...
-		this.data = new PaintingData(additionalData.readShort(), additionalData.readShort(), additionalData.readVarIntArray(), true, this.getUUID().hashCode());
+		this.data = new PaintingData(additionalData.readShort(), additionalData.readShort(), additionalData.readVarIntArray(), true, additionalData.readUUID());
 		this.setPosRaw(additionalData.readDouble(), additionalData.readDouble(), additionalData.readDouble());
 		this.pos = additionalData.readBlockPos();
 		byte dir = additionalData.readByte();

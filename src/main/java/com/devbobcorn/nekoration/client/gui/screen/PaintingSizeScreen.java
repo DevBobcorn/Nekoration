@@ -39,11 +39,14 @@ public class PaintingSizeScreen extends Screen {
 	private short pickedHeight; // 1-6
 
 	private TranslatableComponent tipMessage;
+	private TranslatableComponent[] warningMessages = new TranslatableComponent[2];
 
 	public PaintingSizeScreen(InteractionHand hand) {
 		super(Component.nullToEmpty("PAINTING_SIZE"));
 		this.hand = hand;
 		tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_change_grid", "'E'");
+		warningMessages[0] = new TranslatableComponent("gui.nekoration.message.painting_size_warning");
+		warningMessages[1] = new TranslatableComponent("gui.nekoration.message.painting_size_warning_help");
 	}
 
 	protected void init() {
@@ -53,6 +56,8 @@ public class PaintingSizeScreen extends Screen {
 		leftPos = (this.width - BACKGROUND_WIDTH) / 2;
 		topPos = (this.height - BACKGROUND_HEIGHT) / 2;
 	}
+
+	private int warningOpacity = 0;
 
 	public void render(PoseStack stack, int x, int y, float partialTicks) {
 		stack.pushPose();
@@ -69,6 +74,15 @@ public class PaintingSizeScreen extends Screen {
 				blit(stack, i + 8 + ix * slotLen, j + 30 + iy * slotLen, (ix < pickedWidth && iy < pickedHeight) ? 18 : 0, useLargeSize ? 178 : 160, 18, 18);
 		// Draw text...
 		drawCenteredString(stack, this.font, new TranslatableComponent("gui.nekoration.message.size", pickedWidth, pickedHeight), this.width / 2, this.height / 2 - 66, -1);
+		// Render Warning if too Large...
+		if ((pickedHeight > 6 || pickedWidth > 6)) {
+			if (warningOpacity < 210)
+				warningOpacity += 30;
+		} else if (warningOpacity > 0) warningOpacity -= 30;
+		if (warningOpacity > 0) {
+			drawCenteredString(stack, this.font, warningMessages[0], this.width / 2, this.height - 44, (warningOpacity << 24) + (255 << 16) + (70 << 8) + 70);
+			drawCenteredString(stack, this.font, warningMessages[1], this.width / 2, this.height - 34, (warningOpacity << 24) + (220 << 16) + (30 << 8) + 250);
+		}
 		// Render Tip Text...
         stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
         stack.translate(j, -i - 136, 0);

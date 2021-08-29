@@ -1,6 +1,17 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "nekoration:item/painting"
-    }
+	"parent": "nekoration:item/painting_blank",
+	"overrides": [
+		{
+			"predicate": {
+				"type": 1
+			},
+			"model": "nekoration:item/painting_painted"
+		},
+		{
+			"predicate": {
+				"type": 2
+			},
+			"model": "nekoration:item/painting_magic"
+		}
+	]
 }

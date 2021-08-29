@@ -8,12 +8,14 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.client.rendering.LocalImageLoader;
 import com.devbobcorn.nekoration.utils.PixelPos;
+import com.devbobcorn.nekoration.utils.TagTypes;
 import com.mojang.blaze3d.platform.NativeImage;
 
 import net.minecraft.ChatFormatting;
@@ -27,7 +29,16 @@ import net.minecraft.network.chat.TranslatableComponent;
 public class PaintingData {
     private short width;
     private short height;
-    private int seed;
+    // This is the 'data id', or to say, the original painting entity's uuid.
+    // for a painting entity created from a blank painting item, its 'data id'
+    // is the same as its own entity uuid, and for its duplications(or modified
+    // version from it) this 'data id' will also stay unchanged.
+    // This value is used as a seed to calculate the wooden pattern of a
+    // painting's frame, and should therefore keep the same among an original
+    // and its duplications, to ensure they're exactly the same, despite of
+    // owning different entity uuids. On the other hand, it can be used to
+    // indicate a painting's origin, enabling authorship/signiture features...
+    private final UUID uuid;
 
     public final boolean isClient;
 
@@ -39,14 +50,14 @@ public class PaintingData {
 
     public boolean imageReady = false;
 
-    public PaintingData(short w, short h, boolean client, int seed){
+    public PaintingData(short w, short h, boolean client, UUID seed){
         width = w;
         height = h;
         pixels = new int[w * h];
-        this.seed = seed;
+        this.uuid = seed;
         isClient = client;
         if (isClient){
-            Random random = new Random(seed); // Use the entity's id as a seed to ensure that each PaintingEntity's wooden frame is unique and constant...
+            Random random = new Random(seed.hashCode()); // Use the entity's id as a seed to ensure that each PaintingEntity's wooden frame is unique and constant...
             // Initialize canvas layer and composite layer as an empty canvas...
             canvas = new int[w * h];
             composite = new int[w * h];
@@ -68,14 +79,14 @@ public class PaintingData {
         }
     }
 
-    public PaintingData(short w, short h, int[] pix, boolean client, int seed){
+    public PaintingData(short w, short h, int[] pix, boolean client, UUID seed){
         width = w;
         height = h;
         pixels = pix;
-        this.seed = seed;
+        this.uuid = seed;
         isClient = client;
         if (isClient){
-            Random random = new Random(seed); // Use the entity's id as a seed to ensure that each PaintingEntity's wooden frame is unique and constant...
+            Random random = new Random(seed.hashCode()); // Use the entity's id as a seed to ensure that each PaintingEntity's wooden frame is unique and constant...
             // Initialize the canvas layer as an empty canvas...
             canvas = new int[w * h];
             for (int i = 0;i < w;i++)
@@ -191,6 +202,10 @@ public class PaintingData {
         paintingHash = Arrays.hashCode(composite);
     }
 
+    public UUID getUUID(){
+        return this.uuid;
+    }
+    
     public int getPaintingHash(){
         return paintingHash;
     }
@@ -199,12 +214,13 @@ public class PaintingData {
         tag.putShort("Width", data.width);
         tag.putShort("Height", data.height);
         tag.putIntArray("Pixels", data.pixels);
-        tag.putInt("Seed", data.seed);
+        tag.putUUID("DataID", data.uuid);
     }
 
-    public static PaintingData readFrom(CompoundTag tag){
+    public static PaintingData readFrom(CompoundTag tag, UUID defaultId){
         // Used on server to initialize a Painting...
-        return new PaintingData(tag.getShort("Width"), tag.getShort("Height"), tag.getIntArray("Pixels"), false, tag.getInt("Seed"));
+        UUID dataid = tag.contains("DataID", TagTypes.INT_ARRAY_NBT_ID) ? tag.getUUID("DataID") : defaultId;
+        return new PaintingData(tag.getShort("Width"), tag.getShort("Height"), tag.getIntArray("Pixels"), false, dataid);
     }
 
     private boolean isLegal(int x, int y){

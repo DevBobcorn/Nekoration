@@ -241,7 +241,7 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
 
 	@Override
 	public void writeSpawnData(FriendlyByteBuf buffer) {
-		// We cannot get the same bounding box output with different position input,
+		// We cannot get the same bounding box output with different position inputs,
 		// because server makes adjustments to that. As a result, we need to pass the
 		// right position and hitbox straight over to the clients...
 		buffer.writeByte(this.part.id);
