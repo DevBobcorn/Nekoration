@@ -3,7 +3,7 @@
 #### A Decoration Mod for Minecraft
 
 ### Introduction
-Nekoration is a mod for Minecraft(Currently 1.16.5) which adds lots of decorational stuff to the game, allowing players to have a wider choice when building & creating.
+Nekoration is a mod for Minecraft(1.16.5 and newer) which adds lots of decorational stuff to the game, allowing players to have a wider choice when building & creating.
 
 ### About Its Name
 The name 'Nekoration' is a compound of 'cat' in Japanese(ねこ, neko) and 'decoration', suggesting that the mod is both ornamental and cats-friendly...  ^._.^= ∫
