@@ -110,7 +110,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 						//System.out.println("Open Painting GUI1.");
 					});
 				} else ClientHelper.showPaintingScreen(this.getId());
-			} else if (stack.getItem() == ModItems.PAINTING.get()) {
+			} else if (stack.getItem() != ModItems.PAINTING.get()) {
 				player.displayClientMessage(new TranslatableComponent("gui.nekoration.message.paint_with_palette"), true);
 			}
 		} else {
