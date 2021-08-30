@@ -111,20 +111,28 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PUMPKIN_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PUMPKIN_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.OAK_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.OAK_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.OAK_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.ACACIA_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.ACACIA_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.ACACIA_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BIRCH_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BIRCH_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BIRCH_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DARK_OAK_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DARK_OAK_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DARK_OAK_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPRUCE_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPRUCE_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPRUCE_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRIMSON_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRIMSON_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRIMSON_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_CHAIR.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_TABLE.get(), transparentRenderType);
 
 		LOGGER.info("Block Render Types Registered.");

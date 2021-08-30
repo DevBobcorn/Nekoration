@@ -126,20 +126,23 @@ public class VanillaCompat {
 			setFlammable.invoke(fire, ModBlocks.PUMPKIN_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.OAK_CHAIR.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.OAK_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.OAK_ROUND_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.JUNGLE_CHAIR.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.JUNGLE_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.JUNGLE_ROUND_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.ACACIA_CHAIR.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.ACACIA_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.ACACIA_ROUND_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.BIRCH_CHAIR.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.BIRCH_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.BIRCH_ROUND_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.DARK_OAK_CHAIR.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.DARK_OAK_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DARK_OAK_ROUND_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.SPRUCE_CHAIR.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.SPRUCE_TABLE.get(), 5, 20);
-			//setFlammable.invoke(fire, ModBlocks.CRIMSON_CHAIR.get(), 5, 20);
-			//setFlammable.invoke(fire, ModBlocks.CRIMSON_TABLE.get(), 5, 20);
-			//setFlammable.invoke(fire, ModBlocks.WARPED_CHAIR.get(), 5, 20);
-			//setFlammable.invoke(fire, ModBlocks.WARPED_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.SPRUCE_ROUND_TABLE.get(), 5, 20);
+			// (Crimson / Warped not flammable)
 			// Windows...
 			setFlammable.invoke(fire, ModBlocks.WINDOW_SIMPLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.WINDOW_ARCH.get(), 5, 20);

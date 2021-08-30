@@ -10,8 +10,10 @@ woods = ["pumpkin","dark_oak","spruce","warped","jungle","oak","crimson","acacia
 woods_cn = ["南瓜","深色橡木","云杉木","诡异木","丛林木","橡木","绯红木","金合欢木","白桦木"]
 chair_us = "Chair"
 table_us = "Table"
+round_table_us = "Round WOOD Table"
 chair_cn = "桌"
 table_cn = "椅"
+round_table_cn = "圆桌"
 stones = ["stone_base","stone_base_bottom","stone_frame","stone_frame_bottom","stone_pillar","stone_pillar_bottom","stone_doric","stone_ionic","stone_corinthian","stone_layered","stone_pot"]
 stones_us = ["Stone Base","Stone Base Bottom","Stone Frame","Stone Frame Bottom","Stone Pillar","Stone Pillar Bottom","Doric Stone Pillar","Ionic Stone Pillar","Corinthian Stone Pillar","Layered Stone","Stone Pot"]
 stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底座","多立克石柱","爱奥尼石柱","科林斯石柱","叠层石壁","石质花盆"]
@@ -46,7 +48,7 @@ guis = ["button.scroll_up","button.scroll_down","button.enable_all","button.disa
         "button.enable_glow","button.disable_glow"]
 guis_us = ["Scroll Up","Scroll Down","Enable All","Disable All","Save Painting","Save Painting Content","Load Image File","Clear",
            "Painting saved as %s","Painting content saved as %s","Edit painting with a palette","Failed to load painting %s","Link expired: Failed to find the original painting.",
-           "Press %s to toggle Color Info.","Color: %s R:%s G:%s B:%s","Press %s to view debug info.","Press %s to show color picker.","Press %s to hide color picker.","Press %s to change grid size.","Painting of this size cannot be saved to a single item.","Use a linked painting to copy/move.","Size:  %sx%s",
+           "Press %s to toggle Color Info.","Color: %s R:%s G:%s B:%s","Press %s to view debug info.","Press %s to show color picker.","Press %s to hide color picker.","Press %s to change grid size.","Painting of this size cannot be saved to a single item.","Use a Linked Painting to copy/move.","Size:  %sx%s",
            "Enable Glowing Text", "Disable Glowing Text"]
 guis_cn = ["向上","向下","选中所有","清除所有","保存绘画","保存绘画内容","读取图像文件","清除",
            "已将绘画保存至%s","已将绘画内容保存至%s","请使用调色板编辑画作","绘画%s加载失败","链接已失效：无法找到原画作",
@@ -111,9 +113,11 @@ for dor in range(0, len(doors)):
 # [FURNITURE TAB]
 for fur in range(0, len(woods)):
     obj_us['block.nekoration.' + woods[fur] + '_table'] = getEnName(woods[fur]) + ' ' + table_us
+    obj_us['block.nekoration.' + woods[fur] + '_round_table'] = round_table_us.replace("WOOD", getEnName(woods[fur]))
     obj_us['block.nekoration.' + woods[fur] + '_chair'] = getEnName(woods[fur]) + ' ' + chair_us
     obj_cn['block.nekoration.' + woods[fur] + '_table'] = woods_cn[fur] + table_cn
     obj_cn['block.nekoration.' + woods[fur] + '_chair'] = woods_cn[fur] + chair_cn
+    obj_cn['block.nekoration.' + woods[fur] + '_round_table'] = woods_cn[fur] + round_table_cn
 
 # [DECOR TAB]
 for dec in range(0, len(decors)):

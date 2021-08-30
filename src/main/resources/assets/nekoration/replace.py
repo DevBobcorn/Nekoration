@@ -1,7 +1,7 @@
 import glob, os
 
-src = r'half_timber_white'
-tar = r'half_timber'
+src = r'table'
+tar = r'round_table'
 
 all1 = glob.glob(r'opspace\*.json')
 for single in all1:

@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "nekoration:block/furniture/jungle_top",
-		"2": "nekoration:block/furniture/jungle_side",
-		"particle": "nekoration:block/furniture/jungle_leg"
+		"1": "nekoration:block/furniture/jungle_side",
+		"2": "nekoration:block/furniture/jungle_top",
+		"particle": "nekoration:block/furniture/jungle_side"
 	},
 	"elements": [
 		{

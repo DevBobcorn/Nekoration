@@ -266,13 +266,13 @@ public class NekoColors {
 		BLUE((byte)1, "blue" , 0x446184),
 		BROWN((byte)2, "brown", 0x886541), // spruce
 		CYAN((byte)3, "cyan", 0x389a99), // warped
-		GRAY((byte)4, "gray", 0xa27d64), // jungle
+		GRAY((byte)4, "gray", 0xb38564), // jungle
 		GREEN((byte)5, "green", 0x179930),
 		LIGHT_BLUE((byte)6, "light_blue", 0x4d71b0), // +magic
 		LIGHT_GRAY((byte)7, "light_gray", 0xb9955b), // oak
 		LIME((byte)8, "lime", 0x9fad81), // +willow
 		MAGENTA((byte)9, "magenta", 0x873468),  // crimson
-		ORANGE((byte)10, "orange", 0xf0973d), // acacia
+		ORANGE((byte)10, "orange", 0xb4653a), // acacia
 		PINK((byte)11, "pink", 0xcb8684), // +mahogany
 		PURPLE((byte)12, "purple", 0x7b688c), // +umbran
 		RED((byte)13, "red", 0x9c2525), // +cherry
