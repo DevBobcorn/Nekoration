@@ -276,7 +276,7 @@ public class NekoColors {
 		PINK((byte)11, "pink", 0xcb8684), // +mahogany
 		PURPLE((byte)12, "purple", 0x7b688c), // +umbran
 		RED((byte)13, "red", 0x9c2525), // +cherry
-		WHITE((byte)14, "white", 0x8f2f2b), // birch
+		WHITE((byte)14, "white", 0xe8d699), // birch
 		YELLOW((byte)15, "yellow", 0xcd9144); // +palm
 
 		@Override
