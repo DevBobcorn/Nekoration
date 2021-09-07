@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 
 public abstract class AbstractPaintingRenderer implements Closeable {
     public abstract void render(PoseStack stack, Matrix4f pose, Matrix3f normal, MultiBufferSource buffers, PaintingData data, short blocHor, short blocVer, float left, float bottom, int light);
+    public abstract void renderFull(PoseStack stack, Matrix4f pose, Matrix3f normal, MultiBufferSource buffers, PaintingData data, float left, float bottom, int light);
 
     @Override
     public void close() {}
@@ -30,13 +31,32 @@ public abstract class AbstractPaintingRenderer implements Closeable {
 			// Which uses vertices which don't have uv data but need rgb color values...
 			// Get the VertexBuffer for Image Rendering...
             VertexConsumer vb = buffers.getBuffer(RenderTypeHelper.paintingPixels());
-            // Compensate for the obvious lighting difFerence caused by different shaders...
+            // Compensate for the obvious lighting difference caused by different shaders...
             // TODO: There might be a better way to do this.
             light = Math.max(0, light - 0x300000);
             int[] color;
             for (short posi = 0;posi < 16;posi++)
                 for (short posj = 0;posj < 16;posj++) {
                     color = NekoColors.getRGBArray(data.getCompositeAt(data.getWidth() - 1 - (blocHor * 16 + posi), data.getHeight() - 1 - (blocVer * 16 + posj)));
+                    vertexPixel(pose, normal, vb, left + posi + 1.0F, bottom + posj,        -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // >V
+                    vertexPixel(pose, normal, vb, left + posi, bottom + posj,               -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // <V
+                    vertexPixel(pose, normal, vb, left + posi, bottom + posj + 1.0F,        -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // <A
+                    vertexPixel(pose, normal, vb, left + posi + 1.0F, bottom + posj + 1.0F, -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // >A
+                }
+        }
+
+        public void renderFull(PoseStack stack, Matrix4f pose, Matrix3f normal, MultiBufferSource buffers, PaintingData data, float left, float bottom, int light){
+            // Use Pixel-by-Pixel Rendering...
+            // We don't need textures when rendering the artwork, so we use another RenderType(PAINTING),
+			// Which uses vertices which don't have uv data but need rgb color values...
+			// Get the VertexBuffer for Image Rendering...
+            VertexConsumer vb = buffers.getBuffer(RenderTypeHelper.paintingPixels());
+            // Compensate for the obvious lighting difference caused by different shaders...
+            light = Math.max(0, light - 0x300000);
+            int[] color;
+            for (short posi = 0;posi < data.getWidth();posi++)
+                for (short posj = 0;posj < data.getHeight();posj++) {
+                    color = NekoColors.getRGBArray(data.getCompositeAt(data.getWidth() - 1 - posi, data.getHeight() - 1 - posj));
                     vertexPixel(pose, normal, vb, left + posi + 1.0F, bottom + posj,        -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // >V
                     vertexPixel(pose, normal, vb, left + posi, bottom + posj,               -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // <V
                     vertexPixel(pose, normal, vb, left + posi, bottom + posj + 1.0F,        -0.5F, 0, 0, -1, light, color[0], color[1], color[2]);    // <A
@@ -62,7 +82,6 @@ public abstract class AbstractPaintingRenderer implements Closeable {
         public void render(PoseStack stack, Matrix4f pose, Matrix3f normal, MultiBufferSource buffers, PaintingData data, short blocHor, short blocVer, float left, float bottom, int light){
             // a painting from its texture image...
             VertexConsumer vb = buffers.getBuffer(renderType);
-            
             short blocHorCount = (short)(data.getWidth() / 16);
             short blocVerCount = (short)(data.getHeight() / 16);
             double d0 = 1.0D / blocHorCount;
@@ -79,6 +98,19 @@ public abstract class AbstractPaintingRenderer implements Closeable {
             vertexImage(pose, normal, vb, left,  bottom, paintU0, paintV0, -0.5F, 0, 0, -1, light);
             vertexImage(pose, normal, vb, left,  top,    paintU0, paintV1, -0.5F, 0, 0, -1, light);
             vertexImage(pose, normal, vb, right, top,    paintU1, paintV1, -0.5F, 0, 0, -1, light);
+        }
+
+        public void renderFull(PoseStack stack, Matrix4f pose, Matrix3f normal, MultiBufferSource buffers, PaintingData data, float left, float bottom, int light){
+            // a painting from its texture image...
+            VertexConsumer vb = buffers.getBuffer(renderType);
+            float right = left   + data.getWidth();
+            float top   = bottom + data.getHeight();
+            
+            // Neg[Z] // F[ront]
+            vertexImage(pose, normal, vb, right, bottom, 0.0F, 1.0F, -0.5F, 0, 0, -1, light);
+            vertexImage(pose, normal, vb, left,  bottom, 1.0F, 1.0F, -0.5F, 0, 0, -1, light);
+            vertexImage(pose, normal, vb, left,  top,    1.0F, 0.0F, -0.5F, 0, 0, -1, light);
+            vertexImage(pose, normal, vb, right, top,    0.0F, 0.0F, -0.5F, 0, 0, -1, light);
         }
 
         @Override

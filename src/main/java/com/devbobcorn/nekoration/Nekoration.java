@@ -2,7 +2,9 @@ package com.devbobcorn.nekoration;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import org.apache.logging.log4j.LogManager;
@@ -45,8 +47,8 @@ public class Nekoration {
 		ModRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 
 		// Register Configs
-		//modLoadingContext.registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);
-		//modLoadingContext.registerConfig(ModConfig.Type.SERVER, ConfigHolder.SERVER_SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NekoConfig.CLIENT_SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, NekoConfig.SERVER_SPEC);
 
 		int networkId = 0;
 		ModPacketHandler.CHANNEL.registerMessage(networkId++,

@@ -2,6 +2,7 @@ package com.devbobcorn.nekoration.network;
 
 import java.util.function.Supplier;
 
+import com.devbobcorn.nekoration.NekoConfig;
 import com.devbobcorn.nekoration.entities.PaintingEntity;
 
 import net.minecraft.client.Minecraft;
@@ -66,7 +67,7 @@ public class S2CUpdatePaintingData {
                         pe.data.setAreaPixels(msg.partX, msg.partY, msg.partW, msg.partH, msg.pixels);
                         boolean synced = pe.data.getPaintingHash() == msg.compositeHash;
                         System.out.println(String.format("Painting %s Synced: %s", msg.compositeHash, synced));
-                        if (synced) // The whole picture synced, then re-cache the updated painting...
+                        if (synced && NekoConfig.CLIENT.useImageRendering.get()) // The whole picture synced, then re-cache the updated painting...
                             pe.data.cache();
                     }
                 }

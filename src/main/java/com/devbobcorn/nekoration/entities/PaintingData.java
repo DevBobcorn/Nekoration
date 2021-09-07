@@ -13,6 +13,7 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 
 import com.devbobcorn.nekoration.NekoColors;
+import com.devbobcorn.nekoration.NekoConfig;
 import com.devbobcorn.nekoration.client.rendering.LocalImageLoader;
 import com.devbobcorn.nekoration.utils.PixelPos;
 import com.devbobcorn.nekoration.utils.TagTypes;
@@ -75,7 +76,8 @@ public class PaintingData {
                 composite[right + j * w] = canvas[right + j * w] = (172 + random.nextInt(30) << 16) + (116 + random.nextInt(30) << 8) + 38 + random.nextInt(18);
             }
             updatePaintingHash();
-            cache();
+            if (NekoConfig.CLIENT.useImageRendering.get())
+                cache();
         }
     }
 
@@ -106,7 +108,8 @@ public class PaintingData {
             composite = new int[w * h];
             recalculateComposite();
             updatePaintingHash();
-            imageReady = cache();
+            if (NekoConfig.CLIENT.useImageRendering.get())
+                imageReady = cache();
         }
     }
     

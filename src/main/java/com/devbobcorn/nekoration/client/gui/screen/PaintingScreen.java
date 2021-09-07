@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Objects;
 
 import com.devbobcorn.nekoration.NekoColors;
+import com.devbobcorn.nekoration.NekoConfig;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.client.gui.widget.IconButton;
 import com.devbobcorn.nekoration.entities.PaintingData;
@@ -217,7 +218,8 @@ public class PaintingScreen extends Screen {
                         partCount++;
                     }
                 // Cache on this client...
-                paintingData.cache();
+                if (NekoConfig.CLIENT.useImageRendering.get())
+                    paintingData.cache();
             } else {// Not Edited, still ready...
                 paintingData.imageReady = true;
             }

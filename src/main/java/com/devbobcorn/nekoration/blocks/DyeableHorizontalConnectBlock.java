@@ -2,6 +2,8 @@ package com.devbobcorn.nekoration.blocks;
 
 import java.util.Map;
 
+import com.devbobcorn.nekoration.NekoConfig;
+import com.devbobcorn.nekoration.NekoConfig.HorConnectionDir;
 import com.devbobcorn.nekoration.blocks.states.HorizontalConnection;
 import com.devbobcorn.nekoration.blocks.states.ModStateProperties;
 import com.devbobcorn.nekoration.common.VanillaCompat;
@@ -51,19 +53,19 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 	}
 
 	public final ConnectionType type;
-	public final boolean connectOthers;
+	public final boolean connectOtherVariant;
 
 	public DyeableHorizontalConnectBlock(Properties settings) {
 		super(settings);
 		type = ConnectionType.TRIPLE;
-		connectOthers = false;
+		connectOtherVariant = false;
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
 	}
 
 	public DyeableHorizontalConnectBlock(Properties settings, ConnectionType tp, boolean co) {
 		super(settings);
 		type = tp;
-		connectOthers = co;
+		connectOtherVariant = co;
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
 	}
 
@@ -90,48 +92,97 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		Level blockView = ctx.getLevel();
 		BlockPos blockPos = ctx.getClickedPos();
-		BlockPos blockPosL = getLeftBlock(blockPos, ctx.getHorizontalDirection().getOpposite());
-		BlockState stateL = blockView.getBlockState(blockPosL);
+		HorConnectionDir config = NekoConfig.SERVER.horConnectionDir.get();
+		boolean useLeft = config == HorConnectionDir.LEFT2RIGHT || config == HorConnectionDir.BOTH;
 		
-		//System.out.println("BlockPlaced!");
-		//System.out.println("Is Beam? " + String.valueOf(type == ConnectionType.BEAM));
-		if (stateL.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOthers || stateL.getBlock() == this)) {
-			//System.out.println(stateL.getValue(CONNECTION));
-			switch (stateL.getValue(CONNECTION)) {
-			case S0:
-				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
-			case D0:
-				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
-			case T0:
-				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
-			case D1:
-				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.DOUBLE ? HorizontalConnection.S0 : HorizontalConnection.T2);
-			case T1:
-				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T2);
-			case T2:
-				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.BEAM ? HorizontalConnection.T2 : HorizontalConnection.S0);
-			default:
-				return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T2);
+		if (config != HorConnectionDir.NEITHER){
+			BlockPos blockPosRef = (useLeft) ?
+				getLeftBlock(blockPos, ctx.getHorizontalDirection().getOpposite()) :
+				getRightBlock(blockPos, ctx.getHorizontalDirection().getOpposite());
+			BlockState stateRef = blockView.getBlockState(blockPosRef);
+
+			boolean connect = stateRef.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOtherVariant || stateRef.getBlock() == this);
+
+			if (!connect && config == HorConnectionDir.BOTH){ // Block on the left refuses to connect, try the right one
+				blockPosRef = getRightBlock(blockPos, ctx.getHorizontalDirection().getOpposite());
+				stateRef = blockView.getBlockState(blockPosRef);
+				connect = stateRef.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOtherVariant || stateRef.getBlock() == this);
+				useLeft = false;
+			}
+			if (connect) {
+				if (useLeft){
+					switch (stateRef.getValue(CONNECTION)) {
+						case S0:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
+						case D0:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
+						case T0:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
+						case D1:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.DOUBLE ? HorizontalConnection.S0 : HorizontalConnection.T2);
+						case T1:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T2);
+						case T2:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.BEAM ? HorizontalConnection.T2 : HorizontalConnection.S0);
+						default:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T2);
+						}
+				} else {
+					switch (stateRef.getValue(CONNECTION)) {
+						case S0:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D0);
+						case D1:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D0);
+						case T2:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D0);
+						case D0:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.DOUBLE ? HorizontalConnection.S0 : HorizontalConnection.T0);
+						case T1:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T0);
+						case T0:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.BEAM ? HorizontalConnection.T0 : HorizontalConnection.S0);
+						default:
+							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T0);
+					}
+				}
 			}
 		}
 		return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.S0);
 	}
 
-	public BlockState updateShape(BlockState state, Direction direction, BlockState newState,
-			LevelAccessor world, BlockPos pos, BlockPos posFrom) {
+	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		BlockState res = state;
-		
-		if (direction == getRightDir(state.getValue(FACING)) && newState.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOthers || newState.getBlock() == this)) {
-			BlockState stateL = world.getBlockState(getLeftBlock(pos, state.getValue(FACING)));
-			switch (newState.getValue(CONNECTION)) {
-			case D1:
-				return res.setValue(CONNECTION, HorizontalConnection.D0);
-			case T1:
-				return res.setValue(CONNECTION, (type == ConnectionType.BEAM && stateL.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOthers || stateL.getBlock() == this)) ? HorizontalConnection.T1 : HorizontalConnection.T0);
-			case T2:
-				return res.setValue(CONNECTION, HorizontalConnection.T1);
-			default:
-				break;
+		HorConnectionDir config = NekoConfig.SERVER.horConnectionDir.get();
+		boolean flag1 = direction == getRightDir(state.getValue(FACING)) && (config == HorConnectionDir.LEFT2RIGHT ||  config == HorConnectionDir.BOTH);
+		boolean flag2 = direction == getLeftDir(state.getValue(FACING)) && (config == HorConnectionDir.RIGHT2LEFT ||  config == HorConnectionDir.BOTH);
+
+		boolean connect = flag1 || flag2;
+		if (connect && newState.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOtherVariant || newState.getBlock() == this)) {
+			BlockState stateRef;
+			if (flag1){ // Block on the right is ...
+				stateRef = world.getBlockState(getLeftBlock(pos, state.getValue(FACING))); // Take the block on the left as an extra reference
+				switch (newState.getValue(CONNECTION)) {
+					case D1:
+						return res.setValue(CONNECTION, HorizontalConnection.D0);
+					case T1:
+						return res.setValue(CONNECTION, (type == ConnectionType.BEAM && stateRef.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOtherVariant || stateRef.getBlock() == this)) ? HorizontalConnection.T1 : HorizontalConnection.T0);
+					case T2:
+						return res.setValue(CONNECTION, HorizontalConnection.T1);
+					default:
+						break;
+				}
+			} else { // Block on the left is ...
+				stateRef = world.getBlockState(getRightBlock(pos, state.getValue(FACING))); // Take the block on the right as an extra reference
+				switch (newState.getValue(CONNECTION)) {
+					case D0:
+						return res.setValue(CONNECTION, HorizontalConnection.D1);
+					case T1:
+						return res.setValue(CONNECTION, (type == ConnectionType.BEAM && stateRef.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOtherVariant || stateRef.getBlock() == this)) ? HorizontalConnection.T1 : HorizontalConnection.T2);
+					case T0:
+						return res.setValue(CONNECTION, HorizontalConnection.T1);
+					default:
+						break;
+				}
 			}
 		}
 		return res;
