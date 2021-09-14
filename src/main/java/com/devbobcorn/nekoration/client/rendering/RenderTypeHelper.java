@@ -1,5 +1,7 @@
 package com.devbobcorn.nekoration.client.rendering;
 
+import com.devbobcorn.nekoration.client.event.ClientModEventSubscriber;
+import com.devbobcorn.nekoration.client.rendering.blockentities.PhonographRenderer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -18,6 +20,9 @@ import net.minecraft.resources.ResourceLocation;
 
 
 public class RenderTypeHelper {
+    // Custom Shader Programs
+    protected static final RenderStateShard.ShaderStateShard RENDERTYPE_CAT_PORTAL_SHADER = new RenderStateShard.ShaderStateShard(ClientModEventSubscriber::getRendertypeCatPortalShader);
+
     //public static final TransparencyStateShard ALPHA = new RenderState.AlphaState(1F / 255F);
     public static final CullStateShard CULL_DISABLED = new RenderStateShard.CullStateShard(/*enable*/false);
     public static final LightmapStateShard ENABLE_LIGHTMAP = new RenderStateShard.LightmapStateShard(/*enable*/true);
@@ -34,6 +39,8 @@ public class RenderTypeHelper {
 
     public static final RenderStateShard.CullStateShard NO_CULL = new RenderStateShard.CullStateShard(false);
 
+    private static final RenderType CAT_PORTAL = RenderType.create("cat_portal", DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS, 256, false, false, RenderType.CompositeState.builder().setShaderState(RENDERTYPE_CAT_PORTAL_SHADER).setTextureState(RenderStateShard.MultiTextureStateShard.builder().add(PhonographRenderer.CAT_SKY, false, false).add(PhonographRenderer.CAT_PORTAL, false, false).build()).setTransparencyState(TRANSLUCENT).createCompositeState(false));
+
     private static RenderType PAINTING_PIXELS = RenderType.create("painting_pixels", DefaultVertexFormat.POSITION_COLOR_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, false, RenderType.CompositeState.builder().setShaderState(PIXEL_SHADER).setTextureState(NO_TEXTURE).setCullState(NO_CULL).setLightmapState(ENABLE_LIGHTMAP).createCompositeState(false));
 
     public static RenderType paintingPixels(){
@@ -43,6 +50,10 @@ public class RenderTypeHelper {
     public static RenderType paintingTexture(ResourceLocation location){
         RenderType.CompositeState rendertype$compositestate = RenderType.CompositeState.builder().setShaderState(IMAGE_SHADER).setTextureState(new RenderStateShard.TextureStateShard(location, /*blur*/false, /*mipmap*/true)).setTransparencyState(NO_TRANSPARENCY).setLightmapState(ENABLE_LIGHTMAP).setOverlayState(OVERLAY).createCompositeState(true);
         return RenderType.create("painting", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, /*buffer size*/256, /*no delegate*/false, /*need sorting data*/true, rendertype$compositestate);
+    }
+
+    public static RenderType catPortal(){
+        return CAT_PORTAL;
     }
 
     private static void enableTransparency() {

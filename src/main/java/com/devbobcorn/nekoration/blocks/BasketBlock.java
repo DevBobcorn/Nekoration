@@ -24,8 +24,7 @@ public class BasketBlock extends Block {
     }
 
     @Override
-    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, net.minecraftforge.common.IPlantable plantable)
-    {
+    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, net.minecraftforge.common.IPlantable plantable) {
         PlantType type = plantable.getPlantType(world, pos.relative(facing));
         return type != PlantType.WATER;
     }

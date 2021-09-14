@@ -1,5 +1,9 @@
 package com.devbobcorn.nekoration.client.event;
 
+import java.io.IOException;
+
+import javax.annotation.Nullable;
+
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
@@ -15,6 +19,8 @@ import com.devbobcorn.nekoration.blocks.entities.ModBlockEntityType;
 import com.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import com.devbobcorn.nekoration.client.rendering.blockentities.CustomRenderer;
 import com.devbobcorn.nekoration.client.rendering.blockentities.EaselMenuRenderer;
+import com.devbobcorn.nekoration.client.rendering.blockentities.PhonographRenderer;
+import com.devbobcorn.nekoration.client.rendering.blockentities.PrismapTableRenderer;
 import com.devbobcorn.nekoration.client.rendering.entities.PaintingRenderer;
 import com.devbobcorn.nekoration.client.rendering.entities.SeatRenderer;
 import com.devbobcorn.nekoration.client.rendering.entities.WallPaperRenderer;
@@ -23,6 +29,7 @@ import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.PaintingItem;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,13 +39,16 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterShadersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -139,6 +149,8 @@ public final class ClientModEventSubscriber {
 
 		BlockEntityRenderers.register(ModBlockEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);
 		BlockEntityRenderers.register(ModBlockEntityType.CUSTOM_TYPE.get(), CustomRenderer::new);
+		BlockEntityRenderers.register(ModBlockEntityType.PHONOGRAPH_TYPE.get(), PhonographRenderer::new);
+		BlockEntityRenderers.register(ModBlockEntityType.PRISMAP_TABLE_TYPE.get(), PrismapTableRenderer::new);
 
 		LOGGER.info("BlockEntities Renderers Bound.");
 
@@ -325,5 +337,27 @@ public final class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void RegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(WALLPAPER, WallPaperRenderer::createBodyLayer);
+	}
+
+	@Nullable
+	private static ShaderInstance rendertypeCatPortalShader;
+
+	@Nullable
+	public static ShaderInstance getRendertypeCatPortalShader() {
+	   return rendertypeCatPortalShader;
+	}
+
+	@SubscribeEvent
+	@SuppressWarnings("deprecation")
+	public static void RegisterShaders(RegisterShadersEvent event) {
+		ResourceManager manager = event.getResourceManager();
+
+		try{
+			event.registerShader(new ShaderInstance(manager, Nekoration.MODID + ":rendertype_cat_portal", DefaultVertexFormat.POSITION), (inst) -> {
+				rendertypeCatPortalShader = inst;
+			});
+		} catch (IOException e){
+			e.printStackTrace();
+		}
 	}
 }
