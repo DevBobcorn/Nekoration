@@ -47,6 +47,6 @@ public class DyeableWoodenBlockItem extends BlockItem {
 
 	@Override
 	public Component getName(ItemStack stack) {
-		return new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.wooden." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString());
+		return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.wooden." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString()));
 	}
 }

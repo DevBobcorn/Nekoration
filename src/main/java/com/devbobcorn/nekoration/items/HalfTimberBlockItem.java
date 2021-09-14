@@ -74,6 +74,6 @@ public class HalfTimberBlockItem extends BlockItem {
 		String color0Text = (new TranslatableComponent("color.wooden." + (hasColor ? getColor0(stack).getSerializedName() : "unknown"))).getString();
 		String color1Text = (new TranslatableComponent("color.nekoration." + (hasColor ? getColor1(stack).getSerializedName() : "unknown"))).getString();
 
-		return new TranslatableComponent(this.getDescriptionId(stack), color0Text, color1Text);
+		return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), color0Text, color1Text));
 	}
 }

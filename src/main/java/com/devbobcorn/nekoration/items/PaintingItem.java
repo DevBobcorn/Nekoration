@@ -189,6 +189,6 @@ public class PaintingItem extends Item {
 
 	@Override
 	public Component getName(ItemStack stack) {
-		return new TranslatableComponent(this.getDescriptionId(stack) + '.' + Type.fromId(getType(stack)).name, getWidth(stack), getHeight(stack));
+		return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack) + '.' + Type.fromId(getType(stack)).name, getWidth(stack), getHeight(stack)));
 	}
 }

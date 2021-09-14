@@ -1,9 +1,9 @@
-#This is a Python3 Script used to generate language files for this mod
-import json
+# This is a Python3 Script used to generate language files for this mod
+import json, random, copy, hashlib
 
 colors = ["black","blue","brown","cyan","gray","green","light_blue","light_gray","lime","magenta","orange","pink","purple","red","white","yellow","unknown","blank"]
-colors_us = ["Black","Blue","Brown","Cyan","Gray","Green","Light Blue","Light Gray","Lime","Magenta","Orange","Pink","Purple","Red","White","Yellow","Some","Blank"]
-wooden_us = ["Dark Oak","Blue Wood","Spruce","Warped","Jungle","Green Wood","Magic","Oak","Willow","Crimson","Acacia","Mahogany","Umbran","Cherry","Birch","Palm","Some","Air"]
+colors_us  = ["Black","Blue","Brown","Cyan","Gray","Green","Light Blue","Light Gray","Lime","Magenta","Orange","Pink","Purple","Red","White","Yellow","Some","Blank"]
+wooden_us  = ["Dark Oak","Blue Wood","Spruce","Warped","Jungle","Green Wood","Magic","Oak","Willow","Crimson","Acacia","Mahogany","Umbran","Cherry","Birch","Palm","Some","Air"]
 colors_cn = ["黑色","蓝色","棕色","青色","灰色","绿色","淡蓝色","淡灰色","黄绿色","品红色","橙色","粉色","紫色","红色","白色","黄色","","空白"]
 wooden_cn = ["深色橡木","蓝木","云杉木","诡异木","丛林木","绿木","魔法木","橡木","柳木","绯红木","金合欢木","桃花心木","暗影木","樱木","白桦木","棕榈木","","空气"]
 woods = ["pumpkin","dark_oak","spruce","warped","jungle","oak","crimson","acacia","birch"]
@@ -30,13 +30,13 @@ decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short
 decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu","%s White Easel Menu"]
 decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","%s展架","%s白色展架"]
 # Find it a bit strange to say "Candle Holder with %s candle", so I just ignore their color
-items = ["paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette","painting.blank","painting.painted","painting.magic","wallpaper"]
-items_us = ["Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Blank Painting (%sx%s)","Painting (%sx%s)","Linked Painting (%sx%s)","%s Wallpaper"]
-items_cn = ["猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","空白画(%sx%s)","画(%sx%s)","链接画(%sx%s)","%s墙纸"]
+items = ["brochure","paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette","painting.blank","painting.painted","painting.magic","wallpaper"]
+items_us = ["Neko Brochure [WIP]","Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Blank Painting (%sx%s)","Painting (%sx%s)","Linked Painting (%sx%s)","%s Wallpaper"]
+items_cn = ["Neko手册[WIP]","猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","空白画(%sx%s)","画(%sx%s)","链接画(%sx%s)","%s墙纸"]
 
-miscs = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iron","candle_holder_gold","candle_holder_quartz","flower_basket_iron","flower_basket_gold","flower_basket_quartz","phonograph","custom"]
-miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Phonograph [WIP]","Custom Block"]
-miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","留声机[WIP]","自定义方块"]
+miscs = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iron","candle_holder_gold","candle_holder_quartz","flower_basket_iron","flower_basket_gold","flower_basket_quartz","phonograph","custom","prismap_table"]
+miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Phonograph [WIP]","Custom Block","Prismap Table [WIP]"]
+miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","留声机[WIP]","自定义方块","棱镜台[WIP]"]
 
 tabs = ["stone","wooden","window_n_door","decor","neko_tool"]
 tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Decorations","Neko Tools"]
@@ -70,11 +70,31 @@ def getEnNameMine(instr):
 def getEnName(instr):
     return instr.replace('_', ' ').title()
 
-# English(United States) |  en_us.json
-obj_us = {}
-# 简体中文(中国)         |  zh_cn.json
-obj_cn = {}
+def getUpperCap(instr):
+    strlst = list(instr)
+    toUpper = True
+    for char in range(0, len(strlst)):
+        if (toUpper and strlst[char] >= 'a' and strlst[char] <= 'z'): # Then to Uppercase
+            strlst[char] = chr(ord(strlst[char]) - 32)
+        # Reset
+        toUpper = False
+        if (strlst[char] == ' '):
+            toUpper = True
+    return "".join(strlst)
 
+def getUpper1st(instr):
+    strlst = list(instr)
+    if (strlst[0] >= 'a' and strlst[0] <= 'z'): # Then to Uppercase
+        strlst[0] = chr(ord(strlst[0]) - 32)
+    return "".join(strlst)
+
+
+# English(United States)  |  en_us.json
+obj_us  = {}
+# 简体中文(中国)          |  zh_cn.json
+obj_cn  = {}
+# LOLCAT(Kingdom of Catz) |  lol_us.json
+obj_lol = {}
 
 # Color Names...
 for col in range(0, len(colors)):
@@ -155,3 +175,102 @@ with open("en_us.json", "w+") as f:
 with open("zh_cn.json", "w+", encoding='utf-8') as f:
     data = json.dumps(obj_cn, ensure_ascii=False, sort_keys=True, indent=4, separators=(',', ': '))
     f.write(data)
+
+
+# FULL Langeez Suprot 4 wee catz!
+# Wii apologize 4 de inconviinnis
+colors_lol  = ["Blak","Bloo","Brownish","Syan","Gray","Greenish","Lite Bloo","Lite Gray","Limd","Majenta","Ornge","Pinky","Parple","Redish","Waite","Yello","What","Nuh"]
+rplc_1 = {
+    'far ': ('fur ', 1.0),
+    'bug ': ('<*> ', 1.0),
+    'wip': ('<#>', 1.0),
+    'sh': ('<$>', 1.0),
+    'size': ('hugenezz', 1.0),
+    'thanks': ('thx', 1.0),
+    'gold': ('shiny',1.0),
+    'golden': ('shiny', 1.0),
+    'diamond': ('heaven', 1.0),
+    'cat\'s': ('mai', 1.0),
+    'cat': ('mii', 1.0),
+    'tion': ('<?>', 0.8),
+    'to ': ('2 ', 1.0),
+    'and ': ('& ', 1.0),
+    'for': ('4', 1.0),
+    'pal': ('paw', 1.0),
+    'o': ('oo', 0.2),
+    'or': ('ur', 0.8),
+    'ar': ('aa', 0.5),
+    'er': ('ar', 0.365),
+    'ts': ('z', 0.6),
+    'ur': ('aa', 0.2),
+    'ir': ('ur', 0.78),
+    'ru': ('oo', 0.89),
+    'ny': ('nee', 0.46),
+    'ny': ('ni', 0.26),
+    'ty': ('tee', 0.76),
+    'ti': ('tee', 0.56),
+    'tee': ('ti', 0.36),
+    'sy': ('sii', 0.86),
+    'the': ('teh', 1.0),
+    'teh': ('de', 0.3),
+    'eco': ('eko', 0.95),
+    'ng ': ('n ', 0.99),
+    'ph': ('f', 0.79),
+    'rr': ('r', 0.69)
+}
+grop_1 = ['o','a','u']
+rplc_2 = {
+    '<*>': 'dog',
+    '<#>': 'rip',
+    '<?>': 'shun',
+    '<$>': 'sh'
+}
+
+def toLolCat(instr):
+    sha1 = hashlib.sha1()
+    sha1.update(instr.encode("utf8"))
+    #print('hash ' + str(sha1.hexdigest()))
+    misteaksiid = sha1.hexdigest()
+    print(instr + ' ' + str(misteaksiid))
+    random.seed(misteaksiid)
+    instr = instr.lower()
+    
+    for src, tar in rplc_1.items():
+        if (src in instr):
+            don = random.random()
+            if (don < tar[1]):
+                instr = instr.replace(src, tar[0])
+                
+    strlst = list(instr)
+    for char in range(0, len(strlst)):
+        if (strlst[char] in grop_1):
+            don = random.randint(0, 12)
+            if (don < 10):
+                pikd = random.randint(0, len(grop_1) - 1)
+                strlst[char] = grop_1[pikd]
+        if (char > 0 and strlst[char] == 's' and strlst[char - 1] != '%'):
+            don = random.randint(0, 10)
+            if (don < 7):
+                strlst[char] = 'z'
+    wip = "".join(strlst)
+    for jar, fish in rplc_2.items():
+        if jar in wip:
+            wip = wip.replace(jar, fish)
+    if (random.randint(0, 14) < 10):
+        proc = getUpper1st(wip)
+    else:
+        proc = getUpperCap(wip)
+    #print(proc + ' ' + str(misteaksiid))
+    return proc
+
+with open("lol_us.json", "w+") as f:
+    # 1st maek 1 copee
+    obj_lol = copy.deepcopy(obj_us)
+    for can, tuna in obj_lol.items():
+        obj_lol[can] = toLolCat(tuna)
+    for col in range(0, len(colors)):
+        obj_lol['color.nekoration.' + colors[col]] = colors_lol[col]
+    data = json.dumps(obj_lol, sort_keys=True, indent=4, separators=(',', ': '))
+    f.write(data)
+    # Sooo long & THX 4 ALL teh fishez
+
