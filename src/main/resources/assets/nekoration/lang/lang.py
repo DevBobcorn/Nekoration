@@ -272,5 +272,5 @@ with open("lol_us.json", "w+") as f:
         obj_lol['color.nekoration.' + colors[col]] = colors_lol[col]
     data = json.dumps(obj_lol, sort_keys=True, indent=4, separators=(',', ': '))
     f.write(data)
-    # Sooo long & THX 4 ALL teh fishez
+    # So lang & THX 4 ALL teh fishez
 
