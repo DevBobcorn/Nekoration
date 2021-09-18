@@ -90,6 +90,7 @@ public class PaintingScreen extends Screen {
     private static final String[] buttonKeys = { "save_painting", "save_painting_content", "load_image", "clear" };
     private final TranslatableComponent[] buttonMessages = new TranslatableComponent[buttonKeys.length];
     private final TranslatableComponent[] paramMessages = new TranslatableComponent[TOOLS_NUM];
+    private static int stepLimit;
 
     public PaintingScreen(int pt) {
         this(pt, (byte)0, PaletteItem.DEFAULT_COLOR_SET);
@@ -122,6 +123,7 @@ public class PaintingScreen extends Screen {
             paramMessages[idx] = new TranslatableComponent("gui.nekoration.message.scroll_change", new TranslatableComponent("gui.nekoration.paint.tool_param" + idx).getString());
         history.clear();
         future.clear();
+        stepLimit = NekoConfig.CLIENT.maxUndoLimit.get();
     }
 
     private String[] getFileLocation(){
@@ -264,7 +266,9 @@ public class PaintingScreen extends Screen {
             int[] target = history.pollFirst(); // Pop
             if (target != null){ // Previous step available...
                 paintingData.setPixels(target);
-                future.addFirst(futureCopy); // Push
+                future.offerFirst(futureCopy); // Push
+                if (future.size() > stepLimit)
+                    future.pollLast();
             }
             return true;
         } else if (keyCode == GLFW.GLFW_KEY_X){
@@ -273,7 +277,9 @@ public class PaintingScreen extends Screen {
             int[] target = future.pollFirst(); // Pop
             if (target != null){ // Future step available...
                 paintingData.setPixels(target);
-                history.addFirst(pastCopy); // Push
+                history.offerFirst(pastCopy); // Push
+                if (history.size() > stepLimit)
+                    history.pollLast();
             }
             return true;
         } else if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
@@ -383,7 +389,9 @@ public class PaintingScreen extends Screen {
                 getOpacity(x, y);
                 debugText = "Opacity: " + opacity;
             } else if (isOnPainting(x, y)){
-                history.push(Arrays.copyOf(paintingData.getPixels(), paintingData.getPixels().length));
+                history.offerFirst(Arrays.copyOf(paintingData.getPixels(), paintingData.getPixels().length));
+                if (history.size() > stepLimit)
+                    history.pollLast();
                 future.clear();
                 useTool(x, y);
             } else {

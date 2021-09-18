@@ -23,9 +23,10 @@ public class NekoConfig {
         public final ForgeConfigSpec.BooleanValue useImageRendering;
         public final ForgeConfigSpec.BooleanValue simplifyRendering;
         public final ForgeConfigSpec.BooleanValue debugMode;
+        public final ForgeConfigSpec.IntValue maxUndoLimit;
 
         Client(ForgeConfigSpec.Builder builder){
-            builder.comment("Painting renderer configuration settings").push("painting_renderer");
+            builder.comment("Painting configuration settings").push("painting");
             this.useImageRendering =
                 builder.comment("Whether to cache paintings to this client, and use them for rendering.(Default to true)")
                     .define("useImageRendering", true);
@@ -35,6 +36,9 @@ public class NekoConfig {
             this.debugMode =
                 builder.comment("Whether to display debug information at the bottom of paintings.(Default to false)")
                     .define("debugMode", false);
+            this.maxUndoLimit =
+                builder.comment("The maximum undo/redo steps allowed on this client.(Default to 15)")
+                    .defineInRange("maxUndoLimit", 15, 2, 30);
             builder.pop();
         }
     }
