@@ -34,7 +34,6 @@ public class PaletteItem extends Item {
 	@Override
     @SuppressWarnings("deprecation")
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
-        //System.out.println("Used Palette Item!");
         ItemStack stack = player.getItemInHand(hand);
         if (world.isClientSide) {
             // First get the existing data in this palette...

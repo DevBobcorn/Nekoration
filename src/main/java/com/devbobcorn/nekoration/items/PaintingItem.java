@@ -122,7 +122,6 @@ public class PaintingItem extends Item {
 			}
 		} else if (hasType && tag.getByte(TYPE) == Type.MAGIC.id) { // If a magic link...
 			if (!world.isClientSide) {
-				System.out.println("Blanked Magic!");
 				tag.remove("DataId");
 				tag.remove("EntityId");
 				tag.putByte(TYPE, Type.BLANK.id);

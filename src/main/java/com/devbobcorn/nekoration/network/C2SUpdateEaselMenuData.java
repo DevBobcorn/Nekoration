@@ -65,7 +65,6 @@ public class C2SUpdateEaselMenuData {
                         te.setGlowing(msg.glow);
                         world.getChunkSource().blockChanged(msg.pos);
                         tileEntity.setChanged();
-                        //System.out.println("TEXT UPDATE Packet Received From Client");
                         
                         ItemStack[] its = new ItemStack[8];
                         for (int i = 0;i < 8;i++){
@@ -74,7 +73,6 @@ public class C2SUpdateEaselMenuData {
                         // Then update items on Client Side, used for rendering...
                         final S2CUpdateEaselMenuData packet = new S2CUpdateEaselMenuData(msg.pos, its, msg.texts, msg.colors, msg.glow);
                         ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
-                        //System.out.println("Item Update Packet Sent From Server");
                     }
                 }
             }

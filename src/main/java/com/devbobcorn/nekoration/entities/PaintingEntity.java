@@ -94,7 +94,6 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 		Level world = player.level;
 		if (world.isClientSide) {
 			if (stack.getItem() == ModItems.PALETTE.get()){
-				//System.out.println("Open Painting using Palette Item.");
 				// First get the existing data in this palette...
 				CompoundTag nbt = stack.getTag();
 				if (nbt != null && nbt.contains(PaletteItem.ACTIVE, TagTypes.BYTE_NBT_ID)){
@@ -105,9 +104,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 						col[i] = new Color(NekoColors.getRed(c[i]), NekoColors.getGreen(c[i]), NekoColors.getBlue(c[i]));
 					}
 					DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-						//Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, col));
 						ClientHelper.showPaintingScreen(this.getId(), a, col);
-						//System.out.println("Open Painting GUI1.");
 					});
 				} else ClientHelper.showPaintingScreen(this.getId());
 			} else if (stack.getItem() != ModItems.PAINTING.get()) {
@@ -198,9 +195,6 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 		buffer.writeDouble(this.getBoundingBox().maxX);
 		buffer.writeDouble(this.getBoundingBox().maxY);
 		buffer.writeDouble(this.getBoundingBox().maxZ);
-		//System.out.println("SERVER: " + this.getBoundingBox() + " isClient: " + this.level.isClientSide);
-		//System.out.println(this.position());
-		//System.out.println(this.pos);
 	}
 
 	@Override

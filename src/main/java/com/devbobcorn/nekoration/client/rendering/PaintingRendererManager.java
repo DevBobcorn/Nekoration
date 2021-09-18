@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nullable;
 
-import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.client.rendering.entities.AbstractPaintingRenderer;
 import com.devbobcorn.nekoration.client.rendering.entities.AbstractPaintingRenderer.*;
 import com.google.common.cache.CacheBuilder;
@@ -24,7 +23,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 public class PaintingRendererManager {
     private static final String SAVED_PATH = "nekocache/";
 
-    private static final Logger LOGGER = LogManager.getLogger(Nekoration.MODID + " Painting Manager");
+    private static final Logger LOGGER = LogManager.getLogger("Painting Manager");
 
     private static PixelsPaintingRenderer PIXELS_RENDERER = new PixelsPaintingRenderer();
 

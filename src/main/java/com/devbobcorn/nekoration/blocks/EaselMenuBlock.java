@@ -66,7 +66,7 @@ public class EaselMenuBlock extends DyeableHorizontalBlock implements EntityBloc
 			}
             return;
 		}
-		System.err.println("Tile Entity NOT Found!");
+		LOGGER.error("Tile Entity NOT Found!");
 	}
 
 	@Override

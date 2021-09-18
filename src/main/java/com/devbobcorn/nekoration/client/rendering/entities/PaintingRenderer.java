@@ -9,6 +9,9 @@ import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -25,7 +28,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
-	Font font;
+	private static final Logger LOGGER = LogManager.getLogger("Painting Renderer");
+	private static Font font;
 	public PaintingRenderer(EntityRendererProvider.Context ctx) {
 		super(ctx);
 		font = ctx.getFont();
@@ -139,7 +143,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 						rd = PaintingRendererManager.get(entity.data.getPaintingHash());
 						if (rd == null){
 							// Reset to the Pixel Renderer...
-							System.err.println("Image Renderer Not Ready!");
+							LOGGER.error("Image Renderer Not Ready!");
 							entity.data.imageReady = false;
 							rd = PaintingRendererManager.PixelsRenderer();
 						}
@@ -155,26 +159,28 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 				rd = PaintingRendererManager.get(entity.data.getPaintingHash());
 				if (rd == null){
 					// Reset to the Pixel Renderer...
-					System.err.println("Image Renderer Not Ready!");
+					LOGGER.error("Image Renderer Not Ready!");
 					entity.data.imageReady = false;
 					rd = PaintingRendererManager.PixelsRenderer();
 				}
 			} else rd = PaintingRendererManager.PixelsRenderer();
 			rd.renderFull(stack, pose, normal, buffers, entity.data, LEFT, TOP, light);
 		}
-		// Draw Debug Text...
-		stack.pushPose();
-		stack.translate(-LEFT - 1.0D, TOP + 3.0D, -0.6D);
-		stack.scale(-0.2F, -0.2F, 0.2F);
-		//font.draw(stack, "Ceci n'est pas une painting!", 1.0F, 1.0F, 0xFFFFFF);
-		font.draw(stack, (renderWithImage ? "Rendered with Image" : "Rendered Pixel-by-Pixel") + (fastRender ? " (Fast Mode)" : " (Fancy Mode)"), 1.0F, 1.0F, 0xFFFFFF);
-		stack.translate(0.0D, -10.0D, 0.0D);
-		font.draw(stack, "#" + String.valueOf(entity.data.getPaintingHash()) + String.format(" L: %x", entityLight), 1.0F, 1.0F, 0xFFFFFF);
-		stack.translate(0.0D, 30.0D, 0.0D);
-		font.draw(stack, String.valueOf(entity.data.getUUID()), 1.0F, 1.0F, 0xFFFFFF);
-		stack.translate(0.0D, 10.0D, 0.0D);
-		font.draw(stack, String.valueOf(entity.getUUID()), 1.0F, 1.0F, 0xFFFFFF);
-		stack.popPose();
+		if (NekoConfig.CLIENT.debugMode.get()){
+			// Draw Debug Text...
+			stack.pushPose();
+			stack.translate(-LEFT - 1.0D, TOP + 3.0D, -0.6D);
+			stack.scale(-0.2F, -0.2F, 0.2F);
+			//font.draw(stack, "Ceci n'est pas une painting!", 1.0F, 1.0F, 0xFFFFFF);
+			font.draw(stack, (renderWithImage ? "Rendered with Image" : "Rendered Pixel-by-Pixel") + (fastRender ? " (Fast Mode)" : " (Fancy Mode)"), 1.0F, 1.0F, 0xFFFFFF);
+			stack.translate(0.0D, -10.0D, 0.0D);
+			font.draw(stack, "#" + String.valueOf(entity.data.getPaintingHash()) + String.format(" L: %x", entityLight), 1.0F, 1.0F, 0xFFFFFF);
+			stack.translate(0.0D, 30.0D, 0.0D);
+			font.draw(stack, String.valueOf(entity.data.getUUID()), 1.0F, 1.0F, 0xFFFFFF);
+			stack.translate(0.0D, 10.0D, 0.0D);
+			font.draw(stack, String.valueOf(entity.getUUID()), 1.0F, 1.0F, 0xFFFFFF);
+			stack.popPose();
+		}
 	}
 
 	private static void vertexFrame(Matrix4f pose, Matrix3f normal, VertexConsumer vertexBuilder, float x, float y, float u, float v, float z, int nx, int ny, int nz, int light) {

@@ -221,21 +221,16 @@ public class DyeableWindowFrameBlock extends DyeableHorizontalBlock {
 		BlockState stateU = world.getBlockState(blockPosU);
 		BlockState stateD = world.getBlockState(blockPosD);
 
-		// System.out.println("Update: " + pos.toShortString() + " " + posFrom.toShortString());
 		if (blockPosL.compareTo(posFrom) == 0) {
-			//System.out.println("Left");
 			stateL = newState;
 		}
 		if (blockPosR.compareTo(posFrom) == 0) {
-			//System.out.println("Right");
 			stateR = newState;
 		}
 		if (blockPosU.compareTo(posFrom) == 0) {
-			//System.out.println("Up");
 			stateU = newState;
 		}
 		if (blockPosD.compareTo(posFrom) == 0) {
-			//System.out.println("Down");
 			stateD = newState;
 		}
 

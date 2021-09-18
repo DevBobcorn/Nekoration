@@ -100,10 +100,7 @@ public class CustomBlock extends Block implements EntityBlock {
 			te.color[0] = NekoColors.getRed(c[a]);
 			te.color[1] = NekoColors.getGreen(c[a]);
 			te.color[2] = NekoColors.getBlue(c[a]);
-			// ...
-			System.out.println("Dye Custom Block!");
 		} else if (item instanceof BlockItem){
-			//System.out.println("Block Item.");
 			if (((BlockItem)item).getBlock() instanceof CustomBlock)
 				return InteractionResult.PASS;
 			te.model = 16;

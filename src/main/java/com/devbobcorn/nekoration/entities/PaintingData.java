@@ -19,6 +19,9 @@ import com.devbobcorn.nekoration.utils.PixelPos;
 import com.devbobcorn.nekoration.utils.TagTypes;
 import com.mojang.blaze3d.platform.NativeImage;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -26,8 +29,11 @@ import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 
 public class PaintingData {
+    public static final Logger LOGGER = LogManager.getLogger("Painting Data");
+
     private short width;
     private short height;
     // This is the 'data id', or to say, the original painting entity's uuid.
@@ -122,7 +128,7 @@ public class PaintingData {
         if (pathCheck.isDirectory()){
             final File fileCheck = new File(pathCheck, getPaintingHash() + ".png");
             if (fileCheck.exists()){
-                System.out.println("Painting #" + getPaintingHash() + " already cached.");
+                LOGGER.info("Painting #" + getPaintingHash() + " already cached.");
                 return true;
             }
         }
@@ -143,7 +149,7 @@ public class PaintingData {
             if (!folder.exists() && !folder.mkdir())
                 throw new IOException("Could not create folder");
             final File file = new File(folder, name + ".png");
-            System.out.println("Painting cached to " + file.getAbsolutePath());
+            LOGGER.info("Painting cached to " + file.getAbsolutePath());
             if (!ImageIO.write(image, "png", file))
                 throw new IOException("Could not encode image as png!");
             if (showMessage){
@@ -177,11 +183,10 @@ public class PaintingData {
                     pixels[j * width + i] = (color & 0xFF00FF00) + ((color & 0xFF0000) >> 16) + ((color & 0xFF) << 16);
                 }
             recalculateComposite();
-            System.out.println(String.format("Painting '%s' Loaded: %s x %s", name, image.getWidth(), image.getHeight()));
+            LOGGER.info(String.format("Painting '%s' Loaded: %s x %s", name, image.getWidth(), image.getHeight()));
             return true;
         } catch (IOException e) {
-            //e.printStackTrace();
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
             MutableComponent component = new TextComponent(name);
             minecraft.player.displayClientMessage(new TranslatableComponent("gui.nekoration.message.painting_load_failed", component), false);
             return false;
@@ -194,7 +199,7 @@ public class PaintingData {
         if (path.isDirectory()){
             final File file = new File(path, target + ".png");
             if (file.delete()){
-                System.out.println("Painting #" + target + " cache cleared.");
+                LOGGER.info("Painting #" + target + " cache cleared.");
                 return true;
             }
         }
@@ -240,7 +245,7 @@ public class PaintingData {
 
     public void setPixels(int[] pixels){
         if (pixels.length == this.pixels.length)
-            this.pixels = pixels;
+            this.pixels = Arrays.copyOf(pixels, pixels.length);
         if (isClient)
             recalculateComposite();
     }
@@ -251,7 +256,7 @@ public class PaintingData {
                 int x = partX * 3 * 16 + i;
                 int y = partY * 3 * 16 + j;
                 if (!isLegal(x, y))
-                    System.out.println(x + " 0.0 " + y);
+                    LOGGER.error("Illegal Coordinate: " + x + ", " + y);
                 this.pixels[y * width + x] = pixels[j * partW * 16 + i];
                 // Painting Coord.         => Part Coord.
             }
@@ -262,8 +267,6 @@ public class PaintingData {
     public void setPixel(int x, int y, int color){
         if (isLegal(x, y)){
             pixels[y * width + x] = color;
-            //System.out.println("Pixel set @[" + x + ", " + y + "] Opacity: " + ((pixels[y * width + x] & 0xff000000)));
-            //System.out.printf("%x\n", ((pixels[y * width + x] >> 24) & 0xff));
             if (isClient)
                 recalculateCompositeAt(x, y);
         }
@@ -271,7 +274,7 @@ public class PaintingData {
     private static final int canvasize = 128;
     boolean[][] visited = new boolean[canvasize][canvasize];
 
-    public int fill(int x, int y, int color, int opacity){
+    public int fill(int x, int y, int color, int opacity, int threshold){
         if (!isLegal(x, y))
             return 0;
 
@@ -280,7 +283,7 @@ public class PaintingData {
                 visited[i][j] = false;
             }
         
-        pixSearch(x, y);
+        pixSearch(x, y, threshold);
         int cnt = 0;
         for (int i = 0;i < width;i++)
             for (int j = 0;j < height;j++) {
@@ -303,15 +306,19 @@ public class PaintingData {
         visited[pix.x][pix.y] = true;
     }
 
-    private boolean checkColor(int origin, PixelPos pix){
-        return origin == getCompositeAt(pix.x, pix.y);
+    private boolean checkColor(int origin, PixelPos pix, int threshold){
+        int target = getCompositeAt(pix.x, pix.y);
+        float ro = (origin & 0xff0000) - (target & 0xff0000);
+        float go = (origin & 0xff00) - (target & 0xff00);
+        float bo = (origin & 0xff) - (target & 0xff);
+        return Mth.sqrt(ro * ro + go * go + bo * bo) < threshold;
     }
 
     private static final int[] offsetX = { 1,-1, 0, 0, 1,-1, 1,-1 };
     private static final int[] offsetY = { 0, 0, 1,-1, 1, 1,-1,-1 };
     private boolean connectDiagonal = false;
 
-    private void pixSearch(int x, int y){
+    private void pixSearch(int x, int y, int threshold){
         final int originColor = getCompositeAt(x, y);
         // BFS...
         Queue<PixelPos> queue = new LinkedList<PixelPos>();
@@ -323,7 +330,7 @@ public class PaintingData {
             for (int i = 0;i < (connectDiagonal ? 8 : 4);i++){
                 PixelPos tar = pix.offset(offsetX[i], offsetY[i]);
 
-                if (checkAvailable(tar) && checkColor(originColor, tar)) {
+                if (checkAvailable(tar) && checkColor(originColor, tar, threshold)) {
                     queue.add(tar);
                     setVisited(tar);
                 }

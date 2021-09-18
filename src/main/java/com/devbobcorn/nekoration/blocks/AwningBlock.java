@@ -39,7 +39,6 @@ public class AwningBlock extends DyeableHorizontalBlock {
             }
             
             world.setBlock(pos, state.cycle(IS_END), 3);
-            //Nekoration.LOGGER.info(VanillaCompat.COLOR_ITEMS.get(itemStack.getItem()));
             return InteractionResult.CONSUME;
         } else super.use(state, world, pos, player, hand, hit);
         return InteractionResult.PASS;

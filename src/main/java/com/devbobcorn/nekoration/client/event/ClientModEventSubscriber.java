@@ -58,7 +58,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 // Client-Side Only Things...
 @EventBusSubscriber(modid = Nekoration.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ClientModEventSubscriber {
-	private static final Logger LOGGER = LogManager.getLogger(Nekoration.MODID + " Client Mod Event Subscriber");
+	private static final Logger LOGGER = LogManager.getLogger("Client Mod Event Subscriber");
 
 	@SubscribeEvent
 	public static void onClientSetupEvent(FMLClientSetupEvent event) {

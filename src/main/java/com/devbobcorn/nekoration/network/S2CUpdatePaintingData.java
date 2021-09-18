@@ -5,6 +5,9 @@ import java.util.function.Supplier;
 import com.devbobcorn.nekoration.NekoConfig;
 import com.devbobcorn.nekoration.entities.PaintingEntity;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,6 +15,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class S2CUpdatePaintingData {
+    private static final Logger LOGGER = LogManager.getLogger("Painting Data Packet");
+
     public int paintingId;
     public byte partX;
     public byte partY;
@@ -66,7 +71,7 @@ public class S2CUpdatePaintingData {
                         //pe.data.setPixels(msg.pixels);
                         pe.data.setAreaPixels(msg.partX, msg.partY, msg.partW, msg.partH, msg.pixels);
                         boolean synced = pe.data.getPaintingHash() == msg.compositeHash;
-                        System.out.println(String.format("Painting %s Synced: %s", msg.compositeHash, synced));
+                        LOGGER.info(String.format("Painting %s Synced: %s", msg.compositeHash, synced));
                         if (synced && NekoConfig.CLIENT.useImageRendering.get()) // The whole picture synced, then re-cache the updated painting...
                             pe.data.cache();
                     }

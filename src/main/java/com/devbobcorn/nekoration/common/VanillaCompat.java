@@ -3,7 +3,6 @@ package com.devbobcorn.nekoration.common;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.google.common.collect.Maps;
 
@@ -18,7 +17,7 @@ import net.minecraft.world.level.block.FireBlock;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class VanillaCompat {
-	private static final Logger LOGGER = LogManager.getLogger(Nekoration.MODID + " Vanilla Compat");
+	private static final Logger LOGGER = LogManager.getLogger("Vanilla Compat");
 
 	public static final Map<Block, Block> BLOCK_STRIPPING_MAP_PLUS = Maps.newHashMap();
 	

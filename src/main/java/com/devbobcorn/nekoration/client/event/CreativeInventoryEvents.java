@@ -13,8 +13,6 @@ import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.ModItemTabs;
 import com.devbobcorn.nekoration.utils.ItemIconHelper;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.Minecraft;
@@ -33,7 +31,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 // Creative Screen Things, adapted from MrCrayfish's Furniture Mod...
-@SuppressWarnings("unused")
 public class CreativeInventoryEvents
 {
     private static final ResourceLocation ICONS = new ResourceLocation(Nekoration.MODID, "textures/gui/icons.png");
@@ -48,8 +45,6 @@ public class CreativeInventoryEvents
     private boolean viewingFurnitureTab;
     private int guiCenterX = 0;
     private int guiCenterY = 0;
-
-    private static final Logger LOGGER = LogManager.getLogger("Creative Tab");
 
     @SubscribeEvent
     public void onPlayerLogout(ClientPlayerNetworkEvent.LoggedOutEvent event)

@@ -117,7 +117,6 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
 			//Send a packet to the Server tu update data...
 			final C2SUpdateEaselMenuData packet = new C2SUpdateEaselMenuData(menu.easel.getBlockPos(), menu.easel.getMessages(), menu.easel.getColors(), menu.easel.getGlowing());
 			ModPacketHandler.CHANNEL.sendToServer(packet);
-			//System.out.println("Packet Sent");
 		} catch (Exception e){
 			e.printStackTrace();
 		}

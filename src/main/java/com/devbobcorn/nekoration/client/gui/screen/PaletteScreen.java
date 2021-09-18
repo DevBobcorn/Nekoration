@@ -157,7 +157,6 @@ public class PaletteScreen extends Screen {
     @Override
     public boolean mouseClicked(double x, double y, int type){
         if (type == 0 && !updateActiveSlot(x, y)){ // Left Mouse Only, and first update slots...
-            //System.out.println((isOnColorMap(x, y) ? getColor(x, y) : "Not on ColorMap...") + " type: " + type);
             if (isOnColorMap(x, y))
                 getColor(x, y);
             if (isOnHuePicker(x, y))

@@ -2,6 +2,9 @@ package com.devbobcorn.nekoration.client.rendering;
 
 import com.devbobcorn.nekoration.client.rendering.chunks.ChunkModelRender;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ChunkBufferBuilderPack;
 import net.minecraft.core.BlockPos;
@@ -9,6 +12,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 
 public class ChunkModel {
+    private static final Logger LOGGER = LogManager.getLogger("Chunk Model");
+
     public final ChunkModelRender chunkRender;
     private boolean isCompiled = false;
     private boolean error = false;
@@ -35,7 +40,7 @@ public class ChunkModel {
             final Vec3 pos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
             modelRender.setCamera(pos);
             modelRender.compileModel();
-            System.out.println("Compiled. Raely. I am haz Error: " + (error ? "Yiss" : "Nu"));
+            LOGGER.info("Model " + (error ? "failed to compile." : "compiled successfully."));
 
             this.isCompiled = true;
         } catch (Exception e) {

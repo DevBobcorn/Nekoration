@@ -22,6 +22,7 @@ public class NekoConfig {
     public static class Client{
         public final ForgeConfigSpec.BooleanValue useImageRendering;
         public final ForgeConfigSpec.BooleanValue simplifyRendering;
+        public final ForgeConfigSpec.BooleanValue debugMode;
 
         Client(ForgeConfigSpec.Builder builder){
             builder.comment("Painting renderer configuration settings").push("painting_renderer");
@@ -31,6 +32,9 @@ public class NekoConfig {
             this.simplifyRendering =
                 builder.comment("Whether to simplify the lighting calculation when rendering paintings.(Default to true)")
                     .define("simplifyRendering", true);
+            this.debugMode =
+                builder.comment("Whether to display debug information at the bottom of paintings.(Default to false)")
+                    .define("debugMode", false);
             builder.pop();
         }
     }

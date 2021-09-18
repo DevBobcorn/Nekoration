@@ -59,9 +59,7 @@ public class C2SUpdatePaintingData {
                 // ...
                 Entity entity = player.level.getEntity(msg.paintingId);
                 if (entity instanceof PaintingEntity){
-                    //((PaintingEntity)entity).data.setPixels(msg.pixels);
                     ((PaintingEntity)entity).data.setAreaPixels(msg.partX, msg.partY, msg.partW, msg.partH, msg.pixels);
-                    //System.out.println("Painting Updated!");
                     final S2CUpdatePaintingData packet = new S2CUpdatePaintingData(msg.paintingId, msg.partX, msg.partY, msg.partW, msg.partH, msg.pixels, msg.compositeHash);
                     ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
                 }

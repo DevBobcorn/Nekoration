@@ -1,6 +1,9 @@
 package com.devbobcorn.nekoration.client.gui.screen;
 
 import java.awt.Color;
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Objects;
 
 import com.devbobcorn.nekoration.NekoColors;
@@ -25,6 +28,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class PaintingScreen extends Screen {
     public static final ResourceLocation BACKGROUND = new ResourceLocation(Nekoration.MODID, "textures/gui/painting.png");
@@ -50,16 +54,19 @@ public class PaintingScreen extends Screen {
     private final int imageWidth = 256;
     private final int imageHeight = 192;
 
+    private final Deque<int[]> history = new LinkedList<>();
+    private final Deque<int[]> future = new LinkedList<>();
+    
     private int leftPos;
     private int topPos;
     private int entityId;
-    //private Color colorMapColor = Color.RED;
-    private Color[] colors = new Color[6];
-    private byte activeSlot = 0;
+    private Color[] colors;
+    private byte activeSlot;
     private int opacity = 255;
-    private int opacityPos = -1;
-    private byte activeTool = 0; // 0: Pencil, 1: Pen, 2: Eraser, 3: Bucket Fill
-    // private int[] pointerPos = { -1, -1 };
+    private int opacityPos;
+    private byte activeTool = 0; // 0: Pencil, 1: Brush, 2: Eraser, 3: Bucket Fill
+    private static final int[] toolParams = { 1, 1, 2, 5 };
+    private static final int[] MAX_PARAMS = { 10, 10, 16, 99 };
     public boolean renderDebugText = false;
 
     private final PaintingData paintingData;
@@ -70,16 +77,19 @@ public class PaintingScreen extends Screen {
 
     private EditBox nameInput;
     private boolean nameError = false;
-    private IconButton[] buttons = new IconButton[3];
+    private final IconButton[] buttons = new IconButton[3];
 
     // Used on Client-Side only
     private static double hor = 0.0D, ver = 0.0D;
     private static int pixsize = 8;
     private static int lastEdited = 0;
 
-    private TranslatableComponent tipMessage;
+    private static int renderTime = 0;
+    private static final int TIPS = 3;
+    private final TranslatableComponent[] tipMessages = new TranslatableComponent[TIPS];
     private static final String[] buttonKeys = { "save_painting", "save_painting_content", "load_image", "clear" };
-    private TranslatableComponent[] buttonMessages = new TranslatableComponent[buttonKeys.length];
+    private final TranslatableComponent[] buttonMessages = new TranslatableComponent[buttonKeys.length];
+    private final TranslatableComponent[] paramMessages = new TranslatableComponent[TOOLS_NUM];
 
     public PaintingScreen(int pt) {
         this(pt, (byte)0, PaletteItem.DEFAULT_COLOR_SET);
@@ -103,9 +113,15 @@ public class PaintingScreen extends Screen {
             hor = ver = 0.0D;
             pixsize = 8;
         } // Or if we're editing the painting this client last edited, just keep the editor's transforms.
-        tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_debug_info", "'F1'");
+        tipMessages[0] = new TranslatableComponent("gui.nekoration.message.press_key_debug_info", "'F1'");
+        tipMessages[1] = new TranslatableComponent("gui.nekoration.message.press_key_undo_redo", "'Z'/'X'");
+        tipMessages[2] = new TranslatableComponent("gui.nekoration.message.press_key_change_tool", "'W'");
         for (int idx = 0;idx < buttonKeys.length;idx++)
             buttonMessages[idx] = new TranslatableComponent("gui.nekoration.button." + buttonKeys[idx]);
+        for (int idx = 0;idx < TOOLS_NUM;idx++)
+            paramMessages[idx] = new TranslatableComponent("gui.nekoration.message.scroll_change", new TranslatableComponent("gui.nekoration.paint.tool_param" + idx).getString());
+        history.clear();
+        future.clear();
     }
 
     private String[] getFileLocation(){
@@ -179,6 +195,7 @@ public class PaintingScreen extends Screen {
         this.addWidget(nameInput);
         for (int btn = 0;btn < 3;btn++)
             this.addWidget(buttons[btn]);
+        renderTime = 40;
     }
 
     @Override
@@ -212,7 +229,7 @@ public class PaintingScreen extends Screen {
                             }
                         // Update Painting Data to the Server, and then the Server will notify clients(including this one) to update their cache...
                         //final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId,  paintingData.getPixels(), paintingData.getPaintingHash());
-                        System.out.println(String.format("[%s] Sending Painting(%s) Part: %s, %s (%s x %s)", partCount, paintingData.getPaintingHash(), blocX / 3, blocY / 3, ptW, ptH));
+                        System.out.printf("[%s] Sending Painting(%s) Part: %s, %s (%s x %s)", partCount, paintingData.getPaintingHash(), blocX / 3, blocY / 3, ptW, ptH);
                         final C2SUpdatePaintingData packet = new C2SUpdatePaintingData(entityId, (byte)(blocX / 3), (byte)(blocY / 3), ptW, ptH, partPixels, paintingData.getPaintingHash());
                         ModPacketHandler.CHANNEL.sendToServer(packet);
                         partCount++;
@@ -235,12 +252,29 @@ public class PaintingScreen extends Screen {
 	@SuppressWarnings({"resource"})
     public boolean keyPressed(int keyCode, int scanCode, int modifier) {
 		if (keyCode == GLFW.GLFW_KEY_F1) {
-			// I DONT GET IT, WHY THE HELL PRESSING 'E' CAN CLOSE THE SCREEN...
             this.renderDebugText = !this.renderDebugText;
             return true;
         } else if (keyCode == GLFW.GLFW_KEY_W){
             // Switch Tool...
             activeTool = (byte)((activeTool + 1) % TOOLS_NUM);
+            return true;
+        } else if (keyCode == GLFW.GLFW_KEY_Z){
+            // Undo...
+            int[] futureCopy = Arrays.copyOf(paintingData.getPixels(), paintingData.getPixels().length);
+            int[] target = history.pollFirst(); // Pop
+            if (target != null){ // Previous step available...
+                paintingData.setPixels(target);
+                future.addFirst(futureCopy); // Push
+            }
+            return true;
+        } else if (keyCode == GLFW.GLFW_KEY_X){
+            // Redo...
+            int[] pastCopy = Arrays.copyOf(paintingData.getPixels(), paintingData.getPixels().length);
+            int[] target = future.pollFirst(); // Pop
+            if (target != null){ // Future step available...
+                paintingData.setPixels(target);
+                history.addFirst(pastCopy); // Push
+            }
             return true;
         } else if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).closeContainer();
@@ -308,12 +342,31 @@ public class PaintingScreen extends Screen {
             }
         }
         // Step 9: Render Debug Text...
+        stack.translate(i + 221, j + 17, 0);
+        this.font.draw(stack, "<" + String.format("%02d", toolParams[activeTool])+ ">", 1.0F, 1.0F, 0xFFFFFF);
         stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
-        stack.translate(j + 5, -i - 265, 0);
+        stack.translate(-12, -44, 0);
         //this.fillGradient(stack, i, j, i + 128, j + 128, col, black);
-        if (renderDebugText)
-            this.font.draw(stack, debugText, 1.0F, 1.0F, 0xFFFFFF);
-        else this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
+        if (isOnToolParam(x, y)){
+            this.font.draw(stack, paramMessages[activeTool], 1.0F, 1.0F, 0xFFFFFF);
+        } else {
+            if (renderDebugText)
+                this.font.draw(stack, debugText, 1.0F, 1.0F, 0xFFFFFF);
+            else {
+                renderTime++;
+                renderTime %= 300 * TIPS;
+                int ap = renderTime % 300;
+                if (ap == 0)
+                    ap = 5;
+                else if (ap < 20)
+                    ap *= 8;
+                else if (ap > 280)
+                    ap = (300 - ap) * 8;
+                else ap = 160;
+
+                this.font.draw(stack, tipMessages[renderTime / 300], 1.0F, 1.0F, (ap << 24) + (255 << 16) + (255 << 8) + 255);
+            }
+        }
     }
 
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
@@ -330,11 +383,11 @@ public class PaintingScreen extends Screen {
                 getOpacity(x, y);
                 debugText = "Opacity: " + opacity;
             } else if (isOnPainting(x, y)){
+                history.push(Arrays.copyOf(paintingData.getPixels(), paintingData.getPixels().length));
+                future.clear();
                 useTool(x, y);
             } else {
                 for (byte idx = 0;idx < TOOLS_NUM;idx++){
-                    // if (x > leftPos + TOOLS_LEFT + idx * 17 && x < leftPos + TOOLS_LEFT + idx * 17 + 16 && y > topPos + TOOLS_TOP && y < topPos + TOOLS_TOP + 16)
-                    //     activeTool = idx;
                     if (isOn(x - TOOLS_LEFT - idx * 17, y - TOOLS_TOP, 16, 16))
                         activeTool = idx;
                 }
@@ -355,8 +408,7 @@ public class PaintingScreen extends Screen {
         if (type == 0) { // Left Button, draw...
             if (isOnPainting(x, y)) {
                 useTool(x, y);
-            }
-            else if (isOnOpacityPicker(x, y)) {
+            } else if (isOnOpacityPicker(x, y)) {
                 getOpacity(x, y);
                 debugText = "Opacity: " + opacity;
             }
@@ -395,43 +447,50 @@ public class PaintingScreen extends Screen {
 
     private void usePencil(double x, double y){
         int pixX = (int)x, pixY = (int)y;
-        paintingData.setPixel(pixX, pixY, (opacity << 24) + colors[activeSlot].getRGB());
+        for (int i = -toolParams[0];i <= toolParams[0];i++)
+            for (int j = -toolParams[0];j <= toolParams[0];j++)
+                paintingData.setPixel(pixX + i, pixY + j, (opacity << 24) + colors[activeSlot].getRGB());
     }
 
     private void usePen(double x, double y){
         // TODO: Implement
         int pixX = (int)x, pixY = (int)y;
-        paintingData.setPixel(pixX, pixY, (opacity << 24) + colors[activeSlot].getRGB());
+        for (int i = -toolParams[1];i <= toolParams[1];i++)
+            for (int j = -toolParams[1];j <= toolParams[1];j++)
+                paintingData.setPixel(pixX + i, pixY + j, (opacity << 24) + colors[activeSlot].getRGB());
     }
 
     private void useBucket(double x, double y){
         int pixX = (int)x, pixY = (int)y;
-        paintingData.fill(pixX, pixY, colors[activeSlot].getRGB(), opacity);
+        paintingData.fill(pixX, pixY, colors[activeSlot].getRGB(), opacity, toolParams[3]);
     }
-
-    private static final int radius = 2;
 
     private void useEraser(double x, double y){
         int pixX = (int)x, pixY = (int)y;
-        for (int i = -radius;i <= radius;i++)
-            for (int j = -radius;j <= radius;j++)
+        for (int i = -toolParams[2];i <= toolParams[2];i++)
+            for (int j = -toolParams[2];j <= toolParams[2];j++)
                 paintingData.setPixel(pixX + i, pixY + j, 0x00000000);
     }
 
     @Override
     public boolean mouseScrolled(double x, double y, double d2){
-        debugText = "Scroll: " + x + ", " + y + ", " + d2;
-        double areax = x - this.leftPos - PAINTING_LEFT;
-        double areay = y - this.topPos - PAINTING_TOP;
-
-        double oldpixsize = pixsize;
-        pixsize += d2;
-        pixsize = Math.min(Math.max(1, pixsize), 10);
-        double scale = pixsize / oldpixsize;
-        double dx = (areax - hor) * scale;
-        double dy = (areay - ver) * scale;
-        hor = areax - dx;
-        ver = areay - dy;
+        if (isOnToolParam(x, y)){
+            debugText = "Param: " + x + ", " + y + ", " + d2;
+            toolParams[activeTool] += d2;
+            toolParams[activeTool] = Mth.clamp(toolParams[activeTool], 0, MAX_PARAMS[activeTool]);
+        } else {
+            debugText = "Scale: " + x + ", " + y + ", " + d2;
+            double areax = x - this.leftPos - PAINTING_LEFT;
+            double areay = y - this.topPos - PAINTING_TOP;
+            double oldpixsize = pixsize;
+            pixsize += d2;
+            pixsize = Math.min(Math.max(1, pixsize), 10);
+            double scale = pixsize / oldpixsize;
+            double dx = (areax - hor) * scale;
+            double dy = (areay - ver) * scale;
+            hor = areax - dx;
+            ver = areay - dy;
+        }
         return super.mouseScrolled(x, y, d2);
     }
 
@@ -453,6 +512,10 @@ public class PaintingScreen extends Screen {
             }
         }
         return false;
+    }
+
+    private boolean isOnToolParam(double x, double y){
+        return isOn(x - 216, y - TOOLS_TOP, 33, 16);
     }
 
     private boolean isOnOpacityPicker(double x, double y){
