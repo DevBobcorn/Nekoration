@@ -1,3 +1,7 @@
 {
-	"parent": "nekoration:block/window_plant/flowering_s0"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "nekoration:item/leaves_blob",
+        "layer1": "nekoration:item/flowers"
+    }
 }

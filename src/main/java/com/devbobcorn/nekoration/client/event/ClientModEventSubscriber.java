@@ -45,6 +45,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.level.FoliageColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -292,7 +293,7 @@ public final class ClientModEventSubscriber {
 			switch (tintIndex) {
 				case 0:
 				default:
-					return NekoColors.EnumNekoColor.PURPLE.getColor();
+					return FoliageColor.getDefaultColor();
                 case 1:
 					return DyeableBlockItem.getColor(stack).getColor();
 			}

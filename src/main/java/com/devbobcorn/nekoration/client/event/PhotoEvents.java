@@ -45,12 +45,12 @@ public class PhotoEvents {
                 j = i;
             }
 
-            try (NativeImage photo = new NativeImage(64, 64, false)) {
+            try (NativeImage photo = new NativeImage(96, 96, false)) {
                 nativeimage.resizeSubRectTo(k, l, i, j, photo);
                 File target = new File(mc.gameDirectory, "nekopaint/photo/");
                 if (!target.exists())
                     target.mkdir();
-                photo.writeToFile(new File(target, "foto_test_" + lastShot + ".png"));
+                photo.writeToFile(new File(target, photo.hashCode() + ".png"));
                 LOGGER.info("Photo taken successfully.");
             } catch (IOException ioexception) {
                 ioexception.printStackTrace();
