@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
@@ -23,6 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -30,6 +32,8 @@ import net.minecraft.world.level.Level;
 
 public class NekoShapedRecipe extends CustomRecipe
 		implements net.minecraftforge.common.crafting.IShapedRecipe<CraftingContainer> {
+	private static final Ingredient VANILLA_FLAVOR = Ingredient.of(Items.HONEYCOMB);
+
 	private static final Ingredient HALF_TIMBERS = Ingredient.of(ModBlocks.HALF_TIMBER_P0.get().asItem(),
 			ModBlocks.HALF_TIMBER_P1.get().asItem(), ModBlocks.HALF_TIMBER_P2.get().asItem(),
 			ModBlocks.HALF_TIMBER_P3.get().asItem(), ModBlocks.HALF_TIMBER_P4.get().asItem(),
@@ -171,6 +175,9 @@ public class NekoShapedRecipe extends CustomRecipe
 				ItemStack cur = inv.getItem(i);
 				if (DYEABLES.test(cur)) {
 					DyeableBlockItem.setColor(finalResult, DyeableBlockItem.getColor(cur));
+					break;
+				} else if (VANILLA_FLAVOR.test(cur)) {
+					DyeableBlockItem.setColor(finalResult, EnumNekoColor.WHITE);
 					break;
 				}
 			}

@@ -157,13 +157,11 @@ public class LampPostBlock extends CrossCollisionBlock {
 	}
 
 	protected boolean isValidUpBlock(BlockState state) {
-		return state.getBlock() instanceof LanternBlock;
+		return state.getBlock() instanceof LanternBlock || state.getBlock() instanceof BasketBlock;
 	}
 
 	protected boolean isValidDownBlock(BlockState state) {
-		// return state.getBlock() instanceof ChainBlock || state.getBlock() instanceof
-		// LanternBlock || state.getBlock() instanceof LampBlock;
-		return state.getBlock() instanceof ChainBlock || state.getBlock() instanceof LanternBlock;
+		return state.getBlock() instanceof ChainBlock || state.getBlock() instanceof LanternBlock || state.getBlock() instanceof BasketBlock;
 	}
 
 	@Override
