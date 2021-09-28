@@ -1,0 +1,1 @@
+$(l)Welcome to the world of Nekoration, $(#3399FF)$(playername)$(#000000)!$()$(br)This is a brochure introducing all aspects of $(#FF9900)Nekoration$(), from $(#00CC22)$(t:Recipes)recipes$() to $(#FFAAAA)$(t:Mechanics)various mechanics$().$(br2)Check out the categories on the right for detailed info.

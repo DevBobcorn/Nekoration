@@ -140,20 +140,20 @@ public class LampPostBlock extends CrossCollisionBlock {
 		BlockState blockState3 = blockView.getBlockState(blockPos3);
 		BlockState blockState4 = blockView.getBlockState(blockPos4);
 		return super.getStateForPlacement(ctx)
-				.setValue(NORTH,
-						this.canConnect(blockState1, blockState1.isFaceSturdy(blockView, blockPos1, Direction.SOUTH),
-								Direction.SOUTH))
-				.setValue(EAST,
-						this.canConnect(blockState2, blockState2.isFaceSturdy(blockView, blockPos2, Direction.WEST),
-								Direction.WEST))
-				.setValue(SOUTH,
-						this.canConnect(blockState3, blockState3.isFaceSturdy(blockView, blockPos3, Direction.NORTH),
-								Direction.NORTH))
-				.setValue(WEST,
-						this.canConnect(blockState4, blockState4.isFaceSturdy(blockView, blockPos4, Direction.EAST),
-								Direction.EAST))
-				.setValue(TYPE, this.getType(blockView, blockPos))
-				.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+			.setValue(NORTH,
+					this.canConnect(blockState1, blockState1.isFaceSturdy(blockView, blockPos1, Direction.SOUTH),
+							Direction.SOUTH))
+			.setValue(EAST,
+					this.canConnect(blockState2, blockState2.isFaceSturdy(blockView, blockPos2, Direction.WEST),
+							Direction.WEST))
+			.setValue(SOUTH,
+					this.canConnect(blockState3, blockState3.isFaceSturdy(blockView, blockPos3, Direction.NORTH),
+							Direction.NORTH))
+			.setValue(WEST,
+					this.canConnect(blockState4, blockState4.isFaceSturdy(blockView, blockPos4, Direction.EAST),
+							Direction.EAST))
+			.setValue(TYPE, this.getType(blockView, blockPos))
+			.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
 	}
 
 	protected boolean isValidUpBlock(BlockState state) {

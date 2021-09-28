@@ -30,7 +30,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> PALETTE = ITEMS.register("palette", () -> new PaletteItem(new Item.Properties().tab(ModItemTabs.TOOL_GROUP)));
     
-    public static final RegistryObject<Item> CAMERA = ITEMS.register("camera", () -> new CameraItem(new Item.Properties().tab(ModItemTabs.TOOL_GROUP)));
+    public static final RegistryObject<Item> CAMERA = ITEMS.register("camera", () -> new CameraItem(new Item.Properties())); // TODO: .tab(ModItemTabs.TOOL_GROUP)11
 
     public static final RegistryObject<Item> PAINTING = ITEMS.register("painting", () -> new PaintingItem(new Item.Properties().tab(ModItemTabs.DECOR_GROUP)));
 

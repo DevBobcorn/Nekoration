@@ -77,7 +77,7 @@ public class PaintingScreen extends Screen {
 
     private EditBox nameInput;
     private boolean nameError = false;
-    private final IconButton[] buttons = new IconButton[3];
+    private final IconButton[] buttons = new IconButton[5];
 
     // Used on Client-Side only
     private static double hor = 0.0D, ver = 0.0D;
@@ -87,10 +87,14 @@ public class PaintingScreen extends Screen {
     private static int renderTime = 0;
     private static final int TIPS = 3;
     private final TranslatableComponent[] tipMessages = new TranslatableComponent[TIPS];
-    private static final String[] buttonKeys = { "save_painting", "save_painting_content", "load_image", "clear" };
+    private static final String[] buttonKeys = { "save_painting", "save_painting_content", "load_image", "clear", "round_brush", "square_brush", "transp_add_up", "transp_overwrite" };
     private final TranslatableComponent[] buttonMessages = new TranslatableComponent[buttonKeys.length];
     private final TranslatableComponent[] paramMessages = new TranslatableComponent[TOOLS_NUM];
     private static int stepLimit;
+
+    // Config
+    private static boolean roundBrush = true;
+    private static boolean transBlend = true;
 
     public PaintingScreen(int pt) {
         this(pt, (byte)0, PaletteItem.DEFAULT_COLOR_SET);
@@ -140,7 +144,7 @@ public class PaintingScreen extends Screen {
         super.init();
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (this.height - this.imageHeight) / 2;
-        this.nameInput = new EditBox(this.font, leftPos + 36, topPos - 18, 120, 16, new TranslatableComponent("gui.nekoration.color"));
+        this.nameInput = new EditBox(this.font, leftPos + 57, topPos - 18, 121, 16, new TranslatableComponent("gui.nekoration.color"));
         this.nameInput.setResponder(input -> {
             if (nameError) {
                 this.nameInput.setTextColor(0xFFFFFF); // No more Red Error text if text changed.
@@ -150,7 +154,7 @@ public class PaintingScreen extends Screen {
                 buttons[2].setMessage(buttonMessages[2]);
             }
         });
-        buttons[0] = new IconButton(leftPos + 160, topPos - 20, buttonMessages[0], button -> {
+        buttons[0] = new IconButton(leftPos + 180, topPos - 20, buttonMessages[0], button -> {
             // Save Image...
             try{
                 String[] location = getFileLocation();
@@ -159,7 +163,7 @@ public class PaintingScreen extends Screen {
                 e.printStackTrace();
             }
 		}, ICONS, 0, 16);
-        buttons[1] = new IconButton(leftPos + 180, topPos - 20, buttonMessages[1], button -> {
+        buttons[1] = new IconButton(leftPos + 200, topPos - 20, buttonMessages[1], button -> {
             // Save Image Content...
             try{
                 String[] location = getFileLocation();
@@ -168,7 +172,7 @@ public class PaintingScreen extends Screen {
                 e.printStackTrace();
             }
 		}, ICONS, 16, 16);
-        buttons[2] = new IconButton(leftPos + 200, topPos - 20, buttonMessages[2], button -> {
+        buttons[2] = new IconButton(leftPos + 220, topPos - 20, buttonMessages[2], button -> {
             if (nameError) { // It's a 'Clear' Button
                 nameInput.setValue("");
                 nameInput.setTextColor(0xFFFFFF);
@@ -194,8 +198,19 @@ public class PaintingScreen extends Screen {
                 buttons[2].setMessage(buttonMessages[3]);
             }
 		}, ICONS, 32, 16);
+        // Config Buttons...
+        buttons[3] = new IconButton(leftPos + 15, topPos - 20, roundBrush ? buttonMessages[4] : buttonMessages[5], button -> {
+            roundBrush = !roundBrush;
+            buttons[3].setIcon(ICONS, roundBrush ? 48 : 64, 16);
+            buttons[3].setMessage(roundBrush ? buttonMessages[4] : buttonMessages[5]);
+		}, ICONS, roundBrush ? 48 : 64, 16);
+        buttons[4] = new IconButton(leftPos + 35, topPos - 20, transBlend ? buttonMessages[6] : buttonMessages[7], button -> {
+            transBlend = !transBlend;
+            buttons[4].setIcon(ICONS, transBlend ? 80 : 96, 16);
+            buttons[4].setMessage(transBlend ? buttonMessages[6] : buttonMessages[7]);
+		}, ICONS, transBlend ? 80 : 96, 16);
         this.addWidget(nameInput);
-        for (int btn = 0;btn < 3;btn++)
+        for (int btn = 0;btn < 5;btn++)
             this.addWidget(buttons[btn]);
         renderTime = 40;
     }
@@ -288,7 +303,7 @@ public class PaintingScreen extends Screen {
         return super.keyPressed(keyCode, scanCode, modifier);
     }
 
-    private String debugText = "A nice line of debug text, isn't it?";
+    private String debugText = "Ceci n'est pas une ligne de texte.";
 
     public void render(PoseStack stack, int x, int y, float partialTicks) {
         int i = this.leftPos;
@@ -339,10 +354,10 @@ public class PaintingScreen extends Screen {
         this.blit(stack, i + TOOLS_LEFT + activeTool * 17, j + TOOLS_TOP, 32 + activeTool * 16, 208, 16, 16);
         // Step 8: Render Import/Export Controls...
         nameInput.render(stack, x, y, partialTicks);
-        for (int btn = 0;btn < 3;btn++) {
+        for (int btn = 0;btn < 5;btn++) {
             buttons[btn].render(stack, x, y, partialTicks);
         }
-        for (int tip = 0;tip < 3;tip++) {
+        for (int tip = 0;tip < 5;tip++) {
             if(buttons[tip].isMouseOver(x, y)) {
                 renderTooltip(stack, buttons[tip].getMessage(), x, y);
             }
@@ -457,27 +472,38 @@ public class PaintingScreen extends Screen {
         int pixX = (int)x, pixY = (int)y;
         for (int i = -toolParams[0];i <= toolParams[0];i++)
             for (int j = -toolParams[0];j <= toolParams[0];j++)
-                paintingData.setPixel(pixX + i, pixY + j, (opacity << 24) + colors[activeSlot].getRGB());
+                if (!roundBrush || i * i + j * j <= toolParams[0] * toolParams[0])
+                    paintingData.setPixel(pixX + i, pixY + j, (opacity << 24) + colors[activeSlot].getRGB(), transBlend);
     }
 
     private void usePen(double x, double y){
-        // TODO: Implement
         int pixX = (int)x, pixY = (int)y;
         for (int i = -toolParams[1];i <= toolParams[1];i++)
             for (int j = -toolParams[1];j <= toolParams[1];j++)
-                paintingData.setPixel(pixX + i, pixY + j, (opacity << 24) + colors[activeSlot].getRGB());
+                if (roundBrush){
+                    int dis2 = i * i + j * j;
+                    if (dis2 <= toolParams[1] * toolParams[1]) {
+                        float frct = 1.0F - Mth.clamp(Mth.sqrt(dis2) / ((float)toolParams[1] + 0.1F), 0.0F, 1.0F);
+                        paintingData.setPixel(pixX + i, pixY + j, (((int)(frct * opacity)) << 24) + colors[activeSlot].getRGB(), transBlend);
+                    }
+                } else {
+                    int dis = Math.max(Math.abs(i), Math.abs(j));
+                    float frct = 1.0F - Mth.clamp(dis / ((float)toolParams[1] + 0.1F), 0.0F, 1.0F);
+                    paintingData.setPixel(pixX + i, pixY + j, (((int)(frct * opacity)) << 24) + colors[activeSlot].getRGB(), transBlend);
+                }
     }
 
     private void useBucket(double x, double y){
         int pixX = (int)x, pixY = (int)y;
-        paintingData.fill(pixX, pixY, colors[activeSlot].getRGB(), opacity, toolParams[3]);
+        paintingData.fill(pixX, pixY, colors[activeSlot].getRGB(), opacity, toolParams[3], transBlend);
     }
 
     private void useEraser(double x, double y){
         int pixX = (int)x, pixY = (int)y;
         for (int i = -toolParams[2];i <= toolParams[2];i++)
             for (int j = -toolParams[2];j <= toolParams[2];j++)
-                paintingData.setPixel(pixX + i, pixY + j, 0x00000000);
+                if (!roundBrush || i * i + j * j <= toolParams[2] * toolParams[2])
+                    paintingData.clearPixel(pixX + i, pixY + j);
     }
 
     @Override

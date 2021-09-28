@@ -264,17 +264,26 @@ public class PaintingData {
             recalculateComposite();
     }
 
-    public void setPixel(int x, int y, int color){
+    public void setPixel(int x, int y, int color, boolean blend){
         if (isLegal(x, y)){
-            pixels[y * width + x] = color;
+            pixels[y * width + x] = blend ? blendColor(pixels[y * width + x], color) : color;
             if (isClient)
                 recalculateCompositeAt(x, y);
         }
     }
+
+    public void clearPixel(int x, int y){
+        if (isLegal(x, y)){
+            pixels[y * width + x] = 0x00000000;
+            if (isClient)
+                recalculateCompositeAt(x, y);
+        }
+    }
+
     private static final int canvasize = 128;
     boolean[][] visited = new boolean[canvasize][canvasize];
 
-    public int fill(int x, int y, int color, int opacity, int threshold){
+    public int fill(int x, int y, int color, int opacity, int thresold, boolean blend){
         if (!isLegal(x, y))
             return 0;
 
@@ -283,13 +292,13 @@ public class PaintingData {
                 visited[i][j] = false;
             }
         
-        pixSearch(x, y, threshold);
+        pixSearch(x, y, thresold);
         int cnt = 0;
         for (int i = 0;i < width;i++)
             for (int j = 0;j < height;j++) {
                 if (visited[i][j]) {
                     cnt++;
-                    pixels[i + j * width] = (opacity << 24) + color;
+                    pixels[i + j * width] = blend ? blendColor(pixels[i + j * width], (opacity << 24) + color) : (opacity << 24) + color;
                 }
             }
         recalculateComposite();
@@ -311,7 +320,7 @@ public class PaintingData {
         float ro = (origin & 0xff0000) - (target & 0xff0000);
         float go = (origin & 0xff00) - (target & 0xff00);
         float bo = (origin & 0xff) - (target & 0xff);
-        return Mth.sqrt(ro * ro + go * go + bo * bo) < threshold;
+        return Mth.sqrt(ro * ro + go * go + bo * bo) < threshold * threshold;
     }
 
     private static final int[] offsetX = { 1,-1, 0, 0, 1,-1, 1,-1 };
@@ -365,5 +374,15 @@ public class PaintingData {
 
     public short getHeight(){
         return height;
+    }
+    
+    private static int blendColor(int desc, int tarc){
+        // The alpha bits of an int representing a color contains the sign, and we need to use '>>>' to move the bits
+        int tara = (tarc & 0xff000000) >>> 24;
+        // Transparency Blend
+        int desa = (desc & 0xff000000) >>> 24;
+        double blendfrac = Mth.clamp((double)tara / (double)(tara + desa), 0.0, 1.0);
+        int blenda = Mth.clamp(tara + desa, 0, 255);
+        return NekoColors.getRGBColorBetween(blendfrac, desc, tarc) + (blenda << 24);
     }
 }
