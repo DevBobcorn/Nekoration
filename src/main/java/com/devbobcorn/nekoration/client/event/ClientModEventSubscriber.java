@@ -118,33 +118,20 @@ public final class ClientModEventSubscriber {
 
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PHONOGRAPH.get(), transparentRenderType);
 
-		// Not actually necessary for some models, just to keep them unified
+		// Pumpkin vines growing around...
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PUMPKIN_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.PUMPKIN_CHAIR.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.OAK_TABLE.get(), transparentRenderType);
+		// Table legs...
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.OAK_ROUND_TABLE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.OAK_CHAIR.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_ROUND_TABLE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_CHAIR.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.ACACIA_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.ACACIA_ROUND_TABLE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.ACACIA_CHAIR.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BIRCH_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BIRCH_ROUND_TABLE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BIRCH_CHAIR.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DARK_OAK_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DARK_OAK_ROUND_TABLE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DARK_OAK_CHAIR.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPRUCE_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPRUCE_ROUND_TABLE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPRUCE_TABLE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRIMSON_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRIMSON_ROUND_TABLE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRIMSON_TABLE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_CHAIR.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_ROUND_TABLE.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_TABLE.get(), transparentRenderType);
+		// Glass pane...
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.GLASS_TABLE.get(), transparentRenderType);
 
 		LOGGER.info("Block Render Types Registered.");
 
@@ -212,7 +199,8 @@ public final class ClientModEventSubscriber {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
 				return NekoColors.getWoodenColorOrBrown(2);
 			return NekoColors.getWoodenColorOrBrown(state.getValue(DyeableBlock.COLOR));
-		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get());
+		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get(),
+				ModBlocks.GLASS_TABLE.get(), ModBlocks.ARM_CHAIR.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableVerticalConnectBlock))
@@ -306,7 +294,8 @@ public final class ClientModEventSubscriber {
 		}, 
 		ModBlocks.WINDOW_SIMPLE.get().asItem(), ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
 		ModBlocks.WINDOW_SHADE.get().asItem(), ModBlocks.WINDOW_LANCET.get().asItem(),
-		ModBlocks.EASEL_MENU.get().asItem(), ModBlocks.EASEL_MENU_WHITE.get().asItem());
+		ModBlocks.EASEL_MENU.get().asItem(), ModBlocks.EASEL_MENU_WHITE.get().asItem(),
+		ModBlocks.GLASS_TABLE.get().asItem(), ModBlocks.ARM_CHAIR.get().asItem());
 
 		// Default Wooden Brown, BiDyeable:
 		event.getItemColors().register((stack, tintIndex) -> {
