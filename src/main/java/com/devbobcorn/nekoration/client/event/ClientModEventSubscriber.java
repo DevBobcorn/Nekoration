@@ -132,6 +132,10 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_ROUND_TABLE.get(), transparentRenderType);
 		// Glass pane...
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.GLASS_TABLE.get(), transparentRenderType);
+		// Knobs...
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DRAWER.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CABINET.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DRAWER_CHEST.get(), transparentRenderType);
 
 		LOGGER.info("Block Render Types Registered.");
 
@@ -200,7 +204,8 @@ public final class ClientModEventSubscriber {
 				return NekoColors.getWoodenColorOrBrown(2);
 			return NekoColors.getWoodenColorOrBrown(state.getValue(DyeableBlock.COLOR));
 		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get(),
-				ModBlocks.GLASS_TABLE.get(), ModBlocks.ARM_CHAIR.get());
+				ModBlocks.GLASS_TABLE.get(), ModBlocks.ARM_CHAIR.get(),
+				ModBlocks.DRAWER.get(), ModBlocks.CABINET.get(), ModBlocks.DRAWER_CHEST.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableVerticalConnectBlock))
@@ -295,7 +300,9 @@ public final class ClientModEventSubscriber {
 		ModBlocks.WINDOW_SIMPLE.get().asItem(), ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
 		ModBlocks.WINDOW_SHADE.get().asItem(), ModBlocks.WINDOW_LANCET.get().asItem(),
 		ModBlocks.EASEL_MENU.get().asItem(), ModBlocks.EASEL_MENU_WHITE.get().asItem(),
-		ModBlocks.GLASS_TABLE.get().asItem(), ModBlocks.ARM_CHAIR.get().asItem());
+		ModBlocks.GLASS_TABLE.get().asItem(),
+		ModBlocks.ARM_CHAIR.get().asItem(), ModBlocks.DRAWER.get().asItem(),
+		ModBlocks.CABINET.get().asItem(),ModBlocks.DRAWER_CHEST.get().asItem());
 
 		// Default Wooden Brown, BiDyeable:
 		event.getItemColors().register((stack, tintIndex) -> {

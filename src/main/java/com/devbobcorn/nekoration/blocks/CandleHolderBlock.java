@@ -37,13 +37,12 @@ public class CandleHolderBlock extends DyeableBlock {
 		ItemStack itemStack = player.getItemInHand(hand);
 
 		if (world.isClientSide) {
-			return (VanillaCompat.FLAME_ITEMS.containsKey(itemStack.getItem())) ? super.use(state, world, pos, player, hand, hit)
-					: InteractionResult.PASS;
+			return (VanillaCompat.FLAME_ITEMS.containsKey(itemStack.getItem())) ? InteractionResult.SUCCESS : super.use(state, world, pos, player, hand, hit);
 		}
 		
 		if (VanillaCompat.FLAME_ITEMS.containsKey(itemStack.getItem())) {
 			world.setBlock(pos, state.setValue(FLAME, VanillaCompat.FLAME_ITEMS.get(itemStack.getItem())), 3);
-			return InteractionResult.CONSUME;
+			return InteractionResult.SUCCESS;
 		}
 		return super.use(state, world, pos, player, hand, hit);
 	}

@@ -120,7 +120,7 @@ public class VanillaCompat {
 			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_PILLAR_P0.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_PILLAR_P1.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.HALF_TIMBER_PILLAR_P2.get(), 5, 20);
-			// Tables & Chairs...
+			// Furniture...
 			setFlammable.invoke(fire, ModBlocks.PUMPKIN_CHAIR.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.PUMPKIN_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.OAK_CHAIR.get(), 5, 20);
@@ -143,6 +143,9 @@ public class VanillaCompat {
 			setFlammable.invoke(fire, ModBlocks.SPRUCE_ROUND_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.GLASS_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.ARM_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DRAWER.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.CABINET.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.DRAWER_CHEST.get(), 5, 20);
 			// (Crimson / Warped not flammable)
 			// Windows...
 			setFlammable.invoke(fire, ModBlocks.WINDOW_SIMPLE.get(), 5, 20);

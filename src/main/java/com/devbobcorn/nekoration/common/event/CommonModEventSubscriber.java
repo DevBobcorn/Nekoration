@@ -15,7 +15,6 @@ import com.devbobcorn.nekoration.blocks.DyeableHorizontalBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalWoodenBlock;
 import com.devbobcorn.nekoration.blocks.DyeableWoodenBlock;
-import com.devbobcorn.nekoration.blocks.EaselMenuBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.TableBlock;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
@@ -65,7 +64,7 @@ public final class CommonModEventSubscriber {
 					// Classes: HalfTimberBlock / HalfTimberPillarBlock
 					properties = new Item.Properties().tab(ModItemTabs.WOODEN_GROUP);
 					blockItem = new HalfTimberBlockItem(block, properties);
-				} else if (block instanceof WindowBlock || block instanceof DyeableWoodenBlock || block instanceof DyeableHorizontalWoodenBlock || block instanceof EaselMenuBlock){
+				} else if (block instanceof WindowBlock || block instanceof DyeableWoodenBlock || block instanceof DyeableHorizontalWoodenBlock){
 					properties = new Item.Properties().tab(block instanceof WindowBlock ? ModItemTabs.WINDOW_N_DOOR_GROUP : ModItemTabs.DECOR_GROUP);
 					blockItem = new DyeableWoodenBlockItem(block, properties);
 				} else if (block instanceof StoneBlock || block instanceof StonePillarBlock){
@@ -77,7 +76,7 @@ public final class CommonModEventSubscriber {
 						blockItem = new DyeableBlockItem(block, properties, false);
 						break out;
 					} else if (block instanceof DyeableHorizontalBlock) {
-						if (block instanceof AwningBlock || block instanceof ShortAwningBlock) // Awning...
+						if (block instanceof AwningBlock || block instanceof ShortAwningBlock || block == ModBlocks.WINDOW_PLANT.get()) // Awning...
 							properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
 						else properties = new Item.Properties().tab(ModItemTabs.WINDOW_N_DOOR_GROUP); // Window Frame...
 					} else properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);

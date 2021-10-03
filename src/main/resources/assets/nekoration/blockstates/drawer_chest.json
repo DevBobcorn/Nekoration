@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nekoration:block/drawer_chest",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "nekoration:block/drawer_chest"
+    },
+    "facing=south": {
+      "model": "nekoration:block/drawer_chest",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nekoration:block/drawer_chest",
+      "y": 270
+    }
+  }
+}

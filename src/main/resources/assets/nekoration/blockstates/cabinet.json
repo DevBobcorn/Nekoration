@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nekoration:block/cabinet",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "nekoration:block/cabinet"
+    },
+    "facing=south": {
+      "model": "nekoration:block/cabinet",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nekoration:block/cabinet",
+      "y": 270
+    }
+  }
+}
