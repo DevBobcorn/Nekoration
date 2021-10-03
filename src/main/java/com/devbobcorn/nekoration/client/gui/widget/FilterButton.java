@@ -17,41 +17,35 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * Author: MrCrayfish
- */
-public class WoodTypeButton extends Button
+// Creative Tab Filter, adapted from MrCrayfish's Furniture Mod...
+public class FilterButton extends Button
 {
     private static final ResourceLocation TABS = new ResourceLocation(Nekoration.MODID, "textures/gui/tabs.png");
 
-    private CreativeInventoryEvents.WoodFilter category;
+    private CreativeInventoryEvents.Filter category;
     private ItemStack stack;
     private boolean toggled;
 
-    public WoodTypeButton(int x, int y, CreativeInventoryEvents.WoodFilter category, OnPress pressable)
-    {
+    public FilterButton(int x, int y, CreativeInventoryEvents.Filter category, OnPress pressable){
         super(x, y, 32, 28, TextComponent.EMPTY, pressable);
         this.category = category;
         this.stack = category.getIcon();
         this.toggled = category.isEnabled();
     }
 
-    public CreativeInventoryEvents.WoodFilter getCategory()
-    {
+    public CreativeInventoryEvents.Filter getCategory(){
         return this.category;
     }
 
     @Override
-    public void onPress()
-    {
+    public void onPress(){
         this.toggled = !this.toggled;
         this.category.setEnabled(this.toggled);
         super.onPress();
     }
 
     @Override
-    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
-    {
+    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks){
         Minecraft mc = Minecraft.getInstance();
         RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
         RenderSystem.setShaderTexture(0, TABS);
@@ -69,8 +63,7 @@ public class WoodTypeButton extends Button
         renderer.blitOffset = 0.0F;
     }
 
-    private void drawRotatedTexture(int x, int y, int textureX, int textureY, int width, int height)
-    {
+    private void drawRotatedTexture(int x, int y, int textureX, int textureY, int width, int height){
         float scaleX = 0.00390625F;
         float scaleY = 0.00390625F;
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -84,8 +77,7 @@ public class WoodTypeButton extends Button
         BufferUploader.end(buffer);
     }
 
-    public void updateState()
-    {
+    public void updateState(){
         this.toggled = this.category.isEnabled();
     }
 }
