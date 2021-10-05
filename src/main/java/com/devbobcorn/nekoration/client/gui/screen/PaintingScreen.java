@@ -15,6 +15,7 @@ import com.devbobcorn.nekoration.entities.PaintingEntity;
 import com.devbobcorn.nekoration.items.PaletteItem;
 import com.devbobcorn.nekoration.network.C2SUpdatePaintingData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
+import com.devbobcorn.nekoration.utils.URLHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
@@ -145,6 +146,7 @@ public class PaintingScreen extends Screen {
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (this.height - this.imageHeight) / 2;
         this.nameInput = new EditBox(this.font, leftPos + 57, topPos - 18, 121, 16, new TranslatableComponent("gui.nekoration.color"));
+        this.nameInput.setMaxLength(256);
         this.nameInput.setResponder(input -> {
             if (nameError) {
                 this.nameInput.setTextColor(0xFFFFFF); // No more Red Error text if text changed.
@@ -183,12 +185,18 @@ public class PaintingScreen extends Screen {
                 return;
             }
 			// Load Image File...
-            if (nameInput.getValue().equals("")) {
+            if (nameInput.getValue().trim().equals("")) {
                 nameInput.setValue("Input the name here...");
                 nameError = true;
             } else {
-                String[] location = getFileLocation();
-                nameError = !paintingData.load(location[0], location[1]);
+                if (URLHelper.isURL(nameInput.getValue().split(">")[0].trim())){
+                    // Looks like a url...
+                    System.out.println("Looks like a url...");
+                    nameError = !paintingData.load("<url>", nameInput.getValue().trim());
+                } else {
+                    String[] location = getFileLocation();
+                    nameError = !paintingData.load(location[0], location[1]);
+                }
             }
             if (nameError) {
                 // Make the text Red...
@@ -271,6 +279,8 @@ public class PaintingScreen extends Screen {
 		if (keyCode == GLFW.GLFW_KEY_F1) {
             this.renderDebugText = !this.renderDebugText;
             return true;
+        } else if (this.nameInput.isFocused()){
+            return super.keyPressed(keyCode, scanCode, modifier);
         } else if (keyCode == GLFW.GLFW_KEY_W){
             // Switch Tool...
             activeTool = (byte)((activeTool + 1) % TOOLS_NUM);

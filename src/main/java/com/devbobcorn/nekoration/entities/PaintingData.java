@@ -1,11 +1,15 @@
 package com.devbobcorn.nekoration.entities;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.UUID;
@@ -14,10 +18,8 @@ import javax.imageio.ImageIO;
 
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.NekoConfig;
-import com.devbobcorn.nekoration.client.rendering.LocalImageLoader;
 import com.devbobcorn.nekoration.utils.PixelPos;
 import com.devbobcorn.nekoration.utils.TagTypes;
-import com.mojang.blaze3d.platform.NativeImage;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -148,10 +150,17 @@ public class PaintingData {
             File folder = new File(minecraft.gameDirectory, path);
             if (!folder.exists() && !folder.mkdir())
                 throw new IOException("Could not create folder");
-            final File file = new File(folder, name + ".png");
-            LOGGER.info("Painting cached to " + file.getAbsolutePath());
-            if (!ImageIO.write(image, "png", file))
-                throw new IOException("Could not encode image as png!");
+            
+            List<String> suf = Arrays.asList(new String[]{"png","jpeg","jpg"});
+            String ext = name.toLowerCase().substring(name.lastIndexOf(".") + 1);
+            boolean hasExt = suf.contains(ext);
+            final File file = new File(folder, hasExt ? name : name + ".png");
+            if (!hasExt) ext = "png";
+
+            LOGGER.info("Painting saved to " + file.getAbsolutePath() + " in " + ext + " format.");
+            if (!ImageIO.write(image, ext, file))
+                throw new IOException("Could not encode image as specified(" + ext + ")!");
+
             if (showMessage){
                 MutableComponent component = new TextComponent(file.getName());
                 component = component.withStyle(ChatFormatting.UNDERLINE).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath())));
@@ -159,6 +168,7 @@ public class PaintingData {
             }
             return true;
         } catch (IOException e) {
+            LOGGER.error(e.getMessage());
             imageReady = false;
             return false;
         }
@@ -166,22 +176,83 @@ public class PaintingData {
 
     public boolean load(String path, String name){
         Minecraft minecraft = Minecraft.getInstance();
+        String[] params = name.split(">");
+        int[] offsetl = { 0, 0, 0, 0 };
+        double scalel = 1.0;
+        int[] sizel = { 99999, 99999 };
+
         try {
+            // Apply parameters: fileName > dstOffsetX > dstOffsetY > srcOffsetX > srcOffsetY > scale
+            for (int p = 0;p < params.length;p++){
+                params[p] = params[p].trim();
+                switch(p){
+                    case 0:
+                        name = params[p];
+                        break;
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        offsetl[p - 1] = Integer.parseInt(params[p]);
+                        break;
+                    case 5:
+                        scalel = Mth.clamp(Double.parseDouble(params[p]), 0.01, 100.0);
+                        break;
+                    case 6:
+                    case 7:
+                        sizel[p - 6] = Integer.parseInt(params[p]);
+                }
+            }
+
+            BufferedImage image;
+
+            if (path.equals("<url>")){ // Load from URL...
+                image = ImageIO.read(new URL(name));
+            } else { // Load from Local Path...
             final File folder = new File(minecraft.gameDirectory, path);
             if (!folder.exists())
                 throw new IOException("Could not find folder");
             
-            final File file = new File(folder, name + ".png");
+            List<String> suf = Arrays.asList(new String[]{"png","jpeg","jpg"});
+            String ext = name.toLowerCase().substring(name.lastIndexOf(".") + 1);
+            boolean hasExt = suf.contains(ext);
+            final File file = new File(folder, hasExt ? name : name + ".png");
+
             if (!file.exists())
                 throw new IOException("Could not find file");
+                image = ImageIO.read(file);
+            }
 
-            byte[] arr = LocalImageLoader.read(file.getAbsolutePath());
-            NativeImage image = NativeImage.read(new ByteArrayInputStream(arr));
-            for (int i = 0;i < Math.min(image.getWidth(), width);i++)
-                for (int j = 0;j < Math.min(image.getHeight(), height);j++){
-                    int color = image.getPixelRGBA(i, j);
-                    pixels[j * width + i] = (color & 0xFF00FF00) + ((color & 0xFF0000) >> 16) + ((color & 0xFF) << 16);
-                }
+            if (image == null){
+                LOGGER.error("Image is not available!");
+                return false;
+            }
+
+            if ((offsetl[2] > 0 || offsetl[3] > 0 || sizel[0] != 99999 || sizel[1] != 99999) && (image.getWidth() > offsetl[2] && image.getHeight() > offsetl[3])) {
+                int cropW = Math.min(image.getWidth()  - offsetl[2], sizel[0]);
+                int cropH = Math.min(image.getHeight() - offsetl[3], sizel[1]);
+                image = image.getSubimage(offsetl[2], offsetl[3], cropW, cropH);
+            }
+
+            if (scalel != 1.0){
+                short newW = (short)Math.ceil(image.getWidth() * scalel);
+                short newH = (short)Math.ceil(image.getHeight() * scalel);
+                Image scaled = image.getScaledInstance(newW, newH, Image.SCALE_DEFAULT);
+                BufferedImage scaledImage = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2d = scaledImage.createGraphics();
+                g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+                g2d.drawImage(scaled, 0, 0, newW, newH, null);
+
+                for (int i = offsetl[0];i < Math.min(offsetl[0] + scaledImage.getWidth(), width);i++)
+                    for (int j = offsetl[1];j < Math.min(offsetl[1] + scaledImage.getHeight(), height);j++){
+                        pixels[j * width + i] = scaledImage.getRGB(i - offsetl[0], j - offsetl[1]);
+                    }
+            } else {
+                for (int i = offsetl[0];i < Math.min(offsetl[0] + image.getWidth(), width);i++)
+                    for (int j = offsetl[1];j < Math.min(offsetl[1] + image.getHeight(), height);j++){
+                        pixels[j * width + i] = image.getRGB(i - offsetl[0], j - offsetl[1]);
+                    }
+            }
             recalculateComposite();
             LOGGER.info(String.format("Painting '%s' Loaded: %s x %s", name, image.getWidth(), image.getHeight()));
             return true;
@@ -189,6 +260,10 @@ public class PaintingData {
             LOGGER.error(e.getMessage());
             MutableComponent component = new TextComponent(name);
             minecraft.player.displayClientMessage(new TranslatableComponent("gui.nekoration.message.painting_load_failed", component), false);
+            return false;
+        } catch (IllegalArgumentException e) {
+            //e.printStackTrace();
+            LOGGER.error(e.getMessage());
             return false;
         }
     }
