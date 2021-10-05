@@ -32,7 +32,7 @@ public abstract class AbstractPaintingRenderer implements Closeable {
 			// Get the VertexBuffer for Image Rendering...
             VertexConsumer vb = buffers.getBuffer(RenderTypeHelper.paintingPixels());
             // Compensate for the obvious lighting difference caused by different shaders...
-            // TODO: There might be a better way to do this.
+            // TODO: There might be a better way to do this(1.17).
             light = Math.max(0, light - 0x300000);
             int[] color;
             for (short posi = 0;posi < 16;posi++)
