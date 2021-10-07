@@ -67,7 +67,6 @@ public class PaintingSizeScreen extends Screen {
 		int i = leftPos, j = topPos;
 		blit(stack, i, j, 0, 0, 124, 146);
 		stack.popPose();
-		super.render(stack, x, y, partialTicks);
 		// Draw slots...
 		for (int ix = 0; ix < slotNum; ix++)
 			for (int iy = 0; iy < slotNum; iy++)

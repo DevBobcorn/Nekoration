@@ -104,7 +104,7 @@ public class PaletteScreen extends Screen {
         int i = this.leftPos;
         int j = this.topPos;
 
-        super.render(stack, x, y, partialTicks);
+        //super.render(stack, x, y, partialTicks);
         // Step 0: Fill the back ground...
         fillGradient(stack, 0, 0, width, height, -1072689136, -804253680);
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...

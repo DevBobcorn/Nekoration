@@ -171,17 +171,16 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
 
 	@Override
 	public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
-        RenderSystem.setShaderTexture(0, menu.easel.white ? WHITE_BACKGROUND : BACKGROUND);
 		this.renderBackground(stack);
+		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+		RenderSystem.setShaderTexture(0, menu.easel.white ? WHITE_BACKGROUND : BACKGROUND);
 		if (showColorPicker){
 			for (int i = 0;i < COLOR_NUM;i++) {
 				RenderSystem.setShaderColor(COLOR_SET[i][0], COLOR_SET[i][1], COLOR_SET[i][2], 1.0F);
 				this.blit(stack, leftPos - 16 - (i == selectedColor ? 4 : 0), topPos + 8 + i * 14, 0, 240, 12, 12);
 			}
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		}
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		super.render(stack, mouseX, mouseY, partialTicks);
 		for (int i = 0;i < 8;i++)
 			this.textInputs[i].render(stack, mouseX, mouseY, partialTicks);
@@ -207,8 +206,7 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
 	}
 
 	@Override
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX,
-			int mouseY) {
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
 		this.blit(stack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
 	}
 
