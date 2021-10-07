@@ -14,6 +14,9 @@ round_table_us = "Round WOOD Table"
 chair_cn = "桌"
 table_cn = "椅"
 round_table_cn = "圆桌"
+decortypes = ["planter","awning","furniture","container","misc"]
+decortypes_us = ["Planter","Awning","Furniture","Container","Miscellaneous"]
+decortypes_cn = ["花盆","雨篷","家具","收纳","杂项"]
 stones = ["stone_base","stone_base_bottom","stone_frame","stone_frame_bottom","stone_pillar","stone_pillar_bottom","stone_doric","stone_ionic","stone_corinthian","stone_layered","stone_pot"]
 stones_us = ["Stone Base","Stone Base Bottom","Stone Frame","Stone Frame Bottom","Stone Pillar","Stone Pillar Bottom","Doric Stone Pillar","Ionic Stone Pillar","Corinthian Stone Pillar","Layered Stone","Stone Pot"]
 stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底座","多立克石柱","爱奥尼石柱","科林斯石柱","叠层石壁","石质花盆"]
@@ -26,9 +29,9 @@ windows_cn = ["简易窗","拱形窗","玻璃窗","尖头窗","百叶窗","窗�
 doors = ["door_1","door_2","door_3","door_tall_1","door_tall_2","door_tall_3"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
 doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
-decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","easel_menu","easel_menu_white","glass_table","arm_chair"]
-decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu","%s White Easel Menu","%s Glass Table","%s Arm Chair"]
-decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","%s展架","%s白色展架","%s玻璃桌","%s扶手椅"]
+decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","easel_menu","easel_menu_white","glass_table","glass_round_table","arm_chair","cabinet","drawer","drawer_chest"]
+decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu","%s White Easel Menu","%s Glass Table","%s Round Glass Table","%s Arm Chair","%s Cabinet","%s Drawer","%s Chest of Drawers"]
+decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","%s展架","%s白色展架","%s玻璃桌","%s玻璃圆桌","%s扶手椅","%s橱柜","%s抽屉","%s斗柜"]
 # Find it a bit strange to say "Candle Holder with %s candle", so I just ignore their color
 items = ["brochure","paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette","painting.blank","painting.painted","painting.magic","wallpaper","camera"]
 items_us = ["Neko Brochure [WIP]","Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Blank Painting (%sx%s)","Painting (%sx%s)","Linked Painting (%sx%s)","%s Wallpaper","Camera"]
@@ -102,6 +105,11 @@ for col in range(0, len(colors)):
     obj_us['color.wooden.' + colors[col]] = wooden_us[col]
     obj_cn['color.nekoration.' + colors[col]] = colors_cn[col]
     obj_cn['color.wooden.' + colors[col]] = wooden_cn[col]
+
+# Decoration Types...
+for dec in range(0, len(decortypes)):
+    obj_us['decortype.' + decortypes[dec]] = decortypes_us[dec]
+    obj_cn['decortype.' + decortypes[dec]] = decortypes_cn[dec]
 
 # [STONE TAB]
 for stn in range(0, len(stones)):

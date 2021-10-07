@@ -130,8 +130,9 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPRUCE_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRIMSON_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_ROUND_TABLE.get(), transparentRenderType);
-		// Glass pane...
+		// Glass panes...
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.GLASS_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.GLASS_ROUND_TABLE.get(), transparentRenderType);
 		// Knobs...
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DRAWER.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CABINET.get(), transparentRenderType);
@@ -204,7 +205,7 @@ public final class ClientModEventSubscriber {
 				return NekoColors.getWoodenColorOrBrown(2);
 			return NekoColors.getWoodenColorOrBrown(state.getValue(DyeableBlock.COLOR));
 		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get(),
-				ModBlocks.GLASS_TABLE.get(), ModBlocks.ARM_CHAIR.get(),
+				ModBlocks.GLASS_TABLE.get(), ModBlocks.GLASS_ROUND_TABLE.get(), ModBlocks.ARM_CHAIR.get(),
 				ModBlocks.DRAWER.get(), ModBlocks.CABINET.get(), ModBlocks.DRAWER_CHEST.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
