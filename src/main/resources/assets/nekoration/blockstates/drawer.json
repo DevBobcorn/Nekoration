@@ -1,17 +1,32 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=east,open=true": {
+      "model": "nekoration:block/drawer_open",
+      "y": 90
+    },
+    "facing=north,open=true": {
+      "model": "nekoration:block/drawer_open"
+    },
+    "facing=south,open=true": {
+      "model": "nekoration:block/drawer_open",
+      "y": 180
+    },
+    "facing=west,open=true": {
+      "model": "nekoration:block/drawer_open",
+      "y": 270
+    },
+    "facing=east,open=false": {
       "model": "nekoration:block/drawer",
       "y": 90
     },
-    "facing=north": {
+    "facing=north,open=false": {
       "model": "nekoration:block/drawer"
     },
-    "facing=south": {
+    "facing=south,open=false": {
       "model": "nekoration:block/drawer",
       "y": 180
     },
-    "facing=west": {
+    "facing=west,open=false": {
       "model": "nekoration:block/drawer",
       "y": 270
     }
