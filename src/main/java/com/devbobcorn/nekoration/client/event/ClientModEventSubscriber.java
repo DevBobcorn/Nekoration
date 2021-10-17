@@ -17,6 +17,7 @@ import com.devbobcorn.nekoration.blocks.WindowBlock;
 import com.devbobcorn.nekoration.blocks.containers.ModMenuType;
 import com.devbobcorn.nekoration.blocks.entities.ModBlockEntityType;
 import com.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
+import com.devbobcorn.nekoration.client.rendering.blockentities.CupboardRenderer;
 import com.devbobcorn.nekoration.client.rendering.blockentities.CustomRenderer;
 import com.devbobcorn.nekoration.client.rendering.blockentities.EaselMenuRenderer;
 import com.devbobcorn.nekoration.client.rendering.blockentities.PhonographRenderer;
@@ -137,6 +138,7 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DRAWER.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CABINET.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DRAWER_CHEST.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CUPBOARD.get(), transparentRenderType);
 
 		LOGGER.info("Block Render Types Registered.");
 
@@ -144,6 +146,7 @@ public final class ClientModEventSubscriber {
 		BlockEntityRenderers.register(ModBlockEntityType.CUSTOM_TYPE.get(), CustomRenderer::new);
 		BlockEntityRenderers.register(ModBlockEntityType.PHONOGRAPH_TYPE.get(), PhonographRenderer::new);
 		BlockEntityRenderers.register(ModBlockEntityType.PRISMAP_TABLE_TYPE.get(), PrismapTableRenderer::new);
+		BlockEntityRenderers.register(ModBlockEntityType.CUPBOARD_TYPE.get(), CupboardRenderer::new);
 
 		LOGGER.info("BlockEntities Renderers Bound.");
 
@@ -204,7 +207,7 @@ public final class ClientModEventSubscriber {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
 				return NekoColors.getWoodenColorOrBrown(2);
 			return NekoColors.getWoodenColorOrBrown(state.getValue(DyeableBlock.COLOR));
-		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get(),
+		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get(), ModBlocks.CUPBOARD.get(),
 				ModBlocks.GLASS_TABLE.get(), ModBlocks.GLASS_ROUND_TABLE.get(), ModBlocks.ARM_CHAIR.get(),
 				ModBlocks.DRAWER.get(), ModBlocks.CABINET.get(), ModBlocks.DRAWER_CHEST.get());
 
@@ -301,9 +304,9 @@ public final class ClientModEventSubscriber {
 		ModBlocks.WINDOW_SIMPLE.get().asItem(), ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
 		ModBlocks.WINDOW_SHADE.get().asItem(), ModBlocks.WINDOW_LANCET.get().asItem(),
 		ModBlocks.EASEL_MENU.get().asItem(), ModBlocks.EASEL_MENU_WHITE.get().asItem(),
-		ModBlocks.GLASS_TABLE.get().asItem(),
+		ModBlocks.GLASS_TABLE.get().asItem(), ModBlocks.CUPBOARD.get().asItem(),
 		ModBlocks.ARM_CHAIR.get().asItem(), ModBlocks.DRAWER.get().asItem(),
-		ModBlocks.CABINET.get().asItem(),ModBlocks.DRAWER_CHEST.get().asItem());
+		ModBlocks.CABINET.get().asItem(), ModBlocks.DRAWER_CHEST.get().asItem());
 
 		// Default Wooden Brown, BiDyeable:
 		event.getItemColors().register((stack, tintIndex) -> {

@@ -1,39 +1,39 @@
 package com.devbobcorn.nekoration.common.event;
 
 import com.devbobcorn.nekoration.Nekoration;
-import com.devbobcorn.nekoration.blocks.StoneBlock;
-import com.devbobcorn.nekoration.blocks.StonePillarBlock;
-import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
-import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
+import com.devbobcorn.nekoration.blocks.AwningBlock;
 import com.devbobcorn.nekoration.blocks.CandleHolderBlock;
 import com.devbobcorn.nekoration.blocks.ChairBlock;
-import com.devbobcorn.nekoration.blocks.AwningBlock;
-import com.devbobcorn.nekoration.blocks.ShortAwningBlock;
 import com.devbobcorn.nekoration.blocks.DyeableBlock;
 import com.devbobcorn.nekoration.blocks.DyeableDoorBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
 import com.devbobcorn.nekoration.blocks.DyeableHorizontalWoodenBlock;
 import com.devbobcorn.nekoration.blocks.DyeableWoodenBlock;
+import com.devbobcorn.nekoration.blocks.HalfTimberBlock;
+import com.devbobcorn.nekoration.blocks.HalfTimberPillarBlock;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
+import com.devbobcorn.nekoration.blocks.ShortAwningBlock;
+import com.devbobcorn.nekoration.blocks.StoneBlock;
+import com.devbobcorn.nekoration.blocks.StonePillarBlock;
 import com.devbobcorn.nekoration.blocks.TableBlock;
 import com.devbobcorn.nekoration.blocks.WindowBlock;
 import com.devbobcorn.nekoration.common.VanillaCompat;
-import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
+import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.ModItemTabs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.IForgeRegistry;
 
 @EventBusSubscriber(modid = Nekoration.MODID, bus = EventBusSubscriber.Bus.MOD)
