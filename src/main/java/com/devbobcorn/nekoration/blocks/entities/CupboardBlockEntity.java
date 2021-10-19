@@ -4,6 +4,8 @@ import javax.annotation.Nullable;
 
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.CupboardBlock;
+import com.devbobcorn.nekoration.network.ModPacketHandler;
+import com.devbobcorn.nekoration.network.S2CUpdateCupboardData;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -22,10 +24,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 
 public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
@@ -41,6 +45,22 @@ public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
         protected void onClose(Level world, BlockPos pos, BlockState state) {
             CupboardBlockEntity.this.playSound(state, SoundEvents.BARREL_CLOSE);
             CupboardBlockEntity.this.updateBlockState(state, false);
+			System.out.println("Cupboard Closes... Client: " + world.isClientSide);
+			//ItemStack[] its = { new ItemStack(Items.COOKIE), new ItemStack(Items.APPLE), new ItemStack(Items.CAKE), new ItemStack(Items.HONEY_BOTTLE) };
+			ItemStack[] its = { airStack, airStack, airStack, airStack };
+			// Find out the 4 items to display...
+			int idx = 0;
+			for (ItemStack item : CupboardBlockEntity.this.items){
+				if (!item.is(Items.AIR)){
+					its[idx] = item.copy();
+					idx++;
+					if (idx >= 4)
+						break;
+				}
+			}
+			// This called on SERVER SIDE...
+			final S2CUpdateCupboardData packet = new S2CUpdateCupboardData(pos, its);
+			ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
         }
 
         protected void openerCountChanged(Level world, BlockPos pos, BlockState state, int a, int b) {
@@ -58,10 +78,6 @@ public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
 	private NonNullList<ItemStack> items;
 
 	public CupboardBlockEntity(BlockPos pos, BlockState state) {
-		this(pos, state, true);
-	}
-
-	public CupboardBlockEntity(BlockPos pos, BlockState state, boolean l) {
 		super(ModBlockEntityType.CUPBOARD_TYPE.get(), pos, state);
 		this.items = NonNullList.withSize(27, ItemStack.EMPTY);
 	}
