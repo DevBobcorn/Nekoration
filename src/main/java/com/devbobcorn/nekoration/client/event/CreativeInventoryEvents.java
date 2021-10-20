@@ -345,7 +345,8 @@ public class CreativeInventoryEvents
                     item == ModBlocks.DRAWER.get().asItem() ||
                     item == ModBlocks.CABINET.get().asItem() ||
                     item == ModBlocks.DRAWER_CHEST.get().asItem() ||
-                    item == ModBlocks.CUPBOARD.get().asItem()) && decorFilters.get(3).enabled)
+                    item == ModBlocks.CUPBOARD.get().asItem() ||
+                    item == ModBlocks.SHELF.get().asItem()) && decorFilters.get(3).enabled)
                 item.fillItemCategory(ModItemTabs.DECOR_GROUP, newItems);
             else if (!(t0 || t1 || t2 || t3) && decorFilters.get(4).enabled) // Misc
                 item.fillItemCategory(ModItemTabs.DECOR_GROUP, newItems);

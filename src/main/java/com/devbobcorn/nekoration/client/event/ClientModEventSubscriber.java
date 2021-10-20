@@ -139,6 +139,7 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CABINET.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DRAWER_CHEST.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CUPBOARD.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SHELF.get(), transparentRenderType);
 
 		LOGGER.info("Block Render Types Registered.");
 
@@ -146,7 +147,7 @@ public final class ClientModEventSubscriber {
 		BlockEntityRenderers.register(ModBlockEntityType.CUSTOM_TYPE.get(), CustomRenderer::new);
 		BlockEntityRenderers.register(ModBlockEntityType.PHONOGRAPH_TYPE.get(), PhonographRenderer::new);
 		BlockEntityRenderers.register(ModBlockEntityType.PRISMAP_TABLE_TYPE.get(), PrismapTableRenderer::new);
-		BlockEntityRenderers.register(ModBlockEntityType.CUPBOARD_TYPE.get(), CupboardRenderer::new);
+		BlockEntityRenderers.register(ModBlockEntityType.ITEM_DISPLAY_TYPE.get(), CupboardRenderer::new);
 
 		LOGGER.info("BlockEntities Renderers Bound.");
 
@@ -207,7 +208,8 @@ public final class ClientModEventSubscriber {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
 				return NekoColors.getWoodenColorOrBrown(2);
 			return NekoColors.getWoodenColorOrBrown(state.getValue(DyeableBlock.COLOR));
-		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get(), ModBlocks.CUPBOARD.get(),
+		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get(),
+				ModBlocks.CUPBOARD.get(), ModBlocks.SHELF.get(),
 				ModBlocks.GLASS_TABLE.get(), ModBlocks.GLASS_ROUND_TABLE.get(), ModBlocks.ARM_CHAIR.get(),
 				ModBlocks.DRAWER.get(), ModBlocks.CABINET.get(), ModBlocks.DRAWER_CHEST.get());
 
@@ -304,7 +306,7 @@ public final class ClientModEventSubscriber {
 		ModBlocks.WINDOW_SIMPLE.get().asItem(), ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
 		ModBlocks.WINDOW_SHADE.get().asItem(), ModBlocks.WINDOW_LANCET.get().asItem(),
 		ModBlocks.EASEL_MENU.get().asItem(), ModBlocks.EASEL_MENU_WHITE.get().asItem(),
-		ModBlocks.GLASS_TABLE.get().asItem(), ModBlocks.CUPBOARD.get().asItem(),
+		ModBlocks.GLASS_TABLE.get().asItem(), ModBlocks.CUPBOARD.get().asItem(), ModBlocks.SHELF.get().asItem(),
 		ModBlocks.ARM_CHAIR.get().asItem(), ModBlocks.DRAWER.get().asItem(),
 		ModBlocks.CABINET.get().asItem(), ModBlocks.DRAWER_CHEST.get().asItem());
 

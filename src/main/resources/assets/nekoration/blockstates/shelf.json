@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,bottom=false": {
-      "model": "nekoration:block/cupboard",
+      "model": "nekoration:block/shelf",
       "y": 90
     },
     "facing=north,bottom=false": {
-      "model": "nekoration:block/cupboard"
+      "model": "nekoration:block/shelf"
     },
     "facing=south,bottom=false": {
-      "model": "nekoration:block/cupboard",
+      "model": "nekoration:block/shelf",
       "y": 180
     },
     "facing=west,bottom=false": {
-      "model": "nekoration:block/cupboard",
+      "model": "nekoration:block/shelf",
       "y": 270
     },
     "facing=east,bottom=true": {
-      "model": "nekoration:block/cupboard_bottom",
+      "model": "nekoration:block/shelf_bottom",
       "y": 90
     },
     "facing=north,bottom=true": {
-      "model": "nekoration:block/cupboard_bottom"
+      "model": "nekoration:block/shelf_bottom"
     },
     "facing=south,bottom=true": {
-      "model": "nekoration:block/cupboard_bottom",
+      "model": "nekoration:block/shelf_bottom",
       "y": 180
     },
     "facing=west,bottom=true": {
-      "model": "nekoration:block/cupboard_bottom",
+      "model": "nekoration:block/shelf_bottom",
       "y": 270
     }
   }

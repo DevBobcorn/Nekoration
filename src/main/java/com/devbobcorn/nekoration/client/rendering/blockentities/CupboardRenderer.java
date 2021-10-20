@@ -1,7 +1,7 @@
 package com.devbobcorn.nekoration.client.rendering.blockentities;
 
-import com.devbobcorn.nekoration.blocks.CupboardBlock;
-import com.devbobcorn.nekoration.blocks.entities.CupboardBlockEntity;
+import com.devbobcorn.nekoration.blocks.ItemDisplayBlock;
+import com.devbobcorn.nekoration.blocks.entities.ItemDisplayBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
-public class CupboardRenderer implements BlockEntityRenderer<CupboardBlockEntity> {
+public class CupboardRenderer implements BlockEntityRenderer<ItemDisplayBlockEntity> {
 	Font font;
 
 	public CupboardRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -21,20 +21,20 @@ public class CupboardRenderer implements BlockEntityRenderer<CupboardBlockEntity
 	}
 
 	@Override
-	public void render(CupboardBlockEntity tileEntity, float partialTicks, PoseStack stack, MultiBufferSource buffers, int combinedLight, int combinedOverlay) {
+	public void render(ItemDisplayBlockEntity tileEntity, float partialTicks, PoseStack stack, MultiBufferSource buffers, int combinedLight, int combinedOverlay) {
         stack.pushPose();
         // Items...
         stack.translate(0.5D, 0.5D, 0.5D);
-        stack.mulPose(Vector3f.YP.rotationDegrees(3 - tileEntity.getBlockState().getValue(CupboardBlock.FACING).get2DDataValue() * 90.0F));
+        stack.mulPose(Vector3f.YP.rotationDegrees(3 - tileEntity.getBlockState().getValue(ItemDisplayBlock.FACING).get2DDataValue() * 90.0F));
         
         float sc = 0.5F;
         stack.scale(sc, sc, sc);
 
-        stack.mulPose(Vector3f.XP.rotationDegrees(-22.5F));
+        stack.mulPose(Vector3f.XP.rotationDegrees(-10));
 
         // 0 1
         // 2 3
-        stack.translate(-0.4D, 0.2D, -0.3D);
+        stack.translate(-0.4D, 0.2D, -0.5D);
         Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[0], ItemTransforms.TransformType.GROUND,
             combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1); // TODO The number
 
@@ -42,7 +42,7 @@ public class CupboardRenderer implements BlockEntityRenderer<CupboardBlockEntity
         Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[1], ItemTransforms.TransformType.GROUND,
             combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1);
 
-        stack.translate(0.0D, -0.6D, -0.2D);
+        stack.translate(0.0D, -0.7D, -0.2D);
         Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[3], ItemTransforms.TransformType.GROUND,
             combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1);
 
@@ -54,7 +54,7 @@ public class CupboardRenderer implements BlockEntityRenderer<CupboardBlockEntity
 	}
 
 	@Override
-	public boolean shouldRenderOffScreen(CupboardBlockEntity BlockEntity) {
+	public boolean shouldRenderOffScreen(ItemDisplayBlockEntity BlockEntity) {
 		return false;
 	}
 }

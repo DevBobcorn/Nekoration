@@ -16,5 +16,5 @@ public class ModBlockEntityType {
     public static final RegistryObject<BlockEntityType<CustomBlockEntity>> CUSTOM_TYPE = TILE_ENTITY_TYPES.register("custom", () -> BlockEntityType.Builder.of(CustomBlockEntity::new, ModBlocks.CUSTOM.get()).build(null));
     public static final RegistryObject<BlockEntityType<PrismapTableBlockEntity>> PRISMAP_TABLE_TYPE = TILE_ENTITY_TYPES.register("prismap_table", () -> BlockEntityType.Builder.of(PrismapTableBlockEntity::new, ModBlocks.PRISMAP_TABLE.get()).build(null));
     public static final RegistryObject<BlockEntityType<CabinetBlockEntity>> CABINET_TYPE = TILE_ENTITY_TYPES.register("cabinet", () -> BlockEntityType.Builder.of(CabinetBlockEntity::new, ModBlocks.DRAWER.get(), ModBlocks.CABINET.get(), ModBlocks.DRAWER_CHEST.get()).build(null));
-    public static final RegistryObject<BlockEntityType<CupboardBlockEntity>> CUPBOARD_TYPE = TILE_ENTITY_TYPES.register("cupboard", () -> BlockEntityType.Builder.of(CupboardBlockEntity::new, ModBlocks.CUPBOARD.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ItemDisplayBlockEntity>> ITEM_DISPLAY_TYPE = TILE_ENTITY_TYPES.register("item_display", () -> BlockEntityType.Builder.of(ItemDisplayBlockEntity::new, ModBlocks.CUPBOARD.get(), ModBlocks.SHELF.get()).build(null));
 }

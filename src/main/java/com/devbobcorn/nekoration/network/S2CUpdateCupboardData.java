@@ -2,7 +2,7 @@ package com.devbobcorn.nekoration.network;
 
 import java.util.function.Supplier;
 
-import com.devbobcorn.nekoration.blocks.entities.CupboardBlockEntity;
+import com.devbobcorn.nekoration.blocks.entities.ItemDisplayBlockEntity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -44,8 +44,8 @@ public class S2CUpdateCupboardData {
             ClientLevel world = Minecraft.getInstance().level;
             if (world.isLoaded(msg.pos)) {
                 BlockEntity tileEntity = world.getBlockEntity(msg.pos);
-                if (tileEntity instanceof CupboardBlockEntity) {
-                    CupboardBlockEntity te = (CupboardBlockEntity) tileEntity;
+                if (tileEntity instanceof ItemDisplayBlockEntity) {
+                    ItemDisplayBlockEntity te = (ItemDisplayBlockEntity) tileEntity;
                     for (int i = 0;i < 4;i++){
                         te.renderItems[i] = msg.items[i];
                     }

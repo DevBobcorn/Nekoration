@@ -129,6 +129,7 @@ public final class ModBlocks {
     public static final RegistryObject<Block> DRAWER_CHEST = BLOCKS.register("drawer_chest", () -> new CabinetBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true));
 
     public static final RegistryObject<Block> CUPBOARD = BLOCKS.register("cupboard", () -> new CupboardBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> SHELF = BLOCKS.register("shelf", () -> new CupboardBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
 
 	public static ToIntFunction<BlockState> candleHolderEmission(int lightlevel) {
 		return (state) -> {

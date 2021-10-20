@@ -3,7 +3,7 @@ package com.devbobcorn.nekoration.blocks.entities;
 import javax.annotation.Nullable;
 
 import com.devbobcorn.nekoration.Nekoration;
-import com.devbobcorn.nekoration.blocks.CupboardBlock;
+import com.devbobcorn.nekoration.blocks.ItemDisplayBlock;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.devbobcorn.nekoration.network.S2CUpdateCupboardData;
 
@@ -32,25 +32,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 
-public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
+public class ItemDisplayBlockEntity extends RandomizableContainerBlockEntity {
 	private final ItemStack airStack = ItemStack.EMPTY;
 	public ItemStack[] renderItems = { airStack, airStack, airStack, airStack };
 
     private ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level world, BlockPos pos, BlockState state) {
-            CupboardBlockEntity.this.playSound(state, SoundEvents.BARREL_OPEN);
-            CupboardBlockEntity.this.updateBlockState(state, true);
+            ItemDisplayBlockEntity.this.playSound(state, SoundEvents.BARREL_OPEN);
+            ItemDisplayBlockEntity.this.updateBlockState(state, true);
         }
 
         protected void onClose(Level world, BlockPos pos, BlockState state) {
-            CupboardBlockEntity.this.playSound(state, SoundEvents.BARREL_CLOSE);
-            CupboardBlockEntity.this.updateBlockState(state, false);
-			System.out.println("Cupboard Closes... Client: " + world.isClientSide);
-			//ItemStack[] its = { new ItemStack(Items.COOKIE), new ItemStack(Items.APPLE), new ItemStack(Items.CAKE), new ItemStack(Items.HONEY_BOTTLE) };
+            ItemDisplayBlockEntity.this.playSound(state, SoundEvents.BARREL_CLOSE);
+            ItemDisplayBlockEntity.this.updateBlockState(state, false);
 			ItemStack[] its = { airStack, airStack, airStack, airStack };
 			// Find out the 4 items to display...
 			int idx = 0;
-			for (ItemStack item : CupboardBlockEntity.this.items){
+			for (ItemStack item : ItemDisplayBlockEntity.this.items){
 				if (!item.is(Items.AIR)){
 					its[idx] = item.copy();
 					idx++;
@@ -69,7 +67,7 @@ public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
         protected boolean isOwnContainer(Player player) {
             if (player.containerMenu instanceof ChestMenu) {
                 Container container = ((ChestMenu) player.containerMenu).getContainer();
-                return container == CupboardBlockEntity.this;
+                return container == ItemDisplayBlockEntity.this;
             } else {
                 return false;
             }
@@ -77,8 +75,8 @@ public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
     };
 	private NonNullList<ItemStack> items;
 
-	public CupboardBlockEntity(BlockPos pos, BlockState state) {
-		super(ModBlockEntityType.CUPBOARD_TYPE.get(), pos, state);
+	public ItemDisplayBlockEntity(BlockPos pos, BlockState state) {
+		super(ModBlockEntityType.ITEM_DISPLAY_TYPE.get(), pos, state);
 		this.items = NonNullList.withSize(27, ItemStack.EMPTY);
 	}
 
@@ -95,6 +93,16 @@ public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
 		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 		if (!this.tryLoadLootTable(tag)) {
 			ContainerHelper.loadAllItems(tag, this.items);
+		}
+		// Init render items...
+		int idx = 0;
+		for (ItemStack item : this.items){
+			if (!item.is(Items.AIR)){
+				renderItems[idx] = item.copy();
+				idx++;
+				if (idx >= 4)
+					break;
+			}
 		}
 	}
 
@@ -156,11 +164,11 @@ public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
     }
 
 	private void updateBlockState(BlockState state, boolean open) {
-		this.level.setBlock(this.getBlockPos(), state.setValue(CupboardBlock.OPEN, Boolean.valueOf(open)), 3);
+		this.level.setBlock(this.getBlockPos(), state.setValue(ItemDisplayBlock.OPEN, Boolean.valueOf(open)), 3);
 	}
 
 	private void playSound(BlockState state, SoundEvent sound) {
-		Vec3i vector3i = state.getValue(CupboardBlock.FACING).getNormal();
+		Vec3i vector3i = state.getValue(ItemDisplayBlock.FACING).getNormal();
 		double d0 = (double) this.worldPosition.getX() + 0.5D + (double) vector3i.getX() / 2.0D;
 		double d1 = (double) this.worldPosition.getY() + 0.5D + (double) vector3i.getY() / 2.0D;
 		double d2 = (double) this.worldPosition.getZ() + 0.5D + (double) vector3i.getZ() / 2.0D;
