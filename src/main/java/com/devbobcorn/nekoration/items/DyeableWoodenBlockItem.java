@@ -10,6 +10,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 
 
 
@@ -47,6 +48,8 @@ public class DyeableWoodenBlockItem extends BlockItem {
 
 	@Override
 	public Component getName(ItemStack stack) {
-		return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.wooden." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString()));
+		if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
+			return new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.wooden." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString());
+		else return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.wooden." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString()));
 	}
 }

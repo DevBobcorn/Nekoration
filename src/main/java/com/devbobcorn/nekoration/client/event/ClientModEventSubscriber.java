@@ -306,7 +306,8 @@ public final class ClientModEventSubscriber {
 		ModBlocks.WINDOW_SIMPLE.get().asItem(), ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
 		ModBlocks.WINDOW_SHADE.get().asItem(), ModBlocks.WINDOW_LANCET.get().asItem(),
 		ModBlocks.EASEL_MENU.get().asItem(), ModBlocks.EASEL_MENU_WHITE.get().asItem(),
-		ModBlocks.GLASS_TABLE.get().asItem(), ModBlocks.CUPBOARD.get().asItem(), ModBlocks.SHELF.get().asItem(),
+		ModBlocks.GLASS_TABLE.get().asItem(), ModBlocks.GLASS_ROUND_TABLE.get().asItem(),
+		ModBlocks.CUPBOARD.get().asItem(), ModBlocks.SHELF.get().asItem(),
 		ModBlocks.ARM_CHAIR.get().asItem(), ModBlocks.DRAWER.get().asItem(),
 		ModBlocks.CABINET.get().asItem(), ModBlocks.DRAWER_CHEST.get().asItem());
 

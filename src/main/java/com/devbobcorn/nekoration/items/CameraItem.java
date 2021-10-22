@@ -4,8 +4,6 @@ import javax.annotation.Nonnull;
 
 import com.devbobcorn.nekoration.client.event.PhotoEvents;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -30,9 +28,4 @@ public class CameraItem extends Item {
         }
         return InteractionResultHolder.success(stack);
     }
-
-    @Override
-	public Component getName(ItemStack stack) {
-		return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack)));
-	}
 }

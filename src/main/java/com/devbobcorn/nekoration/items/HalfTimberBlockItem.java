@@ -11,6 +11,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 
 public class HalfTimberBlockItem extends BlockItem {
     public static final String COLOR_0 = "color_0"; // Color of outer layer
@@ -74,6 +75,8 @@ public class HalfTimberBlockItem extends BlockItem {
 		String color0Text = (new TranslatableComponent("color.wooden." + (hasColor ? getColor0(stack).getSerializedName() : "unknown"))).getString();
 		String color1Text = (new TranslatableComponent("color.nekoration." + (hasColor ? getColor1(stack).getSerializedName() : "unknown"))).getString();
 
-		return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), color0Text, color1Text));
+		if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
+			return new TranslatableComponent(this.getDescriptionId(stack), color0Text, color1Text);
+		else return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), color0Text, color1Text));
 	}
 }
