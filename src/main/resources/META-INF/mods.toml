@@ -8,7 +8,7 @@ license="Apache-2.0"
 [[mods]] #mandatory
 # The modid of the mod
 modId="nekoration"
-version="1.4.0"
+version="1.4.1"
 displayName="Nekoration"
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
 #updateJSONURL="https://change.me.example.invalid/updates.json"

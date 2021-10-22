@@ -32,23 +32,25 @@ public class CupboardRenderer implements BlockEntityRenderer<ItemDisplayBlockEnt
 
         stack.mulPose(Vector3f.XP.rotationDegrees(-10));
 
+        int rand = (int)tileEntity.getBlockPos().asLong();
+
         // 0 1
         // 2 3
         stack.translate(-0.4D, 0.2D, -0.5D);
         Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[0], ItemTransforms.TransformType.GROUND,
-            combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1); // TODO The number
+            combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + 1);
 
         stack.translate(0.8D, 0.0D, 0.0D);
         Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[1], ItemTransforms.TransformType.GROUND,
-            combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1);
+            combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + 2);
 
         stack.translate(0.0D, -0.7D, -0.2D);
         Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[3], ItemTransforms.TransformType.GROUND,
-            combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1);
+            combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + 3);
 
         stack.translate(-0.8D, 0.0D, 0.0D);
         Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[2], ItemTransforms.TransformType.GROUND,
-            combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1);
+            combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + 4);
 
         stack.popPose();
 	}

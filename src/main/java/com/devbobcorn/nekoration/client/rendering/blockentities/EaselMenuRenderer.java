@@ -34,23 +34,25 @@ public class EaselMenuRenderer implements BlockEntityRenderer<EaselMenuBlockEnti
 	
 			stack.mulPose(Vector3f.XP.rotationDegrees(-22.5F));
 	
+			int rand = (int)tileEntity.getBlockPos().asLong();
+
 			// 0 1  // 4 5
 			// 2 3  // 6 7
 			stack.translate(-0.3D, 0.0D, 0.4D);
 			Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[0 + rot * 4], ItemTransforms.TransformType.GROUND,
-				combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1); // TODO The number
+				combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + 1);
 	
 			stack.translate(0.6D, 0.0D, 0.0D);
 			Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[1 + rot * 4], ItemTransforms.TransformType.GROUND,
-				combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1);
+				combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + 2);
 	
 			stack.translate(0.0D, -0.6D, 0.0D);
 			Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[3 + rot * 4], ItemTransforms.TransformType.GROUND,
-				combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1);
+				combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + 3);
 	
 			stack.translate(-0.6D, 0.0D, 0.0D);
 			Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[2 + rot * 4], ItemTransforms.TransformType.GROUND,
-				combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, 1);
+				combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + 4);
 	
 			stack.popPose();
 			// Texts on Front Side
