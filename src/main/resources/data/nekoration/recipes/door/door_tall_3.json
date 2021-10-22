@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "#",
+        "#"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:quartz_bricks"
+        }
+    },
+    "result": {
+        "item": "nekoration:door_tall_3",
+        "count": 1
+    }
+}

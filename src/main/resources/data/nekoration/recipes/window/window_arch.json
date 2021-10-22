@@ -1,0 +1,19 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "111",
+        "101"
+    ],
+    "key": {
+        "0": {
+            "item": "nekoration:window_simple"
+        },
+        "1": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "item": "nekoration:window_arch",
+        "count": 1
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "#0#",
+        "#0#",
+        "# #"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:dark_oak_planks"
+        },
+        "0": {
+            "item": "minecraft:white_concrete"
+        }
+    },
+    "result": {
+        "item": "nekoration:easel_menu_white",
+        "nbt": {
+            "color": 0
+        },
+        "count": 4
+    }
+}

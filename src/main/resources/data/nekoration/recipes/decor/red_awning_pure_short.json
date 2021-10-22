@@ -1,0 +1,23 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "  #",
+        " # ",
+        "# 1"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:red_wool"
+        },
+        "1": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "item": "nekoration:awning_pure_short",
+        "nbt": {
+            "color": 13
+        },
+        "count": 3
+    }
+}

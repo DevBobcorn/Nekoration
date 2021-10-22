@@ -1,0 +1,8 @@
+{
+    "type": "nekoration:neko_stonecutting",
+    "ingredient": {
+        "item": "minecraft:smooth_stone"
+    },
+    "result": "nekoration:stone_pillar_bottom",
+    "count": 1
+}

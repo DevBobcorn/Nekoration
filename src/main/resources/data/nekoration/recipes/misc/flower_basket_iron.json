@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " # ",
+        "000",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:iron_block"
+        },
+        "0": {
+            "tag": "minecraft:flowers"
+        }
+    },
+    "result": {
+        "item": "nekoration:flower_basket_iron",
+        "count": 3
+    }
+}

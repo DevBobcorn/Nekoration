@@ -1,0 +1,20 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "1 1",
+        " 0 ",
+        "1 1"
+    ],
+    "key": {
+        "1": {
+            "item": "minecraft:stick"
+        },
+        "0": {
+            "item": "nekoration:half_timber_p0"
+        }
+    },
+    "result": {
+        "item": "nekoration:half_timber_p6",
+        "count": 1
+    }
+}

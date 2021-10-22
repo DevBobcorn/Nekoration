@@ -1,0 +1,27 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "1P1",
+        "P0P",
+        "1P1"
+    ],
+    "key": {
+        "1": {
+            "item": "minecraft:stick"
+        },
+        "0": {
+            "item": "minecraft:jungle_planks"
+        },
+        "P": {
+            "item": "minecraft:paper"
+        }
+    },
+    "result": {
+        "item": "nekoration:half_timber_p0",
+        "nbt": {
+            "color_0": 4,
+            "color_1": 14
+        },
+        "count": 1
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " # ",
+        "000",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:gold_block"
+        },
+        "0": {
+            "tag": "minecraft:flowers"
+        }
+    },
+    "result": {
+        "item": "nekoration:flower_basket_gold",
+        "count": 3
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "  #",
+        " # ",
+        "#  "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:light_gray_wool"
+        }
+    },
+    "result": {
+        "item": "nekoration:awning_pure",
+        "nbt": {
+            "color": 7
+        },
+        "count": 3
+    }
+}

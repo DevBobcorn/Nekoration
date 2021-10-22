@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        " # ",
+        " # "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:jungle_planks"
+        }
+    },
+    "result": {
+        "item": "nekoration:jungle_round_table",
+        "count": 4
+    }
+}

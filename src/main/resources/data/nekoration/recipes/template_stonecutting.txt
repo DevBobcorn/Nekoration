@@ -1,0 +1,8 @@
+{
+	"type": "nekoration:neko_stonecutting",
+	"ingredient": {
+		"item": ""
+	},
+	"result": "",
+	"count": 1
+}

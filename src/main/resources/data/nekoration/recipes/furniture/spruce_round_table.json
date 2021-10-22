@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        " # ",
+        " # "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:spruce_planks"
+        }
+    },
+    "result": {
+        "item": "nekoration:spruce_round_table",
+        "count": 4
+    }
+}

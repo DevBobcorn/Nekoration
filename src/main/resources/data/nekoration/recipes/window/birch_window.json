@@ -1,0 +1,26 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "010",
+        "1#1",
+        "010"
+    ],
+    "key": {
+        "0": {
+            "item": "minecraft:birch_planks"
+        },
+        "1": {
+            "item": "minecraft:stick"
+        },
+        "#": {
+            "item": "minecraft:glass"
+        }
+    },
+    "result": {
+        "item": "nekoration:window_simple",
+        "nbt": {
+            "color": 14
+        },
+        "count": 4
+    }
+}

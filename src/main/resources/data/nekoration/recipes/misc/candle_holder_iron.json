@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "000",
+        "###",
+        " # "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:iron_block"
+        },
+        "0": {
+            "item": "minecraft:honeycomb"
+        }
+    },
+    "result": {
+        "item": "nekoration:candle_holder_iron",
+        "count": 3
+    }
+}

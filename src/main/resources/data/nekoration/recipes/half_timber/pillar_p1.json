@@ -1,0 +1,17 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "#",
+        "#",
+        "#"
+    ],
+    "key": {
+        "#": {
+            "item": "nekoration:half_timber_p1"
+        }
+    },
+    "result": {
+        "item": "nekoration:half_timber_pillar_p1",
+        "count": 3
+    }
+}

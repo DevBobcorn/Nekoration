@@ -1,0 +1,6 @@
+{
+	"type": "nekoration:neko_crafting_shaped",
+	"pattern": [],
+	"key": {},
+	"result": {}
+}

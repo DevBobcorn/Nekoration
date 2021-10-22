@@ -1,0 +1,14 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "#"
+    ],
+    "key": {
+        "#": {
+            "item": "nekoration:awning_stripe"
+        }
+    },
+    "result": {
+        "item": "nekoration:awning_pure"
+    }
+}
