@@ -1,0 +1,23 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "#0#",
+        "# #",
+        "# #"
+    ],
+    "key": {
+        "0": {
+            "item": "minecraft:glass"
+        },
+        "#": {
+            "item": "minecraft:warped_planks"
+        }
+    },
+    "result": {
+        "item": "nekoration:glass_table",
+        "nbt": {
+            "color": 3
+        },
+        "count": 4
+    }
+}

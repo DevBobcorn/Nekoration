@@ -37,6 +37,18 @@ awningShortRecipe = [ "  #"," # ","# 1" ]
 
 easelMenuRecipe = [ "#0#","#0#","# #" ]
 
+armChairRecipe = [ "#  ","#11","###" ]
+
+glassTableRecipe = [ "#0#","# #","# #" ]
+glassRoundTableRecipe = [ "000"," # "," # " ]
+
+drawerRecipe = [ "###","#0#","# #" ]
+cabinetRecipe = [ "###","0#0","###" ]
+drawerChestRecipe = [ "###","#0#","#0#" ]
+
+shelfRecipe = [ "###","#1 ","###" ]
+cupboardRecipe = [ "###","#10","###" ]
+
 def getVanilla(itemId):
     return { "item": "minecraft:" + itemId }
 
@@ -108,7 +120,7 @@ if True: # Neko Shaped / Vanilla Shaped
             with open("half_timber/pillar_p" + str(i) + ".json", "w+") as f:
                 f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
 
-        #window
+        # window
         recipeObj['key'].clear()
         recipeObj['key']['0'] = { "item" : "nekoration:window_simple" }
         recipeObj['key']['1'] = getVanilla("stick")
@@ -156,7 +168,64 @@ if True: # Neko Shaped / Vanilla Shaped
             recipeObj['result'] = getBlockNBTResult("easel_menu","white", wdids[wood], 4)
             with open("decor/" + woods[wood] + "_easel_menu_white.json", "w+") as f:
                 f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+
+        # arm chair
+        recipeObj['key'].clear()
+        recipeObj['pattern'] = armChairRecipe
+        recipeObj['key']['1'] = getVanilla("stick")
+        for wood in range(0, len(woods)):
+            recipeObj['key']['#'] = getVanilla(woods[wood] + "_planks")
+            recipeObj['result'] = getBlockNBTResult("arm_chair","", wdids[wood], 4)
+            with open("furniture/" + woods[wood] + "_arm_chair.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+
+        # glass furniture
+        recipeObj['key'].clear()
+        recipeObj['key']['0'] = getVanilla("glass")
+        for wood in range(0, len(woods)):
+            recipeObj['key']['#'] = getVanilla(woods[wood] + "_planks")
+            recipeObj['pattern'] = glassTableRecipe
+            recipeObj['result'] = getBlockNBTResult("glass_table", "", wdids[wood], 4)
+            with open("furniture/" + woods[wood] + "_glass_table.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+            recipeObj['pattern'] = glassRoundTableRecipe
+            recipeObj['result'] = getBlockNBTResult("glass_round_table", "", wdids[wood], 4)
+            with open("furniture/" + woods[wood] + "_glass_round_table.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
         
+        # cabinet / drawer / chest of drawers
+        recipeObj['key'].clear()
+        recipeObj['key']['0'] = getVanilla("chest")
+        for wood in range(0, len(woods)):
+            recipeObj['key']['#'] = getVanilla(woods[wood] + "_planks")
+            recipeObj['pattern'] = drawerRecipe
+            recipeObj['result'] = getBlockNBTResult("drawer", "", wdids[wood], 1)
+            with open("container/" + woods[wood] + "_drawer.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+            recipeObj['pattern'] = cabinetRecipe
+            recipeObj['result'] = getBlockNBTResult("cabinet", "", wdids[wood], 1)
+            with open("container/" + woods[wood] + "_cabinet.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+            recipeObj['pattern'] = drawerChestRecipe
+            recipeObj['result'] = getBlockNBTResult("drawer_chest", "", wdids[wood], 1)
+            with open("container/" + woods[wood] + "_drawer_chest.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+
+        # cupboard / shelf
+        recipeObj['key'].clear()
+        for wood in range(0, len(woods)):
+            recipeObj['key']['#'] = getVanilla(woods[wood] + "_planks")
+            recipeObj['key']['1'] = getVanilla(woods[wood] + "_pressure_plate")
+            recipeObj['key']['0'] = getVanilla("glass")
+            recipeObj['pattern'] = cupboardRecipe
+            recipeObj['result'] = getBlockNBTResult("cupboard", "", wdids[wood], 1)
+            with open("container/" + woods[wood] + "_cupboard.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+            recipeObj['key'].pop('0')
+            recipeObj['pattern'] = shelfRecipe
+            recipeObj['result'] = getBlockNBTResult("shelf", "", wdids[wood], 1)
+            with open("container/" + woods[wood] + "_shelf.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
 
         # Vanilla Shaped
         recipeObj['type'] = "minecraft:crafting_shaped"
@@ -176,6 +245,7 @@ if True: # Neko Shaped / Vanilla Shaped
             recipeObj['result'] = { "item" : "nekoration:" + woods[wood] + "_round_table", "count": 4 }
             with open("furniture/" + woods[wood] + "_round_table.json", "w+") as f:
                 f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+            
             
 
 if False: # Stonecutting

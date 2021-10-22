@@ -1,0 +1,26 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "###",
+        "#10",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:jungle_planks"
+        },
+        "1": {
+            "item": "minecraft:jungle_pressure_plate"
+        },
+        "0": {
+            "item": "minecraft:glass"
+        }
+    },
+    "result": {
+        "item": "nekoration:cupboard",
+        "nbt": {
+            "color": 4
+        },
+        "count": 1
+    }
+}

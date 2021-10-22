@@ -1,0 +1,23 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "###",
+        "#0#",
+        "# #"
+    ],
+    "key": {
+        "0": {
+            "item": "minecraft:chest"
+        },
+        "#": {
+            "item": "minecraft:warped_planks"
+        }
+    },
+    "result": {
+        "item": "nekoration:drawer",
+        "nbt": {
+            "color": 3
+        },
+        "count": 1
+    }
+}

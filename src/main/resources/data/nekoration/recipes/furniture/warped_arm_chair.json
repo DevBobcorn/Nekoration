@@ -1,0 +1,23 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "#  ",
+        "#11",
+        "###"
+    ],
+    "key": {
+        "1": {
+            "item": "minecraft:stick"
+        },
+        "#": {
+            "item": "minecraft:warped_planks"
+        }
+    },
+    "result": {
+        "item": "nekoration:arm_chair",
+        "nbt": {
+            "color": 3
+        },
+        "count": 4
+    }
+}

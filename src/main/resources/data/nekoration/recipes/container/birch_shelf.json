@@ -1,0 +1,23 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "###",
+        "#1 ",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:birch_planks"
+        },
+        "1": {
+            "item": "minecraft:birch_pressure_plate"
+        }
+    },
+    "result": {
+        "item": "nekoration:shelf",
+        "nbt": {
+            "color": 14
+        },
+        "count": 1
+    }
+}

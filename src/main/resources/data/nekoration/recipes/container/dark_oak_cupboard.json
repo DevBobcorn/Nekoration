@@ -1,0 +1,26 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "###",
+        "#10",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:dark_oak_planks"
+        },
+        "1": {
+            "item": "minecraft:dark_oak_pressure_plate"
+        },
+        "0": {
+            "item": "minecraft:glass"
+        }
+    },
+    "result": {
+        "item": "nekoration:cupboard",
+        "nbt": {
+            "color": 0
+        },
+        "count": 1
+    }
+}

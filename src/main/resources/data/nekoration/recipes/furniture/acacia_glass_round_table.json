@@ -1,0 +1,23 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "000",
+        " # ",
+        " # "
+    ],
+    "key": {
+        "0": {
+            "item": "minecraft:glass"
+        },
+        "#": {
+            "item": "minecraft:acacia_planks"
+        }
+    },
+    "result": {
+        "item": "nekoration:glass_round_table",
+        "nbt": {
+            "color": 10
+        },
+        "count": 4
+    }
+}
