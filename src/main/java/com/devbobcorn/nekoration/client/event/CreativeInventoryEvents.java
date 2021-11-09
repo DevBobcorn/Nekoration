@@ -331,7 +331,8 @@ public class CreativeInventoryEvents
         .forEach(item -> {
             boolean t0, t1, t2, t3 = false;
             String itemId = ForgeRegistries.ITEMS.getKey(item).getPath();
-            if ((t0 = item == ModBlocks.STONE_POT.get().asItem()) && decorFilters.get(0).enabled)
+            if ((t0 = item == ModBlocks.STONE_POT.get().asItem() ||
+                item == ModBlocks.STONE_PLANTER.get().asItem()) && decorFilters.get(0).enabled)
                 item.fillItemCategory(ModItemTabs.DECOR_GROUP, newItems);
             else if ((t1 = item == ModBlocks.AWNING_PURE.get().asItem() ||
                     item == ModBlocks.AWNING_PURE_SHORT.get().asItem() ||
@@ -346,7 +347,8 @@ public class CreativeInventoryEvents
                     item == ModBlocks.CABINET.get().asItem() ||
                     item == ModBlocks.DRAWER_CHEST.get().asItem() ||
                     item == ModBlocks.CUPBOARD.get().asItem() ||
-                    item == ModBlocks.SHELF.get().asItem()) && decorFilters.get(3).enabled)
+                    item == ModBlocks.SHELF.get().asItem() ||
+                    item == ModBlocks.WALL_SHELF.get().asItem()) && decorFilters.get(3).enabled)
                 item.fillItemCategory(ModItemTabs.DECOR_GROUP, newItems);
             else if (!(t0 || t1 || t2 || t3) && decorFilters.get(4).enabled) // Misc
                 item.fillItemCategory(ModItemTabs.DECOR_GROUP, newItems);

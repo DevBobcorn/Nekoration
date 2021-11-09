@@ -23,13 +23,37 @@ public class CupboardRenderer implements BlockEntityRenderer<ItemDisplayBlockEnt
 	@Override
 	public void render(ItemDisplayBlockEntity tileEntity, float partialTicks, PoseStack stack, MultiBufferSource buffers, int combinedLight, int combinedOverlay) {
         stack.pushPose();
+        if (tileEntity.shelf)
+            renderShelfItems(tileEntity, stack, buffers, combinedLight);
+        else renderCabinetItems(tileEntity, stack, buffers, combinedLight);
+        stack.popPose();
+	}
+
+    private void renderShelfItems(ItemDisplayBlockEntity tileEntity, PoseStack stack, MultiBufferSource buffers, int combinedLight){
         // Items...
         stack.translate(0.5D, 0.5D, 0.5D);
-        stack.mulPose(Vector3f.YP.rotationDegrees(3 - tileEntity.getBlockState().getValue(ItemDisplayBlock.FACING).get2DDataValue() * 90.0F));
-        
+        stack.mulPose(Vector3f.YP.rotationDegrees(-tileEntity.getBlockState().getValue(ItemDisplayBlock.FACING).get2DDataValue() * 90.0F));
         float sc = 0.5F;
         stack.scale(sc, sc, sc);
+        stack.mulPose(Vector3f.XP.rotationDegrees(-10));
 
+        int rand = (int)tileEntity.getBlockPos().asLong();
+
+        // 0 1 2 3
+        stack.translate(-1.35D, 0.2D, -0.5D);
+        for (int i = 0;i < 4;i++){
+            stack.translate(0.55D, 0.0D, -0.0D);
+            Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[i], ItemTransforms.TransformType.GROUND,
+                combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + i + 1);
+        }
+    }
+
+    private void renderCabinetItems(ItemDisplayBlockEntity tileEntity, PoseStack stack, MultiBufferSource buffers, int combinedLight){
+        // Items...
+        stack.translate(0.5D, 0.5D, 0.5D);
+        stack.mulPose(Vector3f.YP.rotationDegrees(-tileEntity.getBlockState().getValue(ItemDisplayBlock.FACING).get2DDataValue() * 90.0F));
+        float sc = 0.5F;
+        stack.scale(sc, sc, sc);
         stack.mulPose(Vector3f.XP.rotationDegrees(-10));
 
         int rand = (int)tileEntity.getBlockPos().asLong();
@@ -51,9 +75,7 @@ public class CupboardRenderer implements BlockEntityRenderer<ItemDisplayBlockEnt
         stack.translate(-0.8D, 0.0D, 0.0D);
         Minecraft.getInstance().getItemRenderer().renderStatic(tileEntity.renderItems[2], ItemTransforms.TransformType.GROUND,
             combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + 4);
-
-        stack.popPose();
-	}
+    }
 
 	@Override
 	public boolean shouldRenderOffScreen(ItemDisplayBlockEntity BlockEntity) {

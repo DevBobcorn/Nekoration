@@ -36,6 +36,8 @@ public class ItemDisplayBlockEntity extends RandomizableContainerBlockEntity {
 	private final ItemStack airStack = ItemStack.EMPTY;
 	public ItemStack[] renderItems = { airStack, airStack, airStack, airStack };
 
+	public final boolean shelf;
+
     private ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level world, BlockPos pos, BlockState state) {
             ItemDisplayBlockEntity.this.playSound(state, SoundEvents.BARREL_OPEN);
@@ -78,6 +80,13 @@ public class ItemDisplayBlockEntity extends RandomizableContainerBlockEntity {
 	public ItemDisplayBlockEntity(BlockPos pos, BlockState state) {
 		super(ModBlockEntityType.ITEM_DISPLAY_TYPE.get(), pos, state);
 		this.items = NonNullList.withSize(27, ItemStack.EMPTY);
+		this.shelf = false;
+	}
+
+	public ItemDisplayBlockEntity(BlockPos pos, BlockState state, boolean s) {
+		super(ModBlockEntityType.ITEM_DISPLAY_TYPE.get(), pos, state);
+		this.items = NonNullList.withSize(27, ItemStack.EMPTY);
+		this.shelf = s;
 	}
 
 	public CompoundTag save(CompoundTag tag) {

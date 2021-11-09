@@ -140,6 +140,8 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DRAWER_CHEST.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CUPBOARD.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SHELF.get(), transparentRenderType);
+		// Holes in planters...
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.STONE_PLANTER.get(), transparentRenderType);
 
 		LOGGER.info("Block Render Types Registered.");
 
@@ -196,7 +198,7 @@ public final class ClientModEventSubscriber {
 				return NekoColors.getStoneColorOrLightGray(7);
 			return NekoColors.getStoneColorOrLightGray(state.getValue(DyeableBlock.COLOR));
 		}, ModBlocks.STONE_BASE_BOTTOM.get(), ModBlocks.STONE_FRAME_BOTTOM.get(), ModBlocks.STONE_PILLAR_BOTTOM.get(), ModBlocks.STONE_LAYERED.get(),
-				ModBlocks.STONE_POT.get());
+				ModBlocks.STONE_POT.get(), ModBlocks.STONE_PLANTER.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
 			if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
@@ -209,7 +211,7 @@ public final class ClientModEventSubscriber {
 				return NekoColors.getWoodenColorOrBrown(2);
 			return NekoColors.getWoodenColorOrBrown(state.getValue(DyeableBlock.COLOR));
 		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get(),
-				ModBlocks.CUPBOARD.get(), ModBlocks.SHELF.get(),
+				ModBlocks.CUPBOARD.get(), ModBlocks.SHELF.get(), ModBlocks.WALL_SHELF.get(),
 				ModBlocks.GLASS_TABLE.get(), ModBlocks.GLASS_ROUND_TABLE.get(), ModBlocks.ARM_CHAIR.get(),
 				ModBlocks.DRAWER.get(), ModBlocks.CABINET.get(), ModBlocks.DRAWER_CHEST.get());
 
@@ -277,7 +279,8 @@ public final class ClientModEventSubscriber {
 		ModBlocks.STONE_DORIC.get().asItem(), ModBlocks.STONE_IONIC.get().asItem(),
 		ModBlocks.STONE_CORINTHIAN.get().asItem(), ModBlocks.WINDOW_SILL.get().asItem(),
 		ModBlocks.WINDOW_TOP.get().asItem(), ModBlocks.WINDOW_FRAME.get().asItem(),
-		ModBlocks.STONE_LAYERED.get().asItem(), ModBlocks.STONE_POT.get().asItem());
+		ModBlocks.STONE_LAYERED.get().asItem(), ModBlocks.STONE_POT.get().asItem(),
+		ModBlocks.STONE_PLANTER.get().asItem());
 
 		// Default White:
 		event.getItemColors().register((stack, tintIndex) -> {
@@ -307,7 +310,7 @@ public final class ClientModEventSubscriber {
 		ModBlocks.WINDOW_SHADE.get().asItem(), ModBlocks.WINDOW_LANCET.get().asItem(),
 		ModBlocks.EASEL_MENU.get().asItem(), ModBlocks.EASEL_MENU_WHITE.get().asItem(),
 		ModBlocks.GLASS_TABLE.get().asItem(), ModBlocks.GLASS_ROUND_TABLE.get().asItem(),
-		ModBlocks.CUPBOARD.get().asItem(), ModBlocks.SHELF.get().asItem(),
+		ModBlocks.CUPBOARD.get().asItem(), ModBlocks.SHELF.get().asItem(), ModBlocks.WALL_SHELF.get().asItem(),
 		ModBlocks.ARM_CHAIR.get().asItem(), ModBlocks.DRAWER.get().asItem(),
 		ModBlocks.CABINET.get().asItem(), ModBlocks.DRAWER_CHEST.get().asItem());
 

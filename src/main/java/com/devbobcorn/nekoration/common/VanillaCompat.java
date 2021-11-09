@@ -149,6 +149,7 @@ public class VanillaCompat {
 			setFlammable.invoke(fire, ModBlocks.DRAWER_CHEST.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.CUPBOARD.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.SHELF.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.WALL_SHELF.get(), 5, 20);
 			// (Crimson / Warped not flammable)
 			// Windows...
 			setFlammable.invoke(fire, ModBlocks.WINDOW_SIMPLE.get(), 5, 20);

@@ -1,14 +1,11 @@
 package com.devbobcorn.nekoration.blocks;
 
-import java.util.Map;
-
 import com.devbobcorn.nekoration.NekoConfig;
 import com.devbobcorn.nekoration.NekoConfig.HorConnectionDir;
+import com.devbobcorn.nekoration.blocks.entities.ItemDisplayBlockEntity;
 import com.devbobcorn.nekoration.blocks.states.HorizontalConnection;
 import com.devbobcorn.nekoration.blocks.states.ModStateProperties;
 import com.devbobcorn.nekoration.common.VanillaCompat;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,76 +14,44 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
-	protected static Double thickness = 6.0D;
-
-	private static final Map<Direction, VoxelShape> AABBS = Maps
-			.newEnumMap(ImmutableMap.of(
-					Direction.NORTH, Block.box(0.0D, 0.0D, 16.0D - thickness, 16.0D, 16.0D, 16.0D),
-					Direction.SOUTH, Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, thickness), 
-					Direction.EAST, Block.box(0.0D, 0.0D, 0.0D, thickness, 16.0D, 16.0D),
-					Direction.WEST, Block.box(16.0D - thickness, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)));
-
-	public static final IntegerProperty COLOR = BlockStateProperties.LEVEL;
-
-	public enum ConnectionType {
-		DOUBLE, TRIPLE, BEAM;
-	}
-
+public class WallShelfBlock extends ItemDisplayBlock {
 	public static final EnumProperty<HorizontalConnection> CONNECTION  = ModStateProperties.HONRIZONTAL_CONNECTION;
 
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
-		s.add(COLOR, FACING, CONNECTION);
+		s.add(COLOR, FACING, CONNECTION, OPEN);
 	}
 
-	public final ConnectionType type;
-	public final boolean connectOtherVariant;
-
-	public DyeableHorizontalConnectBlock(Properties settings) {
+	public WallShelfBlock(Properties settings) {
 		super(settings);
-		type = ConnectionType.TRIPLE;
-		connectOtherVariant = false;
 		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
 	}
 
-	public DyeableHorizontalConnectBlock(Properties settings, ConnectionType tp, boolean co) {
-		super(settings);
-		type = tp;
-		connectOtherVariant = co;
-		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new ItemDisplayBlockEntity(pos, state, true);
 	}
 
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
-		return AABBS.get(state.getValue(FACING));
-	}
-
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
-			BlockHitResult hit) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack itemStack = player.getItemInHand(hand);
 
 		if (world.isClientSide) {
-			return (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) ? InteractionResult.SUCCESS
-					: InteractionResult.PASS;
+			return (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) ? InteractionResult.SUCCESS : super.use(state, world, pos, player, hand, hit);
 		}
 		
 		if (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) {
 			world.setBlock(pos, state.setValue(COLOR, VanillaCompat.COLOR_ITEMS.get(itemStack.getItem())), 3);
 			return InteractionResult.CONSUME;
 		}
-		return InteractionResult.PASS;
+		return super.use(state, world, pos, player, hand, hit);
 	}
 
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
@@ -101,46 +66,36 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 				getRightBlock(blockPos, ctx.getHorizontalDirection().getOpposite());
 			BlockState stateRef = blockView.getBlockState(blockPosRef);
 
-			boolean connect = stateRef.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOtherVariant || stateRef.getBlock() == this);
+			boolean connect = stateRef.getBlock() instanceof WallShelfBlock && stateRef.getBlock() == this;
 
 			if (!connect && config == HorConnectionDir.BOTH){ // Block on the left refuses to connect, try the right one
 				blockPosRef = getRightBlock(blockPos, ctx.getHorizontalDirection().getOpposite());
 				stateRef = blockView.getBlockState(blockPosRef);
-				connect = stateRef.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOtherVariant || stateRef.getBlock() == this);
+				connect = stateRef.getBlock() instanceof WallShelfBlock && stateRef.getBlock() == this;
 				useLeft = false;
 			}
 			if (connect) {
 				if (useLeft){
 					switch (stateRef.getValue(CONNECTION)) {
 						case S0:
-							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
 						case D0:
-							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
 						case T0:
 							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D1);
 						case D1:
-							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.DOUBLE ? HorizontalConnection.S0 : HorizontalConnection.T2);
 						case T1:
-							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T2);
 						case T2:
-							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.BEAM ? HorizontalConnection.T2 : HorizontalConnection.S0);
 						default:
 							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T2);
 						}
 				} else {
 					switch (stateRef.getValue(CONNECTION)) {
 						case S0:
-							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D0);
 						case D1:
-							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D0);
 						case T2:
 							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.D0);
 						case D0:
-							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.DOUBLE ? HorizontalConnection.S0 : HorizontalConnection.T0);
 						case T1:
-							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T0);
 						case T0:
-							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, type == ConnectionType.BEAM ? HorizontalConnection.T0 : HorizontalConnection.S0);
 						default:
 							return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(CONNECTION, HorizontalConnection.T0);
 					}
@@ -157,7 +112,7 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 		boolean flag2 = direction == getLeftDir(state.getValue(FACING)) && (config == HorConnectionDir.RIGHT2LEFT ||  config == HorConnectionDir.BOTH);
 
 		boolean connect = flag1 || flag2;
-		if (connect && newState.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOtherVariant || newState.getBlock() == this)) {
+		if (connect && newState.getBlock() instanceof WallShelfBlock) {
 			BlockState stateRef;
 			if (flag1){ // Block on the right is ...
 				stateRef = world.getBlockState(getLeftBlock(pos, state.getValue(FACING))); // Take the block on the left as an extra reference
@@ -165,7 +120,7 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 					case D1:
 						return res.setValue(CONNECTION, HorizontalConnection.D0);
 					case T1:
-						return res.setValue(CONNECTION, (type == ConnectionType.BEAM && stateRef.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOtherVariant || stateRef.getBlock() == this)) ? HorizontalConnection.T1 : HorizontalConnection.T0);
+						return res.setValue(CONNECTION, (stateRef.getBlock() instanceof WallShelfBlock) ? HorizontalConnection.T1 : HorizontalConnection.T0);
 					case T2:
 						return res.setValue(CONNECTION, HorizontalConnection.T1);
 					default:
@@ -177,7 +132,7 @@ public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
 					case D0:
 						return res.setValue(CONNECTION, HorizontalConnection.D1);
 					case T1:
-						return res.setValue(CONNECTION, (type == ConnectionType.BEAM && stateRef.getBlock() instanceof DyeableHorizontalConnectBlock && (connectOtherVariant || stateRef.getBlock() == this)) ? HorizontalConnection.T1 : HorizontalConnection.T2);
+						return res.setValue(CONNECTION, stateRef.getBlock() instanceof WallShelfBlock ? HorizontalConnection.T1 : HorizontalConnection.T2);
 					case T0:
 						return res.setValue(CONNECTION, HorizontalConnection.T1);
 					default:

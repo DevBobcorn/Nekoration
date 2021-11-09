@@ -78,7 +78,8 @@
     "block.nekoration.stone_layered": "%s叠层石壁",
     "block.nekoration.stone_pillar": "%s石柱",
     "block.nekoration.stone_pillar_bottom": "%s石柱底座",
-    "block.nekoration.stone_pot": "%s石质花盆",
+    "block.nekoration.stone_planter": "%s石质花盆",
+    "block.nekoration.stone_pot": "%s石质高脚花盆",
     "block.nekoration.wall_shelf": "%s墙架",
     "block.nekoration.warped_chair": "诡异木椅",
     "block.nekoration.warped_round_table": "诡异木圆桌",
@@ -134,6 +135,7 @@
     "decortype.furniture": "家具",
     "decortype.misc": "杂项",
     "decortype.planter": "花盆",
+    "entity.nekoration.electric_arc": "电弧",
     "entity.nekoration.painting": "画",
     "entity.nekoration.seat": "座位",
     "entity.nekoration.wallpaper": "墙纸",
@@ -188,9 +190,9 @@
     "item.nekoration.paw_right": "右移",
     "item.nekoration.paw_up": "上移",
     "item.nekoration.wallpaper": "%s墙纸",
-    "itemGroup.decor": "装饰",
-    "itemGroup.neko_tool": "工具",
-    "itemGroup.stone": "石质方块",
-    "itemGroup.window_n_door": "门窗",
-    "itemGroup.wooden": "木质方块"
+    "itemGroup.decor": "猫咪装饰 | 装饰",
+    "itemGroup.neko_tool": "猫咪装饰 | 工具",
+    "itemGroup.stone": "猫咪装饰 | 石质方块",
+    "itemGroup.window_n_door": "猫咪装饰 | 门窗",
+    "itemGroup.wooden": "猫咪装饰 | 木质方块"
 }

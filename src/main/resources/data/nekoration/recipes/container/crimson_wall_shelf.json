@@ -1,0 +1,22 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "##",
+        "1 "
+    ],
+    "key": {
+        "1": {
+            "item": "minecraft:stick"
+        },
+        "#": {
+            "item": "minecraft:crimson_pressure_plate"
+        }
+    },
+    "result": {
+        "item": "nekoration:wall_shelf",
+        "nbt": {
+            "color": 9
+        },
+        "count": 1
+    }
+}

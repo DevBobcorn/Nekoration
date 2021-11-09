@@ -27,7 +27,7 @@ public class EaselMenuRenderer implements BlockEntityRenderer<EaselMenuBlockEnti
 			stack.pushPose();
 			// Items on Front Side...
 			stack.translate(0.5D, 0.5D, 0.5D);
-			stack.mulPose(Vector3f.YP.rotationDegrees(3 - tileEntity.getBlockState().getValue(EaselMenuBlock.FACING).get2DDataValue() * 90.0F + rot * 180.0F));
+			stack.mulPose(Vector3f.YP.rotationDegrees(-tileEntity.getBlockState().getValue(EaselMenuBlock.FACING).get2DDataValue() * 90.0F + rot * 180.0F));
 			
 			float sc = 0.5F;
 			stack.scale(sc, sc, sc);
@@ -59,7 +59,7 @@ public class EaselMenuRenderer implements BlockEntityRenderer<EaselMenuBlockEnti
 			stack.pushPose();
 	
 			stack.translate(0.5D, 0.5D, 0.5D);
-			stack.mulPose(Vector3f.YP.rotationDegrees(3 - tileEntity.getBlockState().getValue(EaselMenuBlock.FACING).get2DDataValue() * 90.0F + rot * 180.0F));
+			stack.mulPose(Vector3f.YP.rotationDegrees(-tileEntity.getBlockState().getValue(EaselMenuBlock.FACING).get2DDataValue() * 90.0F + rot * 180.0F));
 			stack.translate(-0.3D, 0.4D, 0.08D);
 			stack.mulPose(Vector3f.XP.rotationDegrees(-22.5F));
 	

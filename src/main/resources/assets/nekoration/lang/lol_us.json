@@ -78,6 +78,7 @@
     "block.nekoration.stone_layered": "%s Layared Ztone",
     "block.nekoration.stone_pillar": "%s ztone pillaa",
     "block.nekoration.stone_pillar_bottom": "%s ztane pillar battum",
+    "block.nekoration.stone_planter": "%s stone plantor",
     "block.nekoration.stone_pot": "%s stone pot",
     "block.nekoration.wall_shelf": "%s wull shelf",
     "block.nekoration.warped_chair": "Warped chaor",
@@ -134,6 +135,7 @@
     "decortype.furniture": "Farnitare",
     "decortype.misc": "Mizcellaneuus",
     "decortype.planter": "Plunter",
+    "entity.nekoration.electric_arc": "Electric arc",
     "entity.nekoration.painting": "Puinteeng",
     "entity.nekoration.seat": "Seot",
     "entity.nekoration.wallpaper": "Wollpaper",
@@ -188,9 +190,9 @@
     "item.nekoration.paw_right": "Mave right",
     "item.nekoration.paw_up": "Move Up",
     "item.nekoration.wallpaper": "%s Wollpopor",
-    "itemGroup.decor": "Decuroshunz",
-    "itemGroup.neko_tool": "Neku touls",
-    "itemGroup.stone": "Stone blacks",
-    "itemGroup.window_n_door": "Windows & dourz",
-    "itemGroup.wooden": "Woaden blocks"
+    "itemGroup.decor": "Nekurashun | decurashunz",
+    "itemGroup.neko_tool": "Nekurashun | Tualz",
+    "itemGroup.stone": "Nekarateean | stone blockz",
+    "itemGroup.window_n_door": "Nekurushun | winduwz & duars",
+    "itemGroup.wooden": "Nekuuroshun | Wuaauden Blouckz"
 }

@@ -24,6 +24,7 @@ public class NekoStonecuttingRecipe extends StonecutterRecipe {
 			ModBlocks.STONE_IONIC.get().asItem());
 
 	private static final Ingredient NEKO_STONIES = Ingredient.of(ModBlocks.STONE_POT.get().asItem(),
+			ModBlocks.STONE_PLANTER.get().asItem(),
 			ModBlocks.WINDOW_TOP.get().asItem(), ModBlocks.WINDOW_SILL.get().asItem(),
 			ModBlocks.WINDOW_FRAME.get().asItem());
 

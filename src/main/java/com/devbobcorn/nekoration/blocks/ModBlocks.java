@@ -38,6 +38,7 @@ public final class ModBlocks {
     public static final RegistryObject<Block> WINDOW_FRAME = BLOCKS.register("window_frame", () -> new DyeableWindowFrameBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion()));
 
     public static final RegistryObject<Block> STONE_POT = BLOCKS.register("stone_pot", () -> new PotBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), 6.0D));
+    public static final RegistryObject<Block> STONE_PLANTER = BLOCKS.register("stone_planter", () -> new PotBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F).noOcclusion(), 8.0D));
 
     public static final RegistryObject<Block> HALF_TIMBER_P0 = BLOCKS.register("half_timber_p0", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F)));
     public static final RegistryObject<Block> HALF_TIMBER_P1 = BLOCKS.register("half_timber_p1", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F)));
@@ -130,6 +131,7 @@ public final class ModBlocks {
 
     public static final RegistryObject<Block> CUPBOARD = BLOCKS.register("cupboard", () -> new CupboardBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> SHELF = BLOCKS.register("shelf", () -> new CupboardBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> WALL_SHELF = BLOCKS.register("wall_shelf", () -> new WallShelfBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
 
 	public static ToIntFunction<BlockState> candleHolderEmission(int lightlevel) {
 		return (state) -> {

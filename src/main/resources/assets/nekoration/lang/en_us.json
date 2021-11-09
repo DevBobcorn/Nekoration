@@ -78,6 +78,7 @@
     "block.nekoration.stone_layered": "%s Layered Stone",
     "block.nekoration.stone_pillar": "%s Stone Pillar",
     "block.nekoration.stone_pillar_bottom": "%s Stone Pillar Bottom",
+    "block.nekoration.stone_planter": "%s Stone Planter",
     "block.nekoration.stone_pot": "%s Stone Pot",
     "block.nekoration.wall_shelf": "%s Wall Shelf",
     "block.nekoration.warped_chair": "Warped Chair",
@@ -134,6 +135,7 @@
     "decortype.furniture": "Furniture",
     "decortype.misc": "Miscellaneous",
     "decortype.planter": "Planter",
+    "entity.nekoration.electric_arc": "Electric Arc",
     "entity.nekoration.painting": "Painting",
     "entity.nekoration.seat": "Seat",
     "entity.nekoration.wallpaper": "Wallpaper",
@@ -188,9 +190,9 @@
     "item.nekoration.paw_right": "Move Right",
     "item.nekoration.paw_up": "Move Up",
     "item.nekoration.wallpaper": "%s Wallpaper",
-    "itemGroup.decor": "Decorations",
-    "itemGroup.neko_tool": "Neko Tools",
-    "itemGroup.stone": "Stone Blocks",
-    "itemGroup.window_n_door": "Windows & Doors",
-    "itemGroup.wooden": "Wooden Blocks"
+    "itemGroup.decor": "Nekoration | Decorations",
+    "itemGroup.neko_tool": "Nekoration | Tools",
+    "itemGroup.stone": "Nekoration | Stone Blocks",
+    "itemGroup.window_n_door": "Nekoration | Windows & Doors",
+    "itemGroup.wooden": "Nekoration | Wooden Blocks"
 }

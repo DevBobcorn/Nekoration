@@ -17,9 +17,9 @@ round_table_cn = "圆桌"
 decortypes = ["planter","awning","furniture","container","misc"]
 decortypes_us = ["Planter","Awning","Furniture","Container","Miscellaneous"]
 decortypes_cn = ["花盆","雨篷","家具","收纳","杂项"]
-stones = ["stone_base","stone_base_bottom","stone_frame","stone_frame_bottom","stone_pillar","stone_pillar_bottom","stone_doric","stone_ionic","stone_corinthian","stone_layered","stone_pot"]
-stones_us = ["Stone Base","Stone Base Bottom","Stone Frame","Stone Frame Bottom","Stone Pillar","Stone Pillar Bottom","Doric Stone Pillar","Ionic Stone Pillar","Corinthian Stone Pillar","Layered Stone","Stone Pot"]
-stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底座","多立克石柱","爱奥尼石柱","科林斯石柱","叠层石壁","石质花盆"]
+stones = ["stone_base","stone_base_bottom","stone_frame","stone_frame_bottom","stone_pillar","stone_pillar_bottom","stone_doric","stone_ionic","stone_corinthian","stone_layered","stone_pot","stone_planter"]
+stones_us = ["Stone Base","Stone Base Bottom","Stone Frame","Stone Frame Bottom","Stone Pillar","Stone Pillar Bottom","Doric Stone Pillar","Ionic Stone Pillar","Corinthian Stone Pillar","Layered Stone","Stone Pot","Stone Planter"]
+stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底座","多立克石柱","爱奥尼石柱","科林斯石柱","叠层石壁","石质高脚花盆","石质花盆"]
 half_timbers = ["half_timber_p0","half_timber_p1","half_timber_p2","half_timber_p3","half_timber_p4","half_timber_p5","half_timber_p6","half_timber_p7","half_timber_p8","half_timber_p9","half_timber_pillar_p0","half_timber_pillar_p1","half_timber_pillar_p2"]
 half_timbers_us = ["%s Half Timber","Slash %s Half Timber","Backslash %s Half Timber","Bi-Slash %s Half Timber","Bi-Backslash %s Half Timber","Center %s Half Timber","Cross %s Half Timber","Diamond %s Half Timber","Checkered %s Half Timber","Double %s Half Timber","%s Half Timber Pillar","Slash %s Half Timber Pillar","Backslash %s Half Timber Pillar"]
 half_timbers_cn = ["%s半露木","斜纹%s半露木","反斜纹%s半露木","双斜纹%s半露木","双反斜纹%s半露木","中心%s半露木","十字%s半露木","菱形%s半露木","方格%s半露木","双格%s半露木","%s半露木柱","斜纹%s半露木柱","反斜纹%s半露木柱"]
@@ -42,7 +42,7 @@ miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Ho
 miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","留声机[WIP]","自定义方块","棱镜台[WIP]"]
 
 tabs = ["stone","wooden","window_n_door","decor","neko_tool"]
-tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Decorations","Neko Tools"]
+tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Decorations","Tools"]
 tabs_cn = ["石质方块","木质方块","门窗","装饰","工具"]
 
 guis = ["button.scroll_up","button.scroll_down","button.enable_all","button.disable_all","button.save_painting","button.save_painting_content","button.load_image","button.clear","paint.tool_param0","paint.tool_param1","paint.tool_param2","paint.tool_param3","message.scroll_change",
@@ -58,9 +58,9 @@ guis_cn = ["向上","向下","选中所有","清除所有","保存绘画","保�
            "可按下%s键查看颜色信息","颜色：%s 红：%s 绿：%s 蓝：%s","可按下%s键查看调试信息","可按下%s键撤销/重做","可按下%s键切换工具","可按下%s键显示颜色选择器","可按下%s键隐藏颜色选择器","可按下%s键切换网格尺寸","此大小的绘画信息无法存入单个物品","请使用链接画复制或移动","尺寸:  %sx%s",
            "启用发光文本","禁用发光文本","圆形画刷","方形画刷","叠加透明度","覆盖透明度"]
 
-etts = ["painting","wallpaper","seat"]
-etts_us = ["Painting","Wallpaper","Seat"]
-etts_cn = ["画","墙纸","座位"]
+etts = ["painting","wallpaper","seat","electric_arc"]
+etts_us = ["Painting","Wallpaper","Seat","Electric Arc"]
+etts_cn = ["画","墙纸","座位","电弧"]
 
 
 def getEnNameMine(instr):
@@ -171,8 +171,8 @@ for itm in range(0, len(items)):
 
 # [TAB NAME]
 for tab in range(0, len(tabs)):
-    obj_us['itemGroup.' + tabs[tab]] = tabs_us[tab]
-    obj_cn['itemGroup.' + tabs[tab]] = tabs_cn[tab]
+    obj_us['itemGroup.' + tabs[tab]] = "Nekoration | " + tabs_us[tab]
+    obj_cn['itemGroup.' + tabs[tab]] = "猫咪装饰 | " + tabs_cn[tab]
 
 # [GUI]
 for gui in range(0, len(guis)):
