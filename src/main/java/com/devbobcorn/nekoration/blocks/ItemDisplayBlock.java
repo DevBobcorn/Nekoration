@@ -6,8 +6,6 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.devbobcorn.nekoration.blocks.entities.ItemDisplayBlockEntity;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,14 +35,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ItemDisplayBlock extends DyeableHorizontalWoodenBlock implements EntityBlock {
-	protected static Double thickness = 9.0D;
-
-	private static final Map<Direction, VoxelShape> AABBS = Maps
-			.newEnumMap(ImmutableMap.of(
-					Direction.NORTH, Block.box(0.0D, 0.0D, 16.0D - thickness, 16.0D, 16.0D, 16.0D),
-					Direction.SOUTH, Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, thickness), 
-					Direction.EAST, Block.box(0.0D, 0.0D, 0.0D, thickness, 16.0D, 16.0D),
-					Direction.WEST, Block.box(16.0D - thickness, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)));
+	private static final Map<Direction, VoxelShape> AABBs = getAABBs(9.0D);
 
 	public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
 
@@ -63,7 +54,7 @@ public class ItemDisplayBlock extends DyeableHorizontalWoodenBlock implements En
 	}
 
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
-		return AABBS.get(state.getValue(FACING));
+		return AABBs.get(state.getValue(FACING));
 	}
 
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {

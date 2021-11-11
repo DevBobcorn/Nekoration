@@ -9,8 +9,6 @@ import com.devbobcorn.nekoration.blocks.states.FramePart;
 import com.devbobcorn.nekoration.blocks.states.HorizontalConnection;
 import com.devbobcorn.nekoration.blocks.states.ModStateProperties;
 import com.devbobcorn.nekoration.common.VanillaCompat;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,12 +36,7 @@ import net.minecraftforge.common.Tags;
 public class DyeableWindowFrameBlock extends DyeableHorizontalBlock {
 	protected static Double thickness = 6.0D;
 
-	private static final Map<Direction, VoxelShape> AABBS = Maps
-		.newEnumMap(ImmutableMap.of(
-			Direction.NORTH, Block.box(0.0D, 0.0D, 16.0D - thickness, 16.0D, 16.0D, 16.0D),
-			Direction.SOUTH, Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, thickness), 
-			Direction.EAST, Block.box(0.0D, 0.0D, 0.0D, thickness, 16.0D, 16.0D),
-			Direction.WEST, Block.box(16.0D - thickness, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)));
+	private static final Map<Direction, VoxelShape> AABBs = getAABBs(4.0D);
 
 	public static final IntegerProperty COLOR = BlockStateProperties.LEVEL;
 
@@ -64,7 +57,7 @@ public class DyeableWindowFrameBlock extends DyeableHorizontalBlock {
 	}
 
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
-		return AABBS.get(state.getValue(FACING));
+		return AABBs.get(state.getValue(FACING));
 	}
 
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,

@@ -1,5 +1,7 @@
 package com.devbobcorn.nekoration.blocks;
 
+import java.util.Map;
+
 import com.devbobcorn.nekoration.NekoConfig;
 import com.devbobcorn.nekoration.NekoConfig.HorConnectionDir;
 import com.devbobcorn.nekoration.blocks.entities.ItemDisplayBlockEntity;
@@ -14,6 +16,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -22,8 +25,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class WallShelfBlock extends ItemDisplayBlock {
+	private static final Map<Direction, VoxelShape> AABBs = getAABBs(6.0D);
+	
 	public static final EnumProperty<HorizontalConnection> CONNECTION  = ModStateProperties.HONRIZONTAL_CONNECTION;
 
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
@@ -38,6 +45,10 @@ public class WallShelfBlock extends ItemDisplayBlock {
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return new ItemDisplayBlockEntity(pos, state, true);
+	}
+
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
+		return AABBs.get(state.getValue(FACING));
 	}
 
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
