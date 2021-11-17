@@ -15,6 +15,9 @@
     },
     "result": {
         "item": "nekoration:candle_holder_gold",
+        "nbt": {
+            "color": 14
+        },
         "count": 3
     }
 }

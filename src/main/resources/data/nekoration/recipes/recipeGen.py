@@ -48,6 +48,7 @@ drawerChestRecipe = [ "###","#0#","#0#" ]
 
 shelfRecipe = [ "###","#1 ","###" ]
 cupboardRecipe = [ "###","#10","###" ]
+wallShelfRecipe = [ "##","1 " ]
 
 def getVanilla(itemId):
     return { "item": "minecraft:" + itemId }
@@ -91,18 +92,9 @@ if True: # Neko Shaped / Vanilla Shaped
 
     with open("template_crafting.txt", "r+") as template:
         recipeObj = json.loads(template.read())
-        # Neko Shaped
-        # half-timber
-        recipeObj['type'] = "nekoration:neko_crafting_shaped"
-        recipeObj['key']['1'] = getVanilla("stick")
-        recipeObj['key']['0'] = { "item" : "nekoration:half_timber_p0" }
-        for style in range(1, len(halfTimberRecipes)):
-            recipeObj['pattern'] = halfTimberRecipes[style]
-            recipeObj['result'] = getHalfTimberResult(style)
-            with open("half_timber/p" + str(style) + ".json", "w+") as f:
-                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
-
+        # Neko Shaped ==============================================================================
         # half-timber base
+        recipeObj['key']['1'] = getVanilla("stick")
         recipeObj['key']['P'] = getVanilla("paper")
         recipeObj['pattern'] = halfTimberRecipes[0]
         for wood in range(0, len(woods)):
@@ -111,32 +103,29 @@ if True: # Neko Shaped / Vanilla Shaped
             with open("half_timber/" + woods[wood] + "_p0.json", "w+") as f:
                 f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
 
-        # half-timber pillar
-        recipeObj['key'].clear()
-        recipeObj['pattern'] = pillarRecipe
-        for i in range(0, 3):
-            recipeObj['key']['#'] = { "item" : "nekoration:half_timber_p" + str(i) }
-            recipeObj['result'] = { "item" : "nekoration:half_timber_pillar_p" + str(i), "count": 3 }
-            with open("half_timber/pillar_p" + str(i) + ".json", "w+") as f:
-                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
-
-        # window
-        recipeObj['key'].clear()
-        recipeObj['key']['0'] = { "item" : "nekoration:window_simple" }
-        recipeObj['key']['1'] = getVanilla("stick")
-        for style in range(1, len(windowRecipes)):
-            recipeObj['pattern'] = windowRecipes[style]
-            recipeObj['result'] = getBlockResult("window", windows[style], 1)
-            with open("window/window_" + windows[style] + ".json", "w+") as f:
-                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
-
         # window base
+        recipeObj['key'].clear()
         recipeObj['pattern'] = windowRecipes[0]
         recipeObj['key']['#'] = getVanilla("glass")
+        recipeObj['key']['1'] = getVanilla("stick")
         for wood in range(0, len(woods)):
             recipeObj['key']['0'] = getVanilla(woods[wood] + "_planks")
             recipeObj['result'] = getBlockNBTResult("window", windows[0], wdids[wood], 4)
             with open("window/" + woods[wood] + "_window.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+
+        # easel menu
+        recipeObj['key'].clear()
+        recipeObj['pattern'] = easelMenuRecipe
+        for wood in range(0, len(woods)):
+            recipeObj['key']['#'] = getVanilla(woods[wood] + "_planks")
+            recipeObj['key']['0'] = getVanilla("black_concrete")
+            recipeObj['result'] = getBlockNBTResult("easel_menu", "", wdids[wood], 4)
+            with open("decor/" + woods[wood] + "_easel_menu.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+            recipeObj['key']['0'] = getVanilla("white_concrete")
+            recipeObj['result'] = getBlockNBTResult("easel_menu","white", wdids[wood], 4)
+            with open("decor/" + woods[wood] + "_easel_menu_white.json", "w+") as f:
                 f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
 
         # colorful awning
@@ -153,20 +142,6 @@ if True: # Neko Shaped / Vanilla Shaped
             recipeObj['key']['#'] = getVanilla(colors[col] + "_wool")
             recipeObj['result'] = getBlockNBTResult("awning", "pure_short", col, 3)
             with open("decor/" + colors[col] + "_awning_pure_short.json", "w+") as f:
-                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
-
-        # easel menu
-        recipeObj['key'].clear()
-        recipeObj['pattern'] = easelMenuRecipe
-        for wood in range(0, len(woods)):
-            recipeObj['key']['#'] = getVanilla(woods[wood] + "_planks")
-            recipeObj['key']['0'] = getVanilla("black_concrete")
-            recipeObj['result'] = getBlockNBTResult("easel_menu", "", wdids[wood], 4)
-            with open("decor/" + woods[wood] + "_easel_menu.json", "w+") as f:
-                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
-            recipeObj['key']['0'] = getVanilla("white_concrete")
-            recipeObj['result'] = getBlockNBTResult("easel_menu","white", wdids[wood], 4)
-            with open("decor/" + woods[wood] + "_easel_menu_white.json", "w+") as f:
                 f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
 
         # arm chair
@@ -216,7 +191,7 @@ if True: # Neko Shaped / Vanilla Shaped
         for wood in range(0, len(woods)):
             recipeObj['key']['#'] = getVanilla(woods[wood] + "_planks")
             recipeObj['key']['1'] = getVanilla(woods[wood] + "_pressure_plate")
-            recipeObj['key']['0'] = getVanilla("glass")
+            recipeObj['key']['0'] = getVanilla("glass_pane")
             recipeObj['pattern'] = cupboardRecipe
             recipeObj['result'] = getBlockNBTResult("cupboard", "", wdids[wood], 1)
             with open("container/" + woods[wood] + "_cupboard.json", "w+") as f:
@@ -227,10 +202,53 @@ if True: # Neko Shaped / Vanilla Shaped
             with open("container/" + woods[wood] + "_shelf.json", "w+") as f:
                 f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
 
-        # Vanilla Shaped
-        recipeObj['type'] = "minecraft:crafting_shaped"
+        # wall_shelf
         recipeObj['key'].clear()
+        recipeObj['pattern'] = wallShelfRecipe
+        recipeObj['key']['1'] = getVanilla("stick")
+        for wood in range(0, len(woods)):
+            recipeObj['key']['#'] = getVanilla(woods[wood] + "_pressure_plate")
+            recipeObj['result'] = getBlockNBTResult("wall_shelf", "", wdids[wood], 1)
+            with open("container/" + woods[wood] + "_wall_shelf.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+
+        # Color Inherit ============================================================================
+        recipeObj['type'] = "nekoration:neko_color_inherit"
+        
+        # half-timber
+        recipeObj['key'].clear()
+        recipeObj['key']['1'] = getVanilla("stick")
+        recipeObj['key']['0'] = { "item" : "nekoration:half_timber_p0" }
+        for style in range(1, len(halfTimberRecipes)):
+            recipeObj['pattern'] = halfTimberRecipes[style]
+            recipeObj['result'] = getHalfTimberResult(style)
+            with open("half_timber/p" + str(style) + ".json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+
+        # half-timber pillar
+        recipeObj['key'].clear()
+        recipeObj['pattern'] = pillarRecipe
+        for i in range(0, 3):
+            recipeObj['key']['#'] = { "item" : "nekoration:half_timber_p" + str(i) }
+            recipeObj['result'] = { "item" : "nekoration:half_timber_pillar_p" + str(i), "count": 3 }
+            with open("half_timber/pillar_p" + str(i) + ".json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+
+        # window
+        recipeObj['key'].clear()
+        recipeObj['key']['0'] = { "item" : "nekoration:window_simple" }
+        recipeObj['key']['1'] = getVanilla("stick")
+        for style in range(1, len(windowRecipes)):
+            recipeObj['pattern'] = windowRecipes[style]
+            recipeObj['result'] = getBlockResult("window", windows[style], 1)
+            with open("window/window_" + windows[style] + ".json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+
+        # Vanilla Shaped ===========================================================================
+        recipeObj['type'] = "minecraft:crafting_shaped"
+        
         # funiture
+        recipeObj['key'].clear()
         for wood in range(0, len(woods)):
             recipeObj['key']['#'] = getVanilla(woods[wood] + "_planks")
             recipeObj['pattern'] = chairRecipe
@@ -250,7 +268,7 @@ if True: # Neko Shaped / Vanilla Shaped
 
 if False: # Stonecutting
     stones = ["layered","base","base_bottom","frame","frame_bottom","pillar","pillar_bottom","doric","corinthian","ionic"]
-    decors = ["window_sill","window_top","window_frame","stone_pot"]
+    decors = ["window_sill","window_top","window_frame","stone_pot","stone_planter"]
 
     with open("template_stonecutting.txt", "r+") as template:
         recipeObj = json.loads(template.read())

@@ -1,14 +1,12 @@
 package com.devbobcorn.nekoration.recipes;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.devbobcorn.nekoration.NekoColors.EnumNekoColor;
-import com.devbobcorn.nekoration.blocks.ModBlocks;
-import com.devbobcorn.nekoration.items.DyeableBlockItem;
-import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
-import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -24,32 +22,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class NekoShapedRecipe extends CustomRecipe
-		implements net.minecraftforge.common.crafting.IShapedRecipe<CraftingContainer> {
-	private static final Ingredient VANILLA_FLAVOR = Ingredient.of(Items.HONEYCOMB);
-
-	private static final Ingredient HALF_TIMBERS = Ingredient.of(ModBlocks.HALF_TIMBER_P0.get().asItem(),
-			ModBlocks.HALF_TIMBER_P1.get().asItem(), ModBlocks.HALF_TIMBER_P2.get().asItem(),
-			ModBlocks.HALF_TIMBER_P3.get().asItem(), ModBlocks.HALF_TIMBER_P4.get().asItem(),
-			ModBlocks.HALF_TIMBER_P5.get().asItem(), ModBlocks.HALF_TIMBER_P6.get().asItem(),
-			ModBlocks.HALF_TIMBER_P7.get().asItem(), ModBlocks.HALF_TIMBER_P8.get().asItem(),
-			ModBlocks.HALF_TIMBER_P9.get().asItem(), ModBlocks.HALF_TIMBER_PILLAR_P0.get().asItem(),
-			ModBlocks.HALF_TIMBER_PILLAR_P1.get().asItem(), ModBlocks.HALF_TIMBER_PILLAR_P2.get().asItem());
-
-	private static final Ingredient WOODEN = Ingredient.of(ModBlocks.WINDOW_SIMPLE.get().asItem(),
-			ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
-			ModBlocks.WINDOW_LANCET.get().asItem(), ModBlocks.WINDOW_SHADE.get().asItem());	
-
-	private static final Ingredient DYEABLES = Ingredient.of(
-			ModBlocks.AWNING_PURE.get().asItem(), ModBlocks.AWNING_PURE_SHORT.get().asItem(),
-			ModBlocks.AWNING_STRIPE.get().asItem(), ModBlocks.AWNING_STRIPE_SHORT.get().asItem());	
-	
+// This type of shaped crafting recipe is used in Nekoration to get result items with NBT,
+// which is not supported in vanilla recipes.
+public class NekoShapedRecipe extends CustomRecipe implements net.minecraftforge.common.crafting.IShapedRecipe<CraftingContainer> {
 	static int MAX_WIDTH = 3;
 	static int MAX_HEIGHT = 3;
 
@@ -76,8 +57,7 @@ public class NekoShapedRecipe extends CustomRecipe
 	private final ItemStack result;
 	private final String group;
 
-	public NekoShapedRecipe(ResourceLocation id, String group, int w, int h,
-			NonNullList<Ingredient> in, ItemStack out) {
+	public NekoShapedRecipe(ResourceLocation id, String group, int w, int h, NonNullList<Ingredient> in, ItemStack out) {
 		super(id);
 		this.group = group;
 		this.width = w;
@@ -109,12 +89,9 @@ public class NekoShapedRecipe extends CustomRecipe
 	public boolean matches(CraftingContainer inv, Level world) {
 		for (int i = 0; i <= inv.getWidth() - this.width; ++i) {
 			for (int j = 0; j <= inv.getHeight() - this.height; ++j) {
-				// Disable Mirrored Recipes for Half-Timber Blocks
-				if (!HALF_TIMBERS.test(this.result))
-					if (this.matches(inv, i, j, true)) {
-						return true;
-					}
-
+				if (this.matches(inv, i, j, true)) {
+					return true;
+				}
 				if (this.matches(inv, i, j, false)) {
 					return true;
 				}
@@ -148,40 +125,7 @@ public class NekoShapedRecipe extends CustomRecipe
 	}
 
 	public ItemStack assemble(CraftingContainer inv) {
-		ItemStack finalResult = this.result.copy();
-
-		// Half-Timber Color Inheritance
-		if (HALF_TIMBERS.test(finalResult))
-			for (int i = 0; i < inv.getContainerSize(); ++i) { // Go through every item in the crafting grid
-				ItemStack cur = inv.getItem(i);
-				if (HALF_TIMBERS.test(cur)) {
-					HalfTimberBlockItem.setColor0(finalResult, HalfTimberBlockItem.getColor0(cur));
-					HalfTimberBlockItem.setColor1(finalResult, HalfTimberBlockItem.getColor1(cur));
-					break;
-				}
-			}
-		// Wooden Dyeable Color Inheritance
-		else if (WOODEN.test(finalResult))
-			for (int i = 0; i < inv.getContainerSize(); ++i) { // Go through every item in the crafting grid
-				ItemStack cur = inv.getItem(i);
-				if (WOODEN.test(cur)) {
-					DyeableWoodenBlockItem.setColor(finalResult, DyeableWoodenBlockItem.getColor(cur));
-					break;
-				}
-			}
-		// Dyeable Color Inheritance
-		else if (DYEABLES.test(finalResult))
-			for (int i = 0; i < inv.getContainerSize(); ++i) { // Go through every item in the crafting grid
-				ItemStack cur = inv.getItem(i);
-				if (DYEABLES.test(cur)) {
-					DyeableBlockItem.setColor(finalResult, DyeableBlockItem.getColor(cur));
-					break;
-				} else if (VANILLA_FLAVOR.test(cur)) {
-					DyeableBlockItem.setColor(finalResult, EnumNekoColor.WHITE);
-					break;
-				}
-			}
-		return finalResult;
+		return this.result.copy();
 	}
 
 	public int getWidth() {
@@ -202,8 +146,7 @@ public class NekoShapedRecipe extends CustomRecipe
 		return getHeight();
 	}
 
-	private static NonNullList<Ingredient> dissolvePattern(String[] pattern, Map<String, Ingredient> ingredients,
-			int width, int height) {
+	private static NonNullList<Ingredient> dissolvePattern(String[] pattern, Map<String, Ingredient> ingredients, int width, int height) {
 		NonNullList<Ingredient> nonnulllist = NonNullList.withSize(width * height, Ingredient.EMPTY);
 		Set<String> set = Sets.newHashSet(ingredients.keySet());
 		set.remove(" ");
@@ -213,10 +156,8 @@ public class NekoShapedRecipe extends CustomRecipe
 				String s = pattern[i].substring(j, j + 1);
 				Ingredient ingredient = ingredients.get(s);
 				if (ingredient == null) {
-					throw new JsonSyntaxException(
-							"Pattern references symbol '" + s + "' but it's not defined in the key");
+					throw new JsonSyntaxException("Pattern references symbol '" + s + "' but it's not defined in the key");
 				}
-
 				set.remove(s);
 				nonnulllist.set(j + width * i, ingredient);
 			}
@@ -245,13 +186,11 @@ public class NekoShapedRecipe extends CustomRecipe
 				if (k == i1) {
 					++k;
 				}
-
 				++l;
 			} else {
 				l = 0;
 			}
 		}
-
 		if (recipe.length == l) {
 			return new String[0];
 		} else {
@@ -260,7 +199,6 @@ public class NekoShapedRecipe extends CustomRecipe
 			for (int k1 = 0; k1 < astring.length; ++k1) {
 				astring[k1] = recipe[k1 + k].substring(i, j + 1);
 			}
-
 			return astring;
 		}
 	}
@@ -269,7 +207,6 @@ public class NekoShapedRecipe extends CustomRecipe
 		int i;
 		for (i = 0; i < line.length() && line.charAt(i) == ' '; ++i) {
 		}
-
 		return i;
 	}
 
@@ -277,7 +214,6 @@ public class NekoShapedRecipe extends CustomRecipe
 		int i;
 		for (i = line.length() - 1; i >= 0 && line.charAt(i) == ' '; --i) {
 		}
-
 		return i;
 	}
 
@@ -293,14 +229,11 @@ public class NekoShapedRecipe extends CustomRecipe
 				if (s.length() > MAX_WIDTH) {
 					throw new JsonSyntaxException("Invalid pattern: too many columns, " + MAX_WIDTH + " is maximum");
 				}
-
 				if (i > 0 && astring[0].length() != s.length()) {
 					throw new JsonSyntaxException("Invalid pattern: each row must be the same width");
 				}
-
 				astring[i] = s;
 			}
-
 			return astring;
 		}
 	}
@@ -310,17 +243,13 @@ public class NekoShapedRecipe extends CustomRecipe
 
 		for (Entry<String, JsonElement> entry : obj.entrySet()) {
 			if (entry.getKey().length() != 1) {
-				throw new JsonSyntaxException("Invalid key entry: '" + (String) entry.getKey()
-						+ "' is an invalid symbol (must be 1 character only).");
+				throw new JsonSyntaxException("Invalid key entry: '" + (String) entry.getKey() + "' is an invalid symbol (must be 1 character only).");
 			}
-
 			if (" ".equals(entry.getKey())) {
 				throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
 			}
-
 			map.put(entry.getKey(), Ingredient.fromJson(entry.getValue()));
 		}
-
 		map.put(" ", Ingredient.EMPTY);
 		return map;
 	}
@@ -333,8 +262,7 @@ public class NekoShapedRecipe extends CustomRecipe
 		}
 	}
 
-	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>>
-			implements RecipeSerializer<NekoShapedRecipe> {
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<NekoShapedRecipe> {
 		public NekoShapedRecipe fromJson(ResourceLocation id, JsonObject json) {
 			String s = GsonHelper.getAsString(json, "group", "");
 			Map<String, Ingredient> ingredientKeys = NekoShapedRecipe
@@ -357,7 +285,6 @@ public class NekoShapedRecipe extends CustomRecipe
 			for (int k = 0; k < nonnulllist.size(); ++k) {
 				nonnulllist.set(k, Ingredient.fromNetwork(packet));
 			}
-
 			ItemStack itemstack = packet.readItem();
 			return new NekoShapedRecipe(id, s, i, j, nonnulllist, itemstack);
 		}
@@ -370,8 +297,26 @@ public class NekoShapedRecipe extends CustomRecipe
 			for (Ingredient ingredient : recipe.recipeItems) {
 				ingredient.toNetwork(packet);
 			}
-
 			packet.writeItem(recipe.result);
 		}
+	}
+
+	// JEI Support
+	public List<List<ItemStack>> getInputs(){
+		List<List<ItemStack>> slots = new ArrayList<>();
+		for (Ingredient ingredient : this.recipeItems){ // For each slot...
+			List<ItemStack> variants = new ArrayList<>();
+			for (ItemStack ingrediantStack : ingredient.getItems()){ // For each possible item in this slot...
+				variants.add(ingrediantStack.copy());
+			}
+			slots.add(variants);
+		}
+		return slots;
+	}
+
+	public List<List<ItemStack>> getOutputs(){
+		List<ItemStack> variants = new ArrayList<>();
+		variants.add(this.result.copy());
+		return Arrays.asList(variants);
 	}
 }

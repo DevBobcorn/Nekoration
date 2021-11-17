@@ -6,14 +6,14 @@
         "010"
     ],
     "key": {
-        "0": {
-            "item": "minecraft:spruce_planks"
+        "#": {
+            "item": "minecraft:glass"
         },
         "1": {
             "item": "minecraft:stick"
         },
-        "#": {
-            "item": "minecraft:glass"
+        "0": {
+            "item": "minecraft:spruce_planks"
         }
     },
     "result": {

@@ -9,11 +9,11 @@
         "1": {
             "item": "minecraft:stick"
         },
-        "0": {
-            "item": "minecraft:birch_planks"
-        },
         "P": {
             "item": "minecraft:paper"
+        },
+        "0": {
+            "item": "minecraft:birch_planks"
         }
     },
     "result": {
