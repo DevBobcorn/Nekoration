@@ -17,3 +17,9 @@ Many blocks in Nekoration supports model auto connecting, to name a few, Half-Ti
 
 #### Painting
 Painting is a feature under development with which you can draw your OWN paintings! You can easily pick colors with a palette item, and enjoy creating your art work on a custom painting!
+
+#### Wallpaper
+With Nekoration, you can turn any Banner into Wallpaper with exactly the same pattern, just the way you make Shields from Banners. Then you can place it on any wall surface(several pieces of wallpaper can fit into a 1x1x1 space, so don't worry about room corners).
+
+#### Neko Brochure
+Once you install the mod with Patchouli, you'll find a red brochure in 'Neko Tools' tab, which introduces all aspects of Nekoration, like recipes and mechanics. The book is still being written, and will be of more use as the mod updates.
