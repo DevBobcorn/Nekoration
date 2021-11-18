@@ -1,4 +1,4 @@
-package com.devbobcorn.nekoration.jei;
+package com.devbobcorn.nekoration.client.jei;
 
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.ModBlocks;

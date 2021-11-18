@@ -1,4 +1,4 @@
-package com.devbobcorn.nekoration.jei;
+package com.devbobcorn.nekoration.client.jei;
 
 import javax.annotation.Nullable;
 
