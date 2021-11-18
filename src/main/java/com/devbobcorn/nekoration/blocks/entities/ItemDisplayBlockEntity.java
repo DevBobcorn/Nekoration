@@ -36,16 +36,19 @@ public class ItemDisplayBlockEntity extends RandomizableContainerBlockEntity {
 	private final ItemStack airStack = ItemStack.EMPTY;
 	public ItemStack[] renderItems = { airStack, airStack, airStack, airStack };
 
-	public final boolean shelf;
+	public final boolean wallShelf;
+	public final boolean playSound;
 
     private ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level world, BlockPos pos, BlockState state) {
-            ItemDisplayBlockEntity.this.playSound(state, SoundEvents.BARREL_OPEN);
+			if (playSound)
+            	ItemDisplayBlockEntity.this.playSound(state, SoundEvents.BARREL_OPEN);
             ItemDisplayBlockEntity.this.updateBlockState(state, true);
         }
 
         protected void onClose(Level world, BlockPos pos, BlockState state) {
-            ItemDisplayBlockEntity.this.playSound(state, SoundEvents.BARREL_CLOSE);
+            if (playSound)
+				ItemDisplayBlockEntity.this.playSound(state, SoundEvents.BARREL_CLOSE);
             ItemDisplayBlockEntity.this.updateBlockState(state, false);
 			ItemStack[] its = { airStack, airStack, airStack, airStack };
 			// Find out the 4 items to display...
@@ -80,13 +83,15 @@ public class ItemDisplayBlockEntity extends RandomizableContainerBlockEntity {
 	public ItemDisplayBlockEntity(BlockPos pos, BlockState state) {
 		super(ModBlockEntityType.ITEM_DISPLAY_TYPE.get(), pos, state);
 		this.items = NonNullList.withSize(27, ItemStack.EMPTY);
-		this.shelf = false;
+		this.wallShelf = false;
+		this.playSound = true;
 	}
 
-	public ItemDisplayBlockEntity(BlockPos pos, BlockState state, boolean s) {
+	public ItemDisplayBlockEntity(BlockPos pos, BlockState state, boolean s, boolean p) {
 		super(ModBlockEntityType.ITEM_DISPLAY_TYPE.get(), pos, state);
 		this.items = NonNullList.withSize(27, ItemStack.EMPTY);
-		this.shelf = s;
+		this.wallShelf = s;
+		this.playSound = p;
 	}
 
 	public CompoundTag save(CompoundTag tag) {

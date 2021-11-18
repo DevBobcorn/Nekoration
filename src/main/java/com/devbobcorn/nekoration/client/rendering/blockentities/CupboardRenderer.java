@@ -23,7 +23,7 @@ public class CupboardRenderer implements BlockEntityRenderer<ItemDisplayBlockEnt
 	@Override
 	public void render(ItemDisplayBlockEntity tileEntity, float partialTicks, PoseStack stack, MultiBufferSource buffers, int combinedLight, int combinedOverlay) {
         stack.pushPose();
-        if (tileEntity.shelf)
+        if (tileEntity.wallShelf)
             renderShelfItems(tileEntity, stack, buffers, combinedLight);
         else renderCabinetItems(tileEntity, stack, buffers, combinedLight);
         stack.popPose();

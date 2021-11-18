@@ -2,6 +2,7 @@ package com.devbobcorn.nekoration.blocks;
 
 import com.devbobcorn.nekoration.NekoConfig;
 import com.devbobcorn.nekoration.NekoConfig.VerConnectionDir;
+import com.devbobcorn.nekoration.blocks.entities.ItemDisplayBlockEntity;
 import com.devbobcorn.nekoration.common.VanillaCompat;
 
 import net.minecraft.core.BlockPos;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -22,15 +24,22 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class CupboardBlock extends ItemDisplayBlock {
     public static final BooleanProperty BOTTOM  = BlockStateProperties.BOTTOM;
+	public final boolean playSound;
 
-    public CupboardBlock(Properties settings) {
+    public CupboardBlock(Properties settings, boolean p) {
         super(settings);
+		this.playSound = p;
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
 		s.add(COLOR, FACING, OPEN, BOTTOM);
 	}
 
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new ItemDisplayBlockEntity(pos, state, false, playSound);
+	}
+	
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack itemStack = player.getItemInHand(hand);
 

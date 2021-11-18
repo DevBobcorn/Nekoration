@@ -44,7 +44,7 @@ public class WallShelfBlock extends ItemDisplayBlock {
 
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new ItemDisplayBlockEntity(pos, state, true);
+		return new ItemDisplayBlockEntity(pos, state, true, false);
 	}
 
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
