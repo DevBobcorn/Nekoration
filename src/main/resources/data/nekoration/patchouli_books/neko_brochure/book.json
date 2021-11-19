@@ -1,0 +1,9 @@
+{
+	"name": "item.nekoration.brochure",
+	"landing_text": "book.nekoration.intro",
+	"creative_tab": "neko_tool",
+	"model": "nekoration:book_neko",
+	"book_texture": "patchouli:textures/gui/book_red.png",
+	"filler_texture": "nekoration:textures/gui/brochure/magicat.png",
+	"version": 6
+}
