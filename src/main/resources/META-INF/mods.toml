@@ -14,7 +14,7 @@ displayName="Nekoration"
 #updateJSONURL="https://change.me.example.invalid/updates.json"
 displayURL="https://gitee.com/DevBobcorn/nekoration"
 logoFile="nekoration.png"
-credits="DevBobcorn, W163▫84 (Voxel Art support)" #optional
+credits="W163▫84 (Voxel Art support)" #optional
 authors="DevBobcorn"
 description='''
 A decoration mod for Minecraft
