@@ -68,7 +68,6 @@ public final class ClientModEventSubscriber {
 
 		RenderType transparentRenderType = RenderType.cutoutMipped();
 		RenderType cutoutRenderType = RenderType.cutout();
-		RenderType translucentRenderType = RenderType.translucent();
 
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P0.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P1.get(), transparentRenderType);
@@ -104,10 +103,10 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_TALL_2.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_TALL_3.get(), transparentRenderType);
 
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_PURE.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_PURE_SHORT.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_STRIPE.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_STRIPE_SHORT.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_PURE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_PURE_SHORT.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_STRIPE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_STRIPE_SHORT.get(), transparentRenderType);
 
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.LAMP_POST_IRON.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.LAMP_POST_GOLD.get(), transparentRenderType);
