@@ -3,7 +3,7 @@
     "textures": {
         "particle": "#side",
         "side": "block/white_concrete",
-        "overlay": "nekoration:block/half_timber/halftimber_frame_dark_p9"
+        "overlay": "nekoration:block/half_timber/halftimber_frame_p0"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

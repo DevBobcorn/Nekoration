@@ -70,20 +70,20 @@ public final class ClientModEventSubscriber {
 		RenderType cutoutRenderType = RenderType.cutout();
 		RenderType translucentRenderType = RenderType.translucent();
 
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P0.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P1.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P2.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P3.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P4.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P5.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P6.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P7.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P8.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P9.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P0.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P1.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P2.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P3.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P4.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P5.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P6.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P7.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P8.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P9.get(), transparentRenderType);
 
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P0.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P1.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P2.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P0.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P1.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_PILLAR_P2.get(), transparentRenderType);
 
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_SIMPLE.get(), cutoutRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WINDOW_ARCH.get(), cutoutRenderType);
@@ -98,11 +98,11 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLOWER_BASKET_QUARTZ.get(), transparentRenderType);
 
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_1.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_2.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_3.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_2.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_3.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_TALL_1.get(), transparentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_TALL_2.get(), translucentRenderType);
-		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_TALL_3.get(), translucentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_TALL_2.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOOR_TALL_3.get(), transparentRenderType);
 
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_PURE.get(), translucentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.AWNING_PURE_SHORT.get(), translucentRenderType);
