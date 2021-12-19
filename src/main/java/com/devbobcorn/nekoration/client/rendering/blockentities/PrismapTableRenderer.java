@@ -16,8 +16,11 @@ import com.mojang.math.Matrix4f;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -77,97 +80,6 @@ public class PrismapTableRenderer implements BlockEntityRenderer<PrismapTableBlo
 				}
 			}
 	}
-
-	/* private void renderWorldChunkLayer(RenderType type, PoseStack stack, double x, double y, double z, Matrix4f projection) {
-		type.setupRenderState();
-
-		boolean flag = type != RenderType.translucent();
-		ObjectListIterator<LevelRenderer.RenderChunkInfo> chunkList = this.renderChunks.listIterator(flag ? 0 : this.renderChunks.size());
-		VertexFormat vertexformat = type.format();
-		ShaderInstance shaderinstance = RenderSystem.getShader();
-		BufferUploader.reset();
-
-		for (int k = 0; k < 12; ++k) {
-			int i = RenderSystem.getShaderTexture(k);
-			shaderinstance.setSampler("Sampler" + k, i);
-		}
-
-		if (shaderinstance.MODEL_VIEW_MATRIX != null) {
-			shaderinstance.MODEL_VIEW_MATRIX.set(stack.last().pose());
-		}
-
-		if (shaderinstance.PROJECTION_MATRIX != null) {
-			shaderinstance.PROJECTION_MATRIX.set(projection);
-		}
-
-		if (shaderinstance.COLOR_MODULATOR != null) {
-			shaderinstance.COLOR_MODULATOR.set(RenderSystem.getShaderColor());
-		}
-
-		if (shaderinstance.FOG_START != null) {
-			shaderinstance.FOG_START.set(RenderSystem.getShaderFogStart());
-		}
-
-		if (shaderinstance.FOG_END != null) {
-			shaderinstance.FOG_END.set(RenderSystem.getShaderFogEnd());
-		}
-
-		if (shaderinstance.FOG_COLOR != null) {
-			shaderinstance.FOG_COLOR.set(RenderSystem.getShaderFogColor());
-		}
-
-		if (shaderinstance.TEXTURE_MATRIX != null) {
-			shaderinstance.TEXTURE_MATRIX.set(RenderSystem.getTextureMatrix());
-		}
-
-		if (shaderinstance.GAME_TIME != null) {
-			shaderinstance.GAME_TIME.set(RenderSystem.getShaderGameTime());
-		}
-
-		RenderSystem.setupShaderLights(shaderinstance);
-		shaderinstance.apply();
-		Uniform uniform = shaderinstance.CHUNK_OFFSET;
-		boolean flag1 = false;
-
-		while (true) {
-			if (flag) {
-				if (!chunkList.hasNext()) {
-					break;
-				}
-			} else if (!chunkList.hasPrevious()) {
-				break;
-			}
-
-			LevelRenderer.RenderChunkInfo info = flag ? chunkList.next() : chunkList.previous();
-			ChunkRenderDispatcher.RenderChunk chunkrender = info.chunk;
-			if (!chunkrender.getCompiledChunk().isEmpty(type)) {
-				VertexBuffer vertexbuffer = chunkrender.getBuffer(type);
-				BlockPos blockpos = chunkrender.getOrigin();
-				if (uniform != null) {
-					uniform.set((float) ((double) blockpos.getX() - x),
-							(float) ((double) blockpos.getY() - y),
-							(float) ((double) blockpos.getZ() - z));
-					uniform.upload();
-				}
-
-				vertexbuffer.drawChunkLayer();
-				flag1 = true;
-			}
-		}
-
-		if (uniform != null) {
-			uniform.set(Vector3f.ZERO);
-		}
-
-		shaderinstance.clear();
-		if (flag1) {
-			vertexformat.clearBufferState();
-		}
-
-		VertexBuffer.unbind();
-		VertexBuffer.unbindVertexArray();
-		type.clearRenderState();
-	} */
 
 	private void renderModelChunkLayer(RenderType type, PoseStack stack, ChunkModelRender chunkRender, double x, double y, double z, Matrix4f projection) {
 		// Note that in 1.16, the projection matrix didn't need to be passed in separately
@@ -239,9 +151,9 @@ public class PrismapTableRenderer implements BlockEntityRenderer<PrismapTableBlo
 	}
 
 	private void hackItUp(){
-		try {
-			MRenderLevel = ObfuscationReflectionHelper.findMethod(LevelRenderer.class, "m_172993_", RenderType.class, PoseStack.class, double.class, double.class, double.class, Matrix4f.class);
-			FRenderChunkLayer = ObfuscationReflectionHelper.findField(LevelRenderer.class, "f_109467_");
+		try { // TODO Update when necessary
+			MRenderLevel = ObfuscationReflectionHelper.findMethod(LevelRenderer.class, "m_109599_", PoseStack.class, float.class, long.class, Camera.class, GameRenderer.class, LightTexture.class, Matrix4f.class);
+			//FRenderChunkLayer = ObfuscationReflectionHelper.findField(LevelRenderer.class, "f_109467_");
 		} catch (Exception e) {
 			error = true;
 			e.printStackTrace();

@@ -122,7 +122,7 @@ public class ItemDisplayBlockEntity extends RandomizableContainerBlockEntity {
 
 	@Nullable
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, 2028, this.getUpdateTag());
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	public CompoundTag getUpdateTag() {

@@ -72,8 +72,7 @@ public class CustomBlockEntity extends BlockEntity {
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
 		CompoundTag nbtTagCompound = new CompoundTag();
 		save(nbtTagCompound);
-		int tileEntityType = 1024; // arbitrary number for only vanilla TileEntities. You can use it, or not.
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, tileEntityType, nbtTagCompound);
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	public CompoundTag getUpdateTag() {

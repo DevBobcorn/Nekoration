@@ -48,7 +48,7 @@ public class WindowBlock extends DyeableVerticalConnectBlock {
 
     @Nonnull
     @Override
-    public ItemStack getPickBlock(@Nonnull BlockState state, HitResult target, @Nonnull BlockGetter world, @Nonnull BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(@Nonnull BlockState state, HitResult target, @Nonnull BlockGetter world, @Nonnull BlockPos pos, Player player) {
 		ItemStack stack = new ItemStack(this.asItem());
 		DyeableWoodenBlockItem.setColor(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
         return stack;

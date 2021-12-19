@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ChunkBufferBuilderPack;
+import net.minecraft.client.renderer.chunk.RenderRegionCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
@@ -39,7 +40,8 @@ public class ChunkModel {
             final ChunkModelRender modelRender = this.chunkRender;
             final Vec3 pos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
             modelRender.setCamera(pos);
-            modelRender.compileModel();
+            RenderRegionCache cache = new RenderRegionCache();
+            modelRender.compileModel(cache);
             LOGGER.info("Model " + (error ? "failed to compile." : "compiled successfully."));
 
             this.isCompiled = true;

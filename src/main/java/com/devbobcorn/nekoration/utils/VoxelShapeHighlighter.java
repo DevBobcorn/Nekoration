@@ -53,7 +53,7 @@ public class VoxelShapeHighlighter {
 		Level world;
 
 		try {
-			world = getPrivateWorldFromWorldRenderer(event.getContext());
+			world = getPrivateWorldFromWorldRenderer(event.getLevelRenderer());
 		} catch (IllegalAccessException | ObfuscationReflectionHelper.UnableToFindFieldException e) {
 			if (!loggedReflectionError)
 				LOGGER.error("Could not find WorldRenderer.world");
@@ -83,9 +83,9 @@ public class VoxelShapeHighlighter {
 				lastHolding = holding;
 				HoldingPalette = true;
 			}
-			Camera ari = event.getInfo();
+			Camera ari = event.getCamera();
 			VoxelShape shape = blockstate.getShape(world, blockpos, CollisionContext.of(ari.getEntity()));
-			drawSelectionBox(event.getContext(), event.getBuffers(), event.getMatrix(), blockpos, ari, shape, PaletteColor);
+			drawSelectionBox(event.getLevelRenderer(), event.getMultiBufferSource(), event.getPoseStack(), blockpos, ari, shape, PaletteColor);
 
             event.setCanceled(true);
 		} else if (HoldingPalette) HoldingPalette = false;

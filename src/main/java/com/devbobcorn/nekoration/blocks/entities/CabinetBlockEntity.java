@@ -83,7 +83,7 @@ public class CabinetBlockEntity extends RandomizableContainerBlockEntity {
 
 	@Nullable
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, 2025, this.getUpdateTag());
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	public CompoundTag getUpdateTag() {

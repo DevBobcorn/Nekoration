@@ -80,7 +80,7 @@ public class EaselMenuBlockEntity extends ContainerBlockEntity {
 
 	@Nullable
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, 2020, this.getUpdateTag());
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	public CompoundTag getUpdateTag() {

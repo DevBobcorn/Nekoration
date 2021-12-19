@@ -33,6 +33,7 @@ import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher;
 import net.minecraft.client.renderer.chunk.RenderChunkRegion;
+import net.minecraft.client.renderer.chunk.RenderRegionCache;
 import net.minecraft.client.renderer.chunk.VisGraph;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -42,7 +43,6 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkStatus;
-import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -50,11 +50,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ChunkModelRender implements net.minecraftforge.client.extensions.IForgeRenderChunk {
+public class ChunkModelRender {
     public static final int SIZE = 16;
     public final int index;
-    public final AtomicReference<CompiledModelChunk> compiled = new AtomicReference<>(
-            CompiledModelChunk.UNCOMPILED);
+    public final AtomicReference<CompiledModelChunk> compiled = new AtomicReference<>(CompiledModelChunk.UNCOMPILED);
     @Nullable
     private ChunkModelRender.RebuildTask lastRebuildTask;
     @Nullable
@@ -101,8 +100,8 @@ public class ChunkModelRender implements net.minecraftforge.client.extensions.IF
         return p_228904_2_.uploadLater(p_228904_1_);
     }
 
-    public void compileModel(){
-        this.compileSync();
+    public void compileModel(RenderRegionCache cache){
+        this.compileSync(cache);
     }
     // Modification end
 
@@ -235,19 +234,18 @@ public class ChunkModelRender implements net.minecraftforge.client.extensions.IF
 
     }
 
-    public ChunkCompileTask createCompileTask() {
+    public ChunkCompileTask createCompileTask(RenderRegionCache cache) {
         this.cancelTasks();
         BlockPos blockpos = this.origin.immutable();
-        RenderChunkRegion renderchunkregion = createRegionRenderCache(this.level,
+        RenderChunkRegion renderchunkregion = cache.createRegion(this.level,
                 blockpos.offset(-1, -1, -1), blockpos.offset(16, 16, 16), 1);
         this.lastRebuildTask = new RebuildTask(
                 new net.minecraft.world.level.ChunkPos(getOrigin()), this.getDistToPlayerSqr(), renderchunkregion);
         return this.lastRebuildTask;
     }
 
-    public void rebuildChunkAsync() {
-        ChunkCompileTask chunkrenderdispatcher$renderchunk$chunkcompiletask = this
-                .createCompileTask();
+    public void rebuildChunkAsync(RenderRegionCache cache) {
+        ChunkCompileTask chunkrenderdispatcher$renderchunk$chunkcompiletask = this.createCompileTask(cache);
         //p_112821_.schedule(chunkrenderdispatcher$renderchunk$chunkcompiletask);
         chunkrenderdispatcher$renderchunk$chunkcompiletask.doTask(fixedBuffers);
     }
@@ -262,9 +260,8 @@ public class ChunkModelRender implements net.minecraftforge.client.extensions.IF
         this.renderer.updateGlobalBlockEntities(set1, set);
     }
 
-    public void compileSync() {
-        ChunkCompileTask chunkrenderdispatcher$renderchunk$chunkcompiletask = this
-                .createCompileTask();
+    public void compileSync(RenderRegionCache cache) {
+        ChunkCompileTask chunkrenderdispatcher$renderchunk$chunkcompiletask = this.createCompileTask(cache);
         chunkrenderdispatcher$renderchunk$chunkcompiletask.doTask(this.fixedBuffers);
     }
 
@@ -313,8 +310,7 @@ public class ChunkModelRender implements net.minecraftforge.client.extensions.IF
             this(null, p_112862_, p_112863_);
         }
 
-        public RebuildTask(@Nullable net.minecraft.world.level.ChunkPos pos, double p_112862_,
-                @Nullable RenderChunkRegion p_112863_) {
+        public RebuildTask(@Nullable net.minecraft.world.level.ChunkPos pos, double p_112862_, @Nullable RenderChunkRegion p_112863_) {
             super(pos, p_112862_);
             this.region = p_112863_;
         }
@@ -348,7 +344,7 @@ public class ChunkModelRender implements net.minecraftforge.client.extensions.IF
                     return Util.sequenceFailFast(list).handle((p_112875_, p_112876_) -> {
                         if (p_112876_ != null && !(p_112876_ instanceof CancellationException)
                                 && !(p_112876_ instanceof InterruptedException)) {
-                            Minecraft.getInstance().delayCrash(CrashReport.forThrowable(p_112876_, "Rendering chunk"));
+                            Minecraft.getInstance().delayCrash(() -> CrashReport.forThrowable(p_112876_, "Rendering chunk"));
                         }
 
                         if (this.isCancelled.get()) {
@@ -362,8 +358,7 @@ public class ChunkModelRender implements net.minecraftforge.client.extensions.IF
             }
         }
 
-        private Set<BlockEntity> compile(float p_112866_, float p_112867_, float p_112868_,
-                CompiledModelChunk p_112869_, ChunkBufferBuilderPack p_112870_) {
+        private Set<BlockEntity> compile(float p_112866_, float p_112867_, float p_112868_, CompiledModelChunk p_112869_, ChunkBufferBuilderPack p_112870_) {
             BlockPos blockpos = ChunkModelRender.this.origin.immutable();
             BlockPos blockpos1 = blockpos.offset(15, 15, 15);
             VisGraph visgraph = new VisGraph();
@@ -383,8 +378,7 @@ public class ChunkModelRender implements net.minecraftforge.client.extensions.IF
                     }
 
                     if (blockstate.hasBlockEntity()) {
-                        BlockEntity blockentity = renderchunkregion.getBlockEntity(blockpos2,
-                                LevelChunk.EntityCreationType.CHECK);
+                        BlockEntity blockentity = renderchunkregion.getBlockEntity(blockpos2);
                         if (blockentity != null) {
                             this.handleBlockEntity(p_112869_, set, blockentity);
                         }
@@ -393,7 +387,7 @@ public class ChunkModelRender implements net.minecraftforge.client.extensions.IF
                     FluidState fluidstate = renderchunkregion.getFluidState(blockpos2);
                     net.minecraftforge.client.model.data.IModelData modelData = getModelData(blockpos2);
                     for (RenderType rendertype : RenderType.chunkBufferLayers()) {
-                        net.minecraftforge.client.ForgeHooksClient.setRenderLayer(rendertype);
+                        net.minecraftforge.client.ForgeHooksClient.setRenderType(rendertype);
                         if (!fluidstate.isEmpty() && ItemBlockRenderTypes.canRenderInLayer(fluidstate, rendertype)) {
                             BufferBuilder bufferbuilder = p_112870_.builder(rendertype);
                             if (p_112869_.hasLayer.add(rendertype)) {
@@ -428,7 +422,7 @@ public class ChunkModelRender implements net.minecraftforge.client.extensions.IF
                         }
                     }
                 }
-                net.minecraftforge.client.ForgeHooksClient.setRenderLayer(null);
+                net.minecraftforge.client.ForgeHooksClient.setRenderType(null);
 
                 if (p_112869_.hasBlocks.contains(RenderType.translucent())) {
                     BufferBuilder bufferbuilder1 = p_112870_.builder(RenderType.translucent());
@@ -517,12 +511,10 @@ public class ChunkModelRender implements net.minecraftforge.client.extensions.IF
                         return completablefuture.handle((p_112895_, p_112896_) -> {
                             if (p_112896_ != null && !(p_112896_ instanceof CancellationException)
                                     && !(p_112896_ instanceof InterruptedException)) {
-                                Minecraft.getInstance()
-                                        .delayCrash(CrashReport.forThrowable(p_112896_, "Rendering chunk"));
+                                Minecraft.getInstance().delayCrash(() -> CrashReport.forThrowable(p_112896_, "Rendering chunk"));
                             }
 
-                            return this.isCancelled.get() ? ModelChunkTaskResult.CANCELLED
-                                    : ModelChunkTaskResult.SUCCESSFUL;
+                            return this.isCancelled.get() ? ModelChunkTaskResult.CANCELLED : ModelChunkTaskResult.SUCCESSFUL;
                         });
                     }
                 } else {

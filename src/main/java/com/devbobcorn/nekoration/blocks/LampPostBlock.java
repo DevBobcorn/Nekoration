@@ -68,10 +68,9 @@ public class LampPostBlock extends CrossCollisionBlock {
 		return this.getShape(state, world, pos, ctx);
 	}
 
-	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world,
-			BlockPos pos, BlockPos posFrom) {
+	public BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom) {
 		if ((Boolean) state.getValue(WATERLOGGED)) {
-			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+			world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 
 		return direction.getAxis().isHorizontal()
