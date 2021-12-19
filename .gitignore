@@ -13,12 +13,12 @@ out
 *.iml
 .idea
 
-# vscode
-.vscode
-
 # gradle
 build
 .gradle
+
+# vscode
+.vscode
 
 # other
 eclipse

@@ -1,0 +1,18 @@
+{
+	"name": "猫猫，你好！",
+	"category": "introduction",
+	"icon": "nekoration:paw",
+	"pages":[
+		{
+			"type": "patchouli:text",
+			"text": "$(l)猫咪装饰是什么？$()$(br)$(#FF9900)猫咪装饰（Nekoration）$()是一个为Minecraft添加了大量装饰材料的模组，使建筑和装饰更便捷、更有趣. $(br2)这个模组的名称$(#FF9900)Nekoration$()是日语“猫”(ねこ，neko)和“装饰”(decoration)的混成词，意为此模组不仅$(#BD00FF)较具观赏价值$()，而且$(#00E07E)对猫友好$()... 喵喵喵~ ^._.^= ∫"
+		},
+		{
+			"type": "patchouli:image",
+			"title": "猫咪装饰",
+			"images": ["nekoration:textures/gui/brochure/night_scene.png"],
+			"border": true,
+			"text": "猫咪装饰点缀着一个恬淡静谧的夜晚."
+		}
+	]
+}

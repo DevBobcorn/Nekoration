@@ -36,6 +36,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 	}
 
 	public void render(PaintingEntity entity, float rotation, float partialTicks, PoseStack stack, MultiBufferSource buffers, int packedLight) {
+		if (entity.data == null) return;
 		stack.pushPose();
 		stack.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotation));
 

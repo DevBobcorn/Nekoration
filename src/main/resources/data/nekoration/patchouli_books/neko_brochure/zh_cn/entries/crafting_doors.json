@@ -1,0 +1,31 @@
+{
+	"name": "合成 - 门",
+	"category": "recipes",
+	"icon": "nekoration:door_1",
+	"pages":[
+		{
+			"type": "patchouli:spotlight",
+			"title": "制作门",
+			"item": "nekoration:door_tall_1{display:{Name:\'{\\\"text\\\":\\\"我门真可爱！\\\",\\\"italic\\\":false}\'}}",
+			"text": "$(br)$(l)明明告诉过你不要把骨粉喂给石英门的233...$()$(br2)作为门窗大家庭的新成员，$(#FF9900)石英门$()萌到飞起QWQ，而且还能染色！"
+		},
+		{
+			"type": "patchouli:crafting",
+			"title": "石英门",
+			"recipe": "nekoration:door/door_1",
+			"recipe2": "nekoration:door/door_tall_1"
+		},
+		{
+			"type": "patchouli:crafting",
+			"title": "錾制石英门",
+			"recipe": "nekoration:door/door_2",
+			"recipe2": "nekoration:door/door_tall_2"
+		},
+		{
+			"type": "patchouli:crafting",
+			"title": "石英砖门",
+			"recipe": "nekoration:door/door_3",
+			"recipe2": "nekoration:door/door_tall_3"
+		}
+	]
+}

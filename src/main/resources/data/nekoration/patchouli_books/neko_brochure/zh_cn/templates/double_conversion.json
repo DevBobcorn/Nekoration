@@ -1,0 +1,68 @@
+{
+	"components": [
+		{
+			"type": "item",
+			"item": "#item1",
+			"x": 15,
+			"y": 20,
+			"framed": false
+		},
+		{
+			"type": "item",
+			"item": "#item2",
+			"x": 87,
+			"y": 20,
+			"framed": false
+		},
+				{
+			"type": "item",
+			"item": "#item3",
+			"x": 15,
+			"y": 50,
+			"framed": false
+		},
+		{
+			"type": "item",
+			"item": "#item4",
+			"x": 87,
+			"y": 50,
+			"framed": false
+		},
+		{
+			"type": "image",
+			"image": "nekoration:textures/gui/brochure/crafting.png",
+			"x": 0,
+			"y": 9,
+			"u": 0,
+			"v": 192,
+			"width": 128,
+			"height": 32,
+			"texture_width": 128,
+			"texture_height": 256
+		},
+		{
+			"type": "image",
+			"image": "nekoration:textures/gui/brochure/crafting.png",
+			"x": 0,
+			"y": 39,
+			"u": 0,
+			"v": 192,
+			"width": 128,
+			"height": 32,
+			"texture_width": 128,
+			"texture_height": 256
+		},
+		{
+			"type": "header",
+			"text": "#title",
+			"x": -1,
+			"y": -1
+		},
+		{
+			"type": "text",
+			"text": "#description",
+			"x": 3,
+			"y": 80
+		}
+	]
+}

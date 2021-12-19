@@ -1,6 +1,6 @@
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
-loaderVersion="[37,)"
+loaderVersion="[39,)"
 license="Apache-2.0"
 # A URL to refer people to when problems occur with this mod
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
@@ -8,13 +8,13 @@ license="Apache-2.0"
 [[mods]] #mandatory
 # The modid of the mod
 modId="nekoration"
-version="1.5.0"
+version="1.5.1"
 displayName="Nekoration"
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
 #updateJSONURL="https://change.me.example.invalid/updates.json"
 displayURL="https://gitee.com/DevBobcorn/nekoration"
 logoFile="nekoration.png"
-credits="W163▫84 (Voxel Art support)" #optional
+credits="W163▫84 (Voxel Art support), yaoxiaosa(飒仔) (Brochure translation)" #optional
 authors="DevBobcorn"
 description='''
 A decoration mod for Minecraft
@@ -29,7 +29,7 @@ TheGreyGhost (whose amazing tutorial & example code helped me a lot)
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[37.0.97,)" #mandatory
+    versionRange="[39,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER

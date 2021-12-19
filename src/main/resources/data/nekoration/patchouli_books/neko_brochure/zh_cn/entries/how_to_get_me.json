@@ -1,0 +1,18 @@
+{
+	"name": "从哪里能得到我？",
+	"category": "introduction",
+	"icon": "patchouli:guide_book",
+	"pages":[
+		{
+			"type": "patchouli:text",
+			"text": "$(l)如何获得这本手册？$()$(br2)在$(#FF9900)创造模式$()中, 您可以在“猫咪装饰|工具”选项卡中找到它. $(br)而对于$(#9900FF)生存模式$(), 您可以试着与一个$(#5570FF)新手级别的图书管理员$()村民交易, 这本小册子可能会作为一个交易选项出现在列表中，可使用$(#00FF66)绿宝石$()来交换."
+		},
+		{
+			"type": "patchouli:image",
+			"title": "图书管理员村民",
+			"images": ["nekoration:textures/gui/brochure/librarian.png"],
+			"border": true,
+			"text": "一位$(#5570FF)新手图书管理员$()村民."
+		}
+	]
+}

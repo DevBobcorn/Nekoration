@@ -1,0 +1,61 @@
+{
+	"name": "合成 - 烛台",
+	"category": "recipes",
+	"icon": "nekoration:candle_holder_iron{color:14b}",
+	"pages":[
+		{
+			"type": "patchouli:spotlight",
+			"title": "制作烛台",
+			"item": "nekoration:candle_holder_quartz{color:14b,display:{Name:\'{\\\"text\\\":\\\"\\\'我是四爪鱼！\\\",\\\"italic\\\":false}\'}}",
+			"text": "$(br)你空荡荡的桌子需要稍加点缀吗？别担心，$(l)烛台$()可以帮助你！$(br2)$(#FF9900)烛台$()可以照亮你的桌子，让你的房间充满无限的温暖."
+		},
+		{
+			"type": "nekoration:double_crafting_neko",
+			"item11": "minecraft:honeycomb",
+			"item12": "minecraft:honeycomb",
+			"item13": "minecraft:honeycomb",
+			"item14": "minecraft:iron_block",
+			"item15": "minecraft:iron_block",
+			"item16": "minecraft:iron_block",
+			"item17": "",
+			"item18": "minecraft:iron_block",
+			"item19": "",
+			"result1": "nekoration:candle_holder_iron#3{color:14b}",
+			"item21": "minecraft:honeycomb",
+			"item22": "minecraft:honeycomb",
+			"item23": "minecraft:honeycomb",
+			"item24": "minecraft:quartz_block",
+			"item25": "minecraft:quartz_block",
+			"item26": "minecraft:quartz_block",
+			"item27": "",
+			"item28": "minecraft:quartz_block",
+			"item29": "",
+			"result2": "nekoration:candle_holder_quartz#3{color:14b}"
+		},
+		{
+			"type": "nekoration:crafting_neko",
+			"item1": "minecraft:honeycomb",
+			"item2": "minecraft:honeycomb",
+			"item3": "minecraft:honeycomb",
+			"item4": "minecraft:gold_block",
+			"item5": "minecraft:gold_block",
+			"item6": "minecraft:gold_block",
+			"item7": "",
+			"item8": "minecraft:gold_block",
+			"item9": "",
+			"result": "nekoration:candle_holder_gold#3{color:14b}",
+			"description": "烛台可使用$(#FF3300)火把$(), $(#FF6600)灯笼$()或者$(#FF9900)打火石$()点燃，也可以使用它们的$(#55CCFF)灵魂火变种$()点燃来让它们燃起凄神寒骨的蓝色火焰. 如果这还不够酷的话，$(#AA00FF)下界之星$()可以让烛台闪闪发光！"
+		},
+		{
+			"type": "nekoration:item_footer",
+			"title": "染色蜡烛",
+			"item1": "nekoration:candle_holder_quartz{color:14b}",
+			"item2": "nekoration:candle_holder_quartz{color:13b}",
+			"item3": "nekoration:candle_holder_quartz{color:12b}",
+			"item4": "nekoration:candle_holder_quartz{color:11b}",
+			"item5": "nekoration:candle_holder_quartz{color:10b}",
+			"item6": "nekoration:candle_holder_quartz{color:9b}",
+			"text": "只需将染料涂在烛台上，就可改变烛台上蜡烛的颜色. 因此，你可以用$(#FF0000)超$(#FFAA00)级$(#EEBB00)炫$(#BBEE00)酷$()的烛台来装饰你的房间！$(br2)有没有兴趣试试呢？ ^._.^"
+		}
+	]
+}

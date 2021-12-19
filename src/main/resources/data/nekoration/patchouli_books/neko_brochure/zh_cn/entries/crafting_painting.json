@@ -1,0 +1,25 @@
+{
+	"name": "合成 - 绘画",
+	"category": "recipes",
+	"icon": "nekoration:painting{type:1b,width:1s,height:1s}",
+	"pages":[
+		{
+			"type": "patchouli:spotlight",
+			"title": "制作绘画",
+			"item": "nekoration:painting{type:1b,width:1s,height:1s,display:{Name:\'{\\\"text\\\":\\\"文森特·威廉·梵高的画作！\\\",\\\"italic\\\":false}\'}}",
+			"text": "$(br)突然心血来潮，灵光乍现？$(br2)试着在一幅空白画上创作你自己的艺术作品吧！"
+		},
+		{
+			"type": "patchouli:crafting",
+			"title": "调色板",
+			"recipe": "nekoration:painting/palette",
+			"text": "$(br)要开始绘画，首先需要获得调色板来选取颜色. 木板和染料是其必不可少的合成材料."
+		},
+		{
+			"type": "patchouli:crafting",
+			"title": "空白画",
+			"recipe": "nekoration:painting/painting",
+			"text": "$(br)有了调色板之后，下一步是画布，或者说空白画. 它的配方类似于画，只是所有的木棍都用竹子代替掉了. $(br)熊猫肯定会喜欢它们的. $(br)  ^._.^←我是熊猫QWQ"
+		}
+	]
+}

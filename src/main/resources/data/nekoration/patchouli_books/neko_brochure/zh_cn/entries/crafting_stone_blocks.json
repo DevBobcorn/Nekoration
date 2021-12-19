@@ -1,0 +1,22 @@
+{
+	"name": "合成 - 石质方块",
+	"category": "recipes",
+	"icon": "nekoration:stone_base_bottom{color:14b}",
+	"pages":[
+		{
+			"type": "patchouli:spotlight",
+			"title": "制作石质方块",
+			"item": "nekoration:stone_corinthian{color:14b,display:{Name:\'{\\\"text\\\":\\\"好肚有肚?0V0\\\",\\\"italic\\\":false}\'}}",
+			"text": "$(br)$(l)石质方块！$()$(br2)$(#FF9900)石质方块$()在猫咪装饰模组中需要使用$(#00BEFF)切石机$()来制作, 就像许多其他的石头的变种方块一样."
+		},
+		{
+			"type": "nekoration:double_stonecutting_neko",
+			"title": "切石",
+			"item1": "minecraft:smooth_stone",
+			"result1": "nekoration:stone_base{color:7b},nekoration:stone_base_bottom{color:7b},nekoration:stone_frame{color:7b},nekoration:stone_frame_bottom{color:7b},nekoration:stone_pillar{color:7b},nekoration:stone_pillar_bottom{color:7b},nekoration:stone_doric{color:7b},nekoration:stone_ionic{color:7b},nekoration:stone_corinthian{color:7b},nekoration:stone_layered{color:7b}",
+			"item2": "nekoration:stone_base{color:7b},nekoration:stone_base_bottom{color:7b}",
+			"result2": "nekoration:window_top{color:7b},nekoration:window_sill{color:7b},nekoration:window_frame{color:7b},nekoration:stone_pot{color:7b},nekoration:stone_planter{color:7b}",
+			"description": "$(#FF9900)猫咪装饰$()中的$(#55EE00)$(t:1*1*1的整方块)基础方块$()都是通过平滑石头切制而来的，并且$(#00CC22)基础石块$()可以用来制作其他石质装饰方块."
+		}
+	]
+}

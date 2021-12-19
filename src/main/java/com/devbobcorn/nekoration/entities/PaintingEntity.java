@@ -25,10 +25,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 
 import com.devbobcorn.nekoration.client.ClientHelper;
 
@@ -57,7 +57,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 		data = new PaintingData(w, h, false, existingId);
 	}
 
-	public PaintingEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
+	public PaintingEntity(PlayMessages.SpawnEntity packet, Level world) {
 		// Constructor 3: the one for client-side, creating instances with data packets from the Server
 		// Enable by adding 'setCustomClientFactory' when building the entity type
 		super(ModEntityType.PAINTING_TYPE, world);

@@ -93,7 +93,7 @@
     "block.nekoration.window_sill": "%s窗台",
     "block.nekoration.window_simple": "%s简易窗",
     "block.nekoration.window_top": "%s窗顶",
-    "book.nekoration.intro": "$(l)欢迎使用猫咪装饰，$(#3399FF)$(playername)$(#000000)！$()$(br)这是一本关于$(#FF9900)猫咪装饰$()的手册，记述了从$(#00CC22)$(t:pf)配方$()到$(#FFAAAA)$(t:机制)各种机制$()的方方面面。$(br2)请参阅右侧的条目分类以了解详细信息。",
+    "book.nekoration.intro": "$(l)欢迎使用猫咪装饰，$(#3399FF)$(playername)$(#000000)！$()$(br)这是一本关于$(#FF9900)猫咪装饰$()的手册，记述了从$(#00CC22)$(t:配方)配方$()到$(#FFAAAA)$(t:机制)各种机制$()的方方面面。$(br2)请参阅右侧的条目分类以了解详细信息。",
     "color.nekoration.black": "黑色",
     "color.nekoration.blank": "空白",
     "color.nekoration.blue": "蓝色",

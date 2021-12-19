@@ -1,0 +1,49 @@
+{
+	"name": "机制 - 模型连接",
+	"category": "mechanics",
+	"icon": "nekoration:window_top{color:14b}",
+	"pages":[
+		{
+			"type": "patchouli:text",
+			"text": "猫咪装饰中有$(#FF9900)模型连接$()的机制，适用于石柱、半露木柱和窗框等方块. $(br2)这些机制一开始可能有些令人困惑，但如果你理解了它们，在建筑时实际上是很有用的."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "连接类型",
+			"text": "$(#FF9900)模型连接$()在猫咪装饰中，一般可分为三种类型:$(li)水平连接$(li)垂直连接$(li)特殊连接$()$(br2)下一页将详细介绍这些类型."
+		},
+		{
+			"type": "patchouli:image",
+			"title": "水平连接",
+			"images": ["nekoration:textures/gui/brochure/mechanics_fig1.png"],
+			"border": false,
+			"text": "   $(o)图1$() 水平连接"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "默认情况下, $(#FF9900)水平连接$()是单向的。也就是说，当您按从左到右的顺序放置方块时，它会自动连接，但如果反过来$(#AF22EE)$(t:从右向左)放置$()便不会连接.$(br2)此放置顺序$(#22AAFF)可以$()在$(#AA22FF)服务器配置文件$()中进行修改. 例如，如果你想要把这个顺序倒过来，就可以将配置更改为$(#FFAA00)RIGHT2LEFT$()（从右向左），或者 $(#FFAA00)BOTH$()（双向连接）."
+		},
+		{
+			"type": "patchouli:image",
+			"title": "垂直连接",
+			"images": ["nekoration:textures/gui/brochure/mechanics_fig2.png"],
+			"border": false,
+			"text": "   $(o)图2$() 垂直连接"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "类似于水平连接， $(#FF9900)垂直连接$() 默认情况下也是单向的，也可以在配置文件中配置。$(br2)包含这些设置的服务器配置文件可在以下位置找到： $(br)$(#AA22FF)saves/ $(br)<Your World Name>/ serverconfig/ $(br)nekoration-server.toml$(). "
+		},
+				{
+			"type": "patchouli:image",
+			"title": "特殊连接",
+			"images": ["nekoration:textures/gui/brochure/mechanics_fig3.png","nekoration:textures/gui/brochure/mechanics_fig4.png"],
+			"border": false,
+			"text": "   $(o)图3$() 特殊连接"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "对于灯柱和窗框，它们有自己的连接逻辑。如果你把这些方块按特定的顺序放置，效果会更好, 如左图所示。$(br2)$(br2)$(#FF9900)^._.^= ∫←这是只猫"
+		}
+	]
+}

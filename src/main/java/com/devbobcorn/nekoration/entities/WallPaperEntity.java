@@ -31,9 +31,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 
 public class WallPaperEntity extends HangingEntity implements IEntityAdditionalSpawnData {
 	@Nullable
@@ -81,7 +81,7 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
 		fromItem(stack);
 	}
 
-	public WallPaperEntity(FMLPlayMessages.SpawnEntity packet, Level world) {
+	public WallPaperEntity(PlayMessages.SpawnEntity packet, Level world) {
 		// Constructor 3: the one for client-side, creating instances with data packets from the Server
 		// Enable by adding 'setCustomClientFactory' when building the entity type
 		super(ModEntityType.WALLPAPER_TYPE, world);

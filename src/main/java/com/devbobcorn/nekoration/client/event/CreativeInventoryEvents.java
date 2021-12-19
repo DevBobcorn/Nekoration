@@ -30,7 +30,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -62,8 +62,8 @@ public class CreativeInventoryEvents
 
     @SubscribeEvent
     @SuppressWarnings({"resource"})
-    public void onScreenInit(GuiScreenEvent.InitGuiEvent.Post event){
-        if(event.getGui() instanceof CreativeModeInventoryScreen){
+    public void onScreenInit(ScreenEvent.InitScreenEvent.Post event){
+        if(event.getScreen() instanceof CreativeModeInventoryScreen){
             if(this.woodFilters == null)
                 this.compileWoodItems();
 
@@ -72,12 +72,12 @@ public class CreativeInventoryEvents
 
             this.viewingWoodTab = false;
             this.viewingDecorTab = false;
-            this.guiCenterX = ((CreativeModeInventoryScreen) event.getGui()).getGuiLeft();
-            this.guiCenterY = ((CreativeModeInventoryScreen) event.getGui()).getGuiTop();
+            this.guiCenterX = ((CreativeModeInventoryScreen) event.getScreen()).getGuiLeft();
+            this.guiCenterY = ((CreativeModeInventoryScreen) event.getScreen()).getGuiTop();
             this.woodButtons = new ArrayList<>();
             this.decorButtons = new ArrayList<>();
 
-            event.addWidget(this.btnScrollUp = new IconButton(this.guiCenterX - 22, this.guiCenterY - 12, new TranslatableComponent("gui.nekoration.button.scroll_up"), button -> {
+            event.addListener(this.btnScrollUp = new IconButton(this.guiCenterX - 22, this.guiCenterY - 12, new TranslatableComponent("gui.nekoration.button.scroll_up"), button -> {
                 if (viewingWoodTab) {
                     if (woodStartIndex > 0)
                         woodStartIndex--;
@@ -90,7 +90,7 @@ public class CreativeInventoryEvents
                 }
             }, ICONS, 64, 0));
 
-            event.addWidget(this.btnScrollDown = new IconButton(this.guiCenterX - 22, this.guiCenterY + 127, new TranslatableComponent("gui.nekoration.button.scroll_down"), button -> {
+            event.addListener(this.btnScrollDown = new IconButton(this.guiCenterX - 22, this.guiCenterY + 127, new TranslatableComponent("gui.nekoration.button.scroll_down"), button -> {
                 if (viewingWoodTab){
                     if (woodStartIndex <= woodFilters.size() - 4 - 1)
                         woodStartIndex++;
@@ -103,7 +103,7 @@ public class CreativeInventoryEvents
                 }
             }, ICONS, 80, 0));
 
-            event.addWidget(this.btnEnableAll = new IconButton(this.guiCenterX + 32, this.guiCenterY - 50, new TranslatableComponent("gui.nekoration.button.enable_all"), button -> {
+            event.addListener(this.btnEnableAll = new IconButton(this.guiCenterX + 32, this.guiCenterY - 50, new TranslatableComponent("gui.nekoration.button.enable_all"), button -> {
                 if (viewingWoodTab){
                     this.woodFilters.forEach(filters -> filters.setEnabled(true));
                     this.woodButtons.forEach(FilterButton::updateState);
@@ -120,7 +120,7 @@ public class CreativeInventoryEvents
                 }
             }, ICONS, 96, 0));
 
-            event.addWidget(this.btnDisableAll = new IconButton(this.guiCenterX + 144, this.guiCenterY - 50, new TranslatableComponent("gui.nekoration.button.disable_all"), button -> {
+            event.addListener(this.btnDisableAll = new IconButton(this.guiCenterX + 144, this.guiCenterY - 50, new TranslatableComponent("gui.nekoration.button.disable_all"), button -> {
                 Screen screen = Minecraft.getInstance().screen;
                 if (viewingWoodTab){
                     this.woodFilters.forEach(filters -> filters.setEnabled(false));
@@ -145,7 +145,7 @@ public class CreativeInventoryEvents
             this.updateWoodTagButtons();
             this.updateDecorTagButtons();
 
-            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getGui();
+            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getScreen();
             if(screen.getSelectedTab() == ModItemTabs.WOODEN_GROUP.getId()){
                 this.btnScrollUp.visible = this.btnScrollDown.visible = true;
                 this.btnEnableAll.visible = this.btnDisableAll.visible = true;
@@ -165,11 +165,11 @@ public class CreativeInventoryEvents
     }
 
     @SubscribeEvent
-    public void onScreenClick(GuiScreenEvent.MouseClickedEvent.Pre event){
+    public void onScreenClick(ScreenEvent.MouseClickedEvent.Pre event){
         if(event.getButton() != GLFW.GLFW_MOUSE_BUTTON_LEFT)
             return;
 
-        if(event.getGui() instanceof CreativeModeInventoryScreen){
+        if(event.getScreen() instanceof CreativeModeInventoryScreen){
             if (viewingWoodTab)
                 for(Button button : this.woodButtons)
                     if(button.isMouseOver(event.getMouseX(), event.getMouseY()))
@@ -185,9 +185,9 @@ public class CreativeInventoryEvents
     }
 
     @SubscribeEvent
-    public void onScreenDrawPre(GuiScreenEvent.DrawScreenEvent.Pre event){
-        if(event.getGui() instanceof CreativeModeInventoryScreen){
-            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getGui();
+    public void onScreenDrawPre(ScreenEvent.DrawScreenEvent.Pre event){
+        if(event.getScreen() instanceof CreativeModeInventoryScreen){
+            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getScreen();
             if(screen.getSelectedTab() == ModItemTabs.WOODEN_GROUP.getId()){
                 if(!this.viewingWoodTab){
                     this.updateWoodItems(screen);
@@ -214,9 +214,9 @@ public class CreativeInventoryEvents
     }
 
     @SubscribeEvent
-    public void onScreenDrawPost(GuiScreenEvent.DrawScreenEvent.Post event){
-        if(event.getGui() instanceof CreativeModeInventoryScreen){
-            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getGui();
+    public void onScreenDrawPost(ScreenEvent.DrawScreenEvent.Post event){
+        if(event.getScreen() instanceof CreativeModeInventoryScreen){
+            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getScreen();
             this.guiCenterX = screen.getGuiLeft();
             this.guiCenterY = screen.getGuiTop();
 
@@ -229,32 +229,32 @@ public class CreativeInventoryEvents
                     this.woodButtons.forEach(button -> button.visible = true);
                     /* Render buttons */
                     this.woodButtons.forEach(button -> {
-                        button.render(event.getMatrixStack(), event.getMouseX(), event.getMouseY(), event.getRenderPartialTicks());
+                        button.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTicks());
                     });
                     /* Render tooltips after so it renders above buttons */
                     this.woodButtons.forEach(button -> {
                         if(button.isMouseOver(event.getMouseX(), event.getMouseY())){
-                            screen.renderTooltip(event.getMatrixStack(), button.getCategory().getName(), event.getMouseX(), event.getMouseY());
+                            screen.renderTooltip(event.getPoseStack(), button.getCategory().getName(), event.getMouseX(), event.getMouseY());
                         }
                     });
                 } else if (viewingDecorTab){
                     this.decorButtons.forEach(button -> button.visible = true);
                     /* Render buttons */
                     this.decorButtons.forEach(button -> {
-                        button.render(event.getMatrixStack(), event.getMouseX(), event.getMouseY(), event.getRenderPartialTicks());
+                        button.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTicks());
                     });
                     /* Render tooltips after so it renders above buttons */
                     this.decorButtons.forEach(button -> {
                         if(button.isMouseOver(event.getMouseX(), event.getMouseY())){
-                            screen.renderTooltip(event.getMatrixStack(), button.getCategory().getName(), event.getMouseX(), event.getMouseY());
+                            screen.renderTooltip(event.getPoseStack(), button.getCategory().getName(), event.getMouseX(), event.getMouseY());
                         }
                     });
                 }
                 if(this.btnEnableAll.isMouseOver(event.getMouseX(), event.getMouseY())){
-                    screen.renderTooltip(event.getMatrixStack(), this.btnEnableAll.getMessage(), event.getMouseX(), event.getMouseY());
+                    screen.renderTooltip(event.getPoseStack(), this.btnEnableAll.getMessage(), event.getMouseX(), event.getMouseY());
                 }
                 if(this.btnDisableAll.isMouseOver(event.getMouseX(), event.getMouseY())){
-                    screen.renderTooltip(event.getMatrixStack(), this.btnDisableAll.getMessage(), event.getMouseX(), event.getMouseY());
+                    screen.renderTooltip(event.getPoseStack(), this.btnDisableAll.getMessage(), event.getMouseX(), event.getMouseY());
                 }
             } else {
                 this.btnScrollUp.visible = false;
