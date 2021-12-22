@@ -1,12 +1,12 @@
 {
 	"name": "合成 - 雨篷",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:awning_stripe{color:10b}",
 	"pages":[
 		{
 			"type": "patchouli:spotlight",
 			"title": "制作雨篷",
-			"item": "nekoration:awning_stripe_short{color:6b,display:{Name:\'{\\\"text\\\":\\\"雨篷就是好！\\\",\\\"italic\\\":false}\'}}",
+			"item": "nekoration:awning_stripe_short{color:6b,display:{Name:\'{\\\"text\\\":\\\"雨篷好！\\\",\\\"italic\\\":false}\'}}",
 			"text": "$(br)$(l)晴天、阴天、雨天，和我在一起就是好天~$()$(br2)不管天气如何，$(#FF9900)雨篷$()永远是你温馨屋舍的绝佳伴侣."
 		},
 		{

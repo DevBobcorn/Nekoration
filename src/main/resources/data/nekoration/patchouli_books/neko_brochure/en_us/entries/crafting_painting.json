@@ -1,6 +1,6 @@
 {
 	"name": "Crafting - Paintings",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:painting{type:1b,width:1s,height:1s}",
 	"pages":[
 		{

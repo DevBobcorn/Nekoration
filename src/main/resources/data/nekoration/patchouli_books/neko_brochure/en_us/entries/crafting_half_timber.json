@@ -1,6 +1,6 @@
 {
 	"name": "Crafting - Half-Timber",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:half_timber_p0{color_0:7b,color_1:14b}",
 	"pages":[
 		{

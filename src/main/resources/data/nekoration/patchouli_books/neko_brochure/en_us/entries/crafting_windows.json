@@ -1,6 +1,6 @@
 {
 	"name": "Crafting - Windows",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:window_cross{color:7b}",
 	"pages":[
 		{

@@ -1,6 +1,6 @@
 {
 	"name": "Crafting - Candle Holders",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:candle_holder_iron{color:14b}",
 	"pages":[
 		{

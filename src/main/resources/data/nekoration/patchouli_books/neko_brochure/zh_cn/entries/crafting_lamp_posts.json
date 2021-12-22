@@ -1,12 +1,12 @@
 {
 	"name": "合成 - 灯柱",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:lamp_post_iron",
 	"pages":[
 		{
 			"type": "patchouli:spotlight",
 			"title": "制作灯柱",
-			"item": "nekoration:lamp_post_gold{display:{Name:\'{\\\"text\\\":\\\"闪亮！\\\",\\\"italic\\\":false}\'}}",
+			"item": "nekoration:lamp_post_gold{display:{Name:\'{\\\"text\\\":\\\"闪闪发光！\\\",\\\"italic\\\":false}\'}}",
 			"text": "$(br)$(l)灯柱！$()$(br2)他们是向导，无论你走到哪里，他们都会为你照亮道路；$(br2)他们是守卫，让黑暗远离你的家园..."
 		},
 		{
@@ -19,7 +19,7 @@
 			"type": "patchouli:crafting",
 			"title": ".",
 			"recipe": "nekoration:misc/lamp_post_gold",
-			"text": "$(br)其实，灯柱上不仅可以挂灯笼，也可以挂吊盆植物。灯柱也不必直立在地上，也可以贴在墙上."
+			"text": "$(br)其实，灯柱上不仅可以挂灯笼，也可以挂吊盆植物. 灯柱也不必直立在地上，也可以贴在墙上."
 		},
 		{
 			"type": "patchouli:image",

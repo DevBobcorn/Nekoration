@@ -1,6 +1,6 @@
 {
 	"name": "合成 - 石质方块",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:stone_base_bottom{color:14b}",
 	"pages":[
 		{

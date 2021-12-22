@@ -1,6 +1,6 @@
 {
 	"name": "Crafting - Stone Blocks",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:stone_base_bottom{color:14b}",
 	"pages":[
 		{

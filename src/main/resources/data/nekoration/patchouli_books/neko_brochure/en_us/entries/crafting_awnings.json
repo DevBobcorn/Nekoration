@@ -1,6 +1,6 @@
 {
 	"name": "Crafting - Awnings",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:awning_stripe{color:10b}",
 	"pages":[
 		{

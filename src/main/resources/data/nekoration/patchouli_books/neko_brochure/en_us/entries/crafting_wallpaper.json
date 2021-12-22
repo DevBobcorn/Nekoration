@@ -1,6 +1,6 @@
 {
 	"name": "Crafting - Wallpaper",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:wallpaper{BlockEntityTag:{Patterns:[{Pattern:\"ss\",Color:11}],Base:3}}",
 	"pages":[
 		{

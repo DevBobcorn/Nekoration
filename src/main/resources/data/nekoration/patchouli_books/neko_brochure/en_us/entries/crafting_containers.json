@@ -1,6 +1,6 @@
 {
 	"name": "Crafting - Containers",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:drawer{color:0b}",
 	"pages":[
 		{

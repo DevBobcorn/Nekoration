@@ -1,19 +1,19 @@
 {
-	"name": "合成 - 壁纸",
-	"category": "recipes",
+	"name": "合成 - 墙纸",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:wallpaper{BlockEntityTag:{Patterns:[{Pattern:\"ss\",Color:11}],Base:3}}",
 	"pages":[
 		{
 			"type": "patchouli:spotlight",
-			"title": "制作壁纸",
-			"item": "nekoration:wallpaper{BlockEntityTag:{Patterns:[{Pattern:\"cbo\",Color:0},{Pattern:\"tl\",Color:0},{Pattern:\"bs\",Color:0},{Pattern:\"tts\",Color:0},{Pattern:\"moj\",Color:15}],Base:15},display:{Name:\'{\\\"text\\\":\\\"Meow~\\\",\\\"italic\\\":false}\'}}",
-			"text": "$(br)$(l)壁纸$()是一个谎言...$(br2)想给你的房间一种全新的感觉，而不需要重修整个房子吗？ 为什么不试试$(#FF9900)壁纸$()呢? 它能让你的墙壁焕然一新，使用起来也超级简单！"
+			"title": "制作墙纸",
+			"item": "nekoration:wallpaper{BlockEntityTag:{Patterns:[{Pattern:\"cbo\",Color:0},{Pattern:\"tl\",Color:0},{Pattern:\"bs\",Color:0},{Pattern:\"tts\",Color:0},{Pattern:\"moj\",Color:15}],Base:15},display:{Name:\'{\\\"text\\\":\\\"喵~\\\",\\\"italic\\\":false}\'}}",
+			"text": "$(br)$(l)墙纸$()是一个谎言...$(br2)想给你的房间一种全新的感觉，而不需要重修整个房子吗？ 为什么不试试$(#FF9900)墙纸$()呢? 它能让你的墙壁焕然一新，使用起来也超级简单！"
 		},
 		{
 			"type": "patchouli:crafting",
-			"title": "空白壁纸",
+			"title": "空白墙纸",
 			"recipe": "nekoration:wallpaper/wallpaper",
-			"text": "在制作带有复杂图案的壁纸之前，首先要得到一张空白的壁纸. 在配方中加入$(#00EE00)粘液球$()可以让它紧密地贴在墙面上."
+			"text": "在制作带有复杂图案的墙纸之前，首先要得到一张空白的墙纸. 在配方中加入$(#00EE00)粘液球$()可以让它紧密地贴在墙面上."
 		},
 		{
 			"type": "nekoration:crafting_neko",
@@ -28,7 +28,7 @@
 			"item8": "",
 			"item9": "",
 			"result": "nekoration:wallpaper{BlockEntityTag:{Patterns:[{Pattern:\"ss\",Color:11}],Base:0}}",
-			"description": "得到一张空白壁纸之后，你便可以使用$(#AA22FF)旗帜$()来给它添加图案了. 这和$(#33DF66)给盾添加图案的过程$()是完全一样的."
+			"description": "得到一张空白墙纸之后，你便可以使用$(#AA22FF)旗帜$()来给它添加图案了. 这和$(#33DF66)给盾添加图案的过程$()是完全一样的."
 		}
 	]
 }

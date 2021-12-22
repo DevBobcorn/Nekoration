@@ -1,12 +1,12 @@
 {
 	"name": "合成 - 吊盆植物",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:flower_basket_iron",
 	"pages":[
 		{
 			"type": "patchouli:spotlight",
 			"title": "制作吊盆植物",
-			"item": "nekoration:flower_basket_gold{display:{Name:\'{\\\"text\\\":\\\"从这里看风景真好！\\\",\\\"italic\\\":false}\'}}",
+			"item": "nekoration:flower_basket_gold{display:{Name:\'{\\\"text\\\":\\\"上面的风景真好！\\\",\\\"italic\\\":false}\'}}",
 			"text": "$(br)想要挂$(l)一篮子鲜花$()在你的窗边吗？$(br2)$(#FF9900)吊盆植物$()可以挂在灯柱或锁链上，这样它们就可以从高处欣赏美景了(=´∇｀=)..."
 		},
 		{

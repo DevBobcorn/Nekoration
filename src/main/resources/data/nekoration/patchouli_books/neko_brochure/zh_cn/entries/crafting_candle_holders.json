@@ -1,12 +1,12 @@
 {
 	"name": "合成 - 烛台",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:candle_holder_iron{color:14b}",
 	"pages":[
 		{
 			"type": "patchouli:spotlight",
 			"title": "制作烛台",
-			"item": "nekoration:candle_holder_quartz{color:14b,display:{Name:\'{\\\"text\\\":\\\"\\\'我是四爪鱼！\\\",\\\"italic\\\":false}\'}}",
+			"item": "nekoration:candle_holder_quartz{color:14b,display:{Name:\'{\\\"text\\\":\\\"我是四爪鱼！\\\",\\\"italic\\\":false}\'}}",
 			"text": "$(br)你空荡荡的桌子需要稍加点缀吗？别担心，$(l)烛台$()可以帮助你！$(br2)$(#FF9900)烛台$()可以照亮你的桌子，让你的房间充满无限的温暖."
 		},
 		{

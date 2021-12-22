@@ -1,6 +1,6 @@
 {
 	"name": "Hello Neko!",
-	"category": "introduction",
+	"category": "nekoration:introduction",
 	"icon": "nekoration:paw",
 	"pages":[
 		{

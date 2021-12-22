@@ -1,6 +1,6 @@
 {
 	"name": "Crafting - Easel Menus",
-	"category": "recipes",
+	"category": "nekoration:recipes",
 	"icon": "nekoration:easel_menu{color:7b}",
 	"pages":[
 		{

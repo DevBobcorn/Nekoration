@@ -1,6 +1,6 @@
 {
 	"name": "配方",
-	"description": "猫咪装饰中的$(#FF9900)各种配方$().",
+	"description": "关于猫咪装饰中的$(#FF9900)各种配方$().",
 	"icon": "minecraft:crafting_table",
 	"sortnum": 1
 }
