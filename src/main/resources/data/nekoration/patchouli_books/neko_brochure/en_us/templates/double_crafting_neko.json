@@ -1,147 +1,147 @@
 {
 	"components": [
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item11",
 			"x": 4,
 			"y": 10,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item12",
 			"x": 24,
 			"y": 10,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item13",
 			"x": 44,
 			"y": 10,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item14",
 			"x": 4,
 			"y": 30,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item15",
 			"x": 24,
 			"y": 30,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item16",
 			"x": 44,
 			"y": 30,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item17",
 			"x": 4,
 			"y": 50,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item18",
 			"x": 24,
 			"y": 50,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item19",
 			"x": 44,
 			"y": 50,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#result1",
 			"x": 81,
 			"y": 30,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item21",
 			"x": 4,
 			"y": 80,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item22",
 			"x": 24,
 			"y": 80,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item23",
 			"x": 44,
 			"y": 80,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item24",
 			"x": 4,
 			"y": 100,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item25",
 			"x": 24,
 			"y": 100,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item26",
 			"x": 44,
 			"y": 100,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item27",
 			"x": 4,
 			"y": 120,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item28",
 			"x": 24,
 			"y": 120,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#item29",
 			"x": 44,
 			"y": 120,
 			"framed": false
 		},
 		{
-			"type": "item",
+			"type": "patchouli:item",
 			"item": "#result2",
 			"x": 81,
 			"y": 100,
 			"framed": false
 		},
 		{
-			"type": "image",
+			"type": "patchouli:image",
 			"image": "nekoration:textures/gui/brochure/crafting.png",
 			"x": 0,
 			"y": 6,
@@ -153,7 +153,7 @@
 			"texture_height": 256
 		},
 		{
-			"type": "image",
+			"type": "patchouli:image",
 			"image": "nekoration:textures/gui/brochure/crafting.png",
 			"x": 0,
 			"y": 76,
@@ -165,10 +165,10 @@
 			"texture_height": 256
 		},
 		{
-			"type": "header",
+			"type": "patchouli:header",
 			"text": "#title",
 			"x": -1,
 			"y": -1
-		},
+		}
 	]
 }
