@@ -28,8 +28,8 @@ public class CustomBlockEntity extends BlockEntity {
     }
     
 	@Override
-	public CompoundTag save(CompoundTag tag) {
-		super.save(tag); // The super call is required to save the tile's location
+	public void saveAdditional(CompoundTag tag) {
+		super.saveAdditional(tag); // The super call is required to save the tile's location
 		tag.putInt("Model", model);
 		tag.putByte("Dir", dir);
 		tag.putIntArray("Offset", offset);
@@ -37,6 +37,12 @@ public class CustomBlockEntity extends BlockEntity {
 		tag.put("Display", NbtUtils.writeBlockState(displayBlock));
 		CompoundTag itm = new CompoundTag();
 		tag.put("Contain", containItem.save(itm));
+	}
+
+	@Override
+	public CompoundTag save(CompoundTag tag) {
+		super.save(tag); // The super call is required to save the tile's location
+		saveAdditional(tag);
 		return tag;
 	}
 

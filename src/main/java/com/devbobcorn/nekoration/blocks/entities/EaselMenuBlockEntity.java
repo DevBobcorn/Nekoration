@@ -33,19 +33,15 @@ public class EaselMenuBlockEntity extends ContainerBlockEntity {
 
 	public final boolean white; // Not saved or synced between clients and server, just temporarily stores the variant type...
 
-	public EaselMenuBlockEntity(BlockPos pos, BlockState state) {
-		this(false, pos, state);
-	}
-
 	public EaselMenuBlockEntity(boolean w, BlockPos pos, BlockState state) {
 		super(ModBlockEntityType.EASEL_MENU_TYPE.get(), pos, state);
 		white = w;
 		isGlowing = false;
 	}
 
-	public CompoundTag save(CompoundTag tag) {
+	public void saveAdditional(CompoundTag tag) {
 		// Items...
-		super.save(tag);
+		super.saveAdditional(tag);
 		// Texts...
 		for (int i = 0; i < 8; ++i) {
 			String s = Component.Serializer.toJson(this.messages[i]);
@@ -57,6 +53,11 @@ public class EaselMenuBlockEntity extends ContainerBlockEntity {
 		}
 		// Glowing...
 		tag.putBoolean("Glowing", isGlowing);
+	}
+
+	public CompoundTag save(CompoundTag tag){
+		super.save(tag);
+		saveAdditional(tag);
 		return tag;
 	}
 

@@ -27,12 +27,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.PacketDistributor;
 
 
-public class ItemDisplayBlockEntity extends RandomizableContainerBlockEntity {
+public class ItemDisplayBlockEntity extends ContainerBlockEntity {
 	private final ItemStack airStack = ItemStack.EMPTY;
 	public ItemStack[] renderItems = { airStack, airStack, airStack, airStack };
 
@@ -78,7 +77,6 @@ public class ItemDisplayBlockEntity extends RandomizableContainerBlockEntity {
             }
         }
     };
-	private NonNullList<ItemStack> items;
 
 	public ItemDisplayBlockEntity(BlockPos pos, BlockState state) {
 		super(ModBlockEntityType.ITEM_DISPLAY_TYPE.get(), pos, state);
@@ -96,9 +94,7 @@ public class ItemDisplayBlockEntity extends RandomizableContainerBlockEntity {
 
 	public CompoundTag save(CompoundTag tag) {
 		super.save(tag);
-		if (!this.trySaveLootTable(tag)) {
-			ContainerHelper.saveAllItems(tag, this.items);
-		}
+		saveAdditional(tag);
 		return tag;
 	}
 

@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Iterator;
 import java.util.stream.IntStream;
 
-public abstract class ContainerBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer{
+public abstract class ContainerBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
     private final int[] slots;
     protected NonNullList<ItemStack> items;
 
@@ -51,14 +51,11 @@ public abstract class ContainerBlockEntity extends RandomizableContainerBlockEnt
     }
 
     @Override
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         Iterator<ItemStack> it = this.items.iterator();
         ItemStack stack;
-        do
-        {
-            if(!it.hasNext())
-            {
+        do {
+            if(!it.hasNext()) {
                 return true;
             }
             stack = (ItemStack) it.next();
@@ -67,12 +64,9 @@ public abstract class ContainerBlockEntity extends RandomizableContainerBlockEnt
         return false;
     }
 
-    public boolean isFull()
-    {
-        for(ItemStack stack : this.items)
-        {
-            if(stack.isEmpty())
-            {
+    public boolean isFull() {
+        for(ItemStack stack : this.items) {
+            if(stack.isEmpty()) {
                 return false;
             }
         }
@@ -80,23 +74,17 @@ public abstract class ContainerBlockEntity extends RandomizableContainerBlockEnt
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound)
-    {
-        super.save(compound);
-        if(!this.trySaveLootTable(compound))
-        {
+    public void saveAdditional(CompoundTag compound) {
+        if(!this.trySaveLootTable(compound)) {
             ContainerHelper.saveAllItems(compound, this.items);
         }
-        return compound;
     }
 
     @Override
-    public void load(CompoundTag compound)
-    {
+    public void load(CompoundTag compound) {
         super.load(compound);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        if(!this.tryLoadLootTable(compound))
-        {
+        if(!this.tryLoadLootTable(compound)) {
             ContainerHelper.loadAllItems(compound, this.items);
         }
     }

@@ -24,11 +24,10 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 
-public class CabinetBlockEntity extends RandomizableContainerBlockEntity {
+public class CabinetBlockEntity extends ContainerBlockEntity {
 	public final boolean large;
     private ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level world, BlockPos pos, BlockState state) {
@@ -53,7 +52,6 @@ public class CabinetBlockEntity extends RandomizableContainerBlockEntity {
             }
         }
     };
-	private NonNullList<ItemStack> items;
 
 	public CabinetBlockEntity(BlockPos pos, BlockState state) {
 		this(pos, state, true);
@@ -67,9 +65,7 @@ public class CabinetBlockEntity extends RandomizableContainerBlockEntity {
 
 	public CompoundTag save(CompoundTag tag) {
 		super.save(tag);
-		if (!this.trySaveLootTable(tag)) {
-			ContainerHelper.saveAllItems(tag, this.items);
-		}
+		saveAdditional(tag);
 		return tag;
 	}
 
