@@ -39,13 +39,6 @@ public class CustomBlockEntity extends BlockEntity {
 		tag.put("Contain", containItem.save(itm));
 	}
 
-	@Override
-	public CompoundTag save(CompoundTag tag) {
-		super.save(tag); // The super call is required to save the tile's location
-		saveAdditional(tag);
-		return tag;
-	}
-
 	// This is where you load the data that you saved in writeToNBT
 	@Override
 	public void load(CompoundTag tag) {
@@ -76,13 +69,13 @@ public class CustomBlockEntity extends BlockEntity {
     @Override
 	@Nullable
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		CompoundTag nbtTagCompound = new CompoundTag();
-		save(nbtTagCompound);
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	public CompoundTag getUpdateTag() {
-		return this.save(new CompoundTag());
+		CompoundTag tag = new CompoundTag();
+		this.saveAdditional(tag);
+		return tag;
 	}
 
 	@Override

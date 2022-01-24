@@ -47,14 +47,6 @@ public class PrismapTableBlockEntity extends BlockEntity {
 			chunkModel.compile();
 	}
 
-    public CompoundTag save(CompoundTag tag){
-        return super.save(tag);
-    }
-
-	public CompoundTag getUpdateTag() {
-		return this.save(new CompoundTag());
-	}
-
     public boolean shouldRenderFace(Direction dir) {
         return Block.shouldRenderFace(this.getBlockState(), this.level, this.getBlockPos(), dir, this.getBlockPos().relative(dir));
     }

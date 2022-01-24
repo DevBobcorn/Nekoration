@@ -92,12 +92,6 @@ public class ItemDisplayBlockEntity extends ContainerBlockEntity {
 		this.playSound = p;
 	}
 
-	public CompoundTag save(CompoundTag tag) {
-		super.save(tag);
-		saveAdditional(tag);
-		return tag;
-	}
-
 	public void load(CompoundTag tag) {
 		super.load(tag);
 		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
@@ -122,7 +116,9 @@ public class ItemDisplayBlockEntity extends ContainerBlockEntity {
 	}
 
 	public CompoundTag getUpdateTag() {
-		return this.save(new CompoundTag());
+		CompoundTag tag = new CompoundTag();
+		this.saveAdditional(tag);
+		return tag;
 	}
 
 	public boolean onlyOpCanSetNbt() {

@@ -55,12 +55,6 @@ public class EaselMenuBlockEntity extends ContainerBlockEntity {
 		tag.putBoolean("Glowing", isGlowing);
 	}
 
-	public CompoundTag save(CompoundTag tag){
-		super.save(tag);
-		saveAdditional(tag);
-		return tag;
-	}
-
 	public void load(CompoundTag tag) {
 		// Items...
 		super.load(tag);
@@ -85,7 +79,9 @@ public class EaselMenuBlockEntity extends ContainerBlockEntity {
 	}
 
 	public CompoundTag getUpdateTag() {
-		return this.save(new CompoundTag());
+		CompoundTag tag = new CompoundTag();
+		this.saveAdditional(tag);
+		return tag;
 	}
 
 	public boolean onlyOpCanSetNbt() {

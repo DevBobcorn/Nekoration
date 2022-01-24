@@ -63,12 +63,6 @@ public class CabinetBlockEntity extends ContainerBlockEntity {
 		this.items = NonNullList.withSize((l ? 6 : 3) * 9, ItemStack.EMPTY);
 	}
 
-	public CompoundTag save(CompoundTag tag) {
-		super.save(tag);
-		saveAdditional(tag);
-		return tag;
-	}
-
 	public void load(CompoundTag tag) {
 		super.load(tag);
 		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
@@ -83,7 +77,9 @@ public class CabinetBlockEntity extends ContainerBlockEntity {
 	}
 
 	public CompoundTag getUpdateTag() {
-		return this.save(new CompoundTag());
+		CompoundTag tag = new CompoundTag();
+		this.saveAdditional(tag);
+		return tag;
 	}
 
 	public boolean onlyOpCanSetNbt() {
