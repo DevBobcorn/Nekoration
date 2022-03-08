@@ -7,6 +7,7 @@ import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.items.PaletteItem;
+import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -63,7 +64,7 @@ public class CustomBlock extends Block implements EntityBlock {
 			}
 			return;
 		}
-		LOGGER.error("Tile Entity NOT Found!");
+		LogUtils.getLogger().error("Tile Entity NOT Found!");
 	}
 
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,

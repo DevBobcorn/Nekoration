@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.devbobcorn.nekoration.blocks.entities.PhonographBlockEntity;
+import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,7 +38,7 @@ public class PhonographBlock extends Block implements EntityBlock {
 		if (tileentity instanceof PhonographBlockEntity) { // prevent a crash if not the right type, or is null
             return;
 		}
-        LOGGER.error("Tile Entity NOT Found!");
+        LogUtils.getLogger().error("Tile Entity NOT Found!");
 	}
 
 	@Override

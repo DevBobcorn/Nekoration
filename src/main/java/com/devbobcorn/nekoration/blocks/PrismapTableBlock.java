@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.devbobcorn.nekoration.blocks.entities.PrismapTableBlockEntity;
+import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -41,7 +42,7 @@ public class PrismapTableBlock extends Block implements EntityBlock {
 		if (tileentity instanceof PrismapTableBlockEntity) { // prevent a crash if not the right type, or is null
             return;
 		}
-        LOGGER.error("Tile Entity NOT Found!");
+        LogUtils.getLogger().error("Tile Entity NOT Found!");
 	}
 
 	// Press 'F5' to refresh... ^._.^==~
@@ -52,7 +53,7 @@ public class PrismapTableBlock extends Block implements EntityBlock {
 				PrismapTableBlockEntity te = (PrismapTableBlockEntity) tileentity;
 				te.createIfNull();
 				te.refresh();
-				LOGGER.info("Refreshing...");
+				LogUtils.getLogger().info("Refreshing...");
 			}
 		}
 		return InteractionResult.SUCCESS;

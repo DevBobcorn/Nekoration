@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
+import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -66,7 +67,7 @@ public class EaselMenuBlock extends DyeableHorizontalWoodenBlock implements Enti
 			}
             return;
 		}
-		LOGGER.error("Tile Entity NOT Found!");
+		LogUtils.getLogger().error("Tile Entity NOT Found!");
 	}
 
 	@Override

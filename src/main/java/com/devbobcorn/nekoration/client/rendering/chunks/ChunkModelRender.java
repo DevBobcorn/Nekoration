@@ -384,7 +384,8 @@ public class ChunkModelRender {
                         }
                     }
 
-                    FluidState fluidstate = renderchunkregion.getFluidState(blockpos2);
+                    BlockState blockstate1 = renderchunkregion.getBlockState(blockpos2);
+                    FluidState fluidstate = blockstate1.getFluidState();
                     net.minecraftforge.client.model.data.IModelData modelData = getModelData(blockpos2);
                     for (RenderType rendertype : RenderType.chunkBufferLayers()) {
                         net.minecraftforge.client.ForgeHooksClient.setRenderType(rendertype);
@@ -394,8 +395,7 @@ public class ChunkModelRender {
                                 ChunkModelRender.this.beginLayer(bufferbuilder);
                             }
 
-                            if (blockrenderdispatcher.renderLiquid(blockpos2, renderchunkregion, bufferbuilder,
-                                    fluidstate)) {
+                            if (blockrenderdispatcher.renderLiquid(blockpos2, renderchunkregion, bufferbuilder, blockstate1, fluidstate)) {
                                 p_112869_.isCompletelyEmpty = false;
                                 p_112869_.hasBlocks.add(rendertype);
                             }
