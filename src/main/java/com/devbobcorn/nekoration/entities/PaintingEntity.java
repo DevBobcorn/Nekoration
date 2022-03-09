@@ -45,7 +45,6 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 
 	public PaintingEntity(Level world, BlockPos pos, Direction dir, short w, short h) {
 		// Constructor 2: the one for server-side to create brand-new PaintingEntity Objects
-		//super(ModEntityType.$PAINTING_TYPE.get(), world, pos); TODO
 		super(ModEntityType.PAINTING_TYPE, world, pos);
 		this.setDirection(dir);
 		data = new PaintingData(w, h, false, this.uuid);
@@ -53,7 +52,6 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 
 	public PaintingEntity(Level world, BlockPos pos, Direction dir, short w, short h, UUID existingId) {
 		// Constructor 3: the one for server-side to duplicate PaintingEntity Objects
-		//super(ModEntityType.$PAINTING_TYPE.get(), world, pos); TODO
 		super(ModEntityType.PAINTING_TYPE, world, pos);
 		this.setDirection(dir);
 		data = new PaintingData(w, h, false, existingId);

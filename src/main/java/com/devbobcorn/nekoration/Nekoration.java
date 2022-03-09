@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.containers.ModMenuType;
 import com.devbobcorn.nekoration.blocks.entities.ModBlockEntityType;
-import com.devbobcorn.nekoration.entities.ModEntityType;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuData;
 import com.devbobcorn.nekoration.network.C2SUpdatePaintingData;
@@ -42,7 +41,7 @@ public class Nekoration {
 
 		ModBlocks.BLOCKS.register(modEventBus);
 		ModItems.ITEMS.register(modEventBus);
-		ModEntityType.ENTITY_TYPES.register(modEventBus);
+		//ModEntityType.ENTITY_TYPES.register(modEventBus);
 		ModMenuType.MENU_TYPES.register(modEventBus);
 		ModBlockEntityType.TILE_ENTITY_TYPES.register(modEventBus);
 		ModRecipes.RECIPE_SERIALIZERS.register(modEventBus);

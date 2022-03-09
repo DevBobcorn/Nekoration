@@ -75,7 +75,6 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
 
 	public WallPaperEntity(Level world, BlockPos pos, Direction dir, ItemStack stack, Part part) {
 		// Constructor 2: the one for server-side to create WallPaperEntity Objects
-		//super(ModEntityType.$WALLPAPER_TYPE.get(), world, pos); TODO
 		super(ModEntityType.WALLPAPER_TYPE, world, pos);
 		this.part = part;
 		this.setDirection(dir);
