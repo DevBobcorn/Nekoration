@@ -30,6 +30,13 @@ public class NekoShapedRecipeExtension implements ICraftingCategoryExtension {
         ingredients.setOutputLists(VanillaTypes.ITEM, recipe.getOutputs());
     }
 
+    /*
+    @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
+        craftingGridHelper.setInputs(builder, VanillaTypes.ITEM, recipe.getInputs(), getWidth(), getHeight());
+    }
+    */
+
     @Nullable
 	public Size2i getSize() {
 		return new Size2i(recipe.getWidth(), recipe.getHeight());
