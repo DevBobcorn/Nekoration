@@ -3,9 +3,9 @@ import json, random, copy, hashlib
 
 colors = ["black","blue","brown","cyan","gray","green","light_blue","light_gray","lime","magenta","orange","pink","purple","red","white","yellow","unknown","blank"]
 colors_us  = ["Black","Blue","Brown","Cyan","Gray","Green","Light Blue","Light Gray","Lime","Magenta","Orange","Pink","Purple","Red","White","Yellow","Some","Blank"]
-wooden_us  = ["Dark Oak","Blue Wood","Spruce","Warped","Jungle","Green Wood","Magic","Oak","Willow","Crimson","Acacia","Mahogany","Umbran","Cherry","Birch","Palm","Some","Air"]
+wooden_us  = ["Dark Oak","Blue Wood","Spruce","Warped","Jungle","Green Wood","Magic","Oak","Willow","Crimson","Acacia","Mangrove","Umbran","Cherry","Birch","Palm","Some","Air"]
 colors_cn = ["黑色","蓝色","棕色","青色","灰色","绿色","淡蓝色","淡灰色","黄绿色","品红色","橙色","粉色","紫色","红色","白色","黄色","","空白"]
-wooden_cn = ["深色橡木","蓝木","云杉木","诡异木","丛林木","绿木","魔法木","橡木","柳木","绯红木","金合欢木","桃花心木","暗影木","樱木","白桦木","棕榈木","","空气"]
+wooden_cn = ["深色橡木","蓝木","云杉木","诡异木","丛林木","绿木","魔法木","橡木","柳木","绯红木","金合欢木","红树林木","暗影木","樱木","白桦木","棕榈木","","空气"]
 woods = ["pumpkin","dark_oak","spruce","warped","jungle","oak","crimson","acacia","birch"]
 woods_cn = ["南瓜","深色橡木","云杉木","诡异木","丛林木","橡木","绯红木","金合欢木","白桦木"]
 chair_us = "Chair"

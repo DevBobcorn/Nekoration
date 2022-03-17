@@ -273,7 +273,7 @@ public class NekoColors {
 		LIME((byte)8, "lime", 0x9fad81), // +willow
 		MAGENTA((byte)9, "magenta", 0x873468),  // crimson
 		ORANGE((byte)10, "orange", 0xb4653a), // acacia
-		PINK((byte)11, "pink", 0xcb8684), // +mahogany
+		PINK((byte)11, "pink", 0x9a4a45), // +mangrove prev: mahogany 0xcd8684
 		PURPLE((byte)12, "purple", 0x7b688c), // +umbran
 		RED((byte)13, "red", 0x9c2525), // +cherry
 		WHITE((byte)14, "white", 0xe8d699), // birch

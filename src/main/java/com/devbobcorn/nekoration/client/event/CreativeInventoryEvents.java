@@ -369,16 +369,17 @@ public class CreativeInventoryEvents
         final WoodFilter WARPED = new WoodFilter(EnumWoodenColor.CYAN, new ItemStack(Blocks.WARPED_PLANKS));
         final WoodFilter CRIMSON = new WoodFilter(EnumWoodenColor.MAGENTA, new ItemStack(Blocks.CRIMSON_PLANKS));
         final WoodFilter DARK_OAK = new WoodFilter(EnumWoodenColor.BLACK, new ItemStack(Blocks.DARK_OAK_PLANKS));
+        // Up coming Wood Type
+        final WoodFilter MANGROVE = new WoodFilter(EnumWoodenColor.PINK, ItemIconHelper.getCustomBlockItem(10003));
         // BOP Wood Type
         final WoodFilter MAGIC = new WoodFilter(EnumWoodenColor.LIGHT_BLUE, ItemIconHelper.getCustomBlockItem(10001));
         final WoodFilter WILLOW = new WoodFilter(EnumWoodenColor.LIME, ItemIconHelper.getCustomBlockItem(10002));
-        final WoodFilter MAHOGANY = new WoodFilter(EnumWoodenColor.PINK, ItemIconHelper.getCustomBlockItem(10003));
         final WoodFilter UMBRAN = new WoodFilter(EnumWoodenColor.PURPLE, ItemIconHelper.getCustomBlockItem(10004));
         final WoodFilter CHERRY = new WoodFilter(EnumWoodenColor.RED, ItemIconHelper.getCustomBlockItem(10005));
         final WoodFilter PALM = new WoodFilter(EnumWoodenColor.YELLOW, ItemIconHelper.getCustomBlockItem(10006));
 
         WoodFilter[] vanilla = new WoodFilter[] { OAK, BIRCH, ACACIA, JUNGLE, SPRUCE, WARPED, CRIMSON, DARK_OAK };
-        WoodFilter[] extra   = new WoodFilter[] { MAGIC, WILLOW, MAHOGANY, UMBRAN, CHERRY, PALM };
+        WoodFilter[] extra   = new WoodFilter[] { MANGROVE, MAGIC, WILLOW, UMBRAN, CHERRY, PALM };
 
         this.woodFilters = new ArrayList<>();
         this.woodFilters.addAll(Arrays.asList(vanilla));
