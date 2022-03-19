@@ -120,6 +120,9 @@ public final class ModBlocks {
     public static final RegistryObject<Block> WARPED_TABLE = BLOCKS.register("warped_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> WARPED_ROUND_TABLE = BLOCKS.register("warped_round_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> WARPED_CHAIR = BLOCKS.register("warped_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 10, 26));
+    public static final RegistryObject<Block> MANGROVE_TABLE = BLOCKS.register("mangrove_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> MANGROVE_ROUND_TABLE = BLOCKS.register("mangrove_round_table", () -> new TableBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
+    public static final RegistryObject<Block> MANGROVE_CHAIR = BLOCKS.register("mangrove_chair", () -> new ChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 10, 26));
 
     public static final RegistryObject<Block> GLASS_TABLE = BLOCKS.register("glass_table", () -> new DyeableWoodenBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> GLASS_ROUND_TABLE = BLOCKS.register("glass_round_table", () -> new DyeableWoodenBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));

@@ -141,6 +141,9 @@ public class VanillaCompat {
 			setFlammable.invoke(fire, ModBlocks.SPRUCE_CHAIR.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.SPRUCE_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.SPRUCE_ROUND_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.MANGROVE_CHAIR.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.MANGROVE_TABLE.get(), 5, 20);
+			setFlammable.invoke(fire, ModBlocks.MANGROVE_ROUND_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.GLASS_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.GLASS_ROUND_TABLE.get(), 5, 20);
 			setFlammable.invoke(fire, ModBlocks.ARM_CHAIR.get(), 5, 20);

@@ -130,6 +130,7 @@ public final class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPRUCE_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRIMSON_ROUND_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.WARPED_ROUND_TABLE.get(), transparentRenderType);
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.MANGROVE_ROUND_TABLE.get(), transparentRenderType);
 		// Glass panes...
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.GLASS_TABLE.get(), transparentRenderType);
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.GLASS_ROUND_TABLE.get(), transparentRenderType);
