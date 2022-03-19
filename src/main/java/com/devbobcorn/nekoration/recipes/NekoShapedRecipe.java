@@ -1,7 +1,6 @@
 package com.devbobcorn.nekoration.recipes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -314,9 +313,9 @@ public class NekoShapedRecipe extends CustomRecipe implements net.minecraftforge
 		return slots;
 	}
 
-	public List<List<ItemStack>> getOutputs(){
+	public List<ItemStack> getOutputs(){
 		List<ItemStack> variants = new ArrayList<>();
 		variants.add(this.result.copy());
-		return Arrays.asList(variants);
+		return variants;
 	}
 }

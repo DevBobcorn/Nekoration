@@ -6,7 +6,9 @@ import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.recipes.NekoColorInheritRecipe;
 
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
+import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.Size2i;
@@ -25,17 +27,10 @@ public class NekoColorInheritRecipeExtension implements ICraftingCategoryExtensi
 	}
 
     @Override
-    public void setIngredients(IIngredients ingredients) {
-        ingredients.setInputLists(VanillaTypes.ITEM, recipe.getInputs());
-        ingredients.setOutputLists(VanillaTypes.ITEM, recipe.getOutputs());
-    }
-
-    /*
-    @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
         craftingGridHelper.setInputs(builder, VanillaTypes.ITEM, recipe.getInputs(), getWidth(), getHeight());
+        craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM, recipe.getOutputs());
     }
-    */
 
     @Nullable
 	public Size2i getSize() {

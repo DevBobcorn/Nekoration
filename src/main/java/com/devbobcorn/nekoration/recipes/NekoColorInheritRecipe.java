@@ -400,8 +400,7 @@ public class NekoColorInheritRecipe extends CustomRecipe implements net.minecraf
         return slots;
     }
 
-    public List<List<ItemStack>> getOutputs() {
-        List<List<ItemStack>> slots = new ArrayList<>();
+    public List<ItemStack> getOutputs() {
         List<ItemStack> variants = new ArrayList<>();
         Item resultItem = this.result.getItem(); // TODO
         if (dyeable(this.result)) { // Dyeable but does not contain color nbt, iterate all variants...
@@ -428,7 +427,6 @@ public class NekoColorInheritRecipe extends CustomRecipe implements net.minecraf
         } else {
             variants.add(this.result.copy());
         }
-        slots.add(variants);
-        return slots;
+        return variants;
     }
 }
