@@ -214,6 +214,7 @@ rplc_1 = {
     'diamond': ('heaven', 1.0),
     'cat\'s': ('mai', 1.0),
     'cat ': ('mii ', 1.0),
+    'angrove': ('<+>', 1.0),
     'tion': ('<?>', 0.8),
     'to ': ('2 ', 1.0),
     'and ': ('& ', 1.0),
@@ -245,7 +246,8 @@ rplc_2 = {
     '<*>': 'dog',
     '<#>': 'rip',
     '<?>': 'shun',
-    '<$>': 'sh'
+    '<$>': 'sh',
+    '<+>': 'oewgrove'
 }
 
 def toLolCat(instr):
