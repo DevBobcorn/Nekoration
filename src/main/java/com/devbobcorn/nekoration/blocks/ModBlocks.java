@@ -127,6 +127,7 @@ public final class ModBlocks {
     public static final RegistryObject<Block> GLASS_TABLE = BLOCKS.register("glass_table", () -> new DyeableWoodenBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> GLASS_ROUND_TABLE = BLOCKS.register("glass_round_table", () -> new DyeableWoodenBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
     public static final RegistryObject<Block> ARM_CHAIR = BLOCKS.register("arm_chair", () -> new DyeableChairBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), 8, 24));
+    public static final RegistryObject<Block> BENCH = BLOCKS.register("bench", () -> new BenchBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
 
     public static final RegistryObject<Block> DRAWER = BLOCKS.register("drawer", () -> new CabinetBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), false));
     public static final RegistryObject<Block> CABINET = BLOCKS.register("cabinet", () -> new CabinetBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true));

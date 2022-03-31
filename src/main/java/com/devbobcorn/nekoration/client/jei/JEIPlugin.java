@@ -60,6 +60,7 @@ public class JEIPlugin implements IModPlugin {
         registration.registerSubtypeInterpreter(ModBlocks.GLASS_TABLE.get().asItem(), (stack, ctx) -> String.valueOf(DyeableWoodenBlockItem.getColor(stack)));
         registration.registerSubtypeInterpreter(ModBlocks.GLASS_ROUND_TABLE.get().asItem(), (stack, ctx) -> String.valueOf(DyeableWoodenBlockItem.getColor(stack)));
         registration.registerSubtypeInterpreter(ModBlocks.ARM_CHAIR.get().asItem(), (stack, ctx) -> String.valueOf(DyeableWoodenBlockItem.getColor(stack)));
+        registration.registerSubtypeInterpreter(ModBlocks.BENCH.get().asItem(), (stack, ctx) -> String.valueOf(DyeableWoodenBlockItem.getColor(stack)));
         // - Container
         registration.registerSubtypeInterpreter(ModBlocks.EASEL_MENU.get().asItem(), (stack, ctx) -> String.valueOf(DyeableWoodenBlockItem.getColor(stack)));
         registration.registerSubtypeInterpreter(ModBlocks.EASEL_MENU_WHITE.get().asItem(), (stack, ctx) -> String.valueOf(DyeableWoodenBlockItem.getColor(stack)));

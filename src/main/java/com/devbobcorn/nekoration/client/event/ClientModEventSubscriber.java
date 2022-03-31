@@ -213,6 +213,7 @@ public final class ClientModEventSubscriber {
 		}, ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get(),
 				ModBlocks.CUPBOARD.get(), ModBlocks.SHELF.get(), ModBlocks.WALL_SHELF.get(),
 				ModBlocks.GLASS_TABLE.get(), ModBlocks.GLASS_ROUND_TABLE.get(), ModBlocks.ARM_CHAIR.get(),
+				ModBlocks.BENCH.get(),
 				ModBlocks.DRAWER.get(), ModBlocks.CABINET.get(), ModBlocks.DRAWER_CHEST.get());
 
 		event.getBlockColors().register((state, view, pos, tintIndex) -> {
@@ -310,7 +311,8 @@ public final class ClientModEventSubscriber {
 		ModBlocks.WINDOW_SHADE.get().asItem(), ModBlocks.WINDOW_LANCET.get().asItem(),
 		ModBlocks.EASEL_MENU.get().asItem(), ModBlocks.EASEL_MENU_WHITE.get().asItem(),
 		ModBlocks.GLASS_TABLE.get().asItem(), ModBlocks.GLASS_ROUND_TABLE.get().asItem(),
-		ModBlocks.CUPBOARD.get().asItem(), ModBlocks.SHELF.get().asItem(), ModBlocks.WALL_SHELF.get().asItem(),
+		ModBlocks.CUPBOARD.get().asItem(), ModBlocks.SHELF.get().asItem(),
+		ModBlocks.WALL_SHELF.get().asItem(), ModBlocks.BENCH.get(),
 		ModBlocks.ARM_CHAIR.get().asItem(), ModBlocks.DRAWER.get().asItem(),
 		ModBlocks.CABINET.get().asItem(), ModBlocks.DRAWER_CHEST.get().asItem());
 

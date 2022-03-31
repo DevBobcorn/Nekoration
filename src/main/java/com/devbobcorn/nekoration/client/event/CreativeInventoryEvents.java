@@ -339,7 +339,7 @@ public class CreativeInventoryEvents
                     item == ModBlocks.AWNING_STRIPE.get().asItem() ||
                     item == ModBlocks.AWNING_STRIPE_SHORT.get().asItem()) && decorFilters.get(1).enabled)
                 item.fillItemCategory(ModItemTabs.DECOR_GROUP, newItems);
-            else if ((t2 = itemId.endsWith("table") || itemId.endsWith("chair")) && decorFilters.get(2).enabled)
+            else if ((t2 = itemId.endsWith("table") || itemId.endsWith("chair") || itemId.endsWith("bench")) && decorFilters.get(2).enabled)
                 item.fillItemCategory(ModItemTabs.DECOR_GROUP, newItems);
             else if ((t3 = item == ModBlocks.EASEL_MENU.get().asItem() ||
                     item == ModBlocks.EASEL_MENU_WHITE.get().asItem() ||
