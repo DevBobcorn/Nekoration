@@ -14,16 +14,7 @@ public class ShortAwningBlock extends DyeableHorizontalBlock {
 		super(settings);
 	}
 
-	public VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
-		return SHAPE;
-	}
-
-	public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos) {
-		return SHAPE;
-	}
-
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos,
-			CollisionContext ctx) {
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
 		return SHAPE;
 	}
 }
