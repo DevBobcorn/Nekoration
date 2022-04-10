@@ -38,6 +38,7 @@ awningShortRecipe = [ "  #"," # ","# 1" ]
 easelMenuRecipe = [ "#0#","#0#","# #" ]
 
 armChairRecipe = [ "#  ","#11","###" ]
+benchRecipe = [ "T  ","###","# #" ]
 
 glassTableRecipe = [ "#0#","# #","# #" ]
 glassRoundTableRecipe = [ "000"," # "," # " ]
@@ -152,6 +153,16 @@ if True: # Neko Shaped / Vanilla Shaped
             recipeObj['key']['#'] = getVanilla(woods[wood] + "_planks")
             recipeObj['result'] = getBlockNBTResult("arm_chair","", wdids[wood], 4)
             with open("furniture/" + woods[wood] + "_arm_chair.json", "w+") as f:
+                f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
+
+        # bench
+        recipeObj['key'].clear()
+        recipeObj['pattern'] = benchRecipe
+        for wood in range(0, len(woods)):
+            recipeObj['key']['T'] = getVanilla(woods[wood] + "_sign")
+            recipeObj['key']['#'] = getVanilla(woods[wood] + "_planks")
+            recipeObj['result'] = getBlockNBTResult("bench","", wdids[wood], 4)
+            with open("furniture/" + woods[wood] + "_bench.json", "w+") as f:
                 f.write(json.dumps(recipeObj, sort_keys=False, indent=4, separators=(',', ': ')))
 
         # glass furniture

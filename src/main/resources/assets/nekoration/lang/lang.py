@@ -29,9 +29,9 @@ windows_cn = ["简易窗","拱形窗","玻璃窗","尖头窗","百叶窗","窗�
 doors = ["door_1","door_2","door_3","door_tall_1","door_tall_2","door_tall_3"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
 doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
-decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","easel_menu","easel_menu_white","glass_table","glass_round_table","arm_chair","cabinet","drawer","drawer_chest","cupboard","shelf","wall_shelf"]
-decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu","%s White Easel Menu","%s Glass Table","%s Round Glass Table","%s Arm Chair","%s Cabinet","%s Drawer","%s Chest of Drawers","%s Cupboard","%s Shelf","%s Wall Shelf"]
-decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","%s展架","%s白色展架","%s玻璃桌","%s玻璃圆桌","%s扶手椅","%s橱柜","%s抽屉","%s斗柜","%s壁橱","%s搁板","%s墙架"]
+decors = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","easel_menu","easel_menu_white","glass_table","glass_round_table","arm_chair","bench","cabinet","drawer","drawer_chest","cupboard","shelf","wall_shelf"]
+decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Easel Menu","%s White Easel Menu","%s Glass Table","%s Round Glass Table","%s Arm Chair","%s Bench","%s Cabinet","%s Drawer","%s Chest of Drawers","%s Cupboard","%s Shelf","%s Wall Shelf"]
+decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","%s展架","%s白色展架","%s玻璃桌","%s玻璃圆桌","%s扶手椅","%s长椅","%s橱柜","%s抽屉","%s斗柜","%s壁橱","%s搁板","%s墙架"]
 # Find it a bit strange to say "Candle Holder with %s candle", so I just ignore their color
 items = ["brochure","paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette","painting.blank","painting.painted","painting.magic","wallpaper","camera"]
 items_us = ["Neko Brochure [WIP]","Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Blank Painting (%sx%s)","Painting (%sx%s)","Linked Painting (%sx%s)","%s Wallpaper","Camera"]

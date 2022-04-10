@@ -1,0 +1,23 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "T  ",
+        "###",
+        "# #"
+    ],
+    "key": {
+        "T": {
+            "item": "minecraft:acacia_sign"
+        },
+        "#": {
+            "item": "minecraft:acacia_planks"
+        }
+    },
+    "result": {
+        "item": "nekoration:bench",
+        "nbt": {
+            "color": 10
+        },
+        "count": 4
+    }
+}

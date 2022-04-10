@@ -1,0 +1,23 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "T  ",
+        "###",
+        "# #"
+    ],
+    "key": {
+        "T": {
+            "item": "minecraft:dark_oak_sign"
+        },
+        "#": {
+            "item": "minecraft:dark_oak_planks"
+        }
+    },
+    "result": {
+        "item": "nekoration:bench",
+        "nbt": {
+            "color": 0
+        },
+        "count": 4
+    }
+}

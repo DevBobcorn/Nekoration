@@ -1,0 +1,23 @@
+{
+    "type": "nekoration:neko_crafting_shaped",
+    "pattern": [
+        "T  ",
+        "###",
+        "# #"
+    ],
+    "key": {
+        "T": {
+            "item": "minecraft:jungle_sign"
+        },
+        "#": {
+            "item": "minecraft:jungle_planks"
+        }
+    },
+    "result": {
+        "item": "nekoration:bench",
+        "nbt": {
+            "color": 4
+        },
+        "count": 4
+    }
+}
