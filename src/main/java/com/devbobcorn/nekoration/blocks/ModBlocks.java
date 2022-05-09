@@ -10,9 +10,6 @@ import com.devbobcorn.nekoration.blocks.frames.DyeableWindowTopBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CakeBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
@@ -139,8 +136,6 @@ public final class ModBlocks {
     public static final RegistryObject<Block> CUPBOARD = BLOCKS.register("cupboard", () -> new CupboardBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true));
     public static final RegistryObject<Block> SHELF = BLOCKS.register("shelf", () -> new CupboardBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), false));
     public static final RegistryObject<Block> WALL_SHELF = BLOCKS.register("wall_shelf", () -> new WallShelfBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
-
-    public static final RegistryObject<Block> MISAKA_CAKE = BLOCKS.register("misaka_cake", () -> new CakeBlock(BlockBehaviour.Properties.of(Material.CAKE).strength(0.5F).sound(SoundType.WOOL)));
 
     public static ToIntFunction<BlockState> candleHolderEmission(int lightlevel) {
         return (state) -> {
