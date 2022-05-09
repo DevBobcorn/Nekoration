@@ -20,10 +20,10 @@ public class NekoShapedRecipeExtension implements ICraftingCategoryExtension {
         this.recipe = recipe;
     }
 
-	@Nullable
-	public ResourceLocation getRegistryName() {
-		return NAME;
-	}
+    @Nullable
+    public ResourceLocation getRegistryName() {
+        return NAME;
+    }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {

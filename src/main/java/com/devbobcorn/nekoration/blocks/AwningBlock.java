@@ -22,17 +22,17 @@ public class AwningBlock extends DyeableHorizontalBlock {
 
     public static final BooleanProperty IS_END = BlockStateProperties.BOTTOM;
 
-	public AwningBlock(Properties settings) {
-		super(settings);
-	}
+    public AwningBlock(Properties settings) {
+        super(settings);
+    }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
         s.add(COLOR, FACING, IS_END);
     }
 
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
-			BlockHitResult hit) {
-		ItemStack itemStack = player.getItemInHand(hand);
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult hit) {
+        ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.getItem() instanceof AxeItem){
             if (world.isClientSide) {
                 return InteractionResult.SUCCESS;
@@ -42,9 +42,9 @@ public class AwningBlock extends DyeableHorizontalBlock {
             return InteractionResult.CONSUME;
         } else super.use(state, world, pos, player, hand, hit);
         return InteractionResult.PASS;
-	}
+    }
 
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
-		return SHAPE;
-	}
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
+        return SHAPE;
+    }
 }

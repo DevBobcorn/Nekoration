@@ -24,8 +24,8 @@ public class PhotoEvents {
     public static boolean shouldTakePhoto = false;
     private static long lastShot = 0L;
 
-	@SubscribeEvent
-	public static void onRenderWorldFinish(RenderLevelLastEvent event) {
+    @SubscribeEvent
+    public static void onRenderWorldFinish(RenderLevelLastEvent event) {
         if (!shouldTakePhoto) return;
         shouldTakePhoto = false;
         if (System.nanoTime() - lastShot < 500000000) return; // Less than 0.5 second...

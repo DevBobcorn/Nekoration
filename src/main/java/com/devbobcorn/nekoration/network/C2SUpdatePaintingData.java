@@ -20,7 +20,7 @@ public class C2SUpdatePaintingData {
     public int[] pixels;
     public int compositeHash;
 
-	public C2SUpdatePaintingData(int id, byte x, byte y, byte w, byte h, int[] pixels, int hash) {
+    public C2SUpdatePaintingData(int id, byte x, byte y, byte w, byte h, int[] pixels, int hash) {
         this.paintingId = id;
         this.partX = x;
         this.partY = y;
@@ -28,9 +28,9 @@ public class C2SUpdatePaintingData {
         this.partH = h;
         this.pixels = pixels;
         this.compositeHash = hash; // Used by other clients to check if the data's right...
-	}
+    }
 
-	public static void encode(final C2SUpdatePaintingData msg, final FriendlyByteBuf packetBuffer) {
+    public static void encode(final C2SUpdatePaintingData msg, final FriendlyByteBuf packetBuffer) {
         packetBuffer.writeInt(msg.paintingId);
         packetBuffer.writeByte(msg.partX);
         packetBuffer.writeByte(msg.partY);
@@ -38,9 +38,9 @@ public class C2SUpdatePaintingData {
         packetBuffer.writeByte(msg.partH);
         packetBuffer.writeVarIntArray(msg.pixels);
         packetBuffer.writeInt(msg.compositeHash);
-	}
+    }
 
-	public static C2SUpdatePaintingData decode(final FriendlyByteBuf packetBuffer) {
+    public static C2SUpdatePaintingData decode(final FriendlyByteBuf packetBuffer) {
         int i = packetBuffer.readInt();
         byte x = packetBuffer.readByte();
         byte y = packetBuffer.readByte();
@@ -48,10 +48,10 @@ public class C2SUpdatePaintingData {
         byte h = packetBuffer.readByte();
         int[] p = packetBuffer.readVarIntArray();
         int hash = packetBuffer.readInt();
-		return new C2SUpdatePaintingData(i, x, y, w, h, p, hash);
-	}
+        return new C2SUpdatePaintingData(i, x, y, w, h, p, hash);
+    }
 
-	public static void handle(final C2SUpdatePaintingData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
+    public static void handle(final C2SUpdatePaintingData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on SERVER SIDE...
             ServerPlayer player = contextSupplier.get().getSender();
@@ -66,5 +66,5 @@ public class C2SUpdatePaintingData {
             }
         });
         contextSupplier.get().setPacketHandled(true);
-	}
+    }
 }

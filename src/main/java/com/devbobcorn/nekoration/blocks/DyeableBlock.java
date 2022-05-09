@@ -28,55 +28,55 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 
 public class DyeableBlock extends Block {
-	public static final IntegerProperty COLOR = BlockStateProperties.LEVEL;
+    public static final IntegerProperty COLOR = BlockStateProperties.LEVEL;
 
-	public DyeableBlock(Properties settings) {
-		super(settings);
-		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
-	}
-	
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
-		s.add(COLOR);
-	}
-
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
-			BlockHitResult hit) {
-		ItemStack itemStack = player.getItemInHand(hand);
-
-		if (world.isClientSide) {
-			return (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) ? InteractionResult.SUCCESS : InteractionResult.PASS;
-		}
-		
-		if (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) {
-			world.setBlock(pos, state.setValue(COLOR, VanillaCompat.COLOR_ITEMS.get(itemStack.getItem())), 3);
-			return InteractionResult.CONSUME;
-		}
-		return InteractionResult.PASS;
-	}
-
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-		ItemStack stack = ctx.getItemInHand();
-		if (stack.getItem() instanceof DyeableBlockItem)
-			return this.defaultBlockState().setValue(COLOR, DyeableBlockItem.getColor(stack).getNBTId());
-		else if (stack.getItem() instanceof DyeableWoodenBlockItem)
-			return this.defaultBlockState().setValue(COLOR, DyeableWoodenBlockItem.getColor(stack).getNBTId());
-		return this.defaultBlockState();
+    public DyeableBlock(Properties settings) {
+        super(settings);
+        this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
+    }
+    
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
+        s.add(COLOR);
     }
 
-	@Nonnull
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult hit) {
+        ItemStack itemStack = player.getItemInHand(hand);
+
+        if (world.isClientSide) {
+            return (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        }
+        
+        if (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) {
+            world.setBlock(pos, state.setValue(COLOR, VanillaCompat.COLOR_ITEMS.get(itemStack.getItem())), 3);
+            return InteractionResult.CONSUME;
+        }
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        ItemStack stack = ctx.getItemInHand();
+        if (stack.getItem() instanceof DyeableBlockItem)
+            return this.defaultBlockState().setValue(COLOR, DyeableBlockItem.getColor(stack).getNBTId());
+        else if (stack.getItem() instanceof DyeableWoodenBlockItem)
+            return this.defaultBlockState().setValue(COLOR, DyeableWoodenBlockItem.getColor(stack).getNBTId());
+        return this.defaultBlockState();
+    }
+
+    @Nonnull
     @Override
     public ItemStack getCloneItemStack(@Nonnull BlockState state, HitResult target, @Nonnull BlockGetter world, @Nonnull BlockPos pos, Player player) {
-		ItemStack stack = new ItemStack(this.asItem());
-		DyeableBlockItem.setColor(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
+        ItemStack stack = new ItemStack(this.asItem());
+        DyeableBlockItem.setColor(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
         return stack;
     }
 
-	
-	@Override
-	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-		ItemStack stack = new ItemStack(this.asItem());
-		DyeableBlockItem.setColor(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
-		return Collections.singletonList(stack);
-	}
+    
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+        ItemStack stack = new ItemStack(this.asItem());
+        DyeableBlockItem.setColor(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
+        return Collections.singletonList(stack);
+    }
 }

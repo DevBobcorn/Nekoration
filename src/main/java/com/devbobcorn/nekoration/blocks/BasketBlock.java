@@ -14,10 +14,10 @@ public class BasketBlock extends Block {
     public final double Radius;
 
     public BasketBlock(Properties settings, double radius) {
-		super(settings);
+        super(settings);
         Radius = radius;
         Shape = Block.box(8.0D - Radius, 0.0D, 8.0D - Radius, 8.0D + Radius, 16.0D, 8.0 + Radius);
-	}
+    }
 
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
         return Shape;

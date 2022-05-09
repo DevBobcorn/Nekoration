@@ -87,5 +87,5 @@ public class JEIPlugin implements IModPlugin {
             (recipe) -> {
                 return new NekoColorInheritRecipeExtension(recipe);
             });
-	}
+    }
 }

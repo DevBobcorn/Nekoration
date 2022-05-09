@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 
 public class CabinetBlockEntity extends ContainerBlockEntity {
-	public final boolean large;
+    public final boolean large;
     private ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level world, BlockPos pos, BlockState state) {
             CabinetBlockEntity.this.playSound(state, SoundEvents.BARREL_OPEN);
@@ -53,67 +53,67 @@ public class CabinetBlockEntity extends ContainerBlockEntity {
         }
     };
 
-	public CabinetBlockEntity(BlockPos pos, BlockState state) {
-		this(pos, state, true);
-	}
+    public CabinetBlockEntity(BlockPos pos, BlockState state) {
+        this(pos, state, true);
+    }
 
-	public CabinetBlockEntity(BlockPos pos, BlockState state, boolean l) {
-		super(ModBlockEntityType.CABINET_TYPE.get(), pos, state);
-		this.large = l;
-		this.items = NonNullList.withSize((l ? 6 : 3) * 9, ItemStack.EMPTY);
-	}
+    public CabinetBlockEntity(BlockPos pos, BlockState state, boolean l) {
+        super(ModBlockEntityType.CABINET_TYPE.get(), pos, state);
+        this.large = l;
+        this.items = NonNullList.withSize((l ? 6 : 3) * 9, ItemStack.EMPTY);
+    }
 
-	public void load(CompoundTag tag) {
-		super.load(tag);
-		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		if (!this.tryLoadLootTable(tag)) {
-			ContainerHelper.loadAllItems(tag, this.items);
-		}
-	}
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        if (!this.tryLoadLootTable(tag)) {
+            ContainerHelper.loadAllItems(tag, this.items);
+        }
+    }
 
-	@Nullable
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
+    @Nullable
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
 
-	public CompoundTag getUpdateTag() {
-		CompoundTag tag = new CompoundTag();
-		this.saveAdditional(tag);
-		return tag;
-	}
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        this.saveAdditional(tag);
+        return tag;
+    }
 
-	public boolean onlyOpCanSetNbt() {
-		return true;
-	}
+    public boolean onlyOpCanSetNbt() {
+        return true;
+    }
 
-	@Nullable
-	@Override
-	public AbstractContainerMenu createMenu(int windowID, Inventory playerInventory) {
-		if (large)
-			return ChestMenu.sixRows(windowID, playerInventory, this);
-		else
-			return ChestMenu.threeRows(windowID, playerInventory, this);
-	}
+    @Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int windowID, Inventory playerInventory) {
+        if (large)
+            return ChestMenu.sixRows(windowID, playerInventory, this);
+        else
+            return ChestMenu.threeRows(windowID, playerInventory, this);
+    }
 
-	@Override
-	public int getContainerSize() {
-		return (large ? 6 : 3) * 9;
-	}
+    @Override
+    public int getContainerSize() {
+        return (large ? 6 : 3) * 9;
+    }
 
-	@Override
-	protected NonNullList<ItemStack> getItems() {
-		return items;
-	}
+    @Override
+    protected NonNullList<ItemStack> getItems() {
+        return items;
+    }
 
-	@Override
-	protected void setItems(NonNullList<ItemStack> newItems) {
-		items = newItems;
-	}
+    @Override
+    protected void setItems(NonNullList<ItemStack> newItems) {
+        items = newItems;
+    }
 
-	@Override
-	protected Component getDefaultName() {
-		return new TranslatableComponent("block." + Nekoration.MODID + ".cabinet");
-	}
+    @Override
+    protected Component getDefaultName() {
+        return new TranslatableComponent("block." + Nekoration.MODID + ".cabinet");
+    }
 
     public void startOpen(Player player) {
         if (!this.remove && !player.isSpectator()) {
@@ -133,15 +133,15 @@ public class CabinetBlockEntity extends ContainerBlockEntity {
         }
     }
 
-	private void updateBlockState(BlockState state, boolean open) {
-		this.level.setBlock(this.getBlockPos(), state.setValue(CabinetBlock.OPEN, Boolean.valueOf(open)), 3);
-	}
+    private void updateBlockState(BlockState state, boolean open) {
+        this.level.setBlock(this.getBlockPos(), state.setValue(CabinetBlock.OPEN, Boolean.valueOf(open)), 3);
+    }
 
-	private void playSound(BlockState state, SoundEvent sound) {
-		Vec3i vector3i = state.getValue(CabinetBlock.FACING).getNormal();
-		double d0 = (double) this.worldPosition.getX() + 0.5D + (double) vector3i.getX() / 2.0D;
-		double d1 = (double) this.worldPosition.getY() + 0.5D + (double) vector3i.getY() / 2.0D;
-		double d2 = (double) this.worldPosition.getZ() + 0.5D + (double) vector3i.getZ() / 2.0D;
-		this.level.playSound((Player) null, d0, d1, d2, sound, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
-	}
+    private void playSound(BlockState state, SoundEvent sound) {
+        Vec3i vector3i = state.getValue(CabinetBlock.FACING).getNormal();
+        double d0 = (double) this.worldPosition.getX() + 0.5D + (double) vector3i.getX() / 2.0D;
+        double d1 = (double) this.worldPosition.getY() + 0.5D + (double) vector3i.getY() / 2.0D;
+        double d2 = (double) this.worldPosition.getZ() + 0.5D + (double) vector3i.getZ() / 2.0D;
+        this.level.playSound((Player) null, d0, d1, d2, sound, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
+    }
 }

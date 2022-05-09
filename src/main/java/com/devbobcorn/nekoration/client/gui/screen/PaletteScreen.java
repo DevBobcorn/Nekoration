@@ -68,28 +68,28 @@ public class PaletteScreen extends Screen {
         this.topPos = (this.height - this.imageHeight) / 2;
     }
 
-	@Override
+    @Override
     public void onClose() {
-		try {
+        try {
             // Reset Highlight Color...
             VoxelShapeHighlighter.PaletteColor = colors[activeSlot];
-			// Update Color Data...
+            // Update Color Data...
             int[] cls = new int[6];
             for (int idx = 0;idx < 6;idx++)
                 cls[idx] = colors[idx].getRGB();
             final C2SUpdatePaletteData packet = new C2SUpdatePaletteData(this.hand, activeSlot, cls);
-			ModPacketHandler.CHANNEL.sendToServer(packet);
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+            ModPacketHandler.CHANNEL.sendToServer(packet);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         super.onClose();
     }
 
-	@Override
-	@SuppressWarnings({"resource"})
+    @Override
+    @SuppressWarnings({"resource"})
     public boolean keyPressed(int keyCode, int scanCode, int modifier) {
-		if (keyCode == GLFW.GLFW_KEY_E) {
-			// I DONT GET IT, WHY THE HELL PRESSING 'E' CAN CLOSE THE SCREEN...
+        if (keyCode == GLFW.GLFW_KEY_E) {
+            // I DONT GET IT, WHY THE HELL PRESSING 'E' CAN CLOSE THE SCREEN...
             this.renderColorText = !this.renderColorText;
             return true;
         }
@@ -111,7 +111,7 @@ public class PaletteScreen extends Screen {
         RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
         RenderSystem.setShaderTexture(0, BACKGROUND);
         
-		for (int idx = 0;idx < 6;idx++){
+        for (int idx = 0;idx < 6;idx++){
             RenderSystem.setShaderColor(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
             blit(stack, i + 8 + 18 * idx + (idx > 2 ? 34: 0), j + 13, 172, 32, 16, 16); // Tinted Pure White Quad...
             if (idx == activeSlot){
@@ -146,12 +146,12 @@ public class PaletteScreen extends Screen {
         else this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
 
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		int edgeSpacingX = (this.width - this.imageWidth) / 2;
-		int edgeSpacingY = (this.height - this.imageHeight) / 2;
-		blit(stack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
-	}
+    protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        int edgeSpacingX = (this.width - this.imageWidth) / 2;
+        int edgeSpacingY = (this.height - this.imageHeight) / 2;
+        blit(stack, edgeSpacingX, edgeSpacingY, 0, 0, this.imageWidth, this.imageHeight);
+    }
 
     @Override
     public boolean mouseClicked(double x, double y, int type){

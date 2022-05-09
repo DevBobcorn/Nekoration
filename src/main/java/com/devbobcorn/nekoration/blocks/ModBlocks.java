@@ -10,6 +10,9 @@ import com.devbobcorn.nekoration.blocks.frames.DyeableWindowTopBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CakeBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
@@ -51,7 +54,7 @@ public final class ModBlocks {
     public static final RegistryObject<Block> HALF_TIMBER_P8 = BLOCKS.register("half_timber_p8", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F)));
     public static final RegistryObject<Block> HALF_TIMBER_P9 = BLOCKS.register("half_timber_p9", () -> new HalfTimberBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F)));
 
-	public static final RegistryObject<Block> HALF_TIMBER_PILLAR_P0 = BLOCKS.register("half_timber_pillar_p0", () -> new HalfTimberPillarBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F), HalfTimberPillarBlock.ConnectionType.PILLAR, false));
+    public static final RegistryObject<Block> HALF_TIMBER_PILLAR_P0 = BLOCKS.register("half_timber_pillar_p0", () -> new HalfTimberPillarBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F), HalfTimberPillarBlock.ConnectionType.PILLAR, false));
     public static final RegistryObject<Block> HALF_TIMBER_PILLAR_P1 = BLOCKS.register("half_timber_pillar_p1", () -> new HalfTimberPillarBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F), HalfTimberPillarBlock.ConnectionType.TRIPLE, false));
     public static final RegistryObject<Block> HALF_TIMBER_PILLAR_P2 = BLOCKS.register("half_timber_pillar_p2", () -> new HalfTimberPillarBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F), HalfTimberPillarBlock.ConnectionType.TRIPLE, false));
     
@@ -137,11 +140,13 @@ public final class ModBlocks {
     public static final RegistryObject<Block> SHELF = BLOCKS.register("shelf", () -> new CupboardBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), false));
     public static final RegistryObject<Block> WALL_SHELF = BLOCKS.register("wall_shelf", () -> new WallShelfBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()));
 
-	public static ToIntFunction<BlockState> candleHolderEmission(int lightlevel) {
-		return (state) -> {
-			return state.getValue(BlockStateProperties.AGE_3) > 0 ? lightlevel : 0;
-		};
-	}
+    public static final RegistryObject<Block> MISAKA_CAKE = BLOCKS.register("misaka_cake", () -> new CakeBlock(BlockBehaviour.Properties.of(Material.CAKE).strength(0.5F).sound(SoundType.WOOL)));
+
+    public static ToIntFunction<BlockState> candleHolderEmission(int lightlevel) {
+        return (state) -> {
+            return state.getValue(BlockStateProperties.AGE_3) > 0 ? lightlevel : 0;
+        };
+    }
 
     private static boolean never(BlockState state, BlockGetter world, BlockPos pos){
         return false;

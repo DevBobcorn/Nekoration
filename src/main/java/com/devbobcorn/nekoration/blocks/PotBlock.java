@@ -15,19 +15,19 @@ public class PotBlock extends DyeableBlock {
     public final double Radius;
 
     public PotBlock(Properties settings, double radius) {
-		super(settings);
+        super(settings);
         Radius = radius;
         Shape = Block.box(8.0D - Radius, 0.0D, 8.0D - Radius, 8.0D + Radius, 16.0D, 8.0 + Radius);
-		this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
-	}
+        this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
+    }
 
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
         return Shape;
     }
 
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
-		s.add(COLOR);
-	}
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
+        s.add(COLOR);
+    }
 
     @Override
     public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, net.minecraftforge.common.IPlantable plantable)

@@ -21,28 +21,28 @@ public class PhonographBlock extends Block implements EntityBlock {
         super(settings);
     }
 
-	// Called when the block is placed or loaded client side to get the tile entity
-	// for the block
-	// Should return a new instance of the tile entity for the block
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new PhonographBlockEntity(pos, state);
-	}
+    // Called when the block is placed or loaded client side to get the tile entity
+    // for the block
+    // Should return a new instance of the tile entity for the block
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new PhonographBlockEntity(pos, state);
+    }
 
     // Called just after the player places a block.
-	@Override
-	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		super.setPlacedBy(worldIn, pos, state, placer, stack);
+    @Override
+    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(worldIn, pos, state, placer, stack);
 
-		BlockEntity tileentity = worldIn.getBlockEntity(pos);
-		if (tileentity instanceof PhonographBlockEntity) { // prevent a crash if not the right type, or is null
+        BlockEntity tileentity = worldIn.getBlockEntity(pos);
+        if (tileentity instanceof PhonographBlockEntity) { // prevent a crash if not the right type, or is null
             return;
-		}
+        }
         LogUtils.getLogger().error("Tile Entity NOT Found!");
-	}
+    }
 
-	@Override
-	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-		return Collections.singletonList(new ItemStack(this.asItem()));
-	}
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+        return Collections.singletonList(new ItemStack(this.asItem()));
+    }
 }

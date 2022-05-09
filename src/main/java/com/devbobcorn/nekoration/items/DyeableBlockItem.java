@@ -19,58 +19,58 @@ import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 
 public class DyeableBlockItem extends BlockItem {
     public static final String COLOR = "color";
-	private final boolean showAllVariants;
+    private final boolean showAllVariants;
 
     public DyeableBlockItem(Block block, Properties settings) {
         super(block, settings);
-		showAllVariants = true;
+        showAllVariants = true;
     }
 
-	public DyeableBlockItem(Block block, Properties settings, boolean allVariants) {
+    public DyeableBlockItem(Block block, Properties settings, boolean allVariants) {
         super(block, settings);
-		showAllVariants = allVariants;
+        showAllVariants = allVariants;
     }
 
-	@Override
-	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
-		if (this.allowdedIn(tab)) {
-			if (showAllVariants)
-				for (EnumNekoColor color : EnumNekoColor.values()) {
-					ItemStack subItemStack = new ItemStack(this, 1);
-					setColor(subItemStack, color);
-					subItems.add(subItemStack);
-				}
-			else {
-				ItemStack subItemStack = new ItemStack(this, 1);
-				setColor(subItemStack, EnumNekoColor.WHITE);
-				subItems.add(subItemStack);
-			}
-		}
-	}
+    @Override
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
+        if (this.allowdedIn(tab)) {
+            if (showAllVariants)
+                for (EnumNekoColor color : EnumNekoColor.values()) {
+                    ItemStack subItemStack = new ItemStack(this, 1);
+                    setColor(subItemStack, color);
+                    subItems.add(subItemStack);
+                }
+            else {
+                ItemStack subItemStack = new ItemStack(this, 1);
+                setColor(subItemStack, EnumNekoColor.WHITE);
+                subItems.add(subItemStack);
+            }
+        }
+    }
 
-	public static boolean hasColor(ItemStack stack) {
-		return stack.getOrCreateTag().contains(COLOR);
-	}
+    public static boolean hasColor(ItemStack stack) {
+        return stack.getOrCreateTag().contains(COLOR);
+    }
 
     public static EnumNekoColor getColor(ItemStack stack) {
-		CompoundTag compoundNBT = stack.getOrCreateTag();
-		return EnumNekoColor.fromNBT(compoundNBT, COLOR);
-	}
+        CompoundTag compoundNBT = stack.getOrCreateTag();
+        return EnumNekoColor.fromNBT(compoundNBT, COLOR);
+    }
 
     public static void setColor(ItemStack stack, EnumNekoColor color) {
         CompoundTag compoundNBT = stack.getOrCreateTag();
         color.putIntoNBT(compoundNBT, COLOR);
-	}
+    }
 
-	public static float getColorPropertyOverride(ItemStack itemStack, @Nullable Level world, @Nullable LivingEntity livingEntity, int what) {
-		EnumNekoColor color = DyeableBlockItem.getColor(itemStack);
-		return color.getPropertyOverrideValue();
-	}
+    public static float getColorPropertyOverride(ItemStack itemStack, @Nullable Level world, @Nullable LivingEntity livingEntity, int what) {
+        EnumNekoColor color = DyeableBlockItem.getColor(itemStack);
+        return color.getPropertyOverrideValue();
+    }
 
-	@Override
-	public Component getName(ItemStack stack) {
-		if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
-			return new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.nekoration." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString());
-		else return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.nekoration." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString()));
-	}
+    @Override
+    public Component getName(ItemStack stack) {
+        if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
+            return new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.nekoration." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString());
+        else return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.nekoration." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString()));
+    }
 }

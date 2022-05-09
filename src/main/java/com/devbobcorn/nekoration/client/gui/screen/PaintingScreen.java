@@ -164,7 +164,7 @@ public class PaintingScreen extends Screen {
             } catch (Exception e){
                 e.printStackTrace();
             }
-		}, ICONS, 0, 16);
+        }, ICONS, 0, 16);
         buttons[1] = new IconButton(leftPos + 200, topPos - 20, buttonMessages[1], button -> {
             // Save Image Content...
             try{
@@ -173,7 +173,7 @@ public class PaintingScreen extends Screen {
             } catch (Exception e){
                 e.printStackTrace();
             }
-		}, ICONS, 16, 16);
+        }, ICONS, 16, 16);
         buttons[2] = new IconButton(leftPos + 220, topPos - 20, buttonMessages[2], button -> {
             if (nameError) { // It's a 'Clear' Button
                 nameInput.setValue("");
@@ -184,7 +184,7 @@ public class PaintingScreen extends Screen {
                 buttons[2].setMessage(buttonMessages[2]);
                 return;
             }
-			// Load Image File...
+            // Load Image File...
             if (nameInput.getValue().trim().equals("")) {
                 nameInput.setValue("Input the name here...");
                 nameError = true;
@@ -205,18 +205,18 @@ public class PaintingScreen extends Screen {
                 buttons[2].setIcon(ICONS, 32, 0);
                 buttons[2].setMessage(buttonMessages[3]);
             }
-		}, ICONS, 32, 16);
+        }, ICONS, 32, 16);
         // Config Buttons...
         buttons[3] = new IconButton(leftPos + 15, topPos - 20, roundBrush ? buttonMessages[4] : buttonMessages[5], button -> {
             roundBrush = !roundBrush;
             buttons[3].setIcon(ICONS, roundBrush ? 48 : 64, 16);
             buttons[3].setMessage(roundBrush ? buttonMessages[4] : buttonMessages[5]);
-		}, ICONS, roundBrush ? 48 : 64, 16);
+        }, ICONS, roundBrush ? 48 : 64, 16);
         buttons[4] = new IconButton(leftPos + 35, topPos - 20, transBlend ? buttonMessages[6] : buttonMessages[7], button -> {
             transBlend = !transBlend;
             buttons[4].setIcon(ICONS, transBlend ? 80 : 96, 16);
             buttons[4].setMessage(transBlend ? buttonMessages[6] : buttonMessages[7]);
-		}, ICONS, transBlend ? 80 : 96, 16);
+        }, ICONS, transBlend ? 80 : 96, 16);
         this.addWidget(nameInput);
         for (int btn = 0;btn < 5;btn++)
             this.addWidget(buttons[btn]);
@@ -228,9 +228,9 @@ public class PaintingScreen extends Screen {
         nameInput.tick();
     }
 
-	@Override
+    @Override
     public void onClose() {
-		try {
+        try {
             if (oldHash != paintingData.getPaintingHash()){ // Check if the painting was changed...
                 // Clear obsoleted cache of itself (the Server can't help it to)...
                 paintingData.clearCache(oldHash);
@@ -265,18 +265,18 @@ public class PaintingScreen extends Screen {
             } else {// Not Edited, still ready...
                 paintingData.imageReady = true;
             }
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         // Update last edited...
         lastEdited = paintingData.getPaintingHash();
         super.onClose();
     }
 
-	@Override
-	@SuppressWarnings({"resource"})
+    @Override
+    @SuppressWarnings({"resource"})
     public boolean keyPressed(int keyCode, int scanCode, int modifier) {
-		if (keyCode == GLFW.GLFW_KEY_F1) {
+        if (keyCode == GLFW.GLFW_KEY_F1) {
             this.renderDebugText = !this.renderDebugText;
             return true;
         } else if (this.nameInput.isFocused()){
@@ -324,7 +324,7 @@ public class PaintingScreen extends Screen {
         // Step 1: Render the 6 color slots, and the 'selected color' slot in the middle...
         RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
         RenderSystem.setShaderTexture(0, BACKGROUND);
-		for (int idx = 0;idx < 6;idx++){
+        for (int idx = 0;idx < 6;idx++){
             RenderSystem.setShaderColor(colors[idx].getRed() / 255.0F, colors[idx].getGreen() / 255.0F, colors[idx].getBlue() / 255.0F, 1.0F);
             this.blit(stack, i + 34 + 18 * idx, j + 13, 16, 224, 16, 16); // Tinted Pure White Quad...
             if (idx == activeSlot){
@@ -399,12 +399,12 @@ public class PaintingScreen extends Screen {
         }
     }
 
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+    protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
         RenderSystem.setShaderTexture(0, BACKGROUND);
-		this.blit(stack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
-	}
+        this.blit(stack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
+    }
 
     @Override
     public boolean mouseClicked(double x, double y, int type){

@@ -25,7 +25,7 @@ public class S2CUpdatePaintingData {
     public int[] pixels;
     public int compositeHash;
 
-	public S2CUpdatePaintingData(int id, byte x, byte y, byte w, byte h, int[] p, int hash) {
+    public S2CUpdatePaintingData(int id, byte x, byte y, byte w, byte h, int[] p, int hash) {
         this.paintingId = id;
         this.partX = x;
         this.partY = y;
@@ -33,9 +33,9 @@ public class S2CUpdatePaintingData {
         this.partH = h;
         this.pixels = p;
         this.compositeHash = hash;
-	}
+    }
 
-	public static void encode(final S2CUpdatePaintingData msg, final FriendlyByteBuf packetBuffer) {
+    public static void encode(final S2CUpdatePaintingData msg, final FriendlyByteBuf packetBuffer) {
         packetBuffer.writeInt(msg.paintingId);
         packetBuffer.writeByte(msg.partX);
         packetBuffer.writeByte(msg.partY);
@@ -43,9 +43,9 @@ public class S2CUpdatePaintingData {
         packetBuffer.writeByte(msg.partH);
         packetBuffer.writeVarIntArray(msg.pixels);
         packetBuffer.writeInt(msg.compositeHash);
-	}
+    }
 
-	public static S2CUpdatePaintingData decode(final FriendlyByteBuf packetBuffer) {
+    public static S2CUpdatePaintingData decode(final FriendlyByteBuf packetBuffer) {
         int id = packetBuffer.readInt();
         byte x = packetBuffer.readByte();
         byte y = packetBuffer.readByte();
@@ -53,11 +53,11 @@ public class S2CUpdatePaintingData {
         byte h = packetBuffer.readByte();
         int[] p = packetBuffer.readVarIntArray();
         int hash = packetBuffer.readInt();
-		return new S2CUpdatePaintingData(id, x, y, w, h, p, hash);
-	}
+        return new S2CUpdatePaintingData(id, x, y, w, h, p, hash);
+    }
 
     @SuppressWarnings("resource")
-	public static void handle(final S2CUpdatePaintingData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
+    public static void handle(final S2CUpdatePaintingData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on CLIENT SIDE...
             ClientLevel world = Minecraft.getInstance().level;
@@ -78,5 +78,5 @@ public class S2CUpdatePaintingData {
                 }
         });
         contextSupplier.get().setPacketHandled(true);
-	}
+    }
 }

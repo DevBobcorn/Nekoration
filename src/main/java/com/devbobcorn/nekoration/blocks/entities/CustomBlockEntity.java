@@ -16,71 +16,71 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class CustomBlockEntity extends BlockEntity {
     public Integer model = 0;
-	public Byte dir = 0;
-	public int[] offset = { 0, 0, 0 };
-	public int[] color = { 255, 255, 255 }; // RGB Color...
+    public Byte dir = 0;
+    public int[] offset = { 0, 0, 0 };
+    public int[] color = { 255, 255, 255 }; // RGB Color...
 
-	public BlockState displayBlock = Blocks.AIR.defaultBlockState();
-	public ItemStack containItem = new ItemStack(Blocks.AIR);
+    public BlockState displayBlock = Blocks.AIR.defaultBlockState();
+    public ItemStack containItem = new ItemStack(Blocks.AIR);
 
     public CustomBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntityType.CUSTOM_TYPE.get(), pos, state);
     }
     
-	@Override
-	public void saveAdditional(CompoundTag tag) {
-		super.saveAdditional(tag); // The super call is required to save the tile's location
-		tag.putInt("Model", model);
-		tag.putByte("Dir", dir);
-		tag.putIntArray("Offset", offset);
-		tag.putIntArray("Color", color);
-		tag.put("Display", NbtUtils.writeBlockState(displayBlock));
-		CompoundTag itm = new CompoundTag();
-		tag.put("Contain", containItem.save(itm));
-	}
+    @Override
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag); // The super call is required to save the tile's location
+        tag.putInt("Model", model);
+        tag.putByte("Dir", dir);
+        tag.putIntArray("Offset", offset);
+        tag.putIntArray("Color", color);
+        tag.put("Display", NbtUtils.writeBlockState(displayBlock));
+        CompoundTag itm = new CompoundTag();
+        tag.put("Contain", containItem.save(itm));
+    }
 
-	// This is where you load the data that you saved in writeToNBT
-	@Override
-	public void load(CompoundTag tag) {
-		super.load(tag); // The super call is required to load the tile's location
+    // This is where you load the data that you saved in writeToNBT
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag); // The super call is required to load the tile's location
 
-		if (tag.contains("Model", TagTypes.INT_NBT_ID)) {
-			model = tag.getInt("Model");
-		}
-		if (tag.contains("Dir", TagTypes.BYTE_NBT_ID)) {
-			dir = tag.getByte("Dir");
-		}
-		if (tag.contains("Offset", TagTypes.INT_ARRAY_NBT_ID)) {
-			offset = tag.getIntArray("Offset");
-		}
-		if (tag.contains("Color", TagTypes.INT_ARRAY_NBT_ID)) {
-			color = tag.getIntArray("Color");
-		}
-		if (tag.contains("Display", TagTypes.COMPOUND_NBT_ID)) {
-			CompoundTag dat = tag.getCompound("Display");
-			displayBlock = NbtUtils.readBlockState(dat);
-		}
-		if (tag.contains("Contain", TagTypes.COMPOUND_NBT_ID)) {
-			CompoundTag dat = tag.getCompound("Contain");
-			containItem = ItemStack.of(dat);
-		}
-	}
+        if (tag.contains("Model", TagTypes.INT_NBT_ID)) {
+            model = tag.getInt("Model");
+        }
+        if (tag.contains("Dir", TagTypes.BYTE_NBT_ID)) {
+            dir = tag.getByte("Dir");
+        }
+        if (tag.contains("Offset", TagTypes.INT_ARRAY_NBT_ID)) {
+            offset = tag.getIntArray("Offset");
+        }
+        if (tag.contains("Color", TagTypes.INT_ARRAY_NBT_ID)) {
+            color = tag.getIntArray("Color");
+        }
+        if (tag.contains("Display", TagTypes.COMPOUND_NBT_ID)) {
+            CompoundTag dat = tag.getCompound("Display");
+            displayBlock = NbtUtils.readBlockState(dat);
+        }
+        if (tag.contains("Contain", TagTypes.COMPOUND_NBT_ID)) {
+            CompoundTag dat = tag.getCompound("Contain");
+            containItem = ItemStack.of(dat);
+        }
+    }
 
     @Override
-	@Nullable
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
+    @Nullable
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
 
-	public CompoundTag getUpdateTag() {
-		CompoundTag tag = new CompoundTag();
-		this.saveAdditional(tag);
-		return tag;
-	}
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        this.saveAdditional(tag);
+        return tag;
+    }
 
-	@Override
-	public void setRemoved(){
-		super.setRemoved();
-		Block.popResource(this.level, this.getBlockPos(), containItem);
-	}
+    @Override
+    public void setRemoved(){
+        super.setRemoved();
+        Block.popResource(this.level, this.getBlockPos(), containItem);
+    }
 }

@@ -24,18 +24,18 @@ public class WindowBlock extends DyeableVerticalConnectBlock {
     }
     
     public WindowBlock(Properties settings, ConnectionType tp, boolean co) {
-		super(settings, tp, co);
+        super(settings, tp, co);
         this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 2));
-	}
+    }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
-		s.add(CONNECTION, COLOR);
-	}
+        s.add(CONNECTION, COLOR);
+    }
 
     @OnlyIn(Dist.CLIENT)
-	public boolean skipRendering(BlockState state, BlockState from, Direction dir) {
-		return (from.getBlock() instanceof WindowBlock);
-	}
+    public boolean skipRendering(BlockState state, BlockState from, Direction dir) {
+        return (from.getBlock() instanceof WindowBlock);
+    }
 
     @OnlyIn(Dist.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter world, BlockPos pos) {
@@ -49,8 +49,8 @@ public class WindowBlock extends DyeableVerticalConnectBlock {
     @Nonnull
     @Override
     public ItemStack getCloneItemStack(@Nonnull BlockState state, HitResult target, @Nonnull BlockGetter world, @Nonnull BlockPos pos, Player player) {
-		ItemStack stack = new ItemStack(this.asItem());
-		DyeableWoodenBlockItem.setColor(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
+        ItemStack stack = new ItemStack(this.asItem());
+        DyeableWoodenBlockItem.setColor(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
         return stack;
     }
 }

@@ -36,62 +36,62 @@ public class Nekoration {
         LOGGER.info("Meow~~ Miaow~~~"); //Translation: Hello World!
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-		
-		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        
+        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		ModBlocks.BLOCKS.register(modEventBus);
-		ModItems.ITEMS.register(modEventBus);
-		//ModEntityType.ENTITY_TYPES.register(modEventBus);
-		ModMenuType.MENU_TYPES.register(modEventBus);
-		ModBlockEntityType.TILE_ENTITY_TYPES.register(modEventBus);
-		ModRecipes.RECIPE_SERIALIZERS.register(modEventBus);
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModItems.ITEMS.register(modEventBus);
+        //ModEntityType.ENTITY_TYPES.register(modEventBus);
+        ModMenuType.MENU_TYPES.register(modEventBus);
+        ModBlockEntityType.TILE_ENTITY_TYPES.register(modEventBus);
+        ModRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 
-		// Register Configs
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NekoConfig.CLIENT_SPEC);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, NekoConfig.SERVER_SPEC);
+        // Register Configs
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NekoConfig.CLIENT_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, NekoConfig.SERVER_SPEC);
 
-		int networkId = 0;
-		ModPacketHandler.CHANNEL.registerMessage(networkId++,
-			C2SUpdateEaselMenuData.class,
-			C2SUpdateEaselMenuData::encode,
-			C2SUpdateEaselMenuData::decode,
-			C2SUpdateEaselMenuData::handle
-		);
-		ModPacketHandler.CHANNEL.registerMessage(networkId++,
-			S2CUpdateEaselMenuData.class,
-			S2CUpdateEaselMenuData::encode,
-			S2CUpdateEaselMenuData::decode,
-			S2CUpdateEaselMenuData::handle
-		);
-		ModPacketHandler.CHANNEL.registerMessage(networkId++,
-			C2SUpdatePaletteData.class,
-			C2SUpdatePaletteData::encode,
-			C2SUpdatePaletteData::decode,
-			C2SUpdatePaletteData::handle
-		);
-		ModPacketHandler.CHANNEL.registerMessage(networkId++,
-			C2SUpdatePaintingData.class,
-			C2SUpdatePaintingData::encode,
-			C2SUpdatePaintingData::decode,
-			C2SUpdatePaintingData::handle
-		);
-		ModPacketHandler.CHANNEL.registerMessage(networkId++,
-			C2SUpdatePaintingSize.class,
-			C2SUpdatePaintingSize::encode,
-			C2SUpdatePaintingSize::decode,
-			C2SUpdatePaintingSize::handle
-		);
-		ModPacketHandler.CHANNEL.registerMessage(networkId++,
-			S2CUpdatePaintingData.class,
-			S2CUpdatePaintingData::encode,
-			S2CUpdatePaintingData::decode,
-			S2CUpdatePaintingData::handle
-		);
-		ModPacketHandler.CHANNEL.registerMessage(networkId++,
-			S2CUpdateCupboardData.class,
-			S2CUpdateCupboardData::encode,
-			S2CUpdateCupboardData::decode,
-			S2CUpdateCupboardData::handle
-		);
+        int networkId = 0;
+        ModPacketHandler.CHANNEL.registerMessage(networkId++,
+            C2SUpdateEaselMenuData.class,
+            C2SUpdateEaselMenuData::encode,
+            C2SUpdateEaselMenuData::decode,
+            C2SUpdateEaselMenuData::handle
+        );
+        ModPacketHandler.CHANNEL.registerMessage(networkId++,
+            S2CUpdateEaselMenuData.class,
+            S2CUpdateEaselMenuData::encode,
+            S2CUpdateEaselMenuData::decode,
+            S2CUpdateEaselMenuData::handle
+        );
+        ModPacketHandler.CHANNEL.registerMessage(networkId++,
+            C2SUpdatePaletteData.class,
+            C2SUpdatePaletteData::encode,
+            C2SUpdatePaletteData::decode,
+            C2SUpdatePaletteData::handle
+        );
+        ModPacketHandler.CHANNEL.registerMessage(networkId++,
+            C2SUpdatePaintingData.class,
+            C2SUpdatePaintingData::encode,
+            C2SUpdatePaintingData::decode,
+            C2SUpdatePaintingData::handle
+        );
+        ModPacketHandler.CHANNEL.registerMessage(networkId++,
+            C2SUpdatePaintingSize.class,
+            C2SUpdatePaintingSize::encode,
+            C2SUpdatePaintingSize::decode,
+            C2SUpdatePaintingSize::handle
+        );
+        ModPacketHandler.CHANNEL.registerMessage(networkId++,
+            S2CUpdatePaintingData.class,
+            S2CUpdatePaintingData::encode,
+            S2CUpdatePaintingData::decode,
+            S2CUpdatePaintingData::handle
+        );
+        ModPacketHandler.CHANNEL.registerMessage(networkId++,
+            S2CUpdateCupboardData.class,
+            S2CUpdateCupboardData::encode,
+            S2CUpdateCupboardData::decode,
+            S2CUpdateCupboardData::handle
+        );
     }
 }

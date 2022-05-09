@@ -13,29 +13,29 @@ import net.minecraftforge.network.NetworkEvent;
 
 public class C2SUpdatePaintingSize {
     public InteractionHand hand;
-	public short width;
+    public short width;
     public short height;
 
-	public C2SUpdatePaintingSize(InteractionHand hand, short w, short h) {
+    public C2SUpdatePaintingSize(InteractionHand hand, short w, short h) {
         this.hand = hand;
-		this.width = w;
+        this.width = w;
         this.height = h;
-	}
+    }
 
-	public static void encode(final C2SUpdatePaintingSize msg, final FriendlyByteBuf packetBuffer) {
+    public static void encode(final C2SUpdatePaintingSize msg, final FriendlyByteBuf packetBuffer) {
         packetBuffer.writeEnum(msg.hand);
         packetBuffer.writeShort(msg.width);
         packetBuffer.writeShort(msg.height);
-	}
+    }
 
-	public static C2SUpdatePaintingSize decode(final FriendlyByteBuf packetBuffer) {
+    public static C2SUpdatePaintingSize decode(final FriendlyByteBuf packetBuffer) {
         InteractionHand hand = packetBuffer.readEnum(InteractionHand.class);
         short w = packetBuffer.readShort();
         short h = packetBuffer.readShort();
-		return new C2SUpdatePaintingSize(hand, w, h);
-	}
+        return new C2SUpdatePaintingSize(hand, w, h);
+    }
 
-	public static void handle(final C2SUpdatePaintingSize msg, final Supplier<NetworkEvent.Context> contextSupplier) {
+    public static void handle(final C2SUpdatePaintingSize msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on SERVER SIDE...
             ServerPlayer player = contextSupplier.get().getSender();
@@ -48,5 +48,5 @@ public class C2SUpdatePaintingSize {
             }
         });
         contextSupplier.get().setPacketHandled(true);
-	}
+    }
 }

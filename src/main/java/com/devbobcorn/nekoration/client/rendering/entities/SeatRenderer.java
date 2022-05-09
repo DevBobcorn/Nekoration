@@ -9,11 +9,11 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 public class SeatRenderer extends EntityRenderer<SeatEntity> {
-	public SeatRenderer(EntityRendererProvider.Context ctx) {
-		super(ctx);
-	}
+    public SeatRenderer(EntityRendererProvider.Context ctx) {
+        super(ctx);
+    }
 
-	public void render(SeatEntity entity, float rotation, float partialTicks, PoseStack stack, MultiBufferSource buffers, int packedLight) {}
+    public void render(SeatEntity entity, float rotation, float partialTicks, PoseStack stack, MultiBufferSource buffers, int packedLight) {}
 
     @Override
     public ResourceLocation getTextureLocation(SeatEntity entity) {

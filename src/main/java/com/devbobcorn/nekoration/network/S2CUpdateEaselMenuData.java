@@ -21,25 +21,25 @@ public class S2CUpdateEaselMenuData {
     public DyeColor[] colors = new DyeColor[8];
     public boolean glow;
 
-	public S2CUpdateEaselMenuData(BlockPos pos, ItemStack[] items, Component[] texts, DyeColor[] colors, boolean glowing) {
+    public S2CUpdateEaselMenuData(BlockPos pos, ItemStack[] items, Component[] texts, DyeColor[] colors, boolean glowing) {
         this.pos = pos;
-		this.items = items;
+        this.items = items;
         this.texts = texts;
         this.colors = colors;
         this.glow = glowing;
-	}
+    }
 
-	public static void encode(final S2CUpdateEaselMenuData msg, final FriendlyByteBuf packetBuffer) {
+    public static void encode(final S2CUpdateEaselMenuData msg, final FriendlyByteBuf packetBuffer) {
         packetBuffer.writeBlockPos(msg.pos);
         for (int i = 0;i < 8;i++){
-		    packetBuffer.writeItemStack(msg.items[i], false);
-		    packetBuffer.writeComponent(msg.texts[i]);
-		    packetBuffer.writeEnum(msg.colors[i]);
+            packetBuffer.writeItemStack(msg.items[i], false);
+            packetBuffer.writeComponent(msg.texts[i]);
+            packetBuffer.writeEnum(msg.colors[i]);
         }
         packetBuffer.writeBoolean(msg.glow);
-	}
+    }
 
-	public static S2CUpdateEaselMenuData decode(final FriendlyByteBuf packetBuffer) {
+    public static S2CUpdateEaselMenuData decode(final FriendlyByteBuf packetBuffer) {
         BlockPos pos = packetBuffer.readBlockPos();
         ItemStack[] t = new ItemStack[8];
         Component[] x = new Component[8];
@@ -49,11 +49,11 @@ public class S2CUpdateEaselMenuData {
             x[i] = packetBuffer.readComponent();
             c[i] = packetBuffer.readEnum(DyeColor.class);
         }
-		return new S2CUpdateEaselMenuData(pos, t, x, c, packetBuffer.readBoolean());
-	}
+        return new S2CUpdateEaselMenuData(pos, t, x, c, packetBuffer.readBoolean());
+    }
 
     @SuppressWarnings("resource")
-	public static void handle(final S2CUpdateEaselMenuData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
+    public static void handle(final S2CUpdateEaselMenuData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on CLIENT SIDE...
             ClientLevel world = Minecraft.getInstance().level;
@@ -72,5 +72,5 @@ public class S2CUpdateEaselMenuData {
             }
         });
         contextSupplier.get().setPacketHandled(true);
-	}
+    }
 }

@@ -488,19 +488,19 @@ public class CreativeInventoryEvents
         MISC("misc");
 
         @Override
-		public String toString() {
-			return this.name;
-		}
+        public String toString() {
+            return this.name;
+        }
 
-		@Override
-		public String getSerializedName() {
-			return this.name;
-		}
+        @Override
+        public String getSerializedName() {
+            return this.name;
+        }
 
-		private final String name;
+        private final String name;
 
         EnumDecorType(String i_name) {
-			this.name = i_name;
-		}
+            this.name = i_name;
+        }
     }
 }

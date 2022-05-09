@@ -14,20 +14,20 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
 public class CupboardRenderer implements BlockEntityRenderer<ItemDisplayBlockEntity> {
-	Font font;
+    Font font;
 
-	public CupboardRenderer(BlockEntityRendererProvider.Context ctx) {
-		font = ctx.getFont();
-	}
+    public CupboardRenderer(BlockEntityRendererProvider.Context ctx) {
+        font = ctx.getFont();
+    }
 
-	@Override
-	public void render(ItemDisplayBlockEntity tileEntity, float partialTicks, PoseStack stack, MultiBufferSource buffers, int combinedLight, int combinedOverlay) {
+    @Override
+    public void render(ItemDisplayBlockEntity tileEntity, float partialTicks, PoseStack stack, MultiBufferSource buffers, int combinedLight, int combinedOverlay) {
         stack.pushPose();
         if (tileEntity.wallShelf)
             renderShelfItems(tileEntity, stack, buffers, combinedLight);
         else renderCabinetItems(tileEntity, stack, buffers, combinedLight);
         stack.popPose();
-	}
+    }
 
     private void renderShelfItems(ItemDisplayBlockEntity tileEntity, PoseStack stack, MultiBufferSource buffers, int combinedLight){
         // Items...
@@ -77,8 +77,8 @@ public class CupboardRenderer implements BlockEntityRenderer<ItemDisplayBlockEnt
             combinedLight, OverlayTexture.NO_OVERLAY, stack, buffers, rand + 4);
     }
 
-	@Override
-	public boolean shouldRenderOffScreen(ItemDisplayBlockEntity BlockEntity) {
-		return false;
-	}
+    @Override
+    public boolean shouldRenderOffScreen(ItemDisplayBlockEntity BlockEntity) {
+        return false;
+    }
 }

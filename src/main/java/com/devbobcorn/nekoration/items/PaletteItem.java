@@ -29,9 +29,9 @@ public class PaletteItem extends Item {
     }
 
     @Nonnull
-	@Override
+    @Override
     @SuppressWarnings("deprecation")
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (world.isClientSide) {
             // First get the existing data in this palette...
@@ -53,7 +53,7 @@ public class PaletteItem extends Item {
                 //Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, DEFAULT_COLOR_SET));
                 ClientHelper.showPaletteScreen(hand, (byte)0, DEFAULT_COLOR_SET);
             });
-		}
+        }
         return InteractionResultHolder.success(stack);
-	}
+    }
 }

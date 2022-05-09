@@ -68,7 +68,7 @@ public class ChairBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-		return Collections.singletonList(new ItemStack(this.asItem()));
-	}
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+        return Collections.singletonList(new ItemStack(this.asItem()));
+    }
 }

@@ -35,79 +35,79 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ItemDisplayBlock extends DyeableHorizontalWoodenBlock implements EntityBlock {
-	private static final Map<Direction, VoxelShape> AABBs = getAABBs(9.0D);
+    private static final Map<Direction, VoxelShape> AABBs = getAABBs(9.0D);
 
-	public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
+    public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
 
-	public ItemDisplayBlock(BlockBehaviour.Properties settings) {
-		super(settings);
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(OPEN, Boolean.valueOf(false)));
-	}
+    public ItemDisplayBlock(BlockBehaviour.Properties settings) {
+        super(settings);
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(OPEN, Boolean.valueOf(false)));
+    }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
         s.add(COLOR, FACING, OPEN);
     }
 
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new ItemDisplayBlockEntity(pos, state);
-	}
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ItemDisplayBlockEntity(pos, state);
+    }
 
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
-		return AABBs.get(state.getValue(FACING));
-	}
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
+        return AABBs.get(state.getValue(FACING));
+    }
 
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-		if (world.isClientSide) {
-			return InteractionResult.SUCCESS;
-		} else {
-			BlockEntity tileentity = world.getBlockEntity(pos);
-			if (tileentity instanceof ItemDisplayBlockEntity) {
-				player.openMenu((ItemDisplayBlockEntity) tileentity);
-				PiglinAi.angerNearbyPiglins(player, true);
-			}
-			return InteractionResult.CONSUME;
-		}
-	}
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+        if (world.isClientSide) {
+            return InteractionResult.SUCCESS;
+        } else {
+            BlockEntity tileentity = world.getBlockEntity(pos);
+            if (tileentity instanceof ItemDisplayBlockEntity) {
+                player.openMenu((ItemDisplayBlockEntity) tileentity);
+                PiglinAi.angerNearbyPiglins(player, true);
+            }
+            return InteractionResult.CONSUME;
+        }
+    }
 
-	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.is(newState.getBlock())) {
-			BlockEntity tileentity = world.getBlockEntity(pos);
-			if (tileentity instanceof Container) {
-				Containers.dropContents(world, pos, (Container) tileentity);
-				world.updateNeighbourForOutputSignal(pos, this);
-			}
-			world.removeBlockEntity(pos);
-		}
-	}
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            BlockEntity tileentity = world.getBlockEntity(pos);
+            if (tileentity instanceof Container) {
+                Containers.dropContents(world, pos, (Container) tileentity);
+                world.updateNeighbourForOutputSignal(pos, this);
+            }
+            world.removeBlockEntity(pos);
+        }
+    }
 
-	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
-		BlockEntity tileentity = world.getBlockEntity(pos);
-		if (tileentity instanceof ItemDisplayBlockEntity) {
-			((ItemDisplayBlockEntity) tileentity).recheckOpen();
-		}
-	}
+    public void tick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+        BlockEntity tileentity = world.getBlockEntity(pos);
+        if (tileentity instanceof ItemDisplayBlockEntity) {
+            ((ItemDisplayBlockEntity) tileentity).recheckOpen();
+        }
+    }
 
-	public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
-		if (stack.hasCustomHoverName()) {
-			BlockEntity tileentity = world.getBlockEntity(pos);
-			if (tileentity instanceof ItemDisplayBlockEntity) {
-				((ItemDisplayBlockEntity) tileentity).setCustomName(stack.getHoverName());
-			}
-		}
-	}
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
+        if (stack.hasCustomHoverName()) {
+            BlockEntity tileentity = world.getBlockEntity(pos);
+            if (tileentity instanceof ItemDisplayBlockEntity) {
+                ((ItemDisplayBlockEntity) tileentity).setCustomName(stack.getHoverName());
+            }
+        }
+    }
 
-	public boolean hasAnalogOutputSignal(BlockState state) {
-		return true;
-	}
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
 
-	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
-		return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(world.getBlockEntity(pos));
-	}
+    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(world.getBlockEntity(pos));
+    }
 
-	@Nullable
-	public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-		BlockEntity tileentity = world.getBlockEntity(pos);
-		return tileentity instanceof MenuProvider ? (MenuProvider) tileentity : null;
-	}
+    @Nullable
+    public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
+        BlockEntity tileentity = world.getBlockEntity(pos);
+        return tileentity instanceof MenuProvider ? (MenuProvider) tileentity : null;
+    }
 }
