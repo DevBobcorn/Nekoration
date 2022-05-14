@@ -95,8 +95,7 @@ public class DyeableDoorBlock extends DoorBlock {
         return ModBlocks.DOOR_TALL_1.get();
     }
 
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
-            BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (VanillaCompat.COLOR_ITEMS.containsKey(itemStack.getItem())) {

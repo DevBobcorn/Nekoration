@@ -57,7 +57,7 @@ public final class CommonModEventSubscriber {
                 Item.Properties properties;
                 BlockItem blockItem;
                 if (block instanceof TableBlock || block instanceof ChairBlock){
-                    // Classes: HalfTimberBlock / HalfTimberPillarBlock
+                    // Classes: TableBlock / ChairBlock
                     properties = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
                     blockItem = new BlockItem(block, properties);
                 } else if (block instanceof HalfTimberBlock || block instanceof HalfTimberPillarBlock){

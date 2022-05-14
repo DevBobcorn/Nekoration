@@ -1,6 +1,6 @@
 package com.devbobcorn.nekoration.blocks;
 
-public class StonePillarBlock extends DyeableVerticalConnectBlock{
+public class StonePillarBlock extends DyeableVerticalConnectBlock {
     public StonePillarBlock(Properties settings) {
         super(settings);
     }

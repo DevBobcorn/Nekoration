@@ -194,9 +194,9 @@
     "item.nekoration.paw_right": "Move Right",
     "item.nekoration.paw_up": "Move Up",
     "item.nekoration.wallpaper": "%s Wallpaper",
-    "itemGroup.decor": "Nekoration | Decorations",
-    "itemGroup.neko_tool": "Nekoration | Tools",
-    "itemGroup.stone": "Nekoration | Stone Blocks",
-    "itemGroup.window_n_door": "Nekoration | Windows & Doors",
-    "itemGroup.wooden": "Nekoration | Wooden Blocks"
+    "itemGroup.nekoration.decor": "Nekoration | Decorations",
+    "itemGroup.nekoration.neko_tool": "Nekoration | Tools",
+    "itemGroup.nekoration.stone": "Nekoration | Stone Blocks",
+    "itemGroup.nekoration.window_n_door": "Nekoration | Windows & Doors",
+    "itemGroup.nekoration.wooden": "Nekoration | Wooden Blocks"
 }

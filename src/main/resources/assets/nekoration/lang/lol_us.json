@@ -194,9 +194,9 @@
     "item.nekoration.paw_right": "Mave right",
     "item.nekoration.paw_up": "Move Up",
     "item.nekoration.wallpaper": "%s Wollpopor",
-    "itemGroup.decor": "Nekurashun | decurashunz",
-    "itemGroup.neko_tool": "Nekurashun | Tualz",
-    "itemGroup.stone": "Nekarateean | stone blockz",
-    "itemGroup.window_n_door": "Nekurushun | winduwz & duars",
-    "itemGroup.wooden": "Nekuuroshun | Wuaauden Blouckz"
+    "itemGroup.nekoration.decor": "Nekurashun | decurashunz",
+    "itemGroup.nekoration.neko_tool": "Nekurashun | Tualz",
+    "itemGroup.nekoration.stone": "Nekarateean | stone blockz",
+    "itemGroup.nekoration.window_n_door": "Nekurushun | winduwz & duars",
+    "itemGroup.nekoration.wooden": "Nekuuroshun | Wuaauden Blouckz"
 }

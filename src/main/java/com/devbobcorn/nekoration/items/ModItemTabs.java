@@ -14,14 +14,14 @@ import com.devbobcorn.nekoration.NekoColors.EnumWoodenColor;
 import java.util.function.Supplier;
 
 public class ModItemTabs {
-    public static final CreativeModeTab STONE_GROUP = new ModItemGroup("stone", () -> {
+    public static final CreativeModeTab STONE_GROUP = new ModItemGroup(Nekoration.MODID + ".stone", () -> {
             ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "stone_frame_bottom")));
             DyeableBlockItem.setColor(icoStack, EnumNekoColor.WHITE);
             return icoStack;
         }
     );
 
-    public static final CreativeModeTab WOODEN_GROUP = new ModItemGroup("wooden", () -> {
+    public static final CreativeModeTab WOODEN_GROUP = new ModItemGroup(Nekoration.MODID + ".wooden", () -> {
             ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "half_timber_p1")));
             HalfTimberBlockItem.setColor1(icoStack, EnumNekoColor.WHITE);
             HalfTimberBlockItem.setColor0(icoStack, EnumWoodenColor.BROWN);
@@ -29,21 +29,21 @@ public class ModItemTabs {
         }
     );
 
-    public static final CreativeModeTab WINDOW_N_DOOR_GROUP = new ModItemGroup("window_n_door", () -> {
+    public static final CreativeModeTab WINDOW_N_DOOR_GROUP = new ModItemGroup(Nekoration.MODID + ".window_n_door", () -> {
             ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "window_lancet")));
             DyeableWoodenBlockItem.setColor(icoStack, EnumWoodenColor.BROWN);
             return icoStack;
         }
     );
 
-    public static final CreativeModeTab DECOR_GROUP = new ModItemGroup("decor", () -> {
+    public static final CreativeModeTab DECOR_GROUP = new ModItemGroup(Nekoration.MODID + ".decor", () -> {
             ItemStack icoStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Nekoration.MODID, "easel_menu")));
             DyeableWoodenBlockItem.setColor(icoStack, EnumWoodenColor.BROWN);
             return icoStack;
         }
     );
 
-    public static final CreativeModeTab TOOL_GROUP = new ModItemGroup("neko_tool", () -> {
+    public static final CreativeModeTab TOOL_GROUP = new ModItemGroup(Nekoration.MODID + ".neko_tool", () -> {
             return new ItemStack(ModItems.PAW.get());
         }
     );

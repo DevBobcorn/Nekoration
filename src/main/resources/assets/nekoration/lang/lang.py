@@ -171,8 +171,8 @@ for itm in range(0, len(items)):
 
 # [TAB NAME]
 for tab in range(0, len(tabs)):
-    obj_us['itemGroup.' + tabs[tab]] = "Nekoration | " + tabs_us[tab]
-    obj_cn['itemGroup.' + tabs[tab]] = "猫咪装饰 | " + tabs_cn[tab]
+    obj_us['itemGroup.nekoration.' + tabs[tab]] = "Nekoration | " + tabs_us[tab]
+    obj_cn['itemGroup.nekoration.' + tabs[tab]] = "猫咪装饰 | " + tabs_cn[tab]
 
 # [GUI]
 for gui in range(0, len(guis)):
