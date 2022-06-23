@@ -39,8 +39,7 @@ public class HalfTimberBlock extends Block {
         s.add(COLOR0, COLOR1);
     }
 
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
-            BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (world.isClientSide) {
