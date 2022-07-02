@@ -41,7 +41,7 @@ miscs = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iro
 miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Phonograph [WIP]","Custom Block","Prismap Table [WIP]"]
 miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","留声机[WIP]","自定义方块","棱镜台[WIP]"]
 
-tabs = ["stone","wooden","window_n_door","decor","neko_tool"]
+tabs = ["stone","wooden","window_n_door","decor","tool"]
 tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Decorations","Tools"]
 tabs_cn = ["石质方块","木质方块","门窗","装饰","工具"]
 
@@ -171,8 +171,8 @@ for itm in range(0, len(items)):
 
 # [TAB NAME]
 for tab in range(0, len(tabs)):
-    obj_us['itemGroup.nekoration.' + tabs[tab]] = "Nekoration | " + tabs_us[tab]
-    obj_cn['itemGroup.nekoration.' + tabs[tab]] = "猫咪装饰 | " + tabs_cn[tab]
+    obj_us['itemGroup.neko_' + tabs[tab]] = "Nekoration | " + tabs_us[tab]
+    obj_cn['itemGroup.neko_' + tabs[tab]] = "猫咪装饰 | " + tabs_cn[tab]
 
 # [GUI]
 for gui in range(0, len(guis)):

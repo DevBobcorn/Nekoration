@@ -194,9 +194,9 @@
     "item.nekoration.paw_right": "右移",
     "item.nekoration.paw_up": "上移",
     "item.nekoration.wallpaper": "%s墙纸",
-    "itemGroup.nekoration.decor": "猫咪装饰 | 装饰",
-    "itemGroup.nekoration.neko_tool": "猫咪装饰 | 工具",
-    "itemGroup.nekoration.stone": "猫咪装饰 | 石质方块",
-    "itemGroup.nekoration.window_n_door": "猫咪装饰 | 门窗",
-    "itemGroup.nekoration.wooden": "猫咪装饰 | 木质方块"
+    "itemGroup.neko_decor": "猫咪装饰 | 装饰",
+    "itemGroup.neko_stone": "猫咪装饰 | 石质方块",
+    "itemGroup.neko_tool": "猫咪装饰 | 工具",
+    "itemGroup.neko_window_n_door": "猫咪装饰 | 门窗",
+    "itemGroup.neko_wooden": "猫咪装饰 | 木质方块"
 }
