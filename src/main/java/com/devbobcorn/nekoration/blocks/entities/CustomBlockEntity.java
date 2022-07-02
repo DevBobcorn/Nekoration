@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -78,9 +77,4 @@ public class CustomBlockEntity extends BlockEntity {
         return tag;
     }
 
-    @Override
-    public void setRemoved(){
-        super.setRemoved();
-        Block.popResource(this.level, this.getBlockPos(), containItem);
-    }
 }

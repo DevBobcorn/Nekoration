@@ -95,17 +95,39 @@ public class CustomBlock extends Block implements EntityBlock {
         } else if (item == ModItems.PALETTE.get()){
             // Dye me!
             CompoundTag nbt = itemStack.getTag();
-            byte a = nbt.getByte(PaletteItem.ACTIVE);
-            int[] c = nbt.getIntArray(PaletteItem.COLORS);
-            // So c[a] is the color we need...
-            te.color[0] = NekoColors.getRed(c[a]);
-            te.color[1] = NekoColors.getGreen(c[a]);
-            te.color[2] = NekoColors.getBlue(c[a]);
+            if (nbt != null)
+            {
+                byte a = nbt.getByte(PaletteItem.ACTIVE);
+                int[] c = nbt.getIntArray(PaletteItem.COLORS);
+                if (c.length > a)
+                {
+                    // So c[a] is the color we need...
+                    te.color[0] = NekoColors.getRed(c[a]);
+                    te.color[1] = NekoColors.getGreen(c[a]);
+                    te.color[2] = NekoColors.getBlue(c[a]);
+                }
+            }
+            else
+            {
+                te.color[0] = PaletteItem.DEFAULT_COLOR_SET[0].getRed();
+                te.color[1] = PaletteItem.DEFAULT_COLOR_SET[0].getGreen();
+                te.color[2] = PaletteItem.DEFAULT_COLOR_SET[0].getBlue();
+            }
         } else if (item instanceof BlockItem){
             if (((BlockItem)item).getBlock() instanceof CustomBlock)
                 return InteractionResult.PASS;
             te.model = 16;
             BlockState newState = ((BlockItem)item).getBlock().getStateForPlacement(new BlockPlaceContext(player, hand, itemStack, hit));
+            
+            // getStateForPlacement() might get a null return value sometimes (The block is not placable
+            // in this BlockPlaceContext), in this occasion, we'll use its default block state...
+            if (newState == null)
+                newState = ((BlockItem)item).getBlock().defaultBlockState();
+            
+            // If we still can't get a valid block state, pass...
+            if (newState == null)
+                return InteractionResult.PASS;
+
             if (te.displayBlock == newState)
                 return InteractionResult.PASS;
             else {
