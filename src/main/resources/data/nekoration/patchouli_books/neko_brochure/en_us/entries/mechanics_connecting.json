@@ -43,7 +43,7 @@
 		},
 		{
 			"type": "patchouli:text",
-			"text": "For lamp posts and window frames, they have their own logic of connecting. And it works smartly if you put these blocks in $(#9900FF)a specific order$(), which is shown in the figures on the left.$(br2)$(br2)$(#FF9900)^._.^= ∫"
+			"text": "For lamp posts and window frames, they have their own logic of connecting. And it works smartly if you put these blocks in $(#9900FF)a specific order$(), which is shown in the figures on the left.$(br)What's more, you can manually cycle the 'frame_part' property of a window frame block, by using any type of axe on it, so that you can change it into the shape you want.  $(#FF9900)^._.^= ∫"
 		}
 	]
 }
