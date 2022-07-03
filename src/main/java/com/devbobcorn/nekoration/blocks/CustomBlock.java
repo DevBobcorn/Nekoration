@@ -7,17 +7,17 @@ import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.items.PaletteItem;
-import com.mojang.logging.LogUtils;
+import com.devbobcorn.nekoration.items.TweakItem;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -31,92 +31,53 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class CustomBlock extends Block implements EntityBlock {
-    public static final IntegerProperty MODEL = BlockStateProperties.LEVEL;
+    public static final IntegerProperty LIGHT = BlockStateProperties.LEVEL;
 
     public CustomBlock(Properties settings) {
         super(settings);
     }
     
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> s) {
-        s.add(MODEL);
-    }
-    
-    @Override
-    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        super.setPlacedBy(worldIn, pos, state, placer, stack);
-        BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-        if (tileEntity instanceof CustomBlockEntity) { // prevent a crash if not the right type, or is null
-            // LOGGER.info(tileentity);
-            CustomBlockEntity te = (CustomBlockEntity)tileEntity;
-            switch (placer.getDirection().getOpposite()){
-                case SOUTH:  // +Z
-                default:
-                    break;
-                case EAST:   // +X
-                    te.dir = 6;
-                    break;
-                case NORTH:  // -Z
-                    te.dir = 12;
-                    break;
-                case WEST:   // -X
-                    te.dir = 18;
-                    break;
-            }
-            return;
-        }
-        LogUtils.getLogger().error("Tile Entity NOT Found!");
+        s.add(LIGHT);
     }
 
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
-    BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getItemInHand(hand);
         Item item = itemStack.getItem();
         CustomBlockEntity te = (CustomBlockEntity)world.getBlockEntity(pos);
 
         // Both Sides Changes...
-        if (item == ModItems.PAW_15.get()){
-            te.dir = ((byte)((te.dir + 1) % 24));
-            return InteractionResult.CONSUME;
-        } else if (item == ModItems.PAW_90.get()){
-            te.dir = ((byte)((te.dir + 6) % 24));
-            return InteractionResult.CONSUME;
-        } else if (item == ModItems.PAW_LEFT.get()){
-            te.offset[0]--;
-        } else if (item == ModItems.PAW_RIGHT.get()){
-            te.offset[0]++;
-        } else if (item == ModItems.PAW_UP.get()){
-            te.offset[1]++;
-        } else if (item == ModItems.PAW_DOWN.get()){
-            te.offset[1]--;
-        } else if (item == ModItems.PAW_NEAR.get()){
-            te.offset[2]++;
-        } else if (item == ModItems.PAW_FAR.get()){
-            te.offset[2]--;
+        if (item == Items.AIR){
+            // Toggle arrow hint...
+            te.showHint = !te.showHint;
+        } else if (item instanceof TweakItem){
+            // Pass and let the item apply the tweaks...
+            return InteractionResult.PASS;
         } else if (item == ModItems.PALETTE.get()){
             // Dye me!
             CompoundTag nbt = itemStack.getTag();
-            if (nbt != null)
-            {
+            if (nbt != null) {
                 byte a = nbt.getByte(PaletteItem.ACTIVE);
                 int[] c = nbt.getIntArray(PaletteItem.COLORS);
-                if (c.length > a)
-                {
+                if (c.length > a) {
                     // So c[a] is the color we need...
                     te.color[0] = NekoColors.getRed(c[a]);
                     te.color[1] = NekoColors.getGreen(c[a]);
                     te.color[2] = NekoColors.getBlue(c[a]);
                 }
-            }
-            else
-            {
+            } else {
                 te.color[0] = PaletteItem.DEFAULT_COLOR_SET[0].getRed();
                 te.color[1] = PaletteItem.DEFAULT_COLOR_SET[0].getGreen();
                 te.color[2] = PaletteItem.DEFAULT_COLOR_SET[0].getBlue();
             }
+            te.retint = true;
+        } else if (item == ModItems.PAW.get()) {
+            // Undye me!
+            te.retint = false;
         } else if (item instanceof BlockItem){
             if (((BlockItem)item).getBlock() instanceof CustomBlock)
                 return InteractionResult.PASS;
-            te.model = 16;
+
             BlockState newState = ((BlockItem)item).getBlock().getStateForPlacement(new BlockPlaceContext(player, hand, itemStack, hit));
             
             // getStateForPlacement() might get a null return value sometimes (The block is not placable
@@ -128,15 +89,14 @@ public class CustomBlock extends Block implements EntityBlock {
             if (newState == null)
                 return InteractionResult.PASS;
 
-            if (te.displayBlock == newState)
+            if (te.displayState == newState)
                 return InteractionResult.PASS;
             else {
-                te.displayBlock = newState;
-                ItemStack newStack = itemStack.copy();
-                newStack.setCount(1);
-                te.containItem = newStack;
+                te.displayState = newState;
             }
         } else return InteractionResult.PASS;
+
+        te.setChanged();
         return InteractionResult.sidedSuccess(world.isClientSide);
     }
 
@@ -145,7 +105,6 @@ public class CustomBlock extends Block implements EntityBlock {
         ItemStack stack = new ItemStack(this.asItem());
         return Collections.singletonList(stack);
     }
-
     
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
