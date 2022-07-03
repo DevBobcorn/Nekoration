@@ -1,0 +1,39 @@
+{
+    "name": "Mechanics - Custom Block",
+	"category": "nekoration:mechanics",
+	"icon": "nekoration:dream_was_taken",
+    "pages":[
+        {
+			"type": "patchouli:text",
+			"text": "$(#FF9900)Custom blocks$() allow you to freely adjust a block's visual position, rotation and tint. Just put down a custom block, right click with on it another block item in your hand, and the custom block will turn into its shape. You can adjust a custom block's position and rotation with corresponding tools, and using them while crouching(holding L-Shift) will apply opposite transformations."
+		},
+		{
+			"type": "patchouli:image",
+			"images": ["nekoration:textures/gui/brochure/custom_block.png"],
+			"border": true,
+			"text": "A few examples of $(#FF9900)custom blocks$()."
+		},
+        {
+			"type": "patchouli:text",
+            "title": "Transformations",
+			"text": "The $(#FF9900)transform arrow$() is a reference direction marker useful when moving custom block.$(br)It points to the 'forward' direction of this custom block, and can be toggled by right clicking with an empty hand. "
+		},
+		{
+			"type": "patchouli:image",
+			"images": ["nekoration:textures/gui/brochure/custom_block_arrow.png", "nekoration:textures/gui/brochure/custom_block_transform.png"],
+			"border": true,
+			"text": "Custom block $(#FF9900)transform arrow$()."
+		},
+        {
+			"type": "patchouli:text",
+            "title": "Tinting & Lighting",
+			"text": "The $(#FF9900)dyeable parts$() of custom blocks can be tinted into any color with a palette, for example, the top grass part of a grass block, and the wooden frame of an easel menu block. Using any type of axe on a custom block can cycle its $(#FF9900)lighting value$() from 0 to 15."
+		},
+		{
+			"type": "patchouli:image",
+			"images": ["nekoration:textures/gui/brochure/custom_block_tint.png"],
+			"border": true,
+			"text": "A few custom grass blocks with $(#FF0000)diff$(#FFAA00)eren$(#EEBB00)t ti$(#BBEE00)nts$()."
+		}
+    ]
+}

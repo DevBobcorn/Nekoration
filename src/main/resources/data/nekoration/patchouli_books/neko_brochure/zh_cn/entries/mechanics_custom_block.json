@@ -1,0 +1,39 @@
+{
+    "name": "机制 - 自定义方块",
+	"category": "nekoration:mechanics",
+	"icon": "nekoration:dream_was_taken",
+    "pages":[
+        {
+			"type": "patchouli:text",
+			"text": "$(#FF9900)自定义方块$()可用于自由调节方块外观的位置、朝向与着色. 放置自定义方块后手持另一方块右键即可将其改变为手持方块的外观. $()使用相应猫爪工具可调整其位置与朝向，若在潜行状态（按下L-Shift）使用则会进行反方向的变换."
+		},
+		{
+			"type": "patchouli:image",
+			"images": ["nekoration:textures/gui/brochure/custom_block.png"],
+			"border": true,
+			"text": "$(#FF9900)自定义方块$()的几个例子."
+		},
+        {
+			"type": "patchouli:text",
+            "title": "变换",
+			"text": "$(#FF9900)变换箭头$()是一个方向标记，在移动自定义方块是尤其有用. $(br)它指向自定义方块的前方，可通过空手右键显示或隐藏. "
+		},
+		{
+			"type": "patchouli:image",
+			"images": ["nekoration:textures/gui/brochure/custom_block_arrow.png", "nekoration:textures/gui/brochure/custom_block_transform.png"],
+			"border": true,
+			"text": "自定义方块的$(#FF9900)变换箭头$()."
+		},
+        {
+			"type": "patchouli:text",
+            "title": "着色与照明",
+			"text": "自定义方块的$(#FF9900)可染色部分$()可以使用调色板染成任意颜色, 比如草方块上面草的部分，以及展架的木质框架部分. 对自定义方块使用任意类型的斧可将其$(#FF9900)亮度$()在0至15之间循环改变."
+		},
+		{
+			"type": "patchouli:image",
+			"images": ["nekoration:textures/gui/brochure/custom_block_tint.png"],
+			"border": true,
+			"text": "几个$(#FF0000)颜$(#FFAA00)色$(#EEBB00)不$(#BBEE00)同$()的草方块."
+		}
+    ]
+}

@@ -16,6 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -78,6 +79,11 @@ public class CustomBlock extends Block implements EntityBlock {
         } else if (item == ModItems.PAW.get()) {
             // Undye me!
             te.retint = false;
+        } else if (item instanceof AxeItem) {
+            // Cycle light value...
+            te.getLevel().setBlock(pos, state.cycle(LIGHT), 3);
+            // In this case we don't need to update the block entity, just return
+            return InteractionResult.sidedSuccess(world.isClientSide);
         } else if (item instanceof BlockItem){
             if (((BlockItem)item).getBlock() instanceof CustomBlock)
                 return InteractionResult.PASS;
