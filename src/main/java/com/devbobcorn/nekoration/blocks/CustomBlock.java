@@ -8,6 +8,8 @@ import com.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.devbobcorn.nekoration.items.PaletteItem;
 import com.devbobcorn.nekoration.items.TweakItem;
+import com.devbobcorn.nekoration.network.ModPacketHandler;
+import com.devbobcorn.nekoration.network.S2CUpdateCustomBlockData;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -29,6 +31,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.network.PacketDistributor;
 
 public class CustomBlock extends Block implements EntityBlock {
     public static final IntegerProperty LIGHT = BlockStateProperties.LEVEL;
@@ -41,6 +44,7 @@ public class CustomBlock extends Block implements EntityBlock {
         s.add(LIGHT);
     }
 
+    @SuppressWarnings("resource")
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getItemInHand(hand);
         Item item = itemStack.getItem();
@@ -96,7 +100,13 @@ public class CustomBlock extends Block implements EntityBlock {
             }
         } else return InteractionResult.PASS;
 
-        te.setChanged();
+        
+        if (!te.getLevel().isClientSide) { // Tell clients to update this block entity...
+            te.setChanged(); // client setChanged() will be called when they receive the packet below
+            
+            final S2CUpdateCustomBlockData packet = new S2CUpdateCustomBlockData(te.getBlockPos(), te.dir, te.offset, te.retint, te.showHint, te.color, te.displayState);
+            ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
+        }
         return InteractionResult.sidedSuccess(world.isClientSide);
     }
 

@@ -20,6 +20,7 @@ import com.devbobcorn.nekoration.network.C2SUpdatePaintingSize;
 import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.devbobcorn.nekoration.network.S2CUpdateCupboardData;
+import com.devbobcorn.nekoration.network.S2CUpdateCustomBlockData;
 import com.devbobcorn.nekoration.network.S2CUpdateEaselMenuData;
 import com.devbobcorn.nekoration.network.S2CUpdatePaintingData;
 import com.devbobcorn.nekoration.recipes.ModRecipes;
@@ -92,6 +93,12 @@ public class Nekoration {
             S2CUpdateCupboardData::encode,
             S2CUpdateCupboardData::decode,
             S2CUpdateCupboardData::handle
+        );
+        ModPacketHandler.CHANNEL.registerMessage(networkId++,
+            S2CUpdateCustomBlockData.class,
+            S2CUpdateCustomBlockData::encode,
+            S2CUpdateCustomBlockData::decode,
+            S2CUpdateCustomBlockData::handle
         );
     }
 }

@@ -2,6 +2,8 @@ package com.devbobcorn.nekoration.items;
 
 import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
+import com.devbobcorn.nekoration.network.ModPacketHandler;
+import com.devbobcorn.nekoration.network.S2CUpdateCustomBlockData;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -9,6 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.network.PacketDistributor;
 
 public class TweakItem extends Item {
     public enum Aspect {
@@ -27,6 +30,7 @@ public class TweakItem extends Item {
         this.amount = amount;
     }
 
+    @SuppressWarnings("resource")
     public InteractionResult useOn(UseOnContext ctx) {
         Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
@@ -56,7 +60,13 @@ public class TweakItem extends Item {
                 break;
         }
 
-        te.setChanged();
+        if (!te.getLevel().isClientSide) { // Tell clients to update this block entity...
+            te.setChanged(); // client setChanged() will be called when they receive the packet below
+            
+            final S2CUpdateCustomBlockData packet = new S2CUpdateCustomBlockData(te.getBlockPos(), te.dir, te.offset, te.retint, te.showHint, te.color, te.displayState);
+            ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
+        }
+        
         return InteractionResult.sidedSuccess(world.isClientSide);
     }
     

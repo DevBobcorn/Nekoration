@@ -60,7 +60,8 @@ public class S2CUpdateEaselMenuData {
             if (world.isLoaded(msg.pos)) {
                 BlockEntity tileEntity = world.getBlockEntity(msg.pos);
                 if (tileEntity instanceof EaselMenuBlockEntity) {
-                        EaselMenuBlockEntity te = (EaselMenuBlockEntity) tileEntity;
+                    EaselMenuBlockEntity te = (EaselMenuBlockEntity) tileEntity;
+                    
                     for (int i = 0;i < 8;i++){
                         te.renderItems[i] = msg.items[i];
                         te.setMessage(i, msg.texts[i]);
