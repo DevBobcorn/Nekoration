@@ -1,6 +1,6 @@
 {
 	"name": "Mechanics",
 	"description": "Mechanics in $(#FF9900)Nekoration$().",
-	"icon": "nekoration:dream_was_taken",
+	"icon": "nekoration:custom",
 	"sortnum": 2
 }

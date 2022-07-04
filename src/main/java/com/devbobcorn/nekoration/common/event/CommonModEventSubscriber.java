@@ -24,11 +24,14 @@ import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.ModItemTabs;
 
+import java.util.ArrayList;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -47,11 +50,15 @@ public final class CommonModEventSubscriber {
     @SubscribeEvent
     public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
         final IForgeRegistry<Item> registry = event.getRegistry();
+
+        final ArrayList<Block> itemless = new ArrayList<>();
+        itemless.add(ModBlocks.DREAM_WAS_TAKEN.get());
+
         // Automatically register BlockItems for all our Blocks
         ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get)
             // You can do extra filtering here if you don't want some blocks to have an
             // BlockItem automatically registered for them
-            // .filter(block -> needsItemBlock(block))
+            .filter(block -> !itemless.contains(block))
             // Register the BlockItem for the block
             .forEach(block -> {
                 Item.Properties properties;

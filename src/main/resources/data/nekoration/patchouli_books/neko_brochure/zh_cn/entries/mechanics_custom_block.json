@@ -1,7 +1,7 @@
 {
     "name": "机制 - 自定义方块",
 	"category": "nekoration:mechanics",
-	"icon": "nekoration:dream_was_taken",
+	"icon": "nekoration:custom",
     "pages":[
         {
 			"type": "patchouli:text",

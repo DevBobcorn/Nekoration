@@ -1,7 +1,7 @@
 {
     "name": "Mechanics - Custom Block",
 	"category": "nekoration:mechanics",
-	"icon": "nekoration:dream_was_taken",
+	"icon": "nekoration:custom",
     "pages":[
         {
 			"type": "patchouli:text",
