@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -88,7 +87,7 @@ public class PaintingItem extends Item {
                         painting.data.setPixels(((PaintingEntity)entity).data.getPixels().clone());
                     else {
                         if (world.isClientSide)
-                            player.displayClientMessage(new TranslatableComponent("gui.nekoration.message.link_expired"), true);
+                            player.displayClientMessage(Component.translatable("gui.nekoration.message.link_expired"), true);
                         return InteractionResult.FAIL;
                     }
                 } else painting = new PaintingEntity(world, blockpos1, direction, (short)(PaintingItem.getWidth(stack) * 16), (short)(PaintingItem.getHeight(stack) * 16));
@@ -188,6 +187,6 @@ public class PaintingItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        return new TranslatableComponent(this.getDescriptionId(stack) + '.' + Type.fromId(getType(stack)).name, getWidth(stack), getHeight(stack));
+        return Component.translatable(this.getDescriptionId(stack) + '.' + Type.fromId(getType(stack)).name, getWidth(stack), getHeight(stack));
     }
 }

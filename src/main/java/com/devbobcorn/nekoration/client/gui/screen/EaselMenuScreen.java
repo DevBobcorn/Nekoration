@@ -19,7 +19,6 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.DyeColor;
@@ -36,8 +35,8 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
     private int editingText = 0;
 
     public boolean showColorPicker = false;
-    private TranslatableComponent tipMessage1;
-    private TranslatableComponent tipMessage2;
+    private Component tipMessage1;
+    private Component tipMessage2;
 
     public EaselMenuScreen(EaselMenuMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
@@ -50,8 +49,8 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
             COLOR_SET[i][1] = NekoColors.getGreenf(color);
             COLOR_SET[i][2] = NekoColors.getBluef(color);
         }
-        tipMessage1 = new TranslatableComponent("gui.nekoration.message.press_key_color_picker_on", "'F1'");
-        tipMessage2 = new TranslatableComponent("gui.nekoration.message.press_key_color_picker_off", "'F1'");
+        tipMessage1 = Component.translatable("gui.nekoration.message.press_key_color_picker_on", "'F1'");
+        tipMessage2 = Component.translatable("gui.nekoration.message.press_key_color_picker_off", "'F1'");
     }
 
     @Override
@@ -64,7 +63,7 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
         final int extraOffsetX = 14;
         final int extraOffsetY = 10;
         for (int i = 0;i < 8;i++) {
-            this.textInputs[i] = new EditBox(this.font, this.leftPos + extraOffsetX + (i < 4 ? 8 : 98), this.topPos + extraOffsetY + 36 + (i % 4) * 18, 70, 18, new TranslatableComponent("gui.nekoration.color"));
+            this.textInputs[i] = new EditBox(this.font, this.leftPos + extraOffsetX + (i < 4 ? 8 : 98), this.topPos + extraOffsetY + 36 + (i % 4) * 18, 70, 18, Component.translatable("gui.nekoration.color"));
             this.textInputs[i].setMaxLength(8);
             final int j = i;
             this.textInputs[j].setResponder(input -> {
@@ -74,11 +73,11 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
             this.textInputs[i].setTextColor(this.menu.easel.getColor(i).getTextColor());
             this.textInputs[i].setTextColorUneditable(DyeColor.LIGHT_GRAY.getTextColor());
             this.textInputs[i].setBordered(false);
-            this.textInputs[i].setValue(this.menu.easel.getMessage(i).getContents());
+            this.textInputs[i].setMessage(this.menu.easel.getMessage(i)); // TODO Check if it is correct
             this.addWidget(this.textInputs[i]);
         }
-        final TranslatableComponent enableGlow = new TranslatableComponent("gui.nekoration.button.enable_glow");
-        final TranslatableComponent disableGlow = new TranslatableComponent("gui.nekoration.button.disable_glow");
+        final Component enableGlow = Component.translatable("gui.nekoration.button.enable_glow");
+        final Component disableGlow = Component.translatable("gui.nekoration.button.disable_glow");
 
         glowButton = new IconButton(leftPos + imageWidth + 2, topPos + 4, menu.easel.getGlowing() ? disableGlow : enableGlow, button -> {
             boolean glow = menu.easel.toggleGlowing();

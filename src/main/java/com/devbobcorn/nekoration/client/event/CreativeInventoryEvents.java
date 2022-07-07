@@ -23,7 +23,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.core.NonNullList;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
@@ -77,7 +77,7 @@ public class CreativeInventoryEvents
             this.woodButtons = new ArrayList<>();
             this.decorButtons = new ArrayList<>();
 
-            event.addListener(this.btnScrollUp = new IconButton(this.guiCenterX - 22, this.guiCenterY - 12, new TranslatableComponent("gui.nekoration.button.scroll_up"), button -> {
+            event.addListener(this.btnScrollUp = new IconButton(this.guiCenterX - 22, this.guiCenterY - 12, Component.translatable("gui.nekoration.button.scroll_up"), button -> {
                 if (viewingWoodTab) {
                     if (woodStartIndex > 0)
                         woodStartIndex--;
@@ -90,7 +90,7 @@ public class CreativeInventoryEvents
                 }
             }, ICONS, 64, 0));
 
-            event.addListener(this.btnScrollDown = new IconButton(this.guiCenterX - 22, this.guiCenterY + 127, new TranslatableComponent("gui.nekoration.button.scroll_down"), button -> {
+            event.addListener(this.btnScrollDown = new IconButton(this.guiCenterX - 22, this.guiCenterY + 127, Component.translatable("gui.nekoration.button.scroll_down"), button -> {
                 if (viewingWoodTab){
                     if (woodStartIndex <= woodFilters.size() - 4 - 1)
                         woodStartIndex++;
@@ -103,7 +103,7 @@ public class CreativeInventoryEvents
                 }
             }, ICONS, 80, 0));
 
-            event.addListener(this.btnEnableAll = new IconButton(this.guiCenterX + 32, this.guiCenterY - 50, new TranslatableComponent("gui.nekoration.button.enable_all"), button -> {
+            event.addListener(this.btnEnableAll = new IconButton(this.guiCenterX + 32, this.guiCenterY - 50, Component.translatable("gui.nekoration.button.enable_all"), button -> {
                 if (viewingWoodTab){
                     this.woodFilters.forEach(filters -> filters.setEnabled(true));
                     this.woodButtons.forEach(FilterButton::updateState);
@@ -120,7 +120,7 @@ public class CreativeInventoryEvents
                 }
             }, ICONS, 96, 0));
 
-            event.addListener(this.btnDisableAll = new IconButton(this.guiCenterX + 144, this.guiCenterY - 50, new TranslatableComponent("gui.nekoration.button.disable_all"), button -> {
+            event.addListener(this.btnDisableAll = new IconButton(this.guiCenterX + 144, this.guiCenterY - 50, Component.translatable("gui.nekoration.button.disable_all"), button -> {
                 Screen screen = Minecraft.getInstance().screen;
                 if (viewingWoodTab){
                     this.woodFilters.forEach(filters -> filters.setEnabled(false));
@@ -229,7 +229,7 @@ public class CreativeInventoryEvents
                     this.woodButtons.forEach(button -> button.visible = true);
                     /* Render buttons */
                     this.woodButtons.forEach(button -> {
-                        button.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTicks());
+                        button.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
                     });
                     /* Render tooltips after so it renders above buttons */
                     this.woodButtons.forEach(button -> {
@@ -241,7 +241,7 @@ public class CreativeInventoryEvents
                     this.decorButtons.forEach(button -> button.visible = true);
                     /* Render buttons */
                     this.decorButtons.forEach(button -> {
-                        button.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTicks());
+                        button.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
                     });
                     /* Render tooltips after so it renders above buttons */
                     this.decorButtons.forEach(button -> {
@@ -307,7 +307,6 @@ public class CreativeInventoryEvents
 
         ForgeRegistries.ITEMS.getValues().stream()
         .filter(item -> item.getItemCategory() == ModItemTabs.WOODEN_GROUP)
-        .filter(item -> item.getRegistryName().getNamespace().equals(Nekoration.MODID))
         .forEach(item -> {
             for(WoodFilter filter : woodFilters){
                 if (filter.isEnabled() && item instanceof HalfTimberBlockItem){
@@ -327,7 +326,6 @@ public class CreativeInventoryEvents
 
         ForgeRegistries.ITEMS.getValues().stream()
         .filter(item -> item.getItemCategory() == ModItemTabs.DECOR_GROUP)
-        .filter(item -> item.getRegistryName().getNamespace().equals(Nekoration.MODID))
         .forEach(item -> {
             boolean t0, t1, t2, t3 = false;
             String itemId = ForgeRegistries.ITEMS.getKey(item).getPath();
@@ -410,19 +408,19 @@ public class CreativeInventoryEvents
     public interface Filter {
         public void setEnabled(boolean enabled);
         public boolean isEnabled();
-        public TranslatableComponent getName();
+        public Component getName();
         public ItemStack getIcon();
     }
 
     public static class WoodFilter implements Filter {
         private final EnumWoodenColor wood;
-        private final TranslatableComponent name;
+        private final Component name;
         private final ItemStack icon;
         private boolean enabled = true;
 
         public WoodFilter(EnumWoodenColor type, ItemStack icon){
             this.wood = type;
-            this.name = new TranslatableComponent(String.format("color.wooden.%s", type.getSerializedName().replace("/", ".")));
+            this.name = Component.translatable(String.format("color.wooden.%s", type.getSerializedName().replace("/", ".")));
             this.icon = icon;
         }
 
@@ -434,7 +432,7 @@ public class CreativeInventoryEvents
             return this.icon;
         }
 
-        public TranslatableComponent getName(){
+        public Component getName(){
             return this.name;
         }
 
@@ -449,13 +447,13 @@ public class CreativeInventoryEvents
 
     public static class DecorFilter implements Filter {
         private final EnumDecorType decor;
-        private final TranslatableComponent name;
+        private final Component name;
         private final ItemStack icon;
         private boolean enabled = true;
 
         public DecorFilter(EnumDecorType type, ItemStack icon){
             this.decor = type;
-            this.name = new TranslatableComponent(String.format("decortype.%s", type.getSerializedName().replace("/", ".")));
+            this.name = Component.translatable(String.format("decortype.%s", type.getSerializedName().replace("/", ".")));
             this.icon = icon;
         }
 
@@ -467,7 +465,7 @@ public class CreativeInventoryEvents
             return this.icon;
         }
 
-        public TranslatableComponent getName(){
+        public Component getName(){
             return this.name;
         }
 

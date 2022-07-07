@@ -5,14 +5,11 @@ import com.devbobcorn.nekoration.NekoColors.EnumWoodenColor;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fml.util.thread.SidedThreadGroups;
-
-
 
 public class DyeableWoodenBlockItem extends BlockItem {
     public static final String COLOR = "color";
@@ -23,7 +20,7 @@ public class DyeableWoodenBlockItem extends BlockItem {
 
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
-        if (this.allowdedIn(tab)) {
+        if (this.allowedIn(tab)) {
             for (EnumWoodenColor color : EnumWoodenColor.values()) {
                 ItemStack subItemStack = new ItemStack(this, 1);
                 setColor(subItemStack, color);
@@ -49,7 +46,7 @@ public class DyeableWoodenBlockItem extends BlockItem {
     @Override
     public Component getName(ItemStack stack) {
         if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
-            return new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.wooden." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString());
-        else return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.wooden." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString()));
+            return Component.translatable(this.getDescriptionId(stack), (Component.translatable("color.wooden." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString());
+        else return CaseTweak.getTweaked(Component.translatable(this.getDescriptionId(stack), (Component.translatable("color.wooden." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString()));
     }
 }

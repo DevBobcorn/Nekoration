@@ -16,7 +16,7 @@ public class SeatEntity extends Entity {
     private BlockPos source;
 
     public SeatEntity(Level world) {
-        super(ModEntityType.SEAT_TYPE, world);
+        super(ModEntityType.SEAT_TYPE.get(), world);
         this.noPhysics = true;
     }
 

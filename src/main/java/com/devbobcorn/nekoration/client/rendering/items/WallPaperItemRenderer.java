@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
@@ -40,7 +41,7 @@ public class WallPaperItemRenderer extends BlockEntityWithoutLevelRenderer {
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
 
-        List<Pair<BannerPattern, DyeColor>> list = flag ? BannerBlockEntity.createPatterns(ShieldItem.getColor(stack), BannerBlockEntity.getItemPatterns(stack)) : WallPaperRenderer.getBlankPattern(DyeColor.WHITE);
+        List<Pair<Holder<BannerPattern>, DyeColor>> list = flag ? BannerBlockEntity.createPatterns(ShieldItem.getColor(stack), BannerBlockEntity.getItemPatterns(stack)) : WallPaperRenderer.getBlankPattern(DyeColor.WHITE);
         BannerRenderer.renderPatterns(matrixStack, buffer, combinedLight, combinedOverlay, paperFull, ModelBakery.BANNER_BASE, true, list, false);
 
         matrixStack.popPose();

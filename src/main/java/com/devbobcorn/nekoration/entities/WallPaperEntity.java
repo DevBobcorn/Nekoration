@@ -11,6 +11,8 @@ import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -27,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,7 +45,7 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
     private ListTag itemPatterns;
     private boolean receivedData = false;
     @Nullable
-    private List<Pair<BannerPattern, DyeColor>> patterns = null;
+    private List<Pair<Holder<BannerPattern>, DyeColor>> patterns = null;
 
     public enum Part {
         UPPER((byte) 0, "upper"),
@@ -70,12 +73,12 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
 
     protected WallPaperEntity(EntityType<WallPaperEntity> type, Level world) {
         // Constructor 1: the default one, but not used to create instances in worlds
-        super(ModEntityType.WALLPAPER_TYPE, world);
+        super(ModEntityType.WALLPAPER_TYPE.get(), world);
     }
 
     public WallPaperEntity(Level world, BlockPos pos, Direction dir, ItemStack stack, Part part) {
         // Constructor 2: the one for server-side to create WallPaperEntity Objects
-        super(ModEntityType.WALLPAPER_TYPE, world, pos);
+        super(ModEntityType.WALLPAPER_TYPE.get(), world, pos);
         this.part = part;
         this.setDirection(dir);
         fromItem(stack);
@@ -84,7 +87,7 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
     public WallPaperEntity(PlayMessages.SpawnEntity packet, Level world) {
         // Constructor 3: the one for client-side, creating instances with data packets from the Server
         // Enable by adding 'setCustomClientFactory' when building the entity type
-        super(ModEntityType.WALLPAPER_TYPE, world);
+        super(ModEntityType.WALLPAPER_TYPE.get(), world);
     }
 
     public void setPart(Part part){
@@ -175,7 +178,7 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     @OnlyIn(Dist.CLIENT)
-    public List<Pair<BannerPattern, DyeColor>> getPatterns() {
+    public List<Pair<Holder<BannerPattern>, DyeColor>> getPatterns() {
         if (this.patterns == null && this.receivedData) {
             this.patterns = createPatterns(this.baseColor, this.itemPatterns);
         }
@@ -183,16 +186,16 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static List<Pair<BannerPattern, DyeColor>> createPatterns(DyeColor baseColor, @Nullable ListTag tag) {
-        List<Pair<BannerPattern, DyeColor>> list = Lists.newArrayList();
-        list.add(Pair.of(BannerPattern.BASE, baseColor));
+    public static List<Pair<Holder<BannerPattern>, DyeColor>> createPatterns(DyeColor baseColor, @Nullable ListTag tag) {
+        List<Pair<Holder<BannerPattern>, DyeColor>> list = Lists.newArrayList();
+        list.add(Pair.of(Registry.BANNER_PATTERN.getHolderOrThrow(BannerPatterns.BASE), baseColor));
         if (tag != null) {
             for (int i = 0; i < tag.size(); ++i) {
                 CompoundTag compoundnbt = tag.getCompound(i);
-                BannerPattern bannerpattern = BannerPattern.byHash(compoundnbt.getString("Pattern"));
-                if (bannerpattern != null) {
+                Holder<BannerPattern> holder = BannerPattern.byHash(compoundnbt.getString("Pattern"));
+                if (holder != null) {
                     int j = compoundnbt.getInt("Color");
-                    list.add(Pair.of(bannerpattern, DyeColor.byId(j)));
+                    list.add(Pair.of(holder, DyeColor.byId(j)));
                 }
             }
         }

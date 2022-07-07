@@ -12,7 +12,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -148,7 +147,7 @@ public class ItemDisplayBlockEntity extends ContainerBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block." + Nekoration.MODID + ".cupboard");
+        return Component.translatable("block." + Nekoration.MODID + ".cupboard");
     }
 
     public void startOpen(Player player) {

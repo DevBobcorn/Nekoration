@@ -7,7 +7,6 @@ import com.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -33,7 +32,7 @@ public class DyeableBlockItem extends BlockItem {
 
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
-        if (this.allowdedIn(tab)) {
+        if (this.allowedIn(tab)) {
             if (showAllVariants)
                 for (EnumNekoColor color : EnumNekoColor.values()) {
                     ItemStack subItemStack = new ItemStack(this, 1);
@@ -70,7 +69,7 @@ public class DyeableBlockItem extends BlockItem {
     @Override
     public Component getName(ItemStack stack) {
         if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
-            return new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.nekoration." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString());
-        else return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.nekoration." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString()));
+            return Component.translatable(this.getDescriptionId(stack), (Component.translatable("color.nekoration." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString());
+        else return CaseTweak.getTweaked(Component.translatable(this.getDescriptionId(stack), (Component.translatable("color.nekoration." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown"))).getString()));
     }
 }

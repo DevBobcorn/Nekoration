@@ -13,7 +13,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraftforge.api.distmarker.Dist;
@@ -38,15 +37,15 @@ public class PaintingSizeScreen extends Screen {
     private short pickedWidth; // 1-6
     private short pickedHeight; // 1-6
 
-    private TranslatableComponent tipMessage;
-    private TranslatableComponent[] warningMessages = new TranslatableComponent[2];
+    private Component tipMessage;
+    private Component[] warningMessages = new Component[2];
 
     public PaintingSizeScreen(InteractionHand hand) {
         super(Component.nullToEmpty("PAINTING_SIZE"));
         this.hand = hand;
-        tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_change_grid", "'E'");
-        warningMessages[0] = new TranslatableComponent("gui.nekoration.message.painting_size_warning");
-        warningMessages[1] = new TranslatableComponent("gui.nekoration.message.painting_size_warning_help");
+        tipMessage = Component.translatable("gui.nekoration.message.press_key_change_grid", "'E'");
+        warningMessages[0] = Component.translatable("gui.nekoration.message.painting_size_warning");
+        warningMessages[1] = Component.translatable("gui.nekoration.message.painting_size_warning_help");
     }
 
     protected void init() {
@@ -72,7 +71,7 @@ public class PaintingSizeScreen extends Screen {
             for (int iy = 0; iy < slotNum; iy++)
                 blit(stack, i + 8 + ix * slotLen, j + 30 + iy * slotLen, (ix < pickedWidth && iy < pickedHeight) ? 18 : 0, useLargeSize ? 178 : 160, 18, 18);
         // Draw text...
-        drawCenteredString(stack, this.font, new TranslatableComponent("gui.nekoration.message.size", pickedWidth, pickedHeight), this.width / 2, this.height / 2 - 66, -1);
+        drawCenteredString(stack, this.font, Component.translatable("gui.nekoration.message.size", pickedWidth, pickedHeight), this.width / 2, this.height / 2 - 66, -1);
         // Render Warning if too Large...
         if ((pickedHeight > 6 || pickedWidth > 6)) {
             if (warningOpacity < 210)

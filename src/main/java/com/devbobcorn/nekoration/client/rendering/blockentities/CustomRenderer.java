@@ -7,7 +7,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -20,6 +19,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -90,10 +90,10 @@ public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
                     int rgb = (tileEntity.color[0] << 16) + (tileEntity.color[1] << 8) + tileEntity.color[2];
                     CustomRendererTintGetter tintGetter = tintGetters.get(world);
                     tintGetter.SetCustomTint(rgb);
-                    dispatcher.getModelRenderer().tesselateBlock(tintGetter, dispatcher.getBlockModel(state), state, tileEntity.getBlockPos(), stack, buffers.getBuffer(type), false, new Random(), seed, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
+                    dispatcher.getModelRenderer().tesselateBlock(tintGetter, dispatcher.getBlockModel(state), state, tileEntity.getBlockPos(), stack, buffers.getBuffer(type), false, RandomSource.create(), seed, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
                 } else {
                     // Don't re-tint...
-                    dispatcher.getModelRenderer().tesselateBlock(world, dispatcher.getBlockModel(state), state, tileEntity.getBlockPos(), stack, buffers.getBuffer(type), false, new Random(), seed, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
+                    dispatcher.getModelRenderer().tesselateBlock(world, dispatcher.getBlockModel(state), state, tileEntity.getBlockPos(), stack, buffers.getBuffer(type), false, RandomSource.create(), seed, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
                 }
 
             }

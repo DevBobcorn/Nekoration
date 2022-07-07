@@ -27,7 +27,6 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -87,10 +86,10 @@ public class PaintingScreen extends Screen {
 
     private static int renderTime = 0;
     private static final int TIPS = 3;
-    private final TranslatableComponent[] tipMessages = new TranslatableComponent[TIPS];
+    private final Component[] tipMessages = new Component[TIPS];
     private static final String[] buttonKeys = { "save_painting", "save_painting_content", "load_image", "clear", "round_brush", "square_brush", "transp_add_up", "transp_overwrite" };
-    private final TranslatableComponent[] buttonMessages = new TranslatableComponent[buttonKeys.length];
-    private final TranslatableComponent[] paramMessages = new TranslatableComponent[TOOLS_NUM];
+    private final Component[] buttonMessages = new Component[buttonKeys.length];
+    private final Component[] paramMessages = new Component[TOOLS_NUM];
     private static int stepLimit;
 
     // Config
@@ -119,13 +118,13 @@ public class PaintingScreen extends Screen {
             hor = ver = 0.0D;
             pixsize = 8;
         } // Or if we're editing the painting this client last edited, just keep the editor's transforms.
-        tipMessages[0] = new TranslatableComponent("gui.nekoration.message.press_key_debug_info", "'F1'");
-        tipMessages[1] = new TranslatableComponent("gui.nekoration.message.press_key_undo_redo", "'Z'/'X'");
-        tipMessages[2] = new TranslatableComponent("gui.nekoration.message.press_key_change_tool", "'W'");
+        tipMessages[0] = Component.translatable("gui.nekoration.message.press_key_debug_info", "'F1'");
+        tipMessages[1] = Component.translatable("gui.nekoration.message.press_key_undo_redo", "'Z'/'X'");
+        tipMessages[2] = Component.translatable("gui.nekoration.message.press_key_change_tool", "'W'");
         for (int idx = 0;idx < buttonKeys.length;idx++)
-            buttonMessages[idx] = new TranslatableComponent("gui.nekoration.button." + buttonKeys[idx]);
+            buttonMessages[idx] = Component.translatable("gui.nekoration.button." + buttonKeys[idx]);
         for (int idx = 0;idx < TOOLS_NUM;idx++)
-            paramMessages[idx] = new TranslatableComponent("gui.nekoration.message.scroll_change", new TranslatableComponent("gui.nekoration.paint.tool_param" + idx).getString());
+            paramMessages[idx] = Component.translatable("gui.nekoration.message.scroll_change", Component.translatable("gui.nekoration.paint.tool_param" + idx).getString());
         history.clear();
         future.clear();
         stepLimit = NekoConfig.CLIENT.maxUndoLimit.get();
@@ -145,7 +144,7 @@ public class PaintingScreen extends Screen {
         super.init();
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (this.height - this.imageHeight) / 2;
-        this.nameInput = new EditBox(this.font, leftPos + 57, topPos - 18, 121, 16, new TranslatableComponent("gui.nekoration.color"));
+        this.nameInput = new EditBox(this.font, leftPos + 57, topPos - 18, 121, 16, Component.translatable("gui.nekoration.color"));
         this.nameInput.setMaxLength(256);
         this.nameInput.setResponder(input -> {
             if (nameError) {

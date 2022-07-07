@@ -25,7 +25,6 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 // This type of shaped crafting recipe is used in Nekoration to get result items with NBT,
 // which is not supported in vanilla recipes.
@@ -261,7 +260,7 @@ public class NekoShapedRecipe extends CustomRecipe implements net.minecraftforge
         }
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<NekoShapedRecipe> {
+    public static class Serializer implements RecipeSerializer<NekoShapedRecipe> {
         public NekoShapedRecipe fromJson(ResourceLocation id, JsonObject json) {
             String s = GsonHelper.getAsString(json, "group", "");
             Map<String, Ingredient> ingredientKeys = NekoShapedRecipe

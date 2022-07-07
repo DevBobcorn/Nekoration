@@ -17,7 +17,6 @@ import org.lwjgl.glfw.GLFW;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 
@@ -52,13 +51,13 @@ public class PaletteScreen extends Screen {
 
     public boolean renderColorText = false;
 
-    private TranslatableComponent tipMessage;
+    private Component tipMessage;
 
     public PaletteScreen(InteractionHand hand, byte active, Color[] oldColors) {
         super(Component.nullToEmpty("PALETTE"));
         this.hand = hand;
         this.colors = oldColors;
-        tipMessage = new TranslatableComponent("gui.nekoration.message.press_key_color_info", "'E'");
+        tipMessage = Component.translatable("gui.nekoration.message.press_key_color_info", "'E'");
         setActiveSlot(active);
     }
 
@@ -142,7 +141,7 @@ public class PaletteScreen extends Screen {
         stack.translate(j, -i - 167, 0);
         //fillGradient(stack, i, j, i + 128, j + 128, col, black);
         if (renderColorText)
-            this.font.draw(stack, new TranslatableComponent("gui.nekoration.message.color_info", colors[activeSlot].getRGB(), colors[activeSlot].getRed(), colors[activeSlot].getGreen(), colors[activeSlot].getBlue()), 1.0F, 1.0F, colors[activeSlot].getRGB());
+            this.font.draw(stack, Component.translatable("gui.nekoration.message.color_info", colors[activeSlot].getRGB(), colors[activeSlot].getRed(), colors[activeSlot].getGreen(), colors[activeSlot].getBlue()), 1.0F, 1.0F, colors[activeSlot].getRGB());
         else this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
 

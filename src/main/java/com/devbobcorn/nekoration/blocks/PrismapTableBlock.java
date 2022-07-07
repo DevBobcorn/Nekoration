@@ -50,9 +50,9 @@ public class PrismapTableBlock extends Block implements EntityBlock {
         if (world.isClientSide){
             BlockEntity tileentity = world.getBlockEntity(pos);
             if (tileentity instanceof PrismapTableBlockEntity) { // prevent a crash if not the right type, or is null
-                PrismapTableBlockEntity te = (PrismapTableBlockEntity) tileentity;
-                te.createIfNull();
-                te.refresh();
+                //PrismapTableBlockEntity te = (PrismapTableBlockEntity) tileentity;
+                //te.createIfNull();
+                //te.refresh();
                 LogUtils.getLogger().info("Refreshing...");
             }
         }

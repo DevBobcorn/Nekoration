@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -85,7 +84,7 @@ public class WallPaperItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        return new TranslatableComponent(this.getDescriptionId(stack), (new TranslatableComponent("color.nekoration." + (hasTag(stack) ? getColor(stack).getSerializedName() : "blank"))).getString());
+        return Component.translatable(this.getDescriptionId(stack), (Component.translatable("color.nekoration." + (hasTag(stack) ? getColor(stack).getSerializedName() : "blank"))).getString());
     }
 
     @OnlyIn(Dist.CLIENT)

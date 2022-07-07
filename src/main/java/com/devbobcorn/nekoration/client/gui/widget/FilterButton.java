@@ -13,7 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -27,7 +27,7 @@ public class FilterButton extends Button
     private boolean toggled;
 
     public FilterButton(int x, int y, CreativeInventoryEvents.Filter category, OnPress pressable){
-        super(x, y, 32, 28, TextComponent.EMPTY, pressable);
+        super(x, y, 32, 28, CommonComponents.EMPTY, pressable);
         this.category = category;
         this.stack = category.getIcon();
         this.toggled = category.isEnabled();
@@ -73,8 +73,7 @@ public class FilterButton extends Button
         buffer.vertex(x + width, y + height, 0.0).uv(((float) (textureX + height) * scaleX), ((float) (textureY + width) * scaleY)).endVertex();
         buffer.vertex(x + width, y, 0.0).uv(((float) (textureX) * scaleX), ((float) (textureY + width) * scaleY)).endVertex();
         buffer.vertex(x, y, 0.0).uv(((float) (textureX) * scaleX), ((float) (textureY) * scaleY)).endVertex();
-        buffer.end();
-        BufferUploader.end(buffer);
+        BufferUploader.drawWithShader(buffer.end());
     }
 
     public void updateState(){

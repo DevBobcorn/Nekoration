@@ -57,8 +57,7 @@ public class NekoStonecuttingRecipe extends StonecutterRecipe {
         return finalResult;
     }
 
-    public static class Serializer extends
-            net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<NekoStonecuttingRecipe> {
+    public static class Serializer implements RecipeSerializer<NekoStonecuttingRecipe> {
         @SuppressWarnings("deprecation")
         public NekoStonecuttingRecipe fromJson(ResourceLocation id, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");

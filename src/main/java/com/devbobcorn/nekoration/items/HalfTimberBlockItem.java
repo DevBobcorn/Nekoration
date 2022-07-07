@@ -6,7 +6,6 @@ import com.devbobcorn.nekoration.NekoColors.EnumWoodenColor;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +23,7 @@ public class HalfTimberBlockItem extends BlockItem {
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
         // Only add those with
-        if (this.allowdedIn(tab)) {
+        if (this.allowedIn(tab)) {
             for (EnumNekoColor color : EnumNekoColor.values()) {
                 ItemStack subItemStack = new ItemStack(this, 1);
                 setColor0(subItemStack, EnumWoodenColor.BROWN);
@@ -35,7 +34,7 @@ public class HalfTimberBlockItem extends BlockItem {
     }
 
     public void fillItemCategoryWithWoodType(CreativeModeTab tab, EnumWoodenColor type, NonNullList<ItemStack> subItems) {
-        if (this.allowdedIn(tab)) {
+        if (this.allowedIn(tab)) {
             for (EnumNekoColor color : EnumNekoColor.values()){
                 ItemStack subItemStack = new ItemStack(this, 1);
                 setColor0(subItemStack, type);
@@ -72,11 +71,11 @@ public class HalfTimberBlockItem extends BlockItem {
     @Override
     public Component getName(ItemStack stack) {
         boolean hasColor = hasColor(stack);
-        String color0Text = (new TranslatableComponent("color.wooden." + (hasColor ? getColor0(stack).getSerializedName() : "unknown"))).getString();
-        String color1Text = (new TranslatableComponent("color.nekoration." + (hasColor ? getColor1(stack).getSerializedName() : "unknown"))).getString();
+        String color0Text = (Component.translatable("color.wooden." + (hasColor ? getColor0(stack).getSerializedName() : "unknown"))).getString();
+        String color1Text = (Component.translatable("color.nekoration." + (hasColor ? getColor1(stack).getSerializedName() : "unknown"))).getString();
 
         if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
-            return new TranslatableComponent(this.getDescriptionId(stack), color0Text, color1Text);
-        else return CaseTweak.getTweaked(new TranslatableComponent(this.getDescriptionId(stack), color0Text, color1Text));
+            return Component.translatable(this.getDescriptionId(stack), color0Text, color1Text);
+        else return CaseTweak.getTweaked(Component.translatable(this.getDescriptionId(stack), color0Text, color1Text));
     }
 }

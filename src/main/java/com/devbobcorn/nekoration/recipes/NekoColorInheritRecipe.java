@@ -320,7 +320,7 @@ public class NekoColorInheritRecipe extends CustomRecipe implements net.minecraf
         }
     }
 
-    public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<NekoColorInheritRecipe> {
+    public static class Serializer implements RecipeSerializer<NekoColorInheritRecipe> {
         public NekoColorInheritRecipe fromJson(ResourceLocation id, JsonObject json) {
             String s = GsonHelper.getAsString(json, "group", "");
             Map<String, Ingredient> ingredientKeys = NekoColorInheritRecipe

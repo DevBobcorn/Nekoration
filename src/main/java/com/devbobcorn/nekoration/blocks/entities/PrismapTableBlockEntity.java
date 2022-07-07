@@ -1,9 +1,5 @@
 package com.devbobcorn.nekoration.blocks.entities;
 
-import javax.annotation.Nullable;
-
-import com.devbobcorn.nekoration.client.rendering.ChunkModel;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -15,12 +11,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PrismapTableBlockEntity extends BlockEntity {
-    @Nullable // May be accessed before onLoad
-    // @OnlyIn(Dist.CLIENT) Makes it so this field will be removed from the class on the PHYSICAL SERVER
-    // This is because we only want the ChunkModel on the physical client - its rendering only.
-    @OnlyIn(Dist.CLIENT)
-    public ChunkModel chunkModel;
-    
     public PrismapTableBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntityType.PRISMAP_TABLE_TYPE.get(), pos, state);
     }
@@ -34,17 +24,7 @@ public class PrismapTableBlockEntity extends BlockEntity {
         Level world = getLevel();
         if (world == null || !world.isClientSide)
             return; // Return if the world is null or if we are on the logical server
-        createIfNull();
-    }
-
-    public void createIfNull(){
-        if (chunkModel == null)
-            chunkModel = ChunkModel.forTileEntity(this);
-    }
-
-    public void refresh(){
-        if (chunkModel != null && !chunkModel.getError())
-            chunkModel.compile();
+        //createIfNull();
     }
 
     public boolean shouldRenderFace(Direction dir) {

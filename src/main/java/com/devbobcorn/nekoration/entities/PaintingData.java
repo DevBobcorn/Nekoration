@@ -28,9 +28,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 
 public class PaintingData {
@@ -162,9 +161,9 @@ public class PaintingData {
                 throw new IOException("Could not encode image as specified(" + ext + ")!");
 
             if (showMessage){
-                MutableComponent component = new TextComponent(file.getName());
+                MutableComponent component = Component.literal(file.getName());
                 component = component.withStyle(ChatFormatting.UNDERLINE).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath())));
-                minecraft.player.displayClientMessage(new TranslatableComponent("gui.nekoration.message." + (composite ? "painting_saved" : "painting_content_saved"), component), false);
+                minecraft.player.displayClientMessage(Component.translatable("gui.nekoration.message." + (composite ? "painting_saved" : "painting_content_saved"), component), false);
             }
             return true;
         } catch (IOException e) {
@@ -258,8 +257,8 @@ public class PaintingData {
             return true;
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
-            MutableComponent component = new TextComponent(name);
-            minecraft.player.displayClientMessage(new TranslatableComponent("gui.nekoration.message.painting_load_failed", component), false);
+            MutableComponent component = Component.literal(name);
+            minecraft.player.displayClientMessage(Component.translatable("gui.nekoration.message.painting_load_failed", component), false);
             return false;
         } catch (IllegalArgumentException e) {
             //e.printStackTrace();

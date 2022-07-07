@@ -7,9 +7,8 @@ import com.devbobcorn.nekoration.blocks.containers.EaselMenuMenu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EaselMenuBlockEntity extends ContainerBlockEntity {
     public static final int NUMBER_OF_SLOTS = 8;
 
-    private final Component[] messages = new Component[] { TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY, TextComponent.EMPTY };
+    private final Component[] messages = new Component[] { CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY };
     private final ItemStack airStack = ItemStack.EMPTY;
     public ItemStack[] renderItems = { airStack, airStack, airStack, airStack, airStack, airStack, airStack, airStack };
     private boolean isEditable = true;
@@ -115,12 +114,12 @@ public class EaselMenuBlockEntity extends ContainerBlockEntity {
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("block." + Nekoration.MODID + ".easel_menu");
+        return Component.translatable("block." + Nekoration.MODID + ".easel_menu");
     }
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block." + Nekoration.MODID + ".easel_menu");
+        return Component.translatable("block." + Nekoration.MODID + ".easel_menu");
     }
 
     @Override

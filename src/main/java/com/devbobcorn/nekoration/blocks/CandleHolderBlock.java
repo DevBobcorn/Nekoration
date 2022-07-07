@@ -1,12 +1,11 @@
 package com.devbobcorn.nekoration.blocks;
 
-import java.util.Random;
-
 import com.devbobcorn.nekoration.common.VanillaCompat;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -49,7 +48,7 @@ public class CandleHolderBlock extends DyeableBlock {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
         if (stateIn.getValue(FLAME) > 0) {
             double x = (double) pos.getX() + 0.5D;
             double y = (double) pos.getY() + 1.2D;

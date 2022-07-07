@@ -10,7 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -40,19 +40,19 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
 
     protected PaintingEntity(EntityType<PaintingEntity> type, Level world) {
         // Constructor 1: the default one, but not used to create instances in worlds
-        super(ModEntityType.PAINTING_TYPE, world);
+        super(ModEntityType.PAINTING_TYPE.get(), world);
     }
 
     public PaintingEntity(Level world, BlockPos pos, Direction dir, short w, short h) {
         // Constructor 2: the one for server-side to create brand-new PaintingEntity Objects
-        super(ModEntityType.PAINTING_TYPE, world, pos);
+        super(ModEntityType.PAINTING_TYPE.get(), world, pos);
         this.setDirection(dir);
         data = new PaintingData(w, h, false, this.uuid);
     }
 
     public PaintingEntity(Level world, BlockPos pos, Direction dir, short w, short h, UUID existingId) {
         // Constructor 3: the one for server-side to duplicate PaintingEntity Objects
-        super(ModEntityType.PAINTING_TYPE, world, pos);
+        super(ModEntityType.PAINTING_TYPE.get(), world, pos);
         this.setDirection(dir);
         data = new PaintingData(w, h, false, existingId);
     }
@@ -60,7 +60,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
     public PaintingEntity(PlayMessages.SpawnEntity packet, Level world) {
         // Constructor 3: the one for client-side, creating instances with data packets from the Server
         // Enable by adding 'setCustomClientFactory' when building the entity type
-        super(ModEntityType.PAINTING_TYPE, world);
+        super(ModEntityType.PAINTING_TYPE.get(), world);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
                     });
                 } else ClientHelper.showPaintingScreen(this.getId());
             } else if (stack.getItem() != ModItems.PAINTING.get()) {
-                player.displayClientMessage(new TranslatableComponent("gui.nekoration.message.paint_with_palette"), true);
+                player.displayClientMessage(Component.translatable("gui.nekoration.message.paint_with_palette"), true);
             }
         } else {
             if (stack.getItem() == ModItems.PAINTING.get()){

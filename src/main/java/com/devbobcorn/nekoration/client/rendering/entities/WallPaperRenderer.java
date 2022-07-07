@@ -21,9 +21,12 @@ import net.minecraft.client.renderer.blockentity.BannerRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 
 public class WallPaperRenderer extends EntityRenderer<WallPaperEntity> {
     public final ModelPart paperFull;
@@ -72,9 +75,9 @@ public class WallPaperRenderer extends EntityRenderer<WallPaperEntity> {
         return null;
     }
 
-    public static List<Pair<BannerPattern, DyeColor>> getBlankPattern(DyeColor base){
-        List<Pair<BannerPattern, DyeColor>> list = Lists.newArrayList();
-        list.add(Pair.of(BannerPattern.BASE, base));
+    public static List<Pair<Holder<BannerPattern>, DyeColor>> getBlankPattern(DyeColor base){
+        List<Pair<Holder<BannerPattern>, DyeColor>> list = Lists.newArrayList();
+        list.add(Pair.of(Registry.BANNER_PATTERN.getHolderOrThrow(BannerPatterns.BASE), base));
         return list;
     }
 

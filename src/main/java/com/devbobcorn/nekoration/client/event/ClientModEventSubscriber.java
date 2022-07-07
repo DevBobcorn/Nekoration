@@ -153,9 +153,9 @@ public final class ClientModEventSubscriber {
 
         LOGGER.info("BlockEntities Renderers Bound.");
 
-        EntityRenderers.register(ModEntityType.PAINTING_TYPE, PaintingRenderer::new);
-        EntityRenderers.register(ModEntityType.WALLPAPER_TYPE, WallPaperRenderer::new);
-        EntityRenderers.register(ModEntityType.SEAT_TYPE, SeatRenderer::new);
+        EntityRenderers.register(ModEntityType.PAINTING_TYPE.get(), PaintingRenderer::new);
+        EntityRenderers.register(ModEntityType.WALLPAPER_TYPE.get(), WallPaperRenderer::new);
+        EntityRenderers.register(ModEntityType.SEAT_TYPE.get(), SeatRenderer::new);
 
         LOGGER.info("Then Entities Renderers Bound.");
 
