@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "nekoration:stone_layered",
+    "nekoration:stone_base_bottom",
+    "nekoration:stone_frame_bottom",
+    "nekoration:stone_pillar_bottom",
+    "nekoration:stone_base",
+    "nekoration:stone_frame",
+    "nekoration:stone_pillar",
+    "nekoration:stone_doric",
+    "nekoration:stone_ionic",
+    "nekoration:stone_corinthian",
+    "nekoration:window_top",
+    "nekoration:window_sill",
+    "nekoration:window_frame",
+    "nekoration:stone_pot",
+    "nekoration:stone_planter"
+  ]
+}

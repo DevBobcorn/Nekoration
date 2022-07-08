@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "nekoration:awning_pure",
+    "nekoration:awning_stripe",
+    "nekoration:awning_pure_short",
+    "nekoration:awning_stripe_short"
+  ]
+}
