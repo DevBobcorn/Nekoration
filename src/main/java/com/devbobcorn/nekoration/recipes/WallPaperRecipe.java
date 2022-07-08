@@ -19,59 +19,59 @@ public class WallPaperRecipe extends CustomRecipe {
     }
 
     public boolean matches(CraftingContainer inv, Level world) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        ItemStack itemstack1 = ItemStack.EMPTY;
+        ItemStack resultStack = ItemStack.EMPTY;
+        ItemStack bannerStack = ItemStack.EMPTY;
 
         for (int i = 0; i < inv.getContainerSize(); ++i) {
-            ItemStack itemstack2 = inv.getItem(i);
-            if (!itemstack2.isEmpty()) {
-                if (itemstack2.getItem() instanceof BannerItem) {
-                    if (!itemstack1.isEmpty()) {
+            ItemStack curStack = inv.getItem(i);
+            if (!curStack.isEmpty()) {
+                if (curStack.getItem() instanceof BannerItem) {
+                    if (!bannerStack.isEmpty()) {
                         return false;
                     }
-                    itemstack1 = itemstack2;
+                    bannerStack = curStack;
                 } else {
-                    if (itemstack2.getItem() != ModItems.WALLPAPER.get()) {
+                    if (curStack.getItem() != ModItems.WALLPAPER.get()) {
                         return false;
                     }
-                    if (!itemstack.isEmpty()) {
+                    if (!resultStack.isEmpty()) {
                         return false;
                     }
                     CompoundTag tag;
-                    if ((tag = itemstack2.getTagElement("BlockEntityTag")) != null) {
+                    if ((tag = curStack.getTagElement("BlockEntityTag")) != null) {
                         if (WallPaperEntity.getBaseColor(tag) != DyeColor.WHITE || WallPaperEntity.getPatterns(tag) != null)
                             return false;
                     }
-                    itemstack = itemstack2;
+                    resultStack = curStack;
                 }
             }
         }
-        return !itemstack.isEmpty() && !itemstack1.isEmpty();
+        return !resultStack.isEmpty() && !bannerStack.isEmpty();
     }
 
     public ItemStack assemble(CraftingContainer inv) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        ItemStack itemstack1 = ItemStack.EMPTY;
+        ItemStack bannerStack = ItemStack.EMPTY;
+        ItemStack resultStack = ItemStack.EMPTY;
 
         for (int i = 0; i < inv.getContainerSize(); ++i) {
-            ItemStack itemstack2 = inv.getItem(i);
-            if (!itemstack2.isEmpty()) {
-                if (itemstack2.getItem() instanceof BannerItem) {
-                    itemstack = itemstack2;
-                } else if (itemstack2.getItem() == ModItems.WALLPAPER.get()) {
-                    itemstack1 = itemstack2.copy();
-                    itemstack.setCount(1);
+            ItemStack curStack = inv.getItem(i);
+            if (!curStack.isEmpty()) {
+                if (curStack.getItem() instanceof BannerItem) {
+                    bannerStack = curStack;
+                } else if (curStack.getItem() == ModItems.WALLPAPER.get()) {
+                    resultStack = curStack.copy();
+                    resultStack.setCount(1);
                 }
             }
         }
-        if (itemstack1.isEmpty()) {
-            return itemstack1;
+        if (resultStack.isEmpty()) {
+            return resultStack;
         } else {
-            CompoundTag compoundnbt = itemstack.getTagElement("BlockEntityTag");
-            CompoundTag compoundnbt1 = compoundnbt == null ? new CompoundTag() : compoundnbt.copy();
-            compoundnbt1.putInt("Base", ((BannerItem) itemstack.getItem()).getColor().getId());
-            itemstack1.addTagElement("BlockEntityTag", compoundnbt1);
-            return itemstack1;
+            CompoundTag bannerTag = bannerStack.getTagElement("BlockEntityTag");
+            CompoundTag wallpaperTag = bannerTag == null ? new CompoundTag() : bannerTag.copy();
+            wallpaperTag.putInt("Base", ((BannerItem) bannerStack.getItem()).getColor().getId());
+            resultStack.addTagElement("BlockEntityTag", wallpaperTag);
+            return resultStack;
         }
     }
 
