@@ -13,8 +13,8 @@ public class ClientHelper {
         Minecraft.getInstance().setScreen(new PaletteScreen(hand, active, colors));
     }
 
-    public static void showPaintingSizeScreen(InteractionHand hand) {
-        Minecraft.getInstance().setScreen(new PaintingSizeScreen(hand));
+    public static void showPaintingSizeScreen(InteractionHand hand, int count) {
+        Minecraft.getInstance().setScreen(new PaintingSizeScreen(hand, count));
     }
 
     public static void showPaintingScreen(int painting) {

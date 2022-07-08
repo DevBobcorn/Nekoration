@@ -114,9 +114,8 @@ public class PaintingItem extends Item {
         boolean hasType = tag.contains(TYPE, TagTypes.BYTE_NBT_ID);
         if (!hasType || (hasType && tag.getByte(TYPE) == Type.BLANK.id)) { // If a blank one...
             if (world.isClientSide) {
-                DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> { 
-                    //Minecraft.getInstance().setScreen(new PaletteScreen(hand, a, col));
-                    ClientHelper.showPaintingSizeScreen(hand);
+                DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+                    ClientHelper.showPaintingSizeScreen(hand, stack.getCount());
                 });
             }
         } else if (hasType && tag.getByte(TYPE) == Type.MAGIC.id) { // If a magic link...

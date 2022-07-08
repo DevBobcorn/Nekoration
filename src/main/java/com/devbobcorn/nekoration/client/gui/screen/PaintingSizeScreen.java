@@ -33,6 +33,7 @@ public class PaintingSizeScreen extends Screen {
     private int topPos;
 
     private InteractionHand hand;
+    private int stackCount;
 
     private short pickedWidth; // 1-6
     private short pickedHeight; // 1-6
@@ -40,9 +41,10 @@ public class PaintingSizeScreen extends Screen {
     private Component tipMessage;
     private Component[] warningMessages = new Component[2];
 
-    public PaintingSizeScreen(InteractionHand hand) {
+    public PaintingSizeScreen(InteractionHand hand, int count) {
         super(Component.nullToEmpty("PAINTING_SIZE"));
         this.hand = hand;
+        this.stackCount = count;
         tipMessage = Component.translatable("gui.nekoration.message.press_key_change_grid", "'E'");
         warningMessages[0] = Component.translatable("gui.nekoration.message.painting_size_warning");
         warningMessages[1] = Component.translatable("gui.nekoration.message.painting_size_warning_help");
@@ -106,7 +108,7 @@ public class PaintingSizeScreen extends Screen {
         // Get it & Close it...
         pickedWidth = (short)Math.min(Math.max((int)Math.ceil(gridx / slotLen), 1), slotNum);
         pickedHeight = (short)Math.min(Math.max((int)Math.ceil(gridy / slotLen), 1), slotNum);
-        final C2SUpdatePaintingSize packet = new C2SUpdatePaintingSize(this.hand, pickedWidth, pickedHeight);
+        final C2SUpdatePaintingSize packet = new C2SUpdatePaintingSize(this.hand, pickedWidth, pickedHeight, stackCount);
         ModPacketHandler.CHANNEL.sendToServer(packet);
         this.minecraft.setScreen((Screen)null);
         return true;
