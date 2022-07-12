@@ -24,6 +24,7 @@ import com.devbobcorn.nekoration.network.S2CUpdateCupboardData;
 import com.devbobcorn.nekoration.network.S2CUpdateCustomBlockData;
 import com.devbobcorn.nekoration.network.S2CUpdateEaselMenuData;
 import com.devbobcorn.nekoration.network.S2CUpdatePaintingData;
+import com.devbobcorn.nekoration.network.S2CUpdateWallpaperPart;
 import com.devbobcorn.nekoration.recipes.ModRecipes;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -88,6 +89,12 @@ public class Nekoration {
             S2CUpdatePaintingData::encode,
             S2CUpdatePaintingData::decode,
             S2CUpdatePaintingData::handle
+        );
+        ModPacketHandler.CHANNEL.registerMessage(networkId++,
+            S2CUpdateWallpaperPart.class,
+            S2CUpdateWallpaperPart::encode,
+            S2CUpdateWallpaperPart::decode,
+            S2CUpdateWallpaperPart::handle
         );
         ModPacketHandler.CHANNEL.registerMessage(networkId++,
             S2CUpdateCupboardData.class,

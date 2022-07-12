@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.devbobcorn.nekoration.items.ModItems;
+import com.devbobcorn.nekoration.network.ModPacketHandler;
+import com.devbobcorn.nekoration.network.S2CUpdateWallpaperPart;
 import com.devbobcorn.nekoration.utils.TagTypes;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
@@ -36,6 +38,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.PlayMessages;
 
 public class WallPaperEntity extends HangingEntity implements IEntityAdditionalSpawnData {
@@ -146,6 +149,13 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
             this.part = Part.UPPER;
         else if (this.part == Part.UPPER)
             this.part = Part.LOWER;
+
+        // Send update packet if this is server
+        Level world = player.level;
+        if (!world.isClientSide) {
+            final S2CUpdateWallpaperPart packet = new S2CUpdateWallpaperPart(this.getId(), this.part.id);
+            ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), packet);
+        }
 
         return InteractionResult.SUCCESS;
     }
