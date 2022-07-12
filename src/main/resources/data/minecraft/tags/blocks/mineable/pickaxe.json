@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
+    "nekoration:lamp_post_iron",
+    "nekoration:lamp_post_gold",
+    "nekoration:lamp_post_quartz",
     "#nekoration:stone_neko"
   ]
 }
