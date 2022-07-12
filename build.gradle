@@ -4,7 +4,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
-version = '1.7.2'
+version = '1.7.4'
 group = 'com.devbobcorn.nekoration' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'nekoration-1.19.X'
 
