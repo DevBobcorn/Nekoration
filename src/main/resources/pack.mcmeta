@@ -1,7 +1,6 @@
 {
     "pack": {
         "description": "Nekoration",
-        "pack_format": 8,
-        "_comment": "A pack_format of 8 requires json lang files and some texture changes from 1.18.2."
+        "pack_format": 9
     }
 }
