@@ -27,8 +27,8 @@ public class NekoColorInheritRecipeExtension implements ICraftingCategoryExtensi
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
-        craftingGridHelper.setInputs(builder, VanillaTypes.ITEM_STACK, recipe.getInputs(), getWidth(), getHeight());
-        craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM_STACK, recipe.getOutputs());
+        craftingGridHelper.createAndSetInputs(builder, VanillaTypes.ITEM_STACK, recipe.getInputs(), getWidth(), getHeight());
+        craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, recipe.getOutputs());
     }
 
     @Override

@@ -12,7 +12,8 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
@@ -25,8 +26,8 @@ public class PhotoEvents {
     private static long lastShot = 0L;
 
     @SubscribeEvent
-    public static void onRenderWorldFinish(RenderLevelLastEvent event) {
-        if (!shouldTakePhoto) return;
+    public static void onRenderWorldFinish(RenderLevelStageEvent event) {
+        if (event.getStage() != Stage.AFTER_WEATHER || !shouldTakePhoto) return;
         shouldTakePhoto = false;
         if (System.nanoTime() - lastShot < 500000000) return; // Less than 0.5 second...
         lastShot = System.nanoTime();
