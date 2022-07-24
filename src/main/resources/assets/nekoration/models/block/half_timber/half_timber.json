@@ -28,5 +28,6 @@
                 "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#overlay", "cullface": "east", "tintindex": 0 }
             }
         }
-    ]
+    ],
+    "render_type": "cutout_mipped"
 }

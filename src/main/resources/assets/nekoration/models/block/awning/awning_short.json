@@ -83,5 +83,6 @@
             "translation": [ 0, 0, 0],
             "scale": [ 0.4, 0.4, 0.4 ]
         }
-    }
+    },
+    "render_type": "cutout_mipped"
 }

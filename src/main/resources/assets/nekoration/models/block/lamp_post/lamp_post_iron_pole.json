@@ -17,5 +17,6 @@
 				"down": {"uv": [7, 7, 9, 9], "texture": "#0", "cullface": "down"}
 			}
 		}
-	]
+	],
+    "render_type": "cutout_mipped"
 }

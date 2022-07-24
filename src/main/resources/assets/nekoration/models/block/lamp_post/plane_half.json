@@ -12,5 +12,6 @@
 				"west": {"uv": [16, 0, 8, 16], "texture": "#0"}
 			}
 		}
-	]
+	],
+    "render_type": "cutout_mipped"
 }

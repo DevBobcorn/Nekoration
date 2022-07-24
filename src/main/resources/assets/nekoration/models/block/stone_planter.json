@@ -28,5 +28,6 @@
 				"up": {"uv": [2, 2, 14, 14], "texture": "#dirt"}
 			}
 		}
-	]
+	],
+    "render_type": "cutout_mipped"
 }

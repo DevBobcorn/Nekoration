@@ -17,5 +17,6 @@
                 "east":  { "texture": "#side", "cullface": "east", "tintindex": 0 }
             }
         }
-    ]
+    ],
+    "render_type": "cutout"
 }
