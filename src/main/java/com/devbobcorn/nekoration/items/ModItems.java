@@ -9,7 +9,7 @@ import com.devbobcorn.nekoration.items.TweakItem.Aspect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -39,10 +39,10 @@ public class ModItems {
 
     public static final RegistryObject<Item> WALLPAPER = ITEMS.register("wallpaper", () -> new WallPaperItem(new Item.Properties().tab(ModItemTabs.DECOR_GROUP)){
         @Override
-        public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-            consumer.accept(new IItemRenderProperties(){
+        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+            consumer.accept(new IClientItemExtensions(){
                 @Override
-                public BlockEntityWithoutLevelRenderer getItemStackRenderer(){
+                public BlockEntityWithoutLevelRenderer getCustomRenderer(){
                     return new WallPaperItemRenderer(null, Minecraft.getInstance().getEntityModels());
                 }
             });

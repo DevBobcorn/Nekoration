@@ -9,7 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModMenuType {
-    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, Nekoration.MODID);
+    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Nekoration.MODID);
 
     public static final RegistryObject<MenuType<EaselMenuMenu>> EASEL_MENU_TYPE = MENU_TYPES.register("easel_menu", () -> IForgeMenuType.create(EaselMenuMenu::new));
 }

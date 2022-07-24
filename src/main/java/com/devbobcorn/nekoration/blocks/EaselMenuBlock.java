@@ -75,7 +75,7 @@ public class EaselMenuBlock extends DyeableHorizontalWoodenBlock implements Enti
             InteractionHand hand, BlockHitResult rayTraceResult) {
             if(!world.isClientSide()) {
                 if(world.getBlockEntity(pos) instanceof EaselMenuBlockEntity blockEntity) {
-                    NetworkHooks.openGui((ServerPlayer) player, blockEntity, pos);
+                    NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos);
                 }
             }
         return InteractionResult.SUCCESS;

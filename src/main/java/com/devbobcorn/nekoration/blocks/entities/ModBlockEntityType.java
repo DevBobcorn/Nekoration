@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockEntityType {
-    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Nekoration.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Nekoration.MODID);
 
     public static final RegistryObject<BlockEntityType<EaselMenuBlockEntity>> EASEL_MENU_TYPE = TILE_ENTITY_TYPES.register("easel_menu", () -> BlockEntityType.Builder.of((pos, state) -> new EaselMenuBlockEntity(((EaselMenuBlock) state.getBlock()).white, pos, state), ModBlocks.EASEL_MENU.get(), ModBlocks.EASEL_MENU_WHITE.get()).build(null));
     public static final RegistryObject<BlockEntityType<PhonographBlockEntity>> PHONOGRAPH_TYPE = TILE_ENTITY_TYPES.register("phonograph", () -> BlockEntityType.Builder.of(PhonographBlockEntity::new, ModBlocks.PHONOGRAPH.get()).build(null));

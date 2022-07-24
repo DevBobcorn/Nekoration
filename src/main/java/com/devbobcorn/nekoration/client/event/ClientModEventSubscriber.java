@@ -38,8 +38,6 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -48,8 +46,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterShadersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -66,7 +64,7 @@ public final class ClientModEventSubscriber {
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
         LOGGER.info("Client Side Setup.");
 
-        RenderType transparentRenderType = RenderType.cutoutMipped();
+        /*RenderType transparentRenderType = RenderType.cutoutMipped();
         RenderType cutoutRenderType = RenderType.cutout();
 
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.HALF_TIMBER_P0.get(), transparentRenderType);
@@ -143,7 +141,7 @@ public final class ClientModEventSubscriber {
         // Holes in planters...
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.STONE_PLANTER.get(), transparentRenderType);
 
-        LOGGER.info("Block Render Types Registered.");
+        LOGGER.info("Block Render Types Registered.");*/
 
         BlockEntityRenderers.register(ModBlockEntityType.EASEL_MENU_TYPE.get(), EaselMenuRenderer::new);
         BlockEntityRenderers.register(ModBlockEntityType.CUSTOM_TYPE.get(), CustomRenderer::new);
@@ -191,21 +189,21 @@ public final class ClientModEventSubscriber {
     }
 
     @SubscribeEvent
-    public static void registerBlockColors(ColorHandlerEvent.Block event) {
-        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+    public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+        event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
                 return NekoColors.getStoneColorOrLightGray(7);
             return NekoColors.getStoneColorOrLightGray(state.getValue(DyeableBlock.COLOR));
         }, ModBlocks.STONE_BASE_BOTTOM.get(), ModBlocks.STONE_FRAME_BOTTOM.get(), ModBlocks.STONE_PILLAR_BOTTOM.get(), ModBlocks.STONE_LAYERED.get(),
                 ModBlocks.STONE_POT.get(), ModBlocks.STONE_PLANTER.get());
 
-        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+        event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
                 return NekoColors.getNekoColorOrWhite(14);
             return NekoColors.getNekoColorOrWhite(state.getValue(DyeableBlock.COLOR));
         }, ModBlocks.CANDLE_HOLDER_IRON.get(), ModBlocks.CANDLE_HOLDER_GOLD.get(), ModBlocks.CANDLE_HOLDER_QUARTZ.get());
 
-        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+        event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
                 return NekoColors.getWoodenColorOrBrown(2);
             return NekoColors.getWoodenColorOrBrown(state.getValue(DyeableBlock.COLOR));
@@ -215,20 +213,20 @@ public final class ClientModEventSubscriber {
                 ModBlocks.BENCH.get(),
                 ModBlocks.DRAWER.get(), ModBlocks.CABINET.get(), ModBlocks.DRAWER_CHEST.get());
 
-        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+        event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof DyeableVerticalConnectBlock))
                 return NekoColors.getStoneColorOrLightGray(7);
             return NekoColors.getStoneColorOrLightGray(state.getValue(DyeableVerticalConnectBlock.COLOR));
         }, ModBlocks.STONE_BASE.get(), ModBlocks.STONE_FRAME.get(), ModBlocks.STONE_PILLAR.get(),
                 ModBlocks.STONE_DORIC.get(), ModBlocks.STONE_IONIC.get(), ModBlocks.STONE_CORINTHIAN.get());
 
-        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+        event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof DyeableHorizontalBlock))
                 return NekoColors.getStoneColorOrLightGray(7);
             return NekoColors.getStoneColorOrLightGray(state.getValue(DyeableHorizontalBlock.COLOR));
         }, ModBlocks.WINDOW_SILL.get(), ModBlocks.WINDOW_TOP.get(), ModBlocks.WINDOW_FRAME.get());
 
-        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+        event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof HalfTimberBlock))
                 return NekoColors.getWoodenColorOrBrown(2);
             return (tintIndex == 0) ? NekoColors.getWoodenColorOrBrown(state.getValue(HalfTimberBlock.COLOR0)) : NekoColors.getNekoColorOrWhite(state.getValue(HalfTimberBlock.COLOR1));
@@ -237,27 +235,27 @@ public final class ClientModEventSubscriber {
                 ModBlocks.HALF_TIMBER_P6.get(), ModBlocks.HALF_TIMBER_P7.get(), ModBlocks.HALF_TIMBER_P8.get(),
                 ModBlocks.HALF_TIMBER_P9.get());
 
-        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+        event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof HalfTimberPillarBlock))
                 return (tintIndex == 0) ? NekoColors.getWoodenColorOrBrown(2) : NekoColors.getNekoColorOrWhite(14);
             return (tintIndex == 0) ? NekoColors.getWoodenColorOrBrown(state.getValue(HalfTimberBlock.COLOR0)) : NekoColors.getNekoColorOrWhite(state.getValue(HalfTimberBlock.COLOR1));
         }, ModBlocks.HALF_TIMBER_PILLAR_P0.get(), ModBlocks.HALF_TIMBER_PILLAR_P1.get(),
                 ModBlocks.HALF_TIMBER_PILLAR_P2.get());
 
-        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+        event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
                 return (tintIndex == 0) ? NekoColors.EnumNekoColor.PURPLE.getColor() : NekoColors.getNekoColorOrWhite(14);
             return (tintIndex == 0) ? BiomeColors.getAverageFoliageColor(view, pos) : NekoColors.getNekoColorOrWhite(state.getValue(DyeableBlock.COLOR));
         }, ModBlocks.WINDOW_PLANT.get());
 
-        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+        event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof WindowBlock))
                 return NekoColors.getWoodenColorOrBrown(2);
             return NekoColors.getWoodenColorOrBrown(state.getValue(WindowBlock.COLOR));
         }, ModBlocks.WINDOW_SIMPLE.get(), ModBlocks.WINDOW_ARCH.get(), ModBlocks.WINDOW_CROSS.get(), ModBlocks.WINDOW_SHADE.get(),
                 ModBlocks.WINDOW_LANCET.get());
 
-        event.getBlockColors().register((state, view, pos, tintIndex) -> {
+        event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof DyeableDoorBlock))
                 return NekoColors.getNekoColorOrWhite(14);
             return NekoColors.getNekoColorOrWhite(state.getValue(DyeableDoorBlock.COLOR));
@@ -268,9 +266,9 @@ public final class ClientModEventSubscriber {
     }
 
     @SubscribeEvent
-    public static void registerItemColors(ColorHandlerEvent.Item event) {
+    public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         // Default Light Gray:
-        event.getItemColors().register((stack, tintIndex) -> {
+        event.register((stack, tintIndex) -> {
             return NekoColors.getStoneFromNeko(DyeableBlockItem.getColor(stack)).getColor();
         },
         ModBlocks.STONE_BASE_BOTTOM.get().asItem(), ModBlocks.STONE_FRAME_BOTTOM.get().asItem(),
@@ -283,7 +281,7 @@ public final class ClientModEventSubscriber {
         ModBlocks.STONE_PLANTER.get().asItem());
 
         // Default White:
-        event.getItemColors().register((stack, tintIndex) -> {
+        event.register((stack, tintIndex) -> {
             return NekoColors.getStoneFromNeko(DyeableBlockItem.getColor(stack)).getColor();
         },
         ModBlocks.CANDLE_HOLDER_IRON.get().asItem(), ModBlocks.CANDLE_HOLDER_GOLD.get().asItem(),
@@ -291,7 +289,7 @@ public final class ClientModEventSubscriber {
 
 
         // Default White, Flowering Plants:
-        event.getItemColors().register((stack, tintIndex) -> {
+        event.register((stack, tintIndex) -> {
             switch (tintIndex) {
                 case 0:
                 default:
@@ -303,7 +301,7 @@ public final class ClientModEventSubscriber {
         ModBlocks.WINDOW_PLANT.get().asItem());
 
         // Default Wooden Brown:
-        event.getItemColors().register((stack, tintIndex) -> {
+        event.register((stack, tintIndex) -> {
             return DyeableWoodenBlockItem.getColor(stack).getColor();
         }, 
         ModBlocks.WINDOW_SIMPLE.get().asItem(), ModBlocks.WINDOW_ARCH.get().asItem(), ModBlocks.WINDOW_CROSS.get().asItem(),
@@ -316,7 +314,7 @@ public final class ClientModEventSubscriber {
         ModBlocks.CABINET.get().asItem(), ModBlocks.DRAWER_CHEST.get().asItem());
 
         // Default Wooden Brown, BiDyeable:
-        event.getItemColors().register((stack, tintIndex) -> {
+        event.register((stack, tintIndex) -> {
             switch (tintIndex) {
                 case 0:
                 default:

@@ -55,14 +55,14 @@ public class CreativeInventoryEvents
     private int guiCenterY = 0;
 
     @SubscribeEvent
-    public void onPlayerLogout(ClientPlayerNetworkEvent.LoggedOutEvent event){
+    public void onPlayerLogout(ClientPlayerNetworkEvent.LoggingOut event){
         this.woodFilters = null;
         this.decorFilters = null;
     }
 
     @SubscribeEvent
     @SuppressWarnings({"resource"})
-    public void onScreenInit(ScreenEvent.InitScreenEvent.Post event){
+    public void onScreenInit(ScreenEvent.Init.Post event){
         if(event.getScreen() instanceof CreativeModeInventoryScreen){
             if(this.woodFilters == null)
                 this.compileWoodItems();
@@ -165,7 +165,7 @@ public class CreativeInventoryEvents
     }
 
     @SubscribeEvent
-    public void onScreenClick(ScreenEvent.MouseClickedEvent.Pre event){
+    public void onScreenClick(ScreenEvent.MouseButtonPressed.Pre event){
         if(event.getButton() != GLFW.GLFW_MOUSE_BUTTON_LEFT)
             return;
 
@@ -185,7 +185,7 @@ public class CreativeInventoryEvents
     }
 
     @SubscribeEvent
-    public void onScreenDrawPre(ScreenEvent.DrawScreenEvent.Pre event){
+    public void onScreenDrawPre(ScreenEvent.Render.Pre event){
         if(event.getScreen() instanceof CreativeModeInventoryScreen){
             CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getScreen();
             if(screen.getSelectedTab() == ModItemTabs.WOODEN_GROUP.getId()){
@@ -214,7 +214,7 @@ public class CreativeInventoryEvents
     }
 
     @SubscribeEvent
-    public void onScreenDrawPost(ScreenEvent.DrawScreenEvent.Post event){
+    public void onScreenDrawPost(ScreenEvent.Render.Post event){
         if(event.getScreen() instanceof CreativeModeInventoryScreen){
             CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getScreen();
             this.guiCenterX = screen.getGuiLeft();

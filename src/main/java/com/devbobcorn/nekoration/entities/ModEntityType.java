@@ -17,7 +17,7 @@ import net.minecraft.world.entity.MobCategory;
 public class ModEntityType {
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, Nekoration.MODID);
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Nekoration.MODID);
 
     public static final RegistryObject<EntityType<PaintingEntity>> PAINTING_TYPE =
         ENTITY_TYPES.register("painting", () -> EntityType.Builder.<PaintingEntity>of(PaintingEntity::new, MobCategory.MISC).setCustomClientFactory(PaintingEntity::new).sized(0.5F, 0.5F).updateInterval(Integer.MAX_VALUE).build("painting"));

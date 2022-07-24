@@ -9,9 +9,7 @@ import com.mojang.math.Vector3f;
 import java.util.HashMap;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -24,8 +22,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.model.data.EmptyModelData;
+import net.minecraftforge.client.model.data.ModelData;
 
 public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
     private final static HashMap<Level, CustomRendererTintGetter> tintGetters = new HashMap<Level, CustomRendererTintGetter>();
@@ -74,31 +71,28 @@ public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
         }
 
         BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
+        var model = dispatcher.getBlockModel(state);
 
-        for (RenderType type : RenderType.chunkBufferLayers()) {
-            if (ItemBlockRenderTypes.canRenderInLayer(state, type)) {
-                ForgeHooksClient.setRenderType(type);
-                // Magic starts...
-                Level world = tileEntity.getLevel();
-                long seed = state.getSeed(tileEntity.getBlockPos());
+        for (var type : model.getRenderTypes(state, RandomSource.create(state.getSeed(tileEntity.getBlockPos())), ModelData.EMPTY)) {
+            // Magic starts...
+            Level world = tileEntity.getLevel();
+            long seed = state.getSeed(tileEntity.getBlockPos());
 
-                if (tileEntity.retint) {
-                    if (!tintGetters.containsKey(world))
-                        tintGetters.put(world, new CustomRendererTintGetter(world));
+            if (tileEntity.retint) {
+                if (!tintGetters.containsKey(world))
+                    tintGetters.put(world, new CustomRendererTintGetter(world));
 
-                    // Do re-tint (override tint color)...
-                    int rgb = (tileEntity.color[0] << 16) + (tileEntity.color[1] << 8) + tileEntity.color[2];
-                    CustomRendererTintGetter tintGetter = tintGetters.get(world);
-                    tintGetter.SetCustomTint(rgb);
-                    dispatcher.getModelRenderer().tesselateBlock(tintGetter, dispatcher.getBlockModel(state), state, tileEntity.getBlockPos(), stack, buffers.getBuffer(type), false, RandomSource.create(), seed, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
-                } else {
-                    // Don't re-tint...
-                    dispatcher.getModelRenderer().tesselateBlock(world, dispatcher.getBlockModel(state), state, tileEntity.getBlockPos(), stack, buffers.getBuffer(type), false, RandomSource.create(), seed, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
-                }
-
+                // Do re-tint (override tint color)...
+                int rgb = (tileEntity.color[0] << 16) + (tileEntity.color[1] << 8) + tileEntity.color[2];
+                CustomRendererTintGetter tintGetter = tintGetters.get(world);
+                tintGetter.SetCustomTint(rgb);
+                dispatcher.getModelRenderer().tesselateBlock(tintGetter, dispatcher.getBlockModel(state), state, tileEntity.getBlockPos(), stack, buffers.getBuffer(type), false, RandomSource.create(), seed, OverlayTexture.NO_OVERLAY, ModelData.EMPTY, type);
+            } else {
+                // Don't re-tint...
+                dispatcher.getModelRenderer().tesselateBlock(world, dispatcher.getBlockModel(state), state, tileEntity.getBlockPos(), stack, buffers.getBuffer(type), false, RandomSource.create(), seed, OverlayTexture.NO_OVERLAY, ModelData.EMPTY, type);
             }
+
         }
-        ForgeHooksClient.setRenderType(null);
         
         stack.popPose();
         

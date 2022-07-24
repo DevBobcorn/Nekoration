@@ -27,11 +27,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.event.DrawSelectionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderHighlightEvent;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class VoxelShapeHighlighter {
@@ -45,7 +45,7 @@ public class VoxelShapeHighlighter {
 	private static int lastHolding = 1202;
 
 	@SubscribeEvent
-	public static void onDrawBlockHighlightEvent(DrawSelectionEvent.HighlightBlock event) {
+	public static void onDrawBlockHighlightEvent(RenderHighlightEvent.Block event) {
 		HitResult rayTraceResult = event.getTarget();
 		Minecraft mc = Minecraft.getInstance();
 		if (rayTraceResult.getType() != HitResult.Type.BLOCK)
