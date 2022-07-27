@@ -91,9 +91,9 @@ public final class ModBlocks {
     public static final RegistryObject<Block> LAMP_POST_GOLD = register("lamp_post_gold", () -> new LampPostBlock(Block.Properties.of(Material.METAL).strength(2.0F, 6.0F)));
     public static final RegistryObject<Block> LAMP_POST_QUARTZ = register("lamp_post_quartz", () -> new LampPostBlock(Block.Properties.of(Material.STONE).strength(2.0F, 6.0F)));
 
-    public static final RegistryObject<Block> CANDLE_HOLDER_IRON = registerDyeable("candle_holder_iron", () -> new CandleHolderBlock(Block.Properties.of(Material.METAL).strength(0.0F).lightLevel(candleHolderEmission(15)).noOcclusion()));
-    public static final RegistryObject<Block> CANDLE_HOLDER_GOLD = registerDyeable("candle_holder_gold", () -> new CandleHolderBlock(Block.Properties.of(Material.METAL).strength(0.0F).lightLevel(candleHolderEmission(15)).noOcclusion()));
-    public static final RegistryObject<Block> CANDLE_HOLDER_QUARTZ = registerDyeable("candle_holder_quartz", () -> new CandleHolderBlock(Block.Properties.of(Material.STONE).strength(0.0F).lightLevel(candleHolderEmission(15)).noOcclusion()));
+    public static final RegistryObject<Block> CANDLE_HOLDER_IRON = registerDyeable("candle_holder_iron", () -> new CandleHolderBlock(Block.Properties.of(Material.METAL).strength(0.0F).lightLevel(candleHolderEmission(15)).noOcclusion()), decorItemProps, false);
+    public static final RegistryObject<Block> CANDLE_HOLDER_GOLD = registerDyeable("candle_holder_gold", () -> new CandleHolderBlock(Block.Properties.of(Material.METAL).strength(0.0F).lightLevel(candleHolderEmission(15)).noOcclusion()), decorItemProps, false);
+    public static final RegistryObject<Block> CANDLE_HOLDER_QUARTZ = registerDyeable("candle_holder_quartz", () -> new CandleHolderBlock(Block.Properties.of(Material.STONE).strength(0.0F).lightLevel(candleHolderEmission(15)).noOcclusion()), decorItemProps, false);
 
     public static final RegistryObject<Block> FLOWER_BASKET_IRON = register("flower_basket_iron", () -> new BasketBlock(Block.Properties.of(Material.METAL).strength(0.0F).noOcclusion(), 6.0D));
     public static final RegistryObject<Block> FLOWER_BASKET_GOLD = register("flower_basket_gold", () -> new BasketBlock(Block.Properties.of(Material.METAL).strength(0.0F).noOcclusion(), 6.0D));
@@ -171,6 +171,12 @@ public final class ModBlocks {
     private static RegistryObject<Block> registerDyeable(String name, Supplier<Block> block, Item.Properties itemProps) {
         RegistryObject<Block> regObject = BLOCKS.register(name, block);
         ModItems.ITEMS.register(name, () -> new DyeableBlockItem(regObject.get(), itemProps));
+        return regObject;
+    }
+
+    private static RegistryObject<Block> registerDyeable(String name, Supplier<Block> block, Item.Properties itemProps, boolean allVariants) {
+        RegistryObject<Block> regObject = BLOCKS.register(name, block);
+        ModItems.ITEMS.register(name, () -> new DyeableBlockItem(regObject.get(), itemProps, allVariants));
         return regObject;
     }
 
