@@ -1,6 +1,11 @@
 package com.devbobcorn.nekoration.client.event;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -30,14 +35,18 @@ import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
 import com.devbobcorn.nekoration.items.PaintingItem;
+import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -45,6 +54,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.level.FoliageColor;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -53,6 +63,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 // Client-Side Only Things...
@@ -98,6 +109,45 @@ public final class ClientModEventSubscriber {
         MenuScreens.register(ModMenuType.EASEL_MENU_TYPE.get(), EaselMenuScreen::new);
 
         LOGGER.info("Nekoration Screens Registered.");
+
+        //exportRenderTypes();
+
+    }
+
+    // Used to export vanilla blocks' render types to a json file...
+    @SuppressWarnings({ "unchecked", "resource" })
+    public static void exportRenderTypes() {
+        final File exportFile = new File(Minecraft.getInstance().gameDirectory, "block_render_type.json");
+
+        try {
+            Field rtMap = ObfuscationReflectionHelper.findField(ItemBlockRenderTypes.class, "f_109275_");
+            rtMap.setAccessible(true);
+            // We're looking for a static field, so no instance is required
+            Object mapObject = rtMap.get(null);
+            var map = (Map<Block, RenderType>)mapObject;
+
+            var gson = new GsonBuilder().setPrettyPrinting().create();
+            var renderTypeTable = new HashMap<String, String>();
+
+            map.forEach((b, rt) -> {
+                String blockId = ForgeRegistries.BLOCKS.getKey(b).toString();
+                String renderType = rt.toString().substring(11).split(":", 2)[0];
+                //LOGGER.info(blockId + " => " + renderType);
+                renderTypeTable.put(blockId, renderType);
+            });
+
+            // Short-circuit logic here...
+            if (exportFile.exists() || exportFile.createNewFile())
+            {
+                var writer = new FileWriter(exportFile);
+                writer.write(gson.toJson(renderTypeTable));
+                writer.close();
+                LOGGER.info("Successfully exported render type table.");
+            }
+
+        } catch (Exception e) {
+            LOGGER.error("Failed to export render type table: " + e.getMessage());
+        }
     }
 
     public static void registerPropertyOverrides() {
