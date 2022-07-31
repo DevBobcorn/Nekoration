@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -55,6 +56,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -111,13 +114,14 @@ public final class ClientModEventSubscriber {
         LOGGER.info("Nekoration Screens Registered.");
 
         //exportRenderTypes();
+        //exportBlockAttributes();
 
     }
 
     // Used to export vanilla blocks' render types to a json file...
     @SuppressWarnings({ "unchecked", "resource" })
     public static void exportRenderTypes() {
-        final File exportFile = new File(Minecraft.getInstance().gameDirectory, "block_render_type.json");
+        final var exportFile = new File(Minecraft.getInstance().gameDirectory, "block_render_type.json");
 
         try {
             Field rtMap = ObfuscationReflectionHelper.findField(ItemBlockRenderTypes.class, "f_109275_");
@@ -147,6 +151,58 @@ public final class ClientModEventSubscriber {
 
         } catch (Exception e) {
             LOGGER.error("Failed to export render type table: " + e.getMessage());
+        }
+    }
+
+    private static class BlockListsExport {
+        public final HashSet<String> no_occlusion = new HashSet<>();
+        public final HashSet<String> no_collision = new HashSet<>();
+        public final HashSet<String> water_blocks = new HashSet<>();
+
+    }
+
+    // Used to export special vanilla block lists to a json file...
+    @SuppressWarnings({ "resource" })
+    public static void exportBlockLists() {
+        final var exportFile = new File(Minecraft.getInstance().gameDirectory, "block_lists.json");
+
+        try {
+            var gson = new GsonBuilder().setPrettyPrinting().create();
+            var data = new BlockListsExport();
+
+            Field col = ObfuscationReflectionHelper.findField(BlockBehaviour.class, "f_60443_");
+
+            // Prepare data to export...
+            for (var block : ForgeRegistries.BLOCKS) {
+                var blockId = ForgeRegistries.BLOCKS.getKey(block);
+                if (blockId.getNamespace() != "minecraft")
+                    continue;
+                
+                var defoState = block.defaultBlockState();
+
+                // Export blocks without collision and those without occulusion
+                if (!defoState.canOcclude())
+                    data.no_occlusion.add(blockId.toString());
+
+                if (!(boolean)col.get(block))
+                    data.no_collision.add(blockId.toString());
+                
+                // Export blocks that always contain water (not waterlogged)
+                if (defoState.getFluidState().is(Fluids.WATER))
+                    data.water_blocks.add(blockId.toString());
+            }
+
+            // Short-circuit logic here...
+            if (exportFile.exists() || exportFile.createNewFile())
+            {
+                var writer = new FileWriter(exportFile);
+                writer.write(gson.toJson(data));
+                writer.close();
+                LOGGER.info("Successfully exported special block lists.");
+            }
+
+        } catch (Exception e) {
+            LOGGER.error("Failed to export special block lists: " + e.getMessage());
         }
     }
 
