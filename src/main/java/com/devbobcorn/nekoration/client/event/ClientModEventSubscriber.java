@@ -52,11 +52,17 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -114,7 +120,7 @@ public final class ClientModEventSubscriber {
         LOGGER.info("Nekoration Screens Registered.");
 
         //exportRenderTypes();
-        //exportBlockAttributes();
+        exportBlockLists();
 
     }
 
@@ -158,6 +164,7 @@ public final class ClientModEventSubscriber {
         public final HashSet<String> no_occlusion = new HashSet<>();
         public final HashSet<String> no_collision = new HashSet<>();
         public final HashSet<String> water_blocks = new HashSet<>();
+        public final HashSet<String> always_fulls = new HashSet<>();
 
     }
 
@@ -167,6 +174,35 @@ public final class ClientModEventSubscriber {
         final var exportFile = new File(Minecraft.getInstance().gameDirectory, "block_lists.json");
 
         try {
+            var fakeLevel = new BlockGetter() {
+                @Override
+                public BlockState getBlockState(BlockPos pos) {
+                    return Blocks.AIR.defaultBlockState();
+                }
+
+                @Override
+                public FluidState getFluidState(BlockPos pos)
+                {
+                    return Fluids.EMPTY.defaultFluidState();
+                }
+
+                @Override
+                public int getHeight() {
+                    return 256;
+                }
+
+                @Override
+                public int getMinBuildHeight() {
+                    return 0;
+                }
+
+                @Override
+                public BlockEntity getBlockEntity(BlockPos pos) {
+                    return null;
+                }
+                
+            };
+
             var gson = new GsonBuilder().setPrettyPrinting().create();
             var data = new BlockListsExport();
 
@@ -190,11 +226,15 @@ public final class ClientModEventSubscriber {
                 // Export blocks that always contain water (not waterlogged)
                 if (defoState.getFluidState().is(Fluids.WATER))
                     data.water_blocks.add(blockId.toString());
+                
+                // Export full cube blocks
+                if (Block.isShapeFullBlock(defoState.getOcclusionShape(fakeLevel, BlockPos.ZERO)))
+                    data.always_fulls.add(blockId.toString());
+                
             }
 
             // Short-circuit logic here...
-            if (exportFile.exists() || exportFile.createNewFile())
-            {
+            if (exportFile.exists() || exportFile.createNewFile()) {
                 var writer = new FileWriter(exportFile);
                 writer.write(gson.toJson(data));
                 writer.close();
