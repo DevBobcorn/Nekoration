@@ -73,7 +73,7 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
             this.textInputs[i].setTextColor(this.menu.easel.getColor(i).getTextColor());
             this.textInputs[i].setTextColorUneditable(DyeColor.LIGHT_GRAY.getTextColor());
             this.textInputs[i].setBordered(false);
-            this.textInputs[i].setMessage(this.menu.easel.getMessage(i)); // TODO Check if it is correct
+            this.textInputs[i].setValue(this.menu.easel.getMessage(i).getString());
             this.addWidget(this.textInputs[i]);
         }
         final Component enableGlow = Component.translatable("gui.nekoration.button.enable_glow");
