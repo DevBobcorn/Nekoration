@@ -120,7 +120,7 @@ public final class ClientModEventSubscriber {
         LOGGER.info("Nekoration Screens Registered.");
 
         //exportRenderTypes();
-        exportBlockLists();
+        //exportBlockLists();
 
     }
 
