@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "vertical_connection=s0": { "model": "nekoration:block/column_thin/stone_pillar_thin_t2" },
+        "vertical_connection=d0": { "model": "nekoration:block/column_thin/stone_pillar_thin_t0" },
+        "vertical_connection=d1": { "model": "nekoration:block/column_thin/stone_pillar_thin_t2" },
+        "vertical_connection=t0": { "model": "nekoration:block/column_thin/stone_pillar_thin_t0" },
+        "vertical_connection=t1": { "model": "nekoration:block/column_thin/stone_pillar_thin_t1" },
+        "vertical_connection=t2": { "model": "nekoration:block/column_thin/stone_pillar_thin_t2" }
+    }
+}

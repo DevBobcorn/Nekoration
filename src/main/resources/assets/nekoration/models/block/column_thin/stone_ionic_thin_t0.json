@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "nekoration:block/column/stone_ionic_t0",
+		"1": "nekoration:block/column/stone_top",
+		"particle": "nekoration:block/column/stone_ionic_t0"
+	},
+	"elements": [
+		{
+			"from": [3, 0, 3],
+			"to": [13, 16, 13],
+			"faces": {
+				"north": {"uv": [3, 0, 13, 16], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [3, 0, 13, 16], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [3, 0, 13, 16], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [3, 0, 13, 16], "texture": "#0", "tintindex": 0},
+				"up": {"uv": [3, 3, 13, 13], "texture": "#1", "cullface": "up", "tintindex": 0},
+				"down": {"uv": [3, 3, 13, 13], "texture": "#1", "cullface": "down", "tintindex": 0}
+			}
+		}
+	]
+}

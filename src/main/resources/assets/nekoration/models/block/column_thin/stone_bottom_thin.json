@@ -1,0 +1,66 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "nekoration:block/column/stone_pillar",
+		"1": "nekoration:block/column/stone_top",
+		"particle": "nekoration:block/column/stone_pillar"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [15, 4, 15],
+			"faces": {
+				"north": {"uv": [1, 12, 15, 16], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [1, 12, 15, 16], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [1, 12, 15, 16], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [1, 12, 15, 16], "texture": "#0", "tintindex": 0},
+				"up": {"uv": [1, 1, 15, 15], "texture": "#1", "tintindex": 0},
+				"down": {"uv": [1, 1, 15, 15], "texture": "#1", "cullface": "down", "tintindex": 0}
+			}
+		},
+		{
+			"from": [2, 4, 2],
+			"to": [14, 10, 14],
+			"faces": {
+				"north": {"uv": [2, 7, 14, 13], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [2, 7, 14, 13], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [2, 7, 14, 13], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [2, 7, 14, 13], "texture": "#0", "tintindex": 0}
+			}
+		},
+		{
+			"from": [1, 10, 1],
+			"to": [15, 13, 15],
+			"faces": {
+				"north": {"uv": [1, 3, 15, 6], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [1, 3, 15, 6], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [1, 3, 15, 6], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [1, 3, 15, 6], "texture": "#0", "tintindex": 0},
+				"up": {"uv": [1, 1, 15, 15], "texture": "#1", "tintindex": 0},
+				"down": {"uv": [1, 1, 15, 15], "texture": "#1", "tintindex": 0}
+			}
+		},
+		{
+			"from": [2, 13, 2],
+			"to": [14, 14, 14],
+			"faces": {
+				"north": {"uv": [2, 2, 14, 3], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [2, 2, 14, 3], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [2, 2, 14, 3], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [2, 2, 14, 3], "texture": "#0", "tintindex": 0},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#1", "tintindex": 0}
+			}
+		},
+		{
+			"from": [3, 14, 3],
+			"to": [13, 16, 13],
+			"faces": {
+				"north": {"uv": [3, 0, 13, 2], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [3, 0, 13, 2], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [3, 0, 13, 2], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [3, 0, 13, 2], "texture": "#0", "tintindex": 0},
+				"up": {"uv": [3, 3, 13, 13], "texture": "#1", "cullface": "up", "tintindex": 0}
+			}
+		}
+	]
+}

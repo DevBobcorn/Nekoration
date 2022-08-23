@@ -1,0 +1,55 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "nekoration:block/column/stone_corinthian_t2",
+		"1": "nekoration:block/column/stone_top",
+		"particle": "nekoration:block/column/stone_corinthian_t2"
+	},
+	"elements": [
+		{
+			"from": [3, 0, 3],
+			"to": [13, 8, 13],
+			"faces": {
+				"north": {"uv": [3, 8, 13, 16], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [3, 8, 13, 16], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [3, 8, 13, 16], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [3, 8, 13, 16], "texture": "#0", "tintindex": 0},
+				"down": {"uv": [3, 3, 13, 13], "texture": "#1", "cullface": "down", "tintindex": 0}
+			}
+		},
+		{
+			"from": [1, 9, 1],
+			"to": [15, 12, 15],
+			"faces": {
+				"north": {"uv": [1, 4, 15, 7], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [1, 0, 15, 3], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [1, 4, 15, 7], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [1, 4, 15, 7], "texture": "#0", "tintindex": 0},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#1", "tintindex": 0}
+			}
+		},
+		{
+			"from": [2, 6, 2],
+			"to": [14, 9, 14],
+			"faces": {
+				"north": {"uv": [2, 11, 14, 14], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [2, 11, 14, 14], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [2, 11, 14, 14], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [2, 11, 14, 14], "texture": "#0", "tintindex": 0},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#1", "tintindex": 0}
+			}
+		},
+		{
+			"from": [0, 12, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 4], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [0, 0, 16, 4], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [0, 0, 16, 4], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [0, 0, 16, 4], "texture": "#0", "tintindex": 0},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#1", "cullface": "up", "tintindex": 0},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#1", "tintindex": 0}
+			}
+		}
+	]
+}

@@ -261,8 +261,12 @@ public final class ClientModEventSubscriber {
             if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
                 return NekoColors.getStoneColorOrLightGray(7);
             return NekoColors.getStoneColorOrLightGray(state.getValue(DyeableBlock.COLOR));
-        }, ModBlocks.STONE_BASE_BOTTOM.get(), ModBlocks.STONE_FRAME_BOTTOM.get(), ModBlocks.STONE_PILLAR_BOTTOM.get(), ModBlocks.STONE_LAYERED.get(),
-                ModBlocks.STONE_POT.get(), ModBlocks.STONE_PLANTER.get());
+        }, ModBlocks.STONE_BASE_BOTTOM.get(), ModBlocks.STONE_FRAME_BOTTOM.get(),
+                ModBlocks.STONE_PILLAR_BOTTOM.get(), ModBlocks.STONE_LAYERED.get(),
+                ModBlocks.STONE_POT.get(), ModBlocks.STONE_PLANTER.get(), 
+                ModBlocks.STONE_BOTTOM_THIN.get(), ModBlocks.STONE_PILLAR_THIN.get(),
+                ModBlocks.STONE_DORIC_THIN.get(), ModBlocks.STONE_IONIC_THIN.get(),
+                ModBlocks.STONE_CORINTHIAN_THIN.get());
 
         event.register((state, view, pos, tintIndex) -> {
             if (view == null || pos == null || !(state.getBlock() instanceof DyeableBlock))
@@ -345,7 +349,9 @@ public final class ClientModEventSubscriber {
         ModBlocks.STONE_CORINTHIAN.get().asItem(), ModBlocks.WINDOW_SILL.get().asItem(),
         ModBlocks.WINDOW_TOP.get().asItem(), ModBlocks.WINDOW_FRAME.get().asItem(),
         ModBlocks.STONE_LAYERED.get().asItem(), ModBlocks.STONE_POT.get().asItem(),
-        ModBlocks.STONE_PLANTER.get().asItem());
+        ModBlocks.STONE_PLANTER.get().asItem(), ModBlocks.STONE_BOTTOM_THIN.get().asItem(),
+        ModBlocks.STONE_PILLAR_THIN.get().asItem(), ModBlocks.STONE_DORIC_THIN.get().asItem(),
+        ModBlocks.STONE_IONIC_THIN.get().asItem(), ModBlocks.STONE_CORINTHIAN_THIN.get().asItem());
 
         // Default White:
         event.register((stack, tintIndex) -> {
