@@ -64,6 +64,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -121,7 +122,48 @@ public final class ClientModEventSubscriber {
 
         //exportRenderTypes();
         //exportBlockLists();
+        exportMapColors();
 
+    }
+
+    private record SimpleColor(int r, int g, int b) { }
+
+    // Used to export vanilla map colors to a json file...
+    @SuppressWarnings({ "resource" })
+    public static void exportMapColors() {
+        final var exportFile = new File(Minecraft.getInstance().gameDirectory, "map_colors.json");
+
+        try {
+            Field colorsField = ObfuscationReflectionHelper.findField(MaterialColor.class, "f_76387_");
+            colorsField.setAccessible(true);
+            // We're looking for a static field, so no instance is required
+            Object dictObject = colorsField.get(null);
+            var colorDict = (MaterialColor[])dictObject;
+            var colorMap  = new HashMap<Integer, SimpleColor>();
+
+            var gson = new GsonBuilder().setPrettyPrinting().create();
+
+            for (var matColor : colorDict) {
+                if (matColor != null) {
+                    int r = matColor.col >> 16 & 0xFF;
+                    int g = matColor.col >>  8 & 0xFF;
+                    int b = matColor.col       & 0xFF;
+                    colorMap.put(matColor.id, new SimpleColor(r, g, b));
+                }
+            }
+
+            // Short-circuit logic here...
+            if (exportFile.exists() || exportFile.createNewFile())
+            {
+                var writer = new FileWriter(exportFile);
+                writer.write(gson.toJson(colorMap));
+                writer.close();
+                LOGGER.info("Successfully exported map colors.");
+            }
+
+        } catch (Exception e) {
+            LOGGER.error("Failed to export map colors: " + e.getMessage());
+        }
     }
 
     // Used to export vanilla blocks' render types to a json file...
