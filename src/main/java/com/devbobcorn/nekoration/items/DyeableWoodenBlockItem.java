@@ -18,7 +18,7 @@ public class DyeableWoodenBlockItem extends BlockItem {
         super(block, settings);
     }
 
-    @Override
+    /* @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
         if (this.allowedIn(tab)) {
             for (EnumWoodenColor color : EnumWoodenColor.values()) {
@@ -27,7 +27,7 @@ public class DyeableWoodenBlockItem extends BlockItem {
                 subItems.add(subItemStack);
             }
         }
-    }
+    } */
     
     public static boolean hasColor(ItemStack stack) {
         return stack.getOrCreateTag().contains(COLOR);

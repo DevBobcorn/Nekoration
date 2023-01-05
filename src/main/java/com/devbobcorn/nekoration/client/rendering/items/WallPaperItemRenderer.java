@@ -6,7 +6,7 @@ import com.devbobcorn.nekoration.client.event.ClientModEventSubscriber;
 import com.devbobcorn.nekoration.client.rendering.entities.WallPaperRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelPart;
@@ -38,8 +38,8 @@ public class WallPaperItemRenderer extends BlockEntityWithoutLevelRenderer {
     public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         boolean flag = stack.getTagElement("BlockEntityTag") != null;
         matrixStack.pushPose();
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+        matrixStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F));
 
         List<Pair<Holder<BannerPattern>, DyeColor>> list = flag ? BannerBlockEntity.createPatterns(ShieldItem.getColor(stack), BannerBlockEntity.getItemPatterns(stack)) : WallPaperRenderer.getBlankPattern(DyeColor.WHITE);
         BannerRenderer.renderPatterns(matrixStack, buffer, combinedLight, combinedOverlay, paperFull, ModelBakery.BANNER_BASE, true, list, false);

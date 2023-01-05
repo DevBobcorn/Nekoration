@@ -2,14 +2,15 @@ package com.devbobcorn.nekoration.client.rendering.entities;
 
 import java.io.Closeable;
 
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.client.rendering.RenderTypeHelper;
 import com.devbobcorn.nekoration.entities.PaintingData;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

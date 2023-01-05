@@ -12,8 +12,6 @@ import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.client.gui.widget.FilterButton;
 import com.devbobcorn.nekoration.client.gui.widget.IconButton;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
-import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
-import com.devbobcorn.nekoration.items.ModItemTabs;
 import com.devbobcorn.nekoration.utils.ItemIconHelper;
 
 import org.lwjgl.glfw.GLFW;
@@ -32,7 +30,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 // Creative Screen Things, adapted from MrCrayfish's Furniture Mod...
 public class CreativeInventoryEvents
@@ -145,22 +142,22 @@ public class CreativeInventoryEvents
             this.updateWoodTagButtons();
             this.updateDecorTagButtons();
 
-            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getScreen();
-            if(screen.getSelectedTab() == ModItemTabs.WOODEN_GROUP.getId()){
+            /* CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getScreen();
+            if(screen. == ModItemTabs.WOODEN_GROUP){ // Check validity
                 this.btnScrollUp.visible = this.btnScrollDown.visible = true;
                 this.btnEnableAll.visible = this.btnDisableAll.visible = true;
                 this.viewingWoodTab = true;
                 this.viewingDecorTab = false;
                 this.woodButtons.forEach(button -> button.visible = true);
                 this.updateWoodItems(screen);
-            } else if(screen.getSelectedTab() == ModItemTabs.DECOR_GROUP.getId()){
+            } else if (screen. == ModItemTabs.DECOR_GROUP){
                 this.btnScrollUp.visible = this.btnScrollDown.visible = true;
                 this.btnEnableAll.visible = this.btnDisableAll.visible = true;
                 this.viewingDecorTab = true;
                 this.viewingWoodTab = false;
                 this.decorButtons.forEach(button -> button.visible = true);
                 this.updateDecorItems(screen);
-            }
+            } */
         }
     }
 
@@ -187,8 +184,9 @@ public class CreativeInventoryEvents
     @SubscribeEvent
     public void onScreenDrawPre(ScreenEvent.Render.Pre event){
         if(event.getScreen() instanceof CreativeModeInventoryScreen){
-            CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getScreen();
-            if(screen.getSelectedTab() == ModItemTabs.WOODEN_GROUP.getId()){
+            /* CreativeModeInventoryScreen screen = (CreativeModeInventoryScreen) event.getScreen();
+
+            if(screen. == ModItemTabs.WOODEN_GROUP){
                 if(!this.viewingWoodTab){
                     this.updateWoodItems(screen);
                     this.viewingWoodTab = true;
@@ -197,7 +195,7 @@ public class CreativeInventoryEvents
                     this.btnScrollUp.active = woodStartIndex > 0;
                     this.btnScrollDown.active = woodStartIndex <= this.woodFilters.size() - 4 - 1;
                 }
-            } else if(screen.getSelectedTab() == ModItemTabs.DECOR_GROUP.getId()){
+            } else if(screen. == ModItemTabs.DECOR_GROUP){
                 if(!this.viewingDecorTab){
                     this.updateDecorItems(screen);
                     this.viewingWoodTab = false;
@@ -209,7 +207,7 @@ public class CreativeInventoryEvents
             } else {
                 this.viewingWoodTab = false;
                 this.viewingDecorTab = false;
-            }
+            } */
         }
     }
 
@@ -220,18 +218,18 @@ public class CreativeInventoryEvents
             this.guiCenterX = screen.getGuiLeft();
             this.guiCenterY = screen.getGuiTop();
 
-            if(screen.getSelectedTab() == ModItemTabs.WOODEN_GROUP.getId() || screen.getSelectedTab() == ModItemTabs.DECOR_GROUP.getId()){
+            /* if(screen. == ModItemTabs.WOODEN_GROUP || screen. == ModItemTabs.DECOR_GROUP){
                 this.btnScrollUp.visible = true;
                 this.btnScrollDown.visible = true;
                 this.btnEnableAll.visible = true;
                 this.btnDisableAll.visible = true;
                 if (viewingWoodTab){
                     this.woodButtons.forEach(button -> button.visible = true);
-                    /* Render buttons */
+                    // Render buttons
                     this.woodButtons.forEach(button -> {
                         button.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
                     });
-                    /* Render tooltips after so it renders above buttons */
+                    // Render tooltips after so it renders above buttons
                     this.woodButtons.forEach(button -> {
                         if(button.isMouseOver(event.getMouseX(), event.getMouseY())){
                             screen.renderTooltip(event.getPoseStack(), button.getCategory().getName(), event.getMouseX(), event.getMouseY());
@@ -239,11 +237,11 @@ public class CreativeInventoryEvents
                     });
                 } else if (viewingDecorTab){
                     this.decorButtons.forEach(button -> button.visible = true);
-                    /* Render buttons */
+                    // Render buttons
                     this.decorButtons.forEach(button -> {
                         button.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
                     });
-                    /* Render tooltips after so it renders above buttons */
+                    // Render tooltips after so it renders above buttons
                     this.decorButtons.forEach(button -> {
                         if(button.isMouseOver(event.getMouseX(), event.getMouseY())){
                             screen.renderTooltip(event.getPoseStack(), button.getCategory().getName(), event.getMouseX(), event.getMouseY());
@@ -263,7 +261,7 @@ public class CreativeInventoryEvents
                 this.btnDisableAll.visible = false;
                 this.woodButtons.forEach(button -> button.visible = false);
                 this.decorButtons.forEach(button -> button.visible = false);
-            }
+            } */
         }
     }
 
@@ -305,6 +303,7 @@ public class CreativeInventoryEvents
         CreativeModeInventoryScreen.ItemPickerMenu container = screen.getMenu();
         NonNullList<ItemStack> newItems = NonNullList.create();
 
+        /*
         ForgeRegistries.ITEMS.getValues().stream()
         .filter(item -> item.getItemCategory() == ModItemTabs.WOODEN_GROUP)
         .forEach(item -> {
@@ -313,7 +312,8 @@ public class CreativeInventoryEvents
                     ((HalfTimberBlockItem)item).fillItemCategoryWithWoodType(ModItemTabs.WOODEN_GROUP, filter.getWood(), newItems);
                 }
             }
-        });
+        }); */
+
         container.items.clear();
         container.items.addAll(newItems);
         container.items.sort(Comparator.comparingInt(o -> Item.getId(o.getItem())));
@@ -324,6 +324,7 @@ public class CreativeInventoryEvents
         CreativeModeInventoryScreen.ItemPickerMenu container = screen.getMenu();
         NonNullList<ItemStack> newItems = NonNullList.create();
 
+        /*
         ForgeRegistries.ITEMS.getValues().stream()
         .filter(item -> item.getItemCategory() == ModItemTabs.DECOR_GROUP)
         .forEach(item -> {
@@ -350,7 +351,8 @@ public class CreativeInventoryEvents
                 item.fillItemCategory(ModItemTabs.DECOR_GROUP, newItems);
             else if (!(t0 || t1 || t2 || t3) && decorFilters.get(4).enabled) // Misc
                 item.fillItemCategory(ModItemTabs.DECOR_GROUP, newItems);
-        });
+        });*/
+
         container.items.clear();
         container.items.addAll(newItems);
         container.items.sort(Comparator.comparingInt(o -> Item.getId(o.getItem())));

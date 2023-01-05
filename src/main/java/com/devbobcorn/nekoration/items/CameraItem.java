@@ -1,7 +1,5 @@
 package com.devbobcorn.nekoration.items;
 
-import javax.annotation.Nonnull;
-
 import com.devbobcorn.nekoration.client.event.PhotoEvents;
 
 import net.minecraft.world.InteractionHand;
@@ -18,9 +16,8 @@ public class CameraItem extends Item {
         super(settings);
     }
 
-    @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         
         ItemStack stack = player.getItemInHand(hand);
         if (world.isClientSide) {

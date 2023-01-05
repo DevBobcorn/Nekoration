@@ -52,7 +52,7 @@ public class S2CUpdateEaselMenuData {
         return new S2CUpdateEaselMenuData(pos, t, x, c, packetBuffer.readBoolean());
     }
 
-    @SuppressWarnings("resource")
+    @SuppressWarnings({ "resource", "null" })
     public static void handle(final S2CUpdateEaselMenuData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on CLIENT SIDE...

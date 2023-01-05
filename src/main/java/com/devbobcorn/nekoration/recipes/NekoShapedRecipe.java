@@ -21,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -56,7 +57,7 @@ public class NekoShapedRecipe extends CustomRecipe implements net.minecraftforge
     private final String group;
 
     public NekoShapedRecipe(ResourceLocation id, String group, int w, int h, NonNullList<Ingredient> in, ItemStack out) {
-        super(id);
+        super(id, CraftingBookCategory.MISC);
         this.group = group;
         this.width = w;
         this.height = h;

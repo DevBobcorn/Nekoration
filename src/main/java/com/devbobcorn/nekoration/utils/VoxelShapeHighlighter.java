@@ -44,6 +44,7 @@ public class VoxelShapeHighlighter {
 	public static Color PaletteColor = Color.RED;
 	private static int lastHolding = 1202;
 
+	@SuppressWarnings("null")
 	@SubscribeEvent
 	public static void onDrawBlockHighlightEvent(RenderHighlightEvent.Block event) {
 		HitResult rayTraceResult = event.getTarget();

@@ -52,7 +52,7 @@ public class EaselMenuBlock extends DyeableHorizontalWoodenBlock implements Enti
 
     // Called just after the player places a block.
     @Override
-    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
         // Set default text colors...
         BlockEntity tileEntity = worldIn.getBlockEntity(pos);
@@ -102,7 +102,7 @@ public class EaselMenuBlock extends DyeableHorizontalWoodenBlock implements Enti
     
     @Nonnull
     @Override
-    public ItemStack getCloneItemStack(@Nonnull BlockState state, HitResult target, @Nonnull BlockGetter world, @Nonnull BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
         ItemStack stack = new ItemStack(this.asItem());
         DyeableWoodenBlockItem.setColor(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR).byteValue()));
         return stack;

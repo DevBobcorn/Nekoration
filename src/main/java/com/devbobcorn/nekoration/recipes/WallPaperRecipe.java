@@ -9,13 +9,14 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BannerItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class WallPaperRecipe extends CustomRecipe {
-    public WallPaperRecipe(ResourceLocation id) {
-        super(id);
+    public WallPaperRecipe(ResourceLocation id, CraftingBookCategory cat) {
+        super(id, cat);
     }
 
     public boolean matches(CraftingContainer inv, Level world) {

@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Iterator;
 import java.util.stream.IntStream;
 
+import javax.annotation.Nullable;
+
 public abstract class ContainerBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
     private final int[] slots;
     protected NonNullList<ItemStack> items;
@@ -31,7 +33,7 @@ public abstract class ContainerBlockEntity extends RandomizableContainerBlockEnt
     }
 
     @Override
-    public boolean canPlaceItemThroughFace(int i, ItemStack stack, Direction dir) {
+    public boolean canPlaceItemThroughFace(int i, ItemStack stack, @Nullable Direction dir) {
         return true;
     }
 

@@ -9,7 +9,7 @@ import com.devbobcorn.nekoration.network.C2SUpdatePaletteData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.devbobcorn.nekoration.utils.VoxelShapeHighlighter;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.glfw.GLFW;
@@ -125,7 +125,7 @@ public class PaletteScreen extends Screen {
         // Step 4: Render the color map...
         //int col = (255 << 24) + (255 << 16) + (0 << 8) + 0; // [RED] a, r, g, b...
         stack.pushPose();
-        stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+        stack.mulPose(Axis.ZP.rotationDegrees(90.0F));
         stack.translate(j + 32, -i - 137, 0);
         //fillGradient(stack, i, j, i + 128, j + 128, col, black);
         fillGradient(stack, 0, 0, 128, 128, colorMapColor.getRGB(), white);
@@ -137,7 +137,7 @@ public class PaletteScreen extends Screen {
         if (colorPos[0] >= 0)
             blit(stack, this.leftPos + colorPos[0] - 2, this.topPos + colorPos[1] - 2, 172, 48, 4, 4); // Color Cursor...
         // Step 6: Render Debug Color Value...
-        stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+        stack.mulPose(Axis.ZP.rotationDegrees(90.0F));
         stack.translate(j, -i - 167, 0);
         //fillGradient(stack, i, j, i + 128, j + 128, col, black);
         if (renderColorText)

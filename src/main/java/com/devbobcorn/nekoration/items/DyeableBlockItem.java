@@ -30,7 +30,7 @@ public class DyeableBlockItem extends BlockItem {
         showAllVariants = allVariants;
     }
 
-    @Override
+    /* @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
         if (this.allowedIn(tab)) {
             if (showAllVariants)
@@ -45,7 +45,7 @@ public class DyeableBlockItem extends BlockItem {
                 subItems.add(subItemStack);
             }
         }
-    }
+    } */
 
     public static boolean hasColor(ItemStack stack) {
         return stack.getOrCreateTag().contains(COLOR);

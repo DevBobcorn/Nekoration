@@ -68,7 +68,7 @@ public class HalfTimberBlock extends Block {
 
     @Nonnull
     @Override
-    public ItemStack getCloneItemStack(@Nonnull BlockState state, HitResult target, @Nonnull BlockGetter world, @Nonnull BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
         ItemStack stack = new ItemStack(this.asItem());
         HalfTimberBlockItem.setColor0(stack, NekoColors.EnumWoodenColor.getColorEnumFromID(state.getValue(COLOR0).byteValue()));
         HalfTimberBlockItem.setColor1(stack, NekoColors.EnumNekoColor.getColorEnumFromID(state.getValue(COLOR1).byteValue()));

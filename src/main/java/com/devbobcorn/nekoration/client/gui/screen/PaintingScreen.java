@@ -18,7 +18,7 @@ import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.devbobcorn.nekoration.utils.URLHelper;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -100,7 +100,7 @@ public class PaintingScreen extends Screen {
         this(pt, (byte)0, PaletteItem.DEFAULT_COLOR_SET);
     }
 
-    @SuppressWarnings("resource")
+    @SuppressWarnings({ "resource", "null" })
     public PaintingScreen(int pt, byte active, Color[] paletteColors) {
         super(Component.nullToEmpty("PAINTING"));
         opacityPos = topPos + OPACITY_TOP;
@@ -373,7 +373,7 @@ public class PaintingScreen extends Screen {
         // Step 9: Render Debug Text...
         stack.translate(i + 221, j + 17, 0);
         this.font.draw(stack, "<" + String.format("%02d", toolParams[activeTool])+ ">", 1.0F, 1.0F, 0xFFFFFF);
-        stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+        stack.mulPose(Axis.ZP.rotationDegrees(90.0F));
         stack.translate(-12, -44, 0);
         //this.fillGradient(stack, i, j, i + 128, j + 128, col, black);
         if (isOnToolParam(x, y)){

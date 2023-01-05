@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.devbobcorn.nekoration.utils.TagTypes;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -37,6 +38,7 @@ public class CustomBlockEntity extends BlockEntity {
 
     // This is where you load the data that you saved in writeToNBT
     @Override
+    @SuppressWarnings("null")
     public void load(CompoundTag tag) {
         super.load(tag); // The super call is required to load the tile's location
 
@@ -54,7 +56,7 @@ public class CustomBlockEntity extends BlockEntity {
         }
         if (tag.contains("Display", TagTypes.COMPOUND_NBT_ID)) {
             CompoundTag dat = tag.getCompound("Display");
-            displayState = NbtUtils.readBlockState(dat);
+            displayState = NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), dat);
         }
     }
 

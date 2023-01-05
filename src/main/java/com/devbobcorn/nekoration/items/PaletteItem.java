@@ -2,8 +2,6 @@ package com.devbobcorn.nekoration.items;
 
 import java.awt.Color;
 
-import javax.annotation.Nonnull;
-
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.client.ClientHelper;
 import com.devbobcorn.nekoration.utils.TagTypes;
@@ -28,10 +26,9 @@ public class PaletteItem extends Item {
         super(settings);
     }
 
-    @Nonnull
     @Override
     @SuppressWarnings("deprecation")
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (world.isClientSide) {
             // First get the existing data in this palette...

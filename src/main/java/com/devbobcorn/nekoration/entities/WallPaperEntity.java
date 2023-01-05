@@ -14,11 +14,12 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -122,6 +123,7 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
         return this.baseColor;
     }
 
+    @SuppressWarnings("null")
     public ItemStack getItem(){
         ItemStack itemstack = new ItemStack(ModItems.WALLPAPER.get());
         CompoundTag tag = itemstack.getOrCreateTagElement("BlockEntityTag");
@@ -160,6 +162,7 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
         return InteractionResult.SUCCESS;
     }
 
+    @SuppressWarnings("null")
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         tag.putByte("Facing", (byte) direction.get2DDataValue());
@@ -198,7 +201,7 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
     @OnlyIn(Dist.CLIENT)
     public static List<Pair<Holder<BannerPattern>, DyeColor>> createPatterns(DyeColor baseColor, @Nullable ListTag tag) {
         List<Pair<Holder<BannerPattern>, DyeColor>> list = Lists.newArrayList();
-        list.add(Pair.of(Registry.BANNER_PATTERN.getHolderOrThrow(BannerPatterns.BASE), baseColor));
+        list.add(Pair.of(BuiltInRegistries.BANNER_PATTERN.getHolderOrThrow(BannerPatterns.BASE), baseColor));
         if (tag != null) {
             for (int i = 0; i < tag.size(); ++i) {
                 CompoundTag compoundnbt = tag.getCompound(i);
@@ -228,7 +231,7 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     @Override
-    public void dropItem(Entity entity) {
+    public void dropItem(@Nullable Entity entity) {
         if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
             this.playSound(SoundEvents.BOOK_PAGE_TURN, 1.0F, 1.0F);
             if (entity instanceof Player) {
@@ -247,11 +250,12 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
-        Packet<?> packet = NetworkHooks.getEntitySpawningPacket(this);
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        Packet<ClientGamePacketListener> packet = NetworkHooks.getEntitySpawningPacket(this);
         return packet;
     }
 
+    @SuppressWarnings("null")
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
         // We cannot get the same bounding box output with different position inputs,
@@ -276,6 +280,7 @@ public class WallPaperEntity extends HangingEntity implements IEntityAdditionalS
         buffer.writeNbt(tag);
     }
 
+    @SuppressWarnings("null")
     @Override
     public void readSpawnData(FriendlyByteBuf additionalData) {
         // Client receives...

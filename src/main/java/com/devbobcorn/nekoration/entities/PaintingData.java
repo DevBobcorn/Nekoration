@@ -136,6 +136,7 @@ public class PaintingData {
         return (imageReady = save(CACHE_PATH, String.valueOf(getPaintingHash()), true, false));
     }
 
+    @SuppressWarnings("null")
     public boolean save(String path, String name, boolean composite, boolean showMessage){
         try {
             Minecraft minecraft = Minecraft.getInstance();
@@ -173,6 +174,7 @@ public class PaintingData {
         }
     }
 
+    @SuppressWarnings("null")
     public boolean load(String path, String name){
         Minecraft minecraft = Minecraft.getInstance();
         String[] params = name.split(">");

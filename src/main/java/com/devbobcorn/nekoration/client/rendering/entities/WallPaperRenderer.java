@@ -8,7 +8,7 @@ import com.devbobcorn.nekoration.entities.WallPaperEntity.Part;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -22,7 +22,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BannerPattern;
@@ -63,7 +63,7 @@ public class WallPaperRenderer extends EntityRenderer<WallPaperEntity> {
 
     public void render(WallPaperEntity entity, float rotation, float partialTicks, PoseStack stack, MultiBufferSource buffers, int packedLight) {
         stack.pushPose();
-        stack.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotation));
+        stack.mulPose(Axis.YP.rotationDegrees(180.0F - rotation));
 
         renderWallPaper(stack, buffers, entity, entity.getHeight(), packedLight);
         stack.popPose();
@@ -77,7 +77,7 @@ public class WallPaperRenderer extends EntityRenderer<WallPaperEntity> {
 
     public static List<Pair<Holder<BannerPattern>, DyeColor>> getBlankPattern(DyeColor base){
         List<Pair<Holder<BannerPattern>, DyeColor>> list = Lists.newArrayList();
-        list.add(Pair.of(Registry.BANNER_PATTERN.getHolderOrThrow(BannerPatterns.BASE), base));
+        list.add(Pair.of(BuiltInRegistries.BANNER_PATTERN.getHolderOrThrow(BannerPatterns.BASE), base));
         return list;
     }
 
@@ -85,7 +85,7 @@ public class WallPaperRenderer extends EntityRenderer<WallPaperEntity> {
         // Then render the wallpaper
         float sc = 0.8F;
         stack.scale(sc, sc, sc);
-        stack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+        stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
 
         BannerRenderer.renderPatterns(stack, buffers, light, 0xFFFFFF, getPaper(entity.getPart()), ModelBakery.BANNER_BASE, true, (entity.getPatterns() == null) ? getBlankPattern(entity.getBaseColor()) : entity.getPatterns());
     }

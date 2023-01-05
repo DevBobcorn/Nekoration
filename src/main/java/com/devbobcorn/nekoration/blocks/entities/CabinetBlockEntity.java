@@ -132,10 +132,12 @@ public class CabinetBlockEntity extends ContainerBlockEntity {
         }
     }
 
+    @SuppressWarnings("null")
     private void updateBlockState(BlockState state, boolean open) {
         this.level.setBlock(this.getBlockPos(), state.setValue(CabinetBlock.OPEN, Boolean.valueOf(open)), 3);
     }
 
+    @SuppressWarnings("null")
     private void playSound(BlockState state, SoundEvent sound) {
         Vec3i vector3i = state.getValue(CabinetBlock.FACING).getNormal();
         double d0 = (double) this.worldPosition.getX() + 0.5D + (double) vector3i.getX() / 2.0D;

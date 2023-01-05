@@ -27,7 +27,7 @@ public class FilterButton extends Button
     private boolean toggled;
 
     public FilterButton(int x, int y, CreativeInventoryEvents.Filter category, OnPress pressable){
-        super(x, y, 32, 28, CommonComponents.EMPTY, pressable);
+        super(x, y, 32, 28, CommonComponents.EMPTY, pressable, DEFAULT_NARRATION);
         this.category = category;
         this.stack = category.getIcon();
         this.toggled = category.isEnabled();
@@ -54,7 +54,11 @@ public class FilterButton extends Button
         int width = this.toggled ? 32 : 28;
         int textureX = 28;
         int textureY = this.toggled ? 32 : 0;
-        this.drawRotatedTexture(this.x, this.y, textureX, textureY, width, 28);
+
+        int x = this.getX();
+        int y = this.getY();
+
+        this.drawRotatedTexture(x, y, textureX, textureY, width, 28);
 
         ItemRenderer renderer = mc.getItemRenderer();
         renderer.blitOffset = 100.0F;

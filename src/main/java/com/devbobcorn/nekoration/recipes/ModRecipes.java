@@ -3,7 +3,7 @@ package com.devbobcorn.nekoration.recipes;
 import com.devbobcorn.nekoration.Nekoration;
 
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -16,5 +16,5 @@ public class ModRecipes {
 
     public static final RegistryObject<RecipeSerializer<NekoStonecuttingRecipe>> NEKO_STONY = RECIPE_SERIALIZERS.register("neko_stonecutting", () -> new NekoStonecuttingRecipe.Serializer());
 
-    public static final RegistryObject<RecipeSerializer<WallPaperRecipe>> NEKO_WALLPAPER = RECIPE_SERIALIZERS.register("neko_crafting_wallpaper", () -> new SimpleRecipeSerializer<>(WallPaperRecipe::new));
+    public static final RegistryObject<RecipeSerializer<WallPaperRecipe>> NEKO_WALLPAPER = RECIPE_SERIALIZERS.register("neko_crafting_wallpaper", () -> new SimpleCraftingRecipeSerializer<>(WallPaperRecipe::new));
 }

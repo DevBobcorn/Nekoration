@@ -63,6 +63,7 @@ public class PaintingItem extends Item {
         return (float) getType(itemStack);
     }
 
+    @SuppressWarnings("null")
     public InteractionResult useOn(UseOnContext ctx) {
         BlockPos blockpos = ctx.getClickedPos();
         Direction direction = ctx.getClickedFace();

@@ -45,7 +45,7 @@ public class CustomBlock extends Block implements EntityBlock {
         s.add(LIGHT);
     }
 
-    @SuppressWarnings("resource")
+    @SuppressWarnings({ "resource", "null" })
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getItemInHand(hand);
         Item item = itemStack.getItem();

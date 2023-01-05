@@ -5,12 +5,12 @@ import com.devbobcorn.nekoration.client.rendering.PaintingRendererManager;
 import com.devbobcorn.nekoration.entities.PaintingEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -38,7 +38,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
     public void render(PaintingEntity entity, float rotation, float partialTicks, PoseStack stack, MultiBufferSource buffers, int packedLight) {
         if (entity.data == null) return;
         stack.pushPose();
-        stack.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotation));
+        stack.mulPose(Axis.YP.rotationDegrees(180.0F - rotation));
 
         stack.scale(0.0625F, 0.0625F, 0.0625F);
         PaintingTextureManager paintingspriteuploader = Minecraft.getInstance().getPaintingTextures();
@@ -50,7 +50,7 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(PaintingEntity entity) {
-        return Minecraft.getInstance().getPaintingTextures().getBackSprite().atlas().location();
+        return Minecraft.getInstance().getPaintingTextures().getBackSprite().atlasLocation();
     }
 
     private void renderPainting(PoseStack stack, MultiBufferSource buffers, PaintingEntity entity, int width, int height, TextureAtlasSprite woodTex) {

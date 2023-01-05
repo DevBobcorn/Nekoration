@@ -3,6 +3,7 @@ package com.devbobcorn.nekoration.blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -38,14 +39,14 @@ public class DyeableDoorBlock extends DoorBlock {
     public static final IntegerProperty COLOR = BlockStateProperties.LEVEL;
     public final boolean isTall;
 
-    public DyeableDoorBlock(Properties settings) {
-        super(settings);
+    public DyeableDoorBlock(Properties settings, SoundEvent openSound, SoundEvent closeSound) {
+        super(settings, openSound, closeSound);
         this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
         isTall = false;
     }
 
-    public DyeableDoorBlock(Properties settings, boolean tall) {
-        super(settings);
+    public DyeableDoorBlock(Properties settings, SoundEvent openSound, SoundEvent closeSound, boolean tall) {
+        super(settings, openSound, closeSound);
         this.registerDefaultState(this.stateDefinition.any().setValue(COLOR, 14));
         isTall = tall;
     }

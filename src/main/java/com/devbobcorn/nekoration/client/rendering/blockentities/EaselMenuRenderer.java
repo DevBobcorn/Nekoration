@@ -3,7 +3,7 @@ package com.devbobcorn.nekoration.client.rendering.blockentities;
 import com.devbobcorn.nekoration.blocks.EaselMenuBlock;
 import com.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -27,12 +27,12 @@ public class EaselMenuRenderer implements BlockEntityRenderer<EaselMenuBlockEnti
             stack.pushPose();
             // Items on Front Side...
             stack.translate(0.5D, 0.5D, 0.5D);
-            stack.mulPose(Vector3f.YP.rotationDegrees(-tileEntity.getBlockState().getValue(EaselMenuBlock.FACING).get2DDataValue() * 90.0F + rot * 180.0F));
+            stack.mulPose(Axis.YP.rotationDegrees(-tileEntity.getBlockState().getValue(EaselMenuBlock.FACING).get2DDataValue() * 90.0F + rot * 180.0F));
             
             float sc = 0.5F;
             stack.scale(sc, sc, sc);
     
-            stack.mulPose(Vector3f.XP.rotationDegrees(-22.5F));
+            stack.mulPose(Axis.XP.rotationDegrees(-22.5F));
     
             int rand = (int)tileEntity.getBlockPos().asLong();
 
@@ -59,9 +59,9 @@ public class EaselMenuRenderer implements BlockEntityRenderer<EaselMenuBlockEnti
             stack.pushPose();
     
             stack.translate(0.5D, 0.5D, 0.5D);
-            stack.mulPose(Vector3f.YP.rotationDegrees(-tileEntity.getBlockState().getValue(EaselMenuBlock.FACING).get2DDataValue() * 90.0F + rot * 180.0F));
+            stack.mulPose(Axis.YP.rotationDegrees(-tileEntity.getBlockState().getValue(EaselMenuBlock.FACING).get2DDataValue() * 90.0F + rot * 180.0F));
             stack.translate(-0.3D, 0.4D, 0.08D);
-            stack.mulPose(Vector3f.XP.rotationDegrees(-22.5F));
+            stack.mulPose(Axis.XP.rotationDegrees(-22.5F));
     
             sc = 0.015F;
             stack.scale(sc, -sc, sc);

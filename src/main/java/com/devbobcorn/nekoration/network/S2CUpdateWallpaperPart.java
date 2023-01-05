@@ -35,7 +35,7 @@ public class S2CUpdateWallpaperPart {
 		return new S2CUpdateWallpaperPart(id, p);
 	}
 
-    @SuppressWarnings("resource")
+    @SuppressWarnings({ "resource", "null" })
 	public static void handle(final S2CUpdateWallpaperPart msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on CLIENT SIDE...

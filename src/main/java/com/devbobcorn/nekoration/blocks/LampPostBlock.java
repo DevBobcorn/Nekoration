@@ -124,8 +124,9 @@ public class LampPostBlock extends CrossCollisionBlock {
         } else {
            return LeadItem.bindPlayerMobs(player, world, pos);
         }
-     }
+    }
 
+    @SuppressWarnings("null")
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         Level blockView = ctx.getLevel();
         BlockPos blockPos = ctx.getClickedPos();

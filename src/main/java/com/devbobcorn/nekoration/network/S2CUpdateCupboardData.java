@@ -37,7 +37,7 @@ public class S2CUpdateCupboardData {
         return new S2CUpdateCupboardData(pos, t);
     }
 
-    @SuppressWarnings("resource")
+    @SuppressWarnings({ "resource", "null" })
     public static void handle(final S2CUpdateCupboardData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on CLIENT SIDE...

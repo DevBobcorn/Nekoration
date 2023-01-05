@@ -36,6 +36,7 @@ public class PaintingRendererManager {
         return PIXELS_RENDERER;
     }
 
+    @SuppressWarnings("null")
     public static byte[] read(String name){
         InputStream input = null;
         ByteArrayOutputStream arrStream = new ByteArrayOutputStream();

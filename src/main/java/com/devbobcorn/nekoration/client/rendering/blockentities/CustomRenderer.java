@@ -4,7 +4,7 @@ import com.devbobcorn.nekoration.blocks.ModBlocks;
 import com.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import com.devbobcorn.nekoration.items.ModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import java.util.HashMap;
 
@@ -38,7 +38,7 @@ public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
         stack.pushPose();
         // Translate a bit so that it can rotate around the center of this block
         stack.translate(0.5, 0.0, 0.5);
-        stack.mulPose(Vector3f.YP.rotationDegrees(tileEntity.dir * 15F));
+        stack.mulPose(Axis.YP.rotationDegrees(tileEntity.dir * 15F));
         
         stack.translate(tileEntity.offset[0] * frac, tileEntity.offset[1] * frac, tileEntity.offset[2] * frac);
 
@@ -46,7 +46,7 @@ public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
             if (tileEntity.showHint) {
                 // Render Arrow
                 stack.translate(0F, 0.5F, -1F);
-                stack.mulPose(Vector3f.XP.rotationDegrees(90F));
+                stack.mulPose(Axis.XP.rotationDegrees(90F));
 
                 ItemRenderer ir = Minecraft.getInstance().getItemRenderer();
                 BakedModel bakedmodel = ir.getModel(arrow, tileEntity.getLevel(), (LivingEntity)null, 0);
@@ -54,7 +54,7 @@ public class CustomRenderer implements BlockEntityRenderer<CustomBlockEntity> {
                 // p_115149_ is packedLight / p_115_150_ is packedOverlay
                 ir.render(arrow, TransformType.FIXED, true, stack, buffers, 255, 0, bakedmodel);
 
-                stack.mulPose(Vector3f.XP.rotationDegrees(-90F));
+                stack.mulPose(Axis.XP.rotationDegrees(-90F));
                 stack.translate(0F, -0.5F, 1F);
             }
         } else {

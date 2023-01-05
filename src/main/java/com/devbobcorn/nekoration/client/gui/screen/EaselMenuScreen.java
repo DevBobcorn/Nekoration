@@ -2,6 +2,8 @@ package com.devbobcorn.nekoration.client.gui.screen;
 
 import java.util.Objects;
 
+import javax.annotation.Nullable;
+
 import com.devbobcorn.nekoration.NekoColors;
 import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.blocks.containers.EaselMenuMenu;
@@ -10,7 +12,7 @@ import com.devbobcorn.nekoration.network.C2SUpdateEaselMenuData;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -59,7 +61,7 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
         super.init();
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (this.height - this.imageHeight) / 2;
-        Objects.requireNonNull(this.minecraft).keyboardHandler.setSendRepeatsToGui(true);
+        // TODO Check and fix Objects.requireNonNull(this.minecraft).keyboardHandler.setSendRepeatsToGui(true);
         final int extraOffsetX = 14;
         final int extraOffsetY = 10;
         for (int i = 0;i < 8;i++) {
@@ -89,7 +91,7 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
     }
 
     @Override
-    public void setFocused(GuiEventListener widgeti){
+    public void setFocused(@Nullable GuiEventListener widgeti){
         super.setFocused(widgeti);
         if (widgeti instanceof EditBox){
             EditBox widget = (EditBox) getFocused();
@@ -189,7 +191,7 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
         }
         this.renderTooltip(stack, mouseX, mouseY);
         // Render Tip Text...
-        stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+        stack.mulPose(Axis.ZP.rotationDegrees(90.0F));
         stack.translate(topPos + 30, -leftPos - 192, 0);
         this.font.draw(stack, showColorPicker ? tipMessage2 : tipMessage1, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }

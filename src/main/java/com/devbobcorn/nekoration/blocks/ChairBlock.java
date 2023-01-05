@@ -58,6 +58,7 @@ public class ChairBlock extends HorizontalDirectionalBlock {
         s.add(FACING);
     }
 
+    @SuppressWarnings("null")
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }

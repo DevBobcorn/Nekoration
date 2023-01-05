@@ -3,6 +3,8 @@ package com.devbobcorn.nekoration.blocks;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.devbobcorn.nekoration.blocks.entities.PhonographBlockEntity;
 import com.mojang.logging.LogUtils;
 
@@ -31,7 +33,7 @@ public class PhonographBlock extends Block implements EntityBlock {
 
     // Called just after the player places a block.
     @Override
-    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
 
         BlockEntity tileentity = worldIn.getBlockEntity(pos);

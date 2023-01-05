@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -34,6 +35,8 @@ import com.devbobcorn.nekoration.client.ClientHelper;
 
 import java.awt.Color;
 import java.util.UUID;
+
+import javax.annotation.Nullable;
 
 public class PaintingEntity extends HangingEntity implements IEntityAdditionalSpawnData {
     public PaintingData data;
@@ -150,7 +153,7 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
     }
 
     @Override
-    public void dropItem(Entity entity) {
+    public void dropItem(@Nullable Entity entity) {
         if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
             this.playSound(SoundEvents.PAINTING_BREAK, 1.0F, 1.0F);
             if (entity instanceof Player) {
@@ -169,8 +172,8 @@ public class PaintingEntity extends HangingEntity implements IEntityAdditionalSp
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
-        Packet<?> packet = NetworkHooks.getEntitySpawningPacket(this);
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        Packet<ClientGamePacketListener> packet = NetworkHooks.getEntitySpawningPacket(this);
         return packet;
     }
 

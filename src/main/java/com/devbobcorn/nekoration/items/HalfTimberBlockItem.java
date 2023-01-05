@@ -20,7 +20,7 @@ public class HalfTimberBlockItem extends BlockItem {
         super(block, settings);
     }
 
-    @Override
+    /* @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
         // Only add those with
         if (this.allowedIn(tab)) {
@@ -42,7 +42,7 @@ public class HalfTimberBlockItem extends BlockItem {
                 subItems.add(subItemStack);
             }
         }
-    }
+    } */
 
     public static boolean hasColor(ItemStack stack) {
         return stack.getOrCreateTag().contains(COLOR_0) && stack.getOrCreateTag().contains(COLOR_1);

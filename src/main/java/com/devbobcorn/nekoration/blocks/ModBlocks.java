@@ -10,10 +10,10 @@ import com.devbobcorn.nekoration.blocks.frames.DyeableWindowTopBlock;
 import com.devbobcorn.nekoration.items.DyeableBlockItem;
 import com.devbobcorn.nekoration.items.DyeableWoodenBlockItem;
 import com.devbobcorn.nekoration.items.HalfTimberBlockItem;
-import com.devbobcorn.nekoration.items.ModItemTabs;
 import com.devbobcorn.nekoration.items.ModItems;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
@@ -28,10 +28,10 @@ import net.minecraftforge.registries.RegistryObject;
 public final class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Nekoration.MODID);
 
-    private static final Item.Properties stoneItemProps = new Item.Properties().tab(ModItemTabs.STONE_GROUP);
-    private static final Item.Properties woodenItemProps = new Item.Properties().tab(ModItemTabs.WOODEN_GROUP);
-    private static final Item.Properties winAndDoorItemProps = new Item.Properties().tab(ModItemTabs.WINDOW_N_DOOR_GROUP);
-    private static final Item.Properties decorItemProps = new Item.Properties().tab(ModItemTabs.DECOR_GROUP);
+    private static final Item.Properties stoneItemProps = new Item.Properties(); //.tab(ModItemTabs.STONE_GROUP);
+    private static final Item.Properties woodenItemProps = new Item.Properties(); //.tab(ModItemTabs.WOODEN_GROUP);
+    private static final Item.Properties winAndDoorItemProps = new Item.Properties(); //.tab(ModItemTabs.WINDOW_N_DOOR_GROUP);
+    private static final Item.Properties decorItemProps = new Item.Properties(); //.tab(ModItemTabs.DECOR_GROUP);
 
     public static final RegistryObject<Block> STONE_LAYERED = registerDyeable("stone_layered", () -> new StoneBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F)), stoneItemProps);
     public static final RegistryObject<Block> STONE_BASE_BOTTOM = registerDyeable("stone_base_bottom", () -> new StoneBlock(Block.Properties.of(Material.STONE).strength(1.5F, 6.0F)), stoneItemProps);
@@ -80,13 +80,13 @@ public final class ModBlocks {
     public static final RegistryObject<Block> WINDOW_SHADE = registerDyeableWooden("window_shade", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion().isSuffocating(ModBlocks::never).isViewBlocking(ModBlocks::never), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false), winAndDoorItemProps);
     public static final RegistryObject<Block> WINDOW_LANCET = registerDyeableWooden("window_lancet", () -> new WindowBlock(Block.Properties.of(Material.GLASS).noOcclusion().isSuffocating(ModBlocks::never).isViewBlocking(ModBlocks::never), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false), winAndDoorItemProps);
 
-    public static final RegistryObject<Block> DOOR_1 = register("door_1", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()), winAndDoorItemProps);
-    public static final RegistryObject<Block> DOOR_2 = register("door_2", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()), winAndDoorItemProps);
-    public static final RegistryObject<Block> DOOR_3 = register("door_3", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion()), winAndDoorItemProps);
+    public static final RegistryObject<Block> DOOR_1 = register("door_1", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN), winAndDoorItemProps);
+    public static final RegistryObject<Block> DOOR_2 = register("door_2", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN), winAndDoorItemProps);
+    public static final RegistryObject<Block> DOOR_3 = register("door_3", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN), winAndDoorItemProps);
 
-    public static final RegistryObject<Block> DOOR_TALL_1 = register("door_tall_1", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true), winAndDoorItemProps);
-    public static final RegistryObject<Block> DOOR_TALL_2 = register("door_tall_2", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true), winAndDoorItemProps);
-    public static final RegistryObject<Block> DOOR_TALL_3 = register("door_tall_3", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), true), winAndDoorItemProps);
+    public static final RegistryObject<Block> DOOR_TALL_1 = register("door_tall_1", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN, true), winAndDoorItemProps);
+    public static final RegistryObject<Block> DOOR_TALL_2 = register("door_tall_2", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN, true), winAndDoorItemProps);
+    public static final RegistryObject<Block> DOOR_TALL_3 = register("door_tall_3", () -> new DyeableDoorBlock(Block.Properties.of(Material.WOOD).strength(2.0F, 3.0F).noOcclusion(), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN, true), winAndDoorItemProps);
 
     public static final RegistryObject<Block> AWNING_PURE = registerDyeable("awning_pure", () -> new AwningBlock(Block.Properties.of(Material.WOOL).strength(0.8F)));
     public static final RegistryObject<Block> AWNING_STRIPE = registerDyeable("awning_stripe", () -> new AwningBlock(Block.Properties.of(Material.WOOL).strength(0.8F)));

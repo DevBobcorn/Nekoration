@@ -54,7 +54,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.ResourceProvider;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.Block;
@@ -471,10 +471,10 @@ public final class ClientModEventSubscriber {
     @SubscribeEvent
     @SuppressWarnings("deprecation")
     public static void RegisterShaders(RegisterShadersEvent event) {
-        ResourceManager manager = event.getResourceManager();
+        ResourceProvider provider = event.getResourceProvider();
 
         try{
-            event.registerShader(new ShaderInstance(manager, Nekoration.MODID + ":rendertype_cat_portal", DefaultVertexFormat.POSITION), (inst) -> {
+            event.registerShader(new ShaderInstance(provider, Nekoration.MODID + ":rendertype_cat_portal", DefaultVertexFormat.POSITION), (inst) -> {
                 rendertypeCatPortalShader = inst;
             });
         } catch (IOException e){

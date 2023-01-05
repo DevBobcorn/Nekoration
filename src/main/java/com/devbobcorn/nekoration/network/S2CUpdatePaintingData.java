@@ -56,7 +56,7 @@ public class S2CUpdatePaintingData {
         return new S2CUpdatePaintingData(id, x, y, w, h, p, hash);
     }
 
-    @SuppressWarnings("resource")
+    @SuppressWarnings({ "resource", "null" })
     public static void handle(final S2CUpdatePaintingData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on CLIENT SIDE...

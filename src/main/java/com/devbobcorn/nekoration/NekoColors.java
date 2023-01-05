@@ -2,7 +2,8 @@ package com.devbobcorn.nekoration;
 
 import java.awt.Color;
 
-import com.mojang.math.Vector3d;
+import org.joml.Vector3d;
+
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;

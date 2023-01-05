@@ -28,6 +28,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -82,7 +83,7 @@ public class NekoColorInheritRecipe extends CustomRecipe implements net.minecraf
     private final String group;
 
     public NekoColorInheritRecipe(ResourceLocation id, String group, int w, int h, NonNullList<Ingredient> in, ItemStack out) {
-        super(id);
+        super(id, CraftingBookCategory.MISC);
         this.group = group;
         this.width = w;
         this.height = h;

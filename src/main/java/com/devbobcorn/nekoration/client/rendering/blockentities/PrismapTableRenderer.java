@@ -10,8 +10,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexBuffer;
-import com.mojang.math.Matrix4f;
 
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -34,7 +34,7 @@ public class PrismapTableRenderer implements BlockEntityRenderer<PrismapTableBlo
 
     public PrismapTableRenderer(BlockEntityRendererProvider.Context ctx) { }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({ "deprecation", "null" })
     public void render(PrismapTableBlockEntity tileEntity, float partialTicks, PoseStack stack, MultiBufferSource buffers, int combinedLight, int combinedOverlay) {
         if (mc == null)
             mc = Minecraft.getInstance();
@@ -100,6 +100,7 @@ public class PrismapTableRenderer implements BlockEntityRenderer<PrismapTableBlo
             
     }
 
+    @SuppressWarnings("null")
     private void renderModelChunkLayer(RenderType type, PoseStack stack, RenderChunk chunkRender, double x, double y, double z, Matrix4f projection) {
         // Note that in 1.16, the projection matrix didn't need to be passed in separately
         type.setupRenderState();

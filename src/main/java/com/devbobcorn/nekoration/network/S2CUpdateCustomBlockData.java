@@ -7,6 +7,7 @@ import com.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -49,6 +50,7 @@ public class S2CUpdateCustomBlockData {
         packetBuffer.writeNbt(NbtUtils.writeBlockState(msg.displayState));
     }
 
+    @SuppressWarnings({ "resource", "null" })
     public static S2CUpdateCustomBlockData decode(final FriendlyByteBuf packetBuffer) {
         BlockPos pos = packetBuffer.readBlockPos();
         byte dir = packetBuffer.readByte();
@@ -60,11 +62,11 @@ public class S2CUpdateCustomBlockData {
         int[] color = new int[3];
         for (int i = 0;i < 3;i++)
             color[i] = packetBuffer.readInt();
-        BlockState state = NbtUtils.readBlockState(packetBuffer.readNbt());
+        BlockState state = NbtUtils.readBlockState(Minecraft.getInstance().level.holderLookup(Registries.BLOCK), packetBuffer.readNbt());
         return new S2CUpdateCustomBlockData(pos, dir, offset, retint, showHint, color, state);
     }
 
-    @SuppressWarnings("resource")
+    @SuppressWarnings({ "resource", "null" })
     public static void handle(final S2CUpdateCustomBlockData msg, final Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             //Handle this on CLIENT SIDE...

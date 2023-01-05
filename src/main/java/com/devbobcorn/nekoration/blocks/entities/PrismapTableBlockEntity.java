@@ -45,6 +45,7 @@ public class PrismapTableBlockEntity extends BlockEntity {
             chunkModel = ChunkModel.forTileEntity(this.level, this, viewAreaRadius);
     }
 
+    @SuppressWarnings("null")
     public void refresh(){
         if (chunkModel != null && !chunkModel.isCompiling())
             chunkModel.compile(Minecraft.getInstance(), this.getBlockPos());

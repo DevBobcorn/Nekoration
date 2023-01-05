@@ -4,7 +4,7 @@ import com.devbobcorn.nekoration.Nekoration;
 import com.devbobcorn.nekoration.network.C2SUpdatePaintingSize;
 import com.devbobcorn.nekoration.network.ModPacketHandler;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -84,7 +84,7 @@ public class PaintingSizeScreen extends Screen {
             drawCenteredString(stack, this.font, warningMessages[1], this.width / 2, this.height - 34, (warningOpacity << 24) + (220 << 16) + (30 << 8) + 250);
         }
         // Render Tip Text...
-        stack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+        stack.mulPose(Axis.ZP.rotationDegrees(90.0F));
         stack.translate(j, -i - 136, 0);
         this.font.draw(stack, tipMessage, 1.0F, 1.0F, (150 << 24) + (255 << 16) + (255 << 8) + 255);
     }
@@ -99,6 +99,7 @@ public class PaintingSizeScreen extends Screen {
         pickedHeight = (short)Math.min(Math.max((int)Math.ceil(gridy / slotLen), 1), slotNum);
     }
 
+    @SuppressWarnings("null")
     @Override
     public boolean mouseClicked(double x, double y, int type){
         double gridx = x - leftPos - GRID_LEFT;
