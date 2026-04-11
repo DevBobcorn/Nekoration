@@ -1,0 +1,1 @@
+$(l)Welcom 2 teh wurld ov Nekurashun, $(#3399FF)$(playername)$(#000000)!$()$(br)this iz brachore intraducin all aspectz ov $(#FF9900)nekuroshun$(), frum $(#00cc22)$(t:recipez)recipez$() 2 $(#FFAAAA)$(t:mechunicz)vaaious mechunicz$().$(br2)check aot teh cat o' guriez on teh right 4 detailed infoz.

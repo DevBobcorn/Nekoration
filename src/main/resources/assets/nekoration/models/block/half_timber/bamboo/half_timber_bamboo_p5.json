@@ -1,0 +1,7 @@
+{
+    "parent": "nekoration:block/half_timber/half_timber",
+    "textures": {
+        "side": "nekoration:block/half_timber_back/halftimber_frame_p5",
+        "overlay": "nekoration:block/half_timber/bamboo/halftimber_frame_p5"
+    }
+}

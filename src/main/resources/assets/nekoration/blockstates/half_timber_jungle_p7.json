@@ -1,0 +1,52 @@
+{
+    "variants": {
+        "color=black": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=blue": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=brown": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=cyan": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=gray": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=green": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=light_blue": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=light_gray": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=lime": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=magenta": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=orange": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=pink": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=purple": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=red": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=white": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        },
+        "color=yellow": {
+            "model": "nekoration:block/half_timber/jungle/half_timber_jungle_p7"
+        }
+    }
+}

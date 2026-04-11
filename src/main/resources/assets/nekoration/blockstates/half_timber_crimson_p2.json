@@ -1,0 +1,52 @@
+{
+    "variants": {
+        "color=black": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=blue": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=brown": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=cyan": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=gray": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=green": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=light_blue": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=light_gray": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=lime": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=magenta": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=orange": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=pink": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=purple": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=red": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=white": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        },
+        "color=yellow": {
+            "model": "nekoration:block/half_timber/crimson/half_timber_crimson_p2"
+        }
+    }
+}

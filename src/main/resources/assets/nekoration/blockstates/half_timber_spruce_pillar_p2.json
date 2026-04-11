@@ -1,0 +1,292 @@
+{
+    "variants": {
+        "color=black,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=black,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=black,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=black,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=black,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=black,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=blue,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=blue,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=blue,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=blue,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=blue,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=blue,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=brown,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=brown,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=brown,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=brown,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=brown,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=brown,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=cyan,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=cyan,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=cyan,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=cyan,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=cyan,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=cyan,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=gray,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=gray,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=gray,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=gray,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=gray,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=gray,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=green,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=green,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=green,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=green,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=green,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=green,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=light_blue,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=light_blue,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=light_blue,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=light_blue,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=light_blue,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=light_blue,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=light_gray,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=light_gray,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=light_gray,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=light_gray,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=light_gray,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=light_gray,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=lime,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=lime,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=lime,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=lime,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=lime,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=lime,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=magenta,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=magenta,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=magenta,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=magenta,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=magenta,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=magenta,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=orange,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=orange,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=orange,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=orange,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=orange,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=orange,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=pink,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=pink,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=pink,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=pink,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=pink,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=pink,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=purple,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=purple,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=purple,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=purple,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=purple,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=purple,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=red,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=red,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=red,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=red,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=red,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=red,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=white,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=white,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=white,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=white,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=white,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=white,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        },
+        "color=yellow,vertical_connection=s0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2"
+        },
+        "color=yellow,vertical_connection=d0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d0"
+        },
+        "color=yellow,vertical_connection=d1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_d1"
+        },
+        "color=yellow,vertical_connection=t0": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t0"
+        },
+        "color=yellow,vertical_connection=t1": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t1"
+        },
+        "color=yellow,vertical_connection=t2": {
+            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p2_t2"
+        }
+    }
+}
