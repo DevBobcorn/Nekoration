@@ -2,6 +2,8 @@
     "parent": "nekoration:block/half_timber/half_timber_pillar",
     "textures": {
         "side": "nekoration:block/half_timber_back/halftimber_frame_p0_t2",
-        "overlay": "nekoration:block/half_timber/crimson/halftimber_frame_p0_t2"
+        "overlay": "nekoration:block/half_timber/crimson/halftimber_frame_p0_t2",
+        "end": "nekoration:block/half_timber_back/halftimber_frame_p0",
+        "end_overlay": "nekoration:block/half_timber/crimson/halftimber_frame_p0"
     }
 }
