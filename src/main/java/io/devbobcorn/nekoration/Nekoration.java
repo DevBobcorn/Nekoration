@@ -1,5 +1,7 @@
 package io.devbobcorn.nekoration;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -8,6 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
@@ -21,6 +24,8 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import io.devbobcorn.nekoration.HalfTimberCreativeTabOrdering;
+import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.HalfTimberRegistration;
 
@@ -46,8 +51,16 @@ public class Nekoration {
             .title(Component.translatable("itemGroup.wooden"))
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> DyeableBlockItem.createCreativeTabStack(HalfTimberRegistration.oakHalfTimberP1Item().get()))
-            .displayItems((parameters, output) -> HalfTimberRegistration.blockItemsView()
-                    .forEach(holder -> output.accept(DyeableBlockItem.createCreativeTabStack(holder.get()))))
+            .displayItems((parameters, output) -> {
+                ArrayList<ItemStack> stacks = new ArrayList<>();
+                HalfTimberRegistration.blockItemsView().forEach(holder -> {
+                    for (EnumNekoColor color : EnumNekoColor.values()) {
+                        stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
+                    }
+                });
+                stacks.sort(HalfTimberCreativeTabOrdering.stackComparator());
+                stacks.forEach(output::accept);
+            })
             .build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.

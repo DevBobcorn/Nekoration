@@ -37,10 +37,15 @@ public class DyeableBlockItem extends BlockItem {
         CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> color.putIntoNbt(tag, COLOR));
     }
 
-    /** Creative tabs: one stack per item with plaster color {@link EnumNekoColor#WHITE}. */
+    /** Creative tabs: default icon stack (white plaster). */
     public static ItemStack createCreativeTabStack(ItemLike item) {
+        return createCreativeTabStack(item, EnumNekoColor.WHITE);
+    }
+
+    /** Creative tabs: one stack with the given plaster color. */
+    public static ItemStack createCreativeTabStack(ItemLike item, EnumNekoColor color) {
         ItemStack stack = new ItemStack(item);
-        setColor(stack, EnumNekoColor.WHITE);
+        setColor(stack, color);
         return stack;
     }
 }

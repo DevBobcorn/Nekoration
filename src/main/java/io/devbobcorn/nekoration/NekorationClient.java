@@ -9,6 +9,9 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.NeoForge;
+
+import io.devbobcorn.nekoration.client.creative.NekoCreativeTabFilterClient;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = Nekoration.MODID, dist = Dist.CLIENT)
@@ -27,5 +30,6 @@ public class NekorationClient {
         // Some client setup code
         Nekoration.LOGGER.info("HELLO FROM CLIENT SETUP");
         Nekoration.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        NeoForge.EVENT_BUS.register(NekoCreativeTabFilterClient.class);
     }
 }

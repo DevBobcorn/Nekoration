@@ -26,10 +26,11 @@ public enum HalfTimberWood {
     }
 
     public BlockBehaviour.Properties plankProperties() {
-        return BlockBehaviour.Properties.ofFullCopy(slabLikePlanks());
+        return BlockBehaviour.Properties.ofFullCopy(vanillaPlanks());
     }
 
-    private Block slabLikePlanks() {
+    /** Vanilla plank block for this wood (icons, sounds, creative filter). */
+    public Block vanillaPlanks() {
         return switch (this) {
             case OAK -> Blocks.OAK_PLANKS;
             case SPRUCE -> Blocks.SPRUCE_PLANKS;
@@ -43,5 +44,10 @@ public enum HalfTimberWood {
             case CRIMSON -> Blocks.CRIMSON_PLANKS;
             case WARPED -> Blocks.WARPED_PLANKS;
         };
+    }
+
+    /** {@code block.minecraft.<id>_planks} */
+    public String vanillaPlanksDescriptionId() {
+        return "block.minecraft." + id() + "_planks";
     }
 }
