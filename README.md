@@ -8,5 +8,7 @@ Nekoration is a mod for Minecraft(NeoForge 1.21.1) which adds lots of decoration
 ### Note
 Due to major code overhaul, many ids and data values have changed from the previous version. As such, loading an old save with the new mod will cause potential data loss, and is not recommended. If you really want to try this, it is always a good idea to backup your save beforehand.
 
+You can find the old version [here](https://github.com/DevBobcorn/NekorationLegacy).
+
 ### About Its Name
 The name 'Nekoration' is a compound of 'cat' in Japanese(ねこ, neko) and 'decoration', suggesting that the mod is both ornamental and cats-friendly...  ^._.^= ∫
