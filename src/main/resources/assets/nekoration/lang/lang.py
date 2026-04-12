@@ -26,7 +26,7 @@ half_timber_woods = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "
 half_timber_woods_cn = ["橡木", "云杉木", "白桦木", "丛林木", "金合欢木", "深色橡木", "红树木", "樱花木", "竹木", "绯红木", "诡异木"]
 half_timber_variants = ["p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "pillar_p0", "pillar_p1", "pillar_p2"]
 # {wood} filled per type; leading "%s " / "%s" is neko (dye) color like stone blocks
-half_timbers_us = ["{wood} Half Timber", "Slash {wood} Half Timber", "Backslash {wood} Half Timber", "Bi-Slash {wood} Half Timber", "Bi-Backslash {wood} Half Timber", "Center {wood} Half Timber", "Cross {wood} Half Timber", "Diamond {wood} Half Timber", "Checkered {wood} Half Timber", "Double {wood} Half Timber", "{wood} Half Timber Pillar", "Slash {wood} Half Timber Pillar", "Backslash {wood} Half Timber Pillar"]
+half_timbers_us = ["{wood} Half-Timber", "Slash {wood} Half-Timber", "Backslash {wood} Half-Timber", "Bi-Slash {wood} Half-Timber", "Bi-Backslash {wood} Half-Timber", "Center {wood} Half-Timber", "Cross {wood} Half-Timber", "Diamond {wood} Half-Timber", "Checkered {wood} Half-Timber", "Double {wood} Half-Timber", "{wood} Half-Timber Pillar", "Slash {wood} Half-Timber Pillar", "Backslash {wood} Half-Timber Pillar"]
 half_timbers_cn = ["{wood}半露木", "斜纹{wood}半露木", "反斜纹{wood}半露木", "双斜纹{wood}半露木", "双反斜纹{wood}半露木", "中心{wood}半露木", "十字{wood}半露木", "菱形{wood}半露木", "方格{wood}半露木", "双格{wood}半露木", "{wood}半露木柱", "斜纹{wood}半露木柱", "反斜纹{wood}半露木柱"]
 windows = ["window_simple","window_arch","window_cross","window_lancet","window_shade","window_top","window_sill","window_frame"]
 windows_us = ["Simple Window","Arch Window","Cross Window","Lancet Window","Shade Window","Window Top","Window Sill","Window Frame"]
@@ -46,9 +46,9 @@ miscs = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iro
 miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Phonograph [WIP]","Custom Block","Prismap Table [WIP]"]
 miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","留声机[WIP]","自定义方块","棱镜台[WIP]"]
 
-tabs = ["stone","wooden","window_n_door","decor","neko_tool"]
-tabs_us = ["Stone Blocks","Wooden Blocks","Windows & Doors","Decorations","Tools"]
-tabs_cn = ["石质方块","木质方块","门窗","装饰","工具"]
+tabs = ["nekoration_stone_columns","nekoration_half_timber","nekoration_windows_n_doors","nekoration_ornaments","nekoration_tools"]
+tabs_us = ["Stone Columns","Half-Timber","Windows & Doors","Ornaments","Tools"]
+tabs_cn = ["石柱","半露木","门窗","装饰","工具"]
 
 guis = ["button.scroll_up","button.scroll_down","button.enable_all","button.disable_all","button.save_painting","button.save_painting_content","button.load_image","button.clear","paint.tool_param0","paint.tool_param1","paint.tool_param2","paint.tool_param3","message.scroll_change",
         "message.painting_saved","message.painting_content_saved","message.paint_with_palette","message.painting_load_failed","message.link_expired",
@@ -180,8 +180,8 @@ for itm in range(0, len(items)):
 
 # [TAB NAME]
 for tab in range(0, len(tabs)):
-    obj_us['itemGroup.' + tabs[tab]] = "Nekoration | " + tabs_us[tab]
-    obj_cn['itemGroup.' + tabs[tab]] = "猫咪装饰 | " + tabs_cn[tab]
+    obj_us['itemGroup.' + tabs[tab]] = "Nekoration: " + tabs_us[tab]
+    obj_cn['itemGroup.' + tabs[tab]] = "猫咪装饰丨" + tabs_cn[tab]
 
 # [GUI]
 for gui in range(0, len(guis)):

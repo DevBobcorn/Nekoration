@@ -6,6 +6,7 @@ import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.HalfTimberRegistration;
+import io.devbobcorn.nekoration.registry.StoneColumnsRegistration;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.BlockPos;
@@ -43,10 +44,12 @@ public final class NekorationColorHandlers {
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         HalfTimberRegistration.blockItemsView().forEach(holder -> event.register(DYEABLE_BLOCK_COLOR, holder.get().getBlock()));
+        StoneColumnsRegistration.blockItemsView().forEach(holder -> event.register(DYEABLE_BLOCK_COLOR, holder.get().getBlock()));
     }
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         HalfTimberRegistration.blockItemsView().forEach(holder -> event.register(DYEABLE_BLOCK_ITEM_COLOR, holder.get()));
+        StoneColumnsRegistration.blockItemsView().forEach(holder -> event.register(DYEABLE_BLOCK_ITEM_COLOR, holder.get()));
     }
 }

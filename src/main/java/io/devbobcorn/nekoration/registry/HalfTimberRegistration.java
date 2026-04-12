@@ -18,7 +18,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  * Registers {@code half_timber_<wood>_p0..p9} and {@code half_timber_<wood>_pillar_p0..p2} for each {@link HalfTimberWood}.
  */
 public final class HalfTimberRegistration {
-    public static final List<DeferredItem<DyeableBlockItem>> BLOCK_ITEMS = new ArrayList<>();
+    public static final List<DeferredItem<DyeableBlockItem>> HALF_TIMBER_BLOCK_ITEMS = new ArrayList<>();
 
     private HalfTimberRegistration() {
     }
@@ -30,7 +30,7 @@ public final class HalfTimberRegistration {
             for (int p = 0; p <= 9; p++) {
                 String id = "half_timber_" + w + "_p" + p;
                 DeferredBlock<Block> block = blocks.register(id, () -> new DyeableBlock(wood.plankProperties()));
-                BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
+                HALF_TIMBER_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
             }
 
             registerPillar(blocks, items, wood, w, 0, DyeableVerticalConnectBlock.ConnectionType.PILLAR);
@@ -43,7 +43,7 @@ public final class HalfTimberRegistration {
             String woodId, int index, DyeableVerticalConnectBlock.ConnectionType type) {
         String id = "half_timber_" + woodId + "_pillar_p" + index;
         DeferredBlock<Block> block = blocks.register(id, () -> new DyeableVerticalConnectBlock(wood.plankProperties(), type, false));
-        BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
+        HALF_TIMBER_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
     }
 
     private static DeferredItem<DyeableBlockItem> registerDyeableBlockItem(DeferredRegister.Items items, String id,
@@ -52,11 +52,11 @@ public final class HalfTimberRegistration {
     }
 
     public static List<DeferredItem<DyeableBlockItem>> blockItemsView() {
-        return Collections.unmodifiableList(BLOCK_ITEMS);
+        return Collections.unmodifiableList(HALF_TIMBER_BLOCK_ITEMS);
     }
 
-    /** {@code half_timber_oak_p1} — default creative tab icon. */
-    public static DeferredItem<DyeableBlockItem> oakHalfTimberP1Item() {
-        return BLOCK_ITEMS.get(1);
+    /** Creative tab icon. */
+    public static DeferredItem<DyeableBlockItem> iconItem() {
+        return HALF_TIMBER_BLOCK_ITEMS.get(13 * 5 + 1);
     }
 }

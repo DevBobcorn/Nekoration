@@ -193,7 +193,7 @@ public final class NekoCreativeTabFilterClient {
     }
 
     private static boolean isOurTab(CreativeModeTab tab) {
-        return tab != null && tab == Nekoration.NEKORATION_TAB.get();
+        return tab != null && tab == Nekoration.NEKORATION_HALF_TIMBER_TAB.get();
     }
 
     private static void applyFilteredItems(CreativeModeInventoryScreen screen) {
