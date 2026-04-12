@@ -26,6 +26,7 @@ import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.HalfTimberRegistration;
 import io.devbobcorn.nekoration.registry.StoneColumnsRegistration;
+import io.devbobcorn.nekoration.registry.WindowRegistration;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Nekoration.MODID)
@@ -47,6 +48,7 @@ public class Nekoration {
     static {
         HalfTimberRegistration.register(BLOCKS, ITEMS);
         StoneColumnsRegistration.register(BLOCKS, ITEMS);
+        WindowRegistration.register(BLOCKS, ITEMS);
     }
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_STONE_TAB = CREATIVE_MODE_TABS.register("nekoration_stone_tab", () -> CreativeModeTab.builder()
@@ -79,6 +81,14 @@ public class Nekoration {
                 stacks.forEach(output::accept);
             })
             .build());
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_WINDOWS_N_DOORS_TAB = CREATIVE_MODE_TABS.register(
+            "nekoration_windows_n_doors_tab",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.nekoration_windows_n_doors"))
+                    .icon(() -> new ItemStack(WindowRegistration.iconItem().get()))
+                    .displayItems((parameters, output) -> WindowRegistration.blockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get()))))
+                    .build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.

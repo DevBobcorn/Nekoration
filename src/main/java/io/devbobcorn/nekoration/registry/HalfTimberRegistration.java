@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
+import io.devbobcorn.nekoration.blocks.VerticalConnectBlock;
 import io.devbobcorn.nekoration.blocks.HalfTimberWood;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.Item;
@@ -33,14 +34,14 @@ public final class HalfTimberRegistration {
                 HALF_TIMBER_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
             }
 
-            registerPillar(blocks, items, wood, w, 0, DyeableVerticalConnectBlock.ConnectionType.PILLAR);
-            registerPillar(blocks, items, wood, w, 1, DyeableVerticalConnectBlock.ConnectionType.TRIPLE);
-            registerPillar(blocks, items, wood, w, 2, DyeableVerticalConnectBlock.ConnectionType.TRIPLE);
+            registerPillar(blocks, items, wood, w, 0, VerticalConnectBlock.ConnectionType.PILLAR);
+            registerPillar(blocks, items, wood, w, 1, VerticalConnectBlock.ConnectionType.TRIPLE);
+            registerPillar(blocks, items, wood, w, 2, VerticalConnectBlock.ConnectionType.TRIPLE);
         }
     }
 
     private static void registerPillar(DeferredRegister.Blocks blocks, DeferredRegister.Items items, HalfTimberWood wood,
-            String woodId, int index, DyeableVerticalConnectBlock.ConnectionType type) {
+            String woodId, int index, VerticalConnectBlock.ConnectionType type) {
         String id = "half_timber_" + woodId + "_pillar_p" + index;
         DeferredBlock<Block> block = blocks.register(id, () -> new DyeableVerticalConnectBlock(wood.plankProperties(), type, false));
         HALF_TIMBER_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));

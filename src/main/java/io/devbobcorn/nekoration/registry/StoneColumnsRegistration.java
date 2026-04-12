@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
+import io.devbobcorn.nekoration.blocks.VerticalConnectBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -49,7 +50,7 @@ public final class StoneColumnsRegistration {
 
     private static void registerStonePillar(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new DyeableVerticalConnectBlock(stoneProperties(), DyeableVerticalConnectBlock.ConnectionType.PILLAR, false));
+                () -> new DyeableVerticalConnectBlock(stoneProperties(), VerticalConnectBlock.ConnectionType.PILLAR, false));
         STONE_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
     }
 

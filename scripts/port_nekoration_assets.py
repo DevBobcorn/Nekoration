@@ -45,22 +45,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-MOD_ID = "nekoration"
+_SCRIPT_DIR = Path(__file__).resolve().parent
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
 
-# Must match io.devbobcorn.nekoration.blocks.HalfTimberWood
-WOOD_IDS = (
-    "oak",
-    "spruce",
-    "birch",
-    "jungle",
-    "acacia",
-    "dark_oak",
-    "mangrove",
-    "cherry",
-    "bamboo",
-    "crimson",
-    "warped",
-)
+from nekoration_asset_constants import MOD_ID, NEKO_COLOR_NAMES, VERTICAL_CONNECTIONS, WOOD_IDS
 
 WOOD_TITLE = {
     "oak": "Oak",
@@ -75,28 +64,6 @@ WOOD_TITLE = {
     "crimson": "Crimson",
     "warped": "Warped",
 }
-
-VERTICAL_CONNECTIONS = ("s0", "d0", "d1", "t0", "t1", "t2")
-
-# Must match io.devbobcorn.nekoration.NekoColors.EnumNekoColor order (NBT id 0..15 → serialized name)
-NEKO_COLOR_NAMES = (
-    "black",
-    "blue",
-    "brown",
-    "cyan",
-    "gray",
-    "green",
-    "light_blue",
-    "light_gray",
-    "lime",
-    "magenta",
-    "orange",
-    "pink",
-    "purple",
-    "red",
-    "white",
-    "yellow",
-)
 
 # Legacy en_us pattern names (p0..p9 then pillar p0..p2) — first %s was wood tint, second plaster; we fold wood into the id.
 PANEL_LABEL_EN = (

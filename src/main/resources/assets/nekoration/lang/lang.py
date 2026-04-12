@@ -4,9 +4,7 @@ import os
 
 colors = ["black","blue","brown","cyan","gray","green","light_blue","light_gray","lime","magenta","orange","pink","purple","red","white","yellow","unknown","blank"]
 colors_us  = ["Black","Blue","Brown","Cyan","Gray","Green","Light Blue","Light Gray","Lime","Magenta","Orange","Pink","Purple","Red","White","Yellow","Some","Blank"]
-wooden_us  = ["Dark Oak","Blue Wood","Spruce","Warped","Jungle","Green Wood","Magic","Oak","Willow","Crimson","Acacia","Mahogany","Umbran","Cherry","Birch","Palm","Some","Air"]
 colors_cn = ["黑色","蓝色","棕色","青色","灰色","绿色","淡蓝色","淡灰色","黄绿色","品红色","橙色","粉色","紫色","红色","白色","黄色","","空白"]
-wooden_cn = ["深色橡木","蓝木","云杉木","诡异木","丛林木","绿木","魔法木","橡木","柳木","绯红木","金合欢木","桃花心木","暗影木","樱木","白桦木","棕榈木","","空气"]
 woods = ["pumpkin","dark_oak","spruce","warped","jungle","oak","crimson","acacia","birch"]
 woods_cn = ["南瓜","深色橡木","云杉木","诡异木","丛林木","橡木","绯红木","金合欢木","白桦木"]
 chair_us = "Chair"
@@ -28,9 +26,12 @@ half_timber_variants = ["p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p
 # {wood} filled per type; leading "%s " / "%s" is neko (dye) color like stone blocks
 half_timbers_us = ["{wood} Half-Timber", "Slash {wood} Half-Timber", "Backslash {wood} Half-Timber", "Bi-Slash {wood} Half-Timber", "Bi-Backslash {wood} Half-Timber", "Center {wood} Half-Timber", "Cross {wood} Half-Timber", "Diamond {wood} Half-Timber", "Checkered {wood} Half-Timber", "Double {wood} Half-Timber", "{wood} Half-Timber Pillar", "Slash {wood} Half-Timber Pillar", "Backslash {wood} Half-Timber Pillar"]
 half_timbers_cn = ["{wood}半露木", "斜纹{wood}半露木", "反斜纹{wood}半露木", "双斜纹{wood}半露木", "双反斜纹{wood}半露木", "中心{wood}半露木", "十字{wood}半露木", "菱形{wood}半露木", "方格{wood}半露木", "双格{wood}半露木", "{wood}半露木柱", "斜纹{wood}半露木柱", "反斜纹{wood}半露木柱"]
-windows = ["window_simple","window_arch","window_cross","window_lancet","window_shade","window_top","window_sill","window_frame"]
-windows_us = ["Simple Window","Arch Window","Cross Window","Lancet Window","Shade Window","Window Top","Window Sill","Window Frame"]
-windows_cn = ["简易窗","拱形窗","玻璃窗","尖头窗","百叶窗","窗顶","窗台","窗框"]
+windows = ["simple","arch","cross","lancet","shade"]
+windows_us = ["{wood} Simple Window","{wood} Arch Window","{wood} Cross Window","{wood} Lancet Window","{wood} Shade Window"]
+windows_cn = ["{wood}简易窗","{wood}拱形窗","{wood}十字窗","{wood}尖头窗","{wood}百叶窗"]
+swindows = ["window_top","window_sill","window_frame"]
+swindows_us = ["Window Top","Window Sill","Window Frame"]
+swindows_cn = ["窗顶","窗台","窗框"]
 doors = ["door_1","door_2","door_3","door_tall_1","door_tall_2","door_tall_3"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
 doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
@@ -112,22 +113,22 @@ obj_lol = {}
 # Color Names...
 for col in range(0, len(colors)):
     obj_us['color.nekoration.' + colors[col]] = colors_us[col]
-    obj_us['color.wooden.' + colors[col]] = wooden_us[col]
+    #obj_us['color.wooden.' + colors[col]] = wooden_us[col]
     obj_cn['color.nekoration.' + colors[col]] = colors_cn[col]
-    obj_cn['color.wooden.' + colors[col]] = wooden_cn[col]
+    #obj_cn['color.wooden.' + colors[col]] = wooden_cn[col]
 
 # Decoration Types...
 for dec in range(0, len(decortypes)):
     obj_us['decortype.' + decortypes[dec]] = decortypes_us[dec]
     obj_cn['decortype.' + decortypes[dec]] = decortypes_cn[dec]
 
-# [STONE TAB]
+# [STONE COLUMNS TAB]
 for stn in range(0, len(stones)):
     ## Include color translation, note if a space should follow (neko_color)
     obj_us['block.nekoration.' + stones[stn]] = "%s " + stones_us[stn]
     obj_cn['block.nekoration.' + stones[stn]] = "%s" + stones_cn[stn]
 
-# [WOODEN TAB] Half-timber: block.nekoration.half_timber_<wood>_p0..p9, _pillar_p0..p2
+# [WOODEN TABs]
 for w_i in range(0, len(half_timber_woods)):
     wood_id = half_timber_woods[w_i]
     wood_en = getEnName(wood_id)
@@ -136,12 +137,15 @@ for w_i in range(0, len(half_timber_woods)):
         block_id = "half_timber_" + wood_id + "_" + half_timber_variants[v_i]
         obj_us["block.nekoration." + block_id] = "%s " + half_timbers_us[v_i].format(wood=wood_en)
         obj_cn["block.nekoration." + block_id] = "%s" + half_timbers_cn[v_i].format(wood=wood_cn)
+    for v_i in range(0, len(windows)):
+        block_id = "window_" + wood_id + "_" + windows[v_i]
+        obj_us["block.nekoration." + block_id] = windows_us[v_i].format(wood=wood_en)
+        obj_cn["block.nekoration." + block_id] = windows_cn[v_i].format(wood=wood_cn)
 
-# [WINDOW TAB]
-for win in range(0, len(windows)):
-    # (wooden_color / nekocolor)
-    obj_us['block.nekoration.' + windows[win]] = "%s " + windows_us[win]
-    obj_cn['block.nekoration.' + windows[win]] = "%s" + windows_cn[win]
+for win in range(0, len(swindows)):
+    # (nekocolor)
+    obj_us['block.nekoration.' + swindows[win]] = "%s " + swindows_us[win]
+    obj_cn['block.nekoration.' + swindows[win]] = "%s" + swindows_cn[win]
 
 obj_us['block.nekoration.window_plant'] = "%s Flowering Window Plant"
 obj_cn['block.nekoration.window_plant'] = "开%s花的窗边植物"

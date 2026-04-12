@@ -1,0 +1,7 @@
+{
+    "parent": "nekoration:block/window/window",
+    "textures": {
+        "side": "nekoration:block/window/crimson/window_cross_t0",
+        "end": "nekoration:block/window/crimson/window_top"
+    }
+}
