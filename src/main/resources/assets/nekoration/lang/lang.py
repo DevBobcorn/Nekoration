@@ -21,7 +21,7 @@ stones_us = ["Stone Base","Stone Base Bottom","Stone Frame","Stone Frame Bottom"
 stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底座","多立克石柱","爱奥尼石柱","科林斯石柱","叠层石壁","石质高脚花盆","石质花盆"]
 # Suffix after <wood>_half_timber_  (matches HalfTimberRegistration / HalfTimberWood)
 half_timber_woods = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"]
-half_timber_woods_cn = ["橡木", "云杉木", "白桦木", "丛林木", "金合欢木", "深色橡木", "红树木", "樱花木", "竹木", "绯红木", "诡异木"]
+half_timber_woods_cn = ["橡木", "云杉木", "白桦木", "丛林木", "金合欢木", "深色橡木", "红树木", "樱花木", "竹", "绯红木", "诡异木"]
 half_timber_variants = ["p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "pillar_p0", "pillar_p1", "pillar_p2"]
 # {wood} filled per type; leading "%s " / "%s" is neko (dye) color like stone blocks
 half_timbers_us = ["{wood} Half-Timber", "Slash {wood} Half-Timber", "Backslash {wood} Half-Timber", "Bi-Slash {wood} Half-Timber", "Bi-Backslash {wood} Half-Timber", "Center {wood} Half-Timber", "Cross {wood} Half-Timber", "Diamond {wood} Half-Timber", "Checkered {wood} Half-Timber", "Double {wood} Half-Timber", "{wood} Half-Timber Pillar", "Slash {wood} Half-Timber Pillar", "Backslash {wood} Half-Timber Pillar"]
