@@ -9,7 +9,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 /**
- * Non-dyeable vertical window; wood and shape are fixed per block id ({@code window_<wood>_<variant>}).
+ * Non-dyeable vertical window; wood and shape are fixed per block id ({@code <wood>_window_<variant>}).
  */
 public class WindowBlock extends VerticalConnectBlock {
 

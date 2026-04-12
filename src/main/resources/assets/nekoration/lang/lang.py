@@ -19,7 +19,7 @@ decortypes_cn = ["花盆","雨篷","家具","收纳","杂项"]
 stones = ["stone_base","stone_base_bottom","stone_frame","stone_frame_bottom","stone_pillar","stone_pillar_bottom","stone_doric","stone_ionic","stone_corinthian","stone_layered","stone_pot","stone_planter"]
 stones_us = ["Stone Base","Stone Base Bottom","Stone Frame","Stone Frame Bottom","Stone Pillar","Stone Pillar Bottom","Doric Stone Pillar","Ionic Stone Pillar","Corinthian Stone Pillar","Layered Stone","Stone Pot","Stone Planter"]
 stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底座","多立克石柱","爱奥尼石柱","科林斯石柱","叠层石壁","石质高脚花盆","石质花盆"]
-# Suffix after half_timber_<wood>_  (matches HalfTimberRegistration / HalfTimberWood)
+# Suffix after <wood>_half_timber_  (matches HalfTimberRegistration / HalfTimberWood)
 half_timber_woods = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"]
 half_timber_woods_cn = ["橡木", "云杉木", "白桦木", "丛林木", "金合欢木", "深色橡木", "红树木", "樱花木", "竹木", "绯红木", "诡异木"]
 half_timber_variants = ["p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "pillar_p0", "pillar_p1", "pillar_p2"]
@@ -134,11 +134,11 @@ for w_i in range(0, len(half_timber_woods)):
     wood_en = getEnName(wood_id)
     wood_cn = half_timber_woods_cn[w_i]
     for v_i in range(0, len(half_timber_variants)):
-        block_id = "half_timber_" + wood_id + "_" + half_timber_variants[v_i]
+        block_id = wood_id + "_half_timber_" + half_timber_variants[v_i]
         obj_us["block.nekoration." + block_id] = "%s " + half_timbers_us[v_i].format(wood=wood_en)
         obj_cn["block.nekoration." + block_id] = "%s" + half_timbers_cn[v_i].format(wood=wood_cn)
     for v_i in range(0, len(windows)):
-        block_id = "window_" + wood_id + "_" + windows[v_i]
+        block_id = wood_id + "_window_" + windows[v_i]
         obj_us["block.nekoration." + block_id] = windows_us[v_i].format(wood=wood_en)
         obj_cn["block.nekoration." + block_id] = windows_cn[v_i].format(wood=wood_cn)
 

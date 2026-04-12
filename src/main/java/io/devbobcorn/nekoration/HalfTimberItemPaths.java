@@ -5,29 +5,29 @@ import java.util.Locale;
 import io.devbobcorn.nekoration.blocks.HalfTimberWood;
 
 /**
- * Parses {@code half_timber_<wood>_p*} / {@code half_timber_<wood>_pillar_p*} item ids.
+ * Parses {@code <wood>_half_timber_p*} / {@code <wood>_half_timber_pillar_p*} item ids.
  */
 public final class HalfTimberItemPaths {
     private HalfTimberItemPaths() {
     }
 
+    private static final String PILLAR_MARKER = "_half_timber_pillar_p";
+    private static final String BASE_MARKER = "_half_timber_p";
+
     public static String woodIdSuffix(String path) {
-        if (!path.startsWith("half_timber_")) {
+        int pillarIdx = path.indexOf(PILLAR_MARKER);
+        if (pillarIdx > 0) {
+            return path.substring(0, pillarIdx);
+        }
+        int baseIdx = path.lastIndexOf(BASE_MARKER);
+        if (baseIdx <= 0) {
             return null;
         }
-        String rest = path.substring("half_timber_".length());
-        if (rest.contains("_pillar_p")) {
-            return rest.substring(0, rest.indexOf("_pillar_p"));
-        }
-        int li = rest.lastIndexOf("_p");
-        if (li <= 0) {
+        String tail = path.substring(baseIdx + BASE_MARKER.length());
+        if (!tail.matches("\\d+")) {
             return null;
         }
-        String tail = rest.substring(li);
-        if (!tail.matches("_p\\d+")) {
-            return null;
-        }
-        return rest.substring(0, li);
+        return path.substring(0, baseIdx);
     }
 
     public static HalfTimberWood parseWood(String path) {

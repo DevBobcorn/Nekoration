@@ -1,5 +1,9 @@
 """
 Shared ids for Nekoration asset generators (keep in sync with Java registration).
+
+Half-timber block/item registry paths: ``{wood}_half_timber_p0..p9``,
+``{wood}_half_timber_pillar_p0..2`` (block models may still live under
+``models/block/half_timber/<wood>/half_timber_<wood>_p*``).
 """
 
 MOD_ID = "nekoration"
@@ -23,7 +27,7 @@ WOOD_IDS = (
 VERTICAL_CONNECTIONS = ("s0", "d0", "d1", "t0", "t1", "t2")
 
 # io.devbobcorn.nekoration.NekoColors.EnumNekoColor serialized names
-# WindowRegistration.WindowVariant id segment (window_<wood>_<variant>)
+# WindowRegistration.WindowVariant id segment (<wood>_window_<variant>)
 WINDOW_VARIANTS = (
     "simple",
     "arch",

@@ -20,7 +20,7 @@ public enum HalfTimberWood {
     CRIMSON,
     WARPED;
 
-    /** Registry suffix: {@code half_timber_<id>_p0} */
+    /** Registry id wood segment: {@code <id>_half_timber_p0} */
     public String id() {
         return name().toLowerCase();
     }

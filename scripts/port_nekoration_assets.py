@@ -3,7 +3,7 @@
 Port Nekoration resource assets from legacy layouts (e.g. 1.16.5) to NeoForge 1.21+ layouts.
 
 Primary use: expand half-timber blocks from ``half_timber_p0`` into per-wood ids
-``half_timber_<wood>_p0`` matching ``HalfTimberWood`` / ``HalfTimberRegistration``.
+``<wood>_half_timber_p0`` matching ``HalfTimberWood`` / ``HalfTimberRegistration``.
 
 Examples
 --------
@@ -237,26 +237,26 @@ def port_half_timber(cfg: PortConfig) -> None:
     for p in range(10):
         for wood in WOOD_IDS:
             bs = build_panel_blockstate(wood, p)
-            rel = Path("blockstates") / f"half_timber_{wood}_p{p}.json"
+            rel = Path("blockstates") / f"{wood}_half_timber_p{p}.json"
             _dump_json(out_assets / rel, bs, cfg.write)
 
     # Blockstates: pillars (legacy pillar_pK uses pattern pK)
     for slot in range(3):
         for wood in WOOD_IDS:
             bs = build_pillar_blockstate(wood, slot)
-            rel = Path("blockstates") / f"half_timber_{wood}_pillar_p{slot}.json"
+            rel = Path("blockstates") / f"{wood}_half_timber_pillar_p{slot}.json"
             _dump_json(out_assets / rel, bs, cfg.write)
 
     # Item models
     for p in range(10):
         for wood in WOOD_IDS:
-            name = f"half_timber_{wood}_p{p}.json"
+            name = f"{wood}_half_timber_p{p}.json"
             data = {"parent": f"{MOD_ID}:block/half_timber/{wood}/half_timber_{wood}_p{p}"}
             _dump_json(out_assets / "models" / "item" / name, data, cfg.write)
 
     for slot in range(3):
         for wood in WOOD_IDS:
-            name = f"half_timber_{wood}_pillar_p{slot}.json"
+            name = f"{wood}_half_timber_pillar_p{slot}.json"
             data = {
                 "parent": f"{MOD_ID}:block/half_timber/{wood}/half_timber_{wood}_p{slot}",
             }
@@ -290,10 +290,10 @@ def generate_lang_entries() -> dict[str, str]:
     for wood in WOOD_IDS:
         title = WOOD_TITLE[wood]
         for p in range(10):
-            key = f"block.{MOD_ID}.half_timber_{wood}_p{p}"
+            key = f"block.{MOD_ID}.{wood}_half_timber_p{p}"
             out[key] = PANEL_LABEL_EN[p] % title
         for slot in range(3):
-            key = f"block.{MOD_ID}.half_timber_{wood}_pillar_p{slot}"
+            key = f"block.{MOD_ID}.{wood}_half_timber_pillar_p{slot}"
             out[key] = PILLAR_LABEL_EN[slot] % title
     return out
 

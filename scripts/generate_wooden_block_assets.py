@@ -2,7 +2,7 @@
 """
 Generate Minecraft JSON assets for per-wood dyeable blocks (blockstates, block models, item models).
 
-Primary target: ``window_<wood>_<variant>`` (see ``WindowRegistration``) — ``vertical_connection`` only
+Primary target: ``<wood>_window_<variant>`` (see ``WindowRegistration``) — ``vertical_connection`` only
 (non-dyeable); one texture family per variant (e.g. ``window_simple`` from ``window_simple*.png``).
 
 Run from repo root or from ``scripts/`` (script sets cwd to its directory).
@@ -202,7 +202,7 @@ def cmd_window(args: argparse.Namespace) -> None:
                 stems.add(style)
 
             model_dir = out_assets / "models" / "block" / "window" / wood / variant
-            base_name = f"window_{wood}_{variant}"
+            base_name = f"{wood}_window_{variant}"
             for vc in VERTICAL_CONNECTIONS:
                 stem = _pick_texture_stem(style, vc, stems)
                 side_tex = f"{MOD_ID}:block/window/{wood}/{stem}"
@@ -236,7 +236,7 @@ def cmd_half_timber_pillars(args: argparse.Namespace) -> None:
     for slot in range(3):
         for wood in WOOD_IDS:
             bs = build_half_timber_pillar_blockstate(wood, slot)
-            name = f"half_timber_{wood}_pillar_p{slot}.json"
+            name = f"{wood}_half_timber_pillar_p{slot}.json"
             _dump_json(out_assets / "blockstates" / name, bs, write)
     if not write:
         print("\nDry run only. Re-run with --write.")
@@ -249,7 +249,7 @@ def cmd_half_timber_bases(args: argparse.Namespace) -> None:
     for p in range(10):
         for wood in WOOD_IDS:
             bs = build_half_timber_base_blockstate(wood, p)
-            name = f"half_timber_{wood}_p{p}.json"
+            name = f"{wood}_half_timber_p{p}.json"
             _dump_json(out_assets / "blockstates" / name, bs, write)
     if not write:
         print("\nDry run only. Re-run with --write.")
@@ -261,7 +261,7 @@ def main() -> None:
 
     p_win = sub.add_parser(
         "window",
-        help="Emit window_<wood>_<variant> blockstates (vertical_connection only), models, item models",
+        help="Emit <wood>_window_<variant> blockstates (vertical_connection only), models, item models",
     )
     p_win.add_argument(
         "--resources",
@@ -280,7 +280,7 @@ def main() -> None:
 
     p_ht = sub.add_parser(
         "half-timber-pillars",
-        help="Rewrite half_timber_<wood>_pillar_p0..2 blockstates only (models unchanged)",
+        help="Rewrite <wood>_half_timber_pillar_p0..2 blockstates only (models unchanged)",
     )
     p_ht.add_argument(
         "--resources",
@@ -293,7 +293,7 @@ def main() -> None:
 
     p_hp = sub.add_parser(
         "half-timber-bases",
-        help="Rewrite half_timber_<wood>_p0..p9 blockstates only (models unchanged)",
+        help="Rewrite <wood>_half_timber_p0..p9 blockstates only (models unchanged)",
     )
     p_hp.add_argument(
         "--resources",

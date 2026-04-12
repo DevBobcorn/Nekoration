@@ -15,7 +15,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Registers {@code window_<wood>_<variant>} for each {@link HalfTimberWood} and {@link WindowVariant}.
+ * Registers {@code <wood>_window_<variant>} for each {@link HalfTimberWood} and {@link WindowVariant}.
  */
 public final class WindowRegistration {
 
@@ -46,7 +46,7 @@ public final class WindowRegistration {
         for (HalfTimberWood wood : HalfTimberWood.values()) {
             String w = wood.id();
             for (WindowVariant variant : WindowVariant.values()) {
-                String id = "window_" + w + "_" + variant.id();
+                String id = w + "_window_" + variant.id();
                 DeferredBlock<Block> block = blocks.register(id,
                         () -> new WindowBlock(wood.plankProperties().noOcclusion(),
                                 VerticalConnectBlock.ConnectionType.TRIPLE, false));

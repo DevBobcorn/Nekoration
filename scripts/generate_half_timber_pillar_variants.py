@@ -99,7 +99,7 @@ def process_base(path: Path, dry_run: bool) -> int:
         print(f"SKIP (side/overlay not strings) {path}", file=sys.stderr)
         return 0
 
-    stem = path.stem  # half_timber_oak_p0
+    stem = path.stem  # e.g. half_timber_oak_p0 (block model id, not registry block id)
     count = 0
     for suffix in VARIANT_SUFFIXES:
         out_path = path.with_name(f"{stem}{suffix}.json")
