@@ -1,52 +1,52 @@
 {
     "variants": {
         "color=black": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=blue": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=brown": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=cyan": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=gray": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=green": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=light_blue": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=light_gray": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=lime": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=magenta": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=orange": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=pink": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=purple": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=red": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=white": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         },
         "color=yellow": {
-            "model": "nekoration:block/half_timber/spruce/half_timber_spruce_p1"
+            "model": "nekoration:block/half_timber/spruce/half_timber_p1"
         }
     }
 }

@@ -17,11 +17,11 @@ Write files (templates under generator_files/window_template; tinted textures in
 
     python scripts/generate_wooden_block_assets.py window --write
 
-Regenerate only blockstates for half-timber pillars (models must already exist)::
+Regenerate blockstates, block models, and item models for half-timber pillars p0..2::
 
     python scripts/generate_wooden_block_assets.py half-timber-pillars --write
 
-Regenerate only blockstates for half-timber bases p0..p9::
+Regenerate blockstates, block models, and item models for half-timber bases p0..p9::
 
     python scripts/generate_wooden_block_assets.py half-timber-bases --write
 
@@ -110,7 +110,46 @@ def build_window_blockstate(wood: str, variant: str) -> dict[str, Any]:
 
 
 def _half_timber_base_model_path(wood: str, pattern_index: int) -> str:
-    return f"{MOD_ID}:block/half_timber/{wood}/half_timber_{wood}_p{pattern_index}"
+    return f"{MOD_ID}:block/half_timber/{wood}/half_timber_p{pattern_index}"
+
+
+HALF_TIMBER_CUBE_PARENT = f"{MOD_ID}:block/half_timber/half_timber"
+HALF_TIMBER_PILLAR_PARENT = f"{MOD_ID}:block/half_timber/half_timber_pillar"
+
+
+def _half_timber_back_texture(pattern_index: int) -> str:
+    return f"{MOD_ID}:block/half_timber_back/halftimber_frame_p{pattern_index}"
+
+
+def _half_timber_overlay_texture(wood: str, pattern_index: int) -> str:
+    return f"{MOD_ID}:block/half_timber/{wood}/halftimber_frame_p{pattern_index}"
+
+
+def build_half_timber_cube_block_model(wood: str, pattern_index: int) -> dict[str, Any]:
+    """Full cube (all faces same); matches ``half_timber`` parent template."""
+    return {
+        "parent": HALF_TIMBER_CUBE_PARENT,
+        "textures": {
+            "side": _half_timber_back_texture(pattern_index),
+            "overlay": _half_timber_overlay_texture(wood, pattern_index),
+        },
+    }
+
+
+def build_half_timber_pillar_connection_model(wood: str, pattern_index: int, vertical_connection: str) -> dict[str, Any]:
+    """Pillar side faces with vertical_connection variant; matches ``generate_half_timber_pillar_variants``."""
+    suffix = f"_{vertical_connection}"
+    base_side = _half_timber_back_texture(pattern_index)
+    base_overlay = _half_timber_overlay_texture(wood, pattern_index)
+    return {
+        "parent": HALF_TIMBER_PILLAR_PARENT,
+        "textures": {
+            "side": base_side + suffix,
+            "overlay": base_overlay + suffix,
+            "end": base_side,
+            "end_overlay": base_overlay,
+        },
+    }
 
 
 def build_half_timber_base_blockstate(wood: str, pattern_index: int) -> dict[str, Any]:
@@ -126,7 +165,7 @@ def build_half_timber_pillar_blockstate(wood: str, pillar_slot: int) -> dict[str
     """Same layout as port_nekoration_assets.build_pillar_blockstate (p0..p2)."""
 
     def model_path(wood_inner: str, p: int, conn_suffix: str | None) -> str:
-        base = f"{MOD_ID}:block/half_timber/{wood_inner}/half_timber_{wood_inner}_p{p}"
+        base = f"{MOD_ID}:block/half_timber/{wood_inner}/half_timber_p{p}"
         if conn_suffix:
             return f"{base}_{conn_suffix}"
         return base
@@ -195,9 +234,22 @@ def cmd_half_timber_pillars(args: argparse.Namespace) -> None:
     write = bool(args.write)
     for slot in range(3):
         for wood in WOOD_IDS:
+            model_dir = out_assets / "models" / "block" / "half_timber" / wood
+            for vc in VERTICAL_CONNECTIONS:
+                if vc == "s0":
+                    model_name = f"half_timber_p{slot}.json"
+                    body = build_half_timber_cube_block_model(wood, slot)
+                else:
+                    model_name = f"half_timber_p{slot}_{vc}.json"
+                    body = build_half_timber_pillar_connection_model(wood, slot, vc)
+                _dump_json(model_dir / model_name, body, write)
+
             bs = build_half_timber_pillar_blockstate(wood, slot)
             name = f"{wood}_half_timber_pillar_p{slot}.json"
             _dump_json(out_assets / "blockstates" / name, bs, write)
+
+            item_body = {"parent": _half_timber_base_model_path(wood, slot)}
+            _dump_json(out_assets / "models" / "item" / f"{wood}_half_timber_pillar_p{slot}.json", item_body, write)
     if not write:
         print("\nDry run only. Re-run with --write.")
 
@@ -208,9 +260,19 @@ def cmd_half_timber_bases(args: argparse.Namespace) -> None:
     write = bool(args.write)
     for p in range(10):
         for wood in WOOD_IDS:
+            model_dir = out_assets / "models" / "block" / "half_timber" / wood
+            _dump_json(
+                model_dir / f"half_timber_p{p}.json",
+                build_half_timber_cube_block_model(wood, p),
+                write,
+            )
+
             bs = build_half_timber_base_blockstate(wood, p)
             name = f"{wood}_half_timber_p{p}.json"
             _dump_json(out_assets / "blockstates" / name, bs, write)
+
+            item_body = {"parent": _half_timber_base_model_path(wood, p)}
+            _dump_json(out_assets / "models" / "item" / f"{wood}_half_timber_p{p}.json", item_body, write)
     if not write:
         print("\nDry run only. Re-run with --write.")
 
@@ -240,7 +302,7 @@ def main() -> None:
 
     p_ht = sub.add_parser(
         "half-timber-pillars",
-        help="Rewrite <wood>_half_timber_pillar_p0..2 blockstates only (models unchanged)",
+        help="Emit <wood>_half_timber_pillar_p0..2 blockstates, per-wood block models, item models",
     )
     p_ht.add_argument(
         "--resources",
@@ -253,7 +315,7 @@ def main() -> None:
 
     p_hp = sub.add_parser(
         "half-timber-bases",
-        help="Rewrite <wood>_half_timber_p0..p9 blockstates only (models unchanged)",
+        help="Emit <wood>_half_timber_p0..p9 blockstates, per-wood block models, item models",
     )
     p_hp.add_argument(
         "--resources",

@@ -2,8 +2,10 @@
 Shared ids for Nekoration asset generators (keep in sync with Java registration).
 
 Half-timber block/item registry paths: ``{wood}_half_timber_p0..p9``,
-``{wood}_half_timber_pillar_p0..2`` (block models may still live under
-``models/block/half_timber/<wood>/half_timber_<wood>_p*``).
+``{wood}_half_timber_pillar_p0..2``. Block models:
+``models/block/half_timber/<wood>/half_timber_p*`` (see
+``generate_wooden_block_assets.py``); legacy ``half_timber_<wood>_p*`` names
+are used only by ``generate_half_timber_pillar_variants.py``.
 """
 
 MOD_ID = "nekoration"
