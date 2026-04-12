@@ -11,22 +11,22 @@ public final class NekoColors {
     }
 
     public enum EnumNekoColor implements StringRepresentable {
-        BLACK((byte) 0, "black", 0x5c5c5c),
-        BLUE((byte) 1, "blue", 0x2891ff),
-        BROWN((byte) 2, "brown", 0x673400),
-        CYAN((byte) 3, "cyan", 0x94e2ff),
-        GRAY((byte) 4, "gray", 0x9f9f9f),
-        GREEN((byte) 5, "green", 0x33b54c),
-        LIGHT_BLUE((byte) 6, "light_blue", 0x75aaff),
-        LIGHT_GRAY((byte) 7, "light_gray", 0xbebebe),
-        LIME((byte) 8, "lime", 0x7aff8f),
-        MAGENTA((byte) 9, "magenta", 0xf976ff),
-        ORANGE((byte) 10, "orange", 0xff7700),
-        PINK((byte) 11, "pink", 0xffa3e0),
-        PURPLE((byte) 12, "purple", 0xbc61ff),
-        RED((byte) 13, "red", 0xe03f3f),
-        WHITE((byte) 14, "white", 0xffffff),
-        YELLOW((byte) 15, "yellow", 0xffc80a);
+        WHITE((byte) 0, "white", 0xf9fffe),
+        LIGHT_GRAY((byte) 1, "light_gray", 0x9d9d97),
+        GRAY((byte) 2, "gray", 0x474f52),
+        BLACK((byte) 3, "black", 0x1d1d21),
+        BROWN((byte) 4, "brown", 0x835432),
+        RED((byte) 5, "red", 0xb02e26),
+        ORANGE((byte) 6, "orange", 0xf9801d),
+        YELLOW((byte) 7, "yellow", 0xfed83d),
+        LIME((byte) 8, "lime", 0x80c71f),
+        GREEN((byte) 9, "green", 0x5ec316),
+        CYAN((byte) 10, "cyan", 0x169c9c),
+        LIGHT_BLUE((byte) 11, "light_blue", 0x3ab3da),
+        BLUE((byte) 12, "blue", 0x3c44aa),
+        PURPLE((byte) 13, "purple", 0x8932b8),
+        MAGENTA((byte) 14, "magenta", 0xc74ebd),
+        PINK((byte) 15, "pink", 0xf38baa);
 
         private final byte nbtId;
         private final String name;
@@ -69,7 +69,7 @@ public final class NekoColors {
                     return c;
                 }
             }
-            return LIGHT_GRAY;
+            return WHITE;
         }
 
         public static int getColorValueFromId(byte id) {
@@ -78,7 +78,7 @@ public final class NekoColors {
                     return c.color;
                 }
             }
-            return LIGHT_GRAY.color;
+            return WHITE.color;
         }
     }
 }

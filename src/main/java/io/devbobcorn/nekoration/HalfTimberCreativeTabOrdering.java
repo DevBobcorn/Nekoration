@@ -17,7 +17,7 @@ public final class HalfTimberCreativeTabOrdering {
     public static Comparator<ItemStack> stackComparator() {
         return Comparator
                 .comparingInt(HalfTimberCreativeTabOrdering::woodOrdinal)
-                .thenComparingInt(s -> -DyeableBlockItem.getColor(s).ordinal())
+                .thenComparingInt(s -> DyeableBlockItem.getColor(s).ordinal())
                 .thenComparingInt(s -> BuiltInRegistries.ITEM.getId(s.getItem()));
     }
 
