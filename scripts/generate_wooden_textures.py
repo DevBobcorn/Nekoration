@@ -24,9 +24,9 @@ wood_type_colors = {
     "jungle": 0xB38564,
     "acacia": 0xB4653A,
     "dark_oak": 0x5C3C1B,
-    "mangrove": 0x9C2525,
-    "cherry": 0x9C2525,
-    "bamboo": 0xCD9144,
+    "mangrove": 0x753630,
+    "cherry": 0xE2B2AC,
+    "bamboo": 0xC1AD50,
     "crimson": 0x873468,
     "warped": 0x389A99,
 }
