@@ -48,7 +48,8 @@ public final class WindowRegistration {
             for (WindowVariant variant : WindowVariant.values()) {
                 String id = "window_" + w + "_" + variant.id();
                 DeferredBlock<Block> block = blocks.register(id,
-                        () -> new WindowBlock(wood.plankProperties(), VerticalConnectBlock.ConnectionType.TRIPLE, false));
+                        () -> new WindowBlock(wood.plankProperties().noOcclusion(),
+                                VerticalConnectBlock.ConnectionType.TRIPLE, false));
                 WINDOW_BLOCK_ITEMS.add(registerBlockItem(items, id, block));
             }
         }
@@ -63,8 +64,8 @@ public final class WindowRegistration {
         return Collections.unmodifiableList(WINDOW_BLOCK_ITEMS);
     }
 
-    /** Creative tab icon ({@code window_oak_simple}). */
+    /** Creative tab icon. */
     public static DeferredItem<BlockItem> iconItem() {
-        return WINDOW_BLOCK_ITEMS.get(0);
+        return WINDOW_BLOCK_ITEMS.get(4);
     }
 }
