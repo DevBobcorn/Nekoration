@@ -1,25 +1,12 @@
+# Nekoration [v2]
 
-Installation information
-=======
+#### A Decoration Mod for Minecraft
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+### Introduction
+Nekoration is a mod for Minecraft(NeoForge 1.21.1) which adds lots of decorational stuff to the game, allowing players to have a wider choice when building & creating. This mod is a continuation of the previous version made for Forge 1.16.5, making this mod playable in modern versions of Minecraft.
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+### Note
+Due to major code overhaul, many ids and data values have changed from the previous version. As such, loading an old save with the new mod will cause potential data loss, and is not recommended. If you really want to try this, it is always a good idea to backup your save beforehand.
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
-
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
-
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+### About Its Name
+The name 'Nekoration' is a compound of 'cat' in Japanese(ねこ, neko) and 'decoration', suggesting that the mod is both ornamental and cats-friendly...  ^._.^= ∫
