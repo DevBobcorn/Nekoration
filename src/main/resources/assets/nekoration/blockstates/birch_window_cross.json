@@ -1,22 +1,22 @@
 {
     "variants": {
         "vertical_connection=s0": {
-            "model": "nekoration:block/window/birch/cross/window_birch_cross"
+            "model": "nekoration:block/window/birch/window_cross"
         },
         "vertical_connection=d0": {
-            "model": "nekoration:block/window/birch/cross/window_birch_cross_d0"
+            "model": "nekoration:block/window/birch/window_cross_d0"
         },
         "vertical_connection=d1": {
-            "model": "nekoration:block/window/birch/cross/window_birch_cross_d1"
+            "model": "nekoration:block/window/birch/window_cross_d1"
         },
         "vertical_connection=t0": {
-            "model": "nekoration:block/window/birch/cross/window_birch_cross_t0"
+            "model": "nekoration:block/window/birch/window_cross_t0"
         },
         "vertical_connection=t1": {
-            "model": "nekoration:block/window/birch/cross/window_birch_cross_t1"
+            "model": "nekoration:block/window/birch/window_cross_t1"
         },
         "vertical_connection=t2": {
-            "model": "nekoration:block/window/birch/cross/window_birch_cross_t2"
+            "model": "nekoration:block/window/birch/window_cross_t2"
         }
     }
 }

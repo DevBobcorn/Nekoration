@@ -1,22 +1,22 @@
 {
     "variants": {
         "vertical_connection=s0": {
-            "model": "nekoration:block/window/mangrove/shade/window_mangrove_shade"
+            "model": "nekoration:block/window/mangrove/window_shade"
         },
         "vertical_connection=d0": {
-            "model": "nekoration:block/window/mangrove/shade/window_mangrove_shade_d0"
+            "model": "nekoration:block/window/mangrove/window_shade_d0"
         },
         "vertical_connection=d1": {
-            "model": "nekoration:block/window/mangrove/shade/window_mangrove_shade_d1"
+            "model": "nekoration:block/window/mangrove/window_shade_d1"
         },
         "vertical_connection=t0": {
-            "model": "nekoration:block/window/mangrove/shade/window_mangrove_shade_t0"
+            "model": "nekoration:block/window/mangrove/window_shade_t0"
         },
         "vertical_connection=t1": {
-            "model": "nekoration:block/window/mangrove/shade/window_mangrove_shade_t1"
+            "model": "nekoration:block/window/mangrove/window_shade_t1"
         },
         "vertical_connection=t2": {
-            "model": "nekoration:block/window/mangrove/shade/window_mangrove_shade_t2"
+            "model": "nekoration:block/window/mangrove/window_shade_t2"
         }
     }
 }

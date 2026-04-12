@@ -93,45 +93,8 @@ def _pick_texture_stem(style: str, vertical_connection: str, stems: set[str]) ->
     return style
 
 
-WINDOW_PARENT_JSON: dict[str, Any] = {
-    "parent": "block/block",
-    "render_type": "minecraft:cutout",
-    "textures": {
-        "particle": "#side",
-        "side": "minecraft:block/white_stained_glass",
-        "overlay": "minecraft:block/oak_planks",
-    },
-    "elements": [
-        {
-            "from": [0, 0, 0],
-            "to": [16, 16, 16],
-            "faces": {
-                "down": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "down"},
-                "up": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "up"},
-                "north": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "north"},
-                "south": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "south"},
-                "west": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "west"},
-                "east": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "east"},
-            },
-        },
-        {
-            "from": [0, 0, 0],
-            "to": [16, 16, 16],
-            "faces": {
-                "down": {"uv": [0, 0, 16, 16], "texture": "#overlay", "cullface": "down"},
-                "up": {"uv": [0, 0, 16, 16], "texture": "#overlay", "cullface": "up"},
-                "north": {"uv": [0, 0, 16, 16], "texture": "#overlay", "cullface": "north"},
-                "south": {"uv": [0, 0, 16, 16], "texture": "#overlay", "cullface": "south"},
-                "west": {"uv": [0, 0, 16, 16], "texture": "#overlay", "cullface": "west"},
-                "east": {"uv": [0, 0, 16, 16], "texture": "#overlay", "cullface": "east"},
-            },
-        },
-    ],
-}
-
-
 def _window_block_model_id(wood: str, variant: str, vertical_connection: str) -> str:
-    base = f"{MOD_ID}:block/window/{wood}/{variant}/window_{wood}_{variant}"
+    base = f"{MOD_ID}:block/window/{wood}/window_{variant}"
     if vertical_connection == "s0":
         return base
     return f"{base}_{vertical_connection}"
@@ -187,9 +150,6 @@ def cmd_window(args: argparse.Namespace) -> None:
     template_dir = (Path(args.template_dir) if args.template_dir else _SCRIPT_DIR / "generator_files" / "window_template")
     template_dir = template_dir.resolve()
 
-    parent_path = out_assets / "models" / "block" / "window" / "window.json"
-    _dump_json(parent_path, WINDOW_PARENT_JSON, write)
-
     for wood in WOOD_IDS:
         for variant in WINDOW_VARIANTS:
             style = f"window_{variant}"
@@ -201,8 +161,8 @@ def cmd_window(args: argparse.Namespace) -> None:
                 )
                 stems.add(style)
 
-            model_dir = out_assets / "models" / "block" / "window" / wood / variant
-            base_name = f"{wood}_window_{variant}"
+            model_dir = out_assets / "models" / "block" / "window" / wood
+            base_name = f"window_{variant}"
             for vc in VERTICAL_CONNECTIONS:
                 stem = _pick_texture_stem(style, vc, stems)
                 side_tex = f"{MOD_ID}:block/window/{wood}/{stem}"
@@ -215,10 +175,10 @@ def cmd_window(args: argparse.Namespace) -> None:
                 _dump_json(model_dir / model_name, body, write)
 
             bs = build_window_blockstate(wood, variant)
-            _dump_json(out_assets / "blockstates" / f"{base_name}.json", bs, write)
+            _dump_json(out_assets / "blockstates" / f"{wood}_{base_name}.json", bs, write)
 
             item_body = {"parent": _window_block_model_id(wood, variant, "s0")}
-            _dump_json(out_assets / "models" / "item" / f"{base_name}.json", item_body, write)
+            _dump_json(out_assets / "models" / "item" / f"{wood}_{base_name}.json", item_body, write)
 
     if not write:
         print("\nDry run only. Re-run with --write.")
