@@ -2,6 +2,7 @@ package io.devbobcorn.nekoration.client;
 
 import org.jetbrains.annotations.Nullable;
 
+import io.devbobcorn.nekoration.NekoColors.NekoColorPalette;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
@@ -20,37 +21,44 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 /**
- * Tints {@code tintindex: 0} faces on dyeable half-timber models (plaster / grayscale layer).
+ * Tints {@code tintindex: 0} faces on dyeable block models (plaster / grayscale layer).
  */
 @EventBusSubscriber(modid = Nekoration.MODID, value = Dist.CLIENT)
 public final class NekorationColorHandlers {
     private NekorationColorHandlers() {
     }
 
-    private static final BlockColor DYEABLE_BLOCK_COLOR = (BlockState state, @Nullable BlockAndTintGetter level, @Nullable BlockPos pos,
-            int tintIndex) -> {
-        if (tintIndex != 0 || !(state.getBlock() instanceof DyeableBlock || state.getBlock() instanceof DyeableVerticalConnectBlock)) {
-            return 0xFFFFFFFF;
-        }
-        return 0xFF000000 | state.getValue(DyeableBlock.COLOR).getColor();
-    };
+    private static BlockColor dyeableBlockColor(NekoColorPalette palette) {
+        return (BlockState state, @Nullable BlockAndTintGetter level, @Nullable BlockPos pos, int tintIndex) -> {
+            if (tintIndex != 0 || !(state.getBlock() instanceof DyeableBlock || state.getBlock() instanceof DyeableVerticalConnectBlock)) {
+                return 0xFFFFFFFF;
+            }
+            return 0xFF000000 | state.getValue(DyeableBlock.COLOR).getColor(palette);
+        };
+    }
 
-    private static final ItemColor DYEABLE_BLOCK_ITEM_COLOR = (ItemStack stack, int tintIndex) -> {
-        if (tintIndex != 0) {
-            return 0xFFFFFFFF;
-        }
-        return 0xFF000000 | DyeableBlockItem.getColor(stack).getColor();
-    };
+    private static ItemColor dyeableBlockItemColor(NekoColorPalette palette) {
+        return (ItemStack stack, int tintIndex) -> {
+            if (tintIndex != 0) {
+                return 0xFFFFFFFF;
+            }
+            return 0xFF000000 | DyeableBlockItem.getColor(stack).getColor(palette);
+        };
+    }
 
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-        HalfTimberRegistration.blockItemsView().forEach(holder -> event.register(DYEABLE_BLOCK_COLOR, holder.get().getBlock()));
-        StoneColumnsRegistration.blockItemsView().forEach(holder -> event.register(DYEABLE_BLOCK_COLOR, holder.get().getBlock()));
+        BlockColor halfTimber = dyeableBlockColor(NekoColorPalette.HALF_TIMBER);
+        BlockColor stone = dyeableBlockColor(NekoColorPalette.STONE_COLUMNS);
+        HalfTimberRegistration.blockItemsView().forEach(holder -> event.register(halfTimber, holder.get().getBlock()));
+        StoneColumnsRegistration.blockItemsView().forEach(holder -> event.register(stone, holder.get().getBlock()));
     }
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-        HalfTimberRegistration.blockItemsView().forEach(holder -> event.register(DYEABLE_BLOCK_ITEM_COLOR, holder.get()));
-        StoneColumnsRegistration.blockItemsView().forEach(holder -> event.register(DYEABLE_BLOCK_ITEM_COLOR, holder.get()));
+        ItemColor halfTimber = dyeableBlockItemColor(NekoColorPalette.HALF_TIMBER);
+        ItemColor stone = dyeableBlockItemColor(NekoColorPalette.STONE_COLUMNS);
+        HalfTimberRegistration.blockItemsView().forEach(holder -> event.register(halfTimber, holder.get()));
+        StoneColumnsRegistration.blockItemsView().forEach(holder -> event.register(stone, holder.get()));
     }
 }
