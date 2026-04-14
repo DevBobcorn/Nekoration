@@ -41,21 +41,20 @@ public final class WoodenTextureAssetProvider implements DataProvider {
         WOOD_COLORS.put("warped", 0x389A99);
     }
 
-    private final Path scriptTextureRoot;
+    private final Path templateTextureRoot;
     private final Path generatedTextureRoot;
     private int writtenTextureCount;
 
     public WoodenTextureAssetProvider(PackOutput output) {
-        this.scriptTextureRoot = resolveScriptTextureRoot();
-        this.generatedTextureRoot = scriptTextureRoot.getParent()
-                .getParent()
+        this.templateTextureRoot = resolveTemplateTextureRoot();
+        this.generatedTextureRoot = templateTextureRoot.getParent()
                 .resolve("src/generated/resources/assets/" + Nekoration.MODID + "/textures/block");
     }
 
     @Override
     public CompletableFuture<?> run(CachedOutput cachedOutput) {
         writtenTextureCount = 0;
-        Nekoration.LOGGER.info("Generating textures from {} to {}", scriptTextureRoot, generatedTextureRoot);
+        Nekoration.LOGGER.info("Generating textures from {} to {}", templateTextureRoot, generatedTextureRoot);
         try {
             generateTintedTextures(cachedOutput);
             generateHalfTimberBackTextures(cachedOutput);
@@ -71,7 +70,7 @@ public final class WoodenTextureAssetProvider implements DataProvider {
 
     private void generateTintedTextures(CachedOutput cachedOutput) throws IOException {
         for (String textureFolder : TINT_TEXTURE_FOLDERS) {
-            Path templateFolder = scriptTextureRoot.resolve(textureFolder + "_template");
+            Path templateFolder = templateTextureRoot.resolve(textureFolder + "_template");
             if (!Files.isDirectory(templateFolder)) {
                 continue;
             }
@@ -102,7 +101,7 @@ public final class WoodenTextureAssetProvider implements DataProvider {
     }
 
     private void generateHalfTimberBackTextures(CachedOutput cachedOutput) throws IOException {
-        Path basePath = scriptTextureRoot.resolve("white_concrete.png");
+        Path basePath = templateTextureRoot.resolve("white_concrete.png");
         if (!Files.exists(basePath)) {
             return;
         }
@@ -112,7 +111,7 @@ public final class WoodenTextureAssetProvider implements DataProvider {
             return;
         }
 
-        Path overlayFolder = scriptTextureRoot.resolve("half_timber_shadow");
+        Path overlayFolder = templateTextureRoot.resolve("half_timber_shadow");
         if (!Files.isDirectory(overlayFolder)) {
             return;
         }
@@ -181,7 +180,7 @@ public final class WoodenTextureAssetProvider implements DataProvider {
         return out;
     }
 
-    private static Path resolveScriptTextureRoot() {
+    private static Path resolveTemplateTextureRoot() {
         Path probe = Path.of("").toAbsolutePath();
         for (Path current = probe; current != null; current = current.getParent()) {
             Path candidate = current.resolve("generator_files");
