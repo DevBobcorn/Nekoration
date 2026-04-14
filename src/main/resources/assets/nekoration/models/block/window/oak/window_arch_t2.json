@@ -1,7 +1,0 @@
-{
-    "parent": "nekoration:block/window/window",
-    "textures": {
-        "side": "nekoration:block/window/oak/window_arch_t2",
-        "end": "nekoration:block/window/oak/window_top"
-    }
-}

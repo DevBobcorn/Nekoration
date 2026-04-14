@@ -1,7 +1,0 @@
-{
-    "parent": "nekoration:block/window/window",
-    "textures": {
-        "side": "nekoration:block/window/warped/window_lancet_t0",
-        "end": "nekoration:block/window/warped/window_top"
-    }
-}
