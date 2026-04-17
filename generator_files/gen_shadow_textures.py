@@ -33,7 +33,7 @@ def generate_varied_edge_masks(input_dir, output_dir, alpha_threshold=200, color
                             if is_edge:
                                 if color_mode == "random":
                                     # Generates a random bright color for every edge pixel
-                                    r = random.randint(0, 10) + 40
+                                    r = random.randint(0, 10) + 20
                                     mask_pixels[x, y] = (0, 0, 0, r)
                                 
                                 elif color_mode == "gradient":
