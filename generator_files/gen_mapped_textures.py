@@ -1,15 +1,23 @@
 from pathlib import Path
 from PIL import Image
 
-IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".bmp", ".webp"}
+IMAGE_SUFFIXES = {".png", ".bmp", ".webp"}
 
 # --- Config (no CLI needed) ---
 TARGET_PALETTE_DIR = Path("plank_palettes")
 SOURCE_PALETTE_FILENAME = "grayscale.png"
+
 # SOURCE_IMAGE_DIR = Path("half_timber_template")
 # OUTPUT_DIR = Path("../src/generated/resources/assets/nekoration/textures/block/half_timber")
 SOURCE_IMAGE_DIR = Path("window_template")
 OUTPUT_DIR = Path("../src/generated/resources/assets/nekoration/textures/block/window")
+OVERLAY_DIR = Path("window_overlay")
+OVERLAY_TEXTURES = {
+    "window_simple.png": "window_glass.png",
+    "window_simple_t0.png": "window_glass_t0.png",
+    "window_simple_t1.png": "window_glass_t1.png",
+    "window_simple_t2.png": "window_glass_t2.png"
+}
 
 
 def load_palette(path: Path):
@@ -51,6 +59,26 @@ def load_source_image(source_path: Path):
     return source_rgba.size, list(source_rgba.getdata())
 
 
+def load_overlay_image(overlay_path: Path):
+    with Image.open(overlay_path) as overlay_image:
+        return overlay_image.convert("RGBA")
+
+
+def get_overlay_for_source(source_image: Path, overlay_dir: Path):
+    overlay_name = OVERLAY_TEXTURES.get(source_image.name)
+    if overlay_name is None:
+        return None
+
+    overlay_path = overlay_dir / overlay_name
+    if not overlay_path.is_file():
+        raise ValueError(
+            f"Overlay image '{overlay_name}' for source '{source_image.name}' "
+            f"was not found in: {overlay_dir}"
+        )
+
+    return load_overlay_image(overlay_path)
+
+
 def remap_pixels(source_pixels: list, mapping: dict):
     unmapped = set()
     mapped_pixels = []
@@ -77,9 +105,18 @@ def remap_pixels(source_pixels: list, mapping: dict):
     return mapped_pixels
 
 
-def save_mapped_image(image_size: tuple, mapped_pixels: list, output_path: Path):
+def save_mapped_image(
+    image_size: tuple, mapped_pixels: list, output_path: Path, overlay_image: Image.Image | None = None
+):
     output_image = Image.new("RGBA", image_size)
     output_image.putdata(mapped_pixels)
+    if overlay_image is not None:
+        if overlay_image.size != image_size:
+            raise ValueError(
+                f"Overlay size {overlay_image.size} does not match output size {image_size} "
+                f"for output '{output_path}'."
+            )
+        output_image.alpha_composite(overlay_image)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_image.save(output_path)
 
@@ -122,6 +159,7 @@ def main():
     target_palette_dir = script_dir / TARGET_PALETTE_DIR
     source_image_dir = script_dir / SOURCE_IMAGE_DIR
     output_dir = script_dir / OUTPUT_DIR
+    overlay_dir = script_dir / OVERLAY_DIR
 
     target_palettes = collect_images(target_palette_dir)
     source_palette = get_source_palette(target_palette_dir)
@@ -139,11 +177,12 @@ def main():
 
     for source_image in source_images:
         image_size, source_pixels = load_source_image(source_image)
+        overlay_image = get_overlay_for_source(source_image, overlay_dir)
         for target_palette in target_palettes:
             mapping = build_color_mapping(source_palette, target_palette)
             mapped_pixels = remap_pixels(source_pixels, mapping)
             output_path = build_output_path(output_dir, source_image, target_palette)
-            save_mapped_image(image_size, mapped_pixels, output_path)
+            save_mapped_image(image_size, mapped_pixels, output_path, overlay_image)
             print(f"Mapped '{source_image.name}' with '{target_palette.name}' -> '{output_path}'")
 
 
