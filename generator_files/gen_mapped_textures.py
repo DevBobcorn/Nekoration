@@ -6,8 +6,10 @@ IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".bmp", ".webp"}
 # --- Config (no CLI needed) ---
 TARGET_PALETTE_DIR = Path("plank_palettes")
 SOURCE_PALETTE_FILENAME = "grayscale.png"
-SOURCE_IMAGE_DIR = Path("half_timber_template")
-OUTPUT_DIR = Path("../src/generated/resources/assets/nekoration/textures/block/half_timber")
+# SOURCE_IMAGE_DIR = Path("half_timber_template")
+# OUTPUT_DIR = Path("../src/generated/resources/assets/nekoration/textures/block/half_timber")
+SOURCE_IMAGE_DIR = Path("window_template")
+OUTPUT_DIR = Path("../src/generated/resources/assets/nekoration/textures/block/window")
 
 
 def load_palette(path: Path):
