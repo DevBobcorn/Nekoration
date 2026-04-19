@@ -33,14 +33,12 @@ public final class NekoCreativeTabFilterClient {
     private static int woodStartIndex;
     private static CreativeTabIconButton btnScrollUp;
     private static CreativeTabIconButton btnScrollDown;
-    private static CreativeTabIconButton btnEnableAll;
-    private static CreativeTabIconButton btnDisableAll;
     private static WoodTypeFilterButton[] woodSlots = new WoodTypeFilterButton[4];
     private static CreativeModeTab lastSeenTab;
     private static boolean filterChromeShown;
 
     static {
-        Arrays.fill(WOOD_ENABLED, true);
+        selectOnly(NekoWood.values()[0]);
     }
 
     private NekoCreativeTabFilterClient() {
@@ -48,7 +46,7 @@ public final class NekoCreativeTabFilterClient {
 
     @SubscribeEvent
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
-        Arrays.fill(WOOD_ENABLED, true);
+        selectOnly(NekoWood.values()[0]);
         woodStartIndex = 0;
         lastSeenTab = null;
     }
@@ -76,26 +74,14 @@ public final class NekoCreativeTabFilterClient {
                 updateWoodSlotButtons(creative);
             }
         }, 80, 0);
-        // Same band as NeoForge tab-page controls (top - 50); offset X to sit right of the "<" button.
-        btnEnableAll = new CreativeTabIconButton(left + 26, top - 50, Component.translatable("gui.nekoration.button.enable_all"), () -> {
-            Arrays.fill(WOOD_ENABLED, true);
-            updateWoodSlotButtons(creative);
-            applyFilteredItems(creative);
-        }, 96, 0);
-        btnDisableAll = new CreativeTabIconButton(left + 138, top - 50, Component.translatable("gui.nekoration.button.disable_all"), () -> {
-            Arrays.fill(WOOD_ENABLED, false);
-            updateWoodSlotButtons(creative);
-            applyFilteredItems(creative);
-        }, 112, 0);
 
         event.addListener(btnScrollUp);
         event.addListener(btnScrollDown);
-        event.addListener(btnEnableAll);
-        event.addListener(btnDisableAll);
 
         for (int i = 0; i < 4; i++) {
             WoodTypeFilterButton b = new WoodTypeFilterButton(0, 0, (wood, on) -> {
-                WOOD_ENABLED[wood.ordinal()] = on;
+                selectOnly(wood);
+                updateWoodSlotButtons(creative);
                 Minecraft mc = Minecraft.getInstance();
                 if (mc.screen instanceof CreativeModeInventoryScreen open) {
                     applyFilteredItems(open);
@@ -142,8 +128,6 @@ public final class NekoCreativeTabFilterClient {
         int top = creative.getGuiTop();
         btnScrollUp.setPosition(left - 22, top - 12);
         btnScrollDown.setPosition(left - 22, top + 127);
-        btnEnableAll.setPosition(left + 26, top - 50);
-        btnDisableAll.setPosition(left + 138, top - 50);
         updateWoodSlotButtons(creative);
     }
 
@@ -154,8 +138,6 @@ public final class NekoCreativeTabFilterClient {
         }
         btnScrollUp.setFilterUiActive(visible);
         btnScrollDown.setFilterUiActive(visible);
-        btnEnableAll.setFilterUiActive(visible);
-        btnDisableAll.setFilterUiActive(visible);
         for (WoodTypeFilterButton b : woodSlots) {
             if (b != null) {
                 b.setFilterUiActive(visible && b.isBound());
@@ -190,6 +172,11 @@ public final class NekoCreativeTabFilterClient {
             woodSlots[i].setFilterUiActive(filterChromeShown && woodSlots[i].isBound());
         }
         refreshScrollButtonStates();
+    }
+
+    private static void selectOnly(NekoWood selected) {
+        Arrays.fill(WOOD_ENABLED, false);
+        WOOD_ENABLED[selected.ordinal()] = true;
     }
 
     private static boolean isOurTab(CreativeModeTab tab) {
