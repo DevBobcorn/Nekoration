@@ -1,0 +1,33 @@
+{
+    "variants": {
+        "horizontal_connection=s0,facing=north": { "model": "nekoration:block/window_frame/top_s0" },
+        "horizontal_connection=s0,facing=east": { "model": "nekoration:block/window_frame/top_s0", "y": 90 },
+        "horizontal_connection=s0,facing=south": { "model": "nekoration:block/window_frame/top_s0", "y": 180 },
+        "horizontal_connection=s0,facing=west": { "model": "nekoration:block/window_frame/top_s0", "y": 270 },
+        
+        "horizontal_connection=d0,facing=north": { "model": "nekoration:block/window_frame/top_d0" },
+        "horizontal_connection=d0,facing=east": { "model": "nekoration:block/window_frame/top_d0", "y": 90 },
+        "horizontal_connection=d0,facing=south": { "model": "nekoration:block/window_frame/top_d0", "y": 180 },
+        "horizontal_connection=d0,facing=west": { "model": "nekoration:block/window_frame/top_d0", "y": 270 },
+        
+        "horizontal_connection=d1,facing=north": { "model": "nekoration:block/window_frame/top_d1" },
+        "horizontal_connection=d1,facing=east": { "model": "nekoration:block/window_frame/top_d1", "y": 90 },
+        "horizontal_connection=d1,facing=south": { "model": "nekoration:block/window_frame/top_d1", "y": 180 },
+        "horizontal_connection=d1,facing=west": { "model": "nekoration:block/window_frame/top_d1", "y": 270 },
+                
+        "horizontal_connection=t0,facing=north": { "model": "nekoration:block/window_frame/top_t0" },
+        "horizontal_connection=t0,facing=east": { "model": "nekoration:block/window_frame/top_t0", "y": 90 },
+        "horizontal_connection=t0,facing=south": { "model": "nekoration:block/window_frame/top_t0", "y": 180 },
+        "horizontal_connection=t0,facing=west": { "model": "nekoration:block/window_frame/top_t0", "y": 270 },
+        
+        "horizontal_connection=t1,facing=north": { "model": "nekoration:block/window_frame/top_t1" },
+        "horizontal_connection=t1,facing=east": { "model": "nekoration:block/window_frame/top_t1", "y": 90 },
+        "horizontal_connection=t1,facing=south": { "model": "nekoration:block/window_frame/top_t1", "y": 180 },
+        "horizontal_connection=t1,facing=west": { "model": "nekoration:block/window_frame/top_t1", "y": 270 },
+        
+        "horizontal_connection=t2,facing=north": { "model": "nekoration:block/window_frame/top_t2" },
+        "horizontal_connection=t2,facing=east": { "model": "nekoration:block/window_frame/top_t2", "y": 90 },
+        "horizontal_connection=t2,facing=south": { "model": "nekoration:block/window_frame/top_t2", "y": 180 },
+        "horizontal_connection=t2,facing=west": { "model": "nekoration:block/window_frame/top_t2", "y": 270 }
+    }
+}

@@ -6,7 +6,7 @@ import io.devbobcorn.nekoration.HalfTimberCreativeTabOrdering;
 import io.devbobcorn.nekoration.HalfTimberItemPaths;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
-import io.devbobcorn.nekoration.blocks.HalfTimberWood;
+import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.HalfTimberRegistration;
 import net.minecraft.client.Minecraft;
@@ -28,7 +28,7 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
  * Registered on {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS} from client setup.
  */
 public final class NekoCreativeTabFilterClient {
-    private static final boolean[] WOOD_ENABLED = new boolean[HalfTimberWood.values().length];
+    private static final boolean[] WOOD_ENABLED = new boolean[NekoWood.values().length];
 
     private static int woodStartIndex;
     private static CreativeTabIconButton btnScrollUp;
@@ -70,7 +70,7 @@ public final class NekoCreativeTabFilterClient {
             }
         }, 64, 0);
         btnScrollDown = new CreativeTabIconButton(left - 22, top + 127, Component.translatable("gui.nekoration.button.scroll_down"), () -> {
-            HalfTimberWood[] v = HalfTimberWood.values();
+            NekoWood[] v = NekoWood.values();
             if (woodStartIndex <= v.length - 4 - 1) {
                 woodStartIndex++;
                 updateWoodSlotButtons(creative);
@@ -167,7 +167,7 @@ public final class NekoCreativeTabFilterClient {
     }
 
     private static void refreshScrollButtonStates() {
-        HalfTimberWood[] v = HalfTimberWood.values();
+        NekoWood[] v = NekoWood.values();
         btnScrollUp.active = woodStartIndex > 0;
         btnScrollDown.active = woodStartIndex <= v.length - 4 - 1;
     }
@@ -178,11 +178,11 @@ public final class NekoCreativeTabFilterClient {
         }
         int left = creative.getGuiLeft();
         int top = creative.getGuiTop();
-        HalfTimberWood[] v = HalfTimberWood.values();
+        NekoWood[] v = NekoWood.values();
         for (int i = 0; i < 4; i++) {
             int idx = woodStartIndex + i;
             if (idx < v.length) {
-                HalfTimberWood w = v[idx];
+                NekoWood w = v[idx];
                 woodSlots[i].bind(w, WOOD_ENABLED[w.ordinal()], left - 28, top + 29 * i + 10);
             } else {
                 woodSlots[i].bind(null, true, 0, 0);
@@ -210,7 +210,7 @@ public final class NekoCreativeTabFilterClient {
             if (id == null || !Nekoration.MODID.equals(id.getNamespace())) {
                 continue;
             }
-            HalfTimberWood w = HalfTimberItemPaths.parseWood(id.getPath());
+            NekoWood w = HalfTimberItemPaths.parseWood(id.getPath());
             if (w == null) {
                 continue;
             }

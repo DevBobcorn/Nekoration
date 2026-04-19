@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "nekoration:block/leaves_blob",
+        "layer1": "nekoration:block/flowers"
+    }
+}

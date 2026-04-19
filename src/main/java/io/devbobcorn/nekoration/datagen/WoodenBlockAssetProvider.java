@@ -13,7 +13,7 @@ import com.google.gson.JsonElement;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
-import io.devbobcorn.nekoration.blocks.HalfTimberWood;
+import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.registry.WindowRegistration;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -44,7 +44,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
     @Override
     public CompletableFuture<?> run(CachedOutput cachedOutput) {
         List<CompletableFuture<?>> writes = new ArrayList<>();
-        for (HalfTimberWood wood : HalfTimberWood.values()) {
+        for (NekoWood wood : NekoWood.values()) {
             String woodId = wood.id();
             generateWindowAssets(cachedOutput, writes, woodId);
             generateHalfTimberAssets(cachedOutput, writes, woodId);

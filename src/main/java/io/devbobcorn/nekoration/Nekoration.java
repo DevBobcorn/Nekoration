@@ -87,7 +87,17 @@ public class Nekoration {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.nekoration_windows_n_doors"))
                     .icon(() -> new ItemStack(WindowRegistration.iconItem().get()))
-                    .displayItems((parameters, output) -> WindowRegistration.blockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get()))))
+                    .displayItems((parameters, output) -> {
+                        WindowRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
+                        WindowRegistration.windowFrameBlockItemsView().forEach(holder -> {
+                            for (EnumNekoColor color : EnumNekoColor.values()) {
+                                output.accept(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
+                            }
+                        });
+                        for (EnumNekoColor color : EnumNekoColor.values()) {
+                            output.accept(DyeableBlockItem.createCreativeTabStack(WindowRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));
+                        }
+                    })
                     .build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.

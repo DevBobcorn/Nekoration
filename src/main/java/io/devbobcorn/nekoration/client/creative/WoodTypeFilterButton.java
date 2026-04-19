@@ -7,7 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.joml.Quaternionf;
 
 import io.devbobcorn.nekoration.Nekoration;
-import io.devbobcorn.nekoration.blocks.HalfTimberWood;
+import io.devbobcorn.nekoration.blocks.NekoWood;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
@@ -24,18 +24,18 @@ import org.jetbrains.annotations.Nullable;
 public final class WoodTypeFilterButton extends AbstractButton {
     private static final ResourceLocation TABS = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "textures/gui/tabs.png");
 
-    private @Nullable HalfTimberWood wood;
+    private @Nullable NekoWood wood;
     private ItemStack icon = ItemStack.EMPTY;
     private boolean toggled = true;
     private boolean filterUiActive = true;
-    private final BiConsumer<HalfTimberWood, Boolean> onChanged;
+    private final BiConsumer<NekoWood, Boolean> onChanged;
 
-    public WoodTypeFilterButton(int x, int y, BiConsumer<HalfTimberWood, Boolean> onChanged) {
+    public WoodTypeFilterButton(int x, int y, BiConsumer<NekoWood, Boolean> onChanged) {
         super(x, y, 32, 28, Component.empty());
         this.onChanged = onChanged;
     }
 
-    public void bind(@Nullable HalfTimberWood type, boolean enabled, int x, int y) {
+    public void bind(@Nullable NekoWood type, boolean enabled, int x, int y) {
         this.wood = type;
         setPosition(x, y);
         if (type == null) {
@@ -53,7 +53,7 @@ public final class WoodTypeFilterButton extends AbstractButton {
         return wood != null;
     }
 
-    public @Nullable HalfTimberWood woodType() {
+    public @Nullable NekoWood woodType() {
         return wood;
     }
 

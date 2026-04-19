@@ -2,7 +2,7 @@ package io.devbobcorn.nekoration;
 
 import java.util.Comparator;
 
-import io.devbobcorn.nekoration.blocks.HalfTimberWood;
+import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
@@ -26,7 +26,7 @@ public final class HalfTimberCreativeTabOrdering {
         if (key == null) {
             return Integer.MAX_VALUE;
         }
-        HalfTimberWood w = HalfTimberItemPaths.parseWood(key.getPath());
+        NekoWood w = HalfTimberItemPaths.parseWood(key.getPath());
         return w != null ? w.ordinal() : Integer.MAX_VALUE;
     }
 }

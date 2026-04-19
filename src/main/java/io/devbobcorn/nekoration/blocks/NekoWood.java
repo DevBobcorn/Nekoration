@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 /**
  * Vanilla plank-derived properties for half-timber block variants (one block id per wood type).
  */
-public enum HalfTimberWood {
+public enum NekoWood {
     OAK,
     SPRUCE,
     BIRCH,

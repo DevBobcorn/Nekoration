@@ -2,7 +2,7 @@ package io.devbobcorn.nekoration;
 
 import java.util.Locale;
 
-import io.devbobcorn.nekoration.blocks.HalfTimberWood;
+import io.devbobcorn.nekoration.blocks.NekoWood;
 
 /**
  * Parses {@code <wood>_half_timber_p*} / {@code <wood>_half_timber_pillar_p*} item ids.
@@ -30,13 +30,13 @@ public final class HalfTimberItemPaths {
         return path.substring(0, baseIdx);
     }
 
-    public static HalfTimberWood parseWood(String path) {
+    public static NekoWood parseWood(String path) {
         String w = woodIdSuffix(path);
         if (w == null) {
             return null;
         }
         try {
-            return HalfTimberWood.valueOf(w.toUpperCase(Locale.ROOT).replace('-', '_'));
+            return NekoWood.valueOf(w.toUpperCase(Locale.ROOT).replace('-', '_'));
         } catch (IllegalArgumentException ignored) {
             return null;
         }
