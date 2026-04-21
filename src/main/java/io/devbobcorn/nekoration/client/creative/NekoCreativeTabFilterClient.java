@@ -202,9 +202,7 @@ public final class NekoCreativeTabFilterClient {
                 continue;
             }
             if (WOOD_ENABLED[w.ordinal()]) {
-                for (EnumNekoColor color : EnumNekoColor.values()) {
-                    out.add(DyeableBlockItem.createCreativeTabStack(item, color));
-                }
+                out.add(DyeableBlockItem.createCreativeTabStack(item, EnumNekoColor.WHITE));
             }
         }
         out.sort(HalfTimberCreativeTabOrdering.stackComparator());

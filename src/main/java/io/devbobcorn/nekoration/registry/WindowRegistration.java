@@ -64,9 +64,9 @@ public final class WindowRegistration {
             }
         }
 
-        registerWindowFrame(blocks, items, "window_frame");
-        registerWindowSill(blocks, items, "window_sill");
-        registerWindowTop(blocks, items, "window_top");
+        registerWindowFrame(blocks, items, "stone_window_frame");
+        registerWindowSill(blocks, items, "stone_window_sill");
+        registerWindowTop(blocks, items, "stone_window_top");
         registerWindowPlant(blocks, items, "window_plant");
     }
 

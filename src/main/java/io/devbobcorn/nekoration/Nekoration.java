@@ -61,6 +61,11 @@ public class Nekoration {
                         stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
                     }
                 });
+                WindowRegistration.windowFrameBlockItemsView().forEach(holder -> {
+                    for (EnumNekoColor color : EnumNekoColor.values()) {
+                        stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
+                    }
+                });
                 stacks.sort(Comparator.<ItemStack>comparingInt(s -> DyeableBlockItem.getColor(s).ordinal())
                         .thenComparingInt(s -> BuiltInRegistries.ITEM.getId(s.getItem())));
                 stacks.forEach(output::accept);
@@ -73,9 +78,7 @@ public class Nekoration {
             .displayItems((parameters, output) -> {
                 ArrayList<ItemStack> stacks = new ArrayList<>();
                 HalfTimberRegistration.blockItemsView().forEach(holder -> {
-                    for (EnumNekoColor color : EnumNekoColor.values()) {
-                        stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
-                    }
+                    stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.WHITE));
                 });
                 stacks.sort(HalfTimberCreativeTabOrdering.stackComparator());
                 stacks.forEach(output::accept);
@@ -89,11 +92,6 @@ public class Nekoration {
                     .icon(() -> new ItemStack(WindowRegistration.iconItem().get()))
                     .displayItems((parameters, output) -> {
                         WindowRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
-                        WindowRegistration.windowFrameBlockItemsView().forEach(holder -> {
-                            for (EnumNekoColor color : EnumNekoColor.values()) {
-                                output.accept(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
-                            }
-                        });
                         for (EnumNekoColor color : EnumNekoColor.values()) {
                             output.accept(DyeableBlockItem.createCreativeTabStack(WindowRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));
                         }
