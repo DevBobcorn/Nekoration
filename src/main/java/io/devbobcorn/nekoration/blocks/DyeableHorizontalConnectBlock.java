@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class DyeableHorizontalConnectBlock extends DyeableHorizontalBlock {
-    private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D);
+    private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D, 16.0D);
 
     public enum ConnectionType {
         DOUBLE, TRIPLE, BEAM

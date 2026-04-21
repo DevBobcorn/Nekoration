@@ -26,7 +26,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class DyeableWindowFrameBlock extends DyeableHorizontalBlock {
-    private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D);
+    private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D, 16.0D);
     public static final EnumProperty<FramePart> PART = ModStateProperties.FRAME_PART;
     public static final BooleanProperty LEFT = ModStateProperties.LEFT;
     public static final BooleanProperty RIGHT = ModStateProperties.RIGHT;

@@ -34,12 +34,12 @@ public abstract class DyeableHorizontalBlock extends DyeableBlock {
         return placed.setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
-    protected static Map<Direction, VoxelShape> getAABBs(double thickness) {
+    protected static Map<Direction, VoxelShape> getAABBs(double thickness, double height) {
         return Map.of(
-                Direction.NORTH, Block.box(0.0D, 0.0D, 16.0D - thickness, 16.0D, 16.0D, 16.0D),
-                Direction.SOUTH, Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, thickness),
-                Direction.EAST, Block.box(0.0D, 0.0D, 0.0D, thickness, 16.0D, 16.0D),
-                Direction.WEST, Block.box(16.0D - thickness, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D));
+                Direction.NORTH, Block.box(0.0D, 0.0D, 16.0D - thickness, 16.0D, height, 16.0D),
+                Direction.SOUTH, Block.box(0.0D, 0.0D, 0.0D, 16.0D, height, thickness),
+                Direction.EAST, Block.box(0.0D, 0.0D, 0.0D, thickness, height, 16.0D),
+                Direction.WEST, Block.box(16.0D - thickness, 0.0D, 0.0D, 16.0D, height, 16.0D));
     }
 
     protected BlockPos getLeftBlock(BlockPos pos, Direction dir) {

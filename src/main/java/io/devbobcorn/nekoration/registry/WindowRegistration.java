@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import io.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
 import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.blocks.VerticalConnectBlock;
 import io.devbobcorn.nekoration.blocks.WindowBlock;
+import io.devbobcorn.nekoration.blocks.WindowPlantBlock;
 import io.devbobcorn.nekoration.blocks.frames.DyeableWindowFrameBlock;
 import io.devbobcorn.nekoration.blocks.frames.DyeableWindowSillBlock;
 import io.devbobcorn.nekoration.blocks.frames.DyeableWindowTopBlock;
@@ -94,7 +94,7 @@ public final class WindowRegistration {
 
     private static void registerWindowPlant(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new DyeableHorizontalConnectBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).noOcclusion()));
+                () -> new WindowPlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).noOcclusion()));
         DeferredItem<DyeableBlockItem> item = registerDyeableBlockItem(items, id, block);
         WINDOW_PLANT_BLOCK = block;
         WINDOW_PLANT_BLOCK_ITEM = item;
