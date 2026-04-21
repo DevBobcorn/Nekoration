@@ -352,9 +352,8 @@
     "item.nekoration.paw_right": "右移",
     "item.nekoration.paw_up": "上移",
     "item.nekoration.wallpaper": "%s墙纸",
-    "itemGroup.nekoration_half_timber": "猫咪装饰丨半露木",
     "itemGroup.nekoration_ornaments": "猫咪装饰丨装饰",
     "itemGroup.nekoration_stone_blocks": "猫咪装饰丨石质方块",
     "itemGroup.nekoration_tools": "猫咪装饰丨工具",
-    "itemGroup.nekoration_windows_n_doors": "猫咪装饰丨门窗"
+    "itemGroup.nekoration_wooden_blocks": "猫咪装饰丨木质方块"
 }

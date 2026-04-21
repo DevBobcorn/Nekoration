@@ -8,6 +8,9 @@ import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
 import io.devbobcorn.nekoration.blocks.PotBlock;
 import io.devbobcorn.nekoration.blocks.VerticalConnectBlock;
+import io.devbobcorn.nekoration.blocks.frames.DyeableWindowFrameBlock;
+import io.devbobcorn.nekoration.blocks.frames.DyeableWindowSillBlock;
+import io.devbobcorn.nekoration.blocks.frames.DyeableWindowTopBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -44,6 +47,9 @@ public final class StoneBlocksRegistration {
         registerStonePillar(blocks, items, "stone_corinthian");
         registerStonePot(blocks, items, "stone_pot", 6.0D);
         registerStonePot(blocks, items, "stone_planter", 8.0D);
+        registerStoneWindowFrame(blocks, items, "stone_window_frame");
+        registerStoneWindowSill(blocks, items, "stone_window_sill");
+        registerStoneWindowTop(blocks, items, "stone_window_top");
     }
 
     private static void registerDyeableStone(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
@@ -61,6 +67,24 @@ public final class StoneBlocksRegistration {
             double radius) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new PotBlock(stoneProperties().noOcclusion(), radius));
+        STONE_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
+    }
+
+    private static void registerStoneWindowFrame(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new DyeableWindowFrameBlock(stoneProperties().noOcclusion()));
+        STONE_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
+    }
+
+    private static void registerStoneWindowSill(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new DyeableWindowSillBlock(stoneProperties().noOcclusion()));
+        STONE_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
+    }
+
+    private static void registerStoneWindowTop(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new DyeableWindowTopBlock(stoneProperties().noOcclusion()));
         STONE_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
     }
 

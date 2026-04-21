@@ -7,9 +7,9 @@ import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
-import io.devbobcorn.nekoration.registry.HalfTimberRegistration;
+import io.devbobcorn.nekoration.registry.OrnamentsRegistration;
+import io.devbobcorn.nekoration.registry.WoodenBlocksRegistration;
 import io.devbobcorn.nekoration.registry.StoneBlocksRegistration;
-import io.devbobcorn.nekoration.registry.WindowRegistration;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.renderer.BiomeColors;
@@ -80,23 +80,17 @@ public final class NekorationColorHandlers {
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         BlockColor halfTimber = dyeableBlockColor(NekoColorPalette.HALF_TIMBER);
         BlockColor stone = dyeableBlockColor(NekoColorPalette.STONE_COLUMNS);
-        HalfTimberRegistration.blockItemsView().forEach(holder -> event.register(halfTimber, holder.get().getBlock()));
+        WoodenBlocksRegistration.halfTimberBlockItemsView().forEach(holder -> event.register(halfTimber, holder.get().getBlock()));
         StoneBlocksRegistration.blockItemsView().forEach(holder -> event.register(stone, holder.get().getBlock()));
-        WindowRegistration.windowFrameBlockItemsView().forEach(holder -> {
-            event.register(stone, holder.get().getBlock());
-        });
-        event.register(windowPlantBlockColor(), WindowRegistration.windowPlantBlock().get());
+        event.register(windowPlantBlockColor(), OrnamentsRegistration.windowPlantBlock().get());
     }
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         ItemColor halfTimber = dyeableBlockItemColor(NekoColorPalette.HALF_TIMBER);
         ItemColor stone = dyeableBlockItemColor(NekoColorPalette.STONE_COLUMNS);
-        HalfTimberRegistration.blockItemsView().forEach(holder -> event.register(halfTimber, holder.get()));
+        WoodenBlocksRegistration.halfTimberBlockItemsView().forEach(holder -> event.register(halfTimber, holder.get()));
         StoneBlocksRegistration.blockItemsView().forEach(holder -> event.register(stone, holder.get()));
-        WindowRegistration.windowFrameBlockItemsView().forEach(holder -> {
-            event.register(stone, holder.get());
-        });
-        event.register(windowPlantItemColor(), WindowRegistration.windowPlantBlockItem().get());
+        event.register(windowPlantItemColor(), OrnamentsRegistration.windowPlantBlockItem().get());
     }
 }

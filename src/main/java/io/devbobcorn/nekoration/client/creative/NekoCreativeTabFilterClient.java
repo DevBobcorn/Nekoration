@@ -8,7 +8,7 @@ import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
-import io.devbobcorn.nekoration.registry.HalfTimberRegistration;
+import io.devbobcorn.nekoration.registry.WoodenBlocksRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.core.NonNullList;
@@ -180,7 +180,20 @@ public final class NekoCreativeTabFilterClient {
     }
 
     private static boolean isOurTab(CreativeModeTab tab) {
-        return tab != null && tab == Nekoration.NEKORATION_HALF_TIMBER_TAB.get();
+        return tab != null && tab == Nekoration.NEKORATION_WOODEN_BLOCKS_TAB.get();
+    }
+
+    private static NekoWood parseWoodForFilteredItem(String path) {
+        NekoWood halfTimber = HalfTimberItemPaths.parseWood(path);
+        if (halfTimber != null) {
+            return halfTimber;
+        }
+        for (NekoWood wood : NekoWood.values()) {
+            if (path.startsWith(wood.id() + "_window_")) {
+                return wood;
+            }
+        }
+        return null;
     }
 
     private static void applyFilteredItems(CreativeModeInventoryScreen screen) {
@@ -191,18 +204,32 @@ public final class NekoCreativeTabFilterClient {
             return;
         }
         NonNullList<ItemStack> out = NonNullList.create();
-        for (var holder : HalfTimberRegistration.blockItemsView()) {
+        for (var holder : WoodenBlocksRegistration.halfTimberBlockItemsView()) {
             Item item = holder.get();
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (id == null || !Nekoration.MODID.equals(id.getNamespace())) {
                 continue;
             }
-            NekoWood w = HalfTimberItemPaths.parseWood(id.getPath());
+            NekoWood w = parseWoodForFilteredItem(id.getPath());
             if (w == null) {
                 continue;
             }
             if (WOOD_ENABLED[w.ordinal()]) {
                 out.add(DyeableBlockItem.createCreativeTabStack(item, EnumNekoColor.WHITE));
+            }
+        }
+        for (var holder : WoodenBlocksRegistration.windowBlockItemsView()) {
+            Item item = holder.get();
+            ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
+            if (id == null || !Nekoration.MODID.equals(id.getNamespace())) {
+                continue;
+            }
+            NekoWood w = parseWoodForFilteredItem(id.getPath());
+            if (w == null) {
+                continue;
+            }
+            if (WOOD_ENABLED[w.ordinal()]) {
+                out.add(new ItemStack(item));
             }
         }
         out.sort(HalfTimberCreativeTabOrdering.stackComparator());

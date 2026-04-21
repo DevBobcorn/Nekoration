@@ -24,9 +24,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
-import io.devbobcorn.nekoration.registry.HalfTimberRegistration;
+import io.devbobcorn.nekoration.registry.OrnamentsRegistration;
+import io.devbobcorn.nekoration.registry.WoodenBlocksRegistration;
 import io.devbobcorn.nekoration.registry.StoneBlocksRegistration;
-import io.devbobcorn.nekoration.registry.WindowRegistration;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Nekoration.MODID)
@@ -46,22 +46,18 @@ public class Nekoration {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     static {
-        HalfTimberRegistration.register(BLOCKS, ITEMS);
+        WoodenBlocksRegistration.register(BLOCKS, ITEMS);
         StoneBlocksRegistration.register(BLOCKS, ITEMS);
-        WindowRegistration.register(BLOCKS, ITEMS);
+        OrnamentsRegistration.register(BLOCKS, ITEMS);
     }
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_STONE_BLOCKS_TAB = CREATIVE_MODE_TABS.register("nekoration_stone_tab", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_STONE_BLOCKS_TAB =
+        CREATIVE_MODE_TABS.register("nekoration_stone_blocks", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_stone_blocks"))
             .icon(() -> DyeableBlockItem.createCreativeTabStack(StoneBlocksRegistration.iconItem().get()))
             .displayItems((parameters, output) -> {
                 ArrayList<ItemStack> stacks = new ArrayList<>();
                 StoneBlocksRegistration.blockItemsView().forEach(holder -> {
-                    for (EnumNekoColor color : EnumNekoColor.values()) {
-                        stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
-                    }
-                });
-                WindowRegistration.windowFrameBlockItemsView().forEach(holder -> {
                     for (EnumNekoColor color : EnumNekoColor.values()) {
                         stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
                     }
@@ -72,31 +68,31 @@ public class Nekoration {
             })
             .build());
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_HALF_TIMBER_TAB = CREATIVE_MODE_TABS.register("nekoration_tab", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.nekoration_half_timber"))
-            .icon(() -> DyeableBlockItem.createCreativeTabStack(HalfTimberRegistration.iconItem().get()))
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_WOODEN_BLOCKS_TAB =
+        CREATIVE_MODE_TABS.register("nekoration_wooden_blocks", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.nekoration_wooden_blocks"))
+            .icon(() -> DyeableBlockItem.createCreativeTabStack(WoodenBlocksRegistration.iconItem().get()))
             .displayItems((parameters, output) -> {
                 ArrayList<ItemStack> stacks = new ArrayList<>();
-                HalfTimberRegistration.blockItemsView().forEach(holder -> {
+                WoodenBlocksRegistration.halfTimberBlockItemsView().forEach(holder -> {
                     stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.WHITE));
                 });
                 stacks.sort(HalfTimberCreativeTabOrdering.stackComparator());
                 stacks.forEach(output::accept);
+                WoodenBlocksRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
             })
             .build());
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_WINDOWS_N_DOORS_TAB = CREATIVE_MODE_TABS.register(
-            "nekoration_windows_n_doors_tab",
-            () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup.nekoration_windows_n_doors"))
-                    .icon(() -> new ItemStack(WindowRegistration.iconItem().get()))
-                    .displayItems((parameters, output) -> {
-                        WindowRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
-                        for (EnumNekoColor color : EnumNekoColor.values()) {
-                            output.accept(DyeableBlockItem.createCreativeTabStack(WindowRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));
-                        }
-                    })
-                    .build());
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_ORNAMENTS_TAB =
+        CREATIVE_MODE_TABS.register("nekoration_ornaments", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.nekoration_ornaments"))
+            .icon(() -> DyeableBlockItem.createCreativeTabStack(OrnamentsRegistration.windowPlantBlockItem().get()))
+            .displayItems((parameters, output) -> {
+                for (EnumNekoColor color : EnumNekoColor.values()) {
+                    output.accept(DyeableBlockItem.createCreativeTabStack(OrnamentsRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));
+                }
+            })
+            .build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.

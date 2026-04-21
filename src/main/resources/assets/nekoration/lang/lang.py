@@ -47,9 +47,9 @@ miscs = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iro
 miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Phonograph [WIP]","Custom Block","Prismap Table [WIP]"]
 miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","留声机[WIP]","自定义方块","棱镜台[WIP]"]
 
-tabs = ["nekoration_stone_blocks","nekoration_half_timber","nekoration_windows_n_doors","nekoration_ornaments","nekoration_tools"]
-tabs_us = ["Stone Blocks","Half-Timber","Windows & Doors","Ornaments","Tools"]
-tabs_cn = ["石质方块","半露木","门窗","装饰","工具"]
+tabs = ["nekoration_stone_blocks","nekoration_wooden_blocks","nekoration_ornaments","nekoration_tools"]
+tabs_us = ["Stone Blocks","Wooden Blocks","Ornaments","Tools"]
+tabs_cn = ["石质方块","木质方块","装饰","工具"]
 
 guis = ["button.scroll_up","button.scroll_down","button.enable_all","button.disable_all","button.save_painting","button.save_painting_content","button.load_image","button.clear","paint.tool_param0","paint.tool_param1","paint.tool_param2","paint.tool_param3","message.scroll_change",
         "message.painting_saved","message.painting_content_saved","message.paint_with_palette","message.painting_load_failed","message.link_expired",

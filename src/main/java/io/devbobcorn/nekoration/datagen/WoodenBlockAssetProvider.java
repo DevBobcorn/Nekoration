@@ -14,7 +14,7 @@ import com.google.gson.JsonElement;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.NekoWood;
-import io.devbobcorn.nekoration.registry.WindowRegistration;
+import io.devbobcorn.nekoration.registry.WoodenBlocksRegistration;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -53,7 +53,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
     }
 
     private void generateWindowAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String woodId) {
-        for (WindowRegistration.WindowVariant variant : WindowRegistration.WindowVariant.values()) {
+        for (WoodenBlocksRegistration.WindowVariant variant : WoodenBlocksRegistration.WindowVariant.values()) {
             String variantId = variant.id();
             String style = "window_" + variantId;
 
