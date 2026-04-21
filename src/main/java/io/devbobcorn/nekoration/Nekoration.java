@@ -25,7 +25,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.HalfTimberRegistration;
-import io.devbobcorn.nekoration.registry.StoneColumnsRegistration;
+import io.devbobcorn.nekoration.registry.StoneBlocksRegistration;
 import io.devbobcorn.nekoration.registry.WindowRegistration;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -47,16 +47,16 @@ public class Nekoration {
 
     static {
         HalfTimberRegistration.register(BLOCKS, ITEMS);
-        StoneColumnsRegistration.register(BLOCKS, ITEMS);
+        StoneBlocksRegistration.register(BLOCKS, ITEMS);
         WindowRegistration.register(BLOCKS, ITEMS);
     }
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_STONE_TAB = CREATIVE_MODE_TABS.register("nekoration_stone_tab", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.nekoration_stone_columns"))
-            .icon(() -> DyeableBlockItem.createCreativeTabStack(StoneColumnsRegistration.iconItem().get()))
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_STONE_BLOCKS_TAB = CREATIVE_MODE_TABS.register("nekoration_stone_tab", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.nekoration_stone_blocks"))
+            .icon(() -> DyeableBlockItem.createCreativeTabStack(StoneBlocksRegistration.iconItem().get()))
             .displayItems((parameters, output) -> {
                 ArrayList<ItemStack> stacks = new ArrayList<>();
-                StoneColumnsRegistration.blockItemsView().forEach(holder -> {
+                StoneBlocksRegistration.blockItemsView().forEach(holder -> {
                     for (EnumNekoColor color : EnumNekoColor.values()) {
                         stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
                     }

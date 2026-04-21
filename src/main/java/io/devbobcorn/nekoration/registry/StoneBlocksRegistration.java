@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
+import io.devbobcorn.nekoration.blocks.PotBlock;
 import io.devbobcorn.nekoration.blocks.VerticalConnectBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.Item;
@@ -17,12 +18,12 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Registers dyeable stone columns.
+ * Registers dyeable stone blocks.
  */
-public final class StoneColumnsRegistration {
+public final class StoneBlocksRegistration {
     public static final List<DeferredItem<DyeableBlockItem>> STONE_BLOCK_ITEMS = new ArrayList<>();
 
-    private StoneColumnsRegistration() {
+    private StoneBlocksRegistration() {
     }
 
     private static BlockBehaviour.Properties stoneProperties() {
@@ -41,6 +42,8 @@ public final class StoneColumnsRegistration {
         registerStonePillar(blocks, items, "stone_doric");
         registerStonePillar(blocks, items, "stone_ionic");
         registerStonePillar(blocks, items, "stone_corinthian");
+        registerStonePot(blocks, items, "stone_pot", 6.0D);
+        registerStonePot(blocks, items, "stone_planter", 8.0D);
     }
 
     private static void registerDyeableStone(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
@@ -51,6 +54,13 @@ public final class StoneColumnsRegistration {
     private static void registerStonePillar(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new DyeableVerticalConnectBlock(stoneProperties(), VerticalConnectBlock.ConnectionType.PILLAR, false));
+        STONE_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
+    }
+
+    private static void registerStonePot(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            double radius) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new PotBlock(stoneProperties().noOcclusion(), radius));
         STONE_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
     }
 

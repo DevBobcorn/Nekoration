@@ -8,7 +8,7 @@ import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.HalfTimberRegistration;
-import io.devbobcorn.nekoration.registry.StoneColumnsRegistration;
+import io.devbobcorn.nekoration.registry.StoneBlocksRegistration;
 import io.devbobcorn.nekoration.registry.WindowRegistration;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
@@ -81,7 +81,7 @@ public final class NekorationColorHandlers {
         BlockColor halfTimber = dyeableBlockColor(NekoColorPalette.HALF_TIMBER);
         BlockColor stone = dyeableBlockColor(NekoColorPalette.STONE_COLUMNS);
         HalfTimberRegistration.blockItemsView().forEach(holder -> event.register(halfTimber, holder.get().getBlock()));
-        StoneColumnsRegistration.blockItemsView().forEach(holder -> event.register(stone, holder.get().getBlock()));
+        StoneBlocksRegistration.blockItemsView().forEach(holder -> event.register(stone, holder.get().getBlock()));
         WindowRegistration.windowFrameBlockItemsView().forEach(holder -> {
             event.register(stone, holder.get().getBlock());
         });
@@ -93,7 +93,7 @@ public final class NekorationColorHandlers {
         ItemColor halfTimber = dyeableBlockItemColor(NekoColorPalette.HALF_TIMBER);
         ItemColor stone = dyeableBlockItemColor(NekoColorPalette.STONE_COLUMNS);
         HalfTimberRegistration.blockItemsView().forEach(holder -> event.register(halfTimber, holder.get()));
-        StoneColumnsRegistration.blockItemsView().forEach(holder -> event.register(stone, holder.get()));
+        StoneBlocksRegistration.blockItemsView().forEach(holder -> event.register(stone, holder.get()));
         WindowRegistration.windowFrameBlockItemsView().forEach(holder -> {
             event.register(stone, holder.get());
         });
