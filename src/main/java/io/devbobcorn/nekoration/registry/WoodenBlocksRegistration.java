@@ -9,6 +9,9 @@ import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
 import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.blocks.VerticalConnectBlock;
 import io.devbobcorn.nekoration.blocks.WindowBlock;
+import io.devbobcorn.nekoration.blocks.containers.CabinetBlock;
+import io.devbobcorn.nekoration.blocks.containers.CupboardBlock;
+import io.devbobcorn.nekoration.blocks.containers.WallShelfBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -41,6 +44,7 @@ public final class WoodenBlocksRegistration {
 
     public static final List<DeferredItem<DyeableBlockItem>> HALF_TIMBER_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<BlockItem>> WINDOW_BLOCK_ITEMS = new ArrayList<>();
+    public static final List<DeferredItem<BlockItem>> CONTAINER_BLOCK_ITEMS = new ArrayList<>();
 
     private WoodenBlocksRegistration() {
     }
@@ -66,6 +70,31 @@ public final class WoodenBlocksRegistration {
                                 VerticalConnectBlock.ConnectionType.PILLAR, false));
                 WINDOW_BLOCK_ITEMS.add(registerBlockItem(items, id, block));
             }
+
+            String cupboardId = w + "_cupboard";
+            DeferredBlock<Block> cupboard = blocks.register(cupboardId,
+                    () -> new CupboardBlock(wood.plankProperties().noOcclusion()));
+            CONTAINER_BLOCK_ITEMS.add(registerBlockItem(items, cupboardId, cupboard));
+
+            String wallShelfId = w + "_wall_shelf";
+            DeferredBlock<Block> wallShelf = blocks.register(wallShelfId,
+                    () -> new WallShelfBlock(wood.plankProperties().noOcclusion()));
+            CONTAINER_BLOCK_ITEMS.add(registerBlockItem(items, wallShelfId, wallShelf));
+
+            String cabinetId = w + "_cabinet";
+            DeferredBlock<Block> cabinet = blocks.register(cabinetId,
+                    () -> new CabinetBlock(wood.plankProperties(), true));
+            CONTAINER_BLOCK_ITEMS.add(registerBlockItem(items, cabinetId, cabinet));
+
+            String drawerId = w + "_drawer";
+            DeferredBlock<Block> drawer = blocks.register(drawerId,
+                    () -> new CabinetBlock(wood.plankProperties(), false));
+            CONTAINER_BLOCK_ITEMS.add(registerBlockItem(items, drawerId, drawer));
+
+            String drawerChestId = w + "_drawer_chest";
+            DeferredBlock<Block> drawerChest = blocks.register(drawerChestId,
+                    () -> new CabinetBlock(wood.plankProperties(), true));
+            CONTAINER_BLOCK_ITEMS.add(registerBlockItem(items, drawerChestId, drawerChest));
         }
 
     }
@@ -93,6 +122,10 @@ public final class WoodenBlocksRegistration {
 
     public static List<DeferredItem<BlockItem>> windowBlockItemsView() {
         return Collections.unmodifiableList(WINDOW_BLOCK_ITEMS);
+    }
+
+    public static List<DeferredItem<BlockItem>> furnitureBlockItemsView() {
+        return Collections.unmodifiableList(CONTAINER_BLOCK_ITEMS);
     }
 
     /** Creative tab icon. */

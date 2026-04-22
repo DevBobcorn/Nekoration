@@ -80,6 +80,7 @@ public class Nekoration {
                 stacks.sort(HalfTimberCreativeTabOrdering.stackComparator());
                 stacks.forEach(output::accept);
                 WoodenBlocksRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
+                WoodenBlocksRegistration.furnitureBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
             })
             .build());
 
