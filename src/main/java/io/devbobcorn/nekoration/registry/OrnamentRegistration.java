@@ -10,13 +10,13 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Registers ornamentals.
+ * Registers ornaments.
  */
-public final class OrnamentsRegistration {
+public final class OrnamentRegistration {
     private static DeferredBlock<Block> WINDOW_PLANT_BLOCK;
     public static DeferredItem<DyeableBlockItem> WINDOW_PLANT_BLOCK_ITEM;
 
-    private OrnamentsRegistration() {
+    private OrnamentRegistration() {
     }
 
     public static void register(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {

@@ -6,15 +6,21 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.NekoWood;
-import io.devbobcorn.nekoration.registry.WoodenBlocksRegistration;
+import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -34,11 +40,13 @@ public final class WoodenBlockAssetProvider implements DataProvider {
     private final PackOutput.PathProvider blockstatePathProvider;
     private final PackOutput.PathProvider blockModelPathProvider;
     private final PackOutput.PathProvider itemModelPathProvider;
+    private final Path containerTemplateModelRoot;
 
     public WoodenBlockAssetProvider(PackOutput output) {
         this.blockstatePathProvider = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "blockstates");
         this.blockModelPathProvider = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "models/block");
         this.itemModelPathProvider = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "models/item");
+        this.containerTemplateModelRoot = resolveContainerTemplateModelRoot();
     }
 
     @Override
@@ -46,14 +54,126 @@ public final class WoodenBlockAssetProvider implements DataProvider {
         List<CompletableFuture<?>> writes = new ArrayList<>();
         for (NekoWood wood : NekoWood.values()) {
             String woodId = wood.id();
+            generateContainerAssets(cachedOutput, writes, woodId);
             generateWindowAssets(cachedOutput, writes, woodId);
             generateHalfTimberAssets(cachedOutput, writes, woodId);
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
 
+    private void generateContainerAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String woodId) {
+        for (WoodenBlockRegistration.ContainerVariant variant : WoodenBlockRegistration.ContainerVariant.values()) {
+            String variantId = variant.id();
+            switch (variant) {
+                case CABINET -> {
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "cabinet", "cabinet");
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "cabinet_open", "cabinet_open");
+
+                    Map<String, Object> blockstateVariants = new LinkedHashMap<>();
+                    for (String facing : List.of("north", "east", "south", "west")) {
+                        int y = horizontalRotationY(facing);
+                        for (boolean open : List.of(false, true)) {
+                            String modelName = open ? "cabinet_open" : "cabinet";
+                            String key = "facing=" + facing + ",open=" + open;
+                            blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
+                        }
+                    }
+
+                    writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
+                            Map.of("variants", blockstateVariants));
+                    writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
+                            Map.of("parent", modLoc("block/container/" + woodId + "/cabinet")));
+                }
+                case CUPBOARD -> {
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "cupboard_d0", "cupboard_d0");
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "cupboard_d1", "cupboard_d1");
+
+                    Map<String, Object> blockstateVariants = new LinkedHashMap<>();
+                    for (String facing : List.of("north", "east", "south", "west")) {
+                        int y = horizontalRotationY(facing);
+                        for (boolean bottom : List.of(false, true)) {
+                            for (boolean open : List.of(false, true)) {
+                                String modelName = bottom ? "cupboard_d1" : "cupboard_d0";
+                                String key = "bottom=" + bottom + ",facing=" + facing + ",open=" + open;
+                                blockstateVariants.put(key,
+                                        horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
+                            }
+                        }
+                    }
+
+                    writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
+                            Map.of("variants", blockstateVariants));
+                    writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
+                            Map.of("parent", modLoc("block/container/" + woodId + "/cupboard_d0")));
+                }
+                case DRAWER -> {
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "drawer", "drawer");
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "drawer_open", "drawer_open");
+
+                    Map<String, Object> blockstateVariants = new LinkedHashMap<>();
+                    for (String facing : List.of("north", "east", "south", "west")) {
+                        int y = horizontalRotationY(facing);
+                        for (boolean open : List.of(false, true)) {
+                            String modelName = open ? "drawer_open" : "drawer";
+                            String key = "facing=" + facing + ",open=" + open;
+                            blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
+                        }
+                    }
+
+                    writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
+                            Map.of("variants", blockstateVariants));
+                    writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
+                            Map.of("parent", modLoc("block/container/" + woodId + "/drawer")));
+                }
+                case DRAWER_CHEST -> {
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "drawer_chest", "drawer_chest");
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "drawer_chest_open", "drawer_chest_open");
+
+                    Map<String, Object> blockstateVariants = new LinkedHashMap<>();
+                    for (String facing : List.of("north", "east", "south", "west")) {
+                        int y = horizontalRotationY(facing);
+                        for (boolean open : List.of(false, true)) {
+                            String modelName = open ? "drawer_chest_open" : "drawer_chest";
+                            String key = "facing=" + facing + ",open=" + open;
+                            blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
+                        }
+                    }
+
+                    writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
+                            Map.of("variants", blockstateVariants));
+                    writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
+                            Map.of("parent", modLoc("block/container/" + woodId + "/drawer_chest")));
+                }
+                case WALL_SHELF -> {
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "wall_shelf_s0", "wall_shelf_s0");
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "wall_shelf_t0", "wall_shelf_t0");
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "wall_shelf_t1", "wall_shelf_t1");
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "wall_shelf_t2", "wall_shelf_t2");
+
+                    Map<String, Object> blockstateVariants = new LinkedHashMap<>();
+                    for (String facing : List.of("north", "east", "south", "west")) {
+                        int y = horizontalRotationY(facing);
+                        for (String connectionId : CONNECTION_IDS) {
+                            for (boolean open : List.of(false, true)) {
+                                String modelName = "wall_shelf_" + wallShelfModelSuffix(connectionId);
+                                String key = "facing=" + facing + ",horizontal_connection=" + connectionId + ",open=" + open;
+                                blockstateVariants.put(key,
+                                        horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
+                            }
+                        }
+                    }
+
+                    writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
+                            Map.of("variants", blockstateVariants));
+                    writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
+                            Map.of("parent", modLoc("block/container/" + woodId + "/wall_shelf_s0")));
+                }
+            }
+        }
+    }
+
     private void generateWindowAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String woodId) {
-        for (WoodenBlocksRegistration.WindowVariant variant : WoodenBlocksRegistration.WindowVariant.values()) {
+        for (WoodenBlockRegistration.WindowVariant variant : WoodenBlockRegistration.WindowVariant.values()) {
             String variantId = variant.id();
             String style = "window_" + variantId;
 
@@ -141,6 +261,65 @@ public final class WoodenBlockAssetProvider implements DataProvider {
         };
     }
 
+    private void writeContainerModelFromTemplate(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String woodId,
+            String templateModelName, String outputModelName) {
+        Map<String, Object> model = new LinkedHashMap<>();
+        model.put("parent", modLoc("block/container/" + templateModelName));
+        model.put("textures", readContainerTemplateTextures(templateModelName, woodId));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "container/" + woodId + "/" + outputModelName, model);
+    }
+
+    private Map<String, Object> readContainerTemplateTextures(String templateModelName, String woodId) {
+        Path templatePath = containerTemplateModelRoot.resolve(templateModelName + ".json");
+        if (!Files.isRegularFile(templatePath)) {
+            throw new IllegalStateException("Missing container model template: " + templatePath);
+        }
+        try {
+            String raw = Files.readString(templatePath, StandardCharsets.UTF_8);
+            JsonObject templateJson = JsonParser.parseString(raw).getAsJsonObject();
+            JsonObject texturesJson = templateJson.getAsJsonObject("textures");
+            if (texturesJson == null) {
+                throw new IllegalStateException("Container model template has no textures object: " + templatePath);
+            }
+
+            Map<String, Object> textures = new LinkedHashMap<>();
+            for (Map.Entry<String, JsonElement> entry : texturesJson.entrySet()) {
+                String textureValue = entry.getValue().getAsString();
+                textures.put(entry.getKey(),
+                        textureValue.replace("block/container/oak/", "block/container/" + woodId + "/"));
+            }
+            return textures;
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed reading container model template: " + templatePath, e);
+        }
+    }
+
+    private static int horizontalRotationY(String facing) {
+        return switch (facing) {
+            case "east" -> 90;
+            case "south" -> 180;
+            case "west" -> 270;
+            default -> 0;
+        };
+    }
+
+    private static Map<String, Object> horizontalFacingVariant(String modelPath, int y) {
+        Map<String, Object> variant = new LinkedHashMap<>();
+        variant.put("model", modLoc(modelPath));
+        if (y != 0) {
+            variant.put("y", y);
+        }
+        return variant;
+    }
+
+    private static String wallShelfModelSuffix(String connectionId) {
+        return switch (connectionId) {
+            case "d0" -> "t0";
+            case "d1" -> "t2";
+            default -> connectionId;
+        };
+    }
+
     private static Map<String, Object> halfTimberCubeModel(String woodId, int patternIndex) {
         Map<String, Object> textures = new LinkedHashMap<>();
         textures.put("side", modLoc("block/half_timber_back/halftimber_frame_p" + patternIndex));
@@ -172,9 +351,24 @@ public final class WoodenBlockAssetProvider implements DataProvider {
 
     private static void writeJson(CachedOutput cachedOutput, List<CompletableFuture<?>> writes,
             PackOutput.PathProvider pathProvider, String path, Map<String, Object> jsonBody) {
+        writeJson(cachedOutput, writes, pathProvider, path, GSON.toJsonTree(jsonBody));
+    }
+
+    private static void writeJson(CachedOutput cachedOutput, List<CompletableFuture<?>> writes,
+            PackOutput.PathProvider pathProvider, String path, JsonElement jsonBody) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, path);
-        JsonElement json = GSON.toJsonTree(jsonBody);
-        writes.add(DataProvider.saveStable(cachedOutput, json, pathProvider.json(id)));
+        writes.add(DataProvider.saveStable(cachedOutput, jsonBody, pathProvider.json(id)));
+    }
+
+    private static Path resolveContainerTemplateModelRoot() {
+        Path probe = Path.of("").toAbsolutePath();
+        for (Path current = probe; current != null; current = current.getParent()) {
+            Path candidate = current.resolve("src/main/resources/assets/" + Nekoration.MODID + "/models/block/container");
+            if (Files.isDirectory(candidate)) {
+                return candidate;
+            }
+        }
+        throw new IllegalStateException("Could not locate container template models from " + probe);
     }
 
     @Override

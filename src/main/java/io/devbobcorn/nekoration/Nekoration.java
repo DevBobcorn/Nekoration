@@ -24,9 +24,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
-import io.devbobcorn.nekoration.registry.OrnamentsRegistration;
-import io.devbobcorn.nekoration.registry.WoodenBlocksRegistration;
-import io.devbobcorn.nekoration.registry.StoneBlocksRegistration;
+import io.devbobcorn.nekoration.registry.OrnamentRegistration;
+import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
+import io.devbobcorn.nekoration.registry.StoneBlockRegistration;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Nekoration.MODID)
@@ -46,18 +46,18 @@ public class Nekoration {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     static {
-        WoodenBlocksRegistration.register(BLOCKS, ITEMS);
-        StoneBlocksRegistration.register(BLOCKS, ITEMS);
-        OrnamentsRegistration.register(BLOCKS, ITEMS);
+        WoodenBlockRegistration.register(BLOCKS, ITEMS);
+        StoneBlockRegistration.register(BLOCKS, ITEMS);
+        OrnamentRegistration.register(BLOCKS, ITEMS);
     }
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_STONE_BLOCKS_TAB =
         CREATIVE_MODE_TABS.register("nekoration_stone_blocks", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_stone_blocks"))
-            .icon(() -> DyeableBlockItem.createCreativeTabStack(StoneBlocksRegistration.iconItem().get()))
+            .icon(() -> DyeableBlockItem.createCreativeTabStack(StoneBlockRegistration.iconItem().get()))
             .displayItems((parameters, output) -> {
                 ArrayList<ItemStack> stacks = new ArrayList<>();
-                StoneBlocksRegistration.blockItemsView().forEach(holder -> {
+                StoneBlockRegistration.blockItemsView().forEach(holder -> {
                     for (EnumNekoColor color : EnumNekoColor.values()) {
                         stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
                     }
@@ -71,26 +71,26 @@ public class Nekoration {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_WOODEN_BLOCKS_TAB =
         CREATIVE_MODE_TABS.register("nekoration_wooden_blocks", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_wooden_blocks"))
-            .icon(() -> DyeableBlockItem.createCreativeTabStack(WoodenBlocksRegistration.iconItem().get()))
+            .icon(() -> DyeableBlockItem.createCreativeTabStack(WoodenBlockRegistration.iconItem().get()))
             .displayItems((parameters, output) -> {
                 ArrayList<ItemStack> stacks = new ArrayList<>();
-                WoodenBlocksRegistration.halfTimberBlockItemsView().forEach(holder -> {
+                WoodenBlockRegistration.halfTimberBlockItemsView().forEach(holder -> {
                     stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.WHITE));
                 });
                 stacks.sort(HalfTimberCreativeTabOrdering.stackComparator());
                 stacks.forEach(output::accept);
-                WoodenBlocksRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
-                WoodenBlocksRegistration.furnitureBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
+                WoodenBlockRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
+                WoodenBlockRegistration.furnitureBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
             })
             .build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_ORNAMENTS_TAB =
         CREATIVE_MODE_TABS.register("nekoration_ornaments", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_ornaments"))
-            .icon(() -> DyeableBlockItem.createCreativeTabStack(OrnamentsRegistration.windowPlantBlockItem().get()))
+            .icon(() -> DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.windowPlantBlockItem().get()))
             .displayItems((parameters, output) -> {
                 for (EnumNekoColor color : EnumNekoColor.values()) {
-                    output.accept(DyeableBlockItem.createCreativeTabStack(OrnamentsRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));
+                    output.accept(DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));
                 }
             })
             .build());

@@ -8,7 +8,7 @@ import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
-import io.devbobcorn.nekoration.registry.WoodenBlocksRegistration;
+import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.core.NonNullList;
@@ -204,7 +204,7 @@ public final class NekoCreativeTabFilterClient {
             return;
         }
         NonNullList<ItemStack> out = NonNullList.create();
-        for (var holder : WoodenBlocksRegistration.halfTimberBlockItemsView()) {
+        for (var holder : WoodenBlockRegistration.halfTimberBlockItemsView()) {
             Item item = holder.get();
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (id == null || !Nekoration.MODID.equals(id.getNamespace())) {
@@ -218,7 +218,7 @@ public final class NekoCreativeTabFilterClient {
                 out.add(DyeableBlockItem.createCreativeTabStack(item, EnumNekoColor.WHITE));
             }
         }
-        for (var holder : WoodenBlocksRegistration.windowBlockItemsView()) {
+        for (var holder : WoodenBlockRegistration.windowBlockItemsView()) {
             Item item = holder.get();
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (id == null || !Nekoration.MODID.equals(id.getNamespace())) {

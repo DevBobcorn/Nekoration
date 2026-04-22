@@ -23,10 +23,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /**
  * Registers dyeable stone blocks.
  */
-public final class StoneBlocksRegistration {
+public final class StoneBlockRegistration {
     public static final List<DeferredItem<DyeableBlockItem>> STONE_BLOCK_ITEMS = new ArrayList<>();
 
-    private StoneBlocksRegistration() {
+    private StoneBlockRegistration() {
     }
 
     private static BlockBehaviour.Properties stoneProperties() {

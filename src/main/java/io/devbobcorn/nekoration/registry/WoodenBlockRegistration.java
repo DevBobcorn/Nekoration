@@ -23,7 +23,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /**
  * Registers wooden blocks for each {@link NekoWood}.
  */
-public final class WoodenBlocksRegistration {
+public final class WoodenBlockRegistration {
     public enum WindowVariant {
         SIMPLE("simple"),
         ARCH("arch"),
@@ -42,11 +42,29 @@ public final class WoodenBlocksRegistration {
         }
     }
 
+    public enum ContainerVariant {
+        CABINET("cabinet"),
+        CUPBOARD("cupboard"),
+        DRAWER("drawer"),
+        DRAWER_CHEST("drawer_chest"),
+        WALL_SHELF("wall_shelf");
+
+        private final String id;
+
+        ContainerVariant(String id) {
+            this.id = id;
+        }
+
+        public String id() {
+            return id;
+        }
+    }
+
     public static final List<DeferredItem<DyeableBlockItem>> HALF_TIMBER_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<BlockItem>> WINDOW_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<BlockItem>> CONTAINER_BLOCK_ITEMS = new ArrayList<>();
 
-    private WoodenBlocksRegistration() {
+    private WoodenBlockRegistration() {
     }
 
     public static void register(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {
