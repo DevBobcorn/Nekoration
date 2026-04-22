@@ -2,7 +2,9 @@ package io.devbobcorn.nekoration.registry;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
@@ -63,6 +65,8 @@ public final class WoodenBlockRegistration {
     public static final List<DeferredItem<DyeableBlockItem>> HALF_TIMBER_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<BlockItem>> WINDOW_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<BlockItem>> CONTAINER_BLOCK_ITEMS = new ArrayList<>();
+    public static final Map<NekoWood, List<DeferredItem<DyeableBlockItem>>> DYED_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
+    public static final Map<NekoWood, List<DeferredItem<BlockItem>>> PLAIN_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
 
     private WoodenBlockRegistration() {
     }
@@ -70,58 +74,76 @@ public final class WoodenBlockRegistration {
     public static void register(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {
         for (NekoWood wood : NekoWood.values()) {
             String w = wood.id();
+            List<DeferredItem<DyeableBlockItem>> dyedByWood = DYED_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood, ignored -> new ArrayList<>());
+            List<DeferredItem<BlockItem>> plainByWood = PLAIN_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood, ignored -> new ArrayList<>());
 
             for (int p = 0; p <= 9; p++) {
                 String id = w + "_half_timber_p" + p;
                 DeferredBlock<Block> block = blocks.register(id, () -> new DyeableBlock(wood.plankProperties()));
-                HALF_TIMBER_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
+                DeferredItem<DyeableBlockItem> registered = registerDyeableBlockItem(items, id, block);
+                HALF_TIMBER_BLOCK_ITEMS.add(registered);
+                dyedByWood.add(registered);
             }
 
-            registerPillar(blocks, items, wood, w, 0, VerticalConnectBlock.ConnectionType.PILLAR);
-            registerPillar(blocks, items, wood, w, 1, VerticalConnectBlock.ConnectionType.TRIPLE);
-            registerPillar(blocks, items, wood, w, 2, VerticalConnectBlock.ConnectionType.TRIPLE);
+            registerPillar(blocks, items, wood, w, 0, VerticalConnectBlock.ConnectionType.PILLAR, dyedByWood);
+            registerPillar(blocks, items, wood, w, 1, VerticalConnectBlock.ConnectionType.TRIPLE, dyedByWood);
+            registerPillar(blocks, items, wood, w, 2, VerticalConnectBlock.ConnectionType.TRIPLE, dyedByWood);
 
             for (WindowVariant variant : WindowVariant.values()) {
                 String id = w + "_window_" + variant.id();
                 DeferredBlock<Block> block = blocks.register(id,
                         () -> new WindowBlock(wood.plankProperties().noOcclusion(),
                                 VerticalConnectBlock.ConnectionType.PILLAR, false));
-                WINDOW_BLOCK_ITEMS.add(registerBlockItem(items, id, block));
+                DeferredItem<BlockItem> registered = registerBlockItem(items, id, block);
+                WINDOW_BLOCK_ITEMS.add(registered);
+                plainByWood.add(registered);
             }
 
             String cupboardId = w + "_cupboard";
             DeferredBlock<Block> cupboard = blocks.register(cupboardId,
                     () -> new CupboardBlock(wood.plankProperties().noOcclusion()));
-            CONTAINER_BLOCK_ITEMS.add(registerBlockItem(items, cupboardId, cupboard));
+            DeferredItem<BlockItem> cupboardItem = registerBlockItem(items, cupboardId, cupboard);
+            CONTAINER_BLOCK_ITEMS.add(cupboardItem);
+            plainByWood.add(cupboardItem);
 
             String wallShelfId = w + "_wall_shelf";
             DeferredBlock<Block> wallShelf = blocks.register(wallShelfId,
                     () -> new WallShelfBlock(wood.plankProperties().noOcclusion()));
-            CONTAINER_BLOCK_ITEMS.add(registerBlockItem(items, wallShelfId, wallShelf));
+            DeferredItem<BlockItem> wallShelfItem = registerBlockItem(items, wallShelfId, wallShelf);
+            CONTAINER_BLOCK_ITEMS.add(wallShelfItem);
+            plainByWood.add(wallShelfItem);
 
             String cabinetId = w + "_cabinet";
             DeferredBlock<Block> cabinet = blocks.register(cabinetId,
                     () -> new CabinetBlock(wood.plankProperties(), true));
-            CONTAINER_BLOCK_ITEMS.add(registerBlockItem(items, cabinetId, cabinet));
+            DeferredItem<BlockItem> cabinetItem = registerBlockItem(items, cabinetId, cabinet);
+            CONTAINER_BLOCK_ITEMS.add(cabinetItem);
+            plainByWood.add(cabinetItem);
 
             String drawerId = w + "_drawer";
             DeferredBlock<Block> drawer = blocks.register(drawerId,
                     () -> new CabinetBlock(wood.plankProperties(), false));
-            CONTAINER_BLOCK_ITEMS.add(registerBlockItem(items, drawerId, drawer));
+            DeferredItem<BlockItem> drawerItem = registerBlockItem(items, drawerId, drawer);
+            CONTAINER_BLOCK_ITEMS.add(drawerItem);
+            plainByWood.add(drawerItem);
 
             String drawerChestId = w + "_drawer_chest";
             DeferredBlock<Block> drawerChest = blocks.register(drawerChestId,
                     () -> new CabinetBlock(wood.plankProperties(), true));
-            CONTAINER_BLOCK_ITEMS.add(registerBlockItem(items, drawerChestId, drawerChest));
+            DeferredItem<BlockItem> drawerChestItem = registerBlockItem(items, drawerChestId, drawerChest);
+            CONTAINER_BLOCK_ITEMS.add(drawerChestItem);
+            plainByWood.add(drawerChestItem);
         }
 
     }
 
     private static void registerPillar(DeferredRegister.Blocks blocks, DeferredRegister.Items items, NekoWood wood,
-            String woodId, int index, VerticalConnectBlock.ConnectionType type) {
+            String woodId, int index, VerticalConnectBlock.ConnectionType type, List<DeferredItem<DyeableBlockItem>> dyedByWood) {
         String id = woodId + "_half_timber_pillar_p" + index;
         DeferredBlock<Block> block = blocks.register(id, () -> new DyeableVerticalConnectBlock(wood.plankProperties(), type, false));
-        HALF_TIMBER_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
+        DeferredItem<DyeableBlockItem> registered = registerDyeableBlockItem(items, id, block);
+        HALF_TIMBER_BLOCK_ITEMS.add(registered);
+        dyedByWood.add(registered);
     }
 
     private static DeferredItem<DyeableBlockItem> registerDyeableBlockItem(DeferredRegister.Items items, String id,
@@ -144,6 +166,14 @@ public final class WoodenBlockRegistration {
 
     public static List<DeferredItem<BlockItem>> furnitureBlockItemsView() {
         return Collections.unmodifiableList(CONTAINER_BLOCK_ITEMS);
+    }
+
+    public static List<DeferredItem<DyeableBlockItem>> dyedItemsForWood(NekoWood wood) {
+        return Collections.unmodifiableList(DYED_BLOCK_ITEMS_BY_WOOD.getOrDefault(wood, List.of()));
+    }
+
+    public static List<DeferredItem<BlockItem>> plainItemsForWood(NekoWood wood) {
+        return Collections.unmodifiableList(PLAIN_BLOCK_ITEMS_BY_WOOD.getOrDefault(wood, List.of()));
     }
 
     /** Creative tab icon. */

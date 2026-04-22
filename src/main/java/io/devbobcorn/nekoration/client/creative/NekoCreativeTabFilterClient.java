@@ -1,9 +1,6 @@
 package io.devbobcorn.nekoration.client.creative;
 
-import java.util.Arrays;
-
 import io.devbobcorn.nekoration.HalfTimberCreativeTabOrdering;
-import io.devbobcorn.nekoration.HalfTimberItemPaths;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.NekoWood;
@@ -12,9 +9,7 @@ import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,7 +23,7 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
  * Registered on {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS} from client setup.
  */
 public final class NekoCreativeTabFilterClient {
-    private static final boolean[] WOOD_ENABLED = new boolean[NekoWood.values().length];
+    private static NekoWood selectedWood = NekoWood.values()[0];
 
     private static int woodStartIndex;
     private static CreativeTabIconButton btnScrollUp;
@@ -37,16 +32,12 @@ public final class NekoCreativeTabFilterClient {
     private static CreativeModeTab lastSeenTab;
     private static boolean filterChromeShown;
 
-    static {
-        selectOnly(NekoWood.values()[0]);
-    }
-
     private NekoCreativeTabFilterClient() {
     }
 
     @SubscribeEvent
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
-        selectOnly(NekoWood.values()[0]);
+        selectWoodType(NekoWood.values()[0]);
         woodStartIndex = 0;
         lastSeenTab = null;
     }
@@ -80,7 +71,7 @@ public final class NekoCreativeTabFilterClient {
 
         for (int i = 0; i < 4; i++) {
             WoodTypeFilterButton b = new WoodTypeFilterButton(0, 0, (wood, on) -> {
-                selectOnly(wood);
+                selectWoodType(wood);
                 updateWoodSlotButtons(creative);
                 Minecraft mc = Minecraft.getInstance();
                 if (mc.screen instanceof CreativeModeInventoryScreen open) {
@@ -165,7 +156,7 @@ public final class NekoCreativeTabFilterClient {
             int idx = woodStartIndex + i;
             if (idx < v.length) {
                 NekoWood w = v[idx];
-                woodSlots[i].bind(w, WOOD_ENABLED[w.ordinal()], left - 28, top + 29 * i + 10);
+                woodSlots[i].bind(w, selectedWood == w, left - 28, top + 29 * i + 10);
             } else {
                 woodSlots[i].bind(null, true, 0, 0);
             }
@@ -174,26 +165,12 @@ public final class NekoCreativeTabFilterClient {
         refreshScrollButtonStates();
     }
 
-    private static void selectOnly(NekoWood selected) {
-        Arrays.fill(WOOD_ENABLED, false);
-        WOOD_ENABLED[selected.ordinal()] = true;
+    private static void selectWoodType(NekoWood selected) {
+        selectedWood = selected;
     }
 
     private static boolean isOurTab(CreativeModeTab tab) {
         return tab != null && tab == Nekoration.NEKORATION_WOODEN_BLOCKS_TAB.get();
-    }
-
-    private static NekoWood parseWoodForFilteredItem(String path) {
-        NekoWood halfTimber = HalfTimberItemPaths.parseWood(path);
-        if (halfTimber != null) {
-            return halfTimber;
-        }
-        for (NekoWood wood : NekoWood.values()) {
-            if (path.startsWith(wood.id() + "_window_")) {
-                return wood;
-            }
-        }
-        return null;
     }
 
     private static void applyFilteredItems(CreativeModeInventoryScreen screen) {
@@ -204,33 +181,13 @@ public final class NekoCreativeTabFilterClient {
             return;
         }
         NonNullList<ItemStack> out = NonNullList.create();
-        for (var holder : WoodenBlockRegistration.halfTimberBlockItemsView()) {
+        for (var holder : WoodenBlockRegistration.dyedItemsForWood(selectedWood)) {
             Item item = holder.get();
-            ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-            if (id == null || !Nekoration.MODID.equals(id.getNamespace())) {
-                continue;
-            }
-            NekoWood w = parseWoodForFilteredItem(id.getPath());
-            if (w == null) {
-                continue;
-            }
-            if (WOOD_ENABLED[w.ordinal()]) {
-                out.add(DyeableBlockItem.createCreativeTabStack(item, EnumNekoColor.WHITE));
-            }
+            out.add(DyeableBlockItem.createCreativeTabStack(item, EnumNekoColor.WHITE));
         }
-        for (var holder : WoodenBlockRegistration.windowBlockItemsView()) {
+        for (var holder : WoodenBlockRegistration.plainItemsForWood(selectedWood)) {
             Item item = holder.get();
-            ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-            if (id == null || !Nekoration.MODID.equals(id.getNamespace())) {
-                continue;
-            }
-            NekoWood w = parseWoodForFilteredItem(id.getPath());
-            if (w == null) {
-                continue;
-            }
-            if (WOOD_ENABLED[w.ordinal()]) {
-                out.add(new ItemStack(item));
-            }
+            out.add(new ItemStack(item));
         }
         out.sort(HalfTimberCreativeTabOrdering.stackComparator());
         picker.items.clear();
