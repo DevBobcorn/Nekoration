@@ -40,6 +40,8 @@ public final class WoodenTextureAssetProvider implements DataProvider {
             "window_simple_t2.png", "window_glass_t2.png");
     private static final Map<String, String> CONTAINER_OVERLAYS = Map.of(
             "cabinet_front.png", "cabinet_knob.png",
+            "cupboard_front_d0.png", "cupboard_glass.png",
+            "cupboard_front_d1.png", "cupboard_glass.png",
             "drawer_front.png", "drawer_knob.png",
             "drawer_chest_front.png", "drawer_chest_knob.png");
 

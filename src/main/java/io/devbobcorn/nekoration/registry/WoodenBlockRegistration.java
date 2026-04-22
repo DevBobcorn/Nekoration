@@ -11,6 +11,7 @@ import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
 import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.blocks.VerticalConnectBlock;
 import io.devbobcorn.nekoration.blocks.WindowBlock;
+import io.devbobcorn.nekoration.blocks.entities.CabinetBlockEntity;
 import io.devbobcorn.nekoration.blocks.containers.CabinetBlock;
 import io.devbobcorn.nekoration.blocks.containers.CupboardBlock;
 import io.devbobcorn.nekoration.blocks.containers.WallShelfBlock;
@@ -65,6 +66,8 @@ public final class WoodenBlockRegistration {
     public static final List<DeferredItem<DyeableBlockItem>> HALF_TIMBER_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<BlockItem>> WINDOW_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<BlockItem>> CONTAINER_BLOCK_ITEMS = new ArrayList<>();
+    /** All {@link CabinetBlock} instances that use {@link CabinetBlockEntity}. */
+    public static final List<DeferredBlock<Block>> CABINET_BLOCKS_FOR_ENTITY = new ArrayList<>();
     public static final Map<NekoWood, List<DeferredItem<DyeableBlockItem>>> DYED_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
     public static final Map<NekoWood, List<DeferredItem<BlockItem>>> PLAIN_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
 
@@ -116,6 +119,7 @@ public final class WoodenBlockRegistration {
             String cabinetId = w + "_cabinet";
             DeferredBlock<Block> cabinet = blocks.register(cabinetId,
                     () -> new CabinetBlock(wood.plankProperties(), true));
+            CABINET_BLOCKS_FOR_ENTITY.add(cabinet);
             DeferredItem<BlockItem> cabinetItem = registerBlockItem(items, cabinetId, cabinet);
             CONTAINER_BLOCK_ITEMS.add(cabinetItem);
             plainByWood.add(cabinetItem);
@@ -123,6 +127,7 @@ public final class WoodenBlockRegistration {
             String drawerId = w + "_drawer";
             DeferredBlock<Block> drawer = blocks.register(drawerId,
                     () -> new CabinetBlock(wood.plankProperties(), false));
+            CABINET_BLOCKS_FOR_ENTITY.add(drawer);
             DeferredItem<BlockItem> drawerItem = registerBlockItem(items, drawerId, drawer);
             CONTAINER_BLOCK_ITEMS.add(drawerItem);
             plainByWood.add(drawerItem);
@@ -130,6 +135,7 @@ public final class WoodenBlockRegistration {
             String drawerChestId = w + "_drawer_chest";
             DeferredBlock<Block> drawerChest = blocks.register(drawerChestId,
                     () -> new CabinetBlock(wood.plankProperties(), true));
+            CABINET_BLOCKS_FOR_ENTITY.add(drawerChest);
             DeferredItem<BlockItem> drawerChestItem = registerBlockItem(items, drawerChestId, drawerChest);
             CONTAINER_BLOCK_ITEMS.add(drawerChestItem);
             plainByWood.add(drawerChestItem);
@@ -166,6 +172,10 @@ public final class WoodenBlockRegistration {
 
     public static List<DeferredItem<BlockItem>> furnitureBlockItemsView() {
         return Collections.unmodifiableList(CONTAINER_BLOCK_ITEMS);
+    }
+
+    public static Block[] cabinetBlocksForEntity() {
+        return CABINET_BLOCKS_FOR_ENTITY.stream().map(DeferredBlock::get).toArray(Block[]::new);
     }
 
     public static List<DeferredItem<DyeableBlockItem>> dyedItemsForWood(NekoWood wood) {
