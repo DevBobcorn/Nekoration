@@ -1,0 +1,10 @@
+{
+  "parent": "nekoration:block/container/drawer_chest",
+  "textures": {
+    "0": "nekoration:block/container/acacia/cabinet_top",
+    "1": "nekoration:block/container/acacia/drawer_chest_front",
+    "3": "nekoration:block/container/acacia/cabinet_side",
+    "4": "nekoration:block/container/acacia/cabinet_back",
+    "particle": "nekoration:block/container/acacia/cabinet_top"
+  }
+}

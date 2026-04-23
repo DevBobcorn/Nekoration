@@ -1,0 +1,10 @@
+{
+  "parent": "nekoration:block/container/cabinet",
+  "textures": {
+    "0": "nekoration:block/container/bamboo/cabinet_top",
+    "1": "nekoration:block/container/bamboo/cabinet_front",
+    "3": "nekoration:block/container/bamboo/cabinet_side",
+    "4": "nekoration:block/container/bamboo/cabinet_back",
+    "particle": "nekoration:block/container/bamboo/cabinet_top"
+  }
+}

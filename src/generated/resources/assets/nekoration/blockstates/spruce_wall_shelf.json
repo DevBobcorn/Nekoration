@@ -1,0 +1,184 @@
+{
+  "variants": {
+    "facing=east,horizontal_connection=d0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=d0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=d1,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=d1,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=s0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_s0",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=s0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_s0",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=t0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=t0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=t1,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t1",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=t1,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t1",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=t2,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=t2,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 90
+    },
+    "facing=north,horizontal_connection=d0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0"
+    },
+    "facing=north,horizontal_connection=d0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0"
+    },
+    "facing=north,horizontal_connection=d1,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2"
+    },
+    "facing=north,horizontal_connection=d1,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2"
+    },
+    "facing=north,horizontal_connection=s0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_s0"
+    },
+    "facing=north,horizontal_connection=s0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_s0"
+    },
+    "facing=north,horizontal_connection=t0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0"
+    },
+    "facing=north,horizontal_connection=t0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0"
+    },
+    "facing=north,horizontal_connection=t1,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t1"
+    },
+    "facing=north,horizontal_connection=t1,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t1"
+    },
+    "facing=north,horizontal_connection=t2,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2"
+    },
+    "facing=north,horizontal_connection=t2,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2"
+    },
+    "facing=south,horizontal_connection=d0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=d0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=d1,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=d1,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=s0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_s0",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=s0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_s0",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=t0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=t0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=t1,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t1",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=t1,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t1",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=t2,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=t2,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 180
+    },
+    "facing=west,horizontal_connection=d0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=d0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=d1,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=d1,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=s0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_s0",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=s0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_s0",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=t0,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=t0,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t0",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=t1,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t1",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=t1,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t1",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=t2,open=false": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=t2,open=true": {
+      "model": "nekoration:block/container/spruce/wall_shelf_t2",
+      "y": 270
+    }
+  }
+}

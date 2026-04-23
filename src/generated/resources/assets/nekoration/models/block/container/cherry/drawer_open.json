@@ -1,0 +1,10 @@
+{
+  "parent": "nekoration:block/container/drawer_open",
+  "textures": {
+    "0": "nekoration:block/container/cherry/cabinet_top",
+    "1": "nekoration:block/container/cherry/drawer_front_open",
+    "3": "nekoration:block/container/cherry/drawer_side",
+    "4": "nekoration:block/container/cherry/drawer_back",
+    "particle": "nekoration:block/container/cherry/cabinet_top"
+  }
+}

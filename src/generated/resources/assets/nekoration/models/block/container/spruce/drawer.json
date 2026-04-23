@@ -1,0 +1,10 @@
+{
+  "parent": "nekoration:block/container/drawer",
+  "textures": {
+    "0": "nekoration:block/container/spruce/cabinet_top",
+    "1": "nekoration:block/container/spruce/drawer_front",
+    "3": "nekoration:block/container/spruce/drawer_side",
+    "4": "nekoration:block/container/spruce/drawer_back",
+    "particle": "nekoration:block/container/spruce/cabinet_top"
+  }
+}

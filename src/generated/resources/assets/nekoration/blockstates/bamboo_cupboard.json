@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "bottom=false,facing=east,open=false": {
+      "model": "nekoration:block/container/bamboo/cupboard_d0",
+      "y": 90
+    },
+    "bottom=false,facing=east,open=true": {
+      "model": "nekoration:block/container/bamboo/cupboard_d0",
+      "y": 90
+    },
+    "bottom=false,facing=north,open=false": {
+      "model": "nekoration:block/container/bamboo/cupboard_d0"
+    },
+    "bottom=false,facing=north,open=true": {
+      "model": "nekoration:block/container/bamboo/cupboard_d0"
+    },
+    "bottom=false,facing=south,open=false": {
+      "model": "nekoration:block/container/bamboo/cupboard_d0",
+      "y": 180
+    },
+    "bottom=false,facing=south,open=true": {
+      "model": "nekoration:block/container/bamboo/cupboard_d0",
+      "y": 180
+    },
+    "bottom=false,facing=west,open=false": {
+      "model": "nekoration:block/container/bamboo/cupboard_d0",
+      "y": 270
+    },
+    "bottom=false,facing=west,open=true": {
+      "model": "nekoration:block/container/bamboo/cupboard_d0",
+      "y": 270
+    },
+    "bottom=true,facing=east,open=false": {
+      "model": "nekoration:block/container/bamboo/cupboard_d1",
+      "y": 90
+    },
+    "bottom=true,facing=east,open=true": {
+      "model": "nekoration:block/container/bamboo/cupboard_d1",
+      "y": 90
+    },
+    "bottom=true,facing=north,open=false": {
+      "model": "nekoration:block/container/bamboo/cupboard_d1"
+    },
+    "bottom=true,facing=north,open=true": {
+      "model": "nekoration:block/container/bamboo/cupboard_d1"
+    },
+    "bottom=true,facing=south,open=false": {
+      "model": "nekoration:block/container/bamboo/cupboard_d1",
+      "y": 180
+    },
+    "bottom=true,facing=south,open=true": {
+      "model": "nekoration:block/container/bamboo/cupboard_d1",
+      "y": 180
+    },
+    "bottom=true,facing=west,open=false": {
+      "model": "nekoration:block/container/bamboo/cupboard_d1",
+      "y": 270
+    },
+    "bottom=true,facing=west,open=true": {
+      "model": "nekoration:block/container/bamboo/cupboard_d1",
+      "y": 270
+    }
+  }
+}
