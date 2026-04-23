@@ -93,7 +93,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                         int y = horizontalRotationY(facing);
                         for (boolean bottom : List.of(false, true)) {
                             for (boolean open : List.of(false, true)) {
-                                String modelName = bottom ? "cupboard_d1" : "cupboard_d0";
+                                String modelName = bottom ? "cupboard_d0" : "cupboard_d1";
                                 String key = "bottom=" + bottom + ",facing=" + facing + ",open=" + open;
                                 blockstateVariants.put(key,
                                         horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
@@ -104,7 +104,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                     writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
                             Map.of("variants", blockstateVariants));
                     writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
-                            Map.of("parent", modLoc("block/container/" + woodId + "/cupboard_d0")));
+                            Map.of("parent", modLoc("block/container/" + woodId + "/cupboard_d1")));
                 }
                 case DRAWER -> {
                     writeContainerModelFromTemplate(cachedOutput, writes, woodId, "drawer", "drawer");

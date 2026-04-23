@@ -68,6 +68,8 @@ public final class WoodenBlockRegistration {
     public static final List<DeferredItem<BlockItem>> CONTAINER_BLOCK_ITEMS = new ArrayList<>();
     /** All {@link CabinetBlock} instances that use {@link CabinetBlockEntity}. */
     public static final List<DeferredBlock<Block>> CABINET_BLOCKS_FOR_ENTITY = new ArrayList<>();
+    /** Cupboards and wall shelves using {@link io.devbobcorn.nekoration.blocks.entities.ItemDisplayBlockEntity}. */
+    public static final List<DeferredBlock<Block>> ITEM_DISPLAY_BLOCKS_FOR_ENTITY = new ArrayList<>();
     public static final Map<NekoWood, List<DeferredItem<DyeableBlockItem>>> DYED_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
     public static final Map<NekoWood, List<DeferredItem<BlockItem>>> PLAIN_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
 
@@ -105,6 +107,7 @@ public final class WoodenBlockRegistration {
             String cupboardId = w + "_cupboard";
             DeferredBlock<Block> cupboard = blocks.register(cupboardId,
                     () -> new CupboardBlock(wood.plankProperties().noOcclusion()));
+            ITEM_DISPLAY_BLOCKS_FOR_ENTITY.add(cupboard);
             DeferredItem<BlockItem> cupboardItem = registerBlockItem(items, cupboardId, cupboard);
             CONTAINER_BLOCK_ITEMS.add(cupboardItem);
             plainByWood.add(cupboardItem);
@@ -112,6 +115,7 @@ public final class WoodenBlockRegistration {
             String wallShelfId = w + "_wall_shelf";
             DeferredBlock<Block> wallShelf = blocks.register(wallShelfId,
                     () -> new WallShelfBlock(wood.plankProperties().noOcclusion()));
+            ITEM_DISPLAY_BLOCKS_FOR_ENTITY.add(wallShelf);
             DeferredItem<BlockItem> wallShelfItem = registerBlockItem(items, wallShelfId, wallShelf);
             CONTAINER_BLOCK_ITEMS.add(wallShelfItem);
             plainByWood.add(wallShelfItem);
@@ -176,6 +180,10 @@ public final class WoodenBlockRegistration {
 
     public static Block[] cabinetBlocksForEntity() {
         return CABINET_BLOCKS_FOR_ENTITY.stream().map(DeferredBlock::get).toArray(Block[]::new);
+    }
+
+    public static Block[] itemDisplayBlocksForEntity() {
+        return ITEM_DISPLAY_BLOCKS_FOR_ENTITY.stream().map(DeferredBlock::get).toArray(Block[]::new);
     }
 
     public static List<DeferredItem<DyeableBlockItem>> dyedItemsForWood(NekoWood wood) {
