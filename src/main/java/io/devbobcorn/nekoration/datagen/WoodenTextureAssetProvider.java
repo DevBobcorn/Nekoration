@@ -43,7 +43,8 @@ public final class WoodenTextureAssetProvider implements DataProvider {
             "cupboard_front_d0.png", "cupboard_glass.png",
             "cupboard_front_d1.png", "cupboard_glass.png",
             "drawer_front.png", "drawer_knob.png",
-            "drawer_chest_front.png", "drawer_chest_knob.png");
+            "drawer_chest_front.png", "drawer_chest_knob.png",
+            "drawer_chest_open_front.png", "drawer_chest_open_knob.png");
 
     private final Path templateTextureRoot;
     private final Path generatedTextureRoot;

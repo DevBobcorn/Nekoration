@@ -4,8 +4,9 @@
 	"render_type": "cutout_mipped",
 	"textures": {
 		"0": "nekoration:block/container/oak/cabinet_top",
-		"1": "nekoration:block/container/oak/drawer_front",
+		"1": "nekoration:block/container/oak/drawer_front_open",
 		"3": "nekoration:block/container/oak/drawer_side",
+		"4": "nekoration:block/container/oak/drawer_back",
 		"particle": "nekoration:block/container/oak/cabinet_top"
 	},
 	"elements": [
@@ -29,7 +30,7 @@
 			"faces": {
 				"north": {"uv": [0, 1, 16, 16], "texture": "#1", "tintindex": 0},
 				"east": {"uv": [0, 1, 15, 16], "texture": "#3", "cullface": "east", "tintindex": 0},
-				"south": {"uv": [0, 1, 16, 16], "texture": "#1", "cullface": "south", "tintindex": 0},
+				"south": {"uv": [0, 1, 16, 16], "texture": "#4", "cullface": "south", "tintindex": 0},
 				"west": {"uv": [0, 1, 15, 16], "texture": "#3", "cullface": "west", "tintindex": 0}
 			}
 		},
@@ -71,16 +72,6 @@
 				"north": {"uv": [2, 3, 14, 8], "texture": "#1", "tintindex": 0},
 				"south": {"uv": [0, 0, 12, 5], "texture": "#0", "tintindex": 0},
 				"up": {"uv": [0, 0, 12, 1], "texture": "#0", "tintindex": 0}
-			}
-		},
-		{
-			"name": "drawer_back",
-			"from": [2, 8, 0],
-			"to": [14, 13, 1],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 8]},
-			"faces": {
-				"north": {"uv": [2, 3, 14, 8], "texture": "#0", "tintindex": 0},
-				"up": {"uv": [2, 2, 14, 3], "texture": "#0", "tintindex": 0}
 			}
 		},
 		{
