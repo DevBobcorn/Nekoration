@@ -1,6 +1,7 @@
 package io.devbobcorn.nekoration.items;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
+import io.devbobcorn.nekoration.common.ComponentCompat;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.nbt.CompoundTag;
@@ -20,7 +21,7 @@ public class DyeableBlockItem extends BlockItem {
     @Override
     public Component getName(ItemStack stack) {
         String colorKey = "color.nekoration." + (hasColor(stack) ? getColor(stack).getSerializedName() : "unknown");
-        return Component.translatable(getDescriptionId(stack), Component.translatable(colorKey));
+        return Component.translatable(getDescriptionId(stack), ComponentCompat.interpolationArg(colorKey));
     }
 
     public static boolean hasColor(ItemStack stack) {

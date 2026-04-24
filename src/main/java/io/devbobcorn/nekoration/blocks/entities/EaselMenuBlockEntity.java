@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.containers.EaselMenuMenu;
+import io.devbobcorn.nekoration.common.ComponentCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -108,7 +109,7 @@ public class EaselMenuBlockEntity extends RandomizableContainerBlockEntity {
         BlockState state = getBlockState();
         if (state.hasProperty(DyeableBlock.COLOR)) {
             String colorKey = "color.nekoration." + state.getValue(DyeableBlock.COLOR).getSerializedName();
-            return Component.translatable(state.getBlock().getDescriptionId(), Component.translatable(colorKey));
+            return Component.translatable(state.getBlock().getDescriptionId(), ComponentCompat.interpolationArg(colorKey));
         }
         return Component.translatable(state.getBlock().getDescriptionId());
     }

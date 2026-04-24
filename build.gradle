@@ -33,6 +33,7 @@ tasks.named('processResources', ProcessResources).configure {
 
 repositories {
     // Add here additional repositories if required by some of the dependencies below.
+    maven { url = "https://api.modrinth.com/maven" }
 }
 
 base {
@@ -123,6 +124,9 @@ configurations {
 }
 
 dependencies {
+    // Optional: Jade API for tooltip integration (plugin only loads when Jade is present).
+    compileOnly "maven.modrinth:jade:15.10.5+neoforge"
+
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
