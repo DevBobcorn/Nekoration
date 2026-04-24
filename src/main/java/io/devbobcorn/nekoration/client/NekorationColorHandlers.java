@@ -81,6 +81,7 @@ public final class NekorationColorHandlers {
         BlockColor halfTimber = dyeableBlockColor(NekoColorPalette.HALF_TIMBER);
         BlockColor stone = dyeableBlockColor(NekoColorPalette.STONE_COLUMNS);
         WoodenBlockRegistration.halfTimberBlockItemsView().forEach(holder -> event.register(halfTimber, holder.get().getBlock()));
+        WoodenBlockRegistration.easelMenuBlockItemsView().forEach(holder -> event.register(halfTimber, holder.get().getBlock()));
         StoneBlockRegistration.blockItemsView().forEach(holder -> event.register(stone, holder.get().getBlock()));
         event.register(windowPlantBlockColor(), OrnamentRegistration.windowPlantBlock().get());
     }
@@ -90,6 +91,7 @@ public final class NekorationColorHandlers {
         ItemColor halfTimber = dyeableBlockItemColor(NekoColorPalette.HALF_TIMBER);
         ItemColor stone = dyeableBlockItemColor(NekoColorPalette.STONE_COLUMNS);
         WoodenBlockRegistration.halfTimberBlockItemsView().forEach(holder -> event.register(halfTimber, holder.get()));
+        WoodenBlockRegistration.easelMenuBlockItemsView().forEach(holder -> event.register(halfTimber, holder.get()));
         StoneBlockRegistration.blockItemsView().forEach(holder -> event.register(stone, holder.get()));
         event.register(windowPlantItemColor(), OrnamentRegistration.windowPlantBlockItem().get());
     }

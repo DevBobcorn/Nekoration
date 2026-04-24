@@ -187,7 +187,12 @@ public final class NekoCreativeTabFilterClient {
         }
         for (var holder : WoodenBlockRegistration.plainItemsForWood(selectedWood)) {
             Item item = holder.get();
-            out.add(new ItemStack(item));
+            if (item instanceof DyeableBlockItem) {
+                out.add(DyeableBlockItem.createCreativeTabStack(item, EnumNekoColor.WHITE));
+                out.add(DyeableBlockItem.createCreativeTabStack(item, EnumNekoColor.BLACK));
+            } else {
+                out.add(new ItemStack(item));
+            }
         }
         out.sort(HalfTimberCreativeTabOrdering.stackComparator());
         picker.items.clear();

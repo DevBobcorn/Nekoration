@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nekoration:block/container/spruce/easel_menu",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "nekoration:block/container/spruce/easel_menu"
+    },
+    "facing=south": {
+      "model": "nekoration:block/container/spruce/easel_menu",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nekoration:block/container/spruce/easel_menu",
+      "y": 270
+    }
+  }
+}

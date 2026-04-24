@@ -83,7 +83,14 @@ public class Nekoration {
                 stacks.sort(HalfTimberCreativeTabOrdering.stackComparator());
                 stacks.forEach(output::accept);
                 WoodenBlockRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
-                WoodenBlockRegistration.furnitureBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
+                WoodenBlockRegistration.furnitureBlockItemsView().forEach(holder -> {
+                    if (holder.get() instanceof DyeableBlockItem) {
+                        output.accept(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.WHITE));
+                        output.accept(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.BLACK));
+                    } else {
+                        output.accept(new ItemStack(holder.get()));
+                    }
+                });
             })
             .build());
 

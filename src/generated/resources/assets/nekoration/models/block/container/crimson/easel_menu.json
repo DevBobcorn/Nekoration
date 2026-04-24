@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/container/easel_menu",
+  "textures": {
+    "0": "nekoration:block/container/crimson/easel_menu",
+    "particle": "nekoration:block/container/crimson/easel_menu"
+  }
+}

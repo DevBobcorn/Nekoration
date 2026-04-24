@@ -2,6 +2,7 @@ package io.devbobcorn.nekoration.blocks.containers;
 
 import javax.annotation.Nullable;
 
+import io.devbobcorn.nekoration.blocks.DyeableHorizontalBlock;
 import io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -12,17 +13,14 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -32,23 +30,13 @@ import net.minecraft.server.level.ServerPlayer;
 /**
  * Easel menu container block with an 8-slot inventory and custom text overlay.
  */
-public class EaselMenuBlock extends Block implements EntityBlock {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+public class EaselMenuBlock extends DyeableHorizontalBlock implements EntityBlock {
+    public static final DirectionProperty FACING = DyeableHorizontalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
 
     public EaselMenuBlock(Properties properties) {
         super(properties.noOcclusion());
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 
     @Override
