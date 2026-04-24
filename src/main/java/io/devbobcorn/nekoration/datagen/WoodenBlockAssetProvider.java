@@ -144,6 +144,21 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                     writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
                             Map.of("parent", modLoc("block/container/" + woodId + "/drawer_chest")));
                 }
+                case EASEL_MENU -> {
+                    writeContainerModelFromTemplate(cachedOutput, writes, woodId, "easel_menu", "easel_menu");
+
+                    Map<String, Object> blockstateVariants = new LinkedHashMap<>();
+                    for (String facing : List.of("north", "east", "south", "west")) {
+                        int y = horizontalRotationY(facing);
+                        String key = "facing=" + facing;
+                        blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "/easel_menu", y));
+                    }
+
+                    writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
+                            Map.of("variants", blockstateVariants));
+                    writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
+                            Map.of("parent", modLoc("block/container/" + woodId + "/easel_menu")));
+                }
                 case WALL_SHELF -> {
                     writeContainerModelFromTemplate(cachedOutput, writes, woodId, "wall_shelf_s0", "wall_shelf_s0");
                     writeContainerModelFromTemplate(cachedOutput, writes, woodId, "wall_shelf_t0", "wall_shelf_t0");

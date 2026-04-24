@@ -14,6 +14,7 @@ import io.devbobcorn.nekoration.blocks.WindowBlock;
 import io.devbobcorn.nekoration.blocks.entities.CabinetBlockEntity;
 import io.devbobcorn.nekoration.blocks.containers.CabinetBlock;
 import io.devbobcorn.nekoration.blocks.containers.CupboardBlock;
+import io.devbobcorn.nekoration.blocks.containers.EaselMenuBlock;
 import io.devbobcorn.nekoration.blocks.containers.WallShelfBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.BlockItem;
@@ -50,6 +51,7 @@ public final class WoodenBlockRegistration {
         CUPBOARD("cupboard"),
         DRAWER("drawer"),
         DRAWER_CHEST("drawer_chest"),
+        EASEL_MENU("easel_menu"),
         WALL_SHELF("wall_shelf");
 
         private final String id;
@@ -70,6 +72,8 @@ public final class WoodenBlockRegistration {
     public static final List<DeferredBlock<Block>> CABINET_BLOCKS_FOR_ENTITY = new ArrayList<>();
     /** Cupboards and wall shelves using {@link io.devbobcorn.nekoration.blocks.entities.ItemDisplayBlockEntity}. */
     public static final List<DeferredBlock<Block>> ITEM_DISPLAY_BLOCKS_FOR_ENTITY = new ArrayList<>();
+    /** Easel menu blocks using {@link io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity}. */
+    public static final List<DeferredBlock<Block>> EASEL_MENU_BLOCKS_FOR_ENTITY = new ArrayList<>();
     public static final Map<NekoWood, List<DeferredItem<DyeableBlockItem>>> DYED_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
     public static final Map<NekoWood, List<DeferredItem<BlockItem>>> PLAIN_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
 
@@ -143,6 +147,14 @@ public final class WoodenBlockRegistration {
             DeferredItem<BlockItem> drawerChestItem = registerBlockItem(items, drawerChestId, drawerChest);
             CONTAINER_BLOCK_ITEMS.add(drawerChestItem);
             plainByWood.add(drawerChestItem);
+
+            String easelMenuId = w + "_easel_menu";
+            DeferredBlock<Block> easelMenu = blocks.register(easelMenuId,
+                    () -> new EaselMenuBlock(wood.plankProperties().noOcclusion()));
+            EASEL_MENU_BLOCKS_FOR_ENTITY.add(easelMenu);
+            DeferredItem<BlockItem> easelMenuItem = registerBlockItem(items, easelMenuId, easelMenu);
+            CONTAINER_BLOCK_ITEMS.add(easelMenuItem);
+            plainByWood.add(easelMenuItem);
         }
 
     }
@@ -184,6 +196,10 @@ public final class WoodenBlockRegistration {
 
     public static Block[] itemDisplayBlocksForEntity() {
         return ITEM_DISPLAY_BLOCKS_FOR_ENTITY.stream().map(DeferredBlock::get).toArray(Block[]::new);
+    }
+
+    public static Block[] easelMenuBlocksForEntity() {
+        return EASEL_MENU_BLOCKS_FOR_ENTITY.stream().map(DeferredBlock::get).toArray(Block[]::new);
     }
 
     public static List<DeferredItem<DyeableBlockItem>> dyedItemsForWood(NekoWood wood) {

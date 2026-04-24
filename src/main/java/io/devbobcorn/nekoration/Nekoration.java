@@ -24,7 +24,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
+import io.devbobcorn.nekoration.network.NekorationNetwork;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
+import io.devbobcorn.nekoration.registry.ModMenuTypes;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import io.devbobcorn.nekoration.registry.StoneBlockRegistration;
@@ -106,6 +108,8 @@ public class Nekoration {
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
         ModBlockEntities.REGISTER.register(modEventBus);
+        ModMenuTypes.REGISTER.register(modEventBus);
+        modEventBus.addListener(NekorationNetwork::register);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Nekoration) to respond directly to events.

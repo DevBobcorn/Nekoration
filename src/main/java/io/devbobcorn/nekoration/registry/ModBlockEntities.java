@@ -7,6 +7,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.entities.CabinetBlockEntity;
+import io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import io.devbobcorn.nekoration.blocks.entities.ItemDisplayBlockEntity;
 
 public final class ModBlockEntities {
@@ -21,6 +22,11 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ItemDisplayBlockEntity>> ITEM_DISPLAY =
             REGISTER.register("item_display", () -> BlockEntityType.Builder
                     .of(ItemDisplayBlockEntity::new, WoodenBlockRegistration.itemDisplayBlocksForEntity())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EaselMenuBlockEntity>> EASEL_MENU =
+            REGISTER.register("easel_menu", () -> BlockEntityType.Builder
+                    .of(EaselMenuBlockEntity::new, WoodenBlockRegistration.easelMenuBlocksForEntity())
                     .build(null));
 
     private ModBlockEntities() {
