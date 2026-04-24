@@ -1,6 +1,7 @@
 package io.devbobcorn.nekoration.network;
 
 import io.devbobcorn.nekoration.Nekoration;
+import io.devbobcorn.nekoration.blocks.containers.EaselMenuMenu;
 import io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -31,6 +32,9 @@ public record EaselMenuUpdatePayload(BlockPos pos, String[] texts, DyeColor[] co
     public static void handle(EaselMenuUpdatePayload payload, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (!(context.player() instanceof ServerPlayer player)) {
+                return;
+            }
+            if (!(player.containerMenu instanceof EaselMenuMenu menu) || !menu.getEasel().getBlockPos().equals(payload.pos())) {
                 return;
             }
             if (!player.level().isLoaded(payload.pos())) {
@@ -80,7 +84,7 @@ public record EaselMenuUpdatePayload(BlockPos pos, String[] texts, DyeColor[] co
             buffer.writeUtf(i < texts.length ? texts[i] : "");
         }
         for (int i = 0; i < EaselMenuBlockEntity.NUMBER_OF_SLOTS; i++) {
-            DyeColor color = i < colors.length ? colors[i] : DyeColor.GRAY;
+            DyeColor color = i < colors.length ? colors[i] : DyeColor.WHITE;
             buffer.writeEnum(color);
         }
         buffer.writeBoolean(glowing);

@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.server.level.ServerPlayer;
 
 /**
  * Easel menu container block with an 8-slot inventory and custom text overlay.
@@ -90,8 +91,8 @@ public class EaselMenuBlock extends Block implements EntityBlock {
             return InteractionResult.SUCCESS;
         }
         MenuProvider menuProvider = getMenuProvider(state, level, pos);
-        if (menuProvider != null) {
-            player.openMenu(menuProvider);
+        if (menuProvider != null && player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.openMenu(menuProvider, pos);
             PiglinAi.angerNearbyPiglins(player, true);
         }
         return InteractionResult.CONSUME;

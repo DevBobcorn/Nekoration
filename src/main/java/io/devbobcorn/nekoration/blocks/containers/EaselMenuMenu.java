@@ -105,6 +105,9 @@ public class EaselMenuMenu extends AbstractContainerMenu {
     }
 
     private static EaselMenuBlockEntity readBlockEntity(Inventory inventory, FriendlyByteBuf buffer) {
+        if (buffer == null) {
+            throw new IllegalStateException("Missing menu open data for EaselMenuMenu");
+        }
         BlockPos pos = buffer.readBlockPos();
         Level level = inventory.player.level();
         if (level.getBlockEntity(pos) instanceof EaselMenuBlockEntity easel) {

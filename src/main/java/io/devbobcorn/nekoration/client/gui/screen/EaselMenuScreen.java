@@ -3,9 +3,11 @@ package io.devbobcorn.nekoration.client.gui.screen;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.containers.EaselMenuMenu;
 import io.devbobcorn.nekoration.network.EaselMenuUpdatePayload;
+import com.mojang.math.Axis;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,13 +23,19 @@ import org.lwjgl.glfw.GLFW;
 public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
     private static final ResourceLocation BACKGROUND =
             ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "textures/gui/easel_menu.png");
+    private static final ResourceLocation ICONS =
+            ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "textures/gui/icons.png");
     private static final int LINE_COUNT = 8;
+    private static final int MAX_TEXT_WIDTH = 42;
 
     private final EditBox[] textInputs = new EditBox[LINE_COUNT];
 
     private Button glowButton;
+    private Component glowEnableTooltip;
+    private Component glowDisableTooltip;
     private int selectedColor = DyeColor.WHITE.getId();
     private int editingText = 0;
+    private boolean glowing;
     private boolean showColorPicker;
     private Component tipMessageOn;
     private Component tipMessageOff;
@@ -48,23 +56,29 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
             int y = topPos + extraOffsetY + 36 + (i % 4) * 18;
             EditBox input = new EditBox(font, x, y, 70, 18, Component.empty());
             input.setMaxLength(32);
+            input.setFilter(value -> font.width(value) <= MAX_TEXT_WIDTH);
+            input.setValue(menu.getEasel().getMessage(i).getString());
             int line = i;
-            input.setResponder(value -> menu.getEasel().setMessage(line, Component.literal(value)));
+            input.setResponder(value -> {
+                menu.getEasel().setMessage(line, Component.literal(value));
+                sendUpdateToServer();
+            });
             input.setTextColor(menu.getEasel().getColor(i).getTextColor());
             input.setTextColorUneditable(DyeColor.LIGHT_GRAY.getTextColor());
             input.setBordered(false);
-            input.setValue(menu.getEasel().getMessage(i).getString());
             addRenderableWidget(input);
             textInputs[i] = input;
         }
 
-        Component enableGlow = Component.translatable("gui.nekoration.button.enable_glow");
-        Component disableGlow = Component.translatable("gui.nekoration.button.disable_glow");
-        boolean glowing = menu.getEasel().isGlowing();
-        glowButton = Button.builder(glowing ? disableGlow : enableGlow, button -> {
-            boolean glow = menu.getEasel().toggleGlowing();
-            button.setMessage(glow ? disableGlow : enableGlow);
-        }).bounds(leftPos + imageWidth + 2, topPos + 4, 62, 20).build();
+        glowEnableTooltip = Component.translatable("gui.nekoration.button.enable_glow");
+        glowDisableTooltip = Component.translatable("gui.nekoration.button.disable_glow");
+        glowing = menu.getEasel().isGlowing();
+        glowButton = Button.builder(Component.empty(), button -> {
+            glowing = menu.getEasel().toggleGlowing();
+            updateGlowTooltip();
+            sendUpdateToServer();
+        }).bounds(leftPos + imageWidth + 2, topPos + 4, 20, 20).build();
+        updateGlowTooltip();
         addRenderableWidget(glowButton);
 
         setFocused(textInputs[0]);
@@ -81,15 +95,7 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
 
     @Override
     public void onClose() {
-        String[] texts = new String[LINE_COUNT];
-        for (int i = 0; i < LINE_COUNT; i++) {
-            texts[i] = menu.getEasel().getMessage(i).getString();
-        }
-        PacketDistributor.sendToServer(new EaselMenuUpdatePayload(
-                menu.getEasel().getBlockPos(),
-                texts,
-                menu.getEasel().getColors(),
-                menu.getEasel().isGlowing()));
+        sendUpdateToServer();
         super.onClose();
     }
 
@@ -121,13 +127,14 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
                 if (i == selectedColor) {
                     continue;
                 }
-                int x = leftPos - 20 - (i == selectedColor ? 4 : 0);
+                int x = leftPos - 16;
                 int y = topPos + 8 + i * 14;
                 if (mouseX >= x && mouseX <= x + 12 && mouseY >= y && mouseY <= y + 12) {
                     DyeColor color = DyeColor.byId(i);
                     menu.getEasel().setColor(editingText, color);
                     textInputs[editingText].setTextColor(color.getTextColor());
                     selectedColor = i;
+                    sendUpdateToServer();
                     setFocused(textInputs[editingText]);
                     textInputs[editingText].setFocused(true);
                     return true;
@@ -144,8 +151,12 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
         if (showColorPicker) {
             renderColorPicker(graphics);
         }
-        graphics.drawString(font, showColorPicker ? tipMessageOff : tipMessageOn, leftPos + imageWidth + 4, topPos + 30,
-                0xFFAAAAAA, false);
+        renderGlowButtonIcon(graphics);
+        graphics.pose().pushPose();
+        graphics.pose().mulPose(Axis.ZP.rotationDegrees(90.0F));
+        graphics.pose().translate(topPos + 30.0F, -leftPos - 192.0F, 0.0F);
+        graphics.drawString(font, showColorPicker ? tipMessageOff : tipMessageOn, 1, 1, 0xFFAAAAAA, false);
+        graphics.pose().popPose();
         renderTooltip(graphics, mouseX, mouseY);
     }
 
@@ -156,18 +167,20 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(font, title, 6, 8, DyeColor.GRAY.getTextColor(), false);
+        graphics.drawString(font, title, 6, 8, DyeColor.BLACK.getTextColor(), false);
     }
 
     private void renderColorPicker(GuiGraphics graphics) {
         for (int i = 0; i < DyeColor.values().length; i++) {
-            int x = leftPos - 20 - (i == selectedColor ? 4 : 0);
+            int x = leftPos - 16 - (i == selectedColor ? 4 : 0);
             int y = topPos + 8 + i * 14;
-            int rgb = DyeColor.byId(i).getTextColor();
-            int argb = 0xFF000000 | (rgb & 0x00FFFFFF);
-            graphics.fill(x, y, x + 12, y + 12, argb);
-            int border = i == selectedColor ? 0xFFFFFFFF : 0xFF444444;
-            graphics.renderOutline(x - 1, y - 1, 14, 14, border);
+            int rgb = DyeColor.byId(i).getTextColor() & 0x00FFFFFF;
+            float red = ((rgb >> 16) & 0xFF) / 255.0F;
+            float green = ((rgb >> 8) & 0xFF) / 255.0F;
+            float blue = (rgb & 0xFF) / 255.0F;
+            graphics.setColor(red, green, blue, 1.0F);
+            graphics.blit(BACKGROUND, x, y, 0, 240, 12, 12, 256, 256);
+            graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 
@@ -179,5 +192,35 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
                 return;
             }
         }
+    }
+
+    private void sendUpdateToServer() {
+        PacketDistributor.sendToServer(new EaselMenuUpdatePayload(
+                menu.getEasel().getBlockPos(),
+                collectTexts(),
+                menu.getEasel().getColors(),
+                menu.getEasel().isGlowing()));
+    }
+
+    private String[] collectTexts() {
+        String[] texts = new String[LINE_COUNT];
+        for (int i = 0; i < LINE_COUNT; i++) {
+            texts[i] = textInputs[i] != null ? textInputs[i].getValue() : menu.getEasel().getMessage(i).getString();
+        }
+        return texts;
+    }
+
+    private void updateGlowTooltip() {
+        if (glowButton != null) {
+            glowButton.setTooltip(Tooltip.create(glowing ? glowDisableTooltip : glowEnableTooltip));
+        }
+    }
+
+    private void renderGlowButtonIcon(GuiGraphics graphics) {
+        if (glowButton == null || !glowButton.visible) {
+            return;
+        }
+        int iconU = glowing ? 0 : 16;
+        graphics.blit(ICONS, glowButton.getX() + 2, glowButton.getY() + 2, iconU, 0, 16, 16, 256, 256);
     }
 }

@@ -66,14 +66,14 @@ public class EaselMenuBlockEntity extends RandomizableContainerBlockEntity {
             CommonComponents.EMPTY
     };
     private final DyeColor[] textColors = new DyeColor[] {
-            DyeColor.GRAY,
-            DyeColor.GRAY,
-            DyeColor.GRAY,
-            DyeColor.GRAY,
-            DyeColor.GRAY,
-            DyeColor.GRAY,
-            DyeColor.GRAY,
-            DyeColor.GRAY
+            DyeColor.WHITE,
+            DyeColor.WHITE,
+            DyeColor.WHITE,
+            DyeColor.WHITE,
+            DyeColor.WHITE,
+            DyeColor.WHITE,
+            DyeColor.WHITE,
+            DyeColor.WHITE
     };
     private boolean glowing;
 
@@ -135,7 +135,7 @@ public class EaselMenuBlockEntity extends RandomizableContainerBlockEntity {
         for (int i = 0; i < LINE_COUNT; i++) {
             String json = tag.getString("Text" + (i + 1));
             messages[i] = Component.Serializer.fromJson(json.isEmpty() ? "\"\"" : json, registries);
-            textColors[i] = DyeColor.byName(tag.getString("Color" + i), DyeColor.GRAY);
+            textColors[i] = DyeColor.byName(tag.getString("Color" + i), DyeColor.WHITE);
         }
         glowing = tag.getBoolean("Glowing");
     }
