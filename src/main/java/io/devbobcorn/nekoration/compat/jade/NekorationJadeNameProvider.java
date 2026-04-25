@@ -1,5 +1,6 @@
 package io.devbobcorn.nekoration.compat.jade;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import snownee.jade.api.BlockAccessor;
@@ -23,7 +24,7 @@ public enum NekorationJadeNameProvider implements IBlockComponentProvider {
         if (picked.isEmpty()) {
             return;
         }
-        tooltip.replace(JadeIds.CORE_OBJECT_NAME, picked.getHoverName());
+        tooltip.replace(JadeIds.CORE_OBJECT_NAME, picked.getHoverName().copy().withStyle(ChatFormatting.WHITE));
     }
 
     @Override
