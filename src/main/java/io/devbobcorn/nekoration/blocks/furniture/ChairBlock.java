@@ -35,7 +35,7 @@ public class ChairBlock extends HorizontalDirectionalBlock {
     private final double seatYOffset;
 
     public ChairBlock(Properties properties) {
-        this(properties, 8, 24);
+        this(properties, 10, 26);
     }
 
     public ChairBlock(Properties properties, int seatHeight, int backRestHeight) {

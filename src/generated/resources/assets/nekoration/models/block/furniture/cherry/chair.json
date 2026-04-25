@@ -1,8 +1,8 @@
 {
   "parent": "nekoration:block/furniture/chair",
+  "particle": "nekoration:block/container/cherry/cabinet_top",
   "textures": {
-    "particle": "minecraft:block/cherry_planks",
-    "side": "minecraft:block/cherry_planks",
+    "side": "nekoration:block/container/cherry/cabinet_top",
     "top": "nekoration:block/furniture/cherry_top"
   }
 }

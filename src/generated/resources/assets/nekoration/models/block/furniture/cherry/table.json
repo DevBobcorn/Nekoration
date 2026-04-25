@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/furniture/table",
   "textures": {
-    "particle": "minecraft:block/cherry_planks",
+    "particle": "nekoration:block/container/cherry/cabinet_top",
     "top": "nekoration:block/furniture/cherry_top"
   }
 }

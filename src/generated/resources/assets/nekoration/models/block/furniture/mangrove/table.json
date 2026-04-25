@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/furniture/table",
   "textures": {
-    "particle": "minecraft:block/mangrove_planks",
+    "particle": "nekoration:block/container/mangrove/cabinet_top",
     "top": "nekoration:block/furniture/mangrove_top"
   }
 }

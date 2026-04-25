@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/furniture/table",
   "textures": {
-    "particle": "minecraft:block/dark_oak_planks",
+    "particle": "nekoration:block/container/dark_oak/cabinet_top",
     "top": "nekoration:block/furniture/dark_oak_top"
   }
 }

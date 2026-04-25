@@ -125,7 +125,8 @@ configurations {
 
 dependencies {
     // Optional: Jade API for tooltip integration (plugin only loads when Jade is present).
-    compileOnly "maven.modrinth:jade:15.10.5+neoforge"
+    compileOnly "maven.modrinth:jade:${jade_version}+neoforge"
+    // localRuntime "maven.modrinth:jade:${jade_version}+neoforge"
 
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime

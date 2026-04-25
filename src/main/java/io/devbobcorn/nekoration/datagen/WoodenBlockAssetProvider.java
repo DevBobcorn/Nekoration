@@ -69,7 +69,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                         "parent", modLoc("block/furniture/table"),
                         "textures", Map.of(
                                 "top", modLoc("block/furniture/" + woodId + "_top"),
-                                "particle", "minecraft:block/" + woodId + "_planks")));
+                                "particle", modLoc("block/container/" + woodId + "/cabinet_top"))));
         writeJson(cachedOutput, writes, blockstatePathProvider, tableId,
                 Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/table")))));
         writeJson(cachedOutput, writes, itemModelPathProvider, tableId,
@@ -81,8 +81,8 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                         "parent", modLoc("block/furniture/chair"),
                         "textures", Map.of(
                                 "top", modLoc("block/furniture/" + woodId + "_top"),
-                                "side", "minecraft:block/" + woodId + "_planks",
-                                "particle", "minecraft:block/" + woodId + "_planks")));
+                                "side", modLoc("block/container/" + woodId + "/cabinet_top")),
+                                "particle", modLoc("block/container/" + woodId + "/cabinet_top")));
         Map<String, Object> chairVariants = new LinkedHashMap<>();
         chairVariants.put("facing=north", Map.of("model", modLoc("block/furniture/" + woodId + "/chair")));
         chairVariants.put("facing=east", Map.of("model", modLoc("block/furniture/" + woodId + "/chair"), "y", 90));

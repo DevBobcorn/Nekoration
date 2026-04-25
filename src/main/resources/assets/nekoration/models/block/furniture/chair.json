@@ -1,9 +1,10 @@
 {
+	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"side": "minecraft:block/oak_planks",
-		"top": "nekoration:block/furniture/oak_top",
-		"particle": "minecraft:block/oak_planks"
+		"particle": "block/oak_planks",
+		"side": "block/oak_planks",
+		"top": "nekoration:block/furniture/oak_top"
 	},
 	"elements": [
 		{
@@ -34,10 +35,10 @@
 			"from": [13, 0, 2],
 			"to": [15, 8, 4],
 			"faces": {
-				"north": {"uv": [14, 0, 16, 8], "texture": "#side"},
-				"east": {"uv": [0, 0, 2, 8], "texture": "#side"},
-				"south": {"uv": [0, 0, 2, 8], "texture": "#side"},
-				"west": {"uv": [14, 0, 16, 8], "texture": "#side"},
+				"north": {"uv": [0, 0, 2, 8], "texture": "#side"},
+				"east": {"uv": [14, 0, 16, 8], "texture": "#side"},
+				"south": {"uv": [14, 0, 16, 8], "texture": "#side"},
+				"west": {"uv": [0, 0, 2, 8], "texture": "#side"},
 				"down": {"uv": [2, 0, 4, 2], "rotation": 180, "texture": "#side", "cullface": "down"}
 			}
 		},
@@ -45,9 +46,9 @@
 			"from": [13, 0, 13],
 			"to": [15, 8, 15],
 			"faces": {
-				"north": {"uv": [14, 0, 16, 8], "texture": "#side"},
+				"north": {"uv": [0, 0, 2, 8], "texture": "#side"},
 				"east": {"uv": [0, 0, 2, 8], "texture": "#side"},
-				"south": {"uv": [0, 0, 2, 8], "texture": "#side"},
+				"south": {"uv": [14, 0, 16, 8], "texture": "#side"},
 				"west": {"uv": [14, 0, 16, 8], "texture": "#side"},
 				"down": {"uv": [2, 0, 4, 2], "rotation": 180, "texture": "#side", "cullface": "down"}
 			}
@@ -68,9 +69,9 @@
 			"to": [3, 8, 4],
 			"faces": {
 				"north": {"uv": [14, 0, 16, 8], "texture": "#side"},
-				"east": {"uv": [0, 0, 2, 8], "texture": "#side"},
+				"east": {"uv": [14, 0, 16, 8], "texture": "#side"},
 				"south": {"uv": [0, 0, 2, 8], "texture": "#side"},
-				"west": {"uv": [14, 0, 16, 8], "texture": "#side"},
+				"west": {"uv": [0, 0, 2, 8], "texture": "#side"},
 				"down": {"uv": [2, 0, 4, 2], "rotation": 180, "texture": "#side", "cullface": "down"}
 			}
 		},
@@ -111,7 +112,7 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 225, 0],
+			"rotation": [0, -135, 0],
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
@@ -119,7 +120,7 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 225, 0],
+			"rotation": [30, -135, 0],
 			"translation": [0, -2, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
