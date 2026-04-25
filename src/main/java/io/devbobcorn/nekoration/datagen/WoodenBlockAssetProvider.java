@@ -55,10 +55,42 @@ public final class WoodenBlockAssetProvider implements DataProvider {
         for (NekoWood wood : NekoWood.values()) {
             String woodId = wood.id();
             generateContainerAssets(cachedOutput, writes, woodId);
+            generateFurnitureAssets(cachedOutput, writes, woodId);
             generateWindowAssets(cachedOutput, writes, woodId);
             generateHalfTimberAssets(cachedOutput, writes, woodId);
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
+    }
+
+    private void generateFurnitureAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String woodId) {
+        String tableId = woodId + "_table";
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/table",
+                Map.of(
+                        "parent", modLoc("block/furniture/table"),
+                        "textures", Map.of(
+                                "top", modLoc("block/furniture/" + woodId + "_top"),
+                                "particle", "minecraft:block/" + woodId + "_planks")));
+        writeJson(cachedOutput, writes, blockstatePathProvider, tableId,
+                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/table")))));
+        writeJson(cachedOutput, writes, itemModelPathProvider, tableId,
+                Map.of("parent", modLoc("block/furniture/" + woodId + "/table")));
+
+        String chairId = woodId + "_chair";
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/chair",
+                Map.of(
+                        "parent", modLoc("block/furniture/chair"),
+                        "textures", Map.of(
+                                "top", modLoc("block/furniture/" + woodId + "_top"),
+                                "side", "minecraft:block/" + woodId + "_planks",
+                                "particle", "minecraft:block/" + woodId + "_planks")));
+        Map<String, Object> chairVariants = new LinkedHashMap<>();
+        chairVariants.put("facing=north", Map.of("model", modLoc("block/furniture/" + woodId + "/chair")));
+        chairVariants.put("facing=east", Map.of("model", modLoc("block/furniture/" + woodId + "/chair"), "y", 90));
+        chairVariants.put("facing=south", Map.of("model", modLoc("block/furniture/" + woodId + "/chair"), "y", 180));
+        chairVariants.put("facing=west", Map.of("model", modLoc("block/furniture/" + woodId + "/chair"), "y", 270));
+        writeJson(cachedOutput, writes, blockstatePathProvider, chairId, Map.of("variants", chairVariants));
+        writeJson(cachedOutput, writes, itemModelPathProvider, chairId,
+                Map.of("parent", modLoc("block/furniture/" + woodId + "/chair")));
     }
 
     private void generateContainerAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String woodId) {

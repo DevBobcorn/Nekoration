@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nekoration:block/furniture/spruce/chair",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "nekoration:block/furniture/spruce/chair"
+    },
+    "facing=south": {
+      "model": "nekoration:block/furniture/spruce/chair",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nekoration:block/furniture/spruce/chair",
+      "y": 270
+    }
+  }
+}

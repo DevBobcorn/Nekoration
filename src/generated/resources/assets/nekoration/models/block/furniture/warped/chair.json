@@ -1,0 +1,8 @@
+{
+  "parent": "nekoration:block/furniture/chair",
+  "textures": {
+    "particle": "minecraft:block/warped_planks",
+    "side": "minecraft:block/warped_planks",
+    "top": "nekoration:block/furniture/warped_top"
+  }
+}

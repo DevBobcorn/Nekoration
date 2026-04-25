@@ -17,7 +17,9 @@ import io.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import io.devbobcorn.nekoration.client.rendering.EaselMenuBlockEntityRenderer;
 import io.devbobcorn.nekoration.client.creative.NekoCreativeTabFilterClient;
 import io.devbobcorn.nekoration.client.rendering.ItemDisplayBlockEntityRenderer;
+import io.devbobcorn.nekoration.client.rendering.SeatEntityRenderer;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
+import io.devbobcorn.nekoration.registry.ModEntities;
 import io.devbobcorn.nekoration.registry.ModMenuTypes;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
@@ -43,6 +45,7 @@ public class NekorationClient {
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.ITEM_DISPLAY.get(), ItemDisplayBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.EASEL_MENU.get(), EaselMenuBlockEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.SEAT.get(), SeatEntityRenderer::new);
     }
 
     private static void registerScreens(RegisterMenuScreensEvent event) {

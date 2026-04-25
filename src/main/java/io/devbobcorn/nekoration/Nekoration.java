@@ -26,6 +26,7 @@ import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.network.NekorationNetwork;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
+import io.devbobcorn.nekoration.registry.ModEntities;
 import io.devbobcorn.nekoration.registry.ModMenuTypes;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
@@ -115,6 +116,7 @@ public class Nekoration {
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
         ModBlockEntities.REGISTER.register(modEventBus);
+        ModEntities.REGISTER.register(modEventBus);
         ModMenuTypes.REGISTER.register(modEventBus);
         modEventBus.addListener(NekorationNetwork::register);
 

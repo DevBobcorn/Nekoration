@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/furniture/table",
+  "textures": {
+    "particle": "minecraft:block/birch_planks",
+    "top": "nekoration:block/furniture/birch_top"
+  }
+}

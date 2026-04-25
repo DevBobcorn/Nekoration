@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nekoration:block/furniture/dark_oak/chair",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "nekoration:block/furniture/dark_oak/chair"
+    },
+    "facing=south": {
+      "model": "nekoration:block/furniture/dark_oak/chair",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nekoration:block/furniture/dark_oak/chair",
+      "y": 270
+    }
+  }
+}
