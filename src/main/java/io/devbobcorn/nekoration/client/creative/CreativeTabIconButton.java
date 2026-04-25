@@ -26,6 +26,8 @@ public final class CreativeTabIconButton extends Button {
 
     public void setFilterUiActive(boolean active) {
         this.filterUiActive = active;
+        this.visible = active;
+        this.active = active;
     }
 
     @Override

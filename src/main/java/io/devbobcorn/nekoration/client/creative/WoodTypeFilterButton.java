@@ -63,6 +63,8 @@ public final class WoodTypeFilterButton extends AbstractButton {
 
     public void setFilterUiActive(boolean active) {
         this.filterUiActive = active;
+        this.visible = active;
+        this.active = active;
     }
 
     @Override
