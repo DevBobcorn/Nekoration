@@ -26,11 +26,11 @@ window_ids = ["simple","arch","cross","lancet","shade"]
 windows_us = ["{wood} Simple Window","{wood} Arch Window","{wood} Cross Window","{wood} Lancet Window","{wood} Shade Window"]
 windows_cn = ["{wood}简易窗","{wood}拱形窗","{wood}十字窗","{wood}尖头窗","{wood}百叶窗"]
 
-furniture_ids = ["easel_menu","table","round_table","glass_table","glass_round_table","chair","cabinet","drawer","drawer_chest","cupboard","wall_shelf"]
-furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Round Table","{wood} Glass Table","{wood} Round Glass Table","{wood} Chair","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
-furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}圆桌","{wood}玻璃桌","{wood}玻璃圆桌","{wood}椅子","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
+furniture_ids = ["easel_menu","table","chair","cabinet","drawer","drawer_chest","cupboard","wall_shelf"]
+furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Chair","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
+furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}椅子","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
 
-door_ids = ["door_1","door_2","door_3","door_tall_1","door_tall_2","door_tall_3"]
+door_ids = ["quartz_door","chiseled_quartz_door","quartz_bricks_door","tall_quartz_door","tall_chiseled_quartz_door","tall_quartz_bricks_door"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
 doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
 
