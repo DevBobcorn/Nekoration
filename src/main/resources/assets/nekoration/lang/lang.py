@@ -28,7 +28,7 @@ windows_cn = ["{wood}简易窗","{wood}拱形窗","{wood}十字窗","{wood}尖�
 
 furniture_ids = ["easel_menu","table","round_table","glass_table","glass_round_table","chair","cabinet","drawer","drawer_chest","cupboard","wall_shelf"]
 furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Round Table","{wood} Glass Table","{wood} Round Glass Table","{wood} Chair","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
-furniture_cn = ["%s{wood}展架","{wood}桌","{wood}圆桌","{wood}玻璃桌","{wood}玻璃圆桌","{wood}椅","{wood}橱柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
+furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}圆桌","{wood}玻璃桌","{wood}玻璃圆桌","{wood}椅子","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
 
 door_ids = ["door_1","door_2","door_3","door_tall_1","door_tall_2","door_tall_3"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
