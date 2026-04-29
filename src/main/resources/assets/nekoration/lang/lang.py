@@ -6,8 +6,7 @@ color_ids = ["black","blue","brown","cyan","gray","green","light_blue","light_gr
 colors_us  = ["Black","Blue","Brown","Cyan","Gray","Green","Light Blue","Light Gray","Lime","Magenta","Orange","Pink","Purple","Red","White","Yellow","Some","Blank"]
 colors_cn = ["黑色","蓝色","棕色","青色","灰色","绿色","淡蓝色","淡灰色","黄绿色","品红色","橙色","粉色","紫色","红色","白色","黄色","","空白"]
 
-
-woods = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"]
+wood_ids = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"]
 woods_us = ["Oak", "Spruce", "Birch", "Jungle", "Acacia", "Dark Oak", "Mangrove", "Cherry", "Bamboo", "Crimson", "Warped"]
 woods_cn = ["橡木", "云杉木", "白桦木", "丛林木", "金合欢木", "深色橡木", "红树木", "樱花木", "竹", "绯红木", "诡异木"]
 
@@ -23,6 +22,10 @@ furniture_ids = ["easel_menu","table","chair","cabinet","drawer","drawer_chest",
 furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Chair","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
 furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}椅子","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
 
+smooth_stone_ids = ["smooth_granite", "smooth_diorite", "smooth_andesite"]
+smooth_stones_us = ["Smooth Granite", "Smooth Diorite", "Smooth Andesite"]
+smooth_stones_cn = ["平滑花岗岩", "平滑闪长岩", "平滑安山岩"]
+
 door_ids = ["quartz_door","chiseled_quartz_door","quartz_bricks_door","tall_quartz_door","tall_chiseled_quartz_door","tall_quartz_bricks_door"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
 doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
@@ -31,7 +34,6 @@ decor_ids = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_sh
 decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Flowering Window Plant"]
 decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","开%s花的窗边植物"]
 
-# Find it a bit strange to say "Candle Holder with %s candle", so I just ignore their color
 item_ids = ["brochure","paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette","painting.blank","painting.painted","painting.magic","wallpaper","camera"]
 items_us = ["Neko Brochure [WIP]","Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Blank Painting (%sx%s)","Painting (%sx%s)","Linked Painting (%sx%s)","%s Wallpaper","Camera"]
 items_cn = ["猫咪手册[WIP]","猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","空白画(%sx%s)","画(%sx%s)","链接画(%sx%s)","%s墙纸","相机"]
@@ -87,15 +89,15 @@ obj_cn  = {}
 obj_lol = {}
 
 # Color Names...
-for col in range(0, len(color_ids)):
-    obj_us['color.nekoration.' + color_ids[col]] = colors_us[col]
+for c_i in range(0, len(color_ids)):
+    obj_us['color.nekoration.' + color_ids[c_i]] = colors_us[c_i]
     #obj_us['color.wooden.' + colors[col]] = wooden_us[col]
-    obj_cn['color.nekoration.' + color_ids[col]] = colors_cn[col]
+    obj_cn['color.nekoration.' + color_ids[c_i]] = colors_cn[c_i]
     #obj_cn['color.wooden.' + colors[col]] = wooden_cn[col]
 
 # [WOODEN BLOCKS TABs]
-for w_i in range(0, len(woods)):
-    wood_id = woods[w_i]
+for w_i in range(0, len(wood_ids)):
+    wood_id = wood_ids[w_i]
     wood_us = woods_us[w_i]
     wood_cn = woods_cn[w_i]
     for v_i in range(0, len(half_timber_ids)):
@@ -111,43 +113,46 @@ for w_i in range(0, len(woods)):
         obj_us["block.nekoration." + block_id] = furniture_us[v_i].format(wood=wood_us)
         obj_cn["block.nekoration." + block_id] = furniture_cn[v_i].format(wood=wood_cn)
 
-# [DOOR TAB]
-for dor in range(0, len(door_ids)):
+# [STONE BLOCKS TABs]
+for ss_i in range(0, len(smooth_stone_ids)):
     # (nekocolor)
-    obj_us['block.nekoration.' + door_ids[dor]] = doors_us[dor]
-    obj_cn['block.nekoration.' + door_ids[dor]] = doors_cn[dor]
+    obj_us['block.nekoration.' + smooth_stone_ids[ss_i]] = smooth_stones_us[ss_i]
+    obj_cn['block.nekoration.' + smooth_stone_ids[ss_i]] = smooth_stones_cn[ss_i]
 
-# [DECOR TAB]
-for dec in range(0, len(decor_ids)):
+# [ORNAMENTS TAB]
+for d_i in range(0, len(door_ids)):
+    # (nekocolor)
+    obj_us['block.nekoration.' + door_ids[d_i]] = doors_us[d_i]
+    obj_cn['block.nekoration.' + door_ids[d_i]] = doors_cn[d_i]
+
+for d_i in range(0, len(decor_ids)):
     # Color texts Included Already (neko_color / wooden_color)
-    obj_us['block.nekoration.' + decor_ids[dec]] = decors_us[dec]
-    obj_cn['block.nekoration.' + decor_ids[dec]] = decors_cn[dec]
+    obj_us['block.nekoration.' + decor_ids[d_i]] = decors_us[d_i]
+    obj_cn['block.nekoration.' + decor_ids[d_i]] = decors_cn[d_i]
 
-# [MISC TAB]
-for msc in range(0, len(misc_ids)):
+for m_i in range(0, len(misc_ids)):
     # Color texts Included Already (neko_color / wooden_color)
-    obj_us['block.nekoration.' + misc_ids[msc]] = miscs_us[msc]
-    obj_cn['block.nekoration.' + misc_ids[msc]] = miscs_cn[msc]
+    obj_us['block.nekoration.' + misc_ids[m_i]] = miscs_us[m_i]
+    obj_cn['block.nekoration.' + misc_ids[m_i]] = miscs_cn[m_i]
 
-# [ITEM TAB]
-for itm in range(0, len(item_ids)):
-    obj_us['item.nekoration.' + item_ids[itm]] = items_us[itm]
-    obj_cn['item.nekoration.' + item_ids[itm]] = items_cn[itm]
+for i_i in range(0, len(item_ids)):
+    obj_us['item.nekoration.' + item_ids[i_i]] = items_us[i_i]
+    obj_cn['item.nekoration.' + item_ids[i_i]] = items_cn[i_i]
 
 # [TAB NAME]
-for tab in range(0, len(tab_ids)):
-    obj_us['itemGroup.' + tab_ids[tab]] = "Nekoration: " + tabs_us[tab]
-    obj_cn['itemGroup.' + tab_ids[tab]] = "猫咪装饰丨" + tabs_cn[tab]
+for t_i in range(0, len(tab_ids)):
+    obj_us['itemGroup.' + tab_ids[t_i]] = "Nekoration: " + tabs_us[t_i]
+    obj_cn['itemGroup.' + tab_ids[t_i]] = "猫咪装饰丨" + tabs_cn[t_i]
 
 # [GUI]
-for gui in range(0, len(gui_ids)):
-    obj_us['gui.nekoration.' + gui_ids[gui]] = guis_us[gui]
-    obj_cn['gui.nekoration.' + gui_ids[gui]] = guis_cn[gui]
+for g_i in range(0, len(gui_ids)):
+    obj_us['gui.nekoration.' + gui_ids[g_i]] = guis_us[g_i]
+    obj_cn['gui.nekoration.' + gui_ids[g_i]] = guis_cn[g_i]
 
 # [ENTITIES]
-for ett in range(0, len(entity_ids)):
-    obj_us['entity.nekoration.' + entity_ids[ett]] = entities_us[ett]
-    obj_cn['entity.nekoration.' + entity_ids[ett]] = entities_cn[ett]
+for e_i in range(0, len(entity_ids)):
+    obj_us['entity.nekoration.' + entity_ids[e_i]] = entities_us[e_i]
+    obj_cn['entity.nekoration.' + entity_ids[e_i]] = entities_cn[e_i]
 
 
 # Set cwd to file directory
@@ -260,8 +265,8 @@ with open("lol_us.json", "w+") as f:
     obj_lol = copy.deepcopy(obj_us)
     for can, tuna in obj_lol.items():
         obj_lol[can] = toLolCat(tuna)
-    for col in range(0, len(color_ids)):
-        obj_lol['color.nekoration.' + color_ids[col]] = colors_lol[col]
+    for c_i in range(0, len(color_ids)):
+        obj_lol['color.nekoration.' + color_ids[c_i]] = colors_lol[c_i]
     with open(r"brochure\lol_us.txt", "r+") as f1:
         obj_lol['book.nekoration.intro'] = f1.read()
     data = json.dumps(obj_lol, sort_keys=True, indent=4, separators=(',', ': '))

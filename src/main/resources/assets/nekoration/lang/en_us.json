@@ -111,7 +111,6 @@
     "block.nekoration.cherry_window_shade": "Cherry Shade Window",
     "block.nekoration.cherry_window_simple": "Cherry Simple Window",
     "block.nekoration.chiseled_quartz_door": "Chiseled Quartz Door",
-    "block.nekoration.concrete": "%s Concrete",
     "block.nekoration.crimson_cabinet": "Crimson Cabinet",
     "block.nekoration.crimson_chair": "Crimson Chair",
     "block.nekoration.crimson_cupboard": "Crimson Cupboard",
@@ -251,6 +250,9 @@
     "block.nekoration.oak_window_simple": "Oak Simple Window",
     "block.nekoration.quartz_bricks_door": "Quartz Bricks Door",
     "block.nekoration.quartz_door": "Quartz Door",
+    "block.nekoration.smooth_andesite": "Smooth Andesite",
+    "block.nekoration.smooth_diorite": "Smooth Diorite",
+    "block.nekoration.smooth_granite": "Smooth Granite",
     "block.nekoration.spruce_cabinet": "Spruce Cabinet",
     "block.nekoration.spruce_chair": "Spruce Chair",
     "block.nekoration.spruce_cupboard": "Spruce Cupboard",
@@ -380,7 +382,7 @@
     "item.nekoration.paw_right": "Move Right",
     "item.nekoration.paw_up": "Move Up",
     "item.nekoration.wallpaper": "%s Wallpaper",
-    "itemGroup.nekoration_stone_blocks": "Nekoration: Concrete Blocks",
     "itemGroup.nekoration_ornaments": "Nekoration: Ornaments",
+    "itemGroup.nekoration_stone_blocks": "Nekoration: Stone Blocks",
     "itemGroup.nekoration_wooden_blocks": "Nekoration: Wooden Blocks"
 }

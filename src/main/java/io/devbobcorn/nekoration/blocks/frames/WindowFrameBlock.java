@@ -3,7 +3,7 @@ package io.devbobcorn.nekoration.blocks.frames;
 import java.util.Map;
 
 import io.devbobcorn.nekoration.blocks.DyeableHorizontalConnectBlock;
-import io.devbobcorn.nekoration.blocks.DyeableHorizontalBlock;
+import io.devbobcorn.nekoration.blocks.HorizontalBlock;
 import io.devbobcorn.nekoration.blocks.WindowBlock;
 import io.devbobcorn.nekoration.blocks.states.FramePart;
 import io.devbobcorn.nekoration.blocks.states.HorizontalConnection;
@@ -25,16 +25,15 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class DyeableWindowFrameBlock extends DyeableHorizontalBlock {
+public class WindowFrameBlock extends HorizontalBlock {
     private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D, 16.0D);
     public static final EnumProperty<FramePart> PART = ModStateProperties.FRAME_PART;
     public static final BooleanProperty LEFT = ModStateProperties.LEFT;
     public static final BooleanProperty RIGHT = ModStateProperties.RIGHT;
 
-    public DyeableWindowFrameBlock(Properties settings) {
+    public WindowFrameBlock(Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(COLOR, io.devbobcorn.nekoration.NekoColors.EnumNekoColor.WHITE)
                 .setValue(FACING, Direction.NORTH)
                 .setValue(PART, defaultPart())
                 .setValue(LEFT, true)
@@ -69,32 +68,32 @@ public class DyeableWindowFrameBlock extends DyeableHorizontalBlock {
     }
 
     private boolean checkFrameBlock(BlockState state) {
-        return state.getBlock() instanceof DyeableWindowFrameBlock
-                || state.getBlock() instanceof DyeableWindowSillBlock
-                || state.getBlock() instanceof DyeableWindowTopBlock;
+        return state.getBlock() instanceof WindowFrameBlock
+                || state.getBlock() instanceof WindowSillBlock
+                || state.getBlock() instanceof WindowTopBlock;
     }
 
     private boolean checkPart(BlockState state, FramePart part) {
         if (!checkFrameBlock(state)) {
             return false;
         }
-        if (part == FramePart.BOTTOM && state.getBlock() instanceof DyeableWindowSillBlock) {
+        if (part == FramePart.BOTTOM && state.getBlock() instanceof WindowSillBlock) {
             return true;
         }
-        if (part == FramePart.TOP && state.getBlock() instanceof DyeableWindowTopBlock) {
+        if (part == FramePart.TOP && state.getBlock() instanceof WindowTopBlock) {
             return true;
         }
-        return state.getBlock() instanceof DyeableWindowFrameBlock && state.getValue(PART) == part;
+        return state.getBlock() instanceof WindowFrameBlock && state.getValue(PART) == part;
     }
 
     private FramePart getPart(BlockState state) {
-        if (state.getBlock() instanceof DyeableWindowSillBlock) {
+        if (state.getBlock() instanceof WindowSillBlock) {
             return FramePart.BOTTOM;
         }
-        if (state.getBlock() instanceof DyeableWindowTopBlock) {
+        if (state.getBlock() instanceof WindowTopBlock) {
             return FramePart.TOP;
         }
-        if (!(state.getBlock() instanceof DyeableWindowFrameBlock)) {
+        if (!(state.getBlock() instanceof WindowFrameBlock)) {
             return FramePart.MIDDLE;
         }
         return state.getValue(PART);
@@ -107,7 +106,7 @@ public class DyeableWindowFrameBlock extends DyeableHorizontalBlock {
                     || connection == HorizontalConnection.D0
                     || connection == HorizontalConnection.T0;
         }
-        if (state.getBlock() instanceof DyeableWindowFrameBlock) {
+        if (state.getBlock() instanceof WindowFrameBlock) {
             return state.getValue(LEFT);
         }
         return false;
@@ -120,7 +119,7 @@ public class DyeableWindowFrameBlock extends DyeableHorizontalBlock {
                     || connection == HorizontalConnection.D1
                     || connection == HorizontalConnection.T2;
         }
-        if (state.getBlock() instanceof DyeableWindowFrameBlock) {
+        if (state.getBlock() instanceof WindowFrameBlock) {
             return state.getValue(RIGHT);
         }
         return false;

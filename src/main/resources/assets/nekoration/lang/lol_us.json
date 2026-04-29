@@ -111,7 +111,6 @@
     "block.nekoration.cherry_window_shade": "Chury shade windoaw",
     "block.nekoration.cherry_window_simple": "Chery zimple window",
     "block.nekoration.chiseled_quartz_door": "Chizeled qaaatz doar",
-    "block.nekoration.concrete": "%s concrete",
     "block.nekoration.crimson_cabinet": "Crimzon cabinet",
     "block.nekoration.crimson_chair": "Crimzon choar",
     "block.nekoration.crimson_cupboard": "Crimsoon Capbaaord",
@@ -251,6 +250,9 @@
     "block.nekoration.oak_window_simple": "Aok Zimple Windaw",
     "block.nekoration.quartz_bricks_door": "Quaatz bricks doou",
     "block.nekoration.quartz_door": "Qourtz duur",
+    "block.nekoration.smooth_andesite": "Smauth ondesite",
+    "block.nekoration.smooth_diorite": "Smaoth diarite",
+    "block.nekoration.smooth_granite": "Smaath granite",
     "block.nekoration.spruce_cabinet": "Spoace Cobinet",
     "block.nekoration.spruce_chair": "Spaoce chaur",
     "block.nekoration.spruce_cupboard": "Spooce cupbuard",
@@ -380,7 +382,7 @@
     "item.nekoration.paw_right": "Mave right",
     "item.nekoration.paw_up": "Move Up",
     "item.nekoration.wallpaper": "%s Wollpopor",
-    "itemGroup.nekoration_stone_blocks": "Nekurushun: cuncrete blocks",
     "itemGroup.nekoration_ornaments": "Nekaorushun: ournumenz",
+    "itemGroup.nekoration_stone_blocks": "Nekarashun: Stone Blucks",
     "itemGroup.nekoration_wooden_blocks": "Nekurateean: Waoden Bluckz"
 }

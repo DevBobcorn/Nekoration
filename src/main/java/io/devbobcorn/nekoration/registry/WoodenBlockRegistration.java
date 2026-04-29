@@ -85,25 +85,25 @@ public final class WoodenBlockRegistration {
 
     public static void register(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {
         for (NekoWood wood : NekoWood.values()) {
-            String w = wood.id();
+            String woodId = wood.id();
             List<DeferredItem<DyeableBlockItem>> dyedByWood = DYED_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood, ignored -> new ArrayList<>());
             List<DeferredItem<? extends BlockItem>> plainByWood = PLAIN_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood,
                     ignored -> new ArrayList<>());
 
             for (int p = 0; p <= 9; p++) {
-                String id = w + "_half_timber_p" + p;
+                String id = woodId + "_half_timber_p" + p;
                 DeferredBlock<Block> block = blocks.register(id, () -> new DyeableBlock(wood.plankProperties()));
-                DeferredItem<DyeableBlockItem> registered = registerDyeableBlockItem(items, id, block);
-                HALF_TIMBER_BLOCK_ITEMS.add(registered);
-                dyedByWood.add(registered);
+                DeferredItem<DyeableBlockItem> blockItem = registerDyeableBlockItem(items, id, block);
+                HALF_TIMBER_BLOCK_ITEMS.add(blockItem);
+                dyedByWood.add(blockItem);
             }
 
-            registerPillar(blocks, items, wood, w, 0, VerticalConnectBlock.ConnectionType.PILLAR, dyedByWood);
-            registerPillar(blocks, items, wood, w, 1, VerticalConnectBlock.ConnectionType.TRIPLE, dyedByWood);
-            registerPillar(blocks, items, wood, w, 2, VerticalConnectBlock.ConnectionType.TRIPLE, dyedByWood);
+            registerPillar(blocks, items, wood, woodId, 0, VerticalConnectBlock.ConnectionType.PILLAR, dyedByWood);
+            registerPillar(blocks, items, wood, woodId, 1, VerticalConnectBlock.ConnectionType.TRIPLE, dyedByWood);
+            registerPillar(blocks, items, wood, woodId, 2, VerticalConnectBlock.ConnectionType.TRIPLE, dyedByWood);
 
             for (WindowVariant variant : WindowVariant.values()) {
-                String id = w + "_window_" + variant.id();
+                String id = woodId + "_window_" + variant.id();
                 DeferredBlock<Block> block = blocks.register(id,
                         () -> new WindowBlock(wood.plankProperties().noOcclusion(),
                                 VerticalConnectBlock.ConnectionType.PILLAR, false));
@@ -112,21 +112,21 @@ public final class WoodenBlockRegistration {
                 plainByWood.add(registered);
             }
 
-            String tableId = w + "_table";
+            String tableId = woodId + "_table";
             DeferredBlock<Block> table = blocks.register(tableId,
                     () -> new TableBlock(wood.plankProperties().noOcclusion()));
             DeferredItem<BlockItem> tableItem = registerBlockItem(items, tableId, table);
             FURNITURE_BLOCK_ITEMS.add(tableItem);
             plainByWood.add(tableItem);
 
-            String chairId = w + "_chair";
+            String chairId = woodId + "_chair";
             DeferredBlock<Block> chair = blocks.register(chairId,
                     () -> new ChairBlock(wood.plankProperties().noOcclusion()));
             DeferredItem<BlockItem> chairItem = registerBlockItem(items, chairId, chair);
             FURNITURE_BLOCK_ITEMS.add(chairItem);
             plainByWood.add(chairItem);
 
-            String cupboardId = w + "_cupboard";
+            String cupboardId = woodId + "_cupboard";
             DeferredBlock<Block> cupboard = blocks.register(cupboardId,
                     () -> new CupboardBlock(wood.plankProperties().noOcclusion()));
             ITEM_DISPLAY_BLOCKS_FOR_ENTITY.add(cupboard);
@@ -134,7 +134,7 @@ public final class WoodenBlockRegistration {
             FURNITURE_BLOCK_ITEMS.add(cupboardItem);
             plainByWood.add(cupboardItem);
 
-            String wallShelfId = w + "_wall_shelf";
+            String wallShelfId = woodId + "_wall_shelf";
             DeferredBlock<Block> wallShelf = blocks.register(wallShelfId,
                     () -> new WallShelfBlock(wood.plankProperties().noOcclusion()));
             ITEM_DISPLAY_BLOCKS_FOR_ENTITY.add(wallShelf);
@@ -142,7 +142,7 @@ public final class WoodenBlockRegistration {
             FURNITURE_BLOCK_ITEMS.add(wallShelfItem);
             plainByWood.add(wallShelfItem);
 
-            String cabinetId = w + "_cabinet";
+            String cabinetId = woodId + "_cabinet";
             DeferredBlock<Block> cabinet = blocks.register(cabinetId,
                     () -> new CabinetBlock(wood.plankProperties(), true));
             CABINET_BLOCKS_FOR_ENTITY.add(cabinet);
@@ -150,7 +150,7 @@ public final class WoodenBlockRegistration {
             FURNITURE_BLOCK_ITEMS.add(cabinetItem);
             plainByWood.add(cabinetItem);
 
-            String drawerId = w + "_drawer";
+            String drawerId = woodId + "_drawer";
             DeferredBlock<Block> drawer = blocks.register(drawerId,
                     () -> new CabinetBlock(wood.plankProperties(), false));
             CABINET_BLOCKS_FOR_ENTITY.add(drawer);
@@ -158,7 +158,7 @@ public final class WoodenBlockRegistration {
             FURNITURE_BLOCK_ITEMS.add(drawerItem);
             plainByWood.add(drawerItem);
 
-            String drawerChestId = w + "_drawer_chest";
+            String drawerChestId = woodId + "_drawer_chest";
             DeferredBlock<Block> drawerChest = blocks.register(drawerChestId,
                     () -> new CabinetBlock(wood.plankProperties(), true));
             CABINET_BLOCKS_FOR_ENTITY.add(drawerChest);
@@ -166,7 +166,7 @@ public final class WoodenBlockRegistration {
             FURNITURE_BLOCK_ITEMS.add(drawerChestItem);
             plainByWood.add(drawerChestItem);
 
-            String easelMenuId = w + "_easel_menu";
+            String easelMenuId = woodId + "_easel_menu";
             DeferredBlock<Block> easelMenu = blocks.register(easelMenuId,
                     () -> new EaselMenuBlock(wood.plankProperties().noOcclusion()));
             EASEL_MENU_BLOCKS_FOR_ENTITY.add(easelMenu);

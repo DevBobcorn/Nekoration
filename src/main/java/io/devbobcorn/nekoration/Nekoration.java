@@ -53,7 +53,6 @@ public class Nekoration {
         OrnamentRegistration.register(BLOCKS, ITEMS);
     }
 
-    /*
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_STONE_BLOCKS_TAB =
         CREATIVE_MODE_TABS.register("nekoration_stone_blocks", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_stone_blocks"))
@@ -61,26 +60,23 @@ public class Nekoration {
             .displayItems((parameters, output) -> {
                 ArrayList<ItemStack> stacks = new ArrayList<>();
                 StoneBlockRegistration.blockItemsView().forEach(holder -> {
-                    for (EnumNekoColor color : EnumNekoColor.values()) {
-                        stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
-                    }
+                    stacks.add(new ItemStack(holder.get()));
                 });
                 stacks.forEach(output::accept);
             })
             .build());
-    */
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_WOODEN_BLOCKS_TAB =
         CREATIVE_MODE_TABS.register("nekoration_wooden_blocks", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_wooden_blocks"))
             .icon(() -> DyeableBlockItem.createCreativeTabStack(WoodenBlockRegistration.iconItem().get()))
             .displayItems((parameters, output) -> {
-                ArrayList<ItemStack> stacks = new ArrayList<>();
+                ArrayList<ItemStack> halfTimberStacks = new ArrayList<>();
                 WoodenBlockRegistration.halfTimberBlockItemsView().forEach(holder -> {
-                    stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.WHITE));
+                    halfTimberStacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.WHITE));
                 });
-                stacks.sort(HalfTimberCreativeTabOrdering.stackComparator());
-                stacks.forEach(output::accept);
+                halfTimberStacks.sort(HalfTimberCreativeTabOrdering.stackComparator());
+                halfTimberStacks.forEach(output::accept);
                 WoodenBlockRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
                 WoodenBlockRegistration.furnitureBlockItemsView().forEach(holder -> {
                     if (holder.get() instanceof DyeableBlockItem) {

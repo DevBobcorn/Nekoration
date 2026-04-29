@@ -111,7 +111,6 @@
     "block.nekoration.cherry_window_shade": "樱花木百叶窗",
     "block.nekoration.cherry_window_simple": "樱花木简易窗",
     "block.nekoration.chiseled_quartz_door": "錾制石英门",
-    "block.nekoration.concrete": "%s混凝土",
     "block.nekoration.crimson_cabinet": "绯红木储物柜",
     "block.nekoration.crimson_chair": "绯红木椅子",
     "block.nekoration.crimson_cupboard": "绯红木橱柜",
@@ -251,6 +250,9 @@
     "block.nekoration.oak_window_simple": "橡木简易窗",
     "block.nekoration.quartz_bricks_door": "石英砖门",
     "block.nekoration.quartz_door": "石英门",
+    "block.nekoration.smooth_andesite": "平滑安山岩",
+    "block.nekoration.smooth_diorite": "平滑闪长岩",
+    "block.nekoration.smooth_granite": "平滑花岗岩",
     "block.nekoration.spruce_cabinet": "云杉木储物柜",
     "block.nekoration.spruce_chair": "云杉木椅子",
     "block.nekoration.spruce_cupboard": "云杉木橱柜",
@@ -380,7 +382,7 @@
     "item.nekoration.paw_right": "右移",
     "item.nekoration.paw_up": "上移",
     "item.nekoration.wallpaper": "%s墙纸",
-    "itemGroup.nekoration_stone_blocks": "猫咪装饰丨混凝土方块",
     "itemGroup.nekoration_ornaments": "猫咪装饰丨装饰",
+    "itemGroup.nekoration_stone_blocks": "猫咪装饰丨石质方块",
     "itemGroup.nekoration_wooden_blocks": "猫咪装饰丨木质方块"
 }
