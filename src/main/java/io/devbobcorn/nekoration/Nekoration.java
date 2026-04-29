@@ -25,6 +25,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.network.NekorationNetwork;
+import io.devbobcorn.nekoration.registry.CtTestRegistration;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
 import io.devbobcorn.nekoration.registry.ModEntities;
 import io.devbobcorn.nekoration.registry.ModMenuTypes;
@@ -53,6 +54,7 @@ public class Nekoration {
         WoodenBlockRegistration.register(BLOCKS, ITEMS);
         StoneBlockRegistration.register(BLOCKS, ITEMS);
         OrnamentRegistration.register(BLOCKS, ITEMS);
+        CtTestRegistration.register(BLOCKS, ITEMS);
     }
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_STONE_BLOCKS_TAB =
@@ -103,6 +105,7 @@ public class Nekoration {
                 for (EnumNekoColor color : EnumNekoColor.values()) {
                     output.accept(DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));
                 }
+                output.accept(new ItemStack(CtTestRegistration.ctTestBlockItem().get()));
             })
             .build());
 

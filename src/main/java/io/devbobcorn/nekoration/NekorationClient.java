@@ -16,6 +16,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import io.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import io.devbobcorn.nekoration.client.rendering.EaselMenuBlockEntityRenderer;
 import io.devbobcorn.nekoration.client.creative.NekoCreativeTabFilterClient;
+import io.devbobcorn.nekoration.client.ct.NekoModelSwapper;
 import io.devbobcorn.nekoration.client.rendering.ItemDisplayBlockEntityRenderer;
 import io.devbobcorn.nekoration.client.rendering.SeatEntityRenderer;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
@@ -35,6 +36,7 @@ public class NekorationClient {
         // EntityRenderersEvent fires on the mod event bus.
         modEventBus.addListener(NekorationClient::registerRenderers);
         modEventBus.addListener(NekorationClient::registerScreens);
+        NekoModelSwapper.registerListeners(modEventBus);
     }
 
     @SubscribeEvent
