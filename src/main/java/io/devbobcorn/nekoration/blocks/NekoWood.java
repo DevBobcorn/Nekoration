@@ -21,7 +21,6 @@ public enum NekoWood {
     CRIMSON,
     WARPED;
 
-    /** Registry id wood segment: {@code <id>_half_timber_p0} */
     public String id() {
         return name().toLowerCase();
     }

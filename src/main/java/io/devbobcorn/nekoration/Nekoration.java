@@ -1,13 +1,11 @@
 package io.devbobcorn.nekoration;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -25,7 +23,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.network.NekorationNetwork;
-import io.devbobcorn.nekoration.registry.CtTestRegistration;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
 import io.devbobcorn.nekoration.registry.ModEntities;
 import io.devbobcorn.nekoration.registry.ModMenuTypes;
@@ -54,9 +51,9 @@ public class Nekoration {
         WoodenBlockRegistration.register(BLOCKS, ITEMS);
         StoneBlockRegistration.register(BLOCKS, ITEMS);
         OrnamentRegistration.register(BLOCKS, ITEMS);
-        CtTestRegistration.register(BLOCKS, ITEMS);
     }
 
+    /*
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_STONE_BLOCKS_TAB =
         CREATIVE_MODE_TABS.register("nekoration_stone_blocks", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_stone_blocks"))
@@ -68,11 +65,10 @@ public class Nekoration {
                         stacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
                     }
                 });
-                stacks.sort(Comparator.<ItemStack>comparingInt(s -> DyeableBlockItem.getColor(s).ordinal())
-                        .thenComparingInt(s -> BuiltInRegistries.ITEM.getId(s.getItem())));
                 stacks.forEach(output::accept);
             })
             .build());
+    */
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_WOODEN_BLOCKS_TAB =
         CREATIVE_MODE_TABS.register("nekoration_wooden_blocks", () -> CreativeModeTab.builder()
@@ -105,7 +101,6 @@ public class Nekoration {
                 for (EnumNekoColor color : EnumNekoColor.values()) {
                     output.accept(DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));
                 }
-                output.accept(new ItemStack(CtTestRegistration.ctTestBlockItem().get()));
             })
             .build());
 

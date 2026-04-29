@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import io.devbobcorn.nekoration.Nekoration;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 
@@ -26,8 +25,10 @@ public final class NekoCTRegistry {
         }
         bootstrapped = true;
 
+        /*
         TestCTBehaviour behaviour = new TestCTBehaviour();
         ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "ct_test_block");
         CT_MODELS.put(blockId, model -> new NekoCTModel(model, behaviour));
+        */
     }
 }

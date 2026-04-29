@@ -37,36 +37,8 @@ public final class NekoColors {
         };
     }
 
-    /**
-     * RGB tints for stone column blocks.
-     */
-    public static final class StoneColumnColors {
-        private StoneColumnColors() {
-        }
-
-        static final int[] RGB_BY_ORDINAL = {
-                0xf9fffe,
-                0x999999,
-                0x787878,
-                0x474f4f,
-                0x8f684d,
-                0x962b23,
-                0xe8931a,
-                0xffce2b,
-                0x8b9e58,
-                0x517038,
-                0x5da19b,
-                0x86bed1,
-                0x284d7d,
-                0xb997c9,
-                0xb86c83,
-                0xf2acbe,
-        };
-    }
-
     public enum NekoColorPalette {
-        HALF_TIMBER(HalfTimberColors.RGB_BY_ORDINAL),
-        STONE_COLUMNS(StoneColumnColors.RGB_BY_ORDINAL);
+        HALF_TIMBER(HalfTimberColors.RGB_BY_ORDINAL);
 
         private final int[] rgbByOrdinal;
 

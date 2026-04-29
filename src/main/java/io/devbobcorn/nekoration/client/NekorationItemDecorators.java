@@ -5,7 +5,6 @@ import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
-import io.devbobcorn.nekoration.registry.StoneBlockRegistration;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -26,9 +25,7 @@ public final class NekorationItemDecorators {
     @SubscribeEvent
     public static void registerItemDecorations(RegisterItemDecorationsEvent event) {
         IItemDecorator halfTimberDecorator = verticalConnectDecorator(NekoColorPalette.HALF_TIMBER);
-        IItemDecorator stoneDecorator = verticalConnectDecorator(NekoColorPalette.STONE_COLUMNS);
         WoodenBlockRegistration.halfTimberBlockItemsView().forEach(holder -> registerIfVertical(event, holder.get(), halfTimberDecorator));
-        StoneBlockRegistration.blockItemsView().forEach(holder -> registerIfVertical(event, holder.get(), stoneDecorator));
     }
 
     private static IItemDecorator verticalConnectDecorator(NekoColorPalette palette) {

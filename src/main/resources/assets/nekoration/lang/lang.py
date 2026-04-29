@@ -6,13 +6,6 @@ color_ids = ["black","blue","brown","cyan","gray","green","light_blue","light_gr
 colors_us  = ["Black","Blue","Brown","Cyan","Gray","Green","Light Blue","Light Gray","Lime","Magenta","Orange","Pink","Purple","Red","White","Yellow","Some","Blank"]
 colors_cn = ["黑色","蓝色","棕色","青色","灰色","绿色","淡蓝色","淡灰色","黄绿色","品红色","橙色","粉色","紫色","红色","白色","黄色","","空白"]
 
-stone_ids = ["stone_base","stone_base_bottom","stone_frame","stone_frame_bottom","stone_pillar","stone_pillar_bottom","stone_doric","stone_ionic","stone_corinthian","stone_layered","stone_pot","stone_planter"]
-stones_us = ["Stone Base","Stone Base Bottom","Stone Frame","Stone Frame Bottom","Stone Pillar","Stone Pillar Bottom","Doric Stone Pillar","Ionic Stone Pillar","Corinthian Stone Pillar","Layered Stone","Stone Pot","Stone Planter"]
-stones_cn = ["石壁","石壁底座","石框","石框底座","石柱","石柱底座","多立克石柱","爱奥尼石柱","科林斯石柱","叠层石壁","石质高脚花盆","石质花盆"]
-
-frame_ids = ["stone_window_top","stone_window_sill","stone_window_frame"]
-frames_us = ["Stone Window Top","Stone Window Sill","Stone Window Frame"]
-frames_cn = ["石质窗顶","石质窗台","石质窗框"]
 
 woods = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"]
 woods_us = ["Oak", "Spruce", "Birch", "Jungle", "Acacia", "Dark Oak", "Mangrove", "Cherry", "Bamboo", "Crimson", "Warped"]
@@ -43,9 +36,9 @@ item_ids = ["brochure","paw","paw_up","paw_down","paw_left","paw_right","paw_nea
 items_us = ["Neko Brochure [WIP]","Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Blank Painting (%sx%s)","Painting (%sx%s)","Linked Painting (%sx%s)","%s Wallpaper","Camera"]
 items_cn = ["猫咪手册[WIP]","猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","空白画(%sx%s)","画(%sx%s)","链接画(%sx%s)","%s墙纸","相机"]
 
-misc_ids = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iron","candle_holder_gold","candle_holder_quartz","flower_basket_iron","flower_basket_gold","flower_basket_quartz","custom","ct_test_block"]
-miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Custom Block","CT Test Block"]
-miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","自定义方块","材质连接测试方块"]
+misc_ids = ["lamp_post_iron","lamp_post_gold","lamp_post_quartz","candle_holder_iron","candle_holder_gold","candle_holder_quartz","flower_basket_iron","flower_basket_gold","flower_basket_quartz","custom_block"]
+miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Custom Block"]
+miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","自定义方块"]
 
 tab_ids = ["nekoration_stone_blocks","nekoration_wooden_blocks","nekoration_ornaments"]
 tabs_us = ["Stone Blocks","Wooden Blocks","Ornaments"]
@@ -99,17 +92,6 @@ for col in range(0, len(color_ids)):
     #obj_us['color.wooden.' + colors[col]] = wooden_us[col]
     obj_cn['color.nekoration.' + color_ids[col]] = colors_cn[col]
     #obj_cn['color.wooden.' + colors[col]] = wooden_cn[col]
-
-# [STONE BLOCKS TAB]
-for s_i in range(0, len(stone_ids)):
-    ## Include color translation, note if a space should follow (neko_color)
-    obj_us['block.nekoration.' + stone_ids[s_i]] = "%s " + stones_us[s_i]
-    obj_cn['block.nekoration.' + stone_ids[s_i]] = "%s" + stones_cn[s_i]
-
-for f_i in range(0, len(frame_ids)):
-    # (nekocolor)
-    obj_us['block.nekoration.' + frame_ids[f_i]] = "%s " + frames_us[f_i]
-    obj_cn['block.nekoration.' + frame_ids[f_i]] = "%s" + frames_cn[f_i]
 
 # [WOODEN BLOCKS TABs]
 for w_i in range(0, len(woods)):
