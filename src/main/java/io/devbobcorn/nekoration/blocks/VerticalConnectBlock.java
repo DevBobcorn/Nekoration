@@ -116,57 +116,54 @@ public class VerticalConnectBlock extends Block {
     @Override
     protected BlockState updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor level,
             BlockPos pos, BlockPos neighborPos) {
-        BlockState res = state;
         VerConnectionDir config = NekoConfig.VER_CONNECTION_DIR.get();
-        boolean flag1 = direction == Direction.UP
-                && (config == VerConnectionDir.BOTTOM2TOP || config == VerConnectionDir.BOTH);
-        boolean flag2 = direction == Direction.DOWN
-                && (config == VerConnectionDir.TOP2BOTTOM || config == VerConnectionDir.BOTH);
+        boolean relevant = (direction == Direction.UP
+                && (config == VerConnectionDir.BOTTOM2TOP || config == VerConnectionDir.BOTH))
+                || (direction == Direction.DOWN
+                && (config == VerConnectionDir.TOP2BOTTOM || config == VerConnectionDir.BOTH));
 
-        boolean connect = flag1 || flag2;
-        if (connect && newState.getBlock() instanceof VerticalConnectBlock
-                && (connectOtherVariant || newState.getBlock() == this)) {
-            BlockState stateRef;
-            if (flag1) {
-                stateRef = level.getBlockState(pos.below());
-                switch (newState.getValue(CONNECTION)) {
-                    case D1 -> {
-                        return res.setValue(CONNECTION, VerticalConnection.D0);
-                    }
-                    case T1 -> {
-                        return res.setValue(CONNECTION,
-                                (type == ConnectionType.PILLAR && stateRef.getBlock() instanceof VerticalConnectBlock
-                                        && (connectOtherVariant || stateRef.getBlock() == this))
-                                        ? VerticalConnection.T1
-                                        : VerticalConnection.T0);
-                    }
-                    case T2 -> {
-                        return res.setValue(CONNECTION, VerticalConnection.T1);
-                    }
-                    default -> {
-                    }
-                }
-            } else {
-                stateRef = level.getBlockState(pos.above());
-                switch (newState.getValue(CONNECTION)) {
-                    case D0 -> {
-                        return res.setValue(CONNECTION, VerticalConnection.D1);
-                    }
-                    case T1 -> {
-                        return res.setValue(CONNECTION,
-                                (type == ConnectionType.PILLAR && stateRef.getBlock() instanceof VerticalConnectBlock
-                                        && (connectOtherVariant || stateRef.getBlock() == this))
-                                        ? VerticalConnection.T1
-                                        : VerticalConnection.T2);
-                    }
-                    case T0 -> {
-                        return res.setValue(CONNECTION, VerticalConnection.T1);
-                    }
-                    default -> {
-                    }
-                }
-            }
+        if (relevant) {
+            return recalculateConnection(state, level, pos);
         }
-        return res;
+        return state;
+    }
+
+    private BlockState recalculateConnection(BlockState state, LevelAccessor level, BlockPos pos) {
+        int blocksBelow = 0;
+        BlockPos checkPos = pos.below();
+        while (isConnectableNeighbor(level, checkPos)) {
+            blocksBelow++;
+            checkPos = checkPos.below();
+        }
+
+        int blocksAbove = 0;
+        checkPos = pos.above();
+        while (isConnectableNeighbor(level, checkPos)) {
+            blocksAbove++;
+            checkPos = checkPos.above();
+        }
+
+        int chainLength = blocksBelow + 1 + blocksAbove;
+        int position = blocksBelow;
+
+        return state.setValue(CONNECTION, getStateForChainPosition(chainLength, position));
+    }
+
+    private static VerticalConnection getStateForChainPosition(int chainLength, int position) {
+        if (chainLength <= 1) {
+            return VerticalConnection.S0;
+        } else if (chainLength == 2) {
+            return position == 0 ? VerticalConnection.D0 : VerticalConnection.D1;
+        } else {
+            if (position == 0) return VerticalConnection.T0;
+            if (position == chainLength - 1) return VerticalConnection.T2;
+            return VerticalConnection.T1;
+        }
+    }
+
+    private boolean isConnectableNeighbor(LevelAccessor level, BlockPos pos) {
+        BlockState blockState = level.getBlockState(pos);
+        return blockState.getBlock() instanceof VerticalConnectBlock
+                && (connectOtherVariant || blockState.getBlock() == this);
     }
 }
