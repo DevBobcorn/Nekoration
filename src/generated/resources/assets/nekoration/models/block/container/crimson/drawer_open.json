@@ -3,6 +3,7 @@
   "textures": {
     "0": "nekoration:block/container/crimson/cabinet_top",
     "1": "nekoration:block/container/crimson/drawer_front_open",
+    "2": "nekoration:block/container/crimson/drawer_front",
     "3": "nekoration:block/container/crimson/drawer_side",
     "4": "nekoration:block/container/crimson/drawer_back",
     "particle": "nekoration:block/container/crimson/cabinet_top"

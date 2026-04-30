@@ -3,6 +3,7 @@
   "textures": {
     "0": "nekoration:block/container/jungle/cabinet_top",
     "1": "nekoration:block/container/jungle/drawer_front_open",
+    "2": "nekoration:block/container/jungle/drawer_front",
     "3": "nekoration:block/container/jungle/drawer_side",
     "4": "nekoration:block/container/jungle/drawer_back",
     "particle": "nekoration:block/container/jungle/cabinet_top"

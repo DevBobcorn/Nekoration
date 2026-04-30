@@ -5,6 +5,7 @@
 	"textures": {
 		"0": "nekoration:block/container/oak/cabinet_top",
 		"1": "nekoration:block/container/oak/drawer_front_open",
+		"2": "nekoration:block/container/oak/drawer_front",
 		"3": "nekoration:block/container/oak/drawer_side",
 		"4": "nekoration:block/container/oak/drawer_back",
 		"particle": "nekoration:block/container/oak/cabinet_top"
@@ -69,7 +70,7 @@
 			"from": [2, 8, -8],
 			"to": [14, 13, -7],
 			"faces": {
-				"north": {"uv": [2, 3, 14, 8], "texture": "#1", "tintindex": 0},
+				"north": {"uv": [2, 3, 14, 8], "texture": "#2", "tintindex": 0},
 				"south": {"uv": [0, 0, 12, 5], "texture": "#0", "tintindex": 0},
 				"up": {"uv": [0, 0, 12, 1], "texture": "#0", "tintindex": 0}
 			}
