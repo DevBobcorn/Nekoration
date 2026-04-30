@@ -1,5 +1,7 @@
 package io.devbobcorn.nekoration.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import io.devbobcorn.nekoration.NekoConfig;
@@ -10,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -129,9 +132,126 @@ public class HorizontalConnectBlock extends HorizontalBlock {
         return res;
     }
 
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (state.getBlock() != newState.getBlock()) {
+            Direction facing = state.getValue(FACING);
+            HorizontalConnection oldConnection = state.getValue(CONNECTION);
+
+            BlockPos rightPos = getRightBlock(pos, facing);
+            BlockPos leftPos = getLeftBlock(pos, facing);
+            BlockState rightState = level.getBlockState(rightPos);
+            BlockState leftState = level.getBlockState(leftPos);
+
+            if (connectsRight(oldConnection) && areConnectedPair(state, rightState)) {
+                rebuildConnectionFrom(level, rightPos);
+            }
+            if (connectsLeft(oldConnection) && areConnectedPair(leftState, state)) {
+                rebuildConnectionFrom(level, leftPos);
+            }
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
     protected boolean canConnectTo(BlockState state) {
         return state.getBlock() instanceof HorizontalConnectBlock
                 && (connectOtherVariant || state.getBlock() == this);
+    }
+
+    private static boolean canMutuallyConnect(BlockState a, BlockState b) {
+        if (!(a.getBlock() instanceof HorizontalConnectBlock aBlock) || !(b.getBlock() instanceof HorizontalConnectBlock bBlock)) {
+            return false;
+        }
+        return aBlock.canConnectTo(b) && bBlock.canConnectTo(a);
+    }
+
+    private static boolean connectsRight(HorizontalConnection connection) {
+        return connection == HorizontalConnection.D0
+                || connection == HorizontalConnection.T0
+                || connection == HorizontalConnection.T1;
+    }
+
+    private static boolean connectsLeft(HorizontalConnection connection) {
+        return connection == HorizontalConnection.D1
+                || connection == HorizontalConnection.T1
+                || connection == HorizontalConnection.T2;
+    }
+
+    private static boolean areConnectedPair(BlockState leftState, BlockState rightState) {
+        if (!canMutuallyConnect(leftState, rightState)) {
+            return false;
+        }
+        if (leftState.getValue(FACING) != rightState.getValue(FACING)) {
+            return false;
+        }
+        HorizontalConnection leftConnection = leftState.getValue(CONNECTION);
+        HorizontalConnection rightConnection = rightState.getValue(CONNECTION);
+        return connectsRight(leftConnection) && connectsLeft(rightConnection);
+    }
+
+    private void rebuildConnectionFrom(Level level, BlockPos origin) {
+        BlockState originState = level.getBlockState(origin);
+        if (!(originState.getBlock() instanceof HorizontalConnectBlock)) {
+            return;
+        }
+
+        Direction facing = originState.getValue(FACING);
+        BlockPos start = origin;
+        while (true) {
+            BlockPos leftPos = getLeftBlock(start, facing);
+            BlockState leftState = level.getBlockState(leftPos);
+            BlockState startState = level.getBlockState(start);
+            if (!areConnectedPair(leftState, startState)) {
+                break;
+            }
+            start = leftPos;
+        }
+
+        List<BlockPos> segment = new ArrayList<>();
+        BlockPos currentPos = start;
+        while (true) {
+            BlockState currentState = level.getBlockState(currentPos);
+            if (!(currentState.getBlock() instanceof HorizontalConnectBlock)
+                    || currentState.getValue(FACING) != facing) {
+                break;
+            }
+
+            segment.add(currentPos);
+            BlockPos rightPos = getRightBlock(currentPos, facing);
+            BlockState rightState = level.getBlockState(rightPos);
+            if (!areConnectedPair(currentState, rightState)) {
+                break;
+            }
+            currentPos = rightPos;
+        }
+
+        int size = segment.size();
+        if (size <= 0) {
+            return;
+        }
+
+        for (int i = 0; i < size; i++) {
+            BlockPos blockPos = segment.get(i);
+            BlockState blockState = level.getBlockState(blockPos);
+            if (!(blockState.getBlock() instanceof HorizontalConnectBlock)
+                    || blockState.getValue(FACING) != facing) {
+                continue;
+            }
+
+            HorizontalConnection connection;
+            if (size == 1) {
+                connection = HorizontalConnection.S0;
+            } else if (size == 2) {
+                connection = i == 0 ? HorizontalConnection.D0 : HorizontalConnection.D1;
+            } else {
+                connection = i == 0 ? HorizontalConnection.T0
+                        : i == size - 1 ? HorizontalConnection.T2 : HorizontalConnection.T1;
+            }
+
+            if (blockState.getValue(CONNECTION) != connection) {
+                level.setBlock(blockPos, blockState.setValue(CONNECTION, connection), Block.UPDATE_CLIENTS);
+            }
+        }
     }
 
     private HorizontalConnection nextFromLeft(HorizontalConnection leftConnection) {
