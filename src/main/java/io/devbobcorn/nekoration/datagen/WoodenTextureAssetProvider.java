@@ -35,9 +35,7 @@ public final class WoodenTextureAssetProvider implements DataProvider {
     private static final String SOURCE_PALETTE_FILENAME = "grayscale.png";
     private static final Map<String, String> WINDOW_OVERLAYS = Map.of(
             "window_simple.png", "window_glass.png",
-            "window_simple_t0.png", "window_glass_t0.png",
-            "window_simple_t1.png", "window_glass_t1.png",
-            "window_simple_t2.png", "window_glass_t2.png");
+            "window_simple_connected.png", "window_glass_connected.png");
     private static final Map<String, String> CONTAINER_OVERLAYS = Map.of(
             "cabinet_front.png", "cabinet_knob.png",
             "cupboard_front_d0.png", "cupboard_glass.png",

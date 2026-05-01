@@ -224,28 +224,16 @@ public final class WoodenBlockAssetProvider implements DataProvider {
             String variantId = variant.id();
             String style = "window_" + variantId;
 
-            for (String connectionId : CONNECTION_IDS) {
-                String modelName = style + ("s0".equals(connectionId) ? "" : "_" + connectionId);
-                Map<String, Object> model = new LinkedHashMap<>();
-                model.put("parent", modLoc("block/window/window"));
-
-                Map<String, Object> textures = new LinkedHashMap<>();
-                textures.put("side", modLoc("block/window/" + woodId + "/" + windowTextureStem(style, connectionId)));
-                textures.put("end", modLoc("block/window/" + woodId + "/window_top"));
-                model.put("textures", textures);
-
-                writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + modelName, model);
-            }
-
-            Map<String, Object> blockstateVariants = new LinkedHashMap<>();
-            for (String connectionId : CONNECTION_IDS) {
-                String modelName = style + ("s0".equals(connectionId) ? "" : "_" + connectionId);
-                blockstateVariants.put("vertical_connection=" + connectionId,
-                        Map.of("model", modLoc("block/window/" + woodId + "/" + modelName)));
-            }
+            Map<String, Object> model = new LinkedHashMap<>();
+            model.put("parent", modLoc("block/window/window"));
+            Map<String, Object> textures = new LinkedHashMap<>();
+            textures.put("side", modLoc("block/window/" + woodId + "/" + style));
+            textures.put("end", modLoc("block/window/" + woodId + "/window_top"));
+            model.put("textures", textures);
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + style, model);
 
             writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_window_" + variantId,
-                    Map.of("variants", blockstateVariants));
+                    Map.of("variants", Map.of("", Map.of("model", modLoc("block/window/" + woodId + "/" + style)))));
             writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_window_" + variantId,
                     Map.of("parent", modLoc("block/window/" + woodId + "/" + style)));
         }
@@ -296,16 +284,6 @@ public final class WoodenBlockAssetProvider implements DataProvider {
             writeJson(cachedOutput, writes, itemModelPathProvider, blockId,
                     Map.of("parent", modLoc("block/half_timber/" + woodId + "/" + baseModelName)));
         }
-    }
-
-    private static String windowTextureStem(String style, String connectionId) {
-        return switch (connectionId) {
-            case "s0" -> style;
-            case "d0", "t0" -> style + "_t0";
-            case "d1", "t2" -> style + "_t2";
-            case "t1" -> style + "_t1";
-            default -> style;
-        };
     }
 
     private void writeContainerModelFromTemplate(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String woodId,

@@ -105,8 +105,7 @@ public final class WoodenBlockRegistration {
             for (WindowVariant variant : WindowVariant.values()) {
                 String id = woodId + "_window_" + variant.id();
                 DeferredBlock<Block> block = blocks.register(id,
-                        () -> new WindowBlock(wood.plankProperties().noOcclusion(),
-                                VerticalConnectBlock.ConnectionType.PILLAR, false));
+                        () -> new WindowBlock(wood.plankProperties().noOcclusion()));
                 DeferredItem<BlockItem> registered = registerBlockItem(items, id, block);
                 WINDOW_BLOCK_ITEMS.add(registered);
                 plainByWood.add(registered);

@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import io.devbobcorn.nekoration.Nekoration;
+import io.devbobcorn.nekoration.blocks.NekoWood;
+import io.devbobcorn.nekoration.registry.WoodenBlockRegistration.WindowVariant;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 
@@ -25,10 +28,13 @@ public final class NekoCTRegistry {
         }
         bootstrapped = true;
 
-        /*
-        TestCTBehaviour behaviour = new TestCTBehaviour();
-        ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "ct_test_block");
-        CT_MODELS.put(blockId, model -> new NekoCTModel(model, behaviour));
-        */
+        WindowCTBehaviour behaviour = new WindowCTBehaviour();
+        for (NekoWood wood : NekoWood.values()) {
+            for (WindowVariant variant : WindowVariant.values()) {
+                String id = wood.id() + "_window_" + variant.id();
+                ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, id);
+                CT_MODELS.put(blockId, model -> new NekoCTModel(model, behaviour));
+            }
+        }
     }
 }

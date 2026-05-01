@@ -1,32 +1,27 @@
 package io.devbobcorn.nekoration.blocks;
 
-import io.devbobcorn.nekoration.blocks.states.VerticalConnection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 /**
- * Non-dyeable vertical window; wood and shape are fixed per block id ({@code <wood>_window_<variant>}).
+ * Window block with connected textures.
  */
-public class WindowBlock extends VerticalConnectBlock {
+public class WindowBlock extends Block {
 
     public WindowBlock(Properties settings) {
         super(settings);
-        registerDefaultState(stateDefinition.any().setValue(CONNECTION, VerticalConnection.S0));
-    }
-
-    public WindowBlock(Properties settings, ConnectionType type, boolean connectOtherVariant) {
-        super(settings, type, connectOtherVariant);
-        registerDefaultState(stateDefinition.any().setValue(CONNECTION, VerticalConnection.S0));
+        registerDefaultState(stateDefinition.any());
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public boolean skipRendering(BlockState state, BlockState adjacentState, Direction side) {
-        return adjacentState.getBlock() == this;
+        return adjacentState.getBlock() instanceof WindowBlock;
     }
 
     @Override
