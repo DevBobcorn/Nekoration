@@ -9,10 +9,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-/**
- * Window plant variant that should not offer sturdy support on its back face,
- * so panes/bars do not visually connect into it.
- */
 public class WindowPlantBlock extends DyeableHorizontalConnectBlock {
     private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D, 10.0D);
 
@@ -20,6 +16,10 @@ public class WindowPlantBlock extends DyeableHorizontalConnectBlock {
         super(settings, ConnectionType.BEAM, true);
     }
 
+    /**
+     * Window plant variant that should not offer sturdy support on its back face,
+     * so panes/bars do not visually connect into it.
+     */
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPES.get(state.getValue(FACING));

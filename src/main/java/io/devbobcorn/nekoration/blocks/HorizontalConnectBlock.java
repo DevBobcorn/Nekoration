@@ -21,6 +21,9 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+/**
+ * Block with horizontal connection.
+ */
 public class HorizontalConnectBlock extends HorizontalBlock {
     private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D, 16.0D);
 

@@ -18,8 +18,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 /**
- * Vertical stack connection without dye / plaster {@code color} (see {@link DyeableVerticalConnectBlock} and
- * {@link WindowBlock}).
+ * Block with vertical connection.
  */
 public class VerticalConnectBlock extends Block {
     public enum ConnectionType {
