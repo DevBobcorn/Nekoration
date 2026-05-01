@@ -30,20 +30,24 @@ public final class StoneBlockRegistration {
             String stoneId = stone.id();
             List<Supplier<? extends Item>> blockItemsByStone = STONE_BLOCK_ITEMS_BY_STONE.computeIfAbsent(stone,
                 ignored -> new ArrayList<>());
-            
-            String smoothId = "smooth_" + stoneId;
-
-            // Optional smooth stone variants
             if (stone.needsSmoothVariant()) {
-                DeferredBlock<Block> block = blocks.register(smoothId, () -> new Block(stone.stoneProperties()));
-                DeferredItem<Item> blockItem = registerBlockItem(items, smoothId, block);
-                STONE_BLOCK_ITEMS.add(blockItem);
-                blockItemsByStone.add(blockItem);
+                registerBlock(blocks, items, "smooth_" + stoneId, blockItemsByStone, stone);
             } else {
+                // Add vanilla smooth variant
                 blockItemsByStone.add(() -> stone.vanillaSmoothStoneBlock().asItem());
             }
+            registerBlock(blocks, items, "polished_smooth_" + stoneId, blockItemsByStone, stone);
+            registerBlock(blocks, items, "chiseled_" + stoneId, blockItemsByStone, stone);
 
         }
+    }
+
+    private static void registerBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+        List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+        DeferredBlock<Block> block = blocks.register(id, () -> new Block(stone.stoneProperties()));
+        DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
+        STONE_BLOCK_ITEMS.add(blockItem);
+        blockItemsByStone.add(blockItem);
     }
 
     private static DeferredItem<Item> registerBlockItem(DeferredRegister.Items items, String id,

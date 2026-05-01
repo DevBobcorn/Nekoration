@@ -28,7 +28,7 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 
 /**
- * Datagen equivalent of the legacy Python wooden texture generators.
+ * Texture generator for all wooden blocks using palettes.
  */
 public final class WoodenTextureAssetProvider implements DataProvider {
     private static final Set<String> IMAGE_SUFFIXES = Set.of(".png", ".bmp", ".webp");

@@ -27,7 +27,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * Datagen equivalent of the legacy Python wooden block asset scripts.
+ * Blockstate/Block/Item model generator for all wooden blocks.
  */
 public final class WoodenBlockAssetProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();

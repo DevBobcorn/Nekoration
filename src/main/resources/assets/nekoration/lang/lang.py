@@ -26,6 +26,18 @@ smooth_stone_ids = ["smooth_granite", "smooth_diorite", "smooth_andesite"]
 smooth_stones_us = ["Smooth Granite", "Smooth Diorite", "Smooth Andesite"]
 smooth_stones_cn = ["平滑花岗岩", "平滑闪长岩", "平滑安山岩"]
 
+stone_ids = ["granite", "diorite", "andesite"]
+stones_us = ["Granite", "Diorite", "Andesite"]
+stones_cn = ["花岗岩", "闪长岩", "安山岩"]
+
+stone_prefix_ids = ["polished_smooth", "chiseled"]
+stone_prefixes_us = ["Polished Smooth", "Chiseled"]
+stone_prefixes_cn = ["磨制平滑", "錾制"]
+
+stone_suffix_ids = ["pot"]
+stone_suffixes_us = ["Pot"]
+stone_suffixes_cn = ["花盆"]
+
 door_ids = ["quartz_door","chiseled_quartz_door","quartz_bricks_door","tall_quartz_door","tall_chiseled_quartz_door","tall_quartz_bricks_door"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
 doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
@@ -115,23 +127,32 @@ for w_i in range(0, len(wood_ids)):
 
 # [STONE BLOCKS TABs]
 for ss_i in range(0, len(smooth_stone_ids)):
-    # (nekocolor)
     obj_us['block.nekoration.' + smooth_stone_ids[ss_i]] = smooth_stones_us[ss_i]
     obj_cn['block.nekoration.' + smooth_stone_ids[ss_i]] = smooth_stones_cn[ss_i]
 
+for s_i in range(0, len(stone_ids)):
+    stone_id = stone_ids[s_i]
+    stone_us = stones_us[s_i]
+    stone_cn = stones_cn[s_i]
+    for ss_i in range(0, len(stone_prefix_ids)):
+        block_id = stone_prefix_ids[ss_i] + "_" + stone_id
+        obj_us['block.nekoration.' + block_id] = stone_prefixes_us[ss_i] + " " + stone_us
+        obj_cn['block.nekoration.' + block_id] = stone_prefixes_cn[ss_i] + stone_cn
+    for ss_i in range(0, len(stone_suffix_ids)):
+        block_id = stone_id + "_" + stone_suffix_ids[ss_i]
+        obj_us['block.nekoration.' + block_id] = stone_us + " " + stone_suffixes_us[ss_i]
+        obj_cn['block.nekoration.' + block_id] = stone_cn + stone_suffixes_cn[ss_i]
+
 # [ORNAMENTS TAB]
 for d_i in range(0, len(door_ids)):
-    # (nekocolor)
     obj_us['block.nekoration.' + door_ids[d_i]] = doors_us[d_i]
     obj_cn['block.nekoration.' + door_ids[d_i]] = doors_cn[d_i]
 
 for d_i in range(0, len(decor_ids)):
-    # Color texts Included Already (neko_color / wooden_color)
     obj_us['block.nekoration.' + decor_ids[d_i]] = decors_us[d_i]
     obj_cn['block.nekoration.' + decor_ids[d_i]] = decors_cn[d_i]
 
 for m_i in range(0, len(misc_ids)):
-    # Color texts Included Already (neko_color / wooden_color)
     obj_us['block.nekoration.' + misc_ids[m_i]] = miscs_us[m_i]
     obj_cn['block.nekoration.' + misc_ids[m_i]] = miscs_cn[m_i]
 

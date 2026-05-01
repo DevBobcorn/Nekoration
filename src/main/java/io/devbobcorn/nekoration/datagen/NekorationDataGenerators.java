@@ -14,6 +14,9 @@ public final class NekorationDataGenerators {
     public static void gatherData(GatherDataEvent event) {
         event.getGenerator().addProvider(
                 event.includeClient(),
+                new StoneBlockAssetProvider(event.getGenerator().getPackOutput()));
+        event.getGenerator().addProvider(
+                event.includeClient(),
                 new WoodenBlockAssetProvider(event.getGenerator().getPackOutput()));
         event.getGenerator().addProvider(
                 event.includeClient(),
