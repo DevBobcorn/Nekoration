@@ -1,7 +1,22 @@
 {
   "variants": {
-    "": {
+    "vertical_connection=d0": {
+      "model": "nekoration:block/stone/chiseled_andesite_d0"
+    },
+    "vertical_connection=d1": {
+      "model": "nekoration:block/stone/chiseled_andesite_d1"
+    },
+    "vertical_connection=s0": {
       "model": "nekoration:block/stone/chiseled_andesite"
+    },
+    "vertical_connection=t0": {
+      "model": "nekoration:block/stone/chiseled_andesite_t0"
+    },
+    "vertical_connection=t1": {
+      "model": "nekoration:block/stone/chiseled_andesite_t1"
+    },
+    "vertical_connection=t2": {
+      "model": "nekoration:block/stone/chiseled_andesite_t2"
     }
   }
 }

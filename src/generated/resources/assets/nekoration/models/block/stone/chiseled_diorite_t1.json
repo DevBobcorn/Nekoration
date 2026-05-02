@@ -2,6 +2,6 @@
   "parent": "block/cube_column",
   "textures": {
     "end": "nekoration:block/stone/diorite_chiseled",
-    "side": "nekoration:block/stone/diorite_chiseled"
+    "side": "nekoration:block/stone/diorite_chiseled_t1"
   }
 }
