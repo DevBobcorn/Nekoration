@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "nekoration:block/stone/smooth_andesite_slab"
+    },
+    "type=double": {
+      "model": "nekoration:block/stone/smooth_andesite"
+    },
+    "type=top": {
+      "model": "nekoration:block/stone/smooth_andesite_slab_top"
+    }
+  }
+}

@@ -40,8 +40,12 @@ public final class StoneBlockAssetProvider implements DataProvider {
             String stoneId = stone.id();
             if (stone.needsSmoothVariant()) {
                 generateStoneCubeAllAssets(cachedOutput, "smooth", true, writes, stone.id());
+                generateStoneStairAssets(cachedOutput, "smooth", true, writes, stone.id());
+                generateStoneSlabAssets(cachedOutput, "smooth", true, writes, stone.id());
             }
             generateStoneCubeAllAssets(cachedOutput, "polished_smooth", true, writes, stone.id());
+            generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stone.id());
+            generateStoneSlabAssets(cachedOutput, "polished_smooth", true, writes, stone.id());
             generateStoneCubeAllAssets(cachedOutput, "chiseled", true, writes, stoneId);
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
@@ -63,15 +67,99 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/stone/" + variantId)));
     }
 
-    private void generateStoneDecoAssets(CachedOutput cachedOutput, String variant, boolean prefixedId, List<CompletableFuture<?>> writes, String stoneId) {
+    private void generateStoneStairAssets(CachedOutput cachedOutput, String variant, boolean prefixedId,
+            List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
-        // String textureId = stoneId + "_" + variant;
+        String textureId = stoneId + "_" + variant;
+        String stairId = variantId + "_stairs";
 
-        writeJson(cachedOutput, writes, blockstatePathProvider, variantId,
-            Map.of("variants", Map.of("", Map.of("model", modLoc("block/stone/" + variantId)))));
+        Map<String, Object> stairTextures = new LinkedHashMap<>();
+        stairTextures.put("bottom", modLoc("block/stone/" + textureId));
+        stairTextures.put("top", modLoc("block/stone/" + textureId));
+        stairTextures.put("side", modLoc("block/stone/" + textureId));
 
-        writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
-                Map.of("parent", modLoc("block/stone/" + variantId)));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + stairId,
+                Map.of("parent", "block/stairs", "textures", stairTextures));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + stairId + "_inner",
+                Map.of("parent", "block/inner_stairs", "textures", stairTextures));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + stairId + "_outer",
+                Map.of("parent", "block/outer_stairs", "textures", stairTextures));
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        for (String facing : List.of("north", "east", "south", "west")) {
+            for (String half : List.of("bottom", "top")) {
+                for (String shape : List.of("straight", "inner_left", "inner_right", "outer_left", "outer_right")) {
+                    String variantKey = "facing=" + facing + ",half=" + half + ",shape=" + shape;
+                    variants.put(variantKey, stairVariant(stairId, facing, half, shape));
+                }
+            }
+        }
+        writeJson(cachedOutput, writes, blockstatePathProvider, stairId, Map.of("variants", variants));
+        writeJson(cachedOutput, writes, itemModelPathProvider, stairId,
+                Map.of("parent", modLoc("block/stone/" + stairId)));
+    }
+
+    private void generateStoneSlabAssets(CachedOutput cachedOutput, String variant, boolean prefixedId,
+            List<CompletableFuture<?>> writes, String stoneId) {
+        String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
+        String textureId = stoneId + "_" + variant;
+        String slabId = variantId + "_slab";
+
+        Map<String, Object> slabTextures = new LinkedHashMap<>();
+        slabTextures.put("bottom", modLoc("block/stone/" + textureId));
+        slabTextures.put("top", modLoc("block/stone/" + textureId));
+        slabTextures.put("side", modLoc("block/stone/" + textureId));
+
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + slabId,
+                Map.of("parent", "block/slab", "textures", slabTextures));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + slabId + "_top",
+                Map.of("parent", "block/slab_top", "textures", slabTextures));
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        variants.put("type=bottom", Map.of("model", modLoc("block/stone/" + slabId)));
+        variants.put("type=top", Map.of("model", modLoc("block/stone/" + slabId + "_top")));
+        variants.put("type=double", Map.of("model", modLoc("block/stone/" + variantId)));
+        writeJson(cachedOutput, writes, blockstatePathProvider, slabId, Map.of("variants", variants));
+        writeJson(cachedOutput, writes, itemModelPathProvider, slabId,
+                Map.of("parent", modLoc("block/stone/" + slabId)));
+    }
+
+    private static Map<String, Object> stairVariant(String stairId, String facing, String half, String shape) {
+        int facingY = switch (facing) {
+            case "east" -> 90;
+            case "south" -> 180;
+            case "west" -> 270;
+            default -> 0;
+        };
+        int baseY = (facingY + 270) % 360;
+
+        String modelName = stairId;
+        if ("inner_left".equals(shape) || "inner_right".equals(shape)) {
+            modelName = stairId + "_inner";
+        } else if ("outer_left".equals(shape) || "outer_right".equals(shape)) {
+            modelName = stairId + "_outer";
+        }
+
+        int yOffset = 0;
+        if ("inner_left".equals(shape) || "outer_left".equals(shape)) {
+            yOffset = half.equals("top") ? 0 : 270;
+        } else if ("inner_right".equals(shape) || "outer_right".equals(shape)) {
+            yOffset = half.equals("top") ? 90 : 0;
+        }
+        int yRotation = (baseY + yOffset) % 360;
+
+        Map<String, Object> variant = new LinkedHashMap<>();
+        variant.put("model", modLoc("block/stone/" + modelName));
+        if (half.equals("top")) {
+            variant.put("x", 180);
+            variant.put("uvlock", true);
+        } else if (yRotation != 0) {
+            variant.put("uvlock", true);
+        }
+        if (yRotation != 0) {
+            variant.put("y", yRotation);
+        }
+        return variant;
     }
 
     private static String modLoc(String path) {

@@ -11,6 +11,8 @@ import io.devbobcorn.nekoration.blocks.NekoStone;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -31,20 +33,45 @@ public final class StoneBlockRegistration {
             List<Supplier<? extends Item>> blockItemsByStone = STONE_BLOCK_ITEMS_BY_STONE.computeIfAbsent(stone,
                 ignored -> new ArrayList<>());
             if (stone.needsSmoothVariant()) {
-                registerBlock(blocks, items, "smooth_" + stoneId, blockItemsByStone, stone);
+                registerStoneBlockSet(blocks, items, "smooth_" + stoneId, blockItemsByStone, stone);
             } else {
                 // Add vanilla smooth variant
                 blockItemsByStone.add(() -> stone.vanillaSmoothStoneBlock().asItem());
             }
-            registerBlock(blocks, items, "polished_smooth_" + stoneId, blockItemsByStone, stone);
+            registerStoneBlockSet(blocks, items, "polished_smooth_" + stoneId, blockItemsByStone, stone);
             registerBlock(blocks, items, "chiseled_" + stoneId, blockItemsByStone, stone);
 
         }
     }
 
-    private static void registerBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
-        List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+    private static void registerStoneBlockSet(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+        DeferredBlock<Block> fullBlock = registerBlock(blocks, items, id, blockItemsByStone, stone);
+        registerStairBlock(blocks, items, id + "_stairs", fullBlock, blockItemsByStone, stone);
+        registerSlabBlock(blocks, items, id + "_slab", blockItemsByStone, stone);
+    }
+
+    private static DeferredBlock<Block> registerBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id, () -> new Block(stone.stoneProperties()));
+        DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
+        STONE_BLOCK_ITEMS.add(blockItem);
+        blockItemsByStone.add(blockItem);
+        return block;
+    }
+
+    private static void registerStairBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            DeferredBlock<Block> sourceBlock, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new StairBlock(sourceBlock.get().defaultBlockState(), stone.stoneProperties()));
+        DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
+        STONE_BLOCK_ITEMS.add(blockItem);
+        blockItemsByStone.add(blockItem);
+    }
+
+    private static void registerSlabBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+        DeferredBlock<Block> block = blocks.register(id, () -> new SlabBlock(stone.stoneProperties()));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);

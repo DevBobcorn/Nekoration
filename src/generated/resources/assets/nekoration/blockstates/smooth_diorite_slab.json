@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "nekoration:block/stone/smooth_diorite_slab"
+    },
+    "type=double": {
+      "model": "nekoration:block/stone/smooth_diorite"
+    },
+    "type=top": {
+      "model": "nekoration:block/stone/smooth_diorite_slab_top"
+    }
+  }
+}

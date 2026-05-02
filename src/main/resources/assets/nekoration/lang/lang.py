@@ -22,21 +22,19 @@ furniture_ids = ["easel_menu","table","chair","cabinet","drawer","drawer_chest",
 furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Chair","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
 furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}椅子","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
 
-smooth_stone_ids = ["smooth_granite", "smooth_diorite", "smooth_andesite"]
-smooth_stones_us = ["Smooth Granite", "Smooth Diorite", "Smooth Andesite"]
-smooth_stones_cn = ["平滑花岗岩", "平滑闪长岩", "平滑安山岩"]
-
 stone_ids = ["granite", "diorite", "andesite"]
 stones_us = ["Granite", "Diorite", "Andesite"]
 stones_cn = ["花岗岩", "闪长岩", "安山岩"]
 
-stone_prefix_ids = ["polished_smooth", "chiseled"]
-stone_prefixes_us = ["Polished Smooth", "Chiseled"]
-stone_prefixes_cn = ["磨制平滑", "錾制"]
+stone_has_smooth_variant = [True, True, True]
 
-stone_suffix_ids = ["pot"]
-stone_suffixes_us = ["Pot"]
-stone_suffixes_cn = ["花盆"]
+smooth_stone_block_ids = ["smooth_{stone}", "smooth_{stone}_slab", "smooth_{stone}_stairs"]
+smooth_stone_blocks_us = ["Smooth {stone}", "Smooth {stone} Slab", "Smooth {stone} Stairs"]
+smooth_stone_blocks_cn = ["平滑{stone}", "平滑{stone}台阶", "平滑{stone}楼梯"]
+
+stone_block_ids = ["polished_smooth_{stone}", "polished_smooth_{stone}_slab", "polished_smooth_{stone}_stairs", "chiseled_{stone}", "{stone}_pot"]
+stone_blocks_us = ["Polished Smooth {stone}", "Polished Smooth {stone} Slab", "Polished Smooth {stone} Stairs", "Chiseled {stone}", "{stone} Pot"]
+stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "錾制{stone}", "{stone}花盆"]
 
 door_ids = ["quartz_door","chiseled_quartz_door","quartz_bricks_door","tall_quartz_door","tall_chiseled_quartz_door","tall_quartz_bricks_door"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
@@ -126,22 +124,19 @@ for w_i in range(0, len(wood_ids)):
         obj_cn["block.nekoration." + block_id] = furniture_cn[v_i].format(wood=wood_cn)
 
 # [STONE BLOCKS TABs]
-for ss_i in range(0, len(smooth_stone_ids)):
-    obj_us['block.nekoration.' + smooth_stone_ids[ss_i]] = smooth_stones_us[ss_i]
-    obj_cn['block.nekoration.' + smooth_stone_ids[ss_i]] = smooth_stones_cn[ss_i]
-
 for s_i in range(0, len(stone_ids)):
     stone_id = stone_ids[s_i]
     stone_us = stones_us[s_i]
     stone_cn = stones_cn[s_i]
-    for ss_i in range(0, len(stone_prefix_ids)):
-        block_id = stone_prefix_ids[ss_i] + "_" + stone_id
-        obj_us['block.nekoration.' + block_id] = stone_prefixes_us[ss_i] + " " + stone_us
-        obj_cn['block.nekoration.' + block_id] = stone_prefixes_cn[ss_i] + stone_cn
-    for ss_i in range(0, len(stone_suffix_ids)):
-        block_id = stone_id + "_" + stone_suffix_ids[ss_i]
-        obj_us['block.nekoration.' + block_id] = stone_us + " " + stone_suffixes_us[ss_i]
-        obj_cn['block.nekoration.' + block_id] = stone_cn + stone_suffixes_cn[ss_i]
+    if stone_has_smooth_variant[s_i]:
+        for ss_i in range(0, len(smooth_stone_block_ids)):
+            block_id = smooth_stone_block_ids[ss_i].format(stone=stone_id)
+            obj_us['block.nekoration.' + block_id] = smooth_stone_blocks_us[ss_i].format(stone=stone_us)
+            obj_cn['block.nekoration.' + block_id] = smooth_stone_blocks_cn[ss_i].format(stone=stone_cn)
+    for ss_i in range(0, len(stone_block_ids)):
+        block_id = stone_block_ids[ss_i].format(stone=stone_id)
+        obj_us['block.nekoration.' + block_id] = stone_blocks_us[ss_i].format(stone=stone_us)
+        obj_cn['block.nekoration.' + block_id] = stone_blocks_cn[ss_i].format(stone=stone_cn)
 
 # [ORNAMENTS TAB]
 for d_i in range(0, len(door_ids)):
