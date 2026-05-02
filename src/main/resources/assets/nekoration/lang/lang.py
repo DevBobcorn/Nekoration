@@ -10,9 +10,9 @@ wood_ids = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove"
 woods_us = ["Oak", "Spruce", "Birch", "Jungle", "Acacia", "Dark Oak", "Mangrove", "Cherry", "Bamboo", "Crimson", "Warped"]
 woods_cn = ["橡木", "云杉木", "白桦木", "丛林木", "金合欢木", "深色橡木", "红树木", "樱花木", "竹", "绯红木", "诡异木"]
 
-half_timber_ids = ["p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "pillar_p0", "pillar_p1", "pillar_p2"]
-half_timbers_us = ["{wood} Half-Timber", "Slash {wood} Half-Timber", "Backslash {wood} Half-Timber", "Bi-Slash {wood} Half-Timber", "Bi-Backslash {wood} Half-Timber", "Center {wood} Half-Timber", "Cross {wood} Half-Timber", "Diamond {wood} Half-Timber", "Checkered {wood} Half-Timber", "Double {wood} Half-Timber", "{wood} Half-Timber Pillar", "Slash {wood} Half-Timber Pillar", "Backslash {wood} Half-Timber Pillar"]
-half_timbers_cn = ["{wood}半露木", "斜纹{wood}半露木", "反斜纹{wood}半露木", "双斜纹{wood}半露木", "双反斜纹{wood}半露木", "中心{wood}半露木", "十字{wood}半露木", "菱形{wood}半露木", "方格{wood}半露木", "双格{wood}半露木", "{wood}半露木柱", "斜纹{wood}半露木柱", "反斜纹{wood}半露木柱"]
+half_timber_ids = ["p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"]
+half_timbers_us = ["{wood} Half-Timber", "Bend Sinister {wood} Half-Timber", "Bend {wood} Half-Timber", "Double Bend Sinister {wood} Half-Timber", "Double Bend {wood} Half-Timber", "Center {wood} Half-Timber", "Roundel {wood} Half-Timber", "Saltire {wood} Half-Timber", "Pale {wood} Half-Timber", "Double {wood} Half-Timber"]
+half_timbers_cn = ["{wood}半露木", "左斜条{wood}半露木", "右斜条{wood}半露木", "双左斜条{wood}半露木", "双右斜条{wood}半露木", "中心{wood}半露木", "圆形条{wood}半露木", "斜十字条{wood}半露木", "中竖条{wood}半露木", "双格{wood}半露木"]
 
 window_ids = ["simple","arch","cross","lancet","shade"]
 windows_us = ["{wood} Simple Window","{wood} Arch Window","{wood} Cross Window","{wood} Lancet Window","{wood} Shade Window"]

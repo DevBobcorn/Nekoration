@@ -246,40 +246,32 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                     halfTimberCubeModel(woodId, patternIndex));
 
             Map<String, Object> blockstateVariants = new LinkedHashMap<>();
-            for (String colorId : COLOR_IDS) {
-                blockstateVariants.put("color=" + colorId,
-                        Map.of("model", modLoc("block/half_timber/" + woodId + "/" + baseModelName)));
+            if (patternIndex <= 2) {
+                for (String connectionId : CONNECTION_IDS) {
+                    if ("s0".equals(connectionId)) {
+                        continue;
+                    }
+                    String connectedModelName = baseModelName + "_" + connectionId;
+                    writeJson(cachedOutput, writes, blockModelPathProvider, "half_timber/" + woodId + "/" + connectedModelName,
+                            halfTimberPillarModel(woodId, patternIndex, connectionId));
+                }
+
+                for (String colorId : COLOR_IDS) {
+                    for (String connectionId : CONNECTION_IDS) {
+                        String modelName = baseModelName + ("s0".equals(connectionId) ? "" : "_" + connectionId);
+                        String variantKey = "color=" + colorId + ",vertical_connection=" + connectionId;
+                        blockstateVariants.put(variantKey,
+                                Map.of("model", modLoc("block/half_timber/" + woodId + "/" + modelName)));
+                    }
+                }
+            } else {
+                for (String colorId : COLOR_IDS) {
+                    blockstateVariants.put("color=" + colorId,
+                            Map.of("model", modLoc("block/half_timber/" + woodId + "/" + baseModelName)));
+                }
             }
 
             String blockId = woodId + "_" + baseModelName;
-            writeJson(cachedOutput, writes, blockstatePathProvider, blockId, Map.of("variants", blockstateVariants));
-            writeJson(cachedOutput, writes, itemModelPathProvider, blockId,
-                    Map.of("parent", modLoc("block/half_timber/" + woodId + "/" + baseModelName)));
-        }
-
-        for (int pillarSlot = 0; pillarSlot <= 2; pillarSlot++) {
-            String baseModelName = "half_timber_p" + pillarSlot;
-
-            for (String connectionId : CONNECTION_IDS) {
-                if ("s0".equals(connectionId)) {
-                    continue;
-                }
-                String connectedModelName = baseModelName + "_" + connectionId;
-                writeJson(cachedOutput, writes, blockModelPathProvider, "half_timber/" + woodId + "/" + connectedModelName,
-                        halfTimberPillarModel(woodId, pillarSlot, connectionId));
-            }
-
-            Map<String, Object> blockstateVariants = new LinkedHashMap<>();
-            for (String colorId : COLOR_IDS) {
-                for (String connectionId : CONNECTION_IDS) {
-                    String modelName = baseModelName + ("s0".equals(connectionId) ? "" : "_" + connectionId);
-                    String variantKey = "color=" + colorId + ",vertical_connection=" + connectionId;
-                    blockstateVariants.put(variantKey,
-                            Map.of("model", modLoc("block/half_timber/" + woodId + "/" + modelName)));
-                }
-            }
-
-            String blockId = woodId + "_half_timber_pillar_p" + pillarSlot;
             writeJson(cachedOutput, writes, blockstatePathProvider, blockId, Map.of("variants", blockstateVariants));
             writeJson(cachedOutput, writes, itemModelPathProvider, blockId,
                     Map.of("parent", modLoc("block/half_timber/" + woodId + "/" + baseModelName)));

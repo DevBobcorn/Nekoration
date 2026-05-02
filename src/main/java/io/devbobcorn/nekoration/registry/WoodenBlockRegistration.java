@@ -91,16 +91,13 @@ public final class WoodenBlockRegistration {
                     ignored -> new ArrayList<>());
 
             for (int p = 0; p <= 9; p++) {
+                int patternIndex = p;
                 String id = woodId + "_half_timber_p" + p;
-                DeferredBlock<Block> block = blocks.register(id, () -> new DyeableBlock(wood.plankProperties()));
+                DeferredBlock<Block> block = blocks.register(id, () -> createHalfTimberBlock(wood, patternIndex));
                 DeferredItem<DyeableBlockItem> blockItem = registerDyeableBlockItem(items, id, block);
                 HALF_TIMBER_BLOCK_ITEMS.add(blockItem);
                 dyedByWood.add(blockItem);
             }
-
-            registerPillar(blocks, items, wood, woodId, 0, VerticalConnectBlock.ConnectionType.PILLAR, dyedByWood);
-            registerPillar(blocks, items, wood, woodId, 1, VerticalConnectBlock.ConnectionType.TRIPLE, dyedByWood);
-            registerPillar(blocks, items, wood, woodId, 2, VerticalConnectBlock.ConnectionType.TRIPLE, dyedByWood);
 
             for (WindowVariant variant : WindowVariant.values()) {
                 String id = woodId + "_window_" + variant.id();
@@ -177,13 +174,14 @@ public final class WoodenBlockRegistration {
 
     }
 
-    private static void registerPillar(DeferredRegister.Blocks blocks, DeferredRegister.Items items, NekoWood wood,
-            String woodId, int index, VerticalConnectBlock.ConnectionType type, List<DeferredItem<DyeableBlockItem>> dyedByWood) {
-        String id = woodId + "_half_timber_pillar_p" + index;
-        DeferredBlock<Block> block = blocks.register(id, () -> new DyeableVerticalConnectBlock(wood.plankProperties(), type, false));
-        DeferredItem<DyeableBlockItem> registered = registerDyeableBlockItem(items, id, block);
-        HALF_TIMBER_BLOCK_ITEMS.add(registered);
-        dyedByWood.add(registered);
+    private static Block createHalfTimberBlock(NekoWood wood, int patternIndex) {
+        if (patternIndex == 0) {
+            return new DyeableVerticalConnectBlock(wood.plankProperties(), VerticalConnectBlock.ConnectionType.PILLAR, false);
+        }
+        if (patternIndex <= 2) {
+            return new DyeableVerticalConnectBlock(wood.plankProperties(), VerticalConnectBlock.ConnectionType.TRIPLE, false);
+        }
+        return new DyeableBlock(wood.plankProperties());
     }
 
     private static DeferredItem<DyeableBlockItem> registerDyeableBlockItem(DeferredRegister.Items items, String id,
