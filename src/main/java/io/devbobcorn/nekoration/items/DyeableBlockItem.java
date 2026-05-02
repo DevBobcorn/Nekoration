@@ -5,13 +5,12 @@ import io.devbobcorn.nekoration.common.ComponentCompat;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.component.CustomData;
 
-public class DyeableBlockItem extends BlockItem {
+public class DyeableBlockItem extends NekoBlockItem {
     public static final String COLOR = "color";
 
     public DyeableBlockItem(Block block, Properties properties) {

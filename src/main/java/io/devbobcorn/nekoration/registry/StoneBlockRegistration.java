@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import io.devbobcorn.nekoration.blocks.NekoStone;
-import net.minecraft.world.item.BlockItem;
+import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
@@ -79,7 +79,7 @@ public final class StoneBlockRegistration {
 
     private static DeferredItem<Item> registerBlockItem(DeferredRegister.Items items, String id,
             DeferredBlock<Block> block) {
-        return items.registerItem(id, props -> new BlockItem(block.get(), props), new Item.Properties());
+        return items.registerItem(id, props -> new NekoBlockItem(block.get(), props), new Item.Properties());
     }
 
     public static List<DeferredItem<Item>> blockItemsView() {

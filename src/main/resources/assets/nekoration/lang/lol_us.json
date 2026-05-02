@@ -372,5 +372,13 @@
     "item.nekoration.wallpaper": "%s Wollpopor",
     "itemGroup.nekoration_ornaments": "Nekaorushun: ournumenz",
     "itemGroup.nekoration_stone_blocks": "Nekarashun: Stone Blucks",
-    "itemGroup.nekoration_wooden_blocks": "Nekurateean: Waoden Bluckz"
+    "itemGroup.nekoration_wooden_blocks": "Nekurateean: Waoden Bluckz",
+    "tooltip.nekoration.connection_both": "In both darecshuns",
+    "tooltip.nekoration.connection_bottom2top": "From bottom 2 tap",
+    "tooltip.nekoration.connection_left2right": "Froam Left 2 Right",
+    "tooltip.nekoration.connection_neither": "In neithar durecshun",
+    "tooltip.nekoration.connection_right2left": "Fram Right 2 Left",
+    "tooltip.nekoration.connection_top2bottom": "From Tap 2 Bottom",
+    "tooltip.nekoration.horizontal_connect_block": "Connecz Horizontolly With Matchin Blacks %s",
+    "tooltip.nekoration.vertical_connect_block": "Connectz vurteecolly with mutchin blackz %s"
 }

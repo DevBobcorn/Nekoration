@@ -105,7 +105,7 @@ for c_i in range(0, len(color_ids)):
     obj_cn['color.nekoration.' + color_ids[c_i]] = colors_cn[c_i]
     #obj_cn['color.wooden.' + colors[col]] = wooden_cn[col]
 
-# [WOODEN BLOCKS TABs]
+# [WOODEN BLOCKS TAB]
 for w_i in range(0, len(wood_ids)):
     wood_id = wood_ids[w_i]
     wood_us = woods_us[w_i]
@@ -123,7 +123,7 @@ for w_i in range(0, len(wood_ids)):
         obj_us["block.nekoration." + block_id] = furniture_us[v_i].format(wood=wood_us)
         obj_cn["block.nekoration." + block_id] = furniture_cn[v_i].format(wood=wood_cn)
 
-# [STONE BLOCKS TABs]
+# [STONE BLOCKS TAB]
 for s_i in range(0, len(stone_ids)):
     stone_id = stone_ids[s_i]
     stone_us = stones_us[s_i]
@@ -155,7 +155,7 @@ for i_i in range(0, len(item_ids)):
     obj_us['item.nekoration.' + item_ids[i_i]] = items_us[i_i]
     obj_cn['item.nekoration.' + item_ids[i_i]] = items_cn[i_i]
 
-# [TAB NAME]
+# [TAB NAMES]
 for t_i in range(0, len(tab_ids)):
     obj_us['itemGroup.' + tab_ids[t_i]] = "Nekoration: " + tabs_us[t_i]
     obj_cn['itemGroup.' + tab_ids[t_i]] = "猫咪装饰丨" + tabs_cn[t_i]
@@ -170,6 +170,24 @@ for e_i in range(0, len(entity_ids)):
     obj_us['entity.nekoration.' + entity_ids[e_i]] = entities_us[e_i]
     obj_cn['entity.nekoration.' + entity_ids[e_i]] = entities_cn[e_i]
 
+# [TOOLTIPS]
+obj_us['tooltip.nekoration.horizontal_connect_block'] = "Connects horizontally with matching blocks %s"
+obj_cn['tooltip.nekoration.horizontal_connect_block'] = "%s可与同种方块水平连接"
+obj_us['tooltip.nekoration.vertical_connect_block'] = "Connects vertically with matching blocks %s"
+obj_cn['tooltip.nekoration.vertical_connect_block'] = "%s可与同种方块垂直连接"
+
+obj_us['tooltip.nekoration.connection_neither'] = "in neither direction"
+obj_cn['tooltip.nekoration.connection_neither'] = "从两侧均不"
+obj_us['tooltip.nekoration.connection_both'] = "in both directions"
+obj_cn['tooltip.nekoration.connection_both'] = "从两侧均"
+obj_us['tooltip.nekoration.connection_left2right'] = "from left to right"
+obj_cn['tooltip.nekoration.connection_left2right'] = "从左至右"
+obj_us['tooltip.nekoration.connection_right2left'] = "from right to left"
+obj_cn['tooltip.nekoration.connection_right2left'] = "从右至左"
+obj_us['tooltip.nekoration.connection_bottom2top'] = "from bottom to top"
+obj_cn['tooltip.nekoration.connection_bottom2top'] = "从下至上"
+obj_us['tooltip.nekoration.connection_top2bottom'] = "from top to bottom"
+obj_cn['tooltip.nekoration.connection_top2bottom'] = "从上至下"
 
 # Set cwd to file directory
 script_dir = os.path.dirname(os.path.abspath(__file__))

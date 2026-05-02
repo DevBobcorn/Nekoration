@@ -372,5 +372,13 @@
     "item.nekoration.wallpaper": "%s Wallpaper",
     "itemGroup.nekoration_ornaments": "Nekoration: Ornaments",
     "itemGroup.nekoration_stone_blocks": "Nekoration: Stone Blocks",
-    "itemGroup.nekoration_wooden_blocks": "Nekoration: Wooden Blocks"
+    "itemGroup.nekoration_wooden_blocks": "Nekoration: Wooden Blocks",
+    "tooltip.nekoration.connection_both": "in both directions",
+    "tooltip.nekoration.connection_bottom2top": "from bottom to top",
+    "tooltip.nekoration.connection_left2right": "from left to right",
+    "tooltip.nekoration.connection_neither": "in neither direction",
+    "tooltip.nekoration.connection_right2left": "from right to left",
+    "tooltip.nekoration.connection_top2bottom": "from top to bottom",
+    "tooltip.nekoration.horizontal_connect_block": "Connects horizontally with matching blocks %s",
+    "tooltip.nekoration.vertical_connect_block": "Connects vertically with matching blocks %s"
 }

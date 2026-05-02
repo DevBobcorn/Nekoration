@@ -372,5 +372,13 @@
     "item.nekoration.wallpaper": "%s墙纸",
     "itemGroup.nekoration_ornaments": "猫咪装饰丨装饰",
     "itemGroup.nekoration_stone_blocks": "猫咪装饰丨石质方块",
-    "itemGroup.nekoration_wooden_blocks": "猫咪装饰丨木质方块"
+    "itemGroup.nekoration_wooden_blocks": "猫咪装饰丨木质方块",
+    "tooltip.nekoration.connection_both": "从两侧均",
+    "tooltip.nekoration.connection_bottom2top": "从下至上",
+    "tooltip.nekoration.connection_left2right": "从左至右",
+    "tooltip.nekoration.connection_neither": "从两侧均不",
+    "tooltip.nekoration.connection_right2left": "从右至左",
+    "tooltip.nekoration.connection_top2bottom": "从上至下",
+    "tooltip.nekoration.horizontal_connect_block": "%s可与同类方块水平连接",
+    "tooltip.nekoration.vertical_connect_block": "%s可与同类方块垂直连接"
 }

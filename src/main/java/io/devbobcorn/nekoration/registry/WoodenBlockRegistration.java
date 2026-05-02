@@ -19,6 +19,7 @@ import io.devbobcorn.nekoration.blocks.containers.WallShelfBlock;
 import io.devbobcorn.nekoration.blocks.furniture.ChairBlock;
 import io.devbobcorn.nekoration.blocks.furniture.TableBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
+import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -191,7 +192,7 @@ public final class WoodenBlockRegistration {
 
     private static DeferredItem<BlockItem> registerBlockItem(DeferredRegister.Items items, String id,
             DeferredBlock<Block> block) {
-        return items.registerItem(id, props -> new BlockItem(block.get(), props), new Item.Properties());
+        return items.registerItem(id, props -> new NekoBlockItem(block.get(), props), new Item.Properties());
     }
 
     public static List<DeferredItem<DyeableBlockItem>> halfTimberBlockItemsView() {
