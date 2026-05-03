@@ -46,22 +46,26 @@ public final class WoodenTextureAssetProvider implements DataProvider {
             "easel_menu.png", "easel_menu_board.png");
 
     private final Path templateTextureRoot;
-    private final Path generatedTextureRoot;
+    private final Path generatedBlockTextureRoot;
+    private final Path generatedGuiTextureRoot;
     private int writtenTextureCount;
 
     public WoodenTextureAssetProvider(PackOutput output) {
         this.templateTextureRoot = resolveTemplateTextureRoot();
-        this.generatedTextureRoot = templateTextureRoot.getParent()
-                .resolve("src/generated/resources/assets/" + Nekoration.MODID + "/textures/block");
+        Path assetsRoot = templateTextureRoot.getParent()
+                .resolve("src/generated/resources/assets/" + Nekoration.MODID + "/textures");
+        this.generatedBlockTextureRoot = assetsRoot.resolve("block");
+        this.generatedGuiTextureRoot = assetsRoot.resolve("gui");
     }
 
     @Override
     public CompletableFuture<?> run(CachedOutput cachedOutput) {
         writtenTextureCount = 0;
-        Nekoration.LOGGER.info("Generating textures from {} to {}", templateTextureRoot, generatedTextureRoot);
+        Nekoration.LOGGER.info("Generating textures from {} to {}", templateTextureRoot, generatedBlockTextureRoot);
         try {
             generatePaletteMappedTextures(cachedOutput);
             generateHalfTimberBackTextures(cachedOutput);
+            generateGuiTextures(cachedOutput);
         } catch (IOException e) {
             throw new IllegalStateException("Failed generating wooden textures", e);
         }
@@ -181,14 +185,55 @@ public final class WoodenTextureAssetProvider implements DataProvider {
         }
     }
 
-    private void writeTexture(CachedOutput cachedOutput, String texturePath, BufferedImage image) throws IOException {
-        Path outPath = generatedTextureRoot.resolve(texturePath + ".png");
+    private void generateGuiTextures(CachedOutput cachedOutput) throws IOException {
+        Path sourceDir = templateTextureRoot.resolve("gui_template");
+        if (!Files.isDirectory(sourceDir)) {
+            return;
+        }
+
+        Path paletteDir = templateTextureRoot.resolve("plank_palettes");
+        Path sourcePalettePath = paletteDir.resolve(SOURCE_PALETTE_FILENAME);
+        if (!Files.isRegularFile(sourcePalettePath)) {
+            return;
+        }
+
+        List<Path> targetPalettes = collectImages(paletteDir).stream()
+                .filter(path -> !path.getFileName().toString().equals(SOURCE_PALETTE_FILENAME))
+                .collect(Collectors.toList());
+        if (targetPalettes.isEmpty()) {
+            return;
+        }
+
+        Palette sourcePalette = loadPalette(sourcePalettePath);
+        List<Path> sourceImages = collectImages(sourceDir);
+
+        for (Path sourceImagePath : sourceImages) {
+            BufferedImage sourceImage = readImage(sourceImagePath);
+            String textureName = stripExtension(sourceImagePath.getFileName().toString());
+
+            for (Path targetPalettePath : targetPalettes) {
+                Palette targetPalette = loadPalette(targetPalettePath);
+                Map<Integer, Integer> colorMapping = buildColorMapping(
+                        sourcePalette, targetPalette, sourcePalettePath, targetPalettePath);
+                BufferedImage mapped = remapImage(sourceImage, colorMapping, sourceImagePath);
+                String targetWoodName = stripExtension(targetPalettePath.getFileName().toString());
+                writeTexture(cachedOutput, generatedGuiTextureRoot, textureName + "/" + targetWoodName, mapped);
+            }
+        }
+    }
+
+    private void writeTexture(CachedOutput cachedOutput, Path outputRoot, String texturePath, BufferedImage image) throws IOException {
+        Path outPath = outputRoot.resolve(texturePath + ".png");
         Files.createDirectories(outPath.getParent());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(image, "png", baos);
         byte[] data = baos.toByteArray();
         cachedOutput.writeIfNeeded(outPath, data, HashCode.fromBytes(data));
         writtenTextureCount++;
+    }
+
+    private void writeTexture(CachedOutput cachedOutput, String texturePath, BufferedImage image) throws IOException {
+        writeTexture(cachedOutput, generatedBlockTextureRoot, texturePath, image);
     }
 
     private Palette loadPalette(Path palettePath) throws IOException {

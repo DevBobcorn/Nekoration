@@ -1,8 +1,13 @@
 package io.devbobcorn.nekoration.client.gui.screen;
 
 import io.devbobcorn.nekoration.Nekoration;
+import io.devbobcorn.nekoration.NekoColors;
+import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
+import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.containers.EaselMenuMenu;
 import io.devbobcorn.nekoration.network.EaselMenuUpdatePayload;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.block.state.BlockState;
 import com.mojang.math.Axis;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -25,11 +30,14 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
             ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "textures/gui/easel_menu.png");
     private static final ResourceLocation ICONS =
             ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "textures/gui/icons.png");
+    private static final String FRAME_TEXTURE_PREFIX =
+            Nekoration.MODID + ":textures/gui/easel_menu_frame/";
     private static final int LINE_COUNT = 8;
     private static final int MAX_TEXT_WIDTH = 42;
 
     private final EditBox[] textInputs = new EditBox[LINE_COUNT];
 
+    private ResourceLocation frameTexture;
     private Button glowButton;
     private Component glowEnableTooltip;
     private Component glowDisableTooltip;
@@ -49,6 +57,13 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
     @Override
     protected void init() {
         super.init();
+
+        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(menu.getEasel().getBlockState().getBlock());
+        String path = blockId.getPath();
+        int suffixPos = path.lastIndexOf("_easel_menu");
+        String woodName = suffixPos > 0 ? path.substring(0, suffixPos) : "oak";
+        frameTexture = ResourceLocation.parse(FRAME_TEXTURE_PREFIX + woodName + ".png");
+
         final int extraOffsetX = 14;
         final int extraOffsetY = 10;
         for (int i = 0; i < LINE_COUNT; i++) {
@@ -163,11 +178,25 @@ public class EaselMenuScreen extends AbstractContainerScreen<EaselMenuMenu> {
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         graphics.blit(BACKGROUND, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        graphics.blit(frameTexture, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+
+        BlockState blockState = menu.getEasel().getBlockState();
+        if (blockState.hasProperty(DyeableBlock.COLOR)) {
+            EnumNekoColor tintColor = blockState.getValue(DyeableBlock.COLOR);
+            int rgb = NekoColors.HalfTimberColors.RGB_BY_ORDINAL[tintColor.ordinal()];
+            float red   = ((rgb >> 16) & 0xFF) / 255.0F;
+            float green = ((rgb >>  8) & 0xFF) / 255.0F;
+            float blue  =  (rgb        & 0xFF) / 255.0F;
+            graphics.setColor(red, green, blue, 1.0F);
+            graphics.blit(BACKGROUND, leftPos + 10,  topPos + 38, 176, 0, 66, 78);
+            graphics.blit(BACKGROUND, leftPos + 100, topPos + 38, 176, 0, 66, 78);
+            graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        }
     }
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(font, title, 6, 8, DyeColor.BLACK.getTextColor(), false);
+        graphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
     }
 
     private void renderColorPicker(GuiGraphics graphics) {

@@ -78,7 +78,7 @@ public class EaselMenuBlockEntityRenderer implements BlockEntityRenderer<EaselMe
         poseStack.pushPose();
         poseStack.translate(0.5D, 0.5D, 0.5D);
         poseStack.mulPose(Axis.YP.rotationDegrees(-state.getValue(EaselMenuBlock.FACING).toYRot() + side * 180.0F));
-        poseStack.translate(-0.3D, 0.4D, 0.08D);
+        poseStack.translate(-0.3D, 0.4D, 0.05D);
         poseStack.mulPose(Axis.XP.rotationDegrees(-22.5F));
         poseStack.scale(0.015F, -0.015F, 0.015F);
 

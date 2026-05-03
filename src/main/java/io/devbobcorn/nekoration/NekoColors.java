@@ -17,7 +17,7 @@ public final class NekoColors {
         private HalfTimberColors() {
         }
 
-        static final int[] RGB_BY_ORDINAL = {
+        public static final int[] RGB_BY_ORDINAL = {
                 0xf9fffe,
                 0x9d9d97,
                 0x474f52,
