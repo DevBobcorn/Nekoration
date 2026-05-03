@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 /**
  * Block with vertical connection.
  */
-public class VerticalConnectBlock extends Block {
+public class VerticalConnectedBlock extends Block {
     public enum ConnectionType {
         DOUBLE, TRIPLE, PILLAR
     }
@@ -30,13 +30,13 @@ public class VerticalConnectBlock extends Block {
     public final ConnectionType type;
     public final boolean connectOtherVariant;
 
-    public VerticalConnectBlock(Properties settings) {
+    public VerticalConnectedBlock(Properties settings) {
         super(settings);
         this.type = ConnectionType.TRIPLE;
         this.connectOtherVariant = false;
     }
 
-    public VerticalConnectBlock(Properties settings, ConnectionType type, boolean connectOtherVariant) {
+    public VerticalConnectedBlock(Properties settings, ConnectionType type, boolean connectOtherVariant) {
         super(settings);
         this.type = type;
         this.connectOtherVariant = connectOtherVariant;
@@ -58,13 +58,13 @@ public class VerticalConnectBlock extends Block {
             BlockPos blockPosRef = useBottom ? blockPos.below() : blockPos.above();
             BlockState stateRef = level.getBlockState(blockPosRef);
 
-            boolean connect = stateRef.getBlock() instanceof VerticalConnectBlock
+            boolean connect = stateRef.getBlock() instanceof VerticalConnectedBlock
                     && (connectOtherVariant || stateRef.getBlock() == this);
 
             if (!connect && config == VerConnectionDir.BOTH) {
                 blockPosRef = blockPos.above();
                 stateRef = level.getBlockState(blockPosRef);
-                connect = stateRef.getBlock() instanceof VerticalConnectBlock
+                connect = stateRef.getBlock() instanceof VerticalConnectedBlock
                         && (connectOtherVariant || stateRef.getBlock() == this);
                 useBottom = false;
             }
@@ -126,7 +126,7 @@ public class VerticalConnectBlock extends Block {
                 && (config == VerConnectionDir.TOP2BOTTOM || config == VerConnectionDir.BOTH);
 
         boolean connect = flag1 || flag2;
-        if (connect && newState.getBlock() instanceof VerticalConnectBlock
+        if (connect && newState.getBlock() instanceof VerticalConnectedBlock
                 && (connectOtherVariant || newState.getBlock() == this)) {
             BlockState stateRef;
             if (flag1) {
@@ -137,7 +137,7 @@ public class VerticalConnectBlock extends Block {
                     }
                     case T1 -> {
                         return res.setValue(CONNECTION,
-                                (type == ConnectionType.PILLAR && stateRef.getBlock() instanceof VerticalConnectBlock
+                                (type == ConnectionType.PILLAR && stateRef.getBlock() instanceof VerticalConnectedBlock
                                         && (connectOtherVariant || stateRef.getBlock() == this))
                                         ? VerticalConnection.T1
                                         : VerticalConnection.T0);
@@ -156,7 +156,7 @@ public class VerticalConnectBlock extends Block {
                     }
                     case T1 -> {
                         return res.setValue(CONNECTION,
-                                (type == ConnectionType.PILLAR && stateRef.getBlock() instanceof VerticalConnectBlock
+                                (type == ConnectionType.PILLAR && stateRef.getBlock() instanceof VerticalConnectedBlock
                                         && (connectOtherVariant || stateRef.getBlock() == this))
                                         ? VerticalConnection.T1
                                         : VerticalConnection.T2);
@@ -188,12 +188,12 @@ public class VerticalConnectBlock extends Block {
     }
 
     protected boolean canConnectTo(BlockState state) {
-        return state.getBlock() instanceof VerticalConnectBlock
+        return state.getBlock() instanceof VerticalConnectedBlock
                 && (connectOtherVariant || state.getBlock() == this);
     }
 
     private static boolean canMutuallyConnect(BlockState a, BlockState b) {
-        if (!(a.getBlock() instanceof VerticalConnectBlock aBlock) || !(b.getBlock() instanceof VerticalConnectBlock bBlock)) {
+        if (!(a.getBlock() instanceof VerticalConnectedBlock aBlock) || !(b.getBlock() instanceof VerticalConnectedBlock bBlock)) {
             return false;
         }
         return aBlock.canConnectTo(b) && bBlock.canConnectTo(a);
@@ -222,7 +222,7 @@ public class VerticalConnectBlock extends Block {
 
     private void rebuildConnectionFrom(Level level, BlockPos origin) {
         BlockState originState = level.getBlockState(origin);
-        if (!(originState.getBlock() instanceof VerticalConnectBlock)) {
+        if (!(originState.getBlock() instanceof VerticalConnectedBlock)) {
             return;
         }
 
@@ -241,7 +241,7 @@ public class VerticalConnectBlock extends Block {
         List<BlockPos> segment = new ArrayList<>();
         BlockPos currentPos = start;
         BlockState currentState = level.getBlockState(currentPos);
-        while (currentState.getBlock() instanceof VerticalConnectBlock) {
+        while (currentState.getBlock() instanceof VerticalConnectedBlock) {
             segment.add(currentPos);
             BlockPos abovePos = currentPos.above();
             BlockState aboveState = level.getBlockState(abovePos);
@@ -260,7 +260,7 @@ public class VerticalConnectBlock extends Block {
         for (int i = 0; i < size; i++) {
             BlockPos blockPos = segment.get(i);
             BlockState blockState = level.getBlockState(blockPos);
-            if (!(blockState.getBlock() instanceof VerticalConnectBlock)) {
+            if (!(blockState.getBlock() instanceof VerticalConnectedBlock)) {
                 continue;
             }
 

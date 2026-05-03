@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import io.devbobcorn.nekoration.NekoColors.NekoColorPalette;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
-import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
+import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
@@ -32,7 +32,7 @@ public final class NekorationColorHandlers {
 
     private static BlockColor dyeableBlockColor(NekoColorPalette palette) {
         return (BlockState state, @Nullable BlockAndTintGetter level, @Nullable BlockPos pos, int tintIndex) -> {
-            if (tintIndex != 0 || !(state.getBlock() instanceof DyeableBlock || state.getBlock() instanceof DyeableVerticalConnectBlock)) {
+            if (tintIndex != 0 || !(state.getBlock() instanceof DyeableBlock || state.getBlock() instanceof DyeableVerticalConnectedBlock)) {
                 return 0xFFFFFFFF;
             }
             return 0xFF000000 | state.getValue(DyeableBlock.COLOR).getColor(palette);

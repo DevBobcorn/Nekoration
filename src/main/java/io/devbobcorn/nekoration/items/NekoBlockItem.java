@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Locale;
 
 import io.devbobcorn.nekoration.NekoConfig;
-import io.devbobcorn.nekoration.blocks.HorizontalConnectBlock;
-import io.devbobcorn.nekoration.blocks.VerticalConnectBlock;
+import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
+import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -28,11 +28,11 @@ public class NekoBlockItem extends BlockItem {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
 
         Block block = getBlock();
-        if (block instanceof HorizontalConnectBlock) {
+        if (block instanceof HorizontalConnectedBlock) {
             tooltipComponents.add(Component
                     .translatable(HORIZONTAL_CONNECT_TOOLTIP_KEY, currentHorizontalConnectionComponent())
                     .withStyle(ChatFormatting.GRAY));
-        } else if (block instanceof VerticalConnectBlock) {
+        } else if (block instanceof VerticalConnectedBlock) {
             tooltipComponents.add(Component
                     .translatable(VERTICAL_CONNECT_TOOLTIP_KEY, currentVerticalConnectionComponent())
                     .withStyle(ChatFormatting.GRAY));

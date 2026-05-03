@@ -4,10 +4,11 @@ import java.util.Collections;
 import java.util.List;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
-import io.devbobcorn.nekoration.blocks.states.VerticalConnection;
+import io.devbobcorn.nekoration.blocks.states.HorizontalConnection;
 import io.devbobcorn.nekoration.common.VanillaCompat;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -21,20 +22,18 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class DyeableVerticalConnectBlock extends VerticalConnectBlock {
+public class DyeableHorizontalConnectedBlock extends HorizontalConnectedBlock {
 
-    public DyeableVerticalConnectBlock(Properties settings) {
-        super(settings);
-        registerDefaultState(stateDefinition.any()
-                .setValue(CONNECTION, VerticalConnection.S0)
-                .setValue(DyeableBlock.COLOR, EnumNekoColor.WHITE));
+    public DyeableHorizontalConnectedBlock(Properties settings) {
+        this(settings, ConnectionType.TRIPLE, false);
     }
 
-    public DyeableVerticalConnectBlock(Properties settings, ConnectionType type, boolean connectOtherVariant) {
+    public DyeableHorizontalConnectedBlock(Properties settings, ConnectionType type, boolean connectOtherVariant) {
         super(settings, type, connectOtherVariant);
-        registerDefaultState(stateDefinition.any()
-                .setValue(CONNECTION, VerticalConnection.S0)
-                .setValue(DyeableBlock.COLOR, EnumNekoColor.WHITE));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(DyeableBlock.COLOR, EnumNekoColor.WHITE)
+                .setValue(FACING, Direction.NORTH)
+                .setValue(CONNECTION, HorizontalConnection.S0));
     }
 
     @Override
@@ -75,14 +74,14 @@ public class DyeableVerticalConnectBlock extends VerticalConnectBlock {
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        ItemStack stack = new ItemStack(asItem());
+        ItemStack stack = new ItemStack(this.asItem());
         DyeableBlockItem.setColor(stack, state.getValue(DyeableBlock.COLOR));
         return stack;
     }
 
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack stack = new ItemStack(asItem());
+        ItemStack stack = new ItemStack(this.asItem());
         DyeableBlockItem.setColor(stack, state.getValue(DyeableBlock.COLOR));
         return Collections.singletonList(stack);
     }

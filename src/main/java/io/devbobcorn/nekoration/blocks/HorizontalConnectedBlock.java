@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * Block with horizontal connection.
  */
-public class HorizontalConnectBlock extends HorizontalBlock {
+public class HorizontalConnectedBlock extends HorizontalBlock {
     private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D, 16.0D);
 
     public enum ConnectionType {
@@ -36,11 +36,11 @@ public class HorizontalConnectBlock extends HorizontalBlock {
     public final ConnectionType type;
     public final boolean connectOtherVariant;
 
-    public HorizontalConnectBlock(Properties settings) {
+    public HorizontalConnectedBlock(Properties settings) {
         this(settings, ConnectionType.TRIPLE, false);
     }
 
-    public HorizontalConnectBlock(Properties settings, ConnectionType type, boolean connectOtherVariant) {
+    public HorizontalConnectedBlock(Properties settings, ConnectionType type, boolean connectOtherVariant) {
         super(settings);
         this.type = type;
         this.connectOtherVariant = connectOtherVariant;
@@ -157,12 +157,12 @@ public class HorizontalConnectBlock extends HorizontalBlock {
     }
 
     protected boolean canConnectTo(BlockState state) {
-        return state.getBlock() instanceof HorizontalConnectBlock
+        return state.getBlock() instanceof HorizontalConnectedBlock
                 && (connectOtherVariant || state.getBlock() == this);
     }
 
     private static boolean canMutuallyConnect(BlockState a, BlockState b) {
-        if (!(a.getBlock() instanceof HorizontalConnectBlock aBlock) || !(b.getBlock() instanceof HorizontalConnectBlock bBlock)) {
+        if (!(a.getBlock() instanceof HorizontalConnectedBlock aBlock) || !(b.getBlock() instanceof HorizontalConnectedBlock bBlock)) {
             return false;
         }
         return aBlock.canConnectTo(b) && bBlock.canConnectTo(a);
@@ -194,7 +194,7 @@ public class HorizontalConnectBlock extends HorizontalBlock {
 
     private void rebuildConnectionFrom(Level level, BlockPos origin) {
         BlockState originState = level.getBlockState(origin);
-        if (!(originState.getBlock() instanceof HorizontalConnectBlock)) {
+        if (!(originState.getBlock() instanceof HorizontalConnectedBlock)) {
             return;
         }
 
@@ -214,7 +214,7 @@ public class HorizontalConnectBlock extends HorizontalBlock {
         BlockPos currentPos = start;
         while (true) {
             BlockState currentState = level.getBlockState(currentPos);
-            if (!(currentState.getBlock() instanceof HorizontalConnectBlock)
+            if (!(currentState.getBlock() instanceof HorizontalConnectedBlock)
                     || currentState.getValue(FACING) != facing) {
                 break;
             }
@@ -236,7 +236,7 @@ public class HorizontalConnectBlock extends HorizontalBlock {
         for (int i = 0; i < size; i++) {
             BlockPos blockPos = segment.get(i);
             BlockState blockState = level.getBlockState(blockPos);
-            if (!(blockState.getBlock() instanceof HorizontalConnectBlock)
+            if (!(blockState.getBlock() instanceof HorizontalConnectedBlock)
                     || blockState.getValue(FACING) != facing) {
                 continue;
             }

@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class WindowPlantBlock extends DyeableHorizontalConnectBlock {
+public class WindowPlantBlock extends DyeableHorizontalConnectedBlock {
     private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D, 10.0D);
 
     public WindowPlantBlock(Properties settings) {

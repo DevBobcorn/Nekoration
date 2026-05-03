@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
-import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectBlock;
+import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.NekoWood;
-import io.devbobcorn.nekoration.blocks.VerticalConnectBlock;
+import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.WindowBlock;
 import io.devbobcorn.nekoration.blocks.entities.CabinetBlockEntity;
 import io.devbobcorn.nekoration.blocks.containers.CabinetBlock;
@@ -177,10 +177,10 @@ public final class WoodenBlockRegistration {
 
     private static Block createHalfTimberBlock(NekoWood wood, int patternIndex) {
         if (patternIndex == 0) {
-            return new DyeableVerticalConnectBlock(wood.plankProperties(), VerticalConnectBlock.ConnectionType.PILLAR, false);
+            return new DyeableVerticalConnectedBlock(wood.plankProperties(), VerticalConnectedBlock.ConnectionType.PILLAR, false);
         }
         if (patternIndex <= 2) {
-            return new DyeableVerticalConnectBlock(wood.plankProperties(), VerticalConnectBlock.ConnectionType.TRIPLE, false);
+            return new DyeableVerticalConnectedBlock(wood.plankProperties(), VerticalConnectedBlock.ConnectionType.TRIPLE, false);
         }
         return new DyeableBlock(wood.plankProperties());
     }

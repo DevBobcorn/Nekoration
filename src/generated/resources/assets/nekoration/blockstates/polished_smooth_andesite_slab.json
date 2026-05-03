@@ -4,7 +4,7 @@
       "model": "nekoration:block/stone/polished_smooth_andesite_slab"
     },
     "type=double": {
-      "model": "nekoration:block/stone/polished_smooth_andesite"
+      "model": "nekoration:block/stone/polished_smooth_andesite_slab_double"
     },
     "type=top": {
       "model": "nekoration:block/stone/polished_smooth_andesite_slab_top"
