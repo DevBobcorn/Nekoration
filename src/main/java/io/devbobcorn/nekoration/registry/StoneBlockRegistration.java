@@ -97,6 +97,11 @@ public final class StoneBlockRegistration {
         return Collections.unmodifiableList(STONE_BLOCK_ITEMS);
     }
 
+    /** Items for the creative stone tab when filtering by {@link io.devbobcorn.nekoration.blocks.NekoStone}. */
+    public static List<Supplier<? extends Item>> itemSuppliersForStone(NekoStone stone) {
+        return Collections.unmodifiableList(STONE_BLOCK_ITEMS_BY_STONE.getOrDefault(stone, List.of()));
+    }
+
     /** Creative tab icon. */
     public static DeferredItem<Item> iconItem() {
         return STONE_BLOCK_ITEMS.get(0);

@@ -32,7 +32,7 @@ public enum NekoStone {
         return BlockBehaviour.Properties.ofFullCopy(vanillaStoneBlock());
     }
 
-    /** Vanilla stone block for this wood (icons, sounds, creative filter). */
+    /** Vanilla stone block for this type (icons, sounds, creative filter). */
     public Block vanillaStoneBlock() {
         return switch (this) {
             case GRANITE -> Blocks.GRANITE;
@@ -48,8 +48,8 @@ public enum NekoStone {
         };
     }
 
-    /** {@code block.minecraft.<id>_planks} */
-    public String vanillaPlanksDescriptionId() {
-        return "block.minecraft." + id() + "_planks";
+    /** {@code block.minecraft.<id>} (e.g. {@code block.minecraft.granite}). */
+    public String vanillaStoneDescriptionId() {
+        return "block.minecraft." + id();
     }
 }
