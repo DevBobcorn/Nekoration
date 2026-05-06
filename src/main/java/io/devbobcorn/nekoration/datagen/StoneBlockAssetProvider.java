@@ -47,7 +47,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateStoneCubeAllAssets(cachedOutput, "polished_smooth", true, writes, stone.id());
             generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stone.id());
             generateStoneSlabAssets(cachedOutput, "polished_smooth", true, true, writes, stone.id());
-            generateVerticalConnectedStoneAssets(cachedOutput, "chiseled", true, writes, stoneId);
+            generateVerticalConnectedStoneAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
@@ -60,24 +60,6 @@ public final class StoneBlockAssetProvider implements DataProvider {
         blockModelTextures.put("all", modLoc("block/stone/" + textureId));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
                 Map.of("parent", "block/cube_all", "textures", blockModelTextures));
-
-        writeJson(cachedOutput, writes, blockstatePathProvider, variantId,
-                Map.of("variants", Map.of("", Map.of("model", modLoc("block/stone/" + variantId)))));
-
-        writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
-                Map.of("parent", modLoc("block/stone/" + variantId)));
-    }
-
-    private void generateStoneCubeColumnAssets(CachedOutput cachedOutput, String variant, String endVariant, boolean prefixedId, List<CompletableFuture<?>> writes, String stoneId) {
-        String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
-        String textureId = stoneId + "_" + variant;
-        String endTextureId = stoneId + "_" + endVariant;
-
-        Map<String, Object> blockModelTextures = new LinkedHashMap<>();
-        blockModelTextures.put("side", modLoc("block/stone/" + textureId));
-        blockModelTextures.put("end", modLoc("block/stone/" + endTextureId));
-        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
-                Map.of("parent", "block/cube_column", "textures", blockModelTextures));
 
         writeJson(cachedOutput, writes, blockstatePathProvider, variantId,
                 Map.of("variants", Map.of("", Map.of("model", modLoc("block/stone/" + variantId)))));

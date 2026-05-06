@@ -32,9 +32,9 @@ smooth_stone_block_ids = ["smooth_{stone}", "smooth_{stone}_slab", "smooth_{ston
 smooth_stone_blocks_us = ["Smooth {stone}", "Smooth {stone} Slab", "Smooth {stone} Stairs"]
 smooth_stone_blocks_cn = ["平滑{stone}", "平滑{stone}台阶", "平滑{stone}楼梯"]
 
-stone_block_ids = ["polished_smooth_{stone}", "polished_smooth_{stone}_slab", "polished_smooth_{stone}_stairs", "chiseled_{stone}", "{stone}_pot"]
-stone_blocks_us = ["Polished Smooth {stone}", "Polished Smooth {stone} Slab", "Polished Smooth {stone} Stairs", "Chiseled {stone}", "{stone} Pot"]
-stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "錾制{stone}", "{stone}花盆"]
+stone_block_ids = ["polished_smooth_{stone}", "polished_smooth_{stone}_slab", "polished_smooth_{stone}_stairs", "chiseled_smooth_{stone}", "{stone}_pot"]
+stone_blocks_us = ["Polished Smooth {stone}", "Polished Smooth {stone} Slab", "Polished Smooth {stone} Stairs", "Chiseled Smooth {stone}", "{stone} Pot"]
+stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "錾制平滑{stone}", "{stone}花盆"]
 
 door_ids = ["quartz_door","chiseled_quartz_door","quartz_bricks_door","tall_quartz_door","tall_chiseled_quartz_door","tall_quartz_bricks_door"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]

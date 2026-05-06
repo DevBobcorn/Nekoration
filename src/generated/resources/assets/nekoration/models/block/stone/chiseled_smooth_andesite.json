@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "nekoration:block/stone/andesite_chiseled_smooth",
+    "side": "nekoration:block/stone/andesite_chiseled_smooth"
+  }
+}

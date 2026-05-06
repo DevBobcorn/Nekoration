@@ -1,0 +1,37 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "nekoration:block/stone/granite_pillar_doric",
+		"1": "nekoration:block/stone/granite_chiseled_smooth",
+		"particle": "nekoration:block/stone/granite_pillar_doric"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 2],
+			"to": [14, 13, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 6, 0]},
+			"faces": {
+				"north": {"uv": [4, 0, 16, 16], "texture": "#0", "cullface": "north"},
+				"east": {"uv": [4, 0, 16, 16], "texture": "#0", "cullface": "east"},
+				"south": {"uv": [4, 0, 16, 16], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [4, 0, 16, 16], "texture": "#0", "cullface": "west"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#1"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 13, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 10, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 3, 16], "rotation": 90, "texture": "#0", "cullface": "north"},
+				"east": {"uv": [0, 0, 3, 16], "rotation": 90, "texture": "#0", "cullface": "east"},
+				"south": {"uv": [0, 0, 3, 16], "rotation": 90, "texture": "#0", "cullface": "south"},
+				"west": {"uv": [0, 0, 3, 16], "rotation": 90, "texture": "#0", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#1", "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#1"}
+			}
+		}
+	]
+}

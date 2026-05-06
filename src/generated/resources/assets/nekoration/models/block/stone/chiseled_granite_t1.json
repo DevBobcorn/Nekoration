@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "nekoration:block/stone/granite_chiseled",
-    "side": "nekoration:block/stone/granite_chiseled_t1"
-  }
-}
