@@ -1,18 +1,19 @@
-package io.devbobcorn.nekoration.blocks;
+package io.devbobcorn.nekoration.blocks.stone;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.util.TriState;
 
 /**
- * Dyeable stone pot/planter block with configurable radius.
+ * Stone pot/planter block with configurable radius.
  */
-public class PotBlock extends DyeableBlock {
+public class PotBlock extends Block {
     private final VoxelShape shape;
 
     public PotBlock(Properties properties, double radius) {

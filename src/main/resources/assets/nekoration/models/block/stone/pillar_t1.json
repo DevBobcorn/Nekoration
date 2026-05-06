@@ -1,10 +1,11 @@
 {
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
 		"0": "nekoration:block/stone/granite_pillar",
 		"1": "nekoration:block/stone/granite_chiseled_smooth",
-		"particle": "nekoration:block/stone/granite_pillar"
+		"particle": "#0"
 	},
 	"elements": [
 		{

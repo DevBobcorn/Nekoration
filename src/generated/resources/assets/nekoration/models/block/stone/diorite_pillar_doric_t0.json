@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/stone/pillar_t0",
+  "textures": {
+    "0": "nekoration:block/stone/diorite_chiseled_smooth",
+    "1": "nekoration:block/stone/diorite_polished_smooth"
+  }
+}
