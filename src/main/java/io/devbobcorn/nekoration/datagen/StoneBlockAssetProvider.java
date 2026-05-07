@@ -216,7 +216,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
         Map<String, Object> variants = new LinkedHashMap<>();
         for (VerticalConnection connection : VerticalConnection.values()) {
             String modelName = switch (connection) {
-                case S0 -> variantId + "_t0";
+                case S0 -> variantId + "_t2";
                 case D0 -> variantId + "_t0";
                 case D1 -> variantId + "_t2";
                 default -> variantId + "_" + connection.getSerializedName();

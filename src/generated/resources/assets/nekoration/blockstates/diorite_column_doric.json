@@ -7,7 +7,7 @@
       "model": "nekoration:block/stone/diorite_column_doric_t2"
     },
     "vertical_connection=s0": {
-      "model": "nekoration:block/stone/diorite_column_doric_t0"
+      "model": "nekoration:block/stone/diorite_column_doric_t2"
     },
     "vertical_connection=t0": {
       "model": "nekoration:block/stone/diorite_column_doric_t0"
