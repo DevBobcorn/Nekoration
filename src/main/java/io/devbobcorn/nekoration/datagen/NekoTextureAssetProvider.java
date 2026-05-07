@@ -28,9 +28,9 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 
 /**
- * Texture generator for all wooden blocks using palettes.
+ * Texture generator for blocks using palettes.
  */
-public final class WoodenTextureAssetProvider implements DataProvider {
+public final class NekoTextureAssetProvider implements DataProvider {
     private static final Set<String> IMAGE_SUFFIXES = Set.of(".png", ".bmp", ".webp");
     private static final String SOURCE_PALETTE_FILENAME = "grayscale.png";
     private static final Map<String, String> WINDOW_OVERLAYS = Map.of(
@@ -44,13 +44,15 @@ public final class WoodenTextureAssetProvider implements DataProvider {
             "drawer_chest_front.png", "drawer_chest_knob.png",
             "drawer_chest_open_front.png", "drawer_chest_open_knob.png",
             "easel_menu.png", "easel_menu_board.png");
+    private static final String PLANK_PALETTE_DIR = "plank_palettes";
+    private static final String STONE_PALETTE_DIR = "stone_palettes";
 
     private final Path templateTextureRoot;
     private final Path generatedBlockTextureRoot;
     private final Path generatedGuiTextureRoot;
     private int writtenTextureCount;
 
-    public WoodenTextureAssetProvider(PackOutput output) {
+    public NekoTextureAssetProvider(PackOutput output) {
         this.templateTextureRoot = resolveTemplateTextureRoot();
         Path assetsRoot = templateTextureRoot.getParent()
                 .resolve("src/generated/resources/assets/" + Nekoration.MODID + "/textures");
@@ -77,7 +79,21 @@ public final class WoodenTextureAssetProvider implements DataProvider {
     }
 
     private void generatePaletteMappedTextures(CachedOutput cachedOutput) throws IOException {
-        Path paletteDir = templateTextureRoot.resolve("plank_palettes");
+        PaletteTargets plankPaletteTargets = resolvePaletteTargets(PLANK_PALETTE_DIR);
+        generateMappedTextureFolder(cachedOutput, "half_timber", Map.of(),
+                plankPaletteTargets.sourcePalettePath(), plankPaletteTargets.targetPalettes());
+        generateMappedTextureFolder(cachedOutput, "window", WINDOW_OVERLAYS,
+                plankPaletteTargets.sourcePalettePath(), plankPaletteTargets.targetPalettes());
+        generateMappedTextureFolder(cachedOutput, "container", CONTAINER_OVERLAYS,
+                plankPaletteTargets.sourcePalettePath(), plankPaletteTargets.targetPalettes());
+
+        PaletteTargets stonePaletteTargets = resolvePaletteTargets(STONE_PALETTE_DIR);
+        generateMappedTextureFolder(cachedOutput, "column", Map.of(),
+                stonePaletteTargets.sourcePalettePath(), stonePaletteTargets.targetPalettes());
+    }
+
+    private PaletteTargets resolvePaletteTargets(String paletteDirectoryName) throws IOException {
+        Path paletteDir = templateTextureRoot.resolve(paletteDirectoryName);
         List<Path> palettes = collectImages(paletteDir);
         Path sourcePalettePath = paletteDir.resolve(SOURCE_PALETTE_FILENAME);
         if (!Files.isRegularFile(sourcePalettePath)) {
@@ -88,12 +104,9 @@ public final class WoodenTextureAssetProvider implements DataProvider {
                 .filter(path -> !path.getFileName().toString().equals(SOURCE_PALETTE_FILENAME))
                 .collect(Collectors.toList());
         if (targetPalettes.isEmpty()) {
-            throw new IllegalStateException("No target palettes found after excluding source palette.");
+            throw new IllegalStateException("No target palettes found after excluding source palette in " + paletteDir);
         }
-
-        generateMappedTextureFolder(cachedOutput, "half_timber", Map.of(), sourcePalettePath, targetPalettes);
-        generateMappedTextureFolder(cachedOutput, "window", WINDOW_OVERLAYS, sourcePalettePath, targetPalettes);
-        generateMappedTextureFolder(cachedOutput, "container", CONTAINER_OVERLAYS, sourcePalettePath, targetPalettes);
+        return new PaletteTargets(sourcePalettePath, targetPalettes);
     }
 
     private void generateMappedTextureFolder(
@@ -302,7 +315,7 @@ public final class WoodenTextureAssetProvider implements DataProvider {
         if (!unmapped.isEmpty()) {
             String preview = unmapped.stream()
                     .limit(10)
-                    .map(WoodenTextureAssetProvider::formatArgb)
+                    .map(NekoTextureAssetProvider::formatArgb)
                     .collect(Collectors.joining(", "));
             throw new IllegalStateException(
                     "Source image contains colors not present in source palette: " + sourcePath.getFileName()
@@ -395,5 +408,8 @@ public final class WoodenTextureAssetProvider implements DataProvider {
     }
 
     private record Palette(List<Integer> colors, int width) {
+    }
+
+    private record PaletteTargets(Path sourcePalettePath, List<Path> targetPalettes) {
     }
 }

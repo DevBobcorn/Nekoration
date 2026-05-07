@@ -1,7 +1,0 @@
-{
-  "parent": "nekoration:block/stone/pillar_doric_t2",
-  "textures": {
-    "0": "nekoration:block/stone/granite_pillar_doric",
-    "1": "nekoration:block/stone/granite_chiseled_smooth"
-  }
-}

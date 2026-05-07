@@ -20,6 +20,6 @@ public final class NekorationDataGenerators {
                 new WoodenBlockAssetProvider(event.getGenerator().getPackOutput()));
         event.getGenerator().addProvider(
                 event.includeClient(),
-                new WoodenTextureAssetProvider(event.getGenerator().getPackOutput()));
+                new NekoTextureAssetProvider(event.getGenerator().getPackOutput()));
     }
 }
