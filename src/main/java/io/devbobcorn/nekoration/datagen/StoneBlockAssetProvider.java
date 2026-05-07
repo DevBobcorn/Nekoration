@@ -41,16 +41,17 @@ public final class StoneBlockAssetProvider implements DataProvider {
         for (NekoStone stone : NekoStone.values()) {
             String stoneId = stone.id();
             if (stone.needsSmoothVariant()) {
-                generateStoneCubeAllAssets(cachedOutput, "smooth", true, writes, stone.id());
-                generateStoneStairAssets(cachedOutput, "smooth", true, writes, stone.id());
-                generateStoneSlabAssets(cachedOutput, "smooth", true, false, writes, stone.id());
+                generateStoneCubeAllAssets(cachedOutput, "smooth", true, writes, stoneId);
+                generateStoneStairAssets(cachedOutput, "smooth", true, writes, stoneId);
+                generateStoneSlabAssets(cachedOutput, "smooth", true, false, writes, stoneId);
             }
-            generateStoneCubeAllAssets(cachedOutput, "polished_smooth", true, writes, stone.id());
-            generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stone.id());
-            generateStoneSlabAssets(cachedOutput, "polished_smooth", true, true, writes, stone.id());
+            generateStoneCubeAllAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
+            generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
+            generateStoneSlabAssets(cachedOutput, "polished_smooth", true, true, writes, stoneId);
             generateVerticalConnectedStoneAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
 
-            generateStoneColumnAssets(cachedOutput, "column_doric", writes, stone.id());
+            generateStoneBaseAssets(cachedOutput, writes, stoneId);
+            generateStoneColumnAssets(cachedOutput, "column_doric", writes, stoneId);
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
@@ -175,24 +176,39 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/stone/" + variantId)));
     }
 
+    private void generateStoneBaseAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String stoneId) {
+        Map<String, Object> baseTextures = new LinkedHashMap<>();
+        baseTextures.put("0", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
+        baseTextures.put("1", modLoc("block/stone/" + stoneId + "_polished_smooth"));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + stoneId + "_base",
+                Map.of("parent", modLoc("block/stone/base"), "textures", baseTextures));
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        variants.put("", Map.of("model", modLoc("block/stone/" + stoneId + "_base")));
+        writeJson(cachedOutput, writes, blockstatePathProvider, stoneId + "_base", Map.of("variants", variants));
+
+        writeJson(cachedOutput, writes, itemModelPathProvider, stoneId + "_base",
+                Map.of("parent", modLoc("block/stone/" + stoneId + "_base")));
+    }
+
     private void generateStoneColumnAssets(CachedOutput cachedOutput, String variant,
         List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = stoneId + "_" + variant;
 
         Map<String, Object> t0Textures = new LinkedHashMap<>();
-        t0Textures.put("0", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
-        t0Textures.put("1", modLoc("block/stone/" + stoneId + "_polished_smooth"));
+        t0Textures.put("0", modLoc("block/stone/" + stoneId + "/column"));
+        t0Textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t0",
                 Map.of("parent", modLoc("block/stone/column_t0"), "textures", t0Textures));
 
         Map<String, Object> t1Textures = new LinkedHashMap<>();
-        t1Textures.put("0", modLoc("block/stone/column/" + stoneId + "/column"));
+        t1Textures.put("0", modLoc("block/stone/" + stoneId + "/column"));
         t1Textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t1",
                 Map.of("parent", modLoc("block/stone/column_t1"), "textures", t1Textures));
         
         Map<String, Object> t2Textures = new LinkedHashMap<>();
-        t2Textures.put("0", modLoc("block/stone/column/" + stoneId + "/" + variant));
+        t2Textures.put("0", modLoc("block/stone/" + stoneId + "/" + variant));
         t2Textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t2",
                 Map.of("parent", modLoc("block/stone/" + variant + "_t2"), "textures", t2Textures));
