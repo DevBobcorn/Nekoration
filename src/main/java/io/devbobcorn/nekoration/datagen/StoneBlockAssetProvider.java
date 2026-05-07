@@ -186,13 +186,13 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/stone/column_t0"), "textures", t0Textures));
 
         Map<String, Object> t1Textures = new LinkedHashMap<>();
-        t1Textures.put("0", modLoc("block/stone/" + stoneId + "_column"));
+        t1Textures.put("0", modLoc("block/stone/column/" + stoneId + "/column"));
         t1Textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t1",
                 Map.of("parent", modLoc("block/stone/column_t1"), "textures", t1Textures));
         
         Map<String, Object> t2Textures = new LinkedHashMap<>();
-        t2Textures.put("0", modLoc("block/stone/" + variantId));
+        t2Textures.put("0", modLoc("block/stone/column/" + stoneId + "/" + variant));
         t2Textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t2",
                 Map.of("parent", modLoc("block/stone/" + variant + "_t2"), "textures", t2Textures));
