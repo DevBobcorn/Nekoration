@@ -4,19 +4,17 @@ from PIL import Image
 IMAGE_SUFFIXES = {".png", ".bmp", ".webp"}
 
 # --- Config (no CLI needed) ---
-TARGET_PALETTE_DIR = Path("plank_palettes")
+#TARGET_PALETTE_DIR = Path("plank_palettes")
+#SOURCE_PALETTE_FILENAME = "grayscale.png"
+TARGET_PALETTE_DIR = Path("stone_palettes")
 SOURCE_PALETTE_FILENAME = "grayscale.png"
 
 # SOURCE_IMAGE_DIR = Path("half_timber_template")
 # OUTPUT_DIR = Path("../src/generated/resources/assets/nekoration/textures/block/half_timber")
-SOURCE_IMAGE_DIR = Path("window_template")
-OUTPUT_DIR = Path("../src/generated/resources/assets/nekoration/textures/block/window")
-OVERLAY_DIR = Path("window_overlay")
+SOURCE_IMAGE_DIR = Path("column_template")
+OUTPUT_DIR = Path("../src/generated/resources/assets/nekoration/textures/block/column")
+OVERLAY_DIR = Path("column_overlay")
 OVERLAY_TEXTURES = {
-    "window_simple.png": "window_glass.png",
-    "window_simple_t0.png": "window_glass_t0.png",
-    "window_simple_t1.png": "window_glass_t1.png",
-    "window_simple_t2.png": "window_glass_t2.png"
 }
 
 

@@ -50,7 +50,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateStoneSlabAssets(cachedOutput, "polished_smooth", true, true, writes, stone.id());
             generateVerticalConnectedStoneAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
 
-            generateStonePillarAssets(cachedOutput, "pillar_doric", writes, stone.id());
+            generateStoneColumnAssets(cachedOutput, "column_doric", writes, stone.id());
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
@@ -175,7 +175,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/stone/" + variantId)));
     }
 
-    private void generateStonePillarAssets(CachedOutput cachedOutput, String variant,
+    private void generateStoneColumnAssets(CachedOutput cachedOutput, String variant,
         List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = stoneId + "_" + variant;
 
@@ -183,13 +183,13 @@ public final class StoneBlockAssetProvider implements DataProvider {
         t0Textures.put("0", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
         t0Textures.put("1", modLoc("block/stone/" + stoneId + "_polished_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t0",
-                Map.of("parent", modLoc("block/stone/pillar_t0"), "textures", t0Textures));
+                Map.of("parent", modLoc("block/stone/column_t0"), "textures", t0Textures));
 
         Map<String, Object> t1Textures = new LinkedHashMap<>();
-        t1Textures.put("0", modLoc("block/stone/" + stoneId + "_pillar"));
+        t1Textures.put("0", modLoc("block/stone/" + stoneId + "_column"));
         t1Textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t1",
-                Map.of("parent", modLoc("block/stone/pillar_t1"), "textures", t1Textures));
+                Map.of("parent", modLoc("block/stone/column_t1"), "textures", t1Textures));
         
         Map<String, Object> t2Textures = new LinkedHashMap<>();
         t2Textures.put("0", modLoc("block/stone/" + variantId));

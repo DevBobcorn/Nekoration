@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 import io.devbobcorn.nekoration.blocks.NekoStone;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
-import io.devbobcorn.nekoration.blocks.stone.PillarBlock;
+import io.devbobcorn.nekoration.blocks.stone.ColumnBlock;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -42,7 +42,7 @@ public final class StoneBlockRegistration {
             }
             registerStoneBlockSet(blocks, items, "polished_smooth_" + stoneId, blockItemsByStone, stone);
             registerVerticalConnectedBlock(blocks, items, "chiseled_smooth_" + stoneId, blockItemsByStone, stone);
-            registerPillarBlock(blocks, items, stoneId + "_pillar_doric", blockItemsByStone, stone);
+            registerColumnBlock(blocks, items, stoneId + "_column_doric", blockItemsByStone, stone);
         }
     }
 
@@ -72,10 +72,10 @@ public final class StoneBlockRegistration {
         return block;
     }
 
-    private static DeferredBlock<Block> registerPillarBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+    private static DeferredBlock<Block> registerColumnBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
         List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new PillarBlock(stone.stoneProperties()));
+                () -> new ColumnBlock(stone.stoneProperties()));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);

@@ -8,12 +8,12 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 
-public class PillarBlock extends VerticalConnectedBlock {
+public class ColumnBlock extends VerticalConnectedBlock {
     private final VoxelShape shapeMiddle;
     private final VoxelShape shapeBottom;
     private final VoxelShape shapeTopDoric;
 
-    public PillarBlock(Properties settings) {
+    public ColumnBlock(Properties settings) {
         super(settings, ConnectionType.PILLAR, true);
 
         final int radius = 6;
