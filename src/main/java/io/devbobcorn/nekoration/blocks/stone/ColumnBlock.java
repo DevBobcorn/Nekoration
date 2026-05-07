@@ -25,8 +25,8 @@ public class ColumnBlock extends VerticalConnectedBlock {
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(CONNECTION)) {
-            case S0, D0, T0, T1 -> this.shapeMiddle;
-            case D1, T2 -> this.shapeTopDoric;
+            case D0, T0, T1 -> this.shapeMiddle;
+            case S0, D1, T2 -> this.shapeTopDoric;
         };
     }
 }
