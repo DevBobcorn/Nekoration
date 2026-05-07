@@ -3,7 +3,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "nekoration:block/stone/pillar",
+		"0": "nekoration:block/stone/dummy",
 		"1": "nekoration:block/stone/granite_chiseled_smooth",
 		"particle": "#0"
 	},
