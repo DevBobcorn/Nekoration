@@ -198,7 +198,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
         String variantId = stoneId + "_" + variant;
 
         Map<String, Object> t0Textures = new LinkedHashMap<>();
-        t0Textures.put("0", modLoc("block/stone/" + stoneId + "/column"));
+        t0Textures.put("0", modLoc("block/stone/" + stoneId + "/column_bottom"));
         t0Textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t0",
                 Map.of("parent", modLoc("block/stone/column_t0"), "textures", t0Textures));

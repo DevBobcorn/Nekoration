@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/stone/column_t0",
   "textures": {
-    "0": "nekoration:block/stone/andesite/column",
+    "0": "nekoration:block/stone/andesite/column_bottom",
     "1": "nekoration:block/stone/andesite_chiseled_smooth"
   }
 }
