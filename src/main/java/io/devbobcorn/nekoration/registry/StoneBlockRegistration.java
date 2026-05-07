@@ -11,6 +11,7 @@ import io.devbobcorn.nekoration.blocks.NekoStone;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.stone.BaseBlock;
 import io.devbobcorn.nekoration.blocks.stone.ColumnBlock;
+import io.devbobcorn.nekoration.blocks.stone.DirectionalColumnBlock;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -44,7 +45,9 @@ public final class StoneBlockRegistration {
             registerStoneBlockSet(blocks, items, "polished_smooth_" + stoneId, blockItemsByStone, stone);
             registerVerticalConnectedBlock(blocks, items, "chiseled_smooth_" + stoneId, blockItemsByStone, stone);
             registerBaseBlock(blocks, items, stoneId + "_base", blockItemsByStone, stone);
-            registerColumnBlock(blocks, items, stoneId + "_column_doric", blockItemsByStone, stone);
+            registerColumnBlock(blocks, items, stoneId + "_column_doric", false, 3, blockItemsByStone, stone);
+            registerColumnBlock(blocks, items, stoneId + "_column_ionic", true, 7, blockItemsByStone, stone);
+            registerColumnBlock(blocks, items, stoneId + "_column_corinthian", false, 7, blockItemsByStone, stone);
         }
     }
 
@@ -85,9 +88,9 @@ public final class StoneBlockRegistration {
     }
 
     private static DeferredBlock<Block> registerColumnBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
-        List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+        boolean hasHorizontalAxis, int topPartHeight, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new ColumnBlock(stone.stoneProperties()));
+                () -> hasHorizontalAxis ? new DirectionalColumnBlock(stone.stoneProperties(), topPartHeight) : new ColumnBlock(stone.stoneProperties(), topPartHeight));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);

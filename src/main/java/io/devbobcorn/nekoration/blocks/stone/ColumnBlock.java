@@ -12,13 +12,13 @@ public class ColumnBlock extends VerticalConnectedBlock {
     private final VoxelShape shapeMiddle;
     private final VoxelShape shapeTopDoric;
 
-    public ColumnBlock(Properties settings) {
+    public ColumnBlock(Properties settings, int topPartHeight) {
         super(settings, ConnectionType.PILLAR, true);
 
         final int radius = 6;
         this.shapeMiddle = box(8.0D - radius, 0.0D, 8.0D - radius, 8.0D + radius, 16.0D, 8.0D + radius);
 
-        VoxelShape shapePartTop = box(0.0D, 13.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+        VoxelShape shapePartTop = box(0.0D, 16.0D - topPartHeight, 0.0D, 16.0D, 16.0D, 16.0D);
         this.shapeTopDoric = Shapes.or(this.shapeMiddle, shapePartTop);
     }
 

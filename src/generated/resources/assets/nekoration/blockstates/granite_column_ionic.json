@@ -1,0 +1,37 @@
+{
+  "variants": {
+    "vertical_connection=d0": {
+      "model": "nekoration:block/stone/granite_column_ionic_t0"
+    },
+    "vertical_connection=d1,axis=x": {
+      "model": "nekoration:block/stone/granite_column_ionic_t2",
+      "uvlock": true,
+      "y": 90
+    },
+    "vertical_connection=d1,axis=z": {
+      "model": "nekoration:block/stone/granite_column_ionic_t2"
+    },
+    "vertical_connection=s0,axis=x": {
+      "model": "nekoration:block/stone/granite_column_ionic_t2",
+      "uvlock": true,
+      "y": 90
+    },
+    "vertical_connection=s0,axis=z": {
+      "model": "nekoration:block/stone/granite_column_ionic_t2"
+    },
+    "vertical_connection=t0": {
+      "model": "nekoration:block/stone/granite_column_ionic_t0"
+    },
+    "vertical_connection=t1": {
+      "model": "nekoration:block/stone/granite_column_ionic_t1"
+    },
+    "vertical_connection=t2,axis=x": {
+      "model": "nekoration:block/stone/granite_column_ionic_t2",
+      "uvlock": true,
+      "y": 90
+    },
+    "vertical_connection=t2,axis=z": {
+      "model": "nekoration:block/stone/granite_column_ionic_t2"
+    }
+  }
+}

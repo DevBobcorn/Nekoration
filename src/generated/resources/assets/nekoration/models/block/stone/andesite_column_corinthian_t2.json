@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/stone/column_corinthian_t2",
+  "textures": {
+    "0": "nekoration:block/stone/andesite/column_corinthian",
+    "1": "nekoration:block/stone/andesite_chiseled_smooth"
+  }
+}

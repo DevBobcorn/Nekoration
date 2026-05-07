@@ -51,7 +51,9 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateVerticalConnectedStoneAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
 
             generateStoneBaseAssets(cachedOutput, writes, stoneId);
-            generateStoneColumnAssets(cachedOutput, "column_doric", writes, stoneId);
+            generateStoneColumnAssets(cachedOutput, "column_doric", false, writes, stoneId);
+            generateStoneColumnAssets(cachedOutput, "column_ionic", true, writes, stoneId);
+            generateStoneColumnAssets(cachedOutput, "column_corinthian", false, writes, stoneId);
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
@@ -192,7 +194,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
     }
 
     private void generateStoneColumnAssets(CachedOutput cachedOutput, String variant,
-        List<CompletableFuture<?>> writes, String stoneId) {
+        boolean hasHorizontalAxis, List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = stoneId + "_" + variant;
 
         Map<String, Object> t0Textures = new LinkedHashMap<>();
@@ -221,7 +223,12 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 case D1 -> variantId + "_t2";
                 default -> variantId + "_" + connection.getSerializedName();
             };
-            variants.put("vertical_connection=" + connection.getSerializedName(), Map.of("model", modLoc("block/stone/" + modelName)));
+            if (hasHorizontalAxis && (connection == VerticalConnection.S0 || connection == VerticalConnection.D1 || connection == VerticalConnection.T2)) {
+                variants.put("vertical_connection=" + connection.getSerializedName() + ",axis=z", Map.of("model", modLoc("block/stone/" + modelName)));
+                variants.put("vertical_connection=" + connection.getSerializedName() + ",axis=x", Map.of("model", modLoc("block/stone/" + modelName), "y", 90, "uvlock", true));
+            } else {
+                variants.put("vertical_connection=" + connection.getSerializedName(), Map.of("model", modLoc("block/stone/" + modelName)));
+            }
         }
         writeJson(cachedOutput, writes, blockstatePathProvider, variantId, Map.of("variants", variants));
 
