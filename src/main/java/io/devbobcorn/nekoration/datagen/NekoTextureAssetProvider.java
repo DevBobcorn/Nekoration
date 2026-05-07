@@ -69,7 +69,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
             generateHalfTimberBackTextures(cachedOutput);
             generateGuiTextures(cachedOutput);
         } catch (IOException e) {
-            throw new IllegalStateException("Failed generating wooden textures", e);
+            throw new IllegalStateException("Failed generating textures", e);
         }
         if (writtenTextureCount == 0) {
             throw new IllegalStateException("Texture provider wrote no files; check script template paths.");
@@ -88,7 +88,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
                 plankPaletteTargets.sourcePalettePath(), plankPaletteTargets.targetPalettes());
 
         PaletteTargets stonePaletteTargets = resolvePaletteTargets(STONE_PALETTE_DIR);
-        generateMappedTextureFolder(cachedOutput, "column", Map.of(),
+        generateMappedTextureFolder(cachedOutput, "stone", Map.of(),
                 stonePaletteTargets.sourcePalettePath(), stonePaletteTargets.targetPalettes());
     }
 
@@ -404,7 +404,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
 
     @Override
     public String getName() {
-        return "Nekoration wooden textures";
+        return "Nekoration textures";
     }
 
     private record Palette(List<Integer> colors, int width) {

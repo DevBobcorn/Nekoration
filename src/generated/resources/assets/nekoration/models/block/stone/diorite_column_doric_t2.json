@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/stone/column_doric_t2",
   "textures": {
-    "0": "nekoration:block/stone/column/diorite/column_doric",
+    "0": "nekoration:block/stone/diorite/column_doric",
     "1": "nekoration:block/stone/diorite_chiseled_smooth"
   }
 }
