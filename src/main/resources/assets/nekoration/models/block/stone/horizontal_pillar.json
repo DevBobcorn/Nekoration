@@ -1,0 +1,24 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"front": "nekoration:block/stone/red_sandstone_chiseled_smooth_t0",
+		"back": "nekoration:block/stone/red_sandstone_chiseled_smooth_t2",
+		"end": "nekoration:block/stone/red_sandstone_chiseled_smooth",
+		"particle": "nekoration:block/stone/red_sandstone_chiseled_smooth_t0"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 16, 16, 0], "rotation": 90, "texture": "#front"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#end"},
+				"south": {"uv": [16, 0, 0, 16], "rotation": 270, "texture": "#back"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#end"},
+				"up": {"uv": [16, 0, 0, 16], "rotation": 90, "texture": "#front"},
+				"down": {"uv": [16, 0, 0, 16], "rotation": 270, "texture": "#back"}
+			}
+		}
+	]
+}
