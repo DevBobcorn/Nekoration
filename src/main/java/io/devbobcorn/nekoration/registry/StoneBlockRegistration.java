@@ -40,7 +40,9 @@ public final class StoneBlockRegistration {
                 registerStoneBlockSet(blocks, items, "smooth_" + stoneId, blockItemsByStone, stone);
             } else {
                 // Add vanilla smooth variant
-                blockItemsByStone.add(() -> stone.vanillaSmoothStoneBlock().asItem());
+                for (Block smoothBlock : stone.vanillaSmoothStoneBlockSet()) {
+                    blockItemsByStone.add(() -> smoothBlock.asItem());
+                }
             }
             registerStoneBlockSet(blocks, items, "polished_smooth_" + stoneId, blockItemsByStone, stone);
             registerVerticalConnectedBlock(blocks, items, "chiseled_smooth_" + stoneId, blockItemsByStone, stone);

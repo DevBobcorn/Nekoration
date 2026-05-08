@@ -1,5 +1,7 @@
 package io.devbobcorn.nekoration.blocks;
 
+import java.util.List;
+
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -12,7 +14,9 @@ public enum NekoStone {
     // STONE(false),
     GRANITE(true),
     DIORITE(true),
-    ANDESITE(true);
+    ANDESITE(true),
+    SANDSTONE(false),
+    RED_SANDSTONE(false);
 
     private final boolean needsSmoothVariant;
 
@@ -38,13 +42,18 @@ public enum NekoStone {
             case GRANITE -> Blocks.GRANITE;
             case DIORITE -> Blocks.DIORITE;
             case ANDESITE -> Blocks.ANDESITE;
+            case SANDSTONE -> Blocks.SANDSTONE;
+            case RED_SANDSTONE -> Blocks.RED_SANDSTONE;
         };
     }
 
-    /** Vanilla smooth/polished block for this stone type. */
-    public Block vanillaSmoothStoneBlock() {
+    /** Vanilla smooth/polished block set for this stone type. */
+    public List<Block> vanillaSmoothStoneBlockSet() {
         return switch (this) {
-            default -> Blocks.SMOOTH_STONE;
+            case SANDSTONE -> List.of(Blocks.SMOOTH_SANDSTONE, Blocks.SMOOTH_SANDSTONE_STAIRS, Blocks.SMOOTH_SANDSTONE_SLAB);
+            case RED_SANDSTONE -> List.of(Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE_STAIRS, Blocks.SMOOTH_RED_SANDSTONE_SLAB);
+
+            default -> List.of(Blocks.SMOOTH_STONE, Blocks.STONE_BRICK_STAIRS, Blocks.SMOOTH_STONE_SLAB);
         };
     }
 

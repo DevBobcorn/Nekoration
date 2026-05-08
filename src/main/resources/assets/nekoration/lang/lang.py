@@ -22,11 +22,11 @@ furniture_ids = ["easel_menu","table","chair","cabinet","drawer","drawer_chest",
 furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Chair","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
 furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}椅子","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
 
-stone_ids = ["granite", "diorite", "andesite"]
-stones_us = ["Granite", "Diorite", "Andesite"]
-stones_cn = ["花岗岩", "闪长岩", "安山岩"]
+stone_ids = ["granite", "diorite", "andesite", "sandstone", "red_sandstone"]
+stones_us = ["Granite", "Diorite", "Andesite", "Sandstone", "Red Sandstone"]
+stones_cn = ["花岗岩", "闪长岩", "安山岩", "砂岩", "红砂岩"]
 
-stone_has_smooth_variant = [True, True, True]
+stone_has_smooth_variant = [True, True, True, False, False]
 
 smooth_stone_block_ids = ["smooth_{stone}", "smooth_{stone}_slab", "smooth_{stone}_stairs"]
 smooth_stone_blocks_us = ["Smooth {stone}", "Smooth {stone} Slab", "Smooth {stone} Stairs"]
