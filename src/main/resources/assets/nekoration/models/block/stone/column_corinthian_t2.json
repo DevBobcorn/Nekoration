@@ -5,7 +5,7 @@
 	"textures": {
 		"0": "nekoration:generator_files/stone_template/column_corinthian",
 		"1": "nekoration:block/stone/granite_chiseled_smooth",
-		"particle": "nekoration:generator_files/stone_template/column_corinthian"
+		"particle": "#0"
 	},
 	"elements": [
 		{
