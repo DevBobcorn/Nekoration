@@ -24,6 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 public final class StoneBlockAssetProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final List<String> VERTICAL_CONNECTION_IDS = List.of("s0", "d0", "d1", "t0", "t1", "t2");
+    private static final List<String> HORIZONTAL_CONNECTION_IDS = List.of("s0", "d0", "d1", "t0", "t1", "t2");
 
     private final PackOutput.PathProvider blockstatePathProvider;
     private final PackOutput.PathProvider blockModelPathProvider;
@@ -48,7 +49,8 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateStoneCubeAllAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
             generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
             generateStoneSlabAssets(cachedOutput, "polished_smooth", true, true, writes, stoneId);
-            generateVerticalConnectedStoneAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
+            generateVerticalConnectedStoneCubeAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
+            generateHorizontalConnectedStoneCubeAssets(cachedOutput, "horizontal_chiseled_smooth", true, writes, stoneId);
 
             generateStoneBaseAssets(cachedOutput, writes, stoneId);
             generateStoneColumnAssets(cachedOutput, "column_doric", false, writes, stoneId);
@@ -143,7 +145,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/stone/" + slabId)));
     }
 
-    private void generateVerticalConnectedStoneAssets(CachedOutput cachedOutput, String variant, boolean prefixedId,
+    private void generateVerticalConnectedStoneCubeAssets(CachedOutput cachedOutput, String variant, boolean prefixedId,
             List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
         String textureId = stoneId + "_" + variant;
@@ -171,6 +173,47 @@ public final class StoneBlockAssetProvider implements DataProvider {
         for (String connectionId : VERTICAL_CONNECTION_IDS) {
             String modelName = "s0".equals(connectionId) ? variantId : variantId + "_" + connectionId;
             variants.put("vertical_connection=" + connectionId, Map.of("model", modLoc("block/stone/" + modelName)));
+        }
+        writeJson(cachedOutput, writes, blockstatePathProvider, variantId, Map.of("variants", variants));
+
+        writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
+                Map.of("parent", modLoc("block/stone/" + variantId)));
+    }
+
+    private void generateHorizontalConnectedStoneCubeAssets(CachedOutput cachedOutput, String variant, boolean prefixedId,
+            List<CompletableFuture<?>> writes, String stoneId) {
+        String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
+        String textureId = stoneId + "_" + variant;
+
+        Map<String, Object> blockModelTextures = new LinkedHashMap<>();
+        blockModelTextures.put("front", modLoc("block/stone/" + textureId));
+        blockModelTextures.put("back", modLoc("block/stone/" + textureId));
+        blockModelTextures.put("end", modLoc("block/stone/" + textureId));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
+                Map.of("parent", modLoc("block/stone/cube_horizontal_column"), "textures", blockModelTextures));
+
+        for (String connectionId : HORIZONTAL_CONNECTION_IDS) {
+            if ("s0".equals(connectionId)) {
+                continue;
+            }
+            String connectionModelName = variantId + "_" + connectionId;
+            String sideSuffix = chiseledSideSuffixForConnection(connectionId);
+            String reversedSideSuffix = reversedConnectedSideSuffixForConnection(connectionId);
+            Map<String, Object> connectedTextures = new LinkedHashMap<>();
+            connectedTextures.put("front", modLoc("block/stone/" + textureId + "_" + sideSuffix));
+            connectedTextures.put("back", modLoc("block/stone/" + textureId + "_" + reversedSideSuffix));
+            connectedTextures.put("end", modLoc("block/stone/" + textureId));
+            writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + connectionModelName,
+                    Map.of("parent", modLoc("block/stone/cube_horizontal_column"), "textures", connectedTextures));
+        }
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        for (String connectionId : HORIZONTAL_CONNECTION_IDS) {
+            String modelName = "s0".equals(connectionId) ? variantId : variantId + "_" + connectionId;
+            variants.put("horizontal_connection=" + connectionId + ",facing=north", Map.of("model", modLoc("block/stone/" + modelName)));
+            variants.put("horizontal_connection=" + connectionId + ",facing=east", Map.of("model", modLoc("block/stone/" + modelName), "y", 90));
+            variants.put("horizontal_connection=" + connectionId + ",facing=south", Map.of("model", modLoc("block/stone/" + modelName), "y", 180));
+            variants.put("horizontal_connection=" + connectionId + ",facing=west", Map.of("model", modLoc("block/stone/" + modelName), "y", 270));
         }
         writeJson(cachedOutput, writes, blockstatePathProvider, variantId, Map.of("variants", variants));
 
@@ -240,6 +283,14 @@ public final class StoneBlockAssetProvider implements DataProvider {
         return switch (connectionId) {
             case "d0", "t0" -> "t0";
             case "d1", "t2" -> "t2";
+            default -> "t1";
+        };
+    }
+
+    private static String reversedConnectedSideSuffixForConnection(String connectionId) {
+        return switch (connectionId) {
+            case "d0", "t0" -> "t2";
+            case "d1", "t2" -> "t0";
             default -> "t1";
         };
     }
