@@ -74,12 +74,12 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
         if (config != HorConnectionDir.NEITHER) {
             BlockPos refPos = useLeft ? getLeftBlock(pos, facing) : getRightBlock(pos, facing);
             BlockState refState = ctx.getLevel().getBlockState(refPos);
-            boolean connect = canConnectTo(refState);
+            boolean connect = canConnectTo(refState, facing);
 
             if (!connect && config == HorConnectionDir.BOTH) {
                 refPos = getRightBlock(pos, facing);
                 refState = ctx.getLevel().getBlockState(refPos);
-                connect = canConnectTo(refState);
+                connect = canConnectTo(refState, facing);
                 useLeft = false;
             }
 
@@ -106,14 +106,14 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
                 && (config == HorConnectionDir.RIGHT2LEFT || config == HorConnectionDir.BOTH);
 
         boolean connect = flag1 || flag2;
-        if (connect && canConnectTo(neighborState)) {
+        if (connect && canConnectTo(neighborState, facing)) {
             BlockState stateRef;
             if (flag1) {
                 stateRef = level.getBlockState(getLeftBlock(pos, facing));
                 return switch (neighborState.getValue(CONNECTION)) {
                     case D1 -> res.setValue(CONNECTION, HorizontalConnection.D0);
                     case T1 -> res.setValue(CONNECTION,
-                            (type == ConnectionType.BEAM && canConnectTo(stateRef))
+                            (type == ConnectionType.BEAM && canConnectTo(stateRef, facing))
                                     ? HorizontalConnection.T1
                                     : HorizontalConnection.T0);
                     case T2 -> res.setValue(CONNECTION, HorizontalConnection.T1);
@@ -124,7 +124,7 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
                 return switch (neighborState.getValue(CONNECTION)) {
                     case D0 -> res.setValue(CONNECTION, HorizontalConnection.D1);
                     case T1 -> res.setValue(CONNECTION,
-                            (type == ConnectionType.BEAM && canConnectTo(stateRef))
+                            (type == ConnectionType.BEAM && canConnectTo(stateRef, facing))
                                     ? HorizontalConnection.T1
                                     : HorizontalConnection.T2);
                     case T0 -> res.setValue(CONNECTION, HorizontalConnection.T1);
@@ -156,16 +156,17 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
-    protected boolean canConnectTo(BlockState state) {
+    protected boolean canConnectTo(BlockState state, Direction facing) {
         return state.getBlock() instanceof HorizontalConnectedBlock
-                && (connectOtherVariant || state.getBlock() == this);
+                && (connectOtherVariant || state.getBlock() == this)
+                && state.getValue(FACING) == facing;
     }
 
     private static boolean canMutuallyConnect(BlockState a, BlockState b) {
         if (!(a.getBlock() instanceof HorizontalConnectedBlock aBlock) || !(b.getBlock() instanceof HorizontalConnectedBlock bBlock)) {
             return false;
         }
-        return aBlock.canConnectTo(b) && bBlock.canConnectTo(a);
+        return aBlock.canConnectTo(b, a.getValue(FACING)) && bBlock.canConnectTo(a, b.getValue(FACING));
     }
 
     private static boolean connectsRight(HorizontalConnection connection) {
