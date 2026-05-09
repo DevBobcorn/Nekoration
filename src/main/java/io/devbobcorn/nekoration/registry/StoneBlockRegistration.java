@@ -144,6 +144,6 @@ public final class StoneBlockRegistration {
 
     /** Creative tab icon. */
     public static DeferredItem<Item> iconItem() {
-        return STONE_BLOCK_ITEMS.get(0);
+        return STONE_BLOCK_ITEMS.get(6);
     }
 }
