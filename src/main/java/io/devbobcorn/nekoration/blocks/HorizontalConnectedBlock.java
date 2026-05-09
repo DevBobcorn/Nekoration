@@ -25,28 +25,28 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * Block with horizontal connection.
  */
 public class HorizontalConnectedBlock extends HorizontalBlock {
-    private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D, 16.0D);
-
     public enum ConnectionType {
         DOUBLE, TRIPLE, BEAM
     }
 
     public static final EnumProperty<HorizontalConnection> CONNECTION = ModStateProperties.HORIZONTAL_CONNECTION;
 
+    private final Map<Direction, VoxelShape> shapes;
     public final ConnectionType type;
     public final boolean connectOtherVariant;
 
-    public HorizontalConnectedBlock(Properties settings) {
-        this(settings, ConnectionType.TRIPLE, false);
+    public HorizontalConnectedBlock(Properties settings, int thickness) {
+        this(settings, ConnectionType.TRIPLE, false, thickness);
     }
 
-    public HorizontalConnectedBlock(Properties settings, ConnectionType type, boolean connectOtherVariant) {
+    public HorizontalConnectedBlock(Properties settings, ConnectionType type, boolean connectOtherVariant, int thickness) {
         super(settings);
         this.type = type;
         this.connectOtherVariant = connectOtherVariant;
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(CONNECTION, HorizontalConnection.S0));
+        this.shapes = getAABBs(thickness, 16.0D);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPES.get(state.getValue(FACING));
+        return shapes.get(state.getValue(FACING));
     }
 
     @Override

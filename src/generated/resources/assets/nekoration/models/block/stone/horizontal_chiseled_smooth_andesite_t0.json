@@ -1,0 +1,8 @@
+{
+  "parent": "nekoration:block/stone/cube_horizontal_column",
+  "textures": {
+    "back": "nekoration:block/stone/andesite_chiseled_smooth_t0",
+    "end": "nekoration:block/stone/andesite_chiseled_smooth",
+    "front": "nekoration:block/stone/andesite_chiseled_smooth_t2"
+  }
+}

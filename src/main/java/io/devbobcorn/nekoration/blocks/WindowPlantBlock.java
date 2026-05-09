@@ -13,7 +13,7 @@ public class WindowPlantBlock extends DyeableHorizontalConnectedBlock {
     private static final Map<Direction, VoxelShape> SHAPES = getAABBs(4.0D, 10.0D);
 
     public WindowPlantBlock(Properties settings) {
-        super(settings, ConnectionType.BEAM, true);
+        super(settings, ConnectionType.BEAM, true, 4);
     }
 
     /**

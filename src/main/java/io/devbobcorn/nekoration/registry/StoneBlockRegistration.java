@@ -84,7 +84,7 @@ public final class StoneBlockRegistration {
     private static DeferredBlock<Block> registerHorizontalConnectedBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new HorizontalConnectedBlock(stone.stoneProperties(), HorizontalConnectedBlock.ConnectionType.BEAM, false));
+                () -> new HorizontalConnectedBlock(stone.stoneProperties(), HorizontalConnectedBlock.ConnectionType.BEAM, false, 16));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);

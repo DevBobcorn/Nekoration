@@ -1,6 +1,7 @@
 {
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
 		"front": "nekoration:block/stone/red_sandstone_chiseled_smooth_t0",
 		"back": "nekoration:block/stone/red_sandstone_chiseled_smooth_t2",

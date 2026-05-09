@@ -50,7 +50,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
             generateStoneSlabAssets(cachedOutput, "polished_smooth", true, true, writes, stoneId);
             generateVerticalConnectedStoneCubeAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
-            generateHorizontalConnectedStoneCubeAssets(cachedOutput, "horizontal_chiseled_smooth", true, writes, stoneId);
+            generateHorizontalConnectedStoneCubeAssets(cachedOutput, "horizontal_chiseled_smooth", "chiseled_smooth", true, writes, stoneId);
 
             generateStoneBaseAssets(cachedOutput, writes, stoneId);
             generateStoneColumnAssets(cachedOutput, "column_doric", false, writes, stoneId);
@@ -180,10 +180,10 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/stone/" + variantId)));
     }
 
-    private void generateHorizontalConnectedStoneCubeAssets(CachedOutput cachedOutput, String variant, boolean prefixedId,
+    private void generateHorizontalConnectedStoneCubeAssets(CachedOutput cachedOutput, String variant, String textureVariant, boolean prefixedId,
             List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
-        String textureId = stoneId + "_" + variant;
+        String textureId = stoneId + "_" + textureVariant;
 
         Map<String, Object> blockModelTextures = new LinkedHashMap<>();
         blockModelTextures.put("front", modLoc("block/stone/" + textureId));
@@ -200,8 +200,8 @@ public final class StoneBlockAssetProvider implements DataProvider {
             String sideSuffix = chiseledSideSuffixForConnection(connectionId);
             String reversedSideSuffix = reversedConnectedSideSuffixForConnection(connectionId);
             Map<String, Object> connectedTextures = new LinkedHashMap<>();
-            connectedTextures.put("front", modLoc("block/stone/" + textureId + "_" + sideSuffix));
-            connectedTextures.put("back", modLoc("block/stone/" + textureId + "_" + reversedSideSuffix));
+            connectedTextures.put("front", modLoc("block/stone/" + textureId + "_" + reversedSideSuffix));
+            connectedTextures.put("back", modLoc("block/stone/" + textureId + "_" + sideSuffix));
             connectedTextures.put("end", modLoc("block/stone/" + textureId));
             writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + connectionModelName,
                     Map.of("parent", modLoc("block/stone/cube_horizontal_column"), "textures", connectedTextures));
