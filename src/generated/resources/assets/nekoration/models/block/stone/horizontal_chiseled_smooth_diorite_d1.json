@@ -1,8 +1,0 @@
-{
-  "parent": "nekoration:block/stone/cube_horizontal_column",
-  "textures": {
-    "back": "nekoration:block/stone/diorite_chiseled_smooth_t2",
-    "end": "nekoration:block/stone/diorite_chiseled_smooth",
-    "front": "nekoration:block/stone/diorite_chiseled_smooth_t0"
-  }
-}

@@ -35,18 +35,18 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
     public final ConnectionType type;
     public final boolean connectOtherVariant;
 
-    public HorizontalConnectedBlock(Properties settings, int thickness) {
-        this(settings, ConnectionType.TRIPLE, false, thickness);
+    public HorizontalConnectedBlock(Properties settings, int thickness, int height, int bottom) {
+        this(settings, ConnectionType.TRIPLE, false, thickness, height, bottom);
     }
 
-    public HorizontalConnectedBlock(Properties settings, ConnectionType type, boolean connectOtherVariant, int thickness) {
+    public HorizontalConnectedBlock(Properties settings, ConnectionType type, boolean connectOtherVariant, int thickness, int height, int bottom) {
         super(settings);
         this.type = type;
         this.connectOtherVariant = connectOtherVariant;
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(CONNECTION, HorizontalConnection.S0));
-        this.shapes = getAABBs(thickness, 16.0D);
+        this.shapes = getAABBs(thickness, height, bottom);
     }
 
     @Override

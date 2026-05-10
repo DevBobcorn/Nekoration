@@ -1,10 +1,10 @@
 {
   "variants": {
     "vertical_connection=d0": {
-      "model": "nekoration:block/stone/chiseled_smooth_red_sandstone_d0"
+      "model": "nekoration:block/stone/chiseled_smooth_red_sandstone_t0"
     },
     "vertical_connection=d1": {
-      "model": "nekoration:block/stone/chiseled_smooth_red_sandstone_d1"
+      "model": "nekoration:block/stone/chiseled_smooth_red_sandstone_t2"
     },
     "vertical_connection=s0": {
       "model": "nekoration:block/stone/chiseled_smooth_red_sandstone"

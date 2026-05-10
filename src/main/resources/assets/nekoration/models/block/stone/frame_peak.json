@@ -1,0 +1,81 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "generator_files/stone_template/frame_peak",
+		"particle": "#0"
+	},
+	"elements": [
+		{
+			"name": "left_outer",
+			"from": [7, 4, 11],
+			"to": [21, 6, 16],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [14, 5, 15]},
+			"faces": {
+				"north": {"uv": [0, 0, 7, 1], "texture": "#0"},
+				"east": {"uv": [0, 0, 2.5, 1], "texture": "#0"},
+				"south": {"uv": [0, 0, 7, 1], "texture": "#0"},
+				"up": {"uv": [0, 4, 7, 6.5], "texture": "#0"},
+				"down": {"uv": [0, 4, 7, 6.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "left_inner",
+			"from": [7, 2.5, 13.1],
+			"to": [20, 4.5, 15],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [13.5, 3.5, 15]},
+			"faces": {
+				"north": {"uv": [0, 0, 6.5, 1], "texture": "#0"},
+				"down": {"uv": [0, 5.5, 6.5, 6.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "right_outer",
+			"from": [-5, 4, 11.1],
+			"to": [9, 6, 16],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [2, 5, 15]},
+			"faces": {
+				"north": {"uv": [5, 0, 12, 1], "texture": "#0"},
+				"south": {"uv": [0, 0, 7, 1], "texture": "#0"},
+				"west": {"uv": [9.5, 0, 12, 1], "texture": "#0"},
+				"up": {"uv": [5, 4, 12, 6.5], "texture": "#0"},
+				"down": {"uv": [5, 4, 12, 6.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "right_inner",
+			"from": [-4, 2.5, 13],
+			"to": [9, 4.5, 15],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [2.5, 3.5, 15]},
+			"faces": {
+				"north": {"uv": [5.5, 0, 12, 1], "texture": "#0"},
+				"down": {"uv": [5.5, 5.5, 12, 6.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "beam",
+			"from": [-4, 0, 12],
+			"to": [20, 2, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 14]},
+			"faces": {
+				"north": {"uv": [0, 0, 12, 1], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 1], "texture": "#0"},
+				"south": {"uv": [0, 0, 12, 1], "texture": "#0"},
+				"west": {"uv": [10, 0, 12, 1], "texture": "#0"},
+				"up": {"uv": [0, 4, 12, 6], "texture": "#0"},
+				"down": {"uv": [0, 4, 12, 6], "texture": "#0"}
+			}
+		},
+		{
+			"name": "back_lower",
+			"from": [0, 1, 14],
+			"to": [16, 5, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 14]},
+			"faces": {
+				"north": {"uv": [2, 4.5, 10, 6.5], "texture": "#0"}
+			}
+		}
+	]
+}

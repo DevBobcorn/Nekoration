@@ -24,12 +24,12 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class DyeableHorizontalConnectedBlock extends HorizontalConnectedBlock {
 
-    public DyeableHorizontalConnectedBlock(Properties settings, int thickness) {
-        this(settings, ConnectionType.TRIPLE, false, thickness);
+    public DyeableHorizontalConnectedBlock(Properties settings, int thickness, int height, int bottom) {
+        this(settings, ConnectionType.TRIPLE, false, thickness, height, bottom);
     }
 
-    public DyeableHorizontalConnectedBlock(Properties settings, ConnectionType type, boolean connectOtherVariant, int thickness) {
-        super(settings, type, connectOtherVariant, thickness);
+    public DyeableHorizontalConnectedBlock(Properties settings, ConnectionType type, boolean connectOtherVariant, int thickness, int height, int bottom) {
+        super(settings, type, connectOtherVariant, thickness, height, bottom);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(DyeableBlock.COLOR, EnumNekoColor.WHITE)
                 .setValue(FACING, Direction.NORTH)

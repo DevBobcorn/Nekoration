@@ -46,12 +46,16 @@ public final class StoneBlockRegistration {
                 }
             }
             registerStoneBlockSet(blocks, items, "polished_smooth_" + stoneId, blockItemsByStone, stone);
-            registerVerticalConnectedBlock(blocks, items, "chiseled_smooth_" + stoneId, blockItemsByStone, stone);
-            registerHorizontalConnectedBlock(blocks, items, "horizontal_chiseled_smooth_" + stoneId, blockItemsByStone, stone);
+            registerVerticalConnectedBlock(blocks, items, "chiseled_smooth_" + stoneId,
+                    VerticalConnectedBlock.ConnectionType.PILLAR, blockItemsByStone, stone);
+            registerHorizontalConnectedBlock(blocks, items, "horizontal_chiseled_smooth_" + stoneId,
+                    HorizontalConnectedBlock.ConnectionType.BEAM, 16, 16, 0, blockItemsByStone, stone);
             registerBaseBlock(blocks, items, stoneId + "_base", blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_doric", false, 3, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_ionic", true, 7, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_corinthian", false, 7, blockItemsByStone, stone);
+            registerHorizontalConnectedBlock(blocks, items, stoneId + "_frame_peak",
+                    HorizontalConnectedBlock.ConnectionType.TRIPLE, 5, 10, 0, blockItemsByStone, stone);
         }
     }
 
@@ -72,9 +76,9 @@ public final class StoneBlockRegistration {
     }
 
     private static DeferredBlock<Block> registerVerticalConnectedBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
-            List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+            VerticalConnectedBlock.ConnectionType connectionType, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new VerticalConnectedBlock(stone.stoneProperties(), VerticalConnectedBlock.ConnectionType.PILLAR, false));
+                () -> new VerticalConnectedBlock(stone.stoneProperties(), connectionType, false));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
@@ -82,9 +86,9 @@ public final class StoneBlockRegistration {
     }
 
     private static DeferredBlock<Block> registerHorizontalConnectedBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
-            List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+            HorizontalConnectedBlock.ConnectionType connectionType, int thickness, int height, int bottom, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new HorizontalConnectedBlock(stone.stoneProperties(), HorizontalConnectedBlock.ConnectionType.BEAM, false, 16));
+                () -> new HorizontalConnectedBlock(stone.stoneProperties(), connectionType, false, thickness, height, bottom));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
@@ -92,7 +96,7 @@ public final class StoneBlockRegistration {
     }
 
     private static DeferredBlock<Block> registerBaseBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
-        List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+            List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new BaseBlock(stone.stoneProperties()));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
@@ -102,7 +106,7 @@ public final class StoneBlockRegistration {
     }
 
     private static DeferredBlock<Block> registerColumnBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
-        boolean hasHorizontalAxis, int topPartHeight, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+            boolean hasHorizontalAxis, int topPartHeight, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> hasHorizontalAxis ? new DirectionalColumnBlock(stone.stoneProperties(), topPartHeight) : new ColumnBlock(stone.stoneProperties(), topPartHeight));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);

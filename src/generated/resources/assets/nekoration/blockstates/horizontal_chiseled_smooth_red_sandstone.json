@@ -1,33 +1,33 @@
 {
   "variants": {
     "horizontal_connection=d0,facing=east": {
-      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_d0",
+      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_t0",
       "y": 90
     },
     "horizontal_connection=d0,facing=north": {
-      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_d0"
+      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_t0"
     },
     "horizontal_connection=d0,facing=south": {
-      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_d0",
+      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_t0",
       "y": 180
     },
     "horizontal_connection=d0,facing=west": {
-      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_d0",
+      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_t0",
       "y": 270
     },
     "horizontal_connection=d1,facing=east": {
-      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_d1",
+      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_t2",
       "y": 90
     },
     "horizontal_connection=d1,facing=north": {
-      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_d1"
+      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_t2"
     },
     "horizontal_connection=d1,facing=south": {
-      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_d1",
+      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_t2",
       "y": 180
     },
     "horizontal_connection=d1,facing=west": {
-      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_d1",
+      "model": "nekoration:block/stone/horizontal_chiseled_smooth_red_sandstone_t2",
       "y": 270
     },
     "horizontal_connection=s0,facing=east": {
