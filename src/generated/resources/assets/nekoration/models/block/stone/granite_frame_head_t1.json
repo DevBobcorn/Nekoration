@@ -1,0 +1,6 @@
+{
+  "parent": "nekoration:block/stone/frame_head_t1",
+  "textures": {
+    "0": "nekoration:block/stone/granite/frame_head"
+  }
+}

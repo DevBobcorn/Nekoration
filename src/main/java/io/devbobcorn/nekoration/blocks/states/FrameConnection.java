@@ -2,14 +2,14 @@ package io.devbobcorn.nekoration.blocks.states;
 
 import net.minecraft.util.StringRepresentable;
 
-public enum FramePart implements StringRepresentable {
-    MIDDLE("middle"),
-    TOP("top"),
-    BOTTOM("bottom");
+public enum FrameConnection implements StringRepresentable {
+    LEFT("left"),
+    RIGHT("right"),
+    BOTH("both");
 
     private final String name;
 
-    FramePart(String name) {
+    FrameConnection(String name) {
         this.name = name;
     }
 

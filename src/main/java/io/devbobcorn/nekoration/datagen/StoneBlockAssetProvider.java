@@ -12,7 +12,6 @@ import com.google.gson.JsonElement;
 
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.NekoStone;
-import io.devbobcorn.nekoration.blocks.states.HorizontalConnection;
 import io.devbobcorn.nekoration.blocks.states.VerticalConnection;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -24,6 +23,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public final class StoneBlockAssetProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+    private static final List<String> FRAME_CONNECTION_IDS = List.of("left", "right", "both");
     private static final List<String> VERTICAL_CONNECTION_IDS = List.of("s0", "d0", "d1", "t0", "t1", "t2");
     private static final List<String> HORIZONTAL_CONNECTION_IDS = List.of("s0", "d0", "d1", "t0", "t1", "t2");
 
@@ -58,8 +58,10 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateStoneColumnAssets(cachedOutput, "column_ionic", true, writes, stoneId);
             generateStoneColumnAssets(cachedOutput, "column_corinthian", false, writes, stoneId);
 
+            generateStoneFrameAssets(cachedOutput, "frame_head", writes, stoneId);
             generateStoneFrameAssets(cachedOutput, "frame_peak", writes, stoneId);
             generateStoneFrameAssets(cachedOutput, "frame_sill", writes, stoneId);
+            generateStoneFrameSideAssets(cachedOutput, "frame_side", writes, stoneId);
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
@@ -313,6 +315,36 @@ public final class StoneBlockAssetProvider implements DataProvider {
 
         writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
                 Map.of("parent", modLoc("block/stone/" + variantId)));
+    }
+
+    private void generateStoneFrameSideAssets(CachedOutput cachedOutput, String variant,
+        List<CompletableFuture<?>> writes, String stoneId) {
+        String variantId = stoneId + "_" + variant;
+
+        Map<String, Object> textures = new LinkedHashMap<>();
+        textures.put("0", modLoc("block/stone/" + stoneId + "/" + variant));
+
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
+        Map.of("parent", modLoc("block/stone/" + variant), "textures", textures));
+
+        for (String connectionId : FRAME_CONNECTION_IDS) {
+            String connectionModelName = variantId + "_" + connectionId;
+            writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + connectionModelName,
+                    Map.of("parent", modLoc("block/stone/" + variant + "_" + connectionId), "textures", textures));
+        }
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        for (String connectionId : FRAME_CONNECTION_IDS) {
+            String modelName = variantId + "_" + connectionId;
+            variants.put("frame_connection=" + connectionId + ",facing=north", Map.of("model", modLoc("block/stone/" + modelName)));
+            variants.put("frame_connection=" + connectionId + ",facing=east", Map.of("model", modLoc("block/stone/" + modelName), "y", 90));
+            variants.put("frame_connection=" + connectionId + ",facing=south", Map.of("model", modLoc("block/stone/" + modelName), "y", 180));
+            variants.put("frame_connection=" + connectionId + ",facing=west", Map.of("model", modLoc("block/stone/" + modelName), "y", 270));
+        }
+        writeJson(cachedOutput, writes, blockstatePathProvider, variantId, Map.of("variants", variants));
+
+        writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
+                Map.of("parent", modLoc("block/stone/" + variantId + "_both")));
     }
 
     private static String tripleConnectionSuffixForConnection(String connectionId) {

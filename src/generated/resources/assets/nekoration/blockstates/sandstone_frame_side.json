@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "frame_connection=both,facing=east": {
+      "model": "nekoration:block/stone/sandstone_frame_side_both",
+      "y": 90
+    },
+    "frame_connection=both,facing=north": {
+      "model": "nekoration:block/stone/sandstone_frame_side_both"
+    },
+    "frame_connection=both,facing=south": {
+      "model": "nekoration:block/stone/sandstone_frame_side_both",
+      "y": 180
+    },
+    "frame_connection=both,facing=west": {
+      "model": "nekoration:block/stone/sandstone_frame_side_both",
+      "y": 270
+    },
+    "frame_connection=left,facing=east": {
+      "model": "nekoration:block/stone/sandstone_frame_side_left",
+      "y": 90
+    },
+    "frame_connection=left,facing=north": {
+      "model": "nekoration:block/stone/sandstone_frame_side_left"
+    },
+    "frame_connection=left,facing=south": {
+      "model": "nekoration:block/stone/sandstone_frame_side_left",
+      "y": 180
+    },
+    "frame_connection=left,facing=west": {
+      "model": "nekoration:block/stone/sandstone_frame_side_left",
+      "y": 270
+    },
+    "frame_connection=right,facing=east": {
+      "model": "nekoration:block/stone/sandstone_frame_side_right",
+      "y": 90
+    },
+    "frame_connection=right,facing=north": {
+      "model": "nekoration:block/stone/sandstone_frame_side_right"
+    },
+    "frame_connection=right,facing=south": {
+      "model": "nekoration:block/stone/sandstone_frame_side_right",
+      "y": 180
+    },
+    "frame_connection=right,facing=west": {
+      "model": "nekoration:block/stone/sandstone_frame_side_right",
+      "y": 270
+    }
+  }
+}

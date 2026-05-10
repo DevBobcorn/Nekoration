@@ -13,6 +13,7 @@ import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.stone.BaseBlock;
 import io.devbobcorn.nekoration.blocks.stone.ColumnBlock;
 import io.devbobcorn.nekoration.blocks.stone.DirectionalColumnBlock;
+import io.devbobcorn.nekoration.blocks.stone.FrameSideBlock;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -54,10 +55,13 @@ public final class StoneBlockRegistration {
             registerColumnBlock(blocks, items, stoneId + "_column_doric", false, 3, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_ionic", true, 7, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_corinthian", false, 7, blockItemsByStone, stone);
+            registerHorizontalConnectedBlock(blocks, items, stoneId + "_frame_head",
+                    HorizontalConnectedBlock.ConnectionType.BEAM, 2, 3, 0, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(blocks, items, stoneId + "_frame_peak",
                     HorizontalConnectedBlock.ConnectionType.TRIPLE, 5, 12, 0, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(blocks, items, stoneId + "_frame_sill",
                     HorizontalConnectedBlock.ConnectionType.BEAM, 4, 4, 12, blockItemsByStone, stone);
+            registerFrameSideBlock(blocks, items, stoneId + "_frame_side", blockItemsByStone, stone);
         }
     }
 
@@ -91,6 +95,16 @@ public final class StoneBlockRegistration {
             HorizontalConnectedBlock.ConnectionType connectionType, int thickness, int height, int bottom, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new HorizontalConnectedBlock(stone.stoneProperties(), connectionType, false, thickness, height, bottom));
+        DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
+        STONE_BLOCK_ITEMS.add(blockItem);
+        blockItemsByStone.add(blockItem);
+        return block;
+    }
+
+    private static DeferredBlock<Block> registerFrameSideBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new FrameSideBlock(stone.stoneProperties()));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
