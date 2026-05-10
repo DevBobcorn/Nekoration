@@ -59,6 +59,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateStoneColumnAssets(cachedOutput, "column_corinthian", false, writes, stoneId);
 
             generateStoneFrameAssets(cachedOutput, "frame_peak", writes, stoneId);
+            generateStoneFrameAssets(cachedOutput, "frame_sill", writes, stoneId);
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }

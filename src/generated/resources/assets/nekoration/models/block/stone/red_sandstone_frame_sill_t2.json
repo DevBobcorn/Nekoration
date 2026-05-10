@@ -1,0 +1,6 @@
+{
+  "parent": "nekoration:block/stone/frame_sill_t2",
+  "textures": {
+    "0": "nekoration:block/stone/red_sandstone/frame_sill"
+  }
+}

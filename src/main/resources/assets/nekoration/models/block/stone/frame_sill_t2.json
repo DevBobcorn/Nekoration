@@ -1,0 +1,37 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "generator_files/stone_template/frame_sill",
+		"particle": "#0"
+	},
+	"elements": [
+		{
+			"name": "stool",
+			"from": [-4, 14, 12],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 14, 14]},
+			"faces": {
+				"north": {"uv": [2, 0, 12, 1], "texture": "#0"},
+				"south": {"uv": [2, 0, 12, 1], "texture": "#0"},
+				"west": {"uv": [10, 0, 12, 1], "texture": "#0"},
+				"up": {"uv": [2, 1.5, 12, 3.5], "texture": "#0"},
+				"down": {"uv": [2, 1.5, 12, 3.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "apron",
+			"from": [-3, 12, 13],
+			"to": [16, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 12, 14]},
+			"faces": {
+				"north": {"uv": [2, 5.5, 11.5, 6.5], "texture": "#0"},
+				"south": {"uv": [2, 5.5, 11.5, 6.5], "texture": "#0"},
+				"west": {"uv": [10, 5.5, 12, 6.5], "texture": "#0"},
+				"down": {"uv": [2, 4, 11.5, 5.5], "texture": "#0"}
+			}
+		}
+	]
+}

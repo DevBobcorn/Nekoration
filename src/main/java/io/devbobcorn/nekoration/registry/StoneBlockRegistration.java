@@ -55,7 +55,9 @@ public final class StoneBlockRegistration {
             registerColumnBlock(blocks, items, stoneId + "_column_ionic", true, 7, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_corinthian", false, 7, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(blocks, items, stoneId + "_frame_peak",
-                    HorizontalConnectedBlock.ConnectionType.TRIPLE, 5, 10, 0, blockItemsByStone, stone);
+                    HorizontalConnectedBlock.ConnectionType.TRIPLE, 5, 12, 0, blockItemsByStone, stone);
+            registerHorizontalConnectedBlock(blocks, items, stoneId + "_frame_sill",
+                    HorizontalConnectedBlock.ConnectionType.BEAM, 4, 4, 12, blockItemsByStone, stone);
         }
     }
 
