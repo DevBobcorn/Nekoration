@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import io.devbobcorn.nekoration.NekoConfig;
-import io.devbobcorn.nekoration.NekoConfig.HorConnectionDir;
 import io.devbobcorn.nekoration.blocks.states.HorizontalConnection;
 import io.devbobcorn.nekoration.blocks.states.ModStateProperties;
 import net.minecraft.core.BlockPos;
@@ -67,29 +65,38 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
             return null;
         }
 
-        HorConnectionDir config = NekoConfig.HOR_CONNECTION_DIR.get();
-        boolean useLeft = config == HorConnectionDir.LEFT2RIGHT || config == HorConnectionDir.BOTH;
+        if (ctx.getPlayer() != null && ctx.getPlayer().isShiftKeyDown()) {
+            return placed.setValue(CONNECTION, HorizontalConnection.S0);
+        }
+
         Direction facing = placed.getValue(FACING);
         BlockPos pos = ctx.getClickedPos();
-        if (config != HorConnectionDir.NEITHER) {
-            BlockPos refPos = useLeft ? getLeftBlock(pos, facing) : getRightBlock(pos, facing);
-            BlockState refState = ctx.getLevel().getBlockState(refPos);
-            boolean connect = canConnectTo(refState, facing);
 
-            if (!connect && config == HorConnectionDir.BOTH) {
-                refPos = getRightBlock(pos, facing);
-                refState = ctx.getLevel().getBlockState(refPos);
-                connect = canConnectTo(refState, facing);
-                useLeft = false;
-            }
+        BlockPos leftPos = getLeftBlock(pos, facing);
+        BlockState leftState = ctx.getLevel().getBlockState(leftPos);
+        boolean connectLeft = canConnectTo(leftState, facing);
 
-            if (connect) {
-                HorizontalConnection connection = useLeft
-                        ? nextFromLeft(refState.getValue(CONNECTION))
-                        : nextFromRight(refState.getValue(CONNECTION));
-                return placed.setValue(CONNECTION, connection);
+        BlockPos rightPos = getRightBlock(pos, facing);
+        BlockState rightState = ctx.getLevel().getBlockState(rightPos);
+        boolean connectRight = canConnectTo(rightState, facing);
+
+        if (connectLeft && connectRight) {
+            if (type == ConnectionType.DOUBLE) {
+                return placed.setValue(CONNECTION, HorizontalConnection.S0);
             }
+            return placed.setValue(CONNECTION, HorizontalConnection.T1);
         }
+
+        if (connectLeft) {
+            HorizontalConnection connection = nextFromLeft(leftState.getValue(CONNECTION));
+            return placed.setValue(CONNECTION, connection);
+        }
+
+        if (connectRight) {
+            HorizontalConnection connection = nextFromRight(rightState.getValue(CONNECTION));
+            return placed.setValue(CONNECTION, connection);
+        }
+
         return placed.setValue(CONNECTION, HorizontalConnection.S0);
     }
 
@@ -97,13 +104,10 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
     protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level,
             BlockPos pos, BlockPos neighborPos) {
         BlockState res = state;
-        HorConnectionDir config = NekoConfig.HOR_CONNECTION_DIR.get();
         Direction facing = state.getValue(FACING);
 
-        boolean flag1 = direction == getRightDir(facing)
-                && (config == HorConnectionDir.LEFT2RIGHT || config == HorConnectionDir.BOTH);
-        boolean flag2 = direction == getLeftDir(facing)
-                && (config == HorConnectionDir.RIGHT2LEFT || config == HorConnectionDir.BOTH);
+        boolean flag1 = direction == getRightDir(facing);
+        boolean flag2 = direction == getLeftDir(facing);
 
         boolean connect = flag1 || flag2;
         if (connect && canConnectTo(neighborState, facing)) {

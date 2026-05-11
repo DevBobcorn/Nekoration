@@ -1,7 +1,5 @@
 package io.devbobcorn.nekoration.blocks.containers;
 
-import io.devbobcorn.nekoration.NekoConfig;
-import io.devbobcorn.nekoration.NekoConfig.VerConnectionDir;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -36,20 +34,31 @@ public class CupboardBlock extends ItemDisplayBlock {
             return null;
         }
 
-        VerConnectionDir config = NekoConfig.VER_CONNECTION_DIR.get();
-        if (config == VerConnectionDir.BOTH || config == VerConnectionDir.TOP2BOTTOM) {
-            BlockState above = ctx.getLevel().getBlockState(ctx.getClickedPos().above());
-            return placed.setValue(BOTTOM, above.getBlock() instanceof CupboardBlock);
+        if (ctx.getPlayer() != null && ctx.getPlayer().isShiftKeyDown()) {
+            return placed.setValue(BOTTOM, false);
         }
+
+        BlockState above = ctx.getLevel().getBlockState(ctx.getClickedPos().above());
+        if (above.getBlock() instanceof CupboardBlock) {
+            return placed.setValue(BOTTOM, true);
+        }
+
+        BlockState below = ctx.getLevel().getBlockState(ctx.getClickedPos().below());
+        if (below.getBlock() instanceof CupboardBlock) {
+            return placed.setValue(BOTTOM, false);
+        }
+
         return placed.setValue(BOTTOM, false);
     }
 
     @Override
     protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level,
             BlockPos pos, BlockPos neighborPos) {
-        VerConnectionDir config = NekoConfig.VER_CONNECTION_DIR.get();
-        if ((config == VerConnectionDir.BOTH || config == VerConnectionDir.BOTTOM2TOP) && direction == Direction.UP) {
+        if (direction == Direction.UP) {
             return state.setValue(BOTTOM, neighborState.getBlock() instanceof CupboardBlock);
+        }
+        if (direction == Direction.DOWN && neighborState.getBlock() instanceof CupboardBlock) {
+            return state.setValue(BOTTOM, false);
         }
         return state;
     }

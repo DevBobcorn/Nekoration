@@ -1,9 +1,7 @@
 package io.devbobcorn.nekoration.items;
 
 import java.util.List;
-import java.util.Locale;
 
-import io.devbobcorn.nekoration.NekoConfig;
 import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 import net.minecraft.ChatFormatting;
@@ -30,22 +28,12 @@ public class NekoBlockItem extends BlockItem {
         Block block = getBlock();
         if (block instanceof HorizontalConnectedBlock) {
             tooltipComponents.add(Component
-                    .translatable(HORIZONTAL_CONNECT_TOOLTIP_KEY, currentHorizontalConnectionComponent())
+                    .translatable(HORIZONTAL_CONNECT_TOOLTIP_KEY)
                     .withStyle(ChatFormatting.GRAY));
         } else if (block instanceof VerticalConnectedBlock) {
             tooltipComponents.add(Component
-                    .translatable(VERTICAL_CONNECT_TOOLTIP_KEY, currentVerticalConnectionComponent())
+                    .translatable(VERTICAL_CONNECT_TOOLTIP_KEY)
                     .withStyle(ChatFormatting.GRAY));
         }
-    }
-
-    private static Component currentHorizontalConnectionComponent() {
-        String key = "tooltip.nekoration.connection_" + NekoConfig.HOR_CONNECTION_DIR.get().name().toLowerCase(Locale.ROOT);
-        return Component.translatable(key).withStyle(ChatFormatting.AQUA);
-    }
-
-    private static Component currentVerticalConnectionComponent() {
-        String key = "tooltip.nekoration.connection_" + NekoConfig.VER_CONNECTION_DIR.get().name().toLowerCase(Locale.ROOT);
-        return Component.translatable(key).withStyle(ChatFormatting.AQUA);
     }
 }
