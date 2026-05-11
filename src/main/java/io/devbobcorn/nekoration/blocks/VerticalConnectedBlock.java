@@ -112,7 +112,8 @@ public class VerticalConnectedBlock extends Block {
                 return switch (newState.getValue(CONNECTION)) {
                     case D1 -> res.setValue(CONNECTION, VerticalConnection.D0);
                     case T1 -> res.setValue(CONNECTION,
-                            (type == ConnectionType.PILLAR && canConnectTo(stateRef))
+                            (type == ConnectionType.PILLAR && canConnectTo(stateRef)
+                                    && connectsUp(stateRef.getValue(CONNECTION)))
                                     ? VerticalConnection.T1
                                     : VerticalConnection.T0);
                     case T2 -> res.setValue(CONNECTION, VerticalConnection.T1);
@@ -123,7 +124,8 @@ public class VerticalConnectedBlock extends Block {
                 return switch (newState.getValue(CONNECTION)) {
                     case D0 -> res.setValue(CONNECTION, VerticalConnection.D1);
                     case T1 -> res.setValue(CONNECTION,
-                            (type == ConnectionType.PILLAR && canConnectTo(stateRef))
+                            (type == ConnectionType.PILLAR && canConnectTo(stateRef)
+                                    && connectsDown(stateRef.getValue(CONNECTION)))
                                     ? VerticalConnection.T1
                                     : VerticalConnection.T2);
                     case T0 -> res.setValue(CONNECTION, VerticalConnection.T1);

@@ -117,7 +117,8 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
                 return switch (neighborState.getValue(CONNECTION)) {
                     case D1 -> res.setValue(CONNECTION, HorizontalConnection.D0);
                     case T1 -> res.setValue(CONNECTION,
-                            (type == ConnectionType.BEAM && canConnectTo(stateRef, facing))
+                            (type == ConnectionType.BEAM && canConnectTo(stateRef, facing)
+                                    && connectsRight(stateRef.getValue(CONNECTION)))
                                     ? HorizontalConnection.T1
                                     : HorizontalConnection.T0);
                     case T2 -> res.setValue(CONNECTION, HorizontalConnection.T1);
@@ -128,7 +129,8 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
                 return switch (neighborState.getValue(CONNECTION)) {
                     case D0 -> res.setValue(CONNECTION, HorizontalConnection.D1);
                     case T1 -> res.setValue(CONNECTION,
-                            (type == ConnectionType.BEAM && canConnectTo(stateRef, facing))
+                            (type == ConnectionType.BEAM && canConnectTo(stateRef, facing)
+                                    && connectsLeft(stateRef.getValue(CONNECTION)))
                                     ? HorizontalConnection.T1
                                     : HorizontalConnection.T2);
                     case T0 -> res.setValue(CONNECTION, HorizontalConnection.T1);
