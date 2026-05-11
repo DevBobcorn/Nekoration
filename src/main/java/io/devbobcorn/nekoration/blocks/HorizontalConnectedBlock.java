@@ -81,10 +81,20 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
         boolean connectRight = canConnectTo(rightState, facing);
 
         if (connectLeft && connectRight) {
-            if (type == ConnectionType.DOUBLE) {
-                return placed.setValue(CONNECTION, HorizontalConnection.S0);
+            Direction leftDir = getLeftDir(facing);
+            Direction rightDir = getRightDir(facing);
+            Direction clickedFace = ctx.getClickedFace();
+
+            if (clickedFace == rightDir) {
+                connectRight = false;
+            } else if (clickedFace == leftDir) {
+                connectLeft = false;
+            } else if (type == ConnectionType.BEAM) {
+                return placed.setValue(CONNECTION, HorizontalConnection.T1);
+            } else {
+                connectLeft = false;
+                connectRight = false;
             }
-            return placed.setValue(CONNECTION, HorizontalConnection.T1);
         }
 
         if (connectLeft) {

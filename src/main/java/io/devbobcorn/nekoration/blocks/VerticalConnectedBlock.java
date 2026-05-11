@@ -63,10 +63,18 @@ public class VerticalConnectedBlock extends Block {
         boolean connectAbove = canConnectTo(aboveState);
 
         if (connectBelow && connectAbove) {
-            if (type == ConnectionType.DOUBLE) {
-                return defaultBlockState().setValue(CONNECTION, VerticalConnection.S0);
+            Direction clickedFace = ctx.getClickedFace();
+
+            if (clickedFace == Direction.UP) {
+                connectAbove = false;
+            } else if (clickedFace == Direction.DOWN) {
+                connectBelow = false;
+            } else if (type == ConnectionType.PILLAR) {
+                return defaultBlockState().setValue(CONNECTION, VerticalConnection.T1);
+            } else {
+                connectBelow = false;
+                connectAbove = false;
             }
-            return defaultBlockState().setValue(CONNECTION, VerticalConnection.T1);
         }
 
         if (connectBelow) {

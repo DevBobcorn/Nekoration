@@ -408,6 +408,9 @@
     "itemGroup.nekoration_ornaments": "猫咪装饰丨装饰",
     "itemGroup.nekoration_stone_blocks": "猫咪装饰丨石质方块",
     "itemGroup.nekoration_wooden_blocks": "猫咪装饰丨木质方块",
-    "tooltip.nekoration.horizontal_connect_block": "可与同种方块水平连接",
-    "tooltip.nekoration.vertical_connect_block": "可与同种方块垂直连接"
+    "tooltip.nekoration.connect_block": "可与同种方块%s连接",
+    "tooltip.nekoration.connect_block_tip": "%s时放置可阻止连接",
+    "tooltip.nekoration.direction_horizontal": "水平",
+    "tooltip.nekoration.direction_vertical": "垂直",
+    "tooltip.nekoration.sneaking": "潜行"
 }

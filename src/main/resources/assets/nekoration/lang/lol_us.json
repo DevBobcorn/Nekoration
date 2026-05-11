@@ -408,6 +408,9 @@
     "itemGroup.nekoration_ornaments": "Nekaorushun: ournumenz",
     "itemGroup.nekoration_stone_blocks": "Nekarashun: Stone Blucks",
     "itemGroup.nekoration_wooden_blocks": "Nekurateean: Waoden Bluckz",
-    "tooltip.nekoration.horizontal_connect_block": "Connecz Horizontolly With Matchin Blacks",
-    "tooltip.nekoration.vertical_connect_block": "Connectz vurteecolly with mutchin blackz"
+    "tooltip.nekoration.connect_block": "Cunnecz %s with motchin bluckz",
+    "tooltip.nekoration.connect_block_tip": "Place While %s 2 Avoid Connecshun",
+    "tooltip.nekoration.direction_horizontal": "Horizontolly",
+    "tooltip.nekoration.direction_vertical": "Vertically",
+    "tooltip.nekoration.sneaking": "Sneoking"
 }

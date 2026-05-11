@@ -101,9 +101,7 @@ obj_lol = {}
 # Color Names...
 for c_i in range(0, len(color_ids)):
     obj_us['color.nekoration.' + color_ids[c_i]] = colors_us[c_i]
-    #obj_us['color.wooden.' + colors[col]] = wooden_us[col]
     obj_cn['color.nekoration.' + color_ids[c_i]] = colors_cn[c_i]
-    #obj_cn['color.wooden.' + colors[col]] = wooden_cn[col]
 
 # [WOODEN BLOCKS TAB]
 for w_i in range(0, len(wood_ids)):
@@ -171,10 +169,16 @@ for e_i in range(0, len(entity_ids)):
     obj_cn['entity.nekoration.' + entity_ids[e_i]] = entities_cn[e_i]
 
 # [TOOLTIPS]
-obj_us['tooltip.nekoration.horizontal_connect_block'] = "Connects horizontally with matching blocks"
-obj_cn['tooltip.nekoration.horizontal_connect_block'] = "可与同种方块水平连接"
-obj_us['tooltip.nekoration.vertical_connect_block'] = "Connects vertically with matching blocks"
-obj_cn['tooltip.nekoration.vertical_connect_block'] = "可与同种方块垂直连接"
+obj_us['tooltip.nekoration.connect_block'] = "Connects %s with matching blocks"
+obj_cn['tooltip.nekoration.connect_block'] = "可与同种方块%s连接"
+obj_us['tooltip.nekoration.connect_block_tip'] = "Place while %s to avoid connection"
+obj_cn['tooltip.nekoration.connect_block_tip'] = "%s时放置可阻止连接"
+obj_us['tooltip.nekoration.direction_horizontal'] = "horizontally"
+obj_cn['tooltip.nekoration.direction_horizontal'] = "水平"
+obj_us['tooltip.nekoration.direction_vertical'] = "vertically"
+obj_cn['tooltip.nekoration.direction_vertical'] = "垂直"
+obj_us['tooltip.nekoration.sneaking'] = "sneaking"
+obj_cn['tooltip.nekoration.sneaking'] = "潜行"
 
 # Set cwd to file directory
 script_dir = os.path.dirname(os.path.abspath(__file__))

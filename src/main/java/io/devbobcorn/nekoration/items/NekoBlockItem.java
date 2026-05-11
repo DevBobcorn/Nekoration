@@ -13,8 +13,11 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 
 public class NekoBlockItem extends BlockItem {
-    private static final String HORIZONTAL_CONNECT_TOOLTIP_KEY = "tooltip.nekoration.horizontal_connect_block";
-    private static final String VERTICAL_CONNECT_TOOLTIP_KEY = "tooltip.nekoration.vertical_connect_block";
+    private static final String CONNECT_TOOLTIP_KEY = "tooltip.nekoration.connect_block";
+    private static final String CONNECT_TOOLTIP_TIP_KEY = "tooltip.nekoration.connect_block_tip";
+    private static final String DIRECTION_HORIZONTAL_TOOLTIP_KEY = "tooltip.nekoration.direction_horizontal";
+    private static final String DIRECTION_VERTICAL_TOOLTIP_KEY = "tooltip.nekoration.direction_vertical";
+    private static final String SNEAKING_TOOLTIP_KEY = "tooltip.nekoration.sneaking";
 
     public NekoBlockItem(Block block, Item.Properties properties) {
         super(block, properties);
@@ -27,12 +30,22 @@ public class NekoBlockItem extends BlockItem {
 
         Block block = getBlock();
         if (block instanceof HorizontalConnectedBlock) {
+            Component direction = Component.translatable(DIRECTION_HORIZONTAL_TOOLTIP_KEY).withStyle(ChatFormatting.WHITE);
             tooltipComponents.add(Component
-                    .translatable(HORIZONTAL_CONNECT_TOOLTIP_KEY)
+                    .translatable(CONNECT_TOOLTIP_KEY, direction)
+                    .withStyle(ChatFormatting.GRAY));
+            tooltipComponents.add(Component
+                    .translatable(CONNECT_TOOLTIP_TIP_KEY,
+                            Component.translatable(SNEAKING_TOOLTIP_KEY).withStyle(ChatFormatting.AQUA))
                     .withStyle(ChatFormatting.GRAY));
         } else if (block instanceof VerticalConnectedBlock) {
+            Component direction = Component.translatable(DIRECTION_VERTICAL_TOOLTIP_KEY).withStyle(ChatFormatting.WHITE);
             tooltipComponents.add(Component
-                    .translatable(VERTICAL_CONNECT_TOOLTIP_KEY)
+                    .translatable(CONNECT_TOOLTIP_KEY, direction)
+                    .withStyle(ChatFormatting.GRAY));
+            tooltipComponents.add(Component
+                    .translatable(CONNECT_TOOLTIP_TIP_KEY,
+                            Component.translatable(SNEAKING_TOOLTIP_KEY).withStyle(ChatFormatting.AQUA))
                     .withStyle(ChatFormatting.GRAY));
         }
     }

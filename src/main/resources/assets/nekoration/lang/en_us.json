@@ -408,6 +408,9 @@
     "itemGroup.nekoration_ornaments": "Nekoration: Ornaments",
     "itemGroup.nekoration_stone_blocks": "Nekoration: Stone Blocks",
     "itemGroup.nekoration_wooden_blocks": "Nekoration: Wooden Blocks",
-    "tooltip.nekoration.horizontal_connect_block": "Connects horizontally with matching blocks",
-    "tooltip.nekoration.vertical_connect_block": "Connects vertically with matching blocks"
+    "tooltip.nekoration.connect_block": "Connects %s with matching blocks",
+    "tooltip.nekoration.connect_block_tip": "Place while %s to avoid connection",
+    "tooltip.nekoration.direction_horizontal": "horizontally",
+    "tooltip.nekoration.direction_vertical": "vertically",
+    "tooltip.nekoration.sneaking": "sneaking"
 }
