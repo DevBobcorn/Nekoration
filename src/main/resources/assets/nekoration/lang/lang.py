@@ -32,9 +32,12 @@ smooth_stone_block_ids = ["smooth_{stone}", "smooth_{stone}_slab", "smooth_{ston
 smooth_stone_blocks_us = ["Smooth {stone}", "Smooth {stone} Slab", "Smooth {stone} Stairs"]
 smooth_stone_blocks_cn = ["平滑{stone}", "平滑{stone}台阶", "平滑{stone}楼梯"]
 
-stone_block_ids = ["polished_smooth_{stone}", "polished_smooth_{stone}_slab", "polished_smooth_{stone}_stairs", "chiseled_smooth_{stone}", "horizontal_chiseled_smooth_{stone}", "{stone}_base", "{stone}_column_doric", "{stone}_column_ionic", "{stone}_column_corinthian", "{stone}_pot"]
-stone_blocks_us = ["Polished Smooth {stone}", "Polished Smooth {stone} Slab", "Polished Smooth {stone} Stairs", "Chiseled Smooth {stone}", "Horizontal Chiseled Smooth {stone}", "{stone} Base", "{stone} Doric Column", "{stone} Ionic Column", "{stone} Corinthian Column", "{stone} Pot"]
-stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "錾制平滑{stone}", "横向錾制平滑{stone}", "{stone}底座", "{stone}多立克柱", "{stone}爱奥尼柱", "{stone}科林斯柱", "{stone}花盆"]
+stone_block_ids = ["polished_smooth_{stone}", "polished_smooth_{stone}_slab", "polished_smooth_{stone}_stairs", "chiseled_smooth_{stone}", "horizontal_chiseled_smooth_{stone}", "{stone}_base", "{stone}_column_doric", "{stone}_column_ionic", "{stone}_column_corinthian",
+    "{stone}_frame_head",  "{stone}_frame_peak","{stone}_frame_side", "{stone}_frame_sill", "{stone}_pot"]
+stone_blocks_us = ["Polished Smooth {stone}", "Polished Smooth {stone} Slab", "Polished Smooth {stone} Stairs", "Chiseled Smooth {stone}", "Horizontal Chiseled Smooth {stone}", "{stone} Base", "{stone} Doric Column", "{stone} Ionic Column", "{stone} Corinthian Column",
+    "{stone} Frame Head",  "{stone} Frame Peak","{stone} Frame Side", "{stone} Frame Sill", "{stone} Pot"]
+stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "錾制平滑{stone}", "横向錾制平滑{stone}", "{stone}底座", "{stone}多立克柱", "{stone}爱奥尼柱", "{stone}科林斯柱",
+    "{stone}框顶边",  "{stone}框尖顶","{stone}框侧边", "{stone}框底边", "{stone}花盆"]
 
 door_ids = ["quartz_door","chiseled_quartz_door","quartz_bricks_door","tall_quartz_door","tall_chiseled_quartz_door","tall_quartz_bricks_door"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
