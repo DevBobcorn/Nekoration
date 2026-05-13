@@ -14,6 +14,7 @@ import io.devbobcorn.nekoration.blocks.stone.BaseBlock;
 import io.devbobcorn.nekoration.blocks.stone.ColumnBlock;
 import io.devbobcorn.nekoration.blocks.stone.DirectionalColumnBlock;
 import io.devbobcorn.nekoration.blocks.stone.FrameSideBlock;
+import io.devbobcorn.nekoration.blocks.stone.PotBlock;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -55,6 +56,8 @@ public final class StoneBlockRegistration {
             registerColumnBlock(blocks, items, stoneId + "_column_doric", false, 3, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_ionic", true, 7, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_corinthian", false, 7, blockItemsByStone, stone);
+            registerPotBlock(blocks, items, stoneId + "_pot", 7, blockItemsByStone, stone);
+            registerPotBlock(blocks, items, stoneId + "_planter", 8, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(blocks, items, stoneId + "_frame_head",
                     HorizontalConnectedBlock.ConnectionType.BEAM, 2, 3, 0, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(blocks, items, stoneId + "_frame_peak",
@@ -75,6 +78,15 @@ public final class StoneBlockRegistration {
     private static DeferredBlock<Block> registerBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id, () -> new Block(stone.stoneProperties()));
+        DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
+        STONE_BLOCK_ITEMS.add(blockItem);
+        blockItemsByStone.add(blockItem);
+        return block;
+    }
+
+    private static DeferredBlock<Block> registerPotBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+        int radius, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+        DeferredBlock<Block> block = blocks.register(id, () -> new PotBlock(stone.stoneProperties(), radius));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);

@@ -11,7 +11,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.util.TriState;
 
 /**
- * Stone pot/planter block with configurable radius.
+ * Pot/planter block with configurable properties and radius.
  */
 public class PotBlock extends Block {
     private final VoxelShape shape;

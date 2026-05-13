@@ -48,6 +48,10 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 generateStoneSlabAssets(cachedOutput, "smooth", true, false, writes, stoneId);
             }
             generateStoneCubeAllAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
+
+            generateStonePotAssets(cachedOutput, "pot", writes, stoneId);
+            generateStonePotAssets(cachedOutput, "planter", writes, stoneId);
+
             generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
             generateStoneSlabAssets(cachedOutput, "polished_smooth", true, true, writes, stoneId);
             generateVerticalConnectedStoneCubeAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
@@ -149,6 +153,23 @@ public final class StoneBlockAssetProvider implements DataProvider {
         writeJson(cachedOutput, writes, blockstatePathProvider, slabId, Map.of("variants", variants));
         writeJson(cachedOutput, writes, itemModelPathProvider, slabId,
                 Map.of("parent", modLoc("block/stone/" + slabId)));
+    }
+
+    private void generateStonePotAssets(CachedOutput cachedOutput, String variant, List<CompletableFuture<?>> writes, String stoneId) {
+        String variantId = stoneId + "_" + variant;
+
+        Map<String, Object> textures = new LinkedHashMap<>();
+        textures.put("0", modLoc("block/stone/" + stoneId + "/" + variant));
+        textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
+                Map.of("parent", modLoc("block/stone/" + variant), "textures", textures));
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        variants.put("", Map.of("model", modLoc("block/stone/" + variantId)));
+        writeJson(cachedOutput, writes, blockstatePathProvider, variantId, Map.of("variants", variants));
+
+        writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
+                Map.of("parent", modLoc("block/stone/" + variantId)));
     }
 
     private void generateVerticalConnectedStoneCubeAssets(CachedOutput cachedOutput, String variant, boolean prefixedId,
