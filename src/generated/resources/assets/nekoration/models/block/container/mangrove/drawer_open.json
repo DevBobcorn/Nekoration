@@ -5,7 +5,6 @@
     "1": "nekoration:block/container/mangrove/drawer_front_open",
     "2": "nekoration:block/container/mangrove/drawer_front",
     "3": "nekoration:block/container/mangrove/drawer_side",
-    "4": "nekoration:block/container/mangrove/drawer_back",
-    "particle": "nekoration:block/container/mangrove/cabinet_top"
+    "4": "nekoration:block/container/mangrove/drawer_back"
   }
 }

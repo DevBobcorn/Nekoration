@@ -5,7 +5,6 @@
     "1": "nekoration:block/container/warped/drawer_front_open",
     "2": "nekoration:block/container/warped/drawer_front",
     "3": "nekoration:block/container/warped/drawer_side",
-    "4": "nekoration:block/container/warped/drawer_back",
-    "particle": "nekoration:block/container/warped/cabinet_top"
+    "4": "nekoration:block/container/warped/drawer_back"
   }
 }

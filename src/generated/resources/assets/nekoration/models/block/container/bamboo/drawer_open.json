@@ -5,7 +5,6 @@
     "1": "nekoration:block/container/bamboo/drawer_front_open",
     "2": "nekoration:block/container/bamboo/drawer_front",
     "3": "nekoration:block/container/bamboo/drawer_side",
-    "4": "nekoration:block/container/bamboo/drawer_back",
-    "particle": "nekoration:block/container/bamboo/cabinet_top"
+    "4": "nekoration:block/container/bamboo/drawer_back"
   }
 }

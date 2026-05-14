@@ -5,7 +5,6 @@
     "1": "nekoration:block/container/birch/drawer_front_open",
     "2": "nekoration:block/container/birch/drawer_front",
     "3": "nekoration:block/container/birch/drawer_side",
-    "4": "nekoration:block/container/birch/drawer_back",
-    "particle": "nekoration:block/container/birch/cabinet_top"
+    "4": "nekoration:block/container/birch/drawer_back"
   }
 }

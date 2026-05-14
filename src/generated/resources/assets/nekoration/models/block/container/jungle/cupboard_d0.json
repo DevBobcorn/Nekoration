@@ -3,7 +3,6 @@
   "textures": {
     "0": "nekoration:block/container/jungle/cabinet_top",
     "1": "nekoration:block/container/jungle/cupboard_front_d0",
-    "4": "nekoration:block/container/jungle/cabinet_back",
-    "particle": "nekoration:block/container/jungle/cabinet_top"
+    "4": "nekoration:block/container/jungle/cabinet_back"
   }
 }

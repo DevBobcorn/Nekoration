@@ -1,7 +1,6 @@
 {
   "parent": "nekoration:block/container/wall_shelf_t0",
   "textures": {
-    "0": "nekoration:block/container/dark_oak/cabinet_top",
-    "particle": "nekoration:block/container/dark_oak/cabinet_top"
+    "0": "nekoration:block/container/dark_oak/cabinet_top"
   }
 }

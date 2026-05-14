@@ -5,7 +5,6 @@
     "1": "nekoration:block/container/jungle/drawer_chest_front_open",
     "2": "nekoration:block/container/jungle/drawer_chest_front",
     "3": "nekoration:block/container/jungle/cabinet_side",
-    "4": "nekoration:block/container/jungle/cabinet_back",
-    "particle": "nekoration:block/container/jungle/cabinet_top"
+    "4": "nekoration:block/container/jungle/cabinet_back"
   }
 }
