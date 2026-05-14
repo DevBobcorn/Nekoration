@@ -302,8 +302,11 @@ public final class WoodenBlockAssetProvider implements DataProvider {
             Map<String, Object> textures = new LinkedHashMap<>();
             for (Map.Entry<String, JsonElement> entry : texturesJson.entrySet()) {
                 String textureValue = entry.getValue().getAsString();
+                if (!textureValue.contains("generator_files/container_template/")) {
+                    continue;
+                }
                 textures.put(entry.getKey(),
-                        textureValue.replace("block/container/oak/", "block/container/" + woodId + "/"));
+                        textureValue.replace("generator_files/container_template/", "block/container/" + woodId + "/"));
             }
             return textures;
         } catch (IOException e) {

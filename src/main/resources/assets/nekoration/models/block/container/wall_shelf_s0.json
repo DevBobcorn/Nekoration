@@ -2,8 +2,8 @@
 	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "nekoration:block/container/oak/cabinet_top",
-		"particle": "nekoration:block/container/oak/cabinet_top"
+		"0": "nekoration:generator_files/container_template/cabinet_top",
+		"particle": "#0"
 	},
 	"elements": [
 		{
