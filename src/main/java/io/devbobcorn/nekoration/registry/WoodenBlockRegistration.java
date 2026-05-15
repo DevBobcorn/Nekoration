@@ -11,6 +11,7 @@ import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.WindowBlock;
+import io.devbobcorn.nekoration.blocks.WindowPaneBlock;
 import io.devbobcorn.nekoration.blocks.entities.CabinetBlockEntity;
 import io.devbobcorn.nekoration.blocks.containers.CabinetBlock;
 import io.devbobcorn.nekoration.blocks.containers.CupboardBlock;
@@ -107,6 +108,13 @@ public final class WoodenBlockRegistration {
                 DeferredItem<BlockItem> registered = registerBlockItem(items, id, block);
                 WINDOW_BLOCK_ITEMS.add(registered);
                 plainByWood.add(registered);
+
+                String paneId = id + "_pane";
+                DeferredBlock<Block> pane = blocks.register(paneId,
+                        () -> new WindowPaneBlock(wood.plankProperties().noOcclusion()));
+                DeferredItem<BlockItem> paneItem = registerBlockItem(items, paneId, pane);
+                WINDOW_BLOCK_ITEMS.add(paneItem);
+                plainByWood.add(paneItem);
             }
 
             String tableId = woodId + "_table";

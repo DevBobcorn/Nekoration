@@ -223,6 +223,8 @@ public final class WoodenBlockAssetProvider implements DataProvider {
         for (WoodenBlockRegistration.WindowVariant variant : WoodenBlockRegistration.WindowVariant.values()) {
             String variantId = variant.id();
             String style = "window_" + variantId;
+            String paneId = woodId + "_window_" + variantId + "_pane";
+            String paneStyle = style + "_pane";
 
             Map<String, Object> model = new LinkedHashMap<>();
             model.put("parent", modLoc("block/window/window"));
@@ -236,6 +238,23 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                     Map.of("variants", Map.of("", Map.of("model", modLoc("block/window/" + woodId + "/" + style)))));
             writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_window_" + variantId,
                     Map.of("parent", modLoc("block/window/" + woodId + "/" + style)));
+
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_post",
+                    paneModel("minecraft:block/template_glass_pane_post", woodId, style));
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_side",
+                    paneModel("minecraft:block/template_glass_pane_side", woodId, style));
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_side_alt",
+                    paneModel("minecraft:block/template_glass_pane_side_alt", woodId, style));
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_noside",
+                    paneModel("minecraft:block/template_glass_pane_noside", woodId, style));
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_noside_alt",
+                    paneModel("minecraft:block/template_glass_pane_noside_alt", woodId, style));
+
+            writeJson(cachedOutput, writes, blockstatePathProvider, paneId, windowPaneBlockstate(woodId, paneStyle));
+            writeJson(cachedOutput, writes, itemModelPathProvider, paneId,
+                    Map.of(
+                            "parent", "minecraft:item/generated",
+                            "textures", Map.of("layer0", modLoc("block/window/" + woodId + "/" + style))));
         }
     }
 
@@ -338,6 +357,43 @@ public final class WoodenBlockAssetProvider implements DataProvider {
             case "d1" -> "t2";
             default -> connectionId;
         };
+    }
+
+    private static Map<String, Object> paneModel(String parent, String woodId, String style) {
+        Map<String, Object> textures = new LinkedHashMap<>();
+        textures.put("pane", modLoc("block/window/" + woodId + "/" + style));
+        textures.put("edge", modLoc("block/window/" + woodId + "/window_top"));
+        Map<String, Object> model = new LinkedHashMap<>();
+        model.put("parent", parent);
+        model.put("textures", textures);
+        return model;
+    }
+
+    private static JsonElement windowPaneBlockstate(String woodId, String paneStyle) {
+        String modelPrefix = modLoc("block/window/" + woodId + "/" + paneStyle);
+        List<Map<String, Object>> multipart = new ArrayList<>();
+        multipart.add(Map.of("apply", Map.of("model", modelPrefix + "_post")));
+        multipart.add(panePart(modelPrefix + "_side", "north", true, 0));
+        multipart.add(panePart(modelPrefix + "_noside", "north", false, 0));
+        multipart.add(panePart(modelPrefix + "_side_alt", "south", true, 0));
+        multipart.add(panePart(modelPrefix + "_noside_alt", "south", false, 90));
+        multipart.add(panePart(modelPrefix + "_side_alt", "west", true, 90));
+        multipart.add(panePart(modelPrefix + "_noside", "west", false, 270));
+        multipart.add(panePart(modelPrefix + "_side", "east", true, 90));
+        multipart.add(panePart(modelPrefix + "_noside_alt", "east", false, 0));
+
+        JsonObject root = new JsonObject();
+        root.add("multipart", GSON.toJsonTree(multipart));
+        return root;
+    }
+
+    private static Map<String, Object> panePart(String model, String side, boolean connected, int y) {
+        Map<String, Object> apply = new LinkedHashMap<>();
+        apply.put("model", model);
+        if (y != 0) {
+            apply.put("y", y);
+        }
+        return Map.of("apply", apply, "when", Map.of(side, Boolean.toString(connected)));
     }
 
     private static Map<String, Object> halfTimberCubeModel(String woodId, int patternIndex) {
