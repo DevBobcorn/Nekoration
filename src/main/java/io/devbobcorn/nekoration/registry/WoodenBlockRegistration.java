@@ -109,7 +109,7 @@ public final class WoodenBlockRegistration {
                 WINDOW_BLOCK_ITEMS.add(registered);
                 plainByWood.add(registered);
 
-                String paneId = id + "_pane";
+                String paneId = woodId + "_window_pane_" + variant.id();
                 DeferredBlock<Block> pane = blocks.register(paneId,
                         () -> new WindowPaneBlock(wood.plankProperties().noOcclusion()));
                 DeferredItem<BlockItem> paneItem = registerBlockItem(items, paneId, pane);

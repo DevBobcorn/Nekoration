@@ -223,8 +223,8 @@ public final class WoodenBlockAssetProvider implements DataProvider {
         for (WoodenBlockRegistration.WindowVariant variant : WoodenBlockRegistration.WindowVariant.values()) {
             String variantId = variant.id();
             String style = "window_" + variantId;
-            String paneId = woodId + "_window_" + variantId + "_pane";
-            String paneStyle = style + "_pane";
+            String paneId = woodId + "_window_pane_" + variantId;
+            String paneStyle = "window_pane_" + variantId;
 
             Map<String, Object> model = new LinkedHashMap<>();
             model.put("parent", modLoc("block/window/window"));

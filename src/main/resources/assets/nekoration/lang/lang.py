@@ -17,7 +17,7 @@ half_timbers_cn = ["{wood}半露木", "左斜条{wood}半露木", "右斜条{woo
 window_ids = ["simple","arch","cross","lancet","shade"]
 windows_us = ["{wood} Simple Window","{wood} Arch Window","{wood} Cross Window","{wood} Lancet Window","{wood} Shade Window"]
 windows_cn = ["{wood}简易窗","{wood}拱形窗","{wood}十字窗","{wood}尖头窗","{wood}百叶窗"]
-window_pane_ids = [window_id + "_pane" for window_id in window_ids]
+window_pane_ids = ["pane_" + window_id for window_id in window_ids]
 window_panes_us = ["{wood} Simple Window Pane","{wood} Arch Window Pane","{wood} Cross Window Pane","{wood} Lancet Window Pane","{wood} Shade Window Pane"]
 window_panes_cn = ["{wood}简易窗格","{wood}拱形窗格","{wood}十字窗格","{wood}尖头窗格","{wood}百叶窗格"]
 
