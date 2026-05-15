@@ -62,6 +62,14 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
     }
 
     @Override
+    public boolean buildContextForOccludedDirections() {
+        // Pane multipart geometry can render quads on directions that vanilla face-culling
+        // considers hidden, especially at corners. Build CT context for all directions so
+        // those quads still receive connected tile indices.
+        return true;
+    }
+
+    @Override
     public boolean connectsTo(BlockState state, BlockState other, BlockAndTintGetter reader, BlockPos pos, BlockPos otherPos,
             Direction face) {
         if (isBeingBlocked(state, reader, pos, otherPos, face)) {
@@ -90,6 +98,14 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
             return false;
         }
         return face == Direction.NORTH || face == Direction.WEST;
+    }
+
+    @Override
+    protected BlockState getCTBlockState(BlockAndTintGetter reader, BlockState reference, Direction face, BlockPos fromPos,
+            BlockPos toPos) {
+        // Window panes rely on their real world state (including connection properties).
+        // Using appearance states can collapse expected pane-to-pane CT adjacency.
+        return reader.getBlockState(toPos);
     }
 
     private static boolean isWindowCtBlock(BlockState state) {
