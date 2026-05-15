@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/window/template_window_pane_side",
+  "textures": {
+    "edge": "nekoration:block/window/warped/window_top",
+    "pane": "nekoration:block/window/warped/window_shade"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/window/template_window_pane_post",
+  "textures": {
+    "edge": "nekoration:block/window/crimson/window_top",
+    "pane": "nekoration:block/window/crimson/window_simple"
+  }
+}
