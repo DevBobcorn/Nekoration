@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.devbobcorn.nekoration.client.ct.NekoConnectedTextureBehaviour.CTContext;
+import io.devbobcorn.nekoration.blocks.WindowPaneBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
@@ -15,6 +16,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
 
@@ -38,8 +42,11 @@ public class NekoCTModel extends NekoBakedModelWrapperWithData {
         CTData data = new CTData();
         MutableBlockPos mutablePos = new MutableBlockPos();
         for (Direction face : Direction.values()) {
-            if (!behaviour.buildContextForOccludedDirections()
-                    && !Block.shouldRenderFace(state, world, pos, face, mutablePos.setWithOffset(pos, face))) {
+            boolean shouldRenderFace = Block.shouldRenderFace(state, world, pos, face, mutablePos.setWithOffset(pos, face));
+            if (shouldCullPaneVerticalFace(state, face)) {
+                data.putPaneVerticalFaceCulled(face, isPaneVerticalFaceFullyOccluded(world, pos, state, face, mutablePos));
+            }
+            if (!behaviour.buildContextForOccludedDirections() && !shouldRenderFace) {
                 continue;
             }
             NekoCTType dataType = behaviour.getDataType(world, pos, state, face);
@@ -63,6 +70,11 @@ public class NekoCTModel extends NekoBakedModelWrapperWithData {
         quads = new ArrayList<>(quads);
         for (int i = 0; i < quads.size(); i++) {
             BakedQuad quad = quads.get(i);
+            if (shouldCullPaneVerticalFace(state, quad.getDirection()) && data.isPaneVerticalFaceCulled(quad.getDirection())) {
+                quads.remove(i--);
+                continue;
+            }
+
             int index = data.get(quad.getDirection());
             if (index == -1) {
                 continue;
@@ -89,11 +101,33 @@ public class NekoCTModel extends NekoBakedModelWrapperWithData {
         return quads;
     }
 
+    private static boolean shouldCullPaneVerticalFace(BlockState state, Direction face) {
+        return state != null
+                && state.getBlock() instanceof WindowPaneBlock
+                && face.getAxis().isVertical();
+    }
+
+    private static boolean isPaneVerticalFaceFullyOccluded(BlockAndTintGetter world, BlockPos pos, BlockState state, Direction face,
+            MutableBlockPos mutablePos) {
+        BlockPos neighborPos = mutablePos.setWithOffset(pos, face);
+        BlockState neighborState = world.getBlockState(neighborPos);
+
+        VoxelShape selfFace = state.getOcclusionShape(world, pos).getFaceShape(face);
+        if (selfFace.isEmpty()) {
+            return false;
+        }
+
+        VoxelShape neighborFace = neighborState.getOcclusionShape(world, neighborPos).getFaceShape(face.getOpposite());
+        return !Shapes.joinIsNotEmpty(selfFace, neighborFace, BooleanOp.ONLY_FIRST);
+    }
+
     private static class CTData {
         private final int[] indices = new int[6];
+        private final boolean[] paneVerticalFaceCulled = new boolean[6];
 
         private CTData() {
             Arrays.fill(indices, -1);
+            Arrays.fill(paneVerticalFaceCulled, false);
         }
 
         private void put(Direction face, int texture) {
@@ -102,6 +136,14 @@ public class NekoCTModel extends NekoBakedModelWrapperWithData {
 
         private int get(Direction face) {
             return indices[face.get3DDataValue()];
+        }
+
+        private void putPaneVerticalFaceCulled(Direction face, boolean culled) {
+            paneVerticalFaceCulled[face.get3DDataValue()] = culled;
+        }
+
+        private boolean isPaneVerticalFaceCulled(Direction face) {
+            return paneVerticalFaceCulled[face.get3DDataValue()];
         }
     }
 }

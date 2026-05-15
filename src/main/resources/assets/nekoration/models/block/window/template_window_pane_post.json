@@ -24,8 +24,7 @@
                         9,
                         9
                     ],
-                    "texture": "#edge",
-                    "cullface": "down"
+                    "texture": "#edge"
                 },
                 "up": {
                     "uv": [
@@ -34,8 +33,7 @@
                         9,
                         9
                     ],
-                    "texture": "#edge",
-                    "cullface": "up"
+                    "texture": "#edge"
                 }
             }
         }
