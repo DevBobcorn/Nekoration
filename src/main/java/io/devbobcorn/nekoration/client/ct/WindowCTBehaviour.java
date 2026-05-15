@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.WindowBlock;
+import io.devbobcorn.nekoration.blocks.WindowPaneBlock;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +26,7 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
     @Override
     @Nullable
     public NekoCTSpriteShiftEntry getShift(BlockState state, Direction direction, TextureAtlasSprite sprite) {
-        if (!(state.getBlock() instanceof WindowBlock) || !direction.getAxis().isHorizontal()) {
+        if (!isWindowCtBlock(state) || !direction.getAxis().isHorizontal()) {
             return null;
         }
 
@@ -54,7 +55,7 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
     @Override
     @Nullable
     public NekoCTType getDataType(BlockAndTintGetter world, BlockPos pos, BlockState state, Direction direction) {
-        if (!(state.getBlock() instanceof WindowBlock) || !direction.getAxis().isHorizontal()) {
+        if (!isWindowCtBlock(state) || !direction.getAxis().isHorizontal()) {
             return null;
         }
         return NekoCTTypes.RECTANGLE;
@@ -66,7 +67,7 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
         if (isBeingBlocked(state, reader, pos, otherPos, face)) {
             return false;
         }
-        if (!(state.getBlock() instanceof WindowBlock) || !(other.getBlock() instanceof WindowBlock)) {
+        if (!isWindowCtBlock(state) || !isWindowCtBlock(other)) {
             return false;
         }
 
@@ -79,6 +80,20 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
         String selfWood = windowWoodId(selfId.getPath());
         String otherWood = windowWoodId(otherId.getPath());
         return selfWood != null && selfWood.equals(otherWood);
+    }
+
+    @Override
+    protected boolean reverseUVsHorizontally(BlockState state, Direction face) {
+        // Pane side quads on negative horizontal axes have mirrored UV orientation
+        // compared to the positive faces; flip CT U mapping to keep atlas order consistent.
+        if (!(state.getBlock() instanceof WindowPaneBlock)) {
+            return false;
+        }
+        return face == Direction.NORTH || face == Direction.WEST;
+    }
+
+    private static boolean isWindowCtBlock(BlockState state) {
+        return state.getBlock() instanceof WindowBlock || state.getBlock() instanceof WindowPaneBlock;
     }
 
     @Nullable

@@ -240,15 +240,15 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                     Map.of("parent", modLoc("block/window/" + woodId + "/" + style)));
 
             writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_post",
-                    paneModel("minecraft:block/template_glass_pane_post", woodId, style));
+                    paneModel(modLoc("block/window/template_window_pane_post"), woodId, style));
             writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_side",
-                    paneModel("minecraft:block/template_glass_pane_side", woodId, style));
+                    paneModel(modLoc("block/window/template_window_pane_side"), woodId, style));
             writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_side_alt",
-                    paneModel("minecraft:block/template_glass_pane_side_alt", woodId, style));
+                    paneModel(modLoc("block/window/template_window_pane_side_alt"), woodId, style));
             writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_noside",
-                    paneModel("minecraft:block/template_glass_pane_noside", woodId, style));
+                    paneModel(modLoc("block/window/template_window_pane_noside"), woodId, style));
             writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_noside_alt",
-                    paneModel("minecraft:block/template_glass_pane_noside_alt", woodId, style));
+                    paneModel(modLoc("block/window/template_window_pane_noside_alt"), woodId, style));
 
             writeJson(cachedOutput, writes, blockstatePathProvider, paneId, windowPaneBlockstate(woodId, paneStyle));
             writeJson(cachedOutput, writes, itemModelPathProvider, paneId,
