@@ -39,6 +39,13 @@ public final class StoneBlockRegistration {
             String stoneId = stone.id();
             List<Supplier<? extends Item>> blockItemsByStone = STONE_BLOCK_ITEMS_BY_STONE.computeIfAbsent(stone,
                 ignored -> new ArrayList<>());
+            if (stone.needsPolishedVariant()) {
+                registerStoneBlockSet(blocks, items, "polished_" + stoneId, blockItemsByStone, stone);
+            } else {
+                for (Block polishedBlock : stone.vanillaPolishedStoneBlockSet()) {
+                    blockItemsByStone.add(() -> polishedBlock.asItem());
+                }
+            }
             if (stone.needsSmoothVariant()) {
                 registerStoneBlockSet(blocks, items, "smooth_" + stoneId, blockItemsByStone, stone);
             } else {

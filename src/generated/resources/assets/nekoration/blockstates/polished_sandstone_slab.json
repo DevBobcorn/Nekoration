@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "nekoration:block/stone/polished_sandstone_slab"
+    },
+    "type=double": {
+      "model": "nekoration:block/stone/polished_sandstone"
+    },
+    "type=top": {
+      "model": "nekoration:block/stone/polished_sandstone_slab_top"
+    }
+  }
+}

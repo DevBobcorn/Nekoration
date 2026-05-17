@@ -11,17 +11,19 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
  */
 public enum NekoStone {
     // Vanilla Stone Types
-    // STONE(false),
-    GRANITE(true),
-    DIORITE(true),
-    ANDESITE(true),
-    SANDSTONE(false),
-    RED_SANDSTONE(false);
+    // STONE(false, true),
+    GRANITE(true, false),
+    DIORITE(true, false),
+    ANDESITE(true, false),
+    SANDSTONE(false, true),
+    RED_SANDSTONE(false, true);
 
     private final boolean needsSmoothVariant;
+    private final boolean needsPolishedVariant;
 
-    NekoStone(boolean needsSmoothVariant) {
+    NekoStone(boolean needsSmoothVariant, boolean needsPolishedVariant) {
         this.needsSmoothVariant = needsSmoothVariant;
+        this.needsPolishedVariant = needsPolishedVariant;
     }
 
     public String id() {
@@ -30,6 +32,10 @@ public enum NekoStone {
 
     public boolean needsSmoothVariant() {
         return needsSmoothVariant;
+    }
+
+    public boolean needsPolishedVariant() {
+        return needsPolishedVariant;
     }
 
     public BlockBehaviour.Properties stoneProperties() {
@@ -47,11 +53,22 @@ public enum NekoStone {
         };
     }
 
-    /** Vanilla smooth/polished block set for this stone type. */
+    /** Vanilla smooth block set for this stone type. */
     public List<Block> vanillaSmoothStoneBlockSet() {
         return switch (this) {
             case SANDSTONE -> List.of(Blocks.SMOOTH_SANDSTONE, Blocks.SMOOTH_SANDSTONE_STAIRS, Blocks.SMOOTH_SANDSTONE_SLAB);
             case RED_SANDSTONE -> List.of(Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE_STAIRS, Blocks.SMOOTH_RED_SANDSTONE_SLAB);
+
+            default -> List.of(Blocks.SMOOTH_STONE, Blocks.STONE_BRICK_STAIRS, Blocks.SMOOTH_STONE_SLAB);
+        };
+    }
+
+    /** Vanilla polished block set for this stone type. */
+    public List<Block> vanillaPolishedStoneBlockSet() {
+        return switch (this) {
+            case GRANITE -> List.of(Blocks.POLISHED_GRANITE, Blocks.POLISHED_GRANITE_STAIRS, Blocks.POLISHED_GRANITE_SLAB);
+            case DIORITE -> List.of(Blocks.POLISHED_DIORITE, Blocks.POLISHED_DIORITE_STAIRS, Blocks.POLISHED_DIORITE_SLAB);
+            case ANDESITE -> List.of(Blocks.POLISHED_ANDESITE, Blocks.POLISHED_ANDESITE_STAIRS, Blocks.POLISHED_ANDESITE_SLAB);
 
             default -> List.of(Blocks.SMOOTH_STONE, Blocks.STONE_BRICK_STAIRS, Blocks.SMOOTH_STONE_SLAB);
         };

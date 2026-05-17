@@ -262,6 +262,29 @@ public final class NekoCreativeTabFilterClient {
         return tab != null && tab == Nekoration.NEKORATION_STONE_BLOCKS_TAB.get();
     }
 
+    private static void prependFilterIconIfMissing(ItemStack icon, NonNullList<ItemStack> out) {
+        if (icon.isEmpty()) {
+            return;
+        }
+        for (ItemStack stack : out) {
+            if (ItemStack.isSameItemSameComponents(stack, icon)) {
+                return;
+            }
+        }
+        out.add(0, icon);
+    }
+
+    private static int stoneVariantPriority(Item item, String stoneId) {
+        String path = BuiltInRegistries.ITEM.getKey(item).getPath();
+        if (path.startsWith("polished_" + stoneId)) {
+            return 0;
+        }
+        if (path.startsWith("smooth_" + stoneId)) {
+            return 1;
+        }
+        return 2;
+    }
+
     private static void applyFilteredItems(CreativeModeInventoryScreen screen) {
         CreativeModeTab tab = CreativeInventoryReflection.getSelectedTab();
         if (!(screen.getMenu() instanceof CreativeModeInventoryScreen.ItemPickerMenu picker)) {
@@ -283,6 +306,7 @@ public final class NekoCreativeTabFilterClient {
                 }
             }
             out.sort(HalfTimberCreativeTabOrdering.stackComparator());
+            prependFilterIconIfMissing(new ItemStack(selectedWood.vanillaPlanks().asItem()), out);
             picker.items.clear();
             picker.items.addAll(out);
             picker.scrollTo(0f);
@@ -293,7 +317,11 @@ public final class NekoCreativeTabFilterClient {
             for (var supplier : StoneBlockRegistration.itemSuppliersForStone(selectedStone)) {
                 out.add(new ItemStack(supplier.get()));
             }
-            out.sort(Comparator.comparingInt(s -> BuiltInRegistries.ITEM.getId(s.getItem())));
+            String stoneId = selectedStone.id();
+            out.sort(Comparator
+                    .comparingInt((ItemStack s) -> stoneVariantPriority(s.getItem(), stoneId))
+                    .thenComparingInt(s -> BuiltInRegistries.ITEM.getId(s.getItem())));
+            prependFilterIconIfMissing(new ItemStack(selectedStone.vanillaStoneBlock().asItem()), out);
             picker.items.clear();
             picker.items.addAll(out);
             picker.scrollTo(0f);

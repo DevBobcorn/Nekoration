@@ -47,11 +47,12 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 generateStoneStairAssets(cachedOutput, "smooth", true, writes, stoneId);
                 generateStoneSlabAssets(cachedOutput, "smooth", true, false, writes, stoneId);
             }
+            if (stone.needsPolishedVariant()) {
+                generateStoneCubeAllAssets(cachedOutput, "polished", true, writes, stoneId);
+                generateStoneStairAssets(cachedOutput, "polished", true, writes, stoneId);
+                generateStoneSlabAssets(cachedOutput, "polished", true, false, writes, stoneId);
+            }
             generateStoneCubeAllAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
-
-            generateStonePotAssets(cachedOutput, "pot", writes, stoneId);
-            generateStonePotAssets(cachedOutput, "planter", writes, stoneId);
-
             generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
             generateStoneSlabAssets(cachedOutput, "polished_smooth", true, true, writes, stoneId);
             generateVerticalConnectedStoneCubeAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
@@ -61,6 +62,9 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateStoneColumnAssets(cachedOutput, "column_doric", false, writes, stoneId);
             generateStoneColumnAssets(cachedOutput, "column_ionic", true, writes, stoneId);
             generateStoneColumnAssets(cachedOutput, "column_corinthian", false, writes, stoneId);
+
+            generateStonePotAssets(cachedOutput, "pot", writes, stoneId);
+            generateStonePotAssets(cachedOutput, "planter", writes, stoneId);
 
             generateStoneFrameAssets(cachedOutput, "frame_head", writes, stoneId);
             generateStoneFrameAssets(cachedOutput, "frame_peak", writes, stoneId);
