@@ -15,11 +15,11 @@ half_timbers_us = ["{wood} Half-Timber", "Bend Sinister {wood} Half-Timber", "Be
 half_timbers_cn = ["{wood}半露木", "左斜条{wood}半露木", "右斜条{wood}半露木", "双左斜条{wood}半露木", "双右斜条{wood}半露木", "中心{wood}半露木", "圆形条{wood}半露木", "斜十字条{wood}半露木", "中竖条{wood}半露木", "双格{wood}半露木"]
 
 window_ids = ["simple","arch","cross","lancet","shade"]
-windows_us = ["{wood} Simple Window","{wood} Arch Window","{wood} Cross Window","{wood} Lancet Window","{wood} Shade Window"]
-windows_cn = ["{wood}简易窗","{wood}拱形窗","{wood}十字窗","{wood}尖头窗","{wood}百叶窗"]
+windows_us = ["Simple {wood} Window","Arch {wood} Window","Cross {wood} Window","Lancet {wood} Window","Shade {wood} Window"]
+windows_cn = ["简易{wood}窗户","拱形{wood}窗户","十字{wood}窗户","尖头{wood}窗户","遮光{wood}窗户"]
 window_pane_ids = ["pane_" + window_id for window_id in window_ids]
-window_panes_us = ["{wood} Simple Window Pane","{wood} Arch Window Pane","{wood} Cross Window Pane","{wood} Lancet Window Pane","{wood} Shade Window Pane"]
-window_panes_cn = ["{wood}简易窗格","{wood}拱形窗格","{wood}十字窗格","{wood}尖头窗格","{wood}百叶窗格"]
+window_panes_us = ["Simple {wood} Window Pane","Arch {wood} Window Pane","Cross {wood} Window Pane","Lancet {wood} Window Pane","Shade {wood} Window Pane"]
+window_panes_cn = ["简易{wood}窗户板","拱形{wood}窗户板","十字{wood}窗户板","尖头{wood}窗户板","遮光{wood}窗户板"]
 
 furniture_ids = ["easel_menu","table","chair","cabinet","drawer","drawer_chest","cupboard","wall_shelf"]
 furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Chair","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
@@ -30,21 +30,26 @@ stones_us = ["Granite", "Diorite", "Andesite", "Sandstone", "Red Sandstone"]
 stones_cn = ["花岗岩", "闪长岩", "安山岩", "砂岩", "红砂岩"]
 
 stone_has_smooth_variant = [True, True, True, False, False]
+stone_has_polished_variant = [False, False, False, True, True]
 
 smooth_stone_block_ids = ["smooth_{stone}", "smooth_{stone}_slab", "smooth_{stone}_stairs"]
 smooth_stone_blocks_us = ["Smooth {stone}", "Smooth {stone} Slab", "Smooth {stone} Stairs"]
 smooth_stone_blocks_cn = ["平滑{stone}", "平滑{stone}台阶", "平滑{stone}楼梯"]
 
+polished_stone_block_ids = ["polished_{stone}", "polished_{stone}_slab", "polished_{stone}_stairs"]
+polished_stone_blocks_us = ["Polished {stone}", "Polished {stone} Slab", "Polished {stone} Stairs"]
+polished_stone_blocks_cn = ["磨制{stone}", "磨制{stone}台阶", "磨制{stone}楼梯"]
+
 stone_block_ids = ["polished_smooth_{stone}", "polished_smooth_{stone}_slab", "polished_smooth_{stone}_stairs", "chiseled_smooth_{stone}", "horizontal_chiseled_smooth_{stone}", "{stone}_base", "{stone}_column_doric", "{stone}_column_ionic", "{stone}_column_corinthian",
     "{stone}_frame_head",  "{stone}_frame_peak","{stone}_frame_side", "{stone}_frame_sill", "{stone}_pot", "{stone}_planter"]
 stone_blocks_us = ["Polished Smooth {stone}", "Polished Smooth {stone} Slab", "Polished Smooth {stone} Stairs", "Chiseled Smooth {stone}", "Horizontal Chiseled Smooth {stone}", "{stone} Base", "{stone} Doric Column", "{stone} Ionic Column", "{stone} Corinthian Column",
     "{stone} Frame Head",  "{stone} Frame Peak","{stone} Frame Side", "{stone} Frame Sill", "{stone} Pot", "{stone} Planter"]
-stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "錾制平滑{stone}", "横向錾制平滑{stone}", "{stone}底座", "{stone}多立克柱", "{stone}爱奥尼柱", "{stone}科林斯柱",
+stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "雕纹平滑{stone}", "横向雕纹平滑{stone}", "{stone}底座", "{stone}多立克柱", "{stone}爱奥尼柱", "{stone}科林斯柱",
     "{stone}框顶边",  "{stone}框尖顶","{stone}框侧边", "{stone}框底边", "{stone}花盆", "{stone}种植盆"]
 
 door_ids = ["quartz_door","chiseled_quartz_door","quartz_bricks_door","tall_quartz_door","tall_chiseled_quartz_door","tall_quartz_bricks_door"]
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
-doors_cn = ["石英门","錾制石英门","石英砖门","加高石英门","加高錾制石英门","加高石英砖门"]
+doors_cn = ["石英门","雕纹石英门","石英砖门","加高石英门","加高雕纹石英门","加高石英砖门"]
 
 decor_ids = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","window_plant"]
 decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Flowering Window Plant"]
@@ -141,6 +146,11 @@ for s_i in range(0, len(stone_ids)):
             block_id = smooth_stone_block_ids[ss_i].format(stone=stone_id)
             obj_us['block.nekoration.' + block_id] = smooth_stone_blocks_us[ss_i].format(stone=stone_us)
             obj_cn['block.nekoration.' + block_id] = smooth_stone_blocks_cn[ss_i].format(stone=stone_cn)
+    if stone_has_polished_variant[s_i]:
+        for ss_i in range(0, len(polished_stone_block_ids)):
+            block_id = polished_stone_block_ids[ss_i].format(stone=stone_id)
+            obj_us['block.nekoration.' + block_id] = polished_stone_blocks_us[ss_i].format(stone=stone_us)
+            obj_cn['block.nekoration.' + block_id] = polished_stone_blocks_cn[ss_i].format(stone=stone_cn)
     for ss_i in range(0, len(stone_block_ids)):
         block_id = stone_block_ids[ss_i].format(stone=stone_id)
         obj_us['block.nekoration.' + block_id] = stone_blocks_us[ss_i].format(stone=stone_us)
