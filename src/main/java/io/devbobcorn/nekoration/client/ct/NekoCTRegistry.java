@@ -28,16 +28,17 @@ public final class NekoCTRegistry {
         }
         bootstrapped = true;
 
-        WindowCTBehaviour behaviour = new WindowCTBehaviour();
+        WindowCTBehaviour windowBehaviour = new WindowCTBehaviour();
+        WindowPaneCTBehaviour paneBehaviour = new WindowPaneCTBehaviour();
         for (NekoWood wood : NekoWood.values()) {
             for (WindowVariant variant : WindowVariant.values()) {
                 String windowId = wood.id() + "_window_" + variant.id();
                 ResourceLocation windowBlockId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, windowId);
-                CT_MODELS.put(windowBlockId, model -> new NekoCTModel(model, behaviour));
+                CT_MODELS.put(windowBlockId, model -> new NekoCTModel(model, windowBehaviour));
 
                 String paneId = wood.id() + "_window_pane_" + variant.id();
                 ResourceLocation paneBlockId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, paneId);
-                CT_MODELS.put(paneBlockId, model -> new NekoCTModel(model, behaviour));
+                CT_MODELS.put(paneBlockId, model -> new NekoCTModel(model, paneBehaviour));
             }
         }
     }

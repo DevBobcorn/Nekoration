@@ -6,7 +6,6 @@ import org.jetbrains.annotations.Nullable;
 
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.WindowBlock;
-import io.devbobcorn.nekoration.blocks.WindowPaneBlock;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,7 +25,7 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
     @Override
     @Nullable
     public NekoCTSpriteShiftEntry getShift(BlockState state, Direction direction, TextureAtlasSprite sprite) {
-        if (!isWindowCtBlock(state) || !direction.getAxis().isHorizontal()) {
+        if (!supportsSourceBlock(state) || !direction.getAxis().isHorizontal()) {
             return null;
         }
 
@@ -55,18 +54,10 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
     @Override
     @Nullable
     public NekoCTType getDataType(BlockAndTintGetter world, BlockPos pos, BlockState state, Direction direction) {
-        if (!isWindowCtBlock(state) || !direction.getAxis().isHorizontal()) {
+        if (!supportsSourceBlock(state) || !direction.getAxis().isHorizontal()) {
             return null;
         }
         return NekoCTTypes.RECTANGLE;
-    }
-
-    @Override
-    public boolean buildContextForOccludedDirections() {
-        // Pane multipart geometry can render quads on directions that vanilla face-culling
-        // considers hidden, especially at corners. Build CT context for all directions so
-        // those quads still receive connected tile indices.
-        return true;
     }
 
     @Override
@@ -75,7 +66,7 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
         if (isBeingBlocked(state, reader, pos, otherPos, face)) {
             return false;
         }
-        if (!isWindowCtBlock(state) || !isWindowCtBlock(other)) {
+        if (!supportsSourceBlock(state) || !supportsSourceBlock(other)) {
             return false;
         }
 
@@ -90,14 +81,13 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
         return selfWood != null && selfWood.equals(otherWood);
     }
 
+    protected boolean supportsSourceBlock(BlockState state) {
+        return state.getBlock() instanceof WindowBlock;
+    }
+
     @Override
     protected boolean reverseUVsHorizontally(BlockState state, Direction face) {
-        // Pane side quads on negative horizontal axes have mirrored UV orientation
-        // compared to the positive faces; flip CT U mapping to keep atlas order consistent.
-        if (!(state.getBlock() instanceof WindowPaneBlock)) {
-            return false;
-        }
-        return face == Direction.NORTH || face == Direction.WEST;
+        return false;
     }
 
     @Override
@@ -106,10 +96,6 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
         // Window panes rely on their real world state (including connection properties).
         // Using appearance states can collapse expected pane-to-pane CT adjacency.
         return reader.getBlockState(toPos);
-    }
-
-    private static boolean isWindowCtBlock(BlockState state) {
-        return state.getBlock() instanceof WindowBlock || state.getBlock() instanceof WindowPaneBlock;
     }
 
     @Nullable
