@@ -85,7 +85,8 @@ public class EaselMenuBlockEntityRenderer implements BlockEntityRenderer<EaselMe
         DyeColor[] colors = blockEntity.getColors();
         int slotBase = side * 4;
         int light = blockEntity.isGlowing() ? LightTexture.FULL_BRIGHT : packedLight;
-        Font.DisplayMode mode = blockEntity.isGlowing() ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL;
+        // Keep glowing text bright, but still depth-tested so it is occluded by blocks.
+        Font.DisplayMode mode = Font.DisplayMode.NORMAL;
 
         for (int i = 0; i < 4; i++) {
             int slot = slotBase + i;
