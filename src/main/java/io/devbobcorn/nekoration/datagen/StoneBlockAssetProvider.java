@@ -46,6 +46,8 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 generateStoneCubeAllAssets(cachedOutput, "smooth", true, writes, stoneId);
                 generateStoneStairAssets(cachedOutput, "smooth", true, writes, stoneId);
                 generateStoneSlabAssets(cachedOutput, "smooth", true, false, writes, stoneId);
+            } else if (stone == NekoStone.STONE) {
+                generateStoneStairAssets(cachedOutput, "smooth", true, writes, stoneId);
             }
             if (stone.needsPolishedVariant()) {
                 generateStoneCubeAllAssets(cachedOutput, "polished", true, writes, stoneId);

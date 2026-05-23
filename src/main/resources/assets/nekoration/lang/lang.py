@@ -156,6 +156,10 @@ for s_i in range(0, len(stone_ids)):
         obj_us['block.nekoration.' + block_id] = stone_blocks_us[ss_i].format(stone=stone_us)
         obj_cn['block.nekoration.' + block_id] = stone_blocks_cn[ss_i].format(stone=stone_cn)
 
+# Vanilla smooth stone has block + slab only; mod adds stairs
+obj_us['block.nekoration.smooth_stone_stairs'] = 'Smooth Stone Stairs'
+obj_cn['block.nekoration.smooth_stone_stairs'] = '平滑石头楼梯'
+
 # [ORNAMENTS TAB]
 for d_i in range(0, len(door_ids)):
     obj_us['block.nekoration.' + door_ids[d_i]] = doors_us[d_i]

@@ -18,6 +18,7 @@ import io.devbobcorn.nekoration.blocks.stone.PotBlock;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -49,9 +50,12 @@ public final class StoneBlockRegistration {
             if (stone.needsSmoothVariant()) {
                 registerStoneBlockSet(blocks, items, "smooth_" + stoneId, blockItemsByStone, stone);
             } else {
-                // Add vanilla smooth variant
                 for (Block smoothBlock : stone.vanillaSmoothStoneBlockSet()) {
                     blockItemsByStone.add(() -> smoothBlock.asItem());
+                }
+                if (stone == NekoStone.STONE) {
+                    registerStairBlock(blocks, items, "smooth_stone_stairs", Blocks.SMOOTH_STONE, blockItemsByStone, stone);
+                    blockItemsByStone.add(() -> Blocks.SMOOTH_STONE_SLAB.asItem());
                 }
             }
             registerStoneBlockSet(blocks, items, "polished_smooth_" + stoneId, blockItemsByStone, stone);
@@ -154,6 +158,15 @@ public final class StoneBlockRegistration {
             DeferredBlock<Block> sourceBlock, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new StairBlock(sourceBlock.get().defaultBlockState(), stone.stoneProperties()));
+        DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
+        STONE_BLOCK_ITEMS.add(blockItem);
+        blockItemsByStone.add(blockItem);
+    }
+
+    private static void registerStairBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            Block sourceBlock, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new StairBlock(sourceBlock.defaultBlockState(), stone.stoneProperties()));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);

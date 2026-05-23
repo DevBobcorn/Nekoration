@@ -60,13 +60,13 @@ public enum NekoStone {
         };
     }
 
-    /** Vanilla smooth block set for this stone type. */
+    /** Vanilla smooth block set for this stone type (block, stairs, slab). */
     public List<Block> vanillaSmoothStoneBlockSet() {
         return switch (this) {
+            case STONE -> List.of(Blocks.SMOOTH_STONE);
             case SANDSTONE -> List.of(Blocks.SMOOTH_SANDSTONE, Blocks.SMOOTH_SANDSTONE_STAIRS, Blocks.SMOOTH_SANDSTONE_SLAB);
             case RED_SANDSTONE -> List.of(Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE_STAIRS, Blocks.SMOOTH_RED_SANDSTONE_SLAB);
-
-            default -> List.of(Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE_STAIRS, Blocks.SMOOTH_RED_SANDSTONE_SLAB);
+            default -> List.of();
         };
     }
 

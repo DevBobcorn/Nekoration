@@ -1,7 +1,5 @@
 package io.devbobcorn.nekoration.client.creative;
 
-import java.util.Comparator;
-
 import io.devbobcorn.nekoration.HalfTimberCreativeTabOrdering;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
@@ -13,7 +11,6 @@ import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -274,17 +271,6 @@ public final class NekoCreativeTabFilterClient {
         out.add(0, icon);
     }
 
-    private static int stoneVariantPriority(Item item, String stoneId) {
-        String path = BuiltInRegistries.ITEM.getKey(item).getPath();
-        if (path.startsWith("polished_" + stoneId)) {
-            return 0;
-        }
-        if (path.startsWith("smooth_" + stoneId)) {
-            return 1;
-        }
-        return 2;
-    }
-
     private static void applyFilteredItems(CreativeModeInventoryScreen screen) {
         CreativeModeTab tab = CreativeInventoryReflection.getSelectedTab();
         if (!(screen.getMenu() instanceof CreativeModeInventoryScreen.ItemPickerMenu picker)) {
@@ -317,10 +303,6 @@ public final class NekoCreativeTabFilterClient {
             for (var supplier : StoneBlockRegistration.itemSuppliersForStone(selectedStone)) {
                 out.add(new ItemStack(supplier.get()));
             }
-            String stoneId = selectedStone.id();
-            out.sort(Comparator
-                    .comparingInt((ItemStack s) -> stoneVariantPriority(s.getItem(), stoneId))
-                    .thenComparingInt(s -> BuiltInRegistries.ITEM.getId(s.getItem())));
             prependFilterIconIfMissing(new ItemStack(selectedStone.vanillaStoneBlock().asItem()), out);
             picker.items.clear();
             picker.items.addAll(out);
