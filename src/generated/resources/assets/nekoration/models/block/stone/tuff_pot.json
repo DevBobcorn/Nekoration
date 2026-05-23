@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/stone/pot",
+  "textures": {
+    "0": "nekoration:block/stone/tuff/pot",
+    "1": "nekoration:block/stone/tuff_chiseled_smooth"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "nekoration:block/stone/tuff_polished_smooth",
+    "side": "nekoration:block/stone/tuff_polished_smooth_slab",
+    "top": "nekoration:block/stone/tuff_polished_smooth"
+  }
+}

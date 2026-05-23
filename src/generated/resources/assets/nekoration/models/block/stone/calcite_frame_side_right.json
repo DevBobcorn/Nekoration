@@ -1,0 +1,6 @@
+{
+  "parent": "nekoration:block/stone/frame_side_right",
+  "textures": {
+    "0": "nekoration:block/stone/calcite/frame_side"
+  }
+}

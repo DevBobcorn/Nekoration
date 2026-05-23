@@ -1,0 +1,8 @@
+{
+  "parent": "block/inner_stairs",
+  "textures": {
+    "bottom": "nekoration:block/stone/calcite_polished",
+    "side": "nekoration:block/stone/calcite_polished",
+    "top": "nekoration:block/stone/calcite_polished"
+  }
+}

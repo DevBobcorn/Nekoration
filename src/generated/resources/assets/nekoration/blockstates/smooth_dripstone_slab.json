@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "nekoration:block/stone/smooth_dripstone_slab"
+    },
+    "type=double": {
+      "model": "nekoration:block/stone/smooth_dripstone"
+    },
+    "type=top": {
+      "model": "nekoration:block/stone/smooth_dripstone_slab_top"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "nekoration:block/stone/polished_calcite_slab"
+    },
+    "type=double": {
+      "model": "nekoration:block/stone/polished_calcite"
+    },
+    "type=top": {
+      "model": "nekoration:block/stone/polished_calcite_slab_top"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/stone/column_t0",
+  "textures": {
+    "0": "nekoration:block/stone/tuff/column_bottom",
+    "1": "nekoration:block/stone/tuff_chiseled_smooth"
+  }
+}

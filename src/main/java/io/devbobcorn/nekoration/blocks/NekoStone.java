@@ -11,10 +11,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
  */
 public enum NekoStone {
     // Vanilla Stone Types
-    // STONE(false, true),
+    STONE(false, true),
     GRANITE(true, false),
     DIORITE(true, false),
     ANDESITE(true, false),
+    CALCITE(true, true),
+    DRIPSTONE(true, true),
+    TUFF(true, false),
     SANDSTONE(false, true),
     RED_SANDSTONE(false, true);
 
@@ -45,9 +48,13 @@ public enum NekoStone {
     /** Vanilla stone block for this type (icons, sounds, creative filter). */
     public Block vanillaStoneBlock() {
         return switch (this) {
+            case STONE -> Blocks.STONE;
             case GRANITE -> Blocks.GRANITE;
             case DIORITE -> Blocks.DIORITE;
             case ANDESITE -> Blocks.ANDESITE;
+            case CALCITE -> Blocks.CALCITE;
+            case DRIPSTONE -> Blocks.DRIPSTONE_BLOCK;
+            case TUFF -> Blocks.TUFF;
             case SANDSTONE -> Blocks.SANDSTONE;
             case RED_SANDSTONE -> Blocks.RED_SANDSTONE;
         };
@@ -59,7 +66,7 @@ public enum NekoStone {
             case SANDSTONE -> List.of(Blocks.SMOOTH_SANDSTONE, Blocks.SMOOTH_SANDSTONE_STAIRS, Blocks.SMOOTH_SANDSTONE_SLAB);
             case RED_SANDSTONE -> List.of(Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE_STAIRS, Blocks.SMOOTH_RED_SANDSTONE_SLAB);
 
-            default -> List.of(Blocks.SMOOTH_STONE, Blocks.STONE_BRICK_STAIRS, Blocks.SMOOTH_STONE_SLAB);
+            default -> List.of(Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE_STAIRS, Blocks.SMOOTH_RED_SANDSTONE_SLAB);
         };
     }
 
@@ -69,13 +76,17 @@ public enum NekoStone {
             case GRANITE -> List.of(Blocks.POLISHED_GRANITE, Blocks.POLISHED_GRANITE_STAIRS, Blocks.POLISHED_GRANITE_SLAB);
             case DIORITE -> List.of(Blocks.POLISHED_DIORITE, Blocks.POLISHED_DIORITE_STAIRS, Blocks.POLISHED_DIORITE_SLAB);
             case ANDESITE -> List.of(Blocks.POLISHED_ANDESITE, Blocks.POLISHED_ANDESITE_STAIRS, Blocks.POLISHED_ANDESITE_SLAB);
+            case TUFF -> List.of(Blocks.POLISHED_TUFF, Blocks.POLISHED_TUFF_STAIRS, Blocks.POLISHED_TUFF_SLAB);
 
-            default -> List.of(Blocks.SMOOTH_STONE, Blocks.STONE_BRICK_STAIRS, Blocks.SMOOTH_STONE_SLAB);
+            default -> List.of(Blocks.POLISHED_TUFF, Blocks.POLISHED_TUFF_STAIRS, Blocks.POLISHED_TUFF_SLAB);
         };
     }
 
     /** {@code block.minecraft.<id>} (e.g. {@code block.minecraft.granite}). */
     public String vanillaStoneDescriptionId() {
+        if (this == DRIPSTONE) {
+            return "block.minecraft.dripstone_block";
+        }
         return "block.minecraft." + id();
     }
 }

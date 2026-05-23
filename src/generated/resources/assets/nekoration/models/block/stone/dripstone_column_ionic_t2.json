@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/stone/column_ionic_t2",
+  "textures": {
+    "0": "nekoration:block/stone/dripstone/column_ionic",
+    "1": "nekoration:block/stone/dripstone_chiseled_smooth"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "block/stairs",
+  "textures": {
+    "bottom": "nekoration:block/stone/stone_polished_smooth",
+    "side": "nekoration:block/stone/stone_polished_smooth",
+    "top": "nekoration:block/stone/stone_polished_smooth"
+  }
+}

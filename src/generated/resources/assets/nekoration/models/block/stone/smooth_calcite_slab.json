@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "nekoration:block/stone/calcite_smooth",
+    "side": "nekoration:block/stone/calcite_smooth",
+    "top": "nekoration:block/stone/calcite_smooth"
+  }
+}
