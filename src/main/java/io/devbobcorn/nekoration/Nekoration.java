@@ -92,7 +92,7 @@ public class Nekoration {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_ORNAMENTS_TAB =
         CREATIVE_MODE_TABS.register("nekoration_ornaments", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_ornaments"))
-            .icon(() -> DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.windowPlantBlockItem().get()))
+            .icon(() -> DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.iconItem().get()))
             .displayItems((parameters, output) -> {
                 for (EnumNekoColor color : EnumNekoColor.values()) {
                     output.accept(DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));

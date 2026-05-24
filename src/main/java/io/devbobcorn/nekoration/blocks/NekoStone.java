@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
  */
 public enum NekoStone {
     // Vanilla Stone Types
-    STONE(false, true),
     GRANITE(true, false),
     DIORITE(true, false),
     ANDESITE(true, false),
@@ -19,7 +18,8 @@ public enum NekoStone {
     DRIPSTONE(true, true),
     TUFF(true, false),
     SANDSTONE(false, true),
-    RED_SANDSTONE(false, true);
+    RED_SANDSTONE(false, true),
+    STONE(false, true);
 
     private final boolean needsSmoothVariant;
     private final boolean needsPolishedVariant;

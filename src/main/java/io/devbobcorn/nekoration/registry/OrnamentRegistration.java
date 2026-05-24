@@ -15,6 +15,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class OrnamentRegistration {
     private static DeferredBlock<Block> WINDOW_PLANT_BLOCK;
     public static DeferredItem<DyeableBlockItem> WINDOW_PLANT_BLOCK_ITEM;
+    
+    private static final String TAB_ICON_ITEM_ID = "window_plant";
+    private static DeferredItem<DyeableBlockItem> tabIconItem;
 
     private OrnamentRegistration() {
     }
@@ -29,6 +32,9 @@ public final class OrnamentRegistration {
         DeferredItem<DyeableBlockItem> item = registerDyeableBlockItem(items, id, block);
         WINDOW_PLANT_BLOCK = block;
         WINDOW_PLANT_BLOCK_ITEM = item;
+        if (TAB_ICON_ITEM_ID.equals(id)) {
+            tabIconItem = item;
+        }
     }
 
     private static DeferredItem<DyeableBlockItem> registerDyeableBlockItem(DeferredRegister.Items items, String id,
@@ -42,5 +48,10 @@ public final class OrnamentRegistration {
 
     public static DeferredItem<DyeableBlockItem> windowPlantBlockItem() {
         return WINDOW_PLANT_BLOCK_ITEM;
+    }
+
+    /** Creative tab icon ({@value #TAB_ICON_ITEM_ID}). */
+    public static DeferredItem<DyeableBlockItem> iconItem() {
+        return tabIconItem;
     }
 }

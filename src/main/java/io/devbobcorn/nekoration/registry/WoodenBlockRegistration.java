@@ -81,6 +81,9 @@ public final class WoodenBlockRegistration {
     public static final List<DeferredBlock<Block>> EASEL_MENU_BLOCKS_FOR_ENTITY = new ArrayList<>();
     public static final Map<NekoWood, List<DeferredItem<DyeableBlockItem>>> DYED_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
     public static final Map<NekoWood, List<DeferredItem<? extends BlockItem>>> PLAIN_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
+    
+    private static final String TAB_ICON_ITEM_ID = "oak_half_timber_p1";
+    private static DeferredItem<DyeableBlockItem> tabIconItem;
 
     private WoodenBlockRegistration() {
     }
@@ -99,6 +102,9 @@ public final class WoodenBlockRegistration {
                 DeferredItem<DyeableBlockItem> blockItem = registerDyeableBlockItem(items, id, block);
                 HALF_TIMBER_BLOCK_ITEMS.add(blockItem);
                 dyedByWood.add(blockItem);
+                if (TAB_ICON_ITEM_ID.equals(id)) {
+                    tabIconItem = blockItem;
+                }
             }
 
             for (WindowVariant variant : WindowVariant.values()) {
@@ -239,8 +245,8 @@ public final class WoodenBlockRegistration {
         return Collections.unmodifiableList(EASEL_MENU_BLOCK_ITEMS);
     }
 
-    /** Creative tab icon. */
+    /** Creative tab icon ({@value #TAB_ICON_ITEM_ID}). */
     public static DeferredItem<DyeableBlockItem> iconItem() {
-        return HALF_TIMBER_BLOCK_ITEMS.get(1);
+        return tabIconItem;
     }
 }
