@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
@@ -25,14 +26,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class FrameSideBlock extends HorizontalBlock {
     public static final EnumProperty<FrameConnection> CONNECTION = ModStateProperties.FRAME_CONNECTION;
 
-    private final Map<Direction, VoxelShape> shapes;
+    private final Map<Direction, Map<FrameConnection, VoxelShape>> shapes;
 
     public FrameSideBlock(Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(CONNECTION, FrameConnection.BOTH));
-        this.shapes = getAABBs(2, 14, 1);
+        this.shapes = createShapes();
     }
 
     @Override
@@ -43,7 +44,43 @@ public class FrameSideBlock extends HorizontalBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return shapes.get(state.getValue(FACING));
+        return shapes.get(state.getValue(FACING)).get(state.getValue(CONNECTION));
+    }
+
+    private static Map<Direction, Map<FrameConnection, VoxelShape>> createShapes() {
+        VoxelShape leftNorth = box(13.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
+        VoxelShape rightNorth = box(0.0D, 0.0D, 14.0D, 3.0D, 16.0D, 16.0D);
+        VoxelShape bothNorth = Shapes.or(leftNorth, rightNorth);
+
+        VoxelShape leftSouth = box(0.0D, 0.0D, 0.0D, 3.0D, 16.0D, 2.0D);
+        VoxelShape rightSouth = box(13.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
+        VoxelShape bothSouth = Shapes.or(leftSouth, rightSouth);
+
+        VoxelShape leftEast = box(0.0D, 0.0D, 13.0D, 2.0D, 16.0D, 16.0D);
+        VoxelShape rightEast = box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 3.0D);
+        VoxelShape bothEast = Shapes.or(leftEast, rightEast);
+
+        VoxelShape leftWest = box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 3.0D);
+        VoxelShape rightWest = box(14.0D, 0.0D, 13.0D, 16.0D, 16.0D, 16.0D);
+        VoxelShape bothWest = Shapes.or(leftWest, rightWest);
+
+        return Map.of(
+                Direction.NORTH, Map.of(
+                        FrameConnection.LEFT, leftNorth,
+                        FrameConnection.RIGHT, rightNorth,
+                        FrameConnection.BOTH, bothNorth),
+                Direction.SOUTH, Map.of(
+                        FrameConnection.LEFT, leftSouth,
+                        FrameConnection.RIGHT, rightSouth,
+                        FrameConnection.BOTH, bothSouth),
+                Direction.EAST, Map.of(
+                        FrameConnection.LEFT, leftEast,
+                        FrameConnection.RIGHT, rightEast,
+                        FrameConnection.BOTH, bothEast),
+                Direction.WEST, Map.of(
+                        FrameConnection.LEFT, leftWest,
+                        FrameConnection.RIGHT, rightWest,
+                        FrameConnection.BOTH, bothWest));
     }
 
     @Override
