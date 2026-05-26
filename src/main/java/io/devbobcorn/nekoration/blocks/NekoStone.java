@@ -11,22 +11,24 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
  */
 public enum NekoStone {
     // Vanilla Stone Types
-    GRANITE(true, false),
-    DIORITE(true, false),
-    ANDESITE(true, false),
-    CALCITE(true, true),
-    DRIPSTONE(true, true),
-    TUFF(true, false),
-    SANDSTONE(false, true),
-    RED_SANDSTONE(false, true),
-    STONE(false, true);
+    GRANITE(true, false, true),
+    DIORITE(true, false, true),
+    ANDESITE(true, false, true),
+    CALCITE(true, true, true),
+    DRIPSTONE(true, true, true),
+    TUFF(true, false, false),
+    SANDSTONE(false, true, true),
+    RED_SANDSTONE(false, true, true),
+    STONE(false, true, false);
 
     private final boolean needsSmoothVariant;
     private final boolean needsPolishedVariant;
+    private final boolean needsBricksVariant;
 
-    NekoStone(boolean needsSmoothVariant, boolean needsPolishedVariant) {
+    NekoStone(boolean needsSmoothVariant, boolean needsPolishedVariant, boolean needsBricksVariant) {
         this.needsSmoothVariant = needsSmoothVariant;
         this.needsPolishedVariant = needsPolishedVariant;
+        this.needsBricksVariant = needsBricksVariant;
     }
 
     public String id() {
@@ -39,6 +41,10 @@ public enum NekoStone {
 
     public boolean needsPolishedVariant() {
         return needsPolishedVariant;
+    }
+
+    public boolean needsBricksVariant() {
+        return needsBricksVariant;
     }
 
     public BlockBehaviour.Properties stoneProperties() {
@@ -70,7 +76,7 @@ public enum NekoStone {
         };
     }
 
-    /** Vanilla polished block set for this stone type. */
+    /** Vanilla polished block set for this stone type (block, stairs, slab). */
     public List<Block> vanillaPolishedStoneBlockSet() {
         return switch (this) {
             case GRANITE -> List.of(Blocks.POLISHED_GRANITE, Blocks.POLISHED_GRANITE_STAIRS, Blocks.POLISHED_GRANITE_SLAB);
@@ -79,6 +85,15 @@ public enum NekoStone {
             case TUFF -> List.of(Blocks.POLISHED_TUFF, Blocks.POLISHED_TUFF_STAIRS, Blocks.POLISHED_TUFF_SLAB);
 
             default -> List.of(Blocks.POLISHED_TUFF, Blocks.POLISHED_TUFF_STAIRS, Blocks.POLISHED_TUFF_SLAB);
+        };
+    }
+
+    /** Vanilla bricks block set for this stone type (block, stairs, slab). */
+    public List<Block> vanillaBricksStoneBlockSet() {
+        return switch (this) {
+            case TUFF -> List.of(Blocks.TUFF_BRICKS, Blocks.TUFF_BRICK_STAIRS, Blocks.TUFF_BRICK_SLAB);
+            case STONE -> List.of(Blocks.STONE_BRICKS, Blocks.STONE_BRICK_STAIRS, Blocks.STONE_BRICK_SLAB);
+            default -> List.of();
         };
     }
 

@@ -1,0 +1,8 @@
+{
+  "parent": "block/outer_stairs",
+  "textures": {
+    "bottom": "nekoration:block/stone/tuff_tiles",
+    "side": "nekoration:block/stone/tuff_tiles",
+    "top": "nekoration:block/stone/tuff_tiles"
+  }
+}

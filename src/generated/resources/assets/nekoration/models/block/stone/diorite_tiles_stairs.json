@@ -1,0 +1,8 @@
+{
+  "parent": "block/stairs",
+  "textures": {
+    "bottom": "nekoration:block/stone/diorite_tiles",
+    "side": "nekoration:block/stone/diorite_tiles",
+    "top": "nekoration:block/stone/diorite_tiles"
+  }
+}

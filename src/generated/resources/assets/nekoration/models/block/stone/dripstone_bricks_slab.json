@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "nekoration:block/stone/dripstone_bricks",
+    "side": "nekoration:block/stone/dripstone_bricks",
+    "top": "nekoration:block/stone/dripstone_bricks"
+  }
+}

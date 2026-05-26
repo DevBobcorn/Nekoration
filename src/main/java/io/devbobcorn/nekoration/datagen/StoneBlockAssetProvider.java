@@ -57,6 +57,14 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateStoneCubeAllAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
             generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
             generateStoneSlabAssets(cachedOutput, "polished_smooth", true, true, writes, stoneId);
+            if (stone.needsBricksVariant()) {
+                generateStoneCubeAllAssets(cachedOutput, "bricks", false, writes, stoneId);
+                generateStoneStairAssets(cachedOutput, "bricks", false, writes, stoneId);
+                generateStoneSlabAssets(cachedOutput, "bricks", false, false, writes, stoneId);
+            }
+            generateStoneCubeAllAssets(cachedOutput, "tiles", false, writes, stoneId);
+            generateStoneStairAssets(cachedOutput, "tiles", false, writes, stoneId);
+            generateStoneSlabAssets(cachedOutput, "tiles", false, false, writes, stoneId);
             generateVerticalConnectedStoneCubeAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
             generateHorizontalConnectedStoneCubeAssets(cachedOutput, "horizontal_chiseled_smooth", "chiseled_smooth", true, writes, stoneId);
 

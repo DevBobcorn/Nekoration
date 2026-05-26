@@ -40,11 +40,11 @@ polished_stone_block_ids = ["polished_{stone}", "polished_{stone}_slab", "polish
 polished_stone_blocks_us = ["Polished {stone}", "Polished {stone} Slab", "Polished {stone} Stairs"]
 polished_stone_blocks_cn = ["磨制{stone}", "磨制{stone}台阶", "磨制{stone}楼梯"]
 
-stone_block_ids = ["polished_smooth_{stone}", "polished_smooth_{stone}_slab", "polished_smooth_{stone}_stairs", "chiseled_smooth_{stone}", "horizontal_chiseled_smooth_{stone}", "{stone}_base", "{stone}_column_doric", "{stone}_column_ionic", "{stone}_column_corinthian",
+stone_block_ids = ["polished_smooth_{stone}", "polished_smooth_{stone}_slab", "polished_smooth_{stone}_stairs", "{stone}_bricks", "{stone}_bricks_slab", "{stone}_bricks_stairs", "{stone}_tiles", "{stone}_tiles_slab", "{stone}_tiles_stairs", "chiseled_smooth_{stone}", "horizontal_chiseled_smooth_{stone}", "{stone}_base", "{stone}_column_doric", "{stone}_column_ionic", "{stone}_column_corinthian",
     "{stone}_frame_head",  "{stone}_frame_peak","{stone}_frame_side", "{stone}_frame_sill", "{stone}_pot", "{stone}_planter"]
-stone_blocks_us = ["Polished Smooth {stone}", "Polished Smooth {stone} Slab", "Polished Smooth {stone} Stairs", "Chiseled Smooth {stone}", "Horizontal Chiseled Smooth {stone}", "{stone} Base", "{stone} Doric Column", "{stone} Ionic Column", "{stone} Corinthian Column",
+stone_blocks_us = ["Polished Smooth {stone}", "Polished Smooth {stone} Slab", "Polished Smooth {stone} Stairs", "{stone} Bricks", "{stone} Bricks Slab", "{stone} Bricks Stairs", "{stone} Tiles", "{stone} Tiles Slab", "{stone} Tiles Stairs", "Chiseled Smooth {stone}", "Horizontal Chiseled Smooth {stone}", "{stone} Base", "{stone} Doric Column", "{stone} Ionic Column", "{stone} Corinthian Column",
     "{stone} Frame Head",  "{stone} Frame Peak","{stone} Frame Side", "{stone} Frame Sill", "{stone} Pot", "{stone} Planter"]
-stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "雕纹平滑{stone}", "横向雕纹平滑{stone}", "{stone}底座", "{stone}多立克柱", "{stone}爱奥尼柱", "{stone}科林斯柱",
+stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "{stone}砖", "{stone}砖台阶", "{stone}砖楼梯", "{stone}瓦", "{stone}瓦台阶", "{stone}瓦楼梯", "雕纹平滑{stone}", "横向雕纹平滑{stone}", "{stone}底座", "{stone}多立克柱", "{stone}爱奥尼柱", "{stone}科林斯柱",
     "{stone}框顶边",  "{stone}框尖顶","{stone}框侧边", "{stone}框底边", "{stone}花盆", "{stone}种植盆"]
 
 door_ids = ["quartz_door","chiseled_quartz_door","quartz_bricks_door","tall_quartz_door","tall_chiseled_quartz_door","tall_quartz_bricks_door"]

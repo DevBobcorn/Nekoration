@@ -50,6 +50,14 @@ public final class StoneBlockRegistration {
                     blockItemsByStone.add(() -> polishedBlock.asItem());
                 }
             }
+            if (stone.needsBricksVariant()) {
+                registerStoneBlockSet(blocks, items, stoneId + "_bricks", blockItemsByStone, stone);
+            } else {
+                for (Block bricksBlock : stone.vanillaBricksStoneBlockSet()) {
+                    blockItemsByStone.add(() -> bricksBlock.asItem());
+                }
+            }
+            registerStoneBlockSet(blocks, items, stoneId + "_tiles", blockItemsByStone, stone);
             if (stone.needsSmoothVariant()) {
                 registerStoneBlockSet(blocks, items, "smooth_" + stoneId, blockItemsByStone, stone);
             } else {

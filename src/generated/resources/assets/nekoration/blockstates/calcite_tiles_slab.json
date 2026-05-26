@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "nekoration:block/stone/calcite_tiles_slab"
+    },
+    "type=double": {
+      "model": "nekoration:block/stone/calcite_tiles"
+    },
+    "type=top": {
+      "model": "nekoration:block/stone/calcite_tiles_slab_top"
+    }
+  }
+}
