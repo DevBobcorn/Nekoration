@@ -2,7 +2,7 @@
 	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "nekoration:generator_files/container_template/cabinet_top",
+		"0": "nekoration:generator_files/furniture_top",
 		"particle": "#0"
 	},
 	"elements": [

@@ -1,8 +1,7 @@
 {
   "parent": "nekoration:block/furniture/chair",
-  "particle": "nekoration:block/container/acacia/cabinet_top",
   "textures": {
-    "side": "nekoration:block/container/acacia/cabinet_top",
+    "side": "block/acacia_planks",
     "top": "nekoration:block/furniture/acacia_top"
   }
 }

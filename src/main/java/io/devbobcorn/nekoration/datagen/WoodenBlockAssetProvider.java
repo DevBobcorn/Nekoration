@@ -68,8 +68,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                 Map.of(
                         "parent", modLoc("block/furniture/table"),
                         "textures", Map.of(
-                                "top", modLoc("block/furniture/" + woodId + "_top"),
-                                "particle", modLoc("block/container/" + woodId + "/cabinet_top"))));
+                                "top", modLoc("block/furniture/" + woodId + "_top"))));
         writeJson(cachedOutput, writes, blockstatePathProvider, tableId,
                 Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/table")))));
         writeJson(cachedOutput, writes, itemModelPathProvider, tableId,
@@ -81,8 +80,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                         "parent", modLoc("block/furniture/chair"),
                         "textures", Map.of(
                                 "top", modLoc("block/furniture/" + woodId + "_top"),
-                                "side", modLoc("block/container/" + woodId + "/cabinet_top")),
-                                "particle", modLoc("block/container/" + woodId + "/cabinet_top")));
+                                "side", "block/" + woodId + "_planks")));
         Map<String, Object> chairVariants = new LinkedHashMap<>();
         chairVariants.put("facing=north", Map.of("model", modLoc("block/furniture/" + woodId + "/chair")));
         chairVariants.put("facing=east", Map.of("model", modLoc("block/furniture/" + woodId + "/chair"), "y", 90));
@@ -321,6 +319,12 @@ public final class WoodenBlockAssetProvider implements DataProvider {
             Map<String, Object> textures = new LinkedHashMap<>();
             for (Map.Entry<String, JsonElement> entry : texturesJson.entrySet()) {
                 String textureValue = entry.getValue().getAsString();
+                // Use unique top textures
+                if (textureValue.equals(Nekoration.MODID + ":generator_files/furniture_top")) {
+                    textures.put(entry.getKey(), Nekoration.MODID + ":block/furniture/" + woodId + "_top");
+                    continue;
+                }
+
                 if (!textureValue.contains("generator_files/container_template/")) {
                     continue;
                 }

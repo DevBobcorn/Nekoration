@@ -1,7 +1,6 @@
 {
   "parent": "nekoration:block/furniture/table",
   "textures": {
-    "particle": "nekoration:block/container/warped/cabinet_top",
     "top": "nekoration:block/furniture/warped_top"
   }
 }

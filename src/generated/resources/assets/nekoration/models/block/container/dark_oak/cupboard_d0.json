@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/container/cupboard_d0",
   "textures": {
-    "0": "nekoration:block/container/dark_oak/cabinet_top",
+    "0": "nekoration:block/furniture/dark_oak_top",
     "1": "nekoration:block/container/dark_oak/cupboard_front_d0",
     "4": "nekoration:block/container/dark_oak/cabinet_back"
   }

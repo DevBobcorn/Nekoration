@@ -28,29 +28,45 @@ public class ChairBlock extends HorizontalDirectionalBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final MapCodec<ChairBlock> CODEC = simpleCodec(ChairBlock::new);
 
-    private static final double SIDE_SPACE = 1.0D;
-    private static final double BACK_REST_THICKNESS = 3.0D;
+    private static final double SIDE_INSET = 2.0D;
+    private static final double LEG_THICKNESS = 2.0D;
+    private static final double SEAT_THICKNESS = 2.0D;
+    private static final double BACK_REST_THICKNESS = 2.0D;
 
     private final VoxelShape[] chairShapes = new VoxelShape[4];
     private final double seatYOffset;
 
     public ChairBlock(Properties properties) {
-        this(properties, 10, 26);
+        this(properties, 10, 22);
     }
 
     public ChairBlock(Properties properties, int seatHeight, int backRestHeight) {
         super(properties);
-        this.seatYOffset = (seatHeight - 4.0D) / 16.0D;
-        VoxelShape seat = Block.box(SIDE_SPACE, 0.0D, SIDE_SPACE, 16.0D - SIDE_SPACE, seatHeight, 16.0D - SIDE_SPACE);
+        this.seatYOffset = (seatHeight - 8.0D) / 16.0D;
+        double seatBottom = seatHeight - SEAT_THICKNESS;
+        double legHeight = seatBottom;
+        VoxelShape frontLeftLeg = Block.box(SIDE_INSET, 0.0D, SIDE_INSET, SIDE_INSET + LEG_THICKNESS, legHeight,
+                SIDE_INSET + LEG_THICKNESS);
+        VoxelShape frontRightLeg = Block.box(16.0D - SIDE_INSET - LEG_THICKNESS, 0.0D, SIDE_INSET, 16.0D - SIDE_INSET,
+                legHeight, SIDE_INSET + LEG_THICKNESS);
+        VoxelShape backLeftLeg = Block.box(SIDE_INSET, 0.0D, 16.0D - SIDE_INSET - LEG_THICKNESS, SIDE_INSET + LEG_THICKNESS,
+                legHeight, 16.0D - SIDE_INSET);
+        VoxelShape backRightLeg = Block.box(16.0D - SIDE_INSET - LEG_THICKNESS, 0.0D, 16.0D - SIDE_INSET - LEG_THICKNESS,
+                16.0D - SIDE_INSET, legHeight, 16.0D - SIDE_INSET);
+        VoxelShape seat = Block.box(SIDE_INSET, seatBottom, SIDE_INSET, 16.0D - SIDE_INSET, seatHeight,
+                16.0D - SIDE_INSET);
+        VoxelShape baseShape = Shapes.or(frontLeftLeg, frontRightLeg, backLeftLeg, backRightLeg, seat);
         VoxelShape[] backRests = new VoxelShape[4];
-        backRests[1] = Block.box(16.0D - BACK_REST_THICKNESS, 0.0D, SIDE_SPACE, 16.0D - SIDE_SPACE, backRestHeight,
-                16.0D - SIDE_SPACE); // West
-        backRests[3] = Block.box(SIDE_SPACE, 0.0D, SIDE_SPACE, BACK_REST_THICKNESS, backRestHeight, 16.0D - SIDE_SPACE); // East
-        backRests[0] = Block.box(SIDE_SPACE, 0.0D, SIDE_SPACE, 16.0D - SIDE_SPACE, backRestHeight, BACK_REST_THICKNESS); // South
-        backRests[2] = Block.box(SIDE_SPACE, 0.0D, 16.0D - BACK_REST_THICKNESS, 16.0D - SIDE_SPACE, backRestHeight,
-                16.0D - SIDE_SPACE); // North
+        backRests[1] = Block.box(16.0D - SIDE_INSET - BACK_REST_THICKNESS, seatHeight, SIDE_INSET,
+                16.0D - SIDE_INSET, backRestHeight, 16.0D - SIDE_INSET);
+        backRests[3] = Block.box(SIDE_INSET, seatHeight, SIDE_INSET, SIDE_INSET + BACK_REST_THICKNESS,
+                backRestHeight, 16.0D - SIDE_INSET);
+        backRests[0] = Block.box(SIDE_INSET, seatHeight, SIDE_INSET, 16.0D - SIDE_INSET, backRestHeight,
+                SIDE_INSET + BACK_REST_THICKNESS);
+        backRests[2] = Block.box(SIDE_INSET, seatHeight, 16.0D - SIDE_INSET - BACK_REST_THICKNESS, 16.0D - SIDE_INSET,
+                backRestHeight, 16.0D - SIDE_INSET);
         for (int i = 0; i < 4; i++) {
-            chairShapes[i] = Shapes.or(backRests[i], seat);
+            chairShapes[i] = Shapes.or(backRests[i], baseShape);
         }
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }

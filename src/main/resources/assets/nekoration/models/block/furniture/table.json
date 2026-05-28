@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"top": "nekoration:block/furniture/acacia_top",
-		"particle": "minecraft:block/oak_planks"
+		"top": "nekoration:block/furniture/oak_top",
+		"particle": "#top"
 	},
 	"elements": [
 		{

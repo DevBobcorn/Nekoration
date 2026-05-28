@@ -3,7 +3,7 @@
 	"credit": "Made with Blockbench",
 	"render_type": "cutout_mipped",
 	"textures": {
-		"0": "nekoration:generator_files/container_template/cabinet_top",
+		"0": "nekoration:generator_files/furniture_top",
 		"1": "nekoration:generator_files/container_template/drawer_chest_front_open",
 		"2": "nekoration:generator_files/container_template/drawer_chest_front",
 		"3": "nekoration:generator_files/container_template/cabinet_side",
