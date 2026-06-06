@@ -11,24 +11,29 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
  */
 public enum NekoStone {
     // Vanilla Stone Types
-    GRANITE(true, false, true),
-    DIORITE(true, false, true),
-    ANDESITE(true, false, true),
-    CALCITE(true, true, true),
-    DRIPSTONE(true, true, true),
-    TUFF(true, false, false),
-    SANDSTONE(false, true, true),
-    RED_SANDSTONE(false, true, true),
-    STONE(false, true, false);
+    GRANITE(true, false, true, true, true),
+    DIORITE(true, false, true, true, true),
+    ANDESITE(true, false, true, true, true),
+    CALCITE(true, true, true, true, true),
+    DRIPSTONE(true, true, true, true, true),
+    TUFF(true, false, false, false, false),
+    SANDSTONE(false, true, true, false, true),
+    RED_SANDSTONE(false, true, true, false, true),
+    STONE(false, true, false, true, false);
 
     private final boolean needsSmoothVariant;
     private final boolean needsPolishedVariant;
     private final boolean needsBricksVariant;
+    private final boolean needsChiseledVariant;
+    private final boolean needsChiseledBricksVariant;
 
-    NekoStone(boolean needsSmoothVariant, boolean needsPolishedVariant, boolean needsBricksVariant) {
+    NekoStone(boolean needsSmoothVariant, boolean needsPolishedVariant, boolean needsBricksVariant,
+            boolean needsChiseledVariant, boolean needsChiseledBricksVariant) {
         this.needsSmoothVariant = needsSmoothVariant;
         this.needsPolishedVariant = needsPolishedVariant;
         this.needsBricksVariant = needsBricksVariant;
+        this.needsChiseledVariant = needsChiseledVariant;
+        this.needsChiseledBricksVariant = needsChiseledBricksVariant;
     }
 
     public String id() {
@@ -45,6 +50,14 @@ public enum NekoStone {
 
     public boolean needsBricksVariant() {
         return needsBricksVariant;
+    }
+
+    public boolean needsChiseledVariant() {
+        return needsChiseledVariant;
+    }
+
+    public boolean needsChiseledBricksVariant() {
+        return needsChiseledBricksVariant;
     }
 
     public BlockBehaviour.Properties stoneProperties() {
@@ -94,6 +107,25 @@ public enum NekoStone {
             case TUFF -> List.of(Blocks.TUFF_BRICKS, Blocks.TUFF_BRICK_STAIRS, Blocks.TUFF_BRICK_SLAB);
             case STONE -> List.of(Blocks.STONE_BRICKS, Blocks.STONE_BRICK_STAIRS, Blocks.STONE_BRICK_SLAB);
             default -> List.of();
+        };
+    }
+
+    /** Vanilla chiseled block for this stone type. */
+    public Block vanillaChiseledStoneBlock() {
+        return switch (this) {
+            case SANDSTONE -> Blocks.CHISELED_SANDSTONE;
+            case RED_SANDSTONE -> Blocks.CHISELED_RED_SANDSTONE;
+            case TUFF -> Blocks.CHISELED_TUFF;
+            default -> throw new IllegalStateException("No vanilla chiseled block for " + this);
+        };
+    }
+
+    /** Vanilla chiseled bricks block for this stone type. */
+    public Block vanillaChiseledBricksStoneBlock() {
+        return switch (this) {
+            case STONE -> Blocks.CHISELED_STONE_BRICKS;
+            case TUFF -> Blocks.CHISELED_TUFF_BRICKS;
+            default -> throw new IllegalStateException("No vanilla chiseled bricks block for " + this);
         };
     }
 

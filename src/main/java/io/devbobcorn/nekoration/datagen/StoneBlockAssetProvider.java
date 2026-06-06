@@ -57,6 +57,12 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateStoneCubeAllAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
             generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
             generateStoneSlabAssets(cachedOutput, "polished_smooth", true, true, writes, stoneId);
+            if (stone.needsChiseledVariant()) {
+                generateChiseledStoneColumnAssets(cachedOutput, "chiseled_" + stoneId, stoneId + "_chiseled", stoneId, writes);
+            }
+            if (stone.needsChiseledBricksVariant()) {
+                generateChiseledStoneColumnAssets(cachedOutput, "chiseled_" + stoneId + "_bricks", stoneId + "_chiseled_bricks", stoneId, writes);
+            }
             if (stone.needsBricksVariant()) {
                 generateStoneCubeAllAssets(cachedOutput, "bricks", false, writes, stoneId);
                 generateStoneStairAssets(cachedOutput, "bricks", false, writes, stoneId);
@@ -87,7 +93,10 @@ public final class StoneBlockAssetProvider implements DataProvider {
     private void generateStoneCubeAllAssets(CachedOutput cachedOutput, String variant, boolean prefixedId, List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
         String textureId = stoneId + "_" + variant;
+        generateStoneCubeAllAssets(cachedOutput, variantId, textureId, writes);
+    }
 
+    private void generateStoneCubeAllAssets(CachedOutput cachedOutput, String variantId, String textureId, List<CompletableFuture<?>> writes) {
         Map<String, Object> blockModelTextures = new LinkedHashMap<>();
         blockModelTextures.put("all", modLoc("block/stone/" + textureId));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
@@ -100,10 +109,30 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/stone/" + variantId)));
     }
 
+    private void generateChiseledStoneColumnAssets(CachedOutput cachedOutput, String variantId, String sideTextureId,
+            String stoneId, List<CompletableFuture<?>> writes) {
+        Map<String, Object> blockModelTextures = new LinkedHashMap<>();
+        blockModelTextures.put("end", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
+        blockModelTextures.put("side", modLoc("block/stone/" + sideTextureId));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
+                Map.of("parent", "block/cube_column", "textures", blockModelTextures));
+
+        writeJson(cachedOutput, writes, blockstatePathProvider, variantId,
+                Map.of("variants", Map.of("", Map.of("model", modLoc("block/stone/" + variantId)))));
+
+        writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
+                Map.of("parent", modLoc("block/stone/" + variantId)));
+    }
+
     private void generateStoneStairAssets(CachedOutput cachedOutput, String variant, boolean prefixedId,
             List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
         String textureId = stoneId + "_" + variant;
+        generateStoneStairAssets(cachedOutput, variantId, textureId, writes);
+    }
+
+    private void generateStoneStairAssets(CachedOutput cachedOutput, String variantId, String textureId,
+            List<CompletableFuture<?>> writes) {
         String stairId = variantId + "_stairs";
 
         Map<String, Object> stairTextures = new LinkedHashMap<>();
@@ -136,6 +165,11 @@ public final class StoneBlockAssetProvider implements DataProvider {
             List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
         String textureId = stoneId + "_" + variant;
+        generateStoneSlabAssets(cachedOutput, variantId, textureId, hasSlabTexture, writes);
+    }
+
+    private void generateStoneSlabAssets(CachedOutput cachedOutput, String variantId, String textureId, boolean hasSlabTexture,
+            List<CompletableFuture<?>> writes) {
         String slabId = variantId + "_slab";
         String sideTextureId = hasSlabTexture ? textureId + "_slab" : textureId;
 

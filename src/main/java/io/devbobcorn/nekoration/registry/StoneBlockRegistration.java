@@ -70,6 +70,16 @@ public final class StoneBlockRegistration {
                 }
             }
             registerStoneBlockSet(blocks, items, "polished_smooth_" + stoneId, blockItemsByStone, stone);
+            if (stone.needsChiseledVariant()) {
+                registerBlock(blocks, items, "chiseled_" + stoneId, blockItemsByStone, stone);
+            } else {
+                blockItemsByStone.add(() -> stone.vanillaChiseledStoneBlock().asItem());
+            }
+            if (stone.needsChiseledBricksVariant()) {
+                registerBlock(blocks, items, "chiseled_" + stoneId + "_bricks", blockItemsByStone, stone);
+            } else {
+                blockItemsByStone.add(() -> stone.vanillaChiseledBricksStoneBlock().asItem());
+            }
             registerVerticalConnectedBlock(blocks, items, "chiseled_smooth_" + stoneId,
                     VerticalConnectedBlock.ConnectionType.PILLAR, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(blocks, items, "horizontal_chiseled_smooth_" + stoneId,
