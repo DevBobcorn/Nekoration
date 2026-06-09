@@ -1,6 +1,7 @@
 {
   "parent": "nekoration:block/stone/frame_peak_t2",
   "textures": {
-    "0": "nekoration:block/stone/diorite/frame_peak"
+    "0": "nekoration:block/stone/diorite/frame_peak",
+    "1": "nekoration:block/stone/diorite_smooth"
   }
 }

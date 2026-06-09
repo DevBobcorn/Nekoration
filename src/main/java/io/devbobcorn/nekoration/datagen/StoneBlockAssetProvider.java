@@ -359,6 +359,17 @@ public final class StoneBlockAssetProvider implements DataProvider {
 
         Map<String, Object> textures = new LinkedHashMap<>();
         textures.put("0", modLoc("block/stone/" + stoneId + "/" + variant));
+        if (variant == "frame_peak") {
+            String smoothTextureId;
+            if (stoneId == "sandstone") {
+                smoothTextureId = "block/smooth_sandstone";
+            } else if (stoneId == "red_sandstone") {
+                smoothTextureId = "block/red_smooth_sandstone";
+            } else {
+                smoothTextureId = modLoc("block/stone/" + stoneId + "_smooth");
+            }
+            textures.put("1", smoothTextureId);
+        }
 
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
         Map.of("parent", modLoc("block/stone/" + variant), "textures", textures));

@@ -1,6 +1,7 @@
 {
   "parent": "nekoration:block/stone/frame_peak",
   "textures": {
-    "0": "nekoration:block/stone/sandstone/frame_peak"
+    "0": "nekoration:block/stone/sandstone/frame_peak",
+    "1": "nekoration:block/stone/sandstone_smooth"
   }
 }

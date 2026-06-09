@@ -5,6 +5,7 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"0": "generator_files/stone_template/frame_peak",
+		"1": "generator_files/stone_template/column",
 		"particle": "#0"
 	},
 	"elements": [
@@ -74,7 +75,7 @@
 			"to": [16, 12, 14],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 14]},
 			"faces": {
-				"north": {"uv": [2, 1, 10, 6.5], "texture": "#0"}
+				"north": {"uv": [0, 5, 16, 16], "texture": "#1"}
 			}
 		}
 	]
