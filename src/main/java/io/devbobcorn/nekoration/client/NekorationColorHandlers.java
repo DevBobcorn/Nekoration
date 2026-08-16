@@ -7,6 +7,7 @@ import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
+import io.devbobcorn.nekoration.registry.CementBlockRegistration;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import net.minecraft.client.color.block.BlockColor;
@@ -80,6 +81,9 @@ public final class NekorationColorHandlers {
         BlockColor halfTimber = dyeableBlockColor(NekoColorPalette.HALF_TIMBER);
         WoodenBlockRegistration.halfTimberBlockItemsView().forEach(holder -> event.register(halfTimber, holder.get().getBlock()));
         WoodenBlockRegistration.easelMenuBlockItemsView().forEach(holder -> event.register(halfTimber, holder.get().getBlock()));
+        BlockColor cement = dyeableBlockColor(NekoColorPalette.CEMENT);
+        CementBlockRegistration.blockItemsView().forEach(holder ->
+            event.register(cement, ((DyeableBlockItem) holder.get()).getBlock()));
         event.register(windowPlantBlockColor(), OrnamentRegistration.windowPlantBlock().get());
     }
 
@@ -88,6 +92,8 @@ public final class NekorationColorHandlers {
         ItemColor halfTimber = dyeableBlockItemColor(NekoColorPalette.HALF_TIMBER);
         WoodenBlockRegistration.halfTimberBlockItemsView().forEach(holder -> event.register(halfTimber, holder.get()));
         WoodenBlockRegistration.easelMenuBlockItemsView().forEach(holder -> event.register(halfTimber, holder.get()));
+        ItemColor cement = dyeableBlockItemColor(NekoColorPalette.CEMENT);
+        CementBlockRegistration.blockItemsView().forEach(holder -> event.register(cement, holder.get()));
         event.register(windowPlantItemColor(), OrnamentRegistration.windowPlantBlockItem().get());
     }
 }

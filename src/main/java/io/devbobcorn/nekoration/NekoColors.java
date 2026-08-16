@@ -37,8 +37,36 @@ public final class NekoColors {
         };
     }
 
+    /**
+     * RGB tints for cement.
+     */
+    public static final class CementColors {
+        private CementColors() {
+        }
+
+        public static final int[] RGB_BY_ORDINAL = {
+                0xf9fffe,
+                0x9d9d97,
+                0x474f52,
+                0x2d2d31,
+                0x835432,
+                0xb02e26,
+                0xf9801d,
+                0xfed83d,
+                0x80c71f,
+                0x5ec316,
+                0x169c9c,
+                0x3ab3da,
+                0x3c44aa,
+                0x8932b8,
+                0xc74ebd,
+                0xf38baa,
+        };
+    }
+
     public enum NekoColorPalette {
-        HALF_TIMBER(HalfTimberColors.RGB_BY_ORDINAL);
+        HALF_TIMBER(HalfTimberColors.RGB_BY_ORDINAL),
+        CEMENT(CementColors.RGB_BY_ORDINAL);
 
         private final int[] rgbByOrdinal;
 

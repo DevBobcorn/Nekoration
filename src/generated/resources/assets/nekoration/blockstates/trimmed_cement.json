@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=black": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=blue": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=brown": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=cyan": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=gray": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=green": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=light_blue": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=light_gray": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=lime": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=magenta": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=orange": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=pink": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=purple": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=red": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=white": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    },
+    "color=yellow": {
+      "model": "nekoration:block/cement/trimmed_cement"
+    }
+  }
+}

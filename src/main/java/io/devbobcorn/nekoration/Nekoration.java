@@ -24,6 +24,7 @@ import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.network.NekorationNetwork;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
+import io.devbobcorn.nekoration.registry.CementBlockRegistration;
 import io.devbobcorn.nekoration.registry.ModEntities;
 import io.devbobcorn.nekoration.registry.ModMenuTypes;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
@@ -50,8 +51,20 @@ public class Nekoration {
     static {
         WoodenBlockRegistration.register(BLOCKS, ITEMS);
         StoneBlockRegistration.register(BLOCKS, ITEMS);
+        CementBlockRegistration.register(BLOCKS, ITEMS);
         OrnamentRegistration.register(BLOCKS, ITEMS);
     }
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_CEMENT_BLOCKS_TAB =
+        CREATIVE_MODE_TABS.register("nekoration_cement_blocks", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.nekoration_cement_blocks"))
+            .icon(() -> DyeableBlockItem.createCreativeTabStack(CementBlockRegistration.iconItem().get()))
+            .displayItems((parameters, output) -> CementBlockRegistration.blockItemsView().forEach(holder -> {
+                for (EnumNekoColor color : EnumNekoColor.values()) {
+                    output.accept(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
+                }
+            }))
+            .build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_STONE_BLOCKS_TAB =
         CREATIVE_MODE_TABS.register("nekoration_stone_blocks", () -> CreativeModeTab.builder()
