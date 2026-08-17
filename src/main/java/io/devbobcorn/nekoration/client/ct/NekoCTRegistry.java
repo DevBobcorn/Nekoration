@@ -28,6 +28,10 @@ public final class NekoCTRegistry {
         }
         bootstrapped = true;
 
+        CementCTBehaviour cementBehaviour = new CementCTBehaviour();
+        CT_MODELS.put(ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "cement"),
+                model -> new NekoCTModel(model, cementBehaviour));
+
         WindowCTBehaviour windowBehaviour = new WindowCTBehaviour();
         WindowPaneCTBehaviour paneBehaviour = new WindowPaneCTBehaviour();
         for (NekoWood wood : NekoWood.values()) {

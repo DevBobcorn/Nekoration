@@ -68,6 +68,7 @@ public abstract class NekoConnectedTextureBehaviour {
         int sv = reverseUVsVertically(state, face) ? -1 : 1;
 
         CTContext context = new CTContext();
+        context.pos = pos;
         if (requirement.up) {
             context.up = testConnection(reader, pos, state, face, horizontal, vertical, 0, sv);
         }
@@ -134,6 +135,8 @@ public abstract class NekoConnectedTextureBehaviour {
     public static class CTContext {
         public boolean up, down, left, right;
         public boolean topLeft, topRight, bottomLeft, bottomRight;
+        /** World position of the block whose faces are being textured. */
+        public BlockPos pos;
     }
 
     public static class ContextRequirement {
