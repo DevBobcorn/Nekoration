@@ -33,10 +33,10 @@ public final class CementBlockAssetProvider implements DataProvider {
     @Override
     public CompletableFuture<?> run(CachedOutput cachedOutput) {
         List<CompletableFuture<?>> writes = new ArrayList<>();
-        generateConnected(cachedOutput, writes, "cement", "stone_base", false);
-        generateStandalone(cachedOutput, writes, "trimmed_cement", "stone_base", "stone_top");
-        generateConnected(cachedOutput, writes, "paneled_cement", "stone_frame", true);
-        generateStandalone(cachedOutput, writes, "layered_cement", "stone_layered", "stone_top");
+        generateConnected(cachedOutput, writes, "cement", "cement", false);
+        generateStandalone(cachedOutput, writes, "trimmed_cement", "trimmed_cement", "cement_top");
+        generateConnected(cachedOutput, writes, "paneled_cement", "paneled_cement", true);
+        generateStandalone(cachedOutput, writes, "layered_cement", "layered_cement", "cement_top");
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
 
@@ -44,7 +44,7 @@ public final class CementBlockAssetProvider implements DataProvider {
             String textureBase, boolean hasStandaloneTexture) {
         for (String part : List.of("s0", "t0", "t1", "t2")) {
             String textureSuffix = "s0".equals(part) ? "" : "_" + part;
-            writeColumnModel(output, writes, blockId + "_" + part, textureBase + textureSuffix, "stone_top");
+            writeColumnModel(output, writes, blockId + "_" + part, textureBase + textureSuffix, "cement_top");
         }
 
         Map<String, Object> variants = new LinkedHashMap<>();

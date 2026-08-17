@@ -19,6 +19,9 @@ public final class CementBlockRegistration {
     public static DeferredBlock<DyeableVerticalConnectedBlock> PANELED_CEMENT;
     public static DeferredBlock<DyeableBlock> LAYERED_CEMENT;
 
+    private static final String TAB_ICON_ITEM_ID = "paneled_cement";
+    private static DeferredItem<Item> tabIconItem;
+
     private static List<DeferredItem<Item>> blockItems;
 
     private CementBlockRegistration() {
@@ -43,14 +46,20 @@ public final class CementBlockRegistration {
 
     private static DeferredItem<Item> registerBlockItem(DeferredRegister.Items items, String id,
 	    DeferredBlock<? extends Block> block) {
-	return items.registerItem(id, properties -> new DyeableBlockItem(block.get(), properties), new Item.Properties());
+	DeferredItem<Item> blockItem = items.registerItem(id,
+		properties -> new DyeableBlockItem(block.get(), properties), new Item.Properties());
+	if (TAB_ICON_ITEM_ID.equals(id)) {
+	    tabIconItem = blockItem;
+	}
+	return blockItem;
     }
 
     public static List<DeferredItem<Item>> blockItemsView() {
 	return blockItems;
     }
 
+    /** Creative tab icon ({@value #TAB_ICON_ITEM_ID}). */
     public static DeferredItem<Item> iconItem() {
-	return blockItems.getFirst();
+	return tabIconItem;
     }
 }

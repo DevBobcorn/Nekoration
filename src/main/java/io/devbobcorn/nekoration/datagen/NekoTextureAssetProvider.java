@@ -66,7 +66,6 @@ public final class NekoTextureAssetProvider implements DataProvider {
         Nekoration.LOGGER.info("Generating textures from {} to {}", templateTextureRoot, generatedBlockTextureRoot);
         try {
             generatePaletteMappedTextures(cachedOutput);
-            generateLegacyCementTextures(cachedOutput);
             generateHalfTimberBackTextures(cachedOutput);
             generateGuiTextures(cachedOutput);
         } catch (IOException e) {
@@ -196,20 +195,6 @@ public final class NekoTextureAssetProvider implements DataProvider {
                             throw new IllegalStateException("Failed composing half-timber back texture " + overlayPath, e);
                         }
                     });
-        }
-    }
-
-    private void generateLegacyCementTextures(CachedOutput cachedOutput) throws IOException {
-        Path sourceDir = templateTextureRoot.getParent().resolve(
-                "reference/nekoration-1.19/src/main/resources/assets/nekoration/textures/block/column");
-        for (String textureName : List.of(
-                "stone_top", "stone_base", "stone_base_t0", "stone_base_t1", "stone_base_t2",
-                "stone_frame", "stone_frame_t0", "stone_frame_t1", "stone_frame_t2", "stone_layered")) {
-            Path sourcePath = sourceDir.resolve(textureName + ".png");
-            if (!Files.isRegularFile(sourcePath)) {
-                throw new IllegalStateException("Missing legacy cement texture: " + sourcePath);
-            }
-            writeTexture(cachedOutput, "cement/" + textureName, readImage(sourcePath));
         }
     }
 
