@@ -18,6 +18,7 @@ import io.devbobcorn.nekoration.blocks.containers.CupboardBlock;
 import io.devbobcorn.nekoration.blocks.containers.EaselMenuBlock;
 import io.devbobcorn.nekoration.blocks.containers.WallShelfBlock;
 import io.devbobcorn.nekoration.blocks.furniture.ChairBlock;
+import io.devbobcorn.nekoration.blocks.furniture.RoundTableBlock;
 import io.devbobcorn.nekoration.blocks.furniture.TableBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
@@ -129,6 +130,13 @@ public final class WoodenBlockRegistration {
             DeferredItem<BlockItem> tableItem = registerBlockItem(items, tableId, table);
             FURNITURE_BLOCK_ITEMS.add(tableItem);
             plainByWood.add(tableItem);
+
+            String roundTableId = woodId + "_round_table";
+            DeferredBlock<Block> roundTable = blocks.register(roundTableId,
+                    () -> new RoundTableBlock(wood.plankProperties().noOcclusion()));
+            DeferredItem<BlockItem> roundTableItem = registerBlockItem(items, roundTableId, roundTable);
+            FURNITURE_BLOCK_ITEMS.add(roundTableItem);
+            plainByWood.add(roundTableItem);
 
             String chairId = woodId + "_chair";
             DeferredBlock<Block> chair = blocks.register(chairId,

@@ -21,9 +21,9 @@ window_pane_ids = ["pane_" + window_id for window_id in window_ids]
 window_panes_us = ["Simple {wood} Window Pane","Arch {wood} Window Pane","Cross {wood} Window Pane","Lancet {wood} Window Pane","Shade {wood} Window Pane"]
 window_panes_cn = ["简易{wood}窗户板","拱形{wood}窗户板","十字{wood}窗户板","尖头{wood}窗户板","遮光{wood}窗户板"]
 
-furniture_ids = ["easel_menu","table","chair","cabinet","drawer","drawer_chest","cupboard","wall_shelf"]
-furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Chair","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
-furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}椅子","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
+furniture_ids = ["easel_menu","table","round_table","glass_table","round_glass_table","chair","cabinet","drawer","drawer_chest","cupboard","wall_shelf"]
+furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Round Table","{wood} Glass Table","{wood} Round Glass Table","{wood} Chair","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
+furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}圆桌","{wood}玻璃桌","{wood}圆玻璃桌","{wood}椅子","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
 
 stone_ids = ["stone", "granite", "diorite", "andesite", "calcite", "dripstone", "tuff", "sandstone", "red_sandstone"]
 stones_us = ["Stone", "Granite", "Diorite", "Andesite", "Calcite", "Dripstone", "Tuff", "Sandstone", "Red Sandstone"]
@@ -40,11 +40,11 @@ polished_stone_block_ids = ["polished_{stone}", "polished_{stone}_slab", "polish
 polished_stone_blocks_us = ["Polished {stone}", "Polished {stone} Slab", "Polished {stone} Stairs"]
 polished_stone_blocks_cn = ["磨制{stone}", "磨制{stone}台阶", "磨制{stone}楼梯"]
 
-stone_block_ids = ["polished_smooth_{stone}", "polished_smooth_{stone}_slab", "polished_smooth_{stone}_stairs", "{stone}_bricks", "{stone}_bricks_slab", "{stone}_bricks_stairs", "{stone}_tiles", "{stone}_tiles_slab", "{stone}_tiles_stairs", "chiseled_smooth_{stone}", "horizontal_chiseled_smooth_{stone}", "{stone}_base", "{stone}_column_doric", "{stone}_column_ionic", "{stone}_column_corinthian",
+stone_block_ids = ["polished_smooth_{stone}", "polished_smooth_{stone}_slab", "polished_smooth_{stone}_stairs", "{stone}_bricks", "{stone}_bricks_slab", "{stone}_bricks_stairs", "{stone}_tiles", "{stone}_tiles_slab", "{stone}_tiles_stairs", "chiseled_smooth_{stone}", "horizontal_chiseled_smooth_{stone}", "chiseled_{stone}", "chiseled_{stone}_bricks", "{stone}_base", "{stone}_column_doric", "{stone}_column_ionic", "{stone}_column_corinthian",
     "{stone}_frame_head",  "{stone}_frame_peak","{stone}_frame_side", "{stone}_frame_sill", "{stone}_pot", "{stone}_planter"]
-stone_blocks_us = ["Polished Smooth {stone}", "Polished Smooth {stone} Slab", "Polished Smooth {stone} Stairs", "{stone} Bricks", "{stone} Bricks Slab", "{stone} Bricks Stairs", "{stone} Tiles", "{stone} Tiles Slab", "{stone} Tiles Stairs", "Chiseled Smooth {stone}", "Horizontal Chiseled Smooth {stone}", "{stone} Base", "{stone} Doric Column", "{stone} Ionic Column", "{stone} Corinthian Column",
+stone_blocks_us = ["Polished Smooth {stone}", "Polished Smooth {stone} Slab", "Polished Smooth {stone} Stairs", "{stone} Bricks", "{stone} Bricks Slab", "{stone} Bricks Stairs", "{stone} Tiles", "{stone} Tiles Slab", "{stone} Tiles Stairs", "Chiseled Smooth {stone}", "Horizontal Chiseled Smooth {stone}", "Chiseled {stone}", "Chiseled {stone} Bricks", "{stone} Base", "{stone} Doric Column", "{stone} Ionic Column", "{stone} Corinthian Column",
     "{stone} Frame Head",  "{stone} Frame Peak","{stone} Frame Side", "{stone} Frame Sill", "{stone} Pot", "{stone} Planter"]
-stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "{stone}砖", "{stone}砖台阶", "{stone}砖楼梯", "{stone}瓦", "{stone}瓦台阶", "{stone}瓦楼梯", "雕纹平滑{stone}", "横向雕纹平滑{stone}", "{stone}底座", "{stone}多立克柱", "{stone}爱奥尼柱", "{stone}科林斯柱",
+stone_blocks_cn = ["磨制平滑{stone}", "磨制平滑{stone}台阶", "磨制平滑{stone}楼梯", "{stone}砖", "{stone}砖台阶", "{stone}砖楼梯", "{stone}瓦", "{stone}瓦台阶", "{stone}瓦楼梯", "雕纹平滑{stone}", "横向雕纹平滑{stone}", "雕纹{stone}", "雕纹{stone}砖", "{stone}底座", "{stone}多立克柱", "{stone}爱奥尼柱", "{stone}科林斯柱",
     "{stone}框顶边",  "{stone}框尖顶","{stone}框侧边", "{stone}框底边", "{stone}花盆", "{stone}种植盆"]
 
 door_ids = ["quartz_door","chiseled_quartz_door","quartz_bricks_door","tall_quartz_door","tall_chiseled_quartz_door","tall_quartz_bricks_door"]
@@ -211,13 +211,13 @@ os.chdir(script_dir)
 
 # Write these objects into files in JSON format
 with open("en_us.json", "w+") as f:
-    with open(r"brochure\en_us.txt", "r+") as f1:
+    with open(r"brochure/en_us.txt", "r+") as f1:
         obj_us['book.nekoration.intro'] = f1.read()
     data = json.dumps(obj_us, sort_keys=True, indent=4, separators=(',', ': '))
     f.write(data)
 
 with open("zh_cn.json", "w+", encoding='utf-8') as f:
-    with open(r"brochure\zh_cn.txt", "r+", encoding="utf-8") as f1:
+    with open(r"brochure/zh_cn.txt", "r+", encoding="utf-8") as f1:
         obj_cn['book.nekoration.intro'] = f1.read()
     data = json.dumps(obj_cn, ensure_ascii=False, sort_keys=True, indent=4, separators=(',', ': '))
     f.write(data)
@@ -316,7 +316,7 @@ with open("lol_us.json", "w+") as f:
         obj_lol[can] = toLolCat(tuna)
     for c_i in range(0, len(color_ids)):
         obj_lol['color.nekoration.' + color_ids[c_i]] = colors_lol[c_i]
-    with open(r"brochure\lol_us.txt", "r+") as f1:
+    with open(r"brochure/lol_us.txt", "r+") as f1:
         obj_lol['book.nekoration.intro'] = f1.read()
     data = json.dumps(obj_lol, sort_keys=True, indent=4, separators=(',', ': '))
     f.write(data)

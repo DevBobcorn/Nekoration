@@ -73,6 +73,18 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                 Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/table")))));
         writeJson(cachedOutput, writes, itemModelPathProvider, tableId,
                 Map.of("parent", modLoc("block/furniture/" + woodId + "/table")));
+        
+        String roundTableId = woodId + "_round_table";
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/round_table",
+                Map.of(
+                        "parent", modLoc("block/furniture/round_table"),
+                        "textures", Map.of(
+                                "top", modLoc("block/furniture/" + woodId + "_round_top"),
+                                "leg", modLoc("block/furniture/" + woodId + "_leg"))));
+        writeJson(cachedOutput, writes, blockstatePathProvider, roundTableId,
+                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/round_table")))));
+        writeJson(cachedOutput, writes, itemModelPathProvider, roundTableId,
+                Map.of("parent", modLoc("block/furniture/" + woodId + "/round_table")));
 
         String chairId = woodId + "_chair";
         writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/chair",
