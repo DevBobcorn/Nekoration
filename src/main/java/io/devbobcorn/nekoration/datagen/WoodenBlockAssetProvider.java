@@ -85,6 +85,29 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                 Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/round_table")))));
         writeJson(cachedOutput, writes, itemModelPathProvider, roundTableId,
                 Map.of("parent", modLoc("block/furniture/" + woodId + "/round_table")));
+        
+        String glassTableId = woodId + "_glass_table";
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/glass_table",
+                Map.of(
+                        "parent", modLoc("block/furniture/glass_table"),
+                        "textures", Map.of(
+                                "top", modLoc("block/furniture/" + woodId + "_top"))));
+        writeJson(cachedOutput, writes, blockstatePathProvider, glassTableId,
+                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/glass_table")))));
+        writeJson(cachedOutput, writes, itemModelPathProvider, glassTableId,
+                Map.of("parent", modLoc("block/furniture/" + woodId + "/glass_table")));
+        
+        String roundGlassTableId = woodId + "_round_glass_table";
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/round_glass_table",
+                Map.of(
+                        "parent", modLoc("block/furniture/round_table"),
+                        "textures", Map.of(
+                                "top", modLoc("block/furniture/glass_round_top"),
+                                "leg", modLoc("block/furniture/" + woodId + "_leg"))));
+        writeJson(cachedOutput, writes, blockstatePathProvider, roundGlassTableId,
+                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/round_glass_table")))));
+        writeJson(cachedOutput, writes, itemModelPathProvider, roundGlassTableId,
+                Map.of("parent", modLoc("block/furniture/" + woodId + "/round_glass_table")));
 
         String chairId = woodId + "_chair";
         writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/chair",

@@ -138,6 +138,20 @@ public final class WoodenBlockRegistration {
             FURNITURE_BLOCK_ITEMS.add(roundTableItem);
             plainByWood.add(roundTableItem);
 
+            String glassTableId = woodId + "_glass_table";
+            DeferredBlock<Block> glassTable = blocks.register(glassTableId,
+                    () -> new TableBlock(wood.plankProperties().noOcclusion()));
+            DeferredItem<BlockItem> glassTableItem = registerBlockItem(items, glassTableId, glassTable);
+            FURNITURE_BLOCK_ITEMS.add(glassTableItem);
+            plainByWood.add(glassTableItem);
+
+            String roundGlassTableId = woodId + "_round_glass_table";
+            DeferredBlock<Block> roundGlassTable = blocks.register(roundGlassTableId,
+                    () -> new RoundTableBlock(wood.plankProperties().noOcclusion()));
+            DeferredItem<BlockItem> roundGlassTableItem = registerBlockItem(items, roundGlassTableId, roundGlassTable);
+            FURNITURE_BLOCK_ITEMS.add(roundGlassTableItem);
+            plainByWood.add(roundGlassTableItem);
+
             String chairId = woodId + "_chair";
             DeferredBlock<Block> chair = blocks.register(chairId,
                     () -> new ChairBlock(wood.plankProperties().noOcclusion()));
