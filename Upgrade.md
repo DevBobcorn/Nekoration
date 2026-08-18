@@ -1,5 +1,6 @@
-This note documents the data mapping between the original version(v1) of Nekoration and the remaster version(v2).
-Always check under `reference/nekoration-1.19` directory to see the exact original implementation when there's anything unclear.
+This note documents the data mapping between the original version(v1) of Nekoration and the remaster version(v2). Always check under `reference/nekoration-1.19` directory to see the exact original implementation when there's anything unclear.
+
+All Identifiers(Ids or Resource Locations) in this note should all be prefixed with mod namespace `nekoration:`, which is omitted below.
 
 ## Colors
 The ordinal of dye color enum has changed from v1 to v2. This is used in block properties:
@@ -48,11 +49,11 @@ Block id mapping:
 
 ## Wooden Blocks
 
-Wooden Blocks also have a massive change of block ids and block properties. In v2, the wood type is no longer treated as dye color and is no longer distinguished by block property `level`, but instead by a part of their block ids.
+Wooden Blocks also have a massive change of block ids and block properties. In v2, the wood type is no longer treated as dye color and is no longer distinguished by block property `level`, but instead by a part of their block ids. A few exceptions are `table`, `round_table` and `chair` blocks, which already use separate ids for different Wood Types in v1.
 
-When upgrading data for all Wooden Blocks, take the `level` property from the old block data and use this lookup table to determine the Wood Type Id(Some `level` values share a same Wood Type Id):
+When upgrading data for all Wooden Blocks, take the `level` property from the old block data and use this lookup table to determine the wood_type_id(Some `level` values share a same wood_type_id):
 
-|Dye Color|`level` Property Value|Wood Type Id|
+|Dye Color|`level` Property Value|wood_type_id|
 |---------|----------------------|---------|
 |Black|0|dark_oak|
 |Blue|1|warped|
@@ -73,18 +74,37 @@ When upgrading data for all Wooden Blocks, take the `level` property from the ol
 
 Half-Timber Blocks additionally have a secondary color block property which is stored as a number in `age` property in v1, and moved to `color` property and stored as `EnumNekoColor`(similar to Cement Blocks).
 
-When upgrading `half_timber_pillar_p0`, `half_timber_pillar_p1` and `half_timber_pillar_p2` to the new version, turn them into `{Wood Type Id}_half_timber_p0`, `{Wood Type Id}_half_timber_p1` and `{Wood Type Id}_half_timber_p0` respectively, and preserve the `vertical_connection` block property. `half_timber_p0`, `half_timber_p1` and `half_timber_p2` from old data will also be turned into `{Wood Type Id}_half_timber_p0`, `{Wood Type Id}_half_timber_p1` and `{Wood Type Id}_half_timber_p0`, and have their `vertical_connection` property set to `s0`.
+When upgrading `half_timber_pillar_p0`, `half_timber_pillar_p1` and `half_timber_pillar_p2` to the new version, turn them into `{wood_type_id}_half_timber_p0`, `{wood_type_id}_half_timber_p1` and `{wood_type_id}_half_timber_p2` respectively, and preserve the `vertical_connection` block property. `half_timber_p0`, `half_timber_p1` and `half_timber_p2` from old data will also be turned into `{wood_type_id}_half_timber_p0`, `{wood_type_id}_half_timber_p1` and `{wood_type_id}_half_timber_p2`, and have their `vertical_connection` property set to `s0`.
+
+`shelf` from v1 should be turned into `{wood_type_id}_cupboard` in v2, the content items should be kept.
+
+`easel_menu` and `easel_menu_white` are merged and split(by Wood Type) into `{wood_type_id}_easel_menu`, with 16 dye colors distinguished by the `color` block property.
 
 Block id mapping:
 
 |Old Name|Old Id|New Name|New Id|
 |--------|------|--------|------|
-|{WoodType} {Color} Half Timber|half_timber_p0|{Color} {WoodType} Half-Timber|{Wood Type Id}_half_timber_p0|
-|{WoodType} Slash {Color} Half Timber|half_timber_p1|{Color} Bend Sinister {WoodType} Half-Timber|{Wood Type Id}_half_timber_p1|
+|{Wood Type} {Color} Half Timber|half_timber_p0|{Color} {Wood Type} Half-Timber|{wood_type_id}_half_timber_p0|
+|{Wood Type} Slash {Color} Half Timber|half_timber_p1|{Color} Bend Sinister {Wood Type} Half-Timber|{wood_type_id}_half_timber_p1|
 |...|...|...|...|
-|{WoodType} Double {Color} Half Timber|half_timber_p9|{Color} Double {WoodType} Half-Timber|{Wood Type Id}_half_timber_p9|
-|{WoodType} {Color} Half Timber Pillar|half_timber_pillar_p0|{Color} {WoodType} Half-Timber|{Wood Type Id}_half_timber_p0|
-|{WoodType} Slash {Color} Half Timber Pillar|half_timber_pillar_p1|{Color} Bend Sinister {WoodType} Half-Timber|{Wood Type Id}_half_timber_p1|
+|{Wood Type} Double {Color} Half Timber|half_timber_p9|{Color} Double {Wood Type} Half-Timber|{wood_type_id}_half_timber_p9|
+|{Wood Type} {Color} Half Timber Pillar|half_timber_pillar_p0|{Color} {Wood Type} Half-Timber|{wood_type_id}_half_timber_p0|
+|{Wood Type} Slash {Color} Half Timber Pillar|half_timber_pillar_p1|{Color} Bend Sinister {Wood Type} Half-Timber|{wood_type_id}_half_timber_p1|
 |...|...|...|...|
-|{WoodType} Simple Window|window_simple|Simple {WoodType} Window|{Wood Type Id}_window_simple|
+|{Wood Type} Simple Window|window_simple|Simple {Wood Type} Window|{wood_type_id}_window_simple|
 |...|...|...|...|
+|{Wood Type} Easel Menu|easel_menu|{Color} {Wood Type} Easel Menu|{wood_type_id}_easel_menu|
+|{Wood Type} White Easel Menu|easel_menu_white|{Color} {Wood Type} Easel Menu|{wood_type_id}_easel_menu|
+|{Wood Type} Table|{wood_type_id}_table|{Wood Type} Table|{wood_type_id}_table|
+|{Wood Type} Round Table|{wood_type_id}_round_table|{Wood Type} Round Table|{wood_type_id}_round_table|
+|{Wood Type} Chair|{wood_type_id}_chair|{Wood Type} Chair|{wood_type_id}_chair|
+|{Wood Type} Glass Table|glass_table|{Wood Type} Table|{wood_type_id}_glass_table|
+|{Wood Type} Round Glass Table|glass_round_table|{Wood Type} Round Glass Table|{wood_type_id}_round_glass_table|
+|{Wood Type} Arm Chair|arm_chair|{Wood Type} Arm Chair|{wood_type_id}_arm_chair|
+|{Wood Type} Bench|bench|{Wood Type} Bench|{wood_type_id}_bench|
+|{Wood Type} Drawer|drawer|{Wood Type} Drawer|{wood_type_id}_drawer|
+|{Wood Type} Cabinet|cabinet|{Wood Type} Cabinet|{wood_type_id}_cabinet|
+|{Wood Type} Chest of Drawers|drawer_chest|{Wood Type} Drawer Chest|{wood_type_id}_drawer_chest|
+|{Wood Type} Cupboard|cupboard|{Wood Type} Cupboard|{wood_type_id}_cupboard|
+|{Wood Type} Shelf|shelf|{Wood Type} Cupboard|{wood_type_id}_cupboard|
+|{Wood Type} Wall Shelf|wall_shelf|{Wood Type} Wall Shelf|{wood_type_id}_wall_shelf|
