@@ -107,6 +107,11 @@ public class Nekoration {
             .title(Component.translatable("itemGroup.nekoration_ornaments"))
             .icon(() -> DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.iconItem().get()))
             .displayItems((parameters, output) -> {
+                for (var holder : OrnamentRegistration.awningBlockItemsView()) {
+                    for (EnumNekoColor color : EnumNekoColor.values()) {
+                        output.accept(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
+                    }
+                }
                 for (EnumNekoColor color : EnumNekoColor.values()) {
                     output.accept(DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));
                 }

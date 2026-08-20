@@ -10,15 +10,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Round table with an octagonal top and X-shaped crossed legs.
- * <p>
- * The collider mirrors {@code round_table.json}: the top is built from three
- * axis-aligned boxes, while the two 45&deg;-rotated leg boards are represented
- * by the single cuboid enclosing their combined bounding box.
  */
 public class RoundTableBlock extends Block {
     private static final double TOP_MIN_Y = 14.0D;
     private static final double TOP_MAX_Y = 16.0D;
-    /** Footprint bounds of the two 45&deg; leg boards. */
     private static final double LEG_MIN = 2.0D;
     private static final double LEG_MAX = 14.0D;
 

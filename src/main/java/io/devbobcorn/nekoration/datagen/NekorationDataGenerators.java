@@ -24,5 +24,8 @@ public final class NekorationDataGenerators {
         event.getGenerator().addProvider(
                 event.includeClient(),
                 new NekoTextureAssetProvider(event.getGenerator().getPackOutput()));
+        event.getGenerator().addProvider(
+                event.includeClient(),
+                new OrnamentAssetProvider(event.getGenerator().getPackOutput()));
     }
 }

@@ -1,6 +1,8 @@
 package io.devbobcorn.nekoration.registry;
 
 import io.devbobcorn.nekoration.blocks.WindowPlantBlock;
+import io.devbobcorn.nekoration.blocks.AwningBlock;
+import io.devbobcorn.nekoration.blocks.ShortAwningBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -8,6 +10,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Registers ornaments.
@@ -15,6 +20,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class OrnamentRegistration {
     private static DeferredBlock<Block> WINDOW_PLANT_BLOCK;
     public static DeferredItem<DyeableBlockItem> WINDOW_PLANT_BLOCK_ITEM;
+    public static final List<DeferredItem<DyeableBlockItem>> AWNING_BLOCK_ITEMS = new ArrayList<>();
     
     private static final String TAB_ICON_ITEM_ID = "window_plant";
     private static DeferredItem<DyeableBlockItem> tabIconItem;
@@ -23,7 +29,23 @@ public final class OrnamentRegistration {
     }
 
     public static void register(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {
+        registerAwning(blocks, items, "awning_pure", false);
+        registerAwning(blocks, items, "awning_stripe", false);
+        registerAwning(blocks, items, "awning_pure_short", true);
+        registerAwning(blocks, items, "awning_stripe_short", true);
         registerWindowPlant(blocks, items, "window_plant");
+    }
+
+    private static void registerAwning(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id, boolean shortAwning) {
+        DeferredBlock<Block> block = blocks.register(id, () -> shortAwning
+                ? new ShortAwningBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).noOcclusion())
+                : new AwningBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).noOcclusion()));
+        DeferredItem<DyeableBlockItem> item = registerDyeableBlockItem(items, id, block);
+        AWNING_BLOCK_ITEMS.add(item);
+    }
+
+    public static List<DeferredItem<DyeableBlockItem>> awningBlockItemsView() {
+        return Collections.unmodifiableList(AWNING_BLOCK_ITEMS);
     }
 
     private static void registerWindowPlant(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
