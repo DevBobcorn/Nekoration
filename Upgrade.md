@@ -24,11 +24,11 @@ The ordinal of dye color enum has changed from v1 to v2. This is used in block p
 |White|14|0|
 |Yellow|15|7|
 
-## Cement Blocks (known as Stone Blocks in old version)
+## Cement Blocks (known as Stone Blocks in v1)
 
 Stone Blocks in v1 are rebranded as Cement Blocks. Note that in v1 the dye color is stored in the `level` block property of a blockstate, while in v2 they're moved to a block property called `color` as `EnumNekoColor` instead of a number(still serialized as a number though).
 
-Not to be confused with Stone Blocks in v2, those are not relavant to Stone Blocks.
+Not to be confused with Stone Blocks in v2, those are not relavant to Cement Blocks.
 
 When upgrading the data, turn `stone_frame`, `stone_frame_bottom`, `stone_pillar`, `stone_doric`, `stone_ionic`, `stone_corinthian` and `stone_pillar_bottom` all into `paneled_cement`. For these blocks whose id ends with `_bottom` from v1 data, set their `vertical_connection` property set to `s0` in new block data.
 
@@ -49,9 +49,9 @@ Block id mapping:
 
 ## Wooden Blocks
 
-Wooden Blocks also have a massive change of block ids and block properties. In v2, the wood type is no longer treated as dye color and is no longer distinguished by block property `level`, but instead by a part of their block ids. A few exceptions are `table`, `round_table` and `chair` blocks, which already use separate ids for different Wood Types in v1.
+Wooden Blocks also have a massive change of block ids and block properties. In v2, the Wood Type is no longer treated as dye color and is no longer distinguished by block property `level`, but instead by a part of their block ids. A few exceptions are `table`, `round_table` and `chair` blocks, which already use separate ids for different Wood Types in v1.
 
-When upgrading data for all Wooden Blocks, take the `level` property from the old block data and use this lookup table to determine the wood_type_id(Some `level` values share a same wood_type_id):
+When upgrading data for all Wooden Blocks with `level` property, take the `level` value from the old block data and use this lookup table to determine the wood_type_id(Some `level` values map to a same wood_type_id):
 
 |Dye Color|`level` Property Value|wood_type_id|
 |---------|----------------------|---------|
@@ -72,7 +72,7 @@ When upgrading data for all Wooden Blocks, take the `level` property from the ol
 |White|14|birch|
 |Yellow|15|birch|
 
-Half-Timber Blocks additionally have a secondary color block property which is stored as a number in `age` property in v1, and moved to `color` property and stored as `EnumNekoColor`(similar to Cement Blocks).
+Half-Timber Blocks additionally used to have a secondary color block property which is stored as a number in `age` property in v1, and moved to `color` property and stored as `EnumNekoColor`(similar to Cement Blocks) in v2.
 
 When upgrading `half_timber_pillar_p0`, `half_timber_pillar_p1` and `half_timber_pillar_p2` to the new version, turn them into `{wood_type_id}_half_timber_p0`, `{wood_type_id}_half_timber_p1` and `{wood_type_id}_half_timber_p2` respectively, and preserve the `vertical_connection` block property. `half_timber_p0`, `half_timber_p1` and `half_timber_p2` from old data will also be turned into `{wood_type_id}_half_timber_p0`, `{wood_type_id}_half_timber_p1` and `{wood_type_id}_half_timber_p2`, and have their `vertical_connection` property set to `s0`.
 
@@ -100,7 +100,7 @@ Block id mapping:
 |{Wood Type} Chair|{wood_type_id}_chair|{Wood Type} Chair|{wood_type_id}_chair|
 |{Wood Type} Glass Table|glass_table|{Wood Type} Table|{wood_type_id}_glass_table|
 |{Wood Type} Round Glass Table|glass_round_table|{Wood Type} Round Glass Table|{wood_type_id}_round_glass_table|
-|{Wood Type} Arm Chair|arm_chair|{Wood Type} Arm Chair|{wood_type_id}_arm_chair|
+|{Wood Type} Arm Chair|arm_chair|{Wood Type} Armchair|{wood_type_id}_armchair|
 |{Wood Type} Bench|bench|{Wood Type} Bench|{wood_type_id}_bench|
 |{Wood Type} Drawer|drawer|{Wood Type} Drawer|{wood_type_id}_drawer|
 |{Wood Type} Cabinet|cabinet|{Wood Type} Cabinet|{wood_type_id}_cabinet|
