@@ -124,6 +124,34 @@ public final class WoodenBlockAssetProvider implements DataProvider {
         writeJson(cachedOutput, writes, blockstatePathProvider, chairId, Map.of("variants", chairVariants));
         writeJson(cachedOutput, writes, itemModelPathProvider, chairId,
                 Map.of("parent", modLoc("block/furniture/" + woodId + "/chair")));
+
+        String armchairId = woodId + "_armchair";
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/armchair",
+                Map.of("parent", modLoc("block/furniture/armchair"),
+                        "textures", Map.of("side", "block/" + woodId + "_planks")));
+        Map<String, Object> armchairVariants = new LinkedHashMap<>();
+        for (String facing : List.of("north", "east", "south", "west")) {
+            armchairVariants.put("facing=" + facing,
+                    horizontalFacingVariant("block/furniture/" + woodId + "/armchair", horizontalRotationY(facing)));
+        }
+        writeJson(cachedOutput, writes, blockstatePathProvider, armchairId, Map.of("variants", armchairVariants));
+        writeJson(cachedOutput, writes, itemModelPathProvider, armchairId,
+                Map.of("parent", modLoc("block/furniture/" + woodId + "/armchair")));
+
+        String benchId = woodId + "_bench";
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/bench",
+                Map.of("parent", modLoc("block/furniture/bench"),
+                        "textures", Map.of("side", "block/" + woodId + "_planks")));
+        Map<String, Object> benchVariants = new LinkedHashMap<>();
+        for (String connectionId : CONNECTION_IDS) {
+            for (String facing : List.of("north", "east", "south", "west")) {
+                benchVariants.put("facing=" + facing + ",horizontal_connection=" + connectionId,
+                        horizontalFacingVariant("block/furniture/" + woodId + "/bench", horizontalRotationY(facing)));
+            }
+        }
+        writeJson(cachedOutput, writes, blockstatePathProvider, benchId, Map.of("variants", benchVariants));
+        writeJson(cachedOutput, writes, itemModelPathProvider, benchId,
+                Map.of("parent", modLoc("block/furniture/" + woodId + "/bench")));
     }
 
     private void generateContainerAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String woodId) {

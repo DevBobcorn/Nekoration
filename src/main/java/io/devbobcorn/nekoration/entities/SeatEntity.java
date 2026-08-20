@@ -3,6 +3,8 @@ package io.devbobcorn.nekoration.entities;
 import java.util.List;
 
 import io.devbobcorn.nekoration.blocks.furniture.ChairBlock;
+import io.devbobcorn.nekoration.blocks.furniture.ArmchairBlock;
+import io.devbobcorn.nekoration.blocks.furniture.BenchBlock;
 import io.devbobcorn.nekoration.registry.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -60,9 +62,14 @@ public class SeatEntity extends Entity {
         if (sourcePos == null) {
             sourcePos = blockPosition();
         }
-        if (getPassengers().isEmpty() || !(level().getBlockState(sourcePos).getBlock() instanceof ChairBlock)) {
+        if (getPassengers().isEmpty() || !isSeat(level().getBlockState(sourcePos))) {
             discard();
         }
+    }
+
+    private static boolean isSeat(net.minecraft.world.level.block.state.BlockState state) {
+        return state.getBlock() instanceof ChairBlock || state.getBlock() instanceof ArmchairBlock
+                || state.getBlock() instanceof BenchBlock;
     }
 
     public static InteractionResult trySit(Level level, BlockPos pos, double yOffset, Player player) {

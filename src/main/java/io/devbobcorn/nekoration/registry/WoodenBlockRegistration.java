@@ -18,6 +18,8 @@ import io.devbobcorn.nekoration.blocks.containers.CupboardBlock;
 import io.devbobcorn.nekoration.blocks.containers.EaselMenuBlock;
 import io.devbobcorn.nekoration.blocks.containers.WallShelfBlock;
 import io.devbobcorn.nekoration.blocks.furniture.ChairBlock;
+import io.devbobcorn.nekoration.blocks.furniture.ArmchairBlock;
+import io.devbobcorn.nekoration.blocks.furniture.BenchBlock;
 import io.devbobcorn.nekoration.blocks.furniture.RoundTableBlock;
 import io.devbobcorn.nekoration.blocks.furniture.TableBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
@@ -158,6 +160,20 @@ public final class WoodenBlockRegistration {
             DeferredItem<BlockItem> chairItem = registerBlockItem(items, chairId, chair);
             FURNITURE_BLOCK_ITEMS.add(chairItem);
             plainByWood.add(chairItem);
+
+            String armchairId = woodId + "_armchair";
+            DeferredBlock<Block> armchair = blocks.register(armchairId,
+                    () -> new ArmchairBlock(wood.plankProperties().noOcclusion()));
+            DeferredItem<BlockItem> armchairItem = registerBlockItem(items, armchairId, armchair);
+            FURNITURE_BLOCK_ITEMS.add(armchairItem);
+            plainByWood.add(armchairItem);
+
+            String benchId = woodId + "_bench";
+            DeferredBlock<Block> bench = blocks.register(benchId,
+                    () -> new BenchBlock(wood.plankProperties().noOcclusion()));
+            DeferredItem<BlockItem> benchItem = registerBlockItem(items, benchId, bench);
+            FURNITURE_BLOCK_ITEMS.add(benchItem);
+            plainByWood.add(benchItem);
 
             String cupboardId = woodId + "_cupboard";
             DeferredBlock<Block> cupboard = blocks.register(cupboardId,

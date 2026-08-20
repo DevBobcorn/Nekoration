@@ -1,0 +1,9 @@
+{
+  "textures": { "side": "block/oak_planks", "particle": "#side" },
+  "elements": [
+    { "from": [1, 8, 1], "to": [15, 10, 14], "faces": { "north": { "texture": "#side", "tintindex": 0 }, "south": { "texture": "#side", "tintindex": 0 }, "east": { "texture": "#side", "tintindex": 0 }, "west": { "texture": "#side", "tintindex": 0 }, "up": { "texture": "#side", "tintindex": 0 } } },
+    { "from": [1, 10, 12], "to": [15, 23, 14], "faces": { "north": { "texture": "#side", "tintindex": 0 }, "south": { "texture": "#side", "tintindex": 0 }, "east": { "texture": "#side", "tintindex": 0 }, "west": { "texture": "#side", "tintindex": 0 }, "up": { "texture": "#side", "tintindex": 0 } } },
+    { "from": [0, 7, 1], "to": [2, 13, 13], "faces": { "north": { "texture": "#side", "tintindex": 0 }, "south": { "texture": "#side", "tintindex": 0 }, "east": { "texture": "#side", "tintindex": 0 }, "west": { "texture": "#side", "tintindex": 0 }, "up": { "texture": "#side", "tintindex": 0 } } },
+    { "from": [14, 7, 1], "to": [16, 13, 13], "faces": { "north": { "texture": "#side", "tintindex": 0 }, "south": { "texture": "#side", "tintindex": 0 }, "east": { "texture": "#side", "tintindex": 0 }, "west": { "texture": "#side", "tintindex": 0 }, "up": { "texture": "#side", "tintindex": 0 } } }
+  ]
+}

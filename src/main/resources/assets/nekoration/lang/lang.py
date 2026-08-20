@@ -21,9 +21,9 @@ window_pane_ids = ["pane_" + window_id for window_id in window_ids]
 window_panes_us = ["Simple {wood} Window Pane","Arch {wood} Window Pane","Cross {wood} Window Pane","Lancet {wood} Window Pane","Shade {wood} Window Pane"]
 window_panes_cn = ["简易{wood}窗户板","拱形{wood}窗户板","十字{wood}窗户板","尖头{wood}窗户板","遮光{wood}窗户板"]
 
-furniture_ids = ["easel_menu","table","round_table","glass_table","round_glass_table","chair","cabinet","drawer","drawer_chest","cupboard","wall_shelf"]
-furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Round Table","{wood} Glass Table","{wood} Round Glass Table","{wood} Chair","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
-furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}圆桌","{wood}玻璃桌","{wood}圆玻璃桌","{wood}椅子","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
+furniture_ids = ["easel_menu","table","round_table","glass_table","round_glass_table","chair","armchair","bench","cabinet","drawer","drawer_chest","cupboard","wall_shelf"]
+furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Round Table","{wood} Glass Table","{wood} Round Glass Table","{wood} Chair","{wood} Armchair","{wood} Bench","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
+furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}圆桌","{wood}玻璃桌","{wood}圆玻璃桌","{wood}椅子","{wood}扶手椅","{wood}长椅","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
 
 stone_ids = ["stone", "granite", "diorite", "andesite", "calcite", "dripstone", "tuff", "sandstone", "red_sandstone"]
 stones_us = ["Stone", "Granite", "Diorite", "Andesite", "Calcite", "Dripstone", "Tuff", "Sandstone", "Red Sandstone"]
@@ -321,4 +321,3 @@ with open("lol_us.json", "w+") as f:
     data = json.dumps(obj_lol, sort_keys=True, indent=4, separators=(',', ': '))
     f.write(data)
     # Sooo long & THX 4 ALL teh fishez
-
