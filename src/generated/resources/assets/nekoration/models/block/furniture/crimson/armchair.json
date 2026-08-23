@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/furniture/armchair",
+  "textures": {
+    "side": "block/crimson_planks",
+    "top": "nekoration:block/furniture/crimson_top"
+  }
+}

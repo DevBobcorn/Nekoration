@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nekoration:block/furniture/acacia/armchair",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "nekoration:block/furniture/acacia/armchair"
+    },
+    "facing=south": {
+      "model": "nekoration:block/furniture/acacia/armchair",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nekoration:block/furniture/acacia/armchair",
+      "y": 270
+    }
+  }
+}

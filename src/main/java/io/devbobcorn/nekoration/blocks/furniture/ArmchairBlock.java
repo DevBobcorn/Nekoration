@@ -36,25 +36,44 @@ public class ArmchairBlock extends HorizontalDirectionalBlock {
     }
 
     private static VoxelShape createShape(Direction facing) {
-        VoxelShape seat = Block.box(1, 8, 1, 15, 10, 14);
-        VoxelShape legs = Shapes.or(Block.box(1, 0, 1, 3, 8, 3), Block.box(13, 0, 1, 15, 8, 3),
-                Block.box(1, 0, 12, 3, 8, 14), Block.box(13, 0, 12, 15, 8, 14));
+        VoxelShape seat;
+        VoxelShape back;
+        VoxelShape legs;
+        VoxelShape arms;
         if (facing.getAxis() == Direction.Axis.Z) {
             boolean north = facing == Direction.NORTH;
-            double backMin = north ? 12 : 1;
-            double backMax = north ? 14 : 3;
-            double armMin = north ? 1 : 3;
-            double armMax = north ? 13 : 15;
-            return Shapes.or(seat, legs, Block.box(1, 10, backMin, 15, 23, backMax),
-                    Block.box(0, 7, armMin, 2, 13, armMax), Block.box(14, 7, armMin, 16, 13, armMax));
+            double seatMinZ = north ? 1 : 3;
+            double seatMaxZ = north ? 13 : 15;
+            double backMinZ = north ? 13 : 1;
+            double backMaxZ = north ? 15 : 3;
+            double frontMinZ = north ? 2 : 12;
+            double frontMaxZ = north ? 4 : 14;
+            double rearMinZ = north ? 13 : 1;
+            double rearMaxZ = north ? 15 : 3;
+            seat = Block.box(2, 5, seatMinZ, 14, 7, seatMaxZ);
+            back = Block.box(1, 5, backMinZ, 15, 19, backMaxZ);
+            legs = Shapes.or(Block.box(0, 0, frontMinZ, 2, 9, frontMaxZ),
+                    Block.box(14, 0, frontMinZ, 16, 9, frontMaxZ), Block.box(1, 0, rearMinZ, 3, 5, rearMaxZ),
+                    Block.box(13, 0, rearMinZ, 15, 5, rearMaxZ));
+            arms = Shapes.or(Block.box(0, 9, 2, 2, 11, 14), Block.box(14, 9, 2, 16, 11, 14));
+        } else {
+            boolean east = facing == Direction.EAST;
+            double seatMinX = east ? 3 : 1;
+            double seatMaxX = east ? 15 : 13;
+            double backMinX = east ? 1 : 13;
+            double backMaxX = east ? 3 : 15;
+            double frontMinX = east ? 12 : 2;
+            double frontMaxX = east ? 14 : 4;
+            double rearMinX = east ? 1 : 13;
+            double rearMaxX = east ? 3 : 15;
+            seat = Block.box(seatMinX, 5, 2, seatMaxX, 7, 14);
+            back = Block.box(backMinX, 5, 1, backMaxX, 19, 15);
+            legs = Shapes.or(Block.box(frontMinX, 0, 0, frontMaxX, 9, 2),
+                    Block.box(frontMinX, 0, 14, frontMaxX, 9, 16), Block.box(rearMinX, 0, 1, rearMaxX, 5, 3),
+                    Block.box(rearMinX, 0, 13, rearMaxX, 5, 15));
+            arms = Shapes.or(Block.box(2, 9, 0, 14, 11, 2), Block.box(2, 9, 14, 14, 11, 16));
         }
-        boolean east = facing == Direction.EAST;
-        double backMin = east ? 1 : 12;
-        double backMax = east ? 3 : 14;
-        double armMin = east ? 3 : 1;
-        double armMax = east ? 15 : 13;
-        return Shapes.or(seat, legs, Block.box(backMin, 10, 1, backMax, 23, 14),
-                Block.box(armMin, 7, 0, armMax, 13, 2), Block.box(armMin, 7, 14, armMax, 13, 16));
+        return Shapes.or(seat, back, legs, arms);
     }
 
     @Override
@@ -80,6 +99,6 @@ public class ArmchairBlock extends HorizontalDirectionalBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
             BlockHitResult hitResult) {
-        return SeatEntity.trySit(level, pos, 0.25D, player);
+        return SeatEntity.trySit(level, pos, 0D, player);
     }
 }

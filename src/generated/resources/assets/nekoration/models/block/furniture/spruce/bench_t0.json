@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/furniture/bench_t0",
+  "textures": {
+    "side": "block/spruce_planks",
+    "top": "nekoration:block/furniture/spruce_top"
+  }
+}
