@@ -70,6 +70,7 @@ public class Nekoration {
         CREATIVE_MODE_TABS.register("nekoration_stone_blocks", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_stone_blocks"))
             .icon(() -> DyeableBlockItem.createCreativeTabStack(StoneBlockRegistration.iconItem().get()))
+            .withTabsBefore(NEKORATION_CEMENT_BLOCKS_TAB.getKey())
             .displayItems((parameters, output) -> {
                 ArrayList<ItemStack> stacks = new ArrayList<>();
                 StoneBlockRegistration.blockItemsView().forEach(holder -> {
@@ -83,6 +84,7 @@ public class Nekoration {
         CREATIVE_MODE_TABS.register("nekoration_wooden_blocks", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_wooden_blocks"))
             .icon(() -> DyeableBlockItem.createCreativeTabStack(WoodenBlockRegistration.iconItem().get()))
+            .withTabsBefore(NEKORATION_STONE_BLOCKS_TAB.getKey())
             .displayItems((parameters, output) -> {
                 ArrayList<ItemStack> halfTimberStacks = new ArrayList<>();
                 WoodenBlockRegistration.halfTimberBlockItemsView().forEach(holder -> {
@@ -106,6 +108,7 @@ public class Nekoration {
         CREATIVE_MODE_TABS.register("nekoration_ornaments", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_ornaments"))
             .icon(() -> DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.iconItem().get()))
+            .withTabsBefore(NEKORATION_WOODEN_BLOCKS_TAB.getKey())
             .displayItems((parameters, output) -> {
                 for (var holder : OrnamentRegistration.awningBlockItemsView()) {
                     for (EnumNekoColor color : EnumNekoColor.values()) {
