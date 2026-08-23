@@ -1,0 +1,244 @@
+{
+  "variants": {
+    "color=black,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_black",
+      "y": 90
+    },
+    "color=black,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_black"
+    },
+    "color=black,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_black",
+      "y": 180
+    },
+    "color=black,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_black",
+      "y": 270
+    },
+    "color=blue,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_blue",
+      "y": 90
+    },
+    "color=blue,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_blue"
+    },
+    "color=blue,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_blue",
+      "y": 180
+    },
+    "color=blue,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_blue",
+      "y": 270
+    },
+    "color=brown,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_brown",
+      "y": 90
+    },
+    "color=brown,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_brown"
+    },
+    "color=brown,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_brown",
+      "y": 180
+    },
+    "color=brown,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_brown",
+      "y": 270
+    },
+    "color=cyan,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_cyan",
+      "y": 90
+    },
+    "color=cyan,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_cyan"
+    },
+    "color=cyan,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_cyan",
+      "y": 180
+    },
+    "color=cyan,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_cyan",
+      "y": 270
+    },
+    "color=gray,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_gray",
+      "y": 90
+    },
+    "color=gray,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_gray"
+    },
+    "color=gray,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_gray",
+      "y": 180
+    },
+    "color=gray,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_gray",
+      "y": 270
+    },
+    "color=green,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_green",
+      "y": 90
+    },
+    "color=green,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_green"
+    },
+    "color=green,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_green",
+      "y": 180
+    },
+    "color=green,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_green",
+      "y": 270
+    },
+    "color=light_blue,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_light_blue",
+      "y": 90
+    },
+    "color=light_blue,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_light_blue"
+    },
+    "color=light_blue,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_light_blue",
+      "y": 180
+    },
+    "color=light_blue,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_light_blue",
+      "y": 270
+    },
+    "color=light_gray,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_light_gray",
+      "y": 90
+    },
+    "color=light_gray,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_light_gray"
+    },
+    "color=light_gray,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_light_gray",
+      "y": 180
+    },
+    "color=light_gray,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_light_gray",
+      "y": 270
+    },
+    "color=lime,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_lime",
+      "y": 90
+    },
+    "color=lime,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_lime"
+    },
+    "color=lime,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_lime",
+      "y": 180
+    },
+    "color=lime,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_lime",
+      "y": 270
+    },
+    "color=magenta,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_magenta",
+      "y": 90
+    },
+    "color=magenta,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_magenta"
+    },
+    "color=magenta,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_magenta",
+      "y": 180
+    },
+    "color=magenta,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_magenta",
+      "y": 270
+    },
+    "color=orange,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_orange",
+      "y": 90
+    },
+    "color=orange,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_orange"
+    },
+    "color=orange,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_orange",
+      "y": 180
+    },
+    "color=orange,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_orange",
+      "y": 270
+    },
+    "color=pink,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_pink",
+      "y": 90
+    },
+    "color=pink,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_pink"
+    },
+    "color=pink,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_pink",
+      "y": 180
+    },
+    "color=pink,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_pink",
+      "y": 270
+    },
+    "color=purple,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_purple",
+      "y": 90
+    },
+    "color=purple,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_purple"
+    },
+    "color=purple,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_purple",
+      "y": 180
+    },
+    "color=purple,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_purple",
+      "y": 270
+    },
+    "color=red,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_red",
+      "y": 90
+    },
+    "color=red,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_red"
+    },
+    "color=red,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_red",
+      "y": 180
+    },
+    "color=red,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_red",
+      "y": 270
+    },
+    "color=white,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_white",
+      "y": 90
+    },
+    "color=white,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_white"
+    },
+    "color=white,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_white",
+      "y": 180
+    },
+    "color=white,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_white",
+      "y": 270
+    },
+    "color=yellow,facing=east": {
+      "model": "nekoration:block/awning/awning_stripe_short_yellow",
+      "y": 90
+    },
+    "color=yellow,facing=north": {
+      "model": "nekoration:block/awning/awning_stripe_short_yellow"
+    },
+    "color=yellow,facing=south": {
+      "model": "nekoration:block/awning/awning_stripe_short_yellow",
+      "y": 180
+    },
+    "color=yellow,facing=west": {
+      "model": "nekoration:block/awning/awning_stripe_short_yellow",
+      "y": 270
+    }
+  }
+}

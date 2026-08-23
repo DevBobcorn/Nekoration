@@ -48,7 +48,8 @@ public final class OrnamentAssetProvider implements DataProvider {
             writeModel(output, writes, colorModelPath(id, color), shortAwning ? "awning_short" : "awning",
                     stripe ? Map.of("0", modLoc("block/awning/" + color + "_stripe_top"),
                             "1", modLoc("block/awning/" + color + "_stripe"))
-                            : Map.of("0", "block/" + color + "_wool"));
+                            : Map.of("0", "block/" + color + "_wool",
+                                    "1", modLoc("block/awning/" + color + "_pure")));
             if (!shortAwning) {
                 writeModel(output, writes, colorEndModelPath(id, color), "awning_end",
                         stripe ? Map.of("0", modLoc("block/awning/" + color + "_stripe_top"),
@@ -62,16 +63,26 @@ public final class OrnamentAssetProvider implements DataProvider {
                 if (!shortAwning) {
                     key += ",bottom=false";
                 }
-                variants.put(key, facingVariant(modLoc("block/awning/" + colorModelPath(id, color)), rotation(facing)));
+                variants.put(key, facingVariant(modLoc("block/" + colorModelPath(id, color)), rotation(facing)));
                 if (!shortAwning) {
                     variants.put("color=" + color + ",facing=" + facing + ",bottom=true",
-                            facingVariant(modLoc("block/awning/" + colorEndModelPath(id, color)), rotation(facing)));
+                            facingVariant(modLoc("block/" + colorEndModelPath(id, color)), rotation(facing)));
                 }
             }
         }
         write(output, writes, blockstates, id, Map.of("variants", variants));
-        String itemModel = shortAwning ? colorModelPath(id, "white") : colorEndModelPath(id, "white");
-        write(output, writes, items, id, Map.of("parent", modLoc("block/" + itemModel)));
+        Map<String, Object> itemBody = new LinkedHashMap<>();
+        itemBody.put("parent", modLoc("block/" + (shortAwning ? colorModelPath(id, "white") : colorEndModelPath(id, "white"))));
+        List<Map<String, Object>> overrides = new ArrayList<>();
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            Map<String, Object> override = new LinkedHashMap<>();
+            override.put("predicate", Map.of("nekoration:color", (double) color.getNbtId()));
+            override.put("model", modLoc("block/" + (shortAwning ? colorModelPath(id, color.getSerializedName())
+                    : colorEndModelPath(id, color.getSerializedName()))));
+            overrides.add(override);
+        }
+        itemBody.put("overrides", overrides);
+        write(output, writes, items, id, itemBody);
     }
 
     private void writeModel(CachedOutput output, List<CompletableFuture<?>> writes, String path, String parent,

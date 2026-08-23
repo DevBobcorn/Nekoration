@@ -1,5 +1,8 @@
 package io.devbobcorn.nekoration;
 
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -19,9 +22,11 @@ import io.devbobcorn.nekoration.client.creative.NekoCreativeTabFilterClient;
 import io.devbobcorn.nekoration.client.ct.NekoModelSwapper;
 import io.devbobcorn.nekoration.client.rendering.ItemDisplayBlockEntityRenderer;
 import io.devbobcorn.nekoration.client.rendering.SeatEntityRenderer;
+import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
 import io.devbobcorn.nekoration.registry.ModEntities;
 import io.devbobcorn.nekoration.registry.ModMenuTypes;
+import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = Nekoration.MODID, dist = Dist.CLIENT)
@@ -42,6 +47,10 @@ public class NekorationClient {
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
         NeoForge.EVENT_BUS.register(NekoCreativeTabFilterClient.class);
+        ItemPropertyFunction color = (stack, level, entity, seed) ->
+                DyeableBlockItem.getColor(stack).getNbtId();
+        ResourceLocation colorId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "color");
+        OrnamentRegistration.awningBlockItemsView().forEach(item -> ItemProperties.register(item.get(), colorId, color));
     }
 
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
