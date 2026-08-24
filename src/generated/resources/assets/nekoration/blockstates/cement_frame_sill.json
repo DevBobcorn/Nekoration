@@ -1,0 +1,1444 @@
+{
+  "variants": {
+    "color=black,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=black,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=black,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=black,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=black,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=black,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=black,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=black,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=black,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=black,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=black,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=black,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=black,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=black,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=black,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=black,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=black,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=black,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=black,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=black,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=black,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=black,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=black,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=black,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=blue,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=blue,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=blue,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=blue,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=blue,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=blue,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=blue,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=blue,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=blue,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=blue,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=blue,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=blue,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=blue,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=blue,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=blue,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=blue,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=blue,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=blue,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=blue,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=blue,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=blue,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=blue,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=blue,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=blue,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=brown,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=brown,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=brown,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=brown,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=brown,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=brown,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=brown,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=brown,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=brown,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=brown,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=brown,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=brown,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=brown,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=brown,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=brown,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=brown,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=brown,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=brown,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=brown,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=brown,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=brown,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=brown,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=brown,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=brown,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=cyan,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=cyan,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=cyan,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=cyan,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=cyan,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=cyan,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=cyan,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=cyan,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=cyan,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=cyan,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=cyan,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=cyan,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=cyan,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=cyan,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=cyan,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=cyan,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=cyan,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=cyan,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=cyan,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=cyan,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=cyan,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=cyan,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=cyan,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=cyan,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=gray,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=gray,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=gray,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=gray,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=gray,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=gray,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=gray,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=gray,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=gray,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=gray,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=gray,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=gray,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=gray,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=gray,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=gray,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=gray,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=gray,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=gray,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=gray,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=gray,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=gray,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=gray,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=gray,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=gray,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=green,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=green,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=green,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=green,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=green,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=green,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=green,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=green,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=green,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=green,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=green,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=green,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=green,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=green,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=green,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=green,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=green,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=green,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=green,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=green,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=green,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=green,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=green,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=green,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=light_blue,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=light_blue,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=light_blue,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=light_blue,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=light_blue,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=light_blue,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=light_blue,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=light_blue,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=light_blue,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=light_blue,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=light_blue,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=light_blue,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=light_blue,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=light_blue,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=light_blue,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=light_blue,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=light_blue,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=light_blue,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=light_blue,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=light_blue,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=light_blue,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=light_blue,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=light_blue,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=light_blue,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=light_gray,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=light_gray,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=light_gray,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=light_gray,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=light_gray,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=light_gray,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=light_gray,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=light_gray,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=light_gray,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=light_gray,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=light_gray,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=light_gray,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=light_gray,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=light_gray,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=light_gray,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=light_gray,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=light_gray,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=light_gray,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=light_gray,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=light_gray,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=light_gray,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=light_gray,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=light_gray,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=light_gray,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=lime,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=lime,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=lime,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=lime,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=lime,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=lime,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=lime,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=lime,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=lime,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=lime,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=lime,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=lime,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=lime,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=lime,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=lime,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=lime,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=lime,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=lime,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=lime,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=lime,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=lime,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=lime,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=lime,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=lime,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=magenta,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=magenta,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=magenta,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=magenta,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=magenta,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=magenta,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=magenta,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=magenta,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=magenta,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=magenta,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=magenta,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=magenta,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=magenta,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=magenta,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=magenta,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=magenta,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=magenta,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=magenta,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=magenta,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=magenta,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=magenta,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=magenta,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=magenta,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=magenta,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=orange,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=orange,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=orange,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=orange,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=orange,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=orange,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=orange,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=orange,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=orange,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=orange,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=orange,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=orange,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=orange,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=orange,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=orange,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=orange,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=orange,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=orange,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=orange,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=orange,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=orange,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=orange,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=orange,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=orange,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=pink,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=pink,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=pink,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=pink,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=pink,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=pink,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=pink,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=pink,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=pink,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=pink,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=pink,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=pink,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=pink,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=pink,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=pink,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=pink,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=pink,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=pink,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=pink,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=pink,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=pink,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=pink,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=pink,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=pink,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=purple,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=purple,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=purple,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=purple,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=purple,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=purple,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=purple,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=purple,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=purple,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=purple,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=purple,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=purple,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=purple,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=purple,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=purple,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=purple,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=purple,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=purple,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=purple,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=purple,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=purple,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=purple,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=purple,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=purple,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=red,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=red,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=red,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=red,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=red,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=red,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=red,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=red,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=red,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=red,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=red,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=red,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=red,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=red,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=red,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=red,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=red,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=red,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=red,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=red,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=red,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=red,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=red,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=red,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=white,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=white,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=white,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=white,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=white,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=white,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=white,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=white,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=white,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=white,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=white,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=white,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=white,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=white,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=white,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=white,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=white,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=white,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=white,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=white,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=white,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=white,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=white,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=white,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=yellow,horizontal_connection=d0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=yellow,horizontal_connection=d0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=yellow,horizontal_connection=d0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=yellow,horizontal_connection=d0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=yellow,horizontal_connection=d1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=yellow,horizontal_connection=d1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=yellow,horizontal_connection=d1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=yellow,horizontal_connection=d1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    },
+    "color=yellow,horizontal_connection=s0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 90
+    },
+    "color=yellow,horizontal_connection=s0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill"
+    },
+    "color=yellow,horizontal_connection=s0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 180
+    },
+    "color=yellow,horizontal_connection=s0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill",
+      "y": 270
+    },
+    "color=yellow,horizontal_connection=t0,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 90
+    },
+    "color=yellow,horizontal_connection=t0,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0"
+    },
+    "color=yellow,horizontal_connection=t0,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 180
+    },
+    "color=yellow,horizontal_connection=t0,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t0",
+      "y": 270
+    },
+    "color=yellow,horizontal_connection=t1,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 90
+    },
+    "color=yellow,horizontal_connection=t1,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1"
+    },
+    "color=yellow,horizontal_connection=t1,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 180
+    },
+    "color=yellow,horizontal_connection=t1,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t1",
+      "y": 270
+    },
+    "color=yellow,horizontal_connection=t2,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 90
+    },
+    "color=yellow,horizontal_connection=t2,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2"
+    },
+    "color=yellow,horizontal_connection=t2,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 180
+    },
+    "color=yellow,horizontal_connection=t2,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_sill_t2",
+      "y": 270
+    }
+  }
+}

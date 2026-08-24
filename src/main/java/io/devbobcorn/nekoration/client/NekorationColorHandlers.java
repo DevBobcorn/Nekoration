@@ -5,7 +5,11 @@ import org.jetbrains.annotations.Nullable;
 import io.devbobcorn.nekoration.NekoColors.NekoColorPalette;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
+import io.devbobcorn.nekoration.blocks.DyeableHorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
+import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
+import io.devbobcorn.nekoration.blocks.cement.DyeablePotBlock;
+import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.CementBlockRegistration;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
@@ -33,11 +37,19 @@ public final class NekorationColorHandlers {
 
     private static BlockColor dyeableBlockColor(NekoColorPalette palette) {
         return (BlockState state, @Nullable BlockAndTintGetter level, @Nullable BlockPos pos, int tintIndex) -> {
-            if (tintIndex != 0 || !(state.getBlock() instanceof DyeableBlock || state.getBlock() instanceof DyeableVerticalConnectedBlock)) {
+            if (tintIndex != 0 || !(isDyeableBlock(state))) {
                 return 0xFFFFFFFF;
             }
             return 0xFF000000 | state.getValue(DyeableBlock.COLOR).getColor(palette);
         };
+    }
+
+    private static boolean isDyeableBlock(BlockState state) {
+        return state.getBlock() instanceof DyeableBlock
+                || state.getBlock() instanceof DyeableVerticalConnectedBlock
+                || state.getBlock() instanceof DyeableHorizontalConnectedBlock
+                || state.getBlock() instanceof DyeableFrameSideBlock
+                || state.getBlock() instanceof DyeablePotBlock;
     }
 
     private static ItemColor dyeableBlockItemColor(NekoColorPalette palette) {

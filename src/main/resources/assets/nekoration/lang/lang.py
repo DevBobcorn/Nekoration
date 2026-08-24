@@ -115,9 +115,9 @@ for c_i in range(0, len(color_ids)):
     obj_cn['color.nekoration.' + color_ids[c_i]] = colors_cn[c_i]
 
 # [CEMENT BLOCKS TAB]
-cement_ids = ["cement", "trimmed_cement", "paneled_cement", "layered_cement"]
-cements_us = ["%s Cement", "%s Trimmed Cement", "%s Paneled Cement", "%s Layered Cement"]
-cements_cn = ["%s水泥", "%s饰边水泥", "%s镶板水泥", "%s层叠水泥"]
+cement_ids = ["cement", "trimmed_cement", "paneled_cement", "layered_cement", "cement_frame_head", "cement_frame_peak", "cement_frame_side", "cement_frame_sill", "cement_pot", "cement_planter"]
+cements_us = ["%s Cement", "%s Trimmed Cement", "%s Paneled Cement", "%s Layered Cement", "%s Cement Frame Head", "%s Cement Frame Peak", "%s Cement Frame Side", "%s Cement Frame Sill", "%s Cement Pot", "%s Cement Planter"]
+cements_cn = ["%s水泥", "%s饰边水泥", "%s镶板水泥", "%s层叠水泥", "%s水泥框顶边", "%s水泥框尖顶", "%s水泥框侧边", "%s水泥框底边", "%s水泥花盆", "%s水泥种植盆"]
 
 for c_i in range(0, len(cement_ids)):
     obj_us['block.nekoration.' + cement_ids[c_i]] = cements_us[c_i]

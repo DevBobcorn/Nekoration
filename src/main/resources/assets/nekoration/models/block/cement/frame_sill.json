@@ -1,0 +1,54 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "nekoration:block/cement/cement_frame_sill",
+		"particle": "#0"
+	},
+	"elements": [
+		{
+			"name": "stool",
+			"from": [-4, 14, 12],
+			"to": [20, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 14, 14]},
+			"faces": {
+				"north": {"uv": [0, 0, 12, 1], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [0, 0, 2, 1], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [0, 0, 12, 1], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [10, 0, 12, 1], "texture": "#0", "tintindex": 0},
+				"up": {"uv": [0, 1.5, 12, 3.5], "texture": "#0", "tintindex": 0},
+				"down": {"uv": [0, 1.5, 12, 3.5], "texture": "#0", "tintindex": 0}
+			}
+		},
+		{
+			"name": "apron",
+			"from": [-3, 12, 13],
+			"to": [19, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 12, 14]},
+			"faces": {
+				"north": {"uv": [0.5, 5.5, 11.5, 6.5], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [0, 5.5, 2, 6.5], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [0.5, 5.5, 11.5, 6.5], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [10, 5.5, 12, 6.5], "texture": "#0", "tintindex": 0},
+				"down": {"uv": [0.5, 4, 11.5, 5.5], "texture": "#0", "tintindex": 0}
+			}
+		}
+	],
+	"display": {
+		"firstperson_righthand": {
+			"rotation": [0, 75, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 75, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"gui": {
+			"rotation": [30, -135, 0],
+			"translation": [2.5, -5, 0],
+			"scale": [0.625, 0.625, 0.625]
+		}
+	}
+}

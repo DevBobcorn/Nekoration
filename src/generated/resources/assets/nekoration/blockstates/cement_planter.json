@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=black": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=blue": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=brown": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=cyan": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=gray": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=green": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=light_blue": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=light_gray": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=lime": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=magenta": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=orange": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=pink": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=purple": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=red": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=white": {
+      "model": "nekoration:block/cement/cement_planter"
+    },
+    "color=yellow": {
+      "model": "nekoration:block/cement/cement_planter"
+    }
+  }
+}

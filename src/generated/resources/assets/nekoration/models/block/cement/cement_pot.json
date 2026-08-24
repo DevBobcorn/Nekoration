@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/cement/pot",
+  "textures": {
+    "0": "nekoration:block/cement/cement_pot",
+    "1": "nekoration:block/cement/cement_top"
+  }
+}

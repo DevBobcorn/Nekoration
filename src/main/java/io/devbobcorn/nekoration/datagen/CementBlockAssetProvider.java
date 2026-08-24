@@ -19,6 +19,8 @@ import net.minecraft.resources.ResourceLocation;
 public final class CementBlockAssetProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final List<String> CONNECTION_IDS = List.of("s0", "d0", "d1", "t0", "t1", "t2");
+    private static final List<String> FRAME_CONNECTION_IDS = List.of("left", "right", "both");
+    private static final List<String> FACINGS = List.of("north", "east", "south", "west");
 
     private final PackOutput.PathProvider blockstatePathProvider;
     private final PackOutput.PathProvider blockModelPathProvider;
@@ -37,6 +39,12 @@ public final class CementBlockAssetProvider implements DataProvider {
         generateStandalone(cachedOutput, writes, "trimmed_cement", "trimmed_cement", "cement_top");
         generateConnected(cachedOutput, writes, "paneled_cement", "paneled_cement", true);
         generateStandalone(cachedOutput, writes, "layered_cement", "layered_cement", "cement_top");
+        generateFrame(cachedOutput, writes, "cement_frame_head", "frame_head", false);
+        generateFrame(cachedOutput, writes, "cement_frame_peak", "frame_peak", true);
+        generateFrame(cachedOutput, writes, "cement_frame_sill", "frame_sill", false);
+        generateFrameSide(cachedOutput, writes, "cement_frame_side");
+        generatePot(cachedOutput, writes, "cement_pot", "pot");
+        generatePot(cachedOutput, writes, "cement_planter", "planter");
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
 
@@ -85,6 +93,98 @@ public final class CementBlockAssetProvider implements DataProvider {
         textures.put("end", modLoc("block/cement/" + endTexture));
         writeJson(output, writes, blockModelPathProvider, "cement/" + modelId,
                 Map.of("parent", modLoc("block/cement/tintable_column"), "textures", textures));
+    }
+
+    private void generateFrame(CachedOutput output, List<CompletableFuture<?>> writes, String blockId,
+            String part, boolean hasBackTexture) {
+        Map<String, Object> textures = new LinkedHashMap<>();
+        textures.put("0", modLoc("block/cement/" + blockId));
+        if (hasBackTexture) {
+            textures.put("1", modLoc("block/cement/cement_top"));
+        }
+
+        writeJson(output, writes, blockModelPathProvider, "cement/" + blockId,
+                Map.of("parent", modLoc("block/cement/" + part), "textures", textures));
+
+        for (String connectionId : CONNECTION_IDS) {
+            if ("s0".equals(connectionId) || "d0".equals(connectionId) || "d1".equals(connectionId)) {
+                continue;
+            }
+            writeJson(output, writes, blockModelPathProvider, "cement/" + blockId + "_" + connectionId,
+                    Map.of("parent", modLoc("block/cement/" + part + "_" + connectionId), "textures", textures));
+        }
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            for (String connectionId : CONNECTION_IDS) {
+                String modelName = "s0".equals(connectionId) ? blockId : blockId + "_" + tripleConnectionSuffixForConnection(connectionId);
+                putFacingVariants(variants, "color=" + color.getSerializedName() + ",horizontal_connection=" + connectionId,
+                        modLoc("block/cement/" + modelName));
+            }
+        }
+        writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
+        writeJson(output, writes, itemModelPathProvider, blockId,
+                Map.of("parent", modLoc("block/cement/" + blockId)));
+    }
+
+    private void generateFrameSide(CachedOutput output, List<CompletableFuture<?>> writes, String blockId) {
+        Map<String, Object> textures = new LinkedHashMap<>();
+        textures.put("0", modLoc("block/cement/" + blockId));
+
+        for (String connectionId : FRAME_CONNECTION_IDS) {
+            writeJson(output, writes, blockModelPathProvider, "cement/" + blockId + "_" + connectionId,
+                    Map.of("parent", modLoc("block/cement/frame_side_" + connectionId), "textures", textures));
+        }
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            for (String connectionId : FRAME_CONNECTION_IDS) {
+                putFacingVariants(variants, "color=" + color.getSerializedName() + ",frame_connection=" + connectionId,
+                        modLoc("block/cement/" + blockId + "_" + connectionId));
+            }
+        }
+        writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
+        writeJson(output, writes, itemModelPathProvider, blockId,
+                Map.of("parent", modLoc("block/cement/" + blockId + "_both")));
+    }
+
+    private void generatePot(CachedOutput output, List<CompletableFuture<?>> writes, String blockId, String part) {
+        Map<String, Object> textures = new LinkedHashMap<>();
+        textures.put("0", modLoc("block/cement/" + blockId));
+        textures.put("1", modLoc("block/cement/cement_top"));
+
+        writeJson(output, writes, blockModelPathProvider, "cement/" + blockId,
+                Map.of("parent", modLoc("block/cement/" + part), "textures", textures));
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            variants.put("color=" + color.getSerializedName(),
+                    Map.of("model", modLoc("block/cement/" + blockId)));
+        }
+        writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
+        writeJson(output, writes, itemModelPathProvider, blockId,
+                Map.of("parent", modLoc("block/cement/" + blockId)));
+    }
+
+    private static void putFacingVariants(Map<String, Object> variants, String keyPrefix, String model) {
+        int i = 0;
+        for (String facing : FACINGS) {
+            Map<String, Object> variant = new LinkedHashMap<>();
+            variant.put("model", model);
+            if (i != 0) {
+                variant.put("y", i * 90);
+            }
+            variants.put(keyPrefix + ",facing=" + facing, variant);
+            i++;
+        }
+    }
+
+    private static String tripleConnectionSuffixForConnection(String connectionId) {
+        return switch (connectionId) {
+            case "d0", "t0" -> "t0";
+            case "d1", "t2" -> "t2";
+            default -> "t1";
+        };
     }
 
     private static String modLoc(String path) {

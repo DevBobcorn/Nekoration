@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/cement/frame_peak_t1",
+  "textures": {
+    "0": "nekoration:block/cement/cement_frame_peak",
+    "1": "nekoration:block/cement/cement_top"
+  }
+}

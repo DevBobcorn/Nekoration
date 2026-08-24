@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=black": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=blue": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=brown": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=cyan": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=gray": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=green": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=light_blue": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=light_gray": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=lime": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=magenta": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=orange": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=pink": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=purple": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=red": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=white": {
+      "model": "nekoration:block/cement/cement_pot"
+    },
+    "color=yellow": {
+      "model": "nekoration:block/cement/cement_pot"
+    }
+  }
+}

@@ -1,0 +1,724 @@
+{
+  "variants": {
+    "color=black,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=black,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=black,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=black,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=black,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=black,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=black,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=black,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=black,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=black,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=black,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=black,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=blue,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=blue,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=blue,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=blue,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=blue,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=blue,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=blue,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=blue,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=blue,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=blue,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=blue,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=blue,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=brown,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=brown,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=brown,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=brown,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=brown,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=brown,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=brown,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=brown,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=brown,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=brown,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=brown,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=brown,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=cyan,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=cyan,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=cyan,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=cyan,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=cyan,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=cyan,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=cyan,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=cyan,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=cyan,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=cyan,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=cyan,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=cyan,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=gray,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=gray,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=gray,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=gray,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=gray,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=gray,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=gray,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=gray,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=gray,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=gray,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=gray,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=gray,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=green,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=green,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=green,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=green,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=green,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=green,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=green,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=green,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=green,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=green,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=green,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=green,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=light_blue,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=light_blue,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=light_blue,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=light_blue,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=light_blue,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=light_blue,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=light_blue,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=light_blue,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=light_blue,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=light_blue,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=light_blue,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=light_blue,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=light_gray,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=light_gray,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=light_gray,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=light_gray,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=light_gray,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=light_gray,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=light_gray,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=light_gray,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=light_gray,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=light_gray,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=light_gray,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=light_gray,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=lime,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=lime,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=lime,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=lime,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=lime,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=lime,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=lime,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=lime,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=lime,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=lime,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=lime,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=lime,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=magenta,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=magenta,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=magenta,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=magenta,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=magenta,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=magenta,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=magenta,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=magenta,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=magenta,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=magenta,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=magenta,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=magenta,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=orange,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=orange,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=orange,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=orange,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=orange,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=orange,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=orange,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=orange,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=orange,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=orange,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=orange,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=orange,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=pink,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=pink,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=pink,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=pink,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=pink,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=pink,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=pink,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=pink,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=pink,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=pink,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=pink,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=pink,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=purple,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=purple,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=purple,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=purple,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=purple,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=purple,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=purple,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=purple,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=purple,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=purple,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=purple,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=purple,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=red,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=red,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=red,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=red,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=red,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=red,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=red,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=red,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=red,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=red,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=red,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=red,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=white,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=white,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=white,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=white,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=white,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=white,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=white,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=white,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=white,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=white,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=white,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=white,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    },
+    "color=yellow,frame_connection=both,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 90
+    },
+    "color=yellow,frame_connection=both,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_both"
+    },
+    "color=yellow,frame_connection=both,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 180
+    },
+    "color=yellow,frame_connection=both,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_both",
+      "y": 270
+    },
+    "color=yellow,frame_connection=left,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 90
+    },
+    "color=yellow,frame_connection=left,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_left"
+    },
+    "color=yellow,frame_connection=left,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 180
+    },
+    "color=yellow,frame_connection=left,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_left",
+      "y": 270
+    },
+    "color=yellow,frame_connection=right,facing=east": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 90
+    },
+    "color=yellow,frame_connection=right,facing=north": {
+      "model": "nekoration:block/cement/cement_frame_side_right"
+    },
+    "color=yellow,frame_connection=right,facing=south": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 180
+    },
+    "color=yellow,frame_connection=right,facing=west": {
+      "model": "nekoration:block/cement/cement_frame_side_right",
+      "y": 270
+    }
+  }
+}
