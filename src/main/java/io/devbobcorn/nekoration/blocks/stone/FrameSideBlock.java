@@ -60,7 +60,7 @@ public class FrameSideBlock extends HorizontalBlock {
             if (level.isClientSide()) {
                 return ItemInteractionResult.SUCCESS;
             }
-            level.setBlock(pos, state.cycle(CONNECTION), Block.UPDATE_ALL);
+            level.setBlock(pos, state.cycle(CONNECTION), Block.UPDATE_ALL | Block.UPDATE_KNOWN_SHAPE);
             return ItemInteractionResult.CONSUME;
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
