@@ -1,18 +1,22 @@
 package io.devbobcorn.nekoration.registry;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Consumer;
+
+import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.blocks.WindowPlantBlock;
 import io.devbobcorn.nekoration.blocks.AwningBlock;
 import io.devbobcorn.nekoration.blocks.ShortAwningBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Registers ornaments.
@@ -21,9 +25,9 @@ public final class OrnamentRegistration {
     private static DeferredBlock<Block> WINDOW_PLANT_BLOCK;
     public static DeferredItem<DyeableBlockItem> WINDOW_PLANT_BLOCK_ITEM;
     public static final List<DeferredItem<DyeableBlockItem>> AWNING_BLOCK_ITEMS = new ArrayList<>();
-    
-    private static final String TAB_ICON_ITEM_ID = "window_plant";
-    private static DeferredItem<DyeableBlockItem> tabIconItem;
+
+    private static final String AWNING_CATEGORY_ICON_ITEM_ID = "awning_stripe_short";
+    private static DeferredItem<DyeableBlockItem> awningCategoryIconItem;
 
     private OrnamentRegistration() {
     }
@@ -42,6 +46,9 @@ public final class OrnamentRegistration {
                 : new AwningBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).noOcclusion()));
         DeferredItem<DyeableBlockItem> item = registerDyeableBlockItem(items, id, block);
         AWNING_BLOCK_ITEMS.add(item);
+        if (AWNING_CATEGORY_ICON_ITEM_ID.equals(id)) {
+            awningCategoryIconItem = item;
+        }
     }
 
     public static List<DeferredItem<DyeableBlockItem>> awningBlockItemsView() {
@@ -54,9 +61,6 @@ public final class OrnamentRegistration {
         DeferredItem<DyeableBlockItem> item = registerDyeableBlockItem(items, id, block);
         WINDOW_PLANT_BLOCK = block;
         WINDOW_PLANT_BLOCK_ITEM = item;
-        if (TAB_ICON_ITEM_ID.equals(id)) {
-            tabIconItem = item;
-        }
     }
 
     private static DeferredItem<DyeableBlockItem> registerDyeableBlockItem(DeferredRegister.Items items, String id,
@@ -72,8 +76,20 @@ public final class OrnamentRegistration {
         return WINDOW_PLANT_BLOCK_ITEM;
     }
 
-    /** Creative tab icon ({@value #TAB_ICON_ITEM_ID}). */
-    public static DeferredItem<DyeableBlockItem> iconItem() {
-        return tabIconItem;
+    /** Icon for the Awning category of the Ornaments tab ({@value #AWNING_CATEGORY_ICON_ITEM_ID}). */
+    public static DeferredItem<DyeableBlockItem> awningCategoryIconItem() {
+        return awningCategoryIconItem;
+    }
+
+    /** Add awning and window plant stacks in every color (Awning category of the Ornaments tab). */
+    public static void addAwningCategoryStacks(Consumer<ItemStack> out) {
+        for (var holder : awningBlockItemsView()) {
+            for (EnumNekoColor color : EnumNekoColor.values()) {
+                out.accept(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
+            }
+        }
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            out.accept(DyeableBlockItem.createCreativeTabStack(WINDOW_PLANT_BLOCK_ITEM.get(), color));
+        }
     }
 }

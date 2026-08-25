@@ -55,6 +55,10 @@ decor_ids = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_sh
 decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Flowering Window Plant"]
 decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","开%s花的窗边植物"]
 
+decortype_ids = ["awning", "easel_menu", "furniture", "container"]
+decortypes_us = ["Awning", "Easel Menu", "Furniture", "Container"]
+decortypes_cn = ["雨篷", "展架", "家具", "收纳"]
+
 item_ids = ["brochure","paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette","painting.blank","painting.painted","painting.magic","wallpaper","camera"]
 items_us = ["Neko Brochure [WIP]","Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Blank Painting (%sx%s)","Painting (%sx%s)","Linked Painting (%sx%s)","%s Wallpaper","Camera"]
 items_cn = ["猫咪手册[WIP]","猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","空白画(%sx%s)","画(%sx%s)","链接画(%sx%s)","%s墙纸","相机"]
@@ -113,6 +117,11 @@ obj_lol = {}
 for c_i in range(0, len(color_ids)):
     obj_us['color.nekoration.' + color_ids[c_i]] = colors_us[c_i]
     obj_cn['color.nekoration.' + color_ids[c_i]] = colors_cn[c_i]
+
+# Wood Type Names (for creative tab filter tooltips)...
+for w_i in range(0, len(wood_ids)):
+    obj_us['wood.nekoration.' + wood_ids[w_i]] = woods_us[w_i]
+    obj_cn['wood.nekoration.' + wood_ids[w_i]] = woods_cn[w_i]
 
 # [CEMENT BLOCKS TAB]
 cement_ids = ["cement", "trimmed_cement", "paneled_cement", "layered_cement", "cement_frame_head", "cement_frame_peak", "cement_frame_side", "cement_frame_sill", "cement_pot", "cement_planter"]
@@ -177,6 +186,10 @@ for d_i in range(0, len(door_ids)):
 for d_i in range(0, len(decor_ids)):
     obj_us['block.nekoration.' + decor_ids[d_i]] = decors_us[d_i]
     obj_cn['block.nekoration.' + decor_ids[d_i]] = decors_cn[d_i]
+
+for d_i in range(0, len(decortype_ids)):
+    obj_us['decortype.nekoration.' + decortype_ids[d_i]] = decortypes_us[d_i]
+    obj_cn['decortype.nekoration.' + decortype_ids[d_i]] = decortypes_cn[d_i]
 
 for m_i in range(0, len(misc_ids)):
     obj_us['block.nekoration.' + misc_ids[m_i]] = miscs_us[m_i]

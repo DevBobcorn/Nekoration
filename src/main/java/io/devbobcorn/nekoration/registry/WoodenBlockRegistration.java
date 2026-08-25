@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
+import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.NekoWood;
@@ -26,6 +28,7 @@ import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -75,6 +78,7 @@ public final class WoodenBlockRegistration {
     public static final List<DeferredItem<DyeableBlockItem>> HALF_TIMBER_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<BlockItem>> WINDOW_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<? extends BlockItem>> FURNITURE_BLOCK_ITEMS = new ArrayList<>();
+    public static final List<DeferredItem<? extends BlockItem>> CONTAINER_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<DyeableBlockItem>> EASEL_MENU_BLOCK_ITEMS = new ArrayList<>();
     /** All {@link CabinetBlock} instances that use {@link CabinetBlockEntity}. */
     public static final List<DeferredBlock<Block>> CABINET_BLOCKS_FOR_ENTITY = new ArrayList<>();
@@ -83,10 +87,20 @@ public final class WoodenBlockRegistration {
     /** Easel menu blocks using {@link io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity}. */
     public static final List<DeferredBlock<Block>> EASEL_MENU_BLOCKS_FOR_ENTITY = new ArrayList<>();
     public static final Map<NekoWood, List<DeferredItem<DyeableBlockItem>>> DYED_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
-    public static final Map<NekoWood, List<DeferredItem<? extends BlockItem>>> PLAIN_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
-    
+    public static final Map<NekoWood, List<DeferredItem<BlockItem>>> WINDOW_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
+    public static final Map<NekoWood, List<DeferredItem<? extends BlockItem>>> FURNITURE_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
+    public static final Map<NekoWood, List<DeferredItem<? extends BlockItem>>> CONTAINER_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
+
     private static final String TAB_ICON_ITEM_ID = "oak_half_timber_p1";
     private static DeferredItem<DyeableBlockItem> tabIconItem;
+    private static final String ORNAMENTS_TAB_ICON_ITEM_ID = "spruce_easel_menu";
+    private static DeferredItem<DyeableBlockItem> ornamentsTabIconItem;
+    private static final String EASEL_MENU_CATEGORY_ICON_ITEM_ID = "oak_easel_menu";
+    private static DeferredItem<DyeableBlockItem> easelMenuCategoryIconItem;
+    private static final String FURNITURE_CATEGORY_ICON_ITEM_ID = "spruce_table";
+    private static DeferredItem<BlockItem> furnitureCategoryIconItem;
+    private static final String CONTAINER_CATEGORY_ICON_ITEM_ID = "acacia_drawer_chest";
+    private static DeferredItem<BlockItem> containerCategoryIconItem;
 
     private WoodenBlockRegistration() {
     }
@@ -95,7 +109,11 @@ public final class WoodenBlockRegistration {
         for (NekoWood wood : NekoWood.values()) {
             String woodId = wood.id();
             List<DeferredItem<DyeableBlockItem>> dyedByWood = DYED_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood, ignored -> new ArrayList<>());
-            List<DeferredItem<? extends BlockItem>> plainByWood = PLAIN_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood,
+            List<DeferredItem<BlockItem>> windowsByWood = WINDOW_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood,
+                    ignored -> new ArrayList<>());
+            List<DeferredItem<? extends BlockItem>> furnitureByWood = FURNITURE_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood,
+                    ignored -> new ArrayList<>());
+            List<DeferredItem<? extends BlockItem>> containersByWood = CONTAINER_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood,
                     ignored -> new ArrayList<>());
 
             for (int p = 0; p <= 9; p++) {
@@ -116,14 +134,14 @@ public final class WoodenBlockRegistration {
                         () -> new WindowBlock(wood.plankProperties().noOcclusion()));
                 DeferredItem<BlockItem> registered = registerBlockItem(items, id, block);
                 WINDOW_BLOCK_ITEMS.add(registered);
-                plainByWood.add(registered);
+                windowsByWood.add(registered);
 
                 String paneId = woodId + "_window_pane_" + variant.id();
                 DeferredBlock<Block> pane = blocks.register(paneId,
                         () -> new WindowPaneBlock(wood.plankProperties().noOcclusion()));
                 DeferredItem<BlockItem> paneItem = registerBlockItem(items, paneId, pane);
                 WINDOW_BLOCK_ITEMS.add(paneItem);
-                plainByWood.add(paneItem);
+                windowsByWood.add(paneItem);
             }
 
             String tableId = woodId + "_table";
@@ -131,89 +149,95 @@ public final class WoodenBlockRegistration {
                     () -> new TableBlock(wood.plankProperties().noOcclusion()));
             DeferredItem<BlockItem> tableItem = registerBlockItem(items, tableId, table);
             FURNITURE_BLOCK_ITEMS.add(tableItem);
-            plainByWood.add(tableItem);
+            furnitureByWood.add(tableItem);
+            if (FURNITURE_CATEGORY_ICON_ITEM_ID.equals(tableId)) {
+                furnitureCategoryIconItem = tableItem;
+            }
 
             String roundTableId = woodId + "_round_table";
             DeferredBlock<Block> roundTable = blocks.register(roundTableId,
                     () -> new RoundTableBlock(wood.plankProperties().noOcclusion()));
             DeferredItem<BlockItem> roundTableItem = registerBlockItem(items, roundTableId, roundTable);
             FURNITURE_BLOCK_ITEMS.add(roundTableItem);
-            plainByWood.add(roundTableItem);
+            furnitureByWood.add(roundTableItem);
 
             String glassTableId = woodId + "_glass_table";
             DeferredBlock<Block> glassTable = blocks.register(glassTableId,
                     () -> new TableBlock(wood.plankProperties().noOcclusion()));
             DeferredItem<BlockItem> glassTableItem = registerBlockItem(items, glassTableId, glassTable);
             FURNITURE_BLOCK_ITEMS.add(glassTableItem);
-            plainByWood.add(glassTableItem);
+            furnitureByWood.add(glassTableItem);
 
             String roundGlassTableId = woodId + "_round_glass_table";
             DeferredBlock<Block> roundGlassTable = blocks.register(roundGlassTableId,
                     () -> new RoundTableBlock(wood.plankProperties().noOcclusion()));
             DeferredItem<BlockItem> roundGlassTableItem = registerBlockItem(items, roundGlassTableId, roundGlassTable);
             FURNITURE_BLOCK_ITEMS.add(roundGlassTableItem);
-            plainByWood.add(roundGlassTableItem);
+            furnitureByWood.add(roundGlassTableItem);
 
             String chairId = woodId + "_chair";
             DeferredBlock<Block> chair = blocks.register(chairId,
                     () -> new ChairBlock(wood.plankProperties().noOcclusion()));
             DeferredItem<BlockItem> chairItem = registerBlockItem(items, chairId, chair);
             FURNITURE_BLOCK_ITEMS.add(chairItem);
-            plainByWood.add(chairItem);
+            furnitureByWood.add(chairItem);
 
             String armchairId = woodId + "_armchair";
             DeferredBlock<Block> armchair = blocks.register(armchairId,
                     () -> new ArmchairBlock(wood.plankProperties().noOcclusion()));
             DeferredItem<BlockItem> armchairItem = registerBlockItem(items, armchairId, armchair);
             FURNITURE_BLOCK_ITEMS.add(armchairItem);
-            plainByWood.add(armchairItem);
+            furnitureByWood.add(armchairItem);
 
             String benchId = woodId + "_bench";
             DeferredBlock<Block> bench = blocks.register(benchId,
                     () -> new BenchBlock(wood.plankProperties().noOcclusion()));
             DeferredItem<BlockItem> benchItem = registerBlockItem(items, benchId, bench);
             FURNITURE_BLOCK_ITEMS.add(benchItem);
-            plainByWood.add(benchItem);
+            furnitureByWood.add(benchItem);
 
             String cupboardId = woodId + "_cupboard";
             DeferredBlock<Block> cupboard = blocks.register(cupboardId,
                     () -> new CupboardBlock(wood.plankProperties().noOcclusion()));
             ITEM_DISPLAY_BLOCKS_FOR_ENTITY.add(cupboard);
             DeferredItem<BlockItem> cupboardItem = registerBlockItem(items, cupboardId, cupboard);
-            FURNITURE_BLOCK_ITEMS.add(cupboardItem);
-            plainByWood.add(cupboardItem);
+            CONTAINER_BLOCK_ITEMS.add(cupboardItem);
+            containersByWood.add(cupboardItem);
 
             String wallShelfId = woodId + "_wall_shelf";
             DeferredBlock<Block> wallShelf = blocks.register(wallShelfId,
                     () -> new WallShelfBlock(wood.plankProperties().noOcclusion()));
             ITEM_DISPLAY_BLOCKS_FOR_ENTITY.add(wallShelf);
             DeferredItem<BlockItem> wallShelfItem = registerBlockItem(items, wallShelfId, wallShelf);
-            FURNITURE_BLOCK_ITEMS.add(wallShelfItem);
-            plainByWood.add(wallShelfItem);
+            CONTAINER_BLOCK_ITEMS.add(wallShelfItem);
+            containersByWood.add(wallShelfItem);
 
             String cabinetId = woodId + "_cabinet";
             DeferredBlock<Block> cabinet = blocks.register(cabinetId,
                     () -> new CabinetBlock(wood.plankProperties(), true));
             CABINET_BLOCKS_FOR_ENTITY.add(cabinet);
             DeferredItem<BlockItem> cabinetItem = registerBlockItem(items, cabinetId, cabinet);
-            FURNITURE_BLOCK_ITEMS.add(cabinetItem);
-            plainByWood.add(cabinetItem);
+            CONTAINER_BLOCK_ITEMS.add(cabinetItem);
+            containersByWood.add(cabinetItem);
 
             String drawerId = woodId + "_drawer";
             DeferredBlock<Block> drawer = blocks.register(drawerId,
                     () -> new CabinetBlock(wood.plankProperties(), false));
             CABINET_BLOCKS_FOR_ENTITY.add(drawer);
             DeferredItem<BlockItem> drawerItem = registerBlockItem(items, drawerId, drawer);
-            FURNITURE_BLOCK_ITEMS.add(drawerItem);
-            plainByWood.add(drawerItem);
+            CONTAINER_BLOCK_ITEMS.add(drawerItem);
+            containersByWood.add(drawerItem);
 
             String drawerChestId = woodId + "_drawer_chest";
             DeferredBlock<Block> drawerChest = blocks.register(drawerChestId,
                     () -> new CabinetBlock(wood.plankProperties(), true));
             CABINET_BLOCKS_FOR_ENTITY.add(drawerChest);
             DeferredItem<BlockItem> drawerChestItem = registerBlockItem(items, drawerChestId, drawerChest);
-            FURNITURE_BLOCK_ITEMS.add(drawerChestItem);
-            plainByWood.add(drawerChestItem);
+            CONTAINER_BLOCK_ITEMS.add(drawerChestItem);
+            containersByWood.add(drawerChestItem);
+            if (CONTAINER_CATEGORY_ICON_ITEM_ID.equals(drawerChestId)) {
+                containerCategoryIconItem = drawerChestItem;
+            }
 
             String easelMenuId = woodId + "_easel_menu";
             DeferredBlock<Block> easelMenu = blocks.register(easelMenuId,
@@ -221,8 +245,12 @@ public final class WoodenBlockRegistration {
             EASEL_MENU_BLOCKS_FOR_ENTITY.add(easelMenu);
             DeferredItem<DyeableBlockItem> easelMenuItem = registerDyeableBlockItem(items, easelMenuId, easelMenu);
             EASEL_MENU_BLOCK_ITEMS.add(easelMenuItem);
-            FURNITURE_BLOCK_ITEMS.add(easelMenuItem);
-            plainByWood.add(easelMenuItem);
+            if (ORNAMENTS_TAB_ICON_ITEM_ID.equals(easelMenuId)) {
+                ornamentsTabIconItem = easelMenuItem;
+            }
+            if (EASEL_MENU_CATEGORY_ICON_ITEM_ID.equals(easelMenuId)) {
+                easelMenuCategoryIconItem = easelMenuItem;
+            }
         }
 
     }
@@ -275,16 +303,93 @@ public final class WoodenBlockRegistration {
         return Collections.unmodifiableList(DYED_BLOCK_ITEMS_BY_WOOD.getOrDefault(wood, List.of()));
     }
 
-    public static List<DeferredItem<? extends BlockItem>> plainItemsForWood(NekoWood wood) {
-        return Collections.unmodifiableList(PLAIN_BLOCK_ITEMS_BY_WOOD.getOrDefault(wood, List.of()));
+    public static List<DeferredItem<BlockItem>> windowItemsForWood(NekoWood wood) {
+        return Collections.unmodifiableList(WINDOW_BLOCK_ITEMS_BY_WOOD.getOrDefault(wood, List.of()));
+    }
+
+    public static List<DeferredItem<? extends BlockItem>> furnitureItemsForWood(NekoWood wood) {
+        return Collections.unmodifiableList(FURNITURE_BLOCK_ITEMS_BY_WOOD.getOrDefault(wood, List.of()));
+    }
+
+    public static List<DeferredItem<? extends BlockItem>> containerItemsForWood(NekoWood wood) {
+        return Collections.unmodifiableList(CONTAINER_BLOCK_ITEMS_BY_WOOD.getOrDefault(wood, List.of()));
     }
 
     public static List<DeferredItem<DyeableBlockItem>> easelMenuBlockItemsView() {
         return Collections.unmodifiableList(EASEL_MENU_BLOCK_ITEMS);
     }
 
+    public static List<DeferredItem<? extends BlockItem>> containerBlockItemsView() {
+        return Collections.unmodifiableList(CONTAINER_BLOCK_ITEMS);
+    }
+
     /** Creative tab icon ({@value #TAB_ICON_ITEM_ID}). */
     public static DeferredItem<DyeableBlockItem> iconItem() {
         return tabIconItem;
+    }
+
+    /** Ornaments tab icon ({@value #ORNAMENTS_TAB_ICON_ITEM_ID}). */
+    public static DeferredItem<DyeableBlockItem> ornamentsTabIconItem() {
+        return ornamentsTabIconItem;
+    }
+
+    /** Icon for the Easel Menu category of the Ornaments tab ({@value #EASEL_MENU_CATEGORY_ICON_ITEM_ID}). */
+    public static DeferredItem<DyeableBlockItem> easelMenuCategoryIconItem() {
+        return easelMenuCategoryIconItem;
+    }
+
+    /** Add easel menu stacks for all woods (Easel Menu category of the Ornaments tab). */
+    public static void addEaselMenuCategoryStacks(Consumer<ItemStack> out) {
+        for (var holder : easelMenuBlockItemsView()) {
+            addPlainOrDyedStacks(holder.get(), out);
+        }
+    }
+
+    /** Icon for the Furniture category of the Ornaments tab ({@value #FURNITURE_CATEGORY_ICON_ITEM_ID}). */
+    public static DeferredItem<BlockItem> furnitureCategoryIconItem() {
+        return furnitureCategoryIconItem;
+    }
+
+    /** Icon for the Container category of the Ornaments tab ({@value #CONTAINER_CATEGORY_ICON_ITEM_ID}). */
+    public static DeferredItem<BlockItem> containerCategoryIconItem() {
+        return containerCategoryIconItem;
+    }
+
+    /** Add furniture stacks for all woods (Furniture category of the Ornaments tab, Wooden Blocks tab). */
+    public static void addFurnitureCategoryStacks(Consumer<ItemStack> out) {
+        for (var holder : furnitureBlockItemsView()) {
+            addPlainOrDyedStacks(holder.get(), out);
+        }
+    }
+
+    /** Add container stacks for all woods (Container category of the Ornaments tab, Wooden Blocks tab). */
+    public static void addContainerCategoryStacks(Consumer<ItemStack> out) {
+        for (var holder : containerBlockItemsView()) {
+            addPlainOrDyedStacks(holder.get(), out);
+        }
+    }
+
+    /** Add furniture stacks for one wood (Wooden Blocks tab filter). */
+    public static void addFurnitureStacksForWood(NekoWood wood, Consumer<ItemStack> out) {
+        for (var holder : furnitureItemsForWood(wood)) {
+            addPlainOrDyedStacks(holder.get(), out);
+        }
+    }
+
+    /** Add container stacks for one wood (Wooden Blocks tab filter). */
+    public static void addContainerStacksForWood(NekoWood wood, Consumer<ItemStack> out) {
+        for (var holder : containerItemsForWood(wood)) {
+            addPlainOrDyedStacks(holder.get(), out);
+        }
+    }
+
+    /** Dyed items get white and black variants, plain items a single stack. */
+    private static void addPlainOrDyedStacks(Item item, Consumer<ItemStack> out) {
+        if (item instanceof DyeableBlockItem) {
+            out.accept(DyeableBlockItem.createCreativeTabStack(item, EnumNekoColor.WHITE));
+            out.accept(DyeableBlockItem.createCreativeTabStack(item, EnumNekoColor.BLACK));
+        } else {
+            out.accept(new ItemStack(item));
+        }
     }
 }

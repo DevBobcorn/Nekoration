@@ -93,31 +93,21 @@ public class Nekoration {
                 halfTimberStacks.sort(HalfTimberCreativeTabOrdering.stackComparator());
                 halfTimberStacks.forEach(output::accept);
                 WoodenBlockRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
-                WoodenBlockRegistration.furnitureBlockItemsView().forEach(holder -> {
-                    if (holder.get() instanceof DyeableBlockItem) {
-                        output.accept(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.WHITE));
-                        output.accept(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.BLACK));
-                    } else {
-                        output.accept(new ItemStack(holder.get()));
-                    }
-                });
+                WoodenBlockRegistration.addFurnitureCategoryStacks(output::accept);
+                WoodenBlockRegistration.addContainerCategoryStacks(output::accept);
             })
             .build());
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEKORATION_ORNAMENTS_TAB =
         CREATIVE_MODE_TABS.register("nekoration_ornaments", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.nekoration_ornaments"))
-            .icon(() -> DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.iconItem().get()))
+            .icon(() -> DyeableBlockItem.createCreativeTabStack(WoodenBlockRegistration.ornamentsTabIconItem().get(), EnumNekoColor.BLACK))
             .withTabsBefore(NEKORATION_WOODEN_BLOCKS_TAB.getKey())
             .displayItems((parameters, output) -> {
-                for (var holder : OrnamentRegistration.awningBlockItemsView()) {
-                    for (EnumNekoColor color : EnumNekoColor.values()) {
-                        output.accept(DyeableBlockItem.createCreativeTabStack(holder.get(), color));
-                    }
-                }
-                for (EnumNekoColor color : EnumNekoColor.values()) {
-                    output.accept(DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.WINDOW_PLANT_BLOCK_ITEM.get(), color));
-                }
+                OrnamentRegistration.addAwningCategoryStacks(output::accept);
+                WoodenBlockRegistration.addEaselMenuCategoryStacks(output::accept);
+                WoodenBlockRegistration.addFurnitureCategoryStacks(output::accept);
+                WoodenBlockRegistration.addContainerCategoryStacks(output::accept);
             })
             .build());
 

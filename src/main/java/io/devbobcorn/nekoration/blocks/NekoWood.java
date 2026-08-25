@@ -50,4 +50,9 @@ public enum NekoWood {
     public String vanillaPlanksDescriptionId() {
         return "block.minecraft." + id() + "_planks";
     }
+
+    /** {@code wood.nekoration.<id>} (e.g. {@code wood.nekoration.oak}). */
+    public String descriptionId() {
+        return "wood.nekoration." + id();
+    }
 }

@@ -653,6 +653,10 @@
     "color.nekoration.unknown": "Some",
     "color.nekoration.white": "White",
     "color.nekoration.yellow": "Yellow",
+    "decortype.nekoration.awning": "Awning",
+    "decortype.nekoration.container": "Container",
+    "decortype.nekoration.easel_menu": "Easel Menu",
+    "decortype.nekoration.furniture": "Furniture",
     "entity.nekoration.painting": "Painting",
     "entity.nekoration.seat": "Seat",
     "entity.nekoration.wallpaper": "Wallpaper",
@@ -715,5 +719,16 @@
     "tooltip.nekoration.connect_block_tip": "Place while %s to avoid connection",
     "tooltip.nekoration.direction_horizontal": "horizontally",
     "tooltip.nekoration.direction_vertical": "vertically",
-    "tooltip.nekoration.sneaking": "sneaking"
+    "tooltip.nekoration.sneaking": "sneaking",
+    "wood.nekoration.acacia": "Acacia",
+    "wood.nekoration.bamboo": "Bamboo",
+    "wood.nekoration.birch": "Birch",
+    "wood.nekoration.cherry": "Cherry",
+    "wood.nekoration.crimson": "Crimson",
+    "wood.nekoration.dark_oak": "Dark Oak",
+    "wood.nekoration.jungle": "Jungle",
+    "wood.nekoration.mangrove": "Mangrove",
+    "wood.nekoration.oak": "Oak",
+    "wood.nekoration.spruce": "Spruce",
+    "wood.nekoration.warped": "Warped"
 }

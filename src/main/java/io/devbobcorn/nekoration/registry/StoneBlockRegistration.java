@@ -32,7 +32,7 @@ public final class StoneBlockRegistration {
     public static final List<DeferredItem<Item>> STONE_BLOCK_ITEMS = new ArrayList<>();
     public static final Map<NekoStone, List<Supplier<? extends Item>>> STONE_BLOCK_ITEMS_BY_STONE = new EnumMap<>(NekoStone.class);
     
-    private static final String TAB_ICON_ITEM_ID = "chiseled_smooth_granite";
+    private static final String TAB_ICON_ITEM_ID = "granite_tiles";
     private static DeferredItem<Item> tabIconItem;
 
     private StoneBlockRegistration() {
@@ -113,6 +113,9 @@ public final class StoneBlockRegistration {
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
+        if (TAB_ICON_ITEM_ID.equals(id)) {
+            tabIconItem = blockItem;
+        }
         return block;
     }
 
@@ -132,9 +135,6 @@ public final class StoneBlockRegistration {
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
-        if (TAB_ICON_ITEM_ID.equals(id)) {
-            tabIconItem = blockItem;
-        }
         return block;
     }
 

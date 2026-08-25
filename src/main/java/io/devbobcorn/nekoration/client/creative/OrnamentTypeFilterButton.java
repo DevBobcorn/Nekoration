@@ -6,8 +6,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.joml.Quaternionf;
 
+import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
-import io.devbobcorn.nekoration.blocks.NekoWood;
+import io.devbobcorn.nekoration.blocks.OrnamentCategory;
+import io.devbobcorn.nekoration.items.DyeableBlockItem;
+import io.devbobcorn.nekoration.registry.OrnamentRegistration;
+import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
@@ -19,24 +23,24 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Toggle for one wood type in the creative half-timber filter (texture from legacy Nekoration).
+ * Toggle for one ornament category in the creative ornaments filter (same chrome as {@link WoodTypeFilterButton}).
  */
-public final class WoodTypeFilterButton extends AbstractButton {
+public final class OrnamentTypeFilterButton extends AbstractButton {
     private static final ResourceLocation TABS = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "textures/gui/tabs.png");
 
-    private @Nullable NekoWood wood;
+    private @Nullable OrnamentCategory category;
     private ItemStack icon = ItemStack.EMPTY;
     private boolean toggled = true;
     private boolean filterUiActive = true;
-    private final BiConsumer<NekoWood, Boolean> onChanged;
+    private final BiConsumer<OrnamentCategory, Boolean> onChanged;
 
-    public WoodTypeFilterButton(int x, int y, BiConsumer<NekoWood, Boolean> onChanged) {
+    public OrnamentTypeFilterButton(int x, int y, BiConsumer<OrnamentCategory, Boolean> onChanged) {
         super(x, y, 32, 28, Component.empty());
         this.onChanged = onChanged;
     }
 
-    public void bind(@Nullable NekoWood type, boolean enabled, int x, int y) {
-        this.wood = type;
+    public void bind(@Nullable OrnamentCategory type, boolean enabled, int x, int y) {
+        this.category = type;
         setPosition(x, y);
         if (type == null) {
             this.icon = ItemStack.EMPTY;
@@ -44,17 +48,26 @@ public final class WoodTypeFilterButton extends AbstractButton {
             setToggledVisual(true);
             return;
         }
-        this.icon = new ItemStack(type.vanillaPlanks().asItem());
+        this.icon = iconStackFor(type);
         setTooltip(Tooltip.create(Component.translatable(type.descriptionId())));
         setToggledVisual(enabled);
     }
 
-    public boolean isBound() {
-        return wood != null;
+    private static ItemStack iconStackFor(OrnamentCategory type) {
+        return switch (type) {
+            case AWNING -> DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.awningCategoryIconItem().get(), EnumNekoColor.WHITE);
+            case EASEL_MENU -> DyeableBlockItem.createCreativeTabStack(WoodenBlockRegistration.easelMenuCategoryIconItem().get(), EnumNekoColor.WHITE);
+            case FURNITURE -> new ItemStack(WoodenBlockRegistration.furnitureCategoryIconItem().get());
+            case CONTAINER -> new ItemStack(WoodenBlockRegistration.containerCategoryIconItem().get());
+        };
     }
 
-    public @Nullable NekoWood woodType() {
-        return wood;
+    public boolean isBound() {
+        return category != null;
+    }
+
+    public @Nullable OrnamentCategory category() {
+        return category;
     }
 
     public void setToggledVisual(boolean on) {
@@ -69,7 +82,7 @@ public final class WoodTypeFilterButton extends AbstractButton {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (!filterUiActive || wood == null) {
+        if (!filterUiActive || category == null) {
             return false;
         }
         return super.mouseClicked(mouseX, mouseY, button);
@@ -77,13 +90,12 @@ public final class WoodTypeFilterButton extends AbstractButton {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        if (!filterUiActive || wood == null) {
+        if (!filterUiActive || category == null) {
             return;
         }
         RenderSystem.enableBlend();
         int drawW = toggled ? 32 : 28;
         int textureY = toggled ? 32 : 0;
-        // Legacy FilterButton used drawRotatedTexture: atlas holds a 28×drawW region shown as drawW×28 on screen.
         graphics.pose().pushPose();
         graphics.pose().translate(getX() + drawW / 2f, getY() + 14f, 0f);
         graphics.pose().mulPose(new Quaternionf().rotationZ((float) (Math.PI * 3 / 2)));
@@ -98,11 +110,11 @@ public final class WoodTypeFilterButton extends AbstractButton {
 
     @Override
     public void onPress() {
-        if (wood == null) {
+        if (category == null) {
             return;
         }
         toggled = !toggled;
-        onChanged.accept(wood, toggled);
+        onChanged.accept(category, toggled);
     }
 
     @Override

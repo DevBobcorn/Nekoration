@@ -653,6 +653,10 @@
     "color.nekoration.unknown": "What",
     "color.nekoration.white": "Waite",
     "color.nekoration.yellow": "Yello",
+    "decortype.nekoration.awning": "Awning",
+    "decortype.nekoration.container": "Containar",
+    "decortype.nekoration.easel_menu": "Eosel menu",
+    "decortype.nekoration.furniture": "Farnitare",
     "entity.nekoration.painting": "Puinteeng",
     "entity.nekoration.seat": "Seot",
     "entity.nekoration.wallpaper": "Wollpaper",
@@ -715,5 +719,16 @@
     "tooltip.nekoration.connect_block_tip": "Place While %s 2 Avoid Connecshun",
     "tooltip.nekoration.direction_horizontal": "Horizontolly",
     "tooltip.nekoration.direction_vertical": "Vertically",
-    "tooltip.nekoration.sneaking": "Sneoking"
+    "tooltip.nekoration.sneaking": "Sneoking",
+    "wood.nekoration.acacia": "Ucuciu",
+    "wood.nekoration.bamboo": "Bumboo",
+    "wood.nekoration.birch": "Burch",
+    "wood.nekoration.cherry": "Chery",
+    "wood.nekoration.crimson": "Crimzon",
+    "wood.nekoration.dark_oak": "Douk uuk",
+    "wood.nekoration.jungle": "Jongle",
+    "wood.nekoration.mangrove": "Mangrove",
+    "wood.nekoration.oak": "Oook",
+    "wood.nekoration.spruce": "Spouce",
+    "wood.nekoration.warped": "Wuaped"
 }
