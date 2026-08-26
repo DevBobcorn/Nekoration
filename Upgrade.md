@@ -2,6 +2,44 @@ This note documents the data mapping between the original version(v1) of Nekorat
 
 All Identifiers(Ids or Resource Locations) in this note should all be prefixed with mod namespace `nekoration:`, which is omitted below.
 
+## Block Connections
+
+The serialized values of the `horizontal_connection` and `vertical_connection` block properties are unchanged between v1 and v2. Preserve these properties when the upgraded block supports the same connection direction. The values describe the block's position in a connected run as follows:
+
+|Value|Horizontal Connection|Vertical Connection|
+|-----|---------------------|-------------------|
+|s0|Single block|Single block|
+|d0|Left block of a pair; connected on the right|Bottom block of a pair; connected above|
+|d1|Right block of a pair; connected on the left|Top block of a pair; connected below|
+|t0|Left end of a run; connected on the right|Bottom end of a run; connected above|
+|t1|Middle of a run; connected on both sides|Middle of a run; connected above and below|
+|t2|Right end of a run; connected on the left|Top end of a run; connected below|
+
+Unlike v1, v2 determines connections from neighbors on both sides instead of using the configured horizontal or vertical placement order. If connection states are recalculated while upgrading, assign the values in the table from the complete connected run. A run of more than three blocks uses `t0` for its first block, `t2` for its last block and `t1` for every block between them.
+
+### Frame Blocks (Window Frame Blocks in v1)
+
+The dyeable Window Frame Blocks from v1 are Cement Frame Blocks in v2. Convert their `level` property to the v2 `color` property using the [Colors](#colors) table, and preserve `facing`.
+
+|v1 Block Id|v2 Block Id|Connection Data|
+|-----------|-----------|---------------|
+|window_top|cement_frame_peak|Preserve `horizontal_connection`|
+|window_sill|cement_frame_sill|Preserve `horizontal_connection`|
+|window_frame with `frame_part=top`|cement_frame_head|Remove `frame_part`, `left` and `right`; recalculate `horizontal_connection` from adjacent converted frame-head blocks|
+|window_frame with `frame_part=middle`|cement_frame_side|Remove `frame_part`, `left` and `right`; set `frame_connection` as described below|
+|window_frame with `frame_part=bottom`|cement_frame_sill|Remove `frame_part`, `left` and `right`; recalculate `horizontal_connection` from adjacent converted frame-sill blocks|
+
+For a v1 `window_frame` with `frame_part=middle`, convert the two Boolean edge properties to the v2 `frame_connection` property. The left/right names are reversed because the v1 properties named the rendered edge while the v2 values name the side to which the frame connects.
+
+|v1 `left`|v1 `right`|v2 `frame_connection`|
+|---------|----------|---------------------|
+|true|false|right|
+|false|true|left|
+|true|true|both|
+|false|false|both|
+
+The v1 `frame_part` property is represented by the selected v2 block id and should then be discarded. V2 frame-side blocks occupy the full block height. The `false`/`false` combination has no direct v2 equivalent, so use the default `both` state.
+
 ## Colors
 The ordinal of dye color enum has changed from v1 to v2. This is used in block properties:
 
@@ -26,7 +64,7 @@ The ordinal of dye color enum has changed from v1 to v2. This is used in block p
 
 ## Cement Blocks (known as Stone Blocks in v1)
 
-Stone Blocks in v1 are rebranded as Cement Blocks. Note that in v1 the dye color is stored in the `level` block property of a blockstate, while in v2 they're moved to a block property called `color` as `EnumNekoColor` instead of a number(still serialized as a number though).
+Stone Blocks in v1 are reimplemented as Cement Blocks. Note that in v1 the dye color is stored in the `level` block property of a blockstate, while in v2 they're moved to a block property called `color` as `EnumNekoColor` instead of a number(still serialized as a number though).
 
 Not to be confused with Stone Blocks in v2, those are not relavant to Cement Blocks.
 
