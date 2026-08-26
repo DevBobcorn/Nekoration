@@ -59,6 +59,7 @@ public final class OrnamentTypeFilterButton extends AbstractButton {
             case EASEL_MENU -> DyeableBlockItem.createCreativeTabStack(WoodenBlockRegistration.easelMenuCategoryIconItem().get(), EnumNekoColor.WHITE);
             case FURNITURE -> new ItemStack(WoodenBlockRegistration.furnitureCategoryIconItem().get());
             case CONTAINER -> new ItemStack(WoodenBlockRegistration.containerCategoryIconItem().get());
+            case MISC -> new ItemStack(OrnamentRegistration.miscCategoryIconItem().get());
         };
     }
 

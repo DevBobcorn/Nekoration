@@ -7,7 +7,8 @@ public enum OrnamentCategory {
     AWNING,
     EASEL_MENU,
     FURNITURE,
-    CONTAINER;
+    CONTAINER,
+    MISC;
 
     public String id() {
         return name().toLowerCase();

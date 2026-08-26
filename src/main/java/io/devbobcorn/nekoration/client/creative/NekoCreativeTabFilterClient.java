@@ -394,6 +394,7 @@ public final class NekoCreativeTabFilterClient {
                 case EASEL_MENU -> WoodenBlockRegistration.addEaselMenuCategoryStacks(out::add);
                 case FURNITURE -> WoodenBlockRegistration.addFurnitureCategoryStacks(out::add);
                 case CONTAINER -> WoodenBlockRegistration.addContainerCategoryStacks(out::add);
+                case MISC -> OrnamentRegistration.addMiscCategoryStacks(out::add);
             }
             picker.items.clear();
             picker.items.addAll(out);

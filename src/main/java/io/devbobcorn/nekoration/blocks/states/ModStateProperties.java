@@ -9,6 +9,8 @@ public final class ModStateProperties {
             EnumProperty.create("horizontal_connection", HorizontalConnection.class);
     public static final EnumProperty<VerticalConnection> VERTICAL_CONNECTION =
             EnumProperty.create("vertical_connection", VerticalConnection.class);
+    public static final EnumProperty<LampPostType> LAMP_POST_TYPE =
+            EnumProperty.create("post_type", LampPostType.class);
 
     private ModStateProperties() {
     }

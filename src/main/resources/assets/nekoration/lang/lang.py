@@ -55,9 +55,9 @@ decor_ids = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_sh
 decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Flowering Window Plant"]
 decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","开%s花的窗边植物"]
 
-decortype_ids = ["awning", "easel_menu", "furniture", "container"]
-decortypes_us = ["Awning", "Easel Menu", "Furniture", "Container"]
-decortypes_cn = ["雨篷", "展架", "家具", "收纳"]
+decortype_ids = ["awning", "easel_menu", "furniture", "container", "misc"]
+decortypes_us = ["Awning", "Easel Menu", "Furniture", "Container", "Misc"]
+decortypes_cn = ["雨篷", "展架", "家具", "收纳", "杂项"]
 
 item_ids = ["brochure","paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette","painting.blank","painting.painted","painting.magic","wallpaper","camera"]
 items_us = ["Neko Brochure [WIP]","Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Blank Painting (%sx%s)","Painting (%sx%s)","Linked Painting (%sx%s)","%s Wallpaper","Camera"]

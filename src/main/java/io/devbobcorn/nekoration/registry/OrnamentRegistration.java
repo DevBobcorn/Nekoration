@@ -8,9 +8,11 @@ import java.util.function.Consumer;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.blocks.WindowPlantBlock;
 import io.devbobcorn.nekoration.blocks.AwningBlock;
+import io.devbobcorn.nekoration.blocks.LampPostBlock;
 import io.devbobcorn.nekoration.blocks.ShortAwningBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -25,6 +27,7 @@ public final class OrnamentRegistration {
     private static DeferredBlock<Block> WINDOW_PLANT_BLOCK;
     public static DeferredItem<DyeableBlockItem> WINDOW_PLANT_BLOCK_ITEM;
     public static final List<DeferredItem<DyeableBlockItem>> AWNING_BLOCK_ITEMS = new ArrayList<>();
+    private static final List<DeferredItem<BlockItem>> MISC_BLOCK_ITEMS = new ArrayList<>();
 
     private static final String AWNING_CATEGORY_ICON_ITEM_ID = "awning_stripe_short";
     private static DeferredItem<DyeableBlockItem> awningCategoryIconItem;
@@ -38,6 +41,16 @@ public final class OrnamentRegistration {
         registerAwning(blocks, items, "awning_pure_short", true);
         registerAwning(blocks, items, "awning_stripe_short", true);
         registerWindowPlant(blocks, items, "window_plant");
+        registerLampPost(blocks, items, "lamp_post_iron", Blocks.IRON_BLOCK);
+        registerLampPost(blocks, items, "lamp_post_gold", Blocks.GOLD_BLOCK);
+        registerLampPost(blocks, items, "lamp_post_quartz", Blocks.QUARTZ_BLOCK);
+    }
+
+    private static void registerLampPost(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            Block material) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new LampPostBlock(BlockBehaviour.Properties.ofFullCopy(material).strength(2, 6).noOcclusion()));
+        MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem(id, block));
     }
 
     private static void registerAwning(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id, boolean shortAwning) {
@@ -91,5 +104,13 @@ public final class OrnamentRegistration {
         for (EnumNekoColor color : EnumNekoColor.values()) {
             out.accept(DyeableBlockItem.createCreativeTabStack(WINDOW_PLANT_BLOCK_ITEM.get(), color));
         }
+    }
+
+    public static DeferredItem<BlockItem> miscCategoryIconItem() {
+        return MISC_BLOCK_ITEMS.getFirst();
+    }
+
+    public static void addMiscCategoryStacks(Consumer<ItemStack> out) {
+        MISC_BLOCK_ITEMS.forEach(holder -> out.accept(new ItemStack(holder.get())));
     }
 }
