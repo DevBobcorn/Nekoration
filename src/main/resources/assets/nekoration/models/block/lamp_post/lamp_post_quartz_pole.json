@@ -1,6 +1,6 @@
 {
     "parent": "nekoration:block/lamp_post/lamp_post_iron_pole",
     "textures": {
-        "0": "nekoration:block/mat_quartz"
+        "0": "nekoration:block/misc/face_quartz"
     }
 }
