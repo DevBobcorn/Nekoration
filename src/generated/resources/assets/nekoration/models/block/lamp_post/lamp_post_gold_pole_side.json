@@ -1,0 +1,6 @@
+{
+  "parent": "nekoration:block/lamp_post/plane_half",
+  "textures": {
+    "0": "nekoration:block/mineral/gold/lamp_post_pole_side"
+  }
+}

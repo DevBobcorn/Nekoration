@@ -1,0 +1,184 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_base"
+      },
+      "when": {
+        "post_type": "base"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_pole"
+      },
+      "when": {
+        "post_type": "pole"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_pole_side"
+      },
+      "when": {
+        "north": "true",
+        "post_type": "pole"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_pole_side",
+        "y": 90
+      },
+      "when": {
+        "east": "true",
+        "post_type": "pole"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_pole_side",
+        "y": 180
+      },
+      "when": {
+        "post_type": "pole",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_pole_side",
+        "y": 270
+      },
+      "when": {
+        "post_type": "pole",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_top_pole"
+      },
+      "when": {
+        "post_type": "top"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_top_side"
+      },
+      "when": {
+        "north": "true",
+        "post_type": "top"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_top_side",
+        "y": 90
+      },
+      "when": {
+        "east": "true",
+        "post_type": "top"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_top_side",
+        "y": 180
+      },
+      "when": {
+        "post_type": "top",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_top_side",
+        "y": 270
+      },
+      "when": {
+        "post_type": "top",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_side_down",
+        "y": 180
+      },
+      "when": {
+        "north": "true",
+        "post_type": "side_down"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_side_down",
+        "y": 270
+      },
+      "when": {
+        "east": "true",
+        "post_type": "side_down"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_side_down"
+      },
+      "when": {
+        "post_type": "side_down",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_side_down",
+        "y": 90
+      },
+      "when": {
+        "post_type": "side_down",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_side_up",
+        "y": 180
+      },
+      "when": {
+        "north": "true",
+        "post_type": "side_up"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_side_up",
+        "y": 270
+      },
+      "when": {
+        "east": "true",
+        "post_type": "side_up"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_side_up"
+      },
+      "when": {
+        "post_type": "side_up",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/lamp_post/lamp_post_quartz_side_up",
+        "y": 90
+      },
+      "when": {
+        "post_type": "side_up",
+        "west": "true"
+      }
+    }
+  ]
+}

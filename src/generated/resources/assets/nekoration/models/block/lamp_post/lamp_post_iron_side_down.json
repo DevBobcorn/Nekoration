@@ -1,0 +1,6 @@
+{
+  "parent": "nekoration:block/lamp_post/plane_full",
+  "textures": {
+    "0": "nekoration:block/mineral/iron/lamp_post_side_down"
+  }
+}

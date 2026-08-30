@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"0": "nekoration:block/lamp_post/lamp_post_iron_top_side",
+		"0": "nekoration:block/mineral/iron/lamp_post_top_side",
 		"particle": "#0"
 	},
 	"elements": [

@@ -1,0 +1,6 @@
+{
+  "parent": "nekoration:block/lamp_post/top_pole",
+  "textures": {
+    "0": "nekoration:block/mineral/iron/face"
+  }
+}

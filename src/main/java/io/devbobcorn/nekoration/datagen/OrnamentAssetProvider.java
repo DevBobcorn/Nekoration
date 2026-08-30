@@ -21,6 +21,8 @@ public final class OrnamentAssetProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final List<String> COLORS = java.util.Arrays.stream(EnumNekoColor.values())
             .map(EnumNekoColor::getSerializedName).toList();
+    private static final List<String> LAMP_POST_MATERIALS = List.of("iron", "gold", "quartz");
+    private static final List<String> DIRECTIONS = List.of("north", "east", "south", "west");
     private final PackOutput.PathProvider blockstates;
     private final PackOutput.PathProvider models;
     private final PackOutput.PathProvider items;
@@ -38,20 +40,88 @@ public final class OrnamentAssetProvider implements DataProvider {
         generateAwning(cachedOutput, writes, "awning_stripe", false, true);
         generateAwning(cachedOutput, writes, "awning_pure_short", true, false);
         generateAwning(cachedOutput, writes, "awning_stripe_short", true, true);
+        for (String material : LAMP_POST_MATERIALS) {
+            generateLampPost(cachedOutput, writes, material);
+        }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
+    }
+
+    private void generateLampPost(CachedOutput output, List<CompletableFuture<?>> writes, String material) {
+        String modelPrefix = "lamp_post/lamp_post_" + material;
+        String texturePrefix = "block/mineral/" + material + "/";
+
+        writeModel(output, writes, modelPrefix + "_base", "lamp_post/base",
+                Map.of("0", modLoc(texturePrefix + "face")));
+        writeModel(output, writes, modelPrefix + "_pole", "lamp_post/pole",
+                Map.of("0", modLoc(texturePrefix + "face")));
+        writeModel(output, writes, modelPrefix + "_top_pole", "lamp_post/top_pole",
+                Map.of("0", modLoc(texturePrefix + "face")));
+        writeModel(output, writes, modelPrefix + "_pole_side", "lamp_post/plane_half",
+                Map.of("0", modLoc(texturePrefix + "lamp_post_pole_side")));
+        writeModel(output, writes, modelPrefix + "_side_down", "lamp_post/plane_full",
+                Map.of("0", modLoc(texturePrefix + "lamp_post_side_down")));
+        writeModel(output, writes, modelPrefix + "_side_up", "lamp_post/plane_full",
+                Map.of("0", modLoc(texturePrefix + "lamp_post_side_up")));
+        writeModel(output, writes, modelPrefix + "_top_side", "lamp_post/plane_half",
+                Map.of("0", modLoc(texturePrefix + "lamp_post_top_side")));
+
+        List<Map<String, Object>> multipart = new ArrayList<>();
+        multipart.add(lampPostVariant("base", null, modelPrefix + "_base", 0));
+        multipart.add(lampPostVariant("pole", null, modelPrefix + "_pole", 0));
+        addLampPostSideVariants(multipart, "pole", modelPrefix + "_pole_side", false);
+        multipart.add(lampPostVariant("top", null, modelPrefix + "_top_pole", 0));
+        addLampPostSideVariants(multipart, "top", modelPrefix + "_top_side", false);
+        addLampPostSideVariants(multipart, "side_down", modelPrefix + "_side_down", true);
+        addLampPostSideVariants(multipart, "side_up", modelPrefix + "_side_up", true);
+        write(output, writes, blockstates, "lamp_post_" + material, Map.of("multipart", multipart));
+
+        Map<String, Object> itemBody = new LinkedHashMap<>();
+        itemBody.put("parent", modLoc("block/" + modelPrefix + "_base"));
+        write(output, writes, items, "lamp_post_" + material, itemBody);
+    }
+
+    private static void addLampPostSideVariants(List<Map<String, Object>> multipart, String postType,
+            String model, boolean flipped) {
+        for (String direction : DIRECTIONS) {
+            multipart.add(lampPostVariant(postType, direction, model, lampPostSideRotation(direction, flipped)));
+        }
+    }
+
+    private static Map<String, Object> lampPostVariant(String postType, String direction, String model, int yRotation) {
+        Map<String, Object> when = new LinkedHashMap<>();
+        when.put("post_type", postType);
+        if (direction != null) {
+            when.put(direction, "true");
+        }
+        Map<String, Object> apply = new LinkedHashMap<>();
+        apply.put("model", modLoc("block/" + model));
+        if (yRotation != 0) {
+            apply.put("y", yRotation);
+        }
+        return Map.of("when", when, "apply", apply);
+    }
+
+    private static int lampPostSideRotation(String direction, boolean flipped) {
+        int y = switch (direction) {
+            case "east" -> 90;
+            case "south" -> 180;
+            case "west" -> 270;
+            default -> 0;
+        };
+        return flipped ? (y + 180) % 360 : y;
     }
 
     private void generateAwning(CachedOutput output, List<CompletableFuture<?>> writes, String id, boolean shortAwning,
             boolean stripe) {
         Map<String, Object> variants = new LinkedHashMap<>();
         for (String color : COLORS) {
-            writeModel(output, writes, colorModelPath(id, color), shortAwning ? "awning_short" : "awning",
+            writeModel(output, writes, colorModelPath(id, color), "awning/" + (shortAwning ? "awning_short" : "awning"),
                     stripe ? Map.of("0", modLoc("block/awning/" + color + "_stripe_top"),
                             "1", modLoc("block/awning/" + color + "_stripe"))
                             : Map.of("0", "block/" + color + "_wool",
                                     "1", modLoc("block/awning/" + color + "_pure")));
             if (!shortAwning) {
-                writeModel(output, writes, colorEndModelPath(id, color), "awning_end",
+                writeModel(output, writes, colorEndModelPath(id, color), "awning/awning_end",
                         stripe ? Map.of("0", modLoc("block/awning/" + color + "_stripe_top"),
                                 "1", modLoc("block/awning/" + color + "_stripe"))
                                 : Map.of("0", "block/" + color + "_wool",
@@ -88,7 +158,7 @@ public final class OrnamentAssetProvider implements DataProvider {
     private void writeModel(CachedOutput output, List<CompletableFuture<?>> writes, String path, String parent,
             Map<String, String> textures) {
         write(output, writes, models, path,
-                Map.of("parent", modLoc("block/awning/" + parent), "textures", textures));
+                Map.of("parent", modLoc("block/" + parent), "textures", textures));
     }
 
     private static Map<String, Object> facingVariant(String model, int rotation) {

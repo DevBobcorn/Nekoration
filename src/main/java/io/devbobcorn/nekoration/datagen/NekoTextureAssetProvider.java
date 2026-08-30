@@ -46,6 +46,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
             "easel_menu.png", "easel_menu_board.png");
     private static final String PLANK_PALETTE_DIR = "plank_palettes";
     private static final String STONE_PALETTE_DIR = "stone_palettes";
+    private static final String MINERAL_PALETTE_DIR = "mineral_palettes";
 
     private final Path templateTextureRoot;
     private final Path generatedBlockTextureRoot;
@@ -90,6 +91,10 @@ public final class NekoTextureAssetProvider implements DataProvider {
         PaletteTargets stonePaletteTargets = resolvePaletteTargets(STONE_PALETTE_DIR);
         generateMappedTextureFolder(cachedOutput, "stone", Map.of(),
                 stonePaletteTargets.sourcePalettePath(), stonePaletteTargets.targetPalettes());
+        
+        PaletteTargets mineralPaletteTargets = resolvePaletteTargets(MINERAL_PALETTE_DIR);
+        generateMappedTextureFolder(cachedOutput, "mineral", Map.of(),
+                mineralPaletteTargets.sourcePalettePath(), mineralPaletteTargets.targetPalettes());
     }
 
     private PaletteTargets resolvePaletteTargets(String paletteDirectoryName) throws IOException {
