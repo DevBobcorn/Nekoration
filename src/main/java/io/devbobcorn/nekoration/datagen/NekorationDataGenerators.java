@@ -27,5 +27,9 @@ public final class NekorationDataGenerators {
         event.getGenerator().addProvider(
                 event.includeClient(),
                 new OrnamentAssetProvider(event.getGenerator().getPackOutput()));
+        event.getGenerator().addProvider(
+                event.includeServer(),
+                new NekorationBlockTagsProvider(event.getGenerator().getPackOutput(), event.getLookupProvider(),
+                        event.getExistingFileHelper()));
     }
 }

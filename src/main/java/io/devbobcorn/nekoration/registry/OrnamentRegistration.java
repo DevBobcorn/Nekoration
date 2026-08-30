@@ -28,6 +28,7 @@ public final class OrnamentRegistration {
     public static DeferredItem<DyeableBlockItem> WINDOW_PLANT_BLOCK_ITEM;
     public static final List<DeferredItem<DyeableBlockItem>> AWNING_BLOCK_ITEMS = new ArrayList<>();
     private static final List<DeferredItem<BlockItem>> MISC_BLOCK_ITEMS = new ArrayList<>();
+    private static final List<DeferredBlock<Block>> LAMP_POST_BLOCKS = new ArrayList<>();
 
     private static final String AWNING_CATEGORY_ICON_ITEM_ID = "awning_stripe_short";
     private static DeferredItem<DyeableBlockItem> awningCategoryIconItem;
@@ -50,6 +51,7 @@ public final class OrnamentRegistration {
             Block material) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new LampPostBlock(BlockBehaviour.Properties.ofFullCopy(material).strength(2, 6).noOcclusion()));
+        LAMP_POST_BLOCKS.add(block);
         MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem(id, block));
     }
 
@@ -66,6 +68,10 @@ public final class OrnamentRegistration {
 
     public static List<DeferredItem<DyeableBlockItem>> awningBlockItemsView() {
         return Collections.unmodifiableList(AWNING_BLOCK_ITEMS);
+    }
+
+    public static List<DeferredBlock<Block>> lampPostBlocksView() {
+        return Collections.unmodifiableList(LAMP_POST_BLOCKS);
     }
 
     private static void registerWindowPlant(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
