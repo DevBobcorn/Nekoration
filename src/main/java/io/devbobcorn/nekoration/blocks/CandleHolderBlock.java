@@ -1,5 +1,6 @@
 package io.devbobcorn.nekoration.blocks;
 
+import io.devbobcorn.nekoration.blocks.states.CandleFlameType;
 import io.devbobcorn.nekoration.common.VanillaCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,19 +14,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
  * Dyeable candle holder with a configurable flame, lit with flame items.
  */
 public class CandleHolderBlock extends DyeableBlock {
-    public static final IntegerProperty FLAME = BlockStateProperties.AGE_3;
+    public static final EnumProperty<CandleFlameType> FLAME = EnumProperty.create("flame", CandleFlameType.class);
 
     public CandleHolderBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FLAME, 0));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FLAME, CandleFlameType.NONE));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CandleHolderBlock extends DyeableBlock {
             return VanillaCompat.FLAME_ITEMS.containsKey(stack.getItem()) ? ItemInteractionResult.SUCCESS
                     : super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }
-        Integer flame = VanillaCompat.FLAME_ITEMS.get(stack.getItem());
+        CandleFlameType flame = VanillaCompat.FLAME_ITEMS.get(stack.getItem());
         if (flame != null) {
             level.setBlock(pos, state.setValue(FLAME, flame), Block.UPDATE_ALL);
             return ItemInteractionResult.CONSUME;
@@ -51,7 +51,8 @@ public class CandleHolderBlock extends DyeableBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if (state.getValue(FLAME) == 0) {
+        CandleFlameType flame = state.getValue(FLAME);
+        if (!flame.isLit()) {
             return;
         }
         double x = pos.getX() + 0.5D;
@@ -60,9 +61,9 @@ public class CandleHolderBlock extends DyeableBlock {
         double h = pos.getY() + 1.0D;
         double r = 0.38D;
 
-        SimpleParticleType type = switch (state.getValue(FLAME)) {
-            case 1 -> ParticleTypes.FLAME;
-            case 2 -> ParticleTypes.SOUL_FIRE_FLAME;
+        SimpleParticleType type = switch (flame) {
+            case FLAME -> ParticleTypes.FLAME;
+            case SOUL_FLAME -> ParticleTypes.SOUL_FIRE_FLAME;
             default -> ParticleTypes.FIREWORK;
         };
 

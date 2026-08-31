@@ -45,22 +45,22 @@ public final class OrnamentRegistration {
         registerAwning(blocks, items, "awning_pure_short", true);
         registerAwning(blocks, items, "awning_stripe_short", true);
         registerWindowPlant(blocks, items, "window_plant");
-        registerLampPost(blocks, items, "lamp_post_iron", Blocks.IRON_BLOCK);
-        registerLampPost(blocks, items, "lamp_post_gold", Blocks.GOLD_BLOCK);
-        registerLampPost(blocks, items, "lamp_post_quartz", Blocks.QUARTZ_BLOCK);
-        registerCandleHolder(blocks, items, "candle_holder_iron", Blocks.IRON_BLOCK);
-        registerCandleHolder(blocks, items, "candle_holder_gold", Blocks.GOLD_BLOCK);
-        registerCandleHolder(blocks, items, "candle_holder_quartz", Blocks.QUARTZ_BLOCK);
-        registerFlowerBasket(blocks, items, "flower_basket_iron", Blocks.IRON_BLOCK);
-        registerFlowerBasket(blocks, items, "flower_basket_gold", Blocks.GOLD_BLOCK);
-        registerFlowerBasket(blocks, items, "flower_basket_quartz", Blocks.QUARTZ_BLOCK);
+        registerLampPost(blocks, items, "iron_lamp_post", Blocks.IRON_BLOCK);
+        registerLampPost(blocks, items, "gold_lamp_post", Blocks.GOLD_BLOCK);
+        registerLampPost(blocks, items, "quartz_lamp_post", Blocks.QUARTZ_BLOCK);
+        registerCandleHolder(blocks, items, "iron_candle_holder", Blocks.IRON_BLOCK);
+        registerCandleHolder(blocks, items, "gold_candle_holder", Blocks.GOLD_BLOCK);
+        registerCandleHolder(blocks, items, "quartz_candle_holder", Blocks.QUARTZ_BLOCK);
+        registerFlowerBasket(blocks, items, "iron_flower_basket", Blocks.IRON_BLOCK);
+        registerFlowerBasket(blocks, items, "gold_flower_basket", Blocks.GOLD_BLOCK);
+        registerFlowerBasket(blocks, items, "quartz_flower_basket", Blocks.QUARTZ_BLOCK);
     }
 
     private static void registerCandleHolder(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             Block material) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new CandleHolderBlock(BlockBehaviour.Properties.ofFullCopy(material).strength(0.0F).noOcclusion()
-                        .lightLevel(state -> state.getValue(CandleHolderBlock.FLAME) > 0 ? 15 : 0)));
+                        .lightLevel(state -> state.getValue(CandleHolderBlock.FLAME).isLit() ? 15 : 0)));
         DeferredItem<DyeableBlockItem> item = registerDyeableBlockItem(items, id, block);
         CANDLE_HOLDER_BLOCK_ITEMS.add(item);
         MISC_BLOCK_ITEMS.add(item);

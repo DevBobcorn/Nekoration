@@ -49,7 +49,7 @@ public final class OrnamentAssetProvider implements DataProvider {
     }
 
     private void generateCandleHolder(CachedOutput output, List<CompletableFuture<?>> writes, String material) {
-        String modelPath = "candle_holder/candle_holder_" + material;
+        String modelPath = "candle_holder/" + material + "_candle_holder";
         String texturePrefix = "block/mineral/" + material + "/";
 
         writeModel(output, writes, modelPath, "candle_holder/candle_holder",
@@ -58,15 +58,15 @@ public final class OrnamentAssetProvider implements DataProvider {
 
         Map<String, Object> variants = new LinkedHashMap<>();
         variants.put("", facingVariant(modLoc("block/" + modelPath), 0));
-        write(output, writes, blockstates, "candle_holder_" + material, Map.of("variants", variants));
+        write(output, writes, blockstates, material + "_candle_holder", Map.of("variants", variants));
 
         Map<String, Object> itemBody = new LinkedHashMap<>();
         itemBody.put("parent", modLoc("block/" + modelPath));
-        write(output, writes, items, "candle_holder_" + material, itemBody);
+        write(output, writes, items, material + "_candle_holder", itemBody);
     }
 
     private void generateFlowerBasket(CachedOutput output, List<CompletableFuture<?>> writes, String material) {
-        String modelPath = "flower_basket/flower_basket_" + material;
+        String modelPath = "flower_basket/" + material + "_flower_basket";
         String texturePrefix = "block/mineral/" + material + "/";
 
         writeModel(output, writes, modelPath, "flower_basket/flower_basket",
@@ -76,16 +76,16 @@ public final class OrnamentAssetProvider implements DataProvider {
 
         Map<String, Object> variants = new LinkedHashMap<>();
         variants.put("", facingVariant(modLoc("block/" + modelPath), 0));
-        write(output, writes, blockstates, "flower_basket_" + material, Map.of("variants", variants));
+        write(output, writes, blockstates, material + "_flower_basket", Map.of("variants", variants));
 
         Map<String, Object> itemBody = new LinkedHashMap<>();
         itemBody.put("parent", "item/generated");
         itemBody.put("textures", Map.of("layer0", modLoc(texturePrefix + "flower_basket")));
-        write(output, writes, items, "flower_basket_" + material, itemBody);
+        write(output, writes, items, material + "_flower_basket", itemBody);
     }
 
     private void generateLampPost(CachedOutput output, List<CompletableFuture<?>> writes, String material) {
-        String modelPrefix = "lamp_post/lamp_post_" + material;
+        String modelPrefix = "lamp_post/" + material + "_lamp_post";
         String texturePrefix = "block/mineral/" + material + "/";
 
         writeModel(output, writes, modelPrefix + "_base", "lamp_post/base",
@@ -111,11 +111,11 @@ public final class OrnamentAssetProvider implements DataProvider {
         addLampPostSideVariants(multipart, "top", modelPrefix + "_top_side", false);
         addLampPostSideVariants(multipart, "side_down", modelPrefix + "_side_down", true);
         addLampPostSideVariants(multipart, "side_up", modelPrefix + "_side_up", true);
-        write(output, writes, blockstates, "lamp_post_" + material, Map.of("multipart", multipart));
+        write(output, writes, blockstates, material + "_lamp_post", Map.of("multipart", multipart));
 
         Map<String, Object> itemBody = new LinkedHashMap<>();
         itemBody.put("parent", modLoc("block/" + modelPrefix + "_base"));
-        write(output, writes, items, "lamp_post_" + material, itemBody);
+        write(output, writes, items, material + "_lamp_post", itemBody);
     }
 
     private static void addLampPostSideVariants(List<Map<String, Object>> multipart, String postType,

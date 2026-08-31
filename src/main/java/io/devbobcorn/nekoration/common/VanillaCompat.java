@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.devbobcorn.nekoration.blocks.states.CandleFlameType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -16,7 +17,7 @@ public final class VanillaCompat {
     /** Raw material to color mapping. */
     public static final Map<Item, Integer> RAW_COLOR_ITEMS = createRawColorItemsMap();
     /** Item to candle flame type mapping (candle holders). */
-    public static final Map<Item, Integer> FLAME_ITEMS = createFlameItemsMap();
+    public static final Map<Item, CandleFlameType> FLAME_ITEMS = createFlameItemsMap();
 
     private VanillaCompat() {
     }
@@ -89,18 +90,18 @@ public final class VanillaCompat {
         return Collections.unmodifiableMap(map);
     }
 
-    private static Map<Item, Integer> createFlameItemsMap() {
-        Map<Item, Integer> map = new HashMap<>();
-        map.put(Items.TORCH, 1);
-        map.put(Items.FLINT_AND_STEEL, 1);
-        map.put(Items.LANTERN, 1);
-        map.put(Items.CAMPFIRE, 1);
-        map.put(Items.SOUL_TORCH, 2);
-        map.put(Items.SOUL_LANTERN, 2);
-        map.put(Items.SOUL_CAMPFIRE, 2);
-        map.put(Items.NETHER_STAR, 3);
-        map.put(Items.BEACON, 3);
-        map.put(Items.END_CRYSTAL, 3);
+    private static Map<Item, CandleFlameType> createFlameItemsMap() {
+        Map<Item, CandleFlameType> map = new HashMap<>();
+        map.put(Items.TORCH, CandleFlameType.FLAME);
+        map.put(Items.FLINT_AND_STEEL, CandleFlameType.FLAME);
+        map.put(Items.LANTERN, CandleFlameType.FLAME);
+        map.put(Items.CAMPFIRE, CandleFlameType.FLAME);
+        map.put(Items.SOUL_TORCH, CandleFlameType.SOUL_FLAME);
+        map.put(Items.SOUL_LANTERN, CandleFlameType.SOUL_FLAME);
+        map.put(Items.SOUL_CAMPFIRE, CandleFlameType.SOUL_FLAME);
+        map.put(Items.NETHER_STAR, CandleFlameType.FIREWORK);
+        map.put(Items.BEACON, CandleFlameType.FIREWORK);
+        map.put(Items.END_CRYSTAL, CandleFlameType.FIREWORK);
         return Collections.unmodifiableMap(map);
     }
 }

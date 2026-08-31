@@ -146,3 +146,33 @@ Block id mapping:
 |{Wood Type} Cupboard|cupboard|{Wood Type} Cupboard|{wood_type_id}_cupboard|
 |{Wood Type} Shelf|shelf|{Wood Type} Cupboard|{wood_type_id}_cupboard|
 |{Wood Type} Wall Shelf|wall_shelf|{Wood Type} Wall Shelf|{wood_type_id}_wall_shelf|
+
+## Lamp Posts, Candle Holders and Flower Baskets
+
+In v2, the material part(`iron`, `gold` or `quartz`) of these block ids moved from a suffix to a prefix. The item ids follow their block ids in both versions.
+
+|Old Name|Old Id|New Name|New Id|
+|--------|------|--------|------|
+|Iron Lamp Post|lamp_post_iron|Iron Lamp Post|iron_lamp_post|
+|Gold Lamp Post|lamp_post_gold|Gold Lamp Post|gold_lamp_post|
+|Quartz Lamp Post|lamp_post_quartz|Quartz Lamp Post|quartz_lamp_post|
+|Iron Candle Holder|candle_holder_iron|Iron Candle Holder|iron_candle_holder|
+|Gold Candle Holder|candle_holder_gold|Gold Candle Holder|gold_candle_holder|
+|Quartz Candle Holder|candle_holder_quartz|Quartz Candle Holder|quartz_candle_holder|
+|Hanging Plants|flower_basket_iron|Hanging Plants|iron_flower_basket|
+|Hanging Plants|flower_basket_gold|Hanging Plants|gold_flower_basket|
+|Hanging Plants|flower_basket_quartz|Hanging Plants|quartz_flower_basket|
+
+All block properties are carried over between v1 and v2, with two exceptions on Candle Holders:
+
+- They store their dye color in the `level` block property in v1, while v2 uses the `color` property as `EnumNekoColor`(like Cement Blocks). Convert their `level` property to the v2 `color` property using the [Colors](#colors) table.
+- Their flame level is stored in the `age` integer property in v1, while v2 uses a dedicated `flame` enum property. Convert their `age` value as follows:
+
+|v1 `age`|v2 `flame`|
+|--------|----------|
+|0|none|
+|1|flame|
+|2|soul_flame|
+|3|firework|
+
+All properties of Lamp Posts are unchanged.
