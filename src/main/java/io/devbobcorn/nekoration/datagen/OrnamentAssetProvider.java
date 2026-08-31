@@ -71,7 +71,6 @@ public final class OrnamentAssetProvider implements DataProvider {
 
         writeModel(output, writes, modelPath, "flower_basket/flower_basket",
                 Map.of("0", modLoc(texturePrefix + "flower_basket"),
-                        "1", modLoc("block/flowers"),
                         "2", modLoc(texturePrefix + "face")));
 
         Map<String, Object> variants = new LinkedHashMap<>();

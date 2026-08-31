@@ -44,6 +44,9 @@ public final class NekoTextureAssetProvider implements DataProvider {
             "drawer_chest_front.png", "drawer_chest_knob.png",
             "drawer_chest_open_front.png", "drawer_chest_open_knob.png",
             "easel_menu.png", "easel_menu_board.png");
+    private static final Map<String, String> MINERAL_OVERLAYS = Map.of(
+            "candle_holder.png", "candle_holder_candle.png",
+            "flower_basket.png", "flower_basket_flowers.png");
     private static final String PLANK_PALETTE_DIR = "plank_palettes";
     private static final String STONE_PALETTE_DIR = "stone_palettes";
     private static final String MINERAL_PALETTE_DIR = "mineral_palettes";
@@ -93,7 +96,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
                 stonePaletteTargets.sourcePalettePath(), stonePaletteTargets.targetPalettes());
         
         PaletteTargets mineralPaletteTargets = resolvePaletteTargets(MINERAL_PALETTE_DIR);
-        generateMappedTextureFolder(cachedOutput, "mineral", Map.of(),
+        generateMappedTextureFolder(cachedOutput, "mineral", MINERAL_OVERLAYS,
                 mineralPaletteTargets.sourcePalettePath(), mineralPaletteTargets.targetPalettes());
     }
 

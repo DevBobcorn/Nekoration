@@ -5,7 +5,6 @@ import io.devbobcorn.nekoration.blocks.DyeableHorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeablePotBlock;
-import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaPlugin;
 import snownee.jade.api.WailaPlugin;

@@ -3,7 +3,6 @@ package io.devbobcorn.nekoration.blocks.furniture;
 import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.entities.SeatEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;

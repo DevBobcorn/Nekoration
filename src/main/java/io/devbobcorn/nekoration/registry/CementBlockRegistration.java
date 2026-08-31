@@ -9,7 +9,6 @@ import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeablePotBlock;
-import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
