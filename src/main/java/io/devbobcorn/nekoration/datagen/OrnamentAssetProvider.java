@@ -21,7 +21,7 @@ public final class OrnamentAssetProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final List<String> COLORS = java.util.Arrays.stream(EnumNekoColor.values())
             .map(EnumNekoColor::getSerializedName).toList();
-    private static final List<String> LAMP_POST_MATERIALS = List.of("iron", "gold", "quartz");
+    private static final List<String> MINERAL_MATERIALS = List.of("iron", "gold", "quartz");
     private static final List<String> DIRECTIONS = List.of("north", "east", "south", "west");
     private final PackOutput.PathProvider blockstates;
     private final PackOutput.PathProvider models;
@@ -40,10 +40,48 @@ public final class OrnamentAssetProvider implements DataProvider {
         generateAwning(cachedOutput, writes, "awning_stripe", false, true);
         generateAwning(cachedOutput, writes, "awning_pure_short", true, false);
         generateAwning(cachedOutput, writes, "awning_stripe_short", true, true);
-        for (String material : LAMP_POST_MATERIALS) {
+        for (String material : MINERAL_MATERIALS) {
             generateLampPost(cachedOutput, writes, material);
+            generateCandleHolder(cachedOutput, writes, material);
+            generateFlowerBasket(cachedOutput, writes, material);
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
+    }
+
+    private void generateCandleHolder(CachedOutput output, List<CompletableFuture<?>> writes, String material) {
+        String modelPath = "candle_holder/candle_holder_" + material;
+        String texturePrefix = "block/mineral/" + material + "/";
+
+        writeModel(output, writes, modelPath, "candle_holder/candle_holder",
+                Map.of("0", modLoc(texturePrefix + "candle_holder"),
+                        "1", modLoc(texturePrefix + "face")));
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        variants.put("", facingVariant(modLoc("block/" + modelPath), 0));
+        write(output, writes, blockstates, "candle_holder_" + material, Map.of("variants", variants));
+
+        Map<String, Object> itemBody = new LinkedHashMap<>();
+        itemBody.put("parent", modLoc("block/" + modelPath));
+        write(output, writes, items, "candle_holder_" + material, itemBody);
+    }
+
+    private void generateFlowerBasket(CachedOutput output, List<CompletableFuture<?>> writes, String material) {
+        String modelPath = "flower_basket/flower_basket_" + material;
+        String texturePrefix = "block/mineral/" + material + "/";
+
+        writeModel(output, writes, modelPath, "flower_basket/flower_basket",
+                Map.of("0", modLoc(texturePrefix + "flower_basket"),
+                        "1", modLoc("block/flowers"),
+                        "2", modLoc(texturePrefix + "face")));
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        variants.put("", facingVariant(modLoc("block/" + modelPath), 0));
+        write(output, writes, blockstates, "flower_basket_" + material, Map.of("variants", variants));
+
+        Map<String, Object> itemBody = new LinkedHashMap<>();
+        itemBody.put("parent", "item/generated");
+        itemBody.put("textures", Map.of("layer0", modLoc(texturePrefix + "flower_basket")));
+        write(output, writes, items, "flower_basket_" + material, itemBody);
     }
 
     private void generateLampPost(CachedOutput output, List<CompletableFuture<?>> writes, String material) {

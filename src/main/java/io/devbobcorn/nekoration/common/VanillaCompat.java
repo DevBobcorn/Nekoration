@@ -15,6 +15,8 @@ public final class VanillaCompat {
     public static final Map<Item, Integer> COLOR_ITEMS = createColorItemsMap();
     /** Raw material to color mapping. */
     public static final Map<Item, Integer> RAW_COLOR_ITEMS = createRawColorItemsMap();
+    /** Item to candle flame type mapping (candle holders). */
+    public static final Map<Item, Integer> FLAME_ITEMS = createFlameItemsMap();
 
     private VanillaCompat() {
     }
@@ -84,6 +86,21 @@ public final class VanillaCompat {
         // Pink
         map.put(Items.PEONY, 15);
         map.put(Items.PINK_TULIP, 15);
+        return Collections.unmodifiableMap(map);
+    }
+
+    private static Map<Item, Integer> createFlameItemsMap() {
+        Map<Item, Integer> map = new HashMap<>();
+        map.put(Items.TORCH, 1);
+        map.put(Items.FLINT_AND_STEEL, 1);
+        map.put(Items.LANTERN, 1);
+        map.put(Items.CAMPFIRE, 1);
+        map.put(Items.SOUL_TORCH, 2);
+        map.put(Items.SOUL_LANTERN, 2);
+        map.put(Items.SOUL_CAMPFIRE, 2);
+        map.put(Items.NETHER_STAR, 3);
+        map.put(Items.BEACON, 3);
+        map.put(Items.END_CRYSTAL, 3);
         return Collections.unmodifiableMap(map);
     }
 }

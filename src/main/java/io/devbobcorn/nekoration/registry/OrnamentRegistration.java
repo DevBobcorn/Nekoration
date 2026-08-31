@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
+import io.devbobcorn.nekoration.blocks.CandleHolderBlock;
+import io.devbobcorn.nekoration.blocks.FlowerBasketBlock;
 import io.devbobcorn.nekoration.blocks.WindowPlantBlock;
 import io.devbobcorn.nekoration.blocks.AwningBlock;
 import io.devbobcorn.nekoration.blocks.LampPostBlock;
@@ -27,7 +29,8 @@ public final class OrnamentRegistration {
     private static DeferredBlock<Block> WINDOW_PLANT_BLOCK;
     public static DeferredItem<DyeableBlockItem> WINDOW_PLANT_BLOCK_ITEM;
     public static final List<DeferredItem<DyeableBlockItem>> AWNING_BLOCK_ITEMS = new ArrayList<>();
-    private static final List<DeferredItem<BlockItem>> MISC_BLOCK_ITEMS = new ArrayList<>();
+    public static final List<DeferredItem<DyeableBlockItem>> CANDLE_HOLDER_BLOCK_ITEMS = new ArrayList<>();
+    private static final List<DeferredItem<? extends BlockItem>> MISC_BLOCK_ITEMS = new ArrayList<>();
     private static final List<DeferredBlock<Block>> LAMP_POST_BLOCKS = new ArrayList<>();
 
     private static final String AWNING_CATEGORY_ICON_ITEM_ID = "awning_stripe_short";
@@ -45,6 +48,29 @@ public final class OrnamentRegistration {
         registerLampPost(blocks, items, "lamp_post_iron", Blocks.IRON_BLOCK);
         registerLampPost(blocks, items, "lamp_post_gold", Blocks.GOLD_BLOCK);
         registerLampPost(blocks, items, "lamp_post_quartz", Blocks.QUARTZ_BLOCK);
+        registerCandleHolder(blocks, items, "candle_holder_iron", Blocks.IRON_BLOCK);
+        registerCandleHolder(blocks, items, "candle_holder_gold", Blocks.GOLD_BLOCK);
+        registerCandleHolder(blocks, items, "candle_holder_quartz", Blocks.QUARTZ_BLOCK);
+        registerFlowerBasket(blocks, items, "flower_basket_iron", Blocks.IRON_BLOCK);
+        registerFlowerBasket(blocks, items, "flower_basket_gold", Blocks.GOLD_BLOCK);
+        registerFlowerBasket(blocks, items, "flower_basket_quartz", Blocks.QUARTZ_BLOCK);
+    }
+
+    private static void registerCandleHolder(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            Block material) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new CandleHolderBlock(BlockBehaviour.Properties.ofFullCopy(material).strength(0.0F).noOcclusion()
+                        .lightLevel(state -> state.getValue(CandleHolderBlock.FLAME) > 0 ? 15 : 0)));
+        DeferredItem<DyeableBlockItem> item = registerDyeableBlockItem(items, id, block);
+        CANDLE_HOLDER_BLOCK_ITEMS.add(item);
+        MISC_BLOCK_ITEMS.add(item);
+    }
+
+    private static void registerFlowerBasket(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            Block material) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new FlowerBasketBlock(BlockBehaviour.Properties.ofFullCopy(material).strength(0.0F).noOcclusion()));
+        MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem(id, block));
     }
 
     private static void registerLampPost(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
@@ -72,6 +98,10 @@ public final class OrnamentRegistration {
 
     public static List<DeferredBlock<Block>> lampPostBlocksView() {
         return Collections.unmodifiableList(LAMP_POST_BLOCKS);
+    }
+
+    public static List<DeferredItem<DyeableBlockItem>> candleHolderBlockItemsView() {
+        return Collections.unmodifiableList(CANDLE_HOLDER_BLOCK_ITEMS);
     }
 
     private static void registerWindowPlant(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {
@@ -112,11 +142,16 @@ public final class OrnamentRegistration {
         }
     }
 
-    public static DeferredItem<BlockItem> miscCategoryIconItem() {
+    public static DeferredItem<? extends BlockItem> miscCategoryIconItem() {
         return MISC_BLOCK_ITEMS.getFirst();
     }
 
     public static void addMiscCategoryStacks(Consumer<ItemStack> out) {
-        MISC_BLOCK_ITEMS.forEach(holder -> out.accept(new ItemStack(holder.get())));
+        for (var holder : MISC_BLOCK_ITEMS) {
+            BlockItem item = holder.get();
+            out.accept(item instanceof DyeableBlockItem dyeable
+                    ? DyeableBlockItem.createCreativeTabStack(dyeable, EnumNekoColor.WHITE)
+                    : new ItemStack(item));
+        }
     }
 }

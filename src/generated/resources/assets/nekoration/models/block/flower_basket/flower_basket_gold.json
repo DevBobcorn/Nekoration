@@ -1,0 +1,8 @@
+{
+  "parent": "nekoration:block/flower_basket/flower_basket",
+  "textures": {
+    "0": "nekoration:block/mineral/gold/flower_basket",
+    "1": "nekoration:block/flowers",
+    "2": "nekoration:block/mineral/gold/face"
+  }
+}

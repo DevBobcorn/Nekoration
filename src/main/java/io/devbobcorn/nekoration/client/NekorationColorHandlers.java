@@ -99,6 +99,9 @@ public final class NekorationColorHandlers {
         event.register(windowPlantBlockColor(), OrnamentRegistration.windowPlantBlock().get());
         BlockColor awning = dyeableBlockColor(NekoColorPalette.CEMENT);
         OrnamentRegistration.awningBlockItemsView().forEach(holder -> event.register(awning, holder.get().getBlock()));
+        BlockColor candleHolder = dyeableBlockColor(NekoColorPalette.HALF_TIMBER);
+        OrnamentRegistration.candleHolderBlockItemsView().forEach(holder ->
+            event.register(candleHolder, holder.get().getBlock()));
     }
 
     @SubscribeEvent
@@ -110,5 +113,7 @@ public final class NekorationColorHandlers {
         CementBlockRegistration.blockItemsView().forEach(holder -> event.register(cement, holder.get()));
         event.register(windowPlantItemColor(), OrnamentRegistration.windowPlantBlockItem().get());
         OrnamentRegistration.awningBlockItemsView().forEach(holder -> event.register(dyeableBlockItemColor(NekoColorPalette.CEMENT), holder.get()));
+        ItemColor candleHolder = dyeableBlockItemColor(NekoColorPalette.HALF_TIMBER);
+        OrnamentRegistration.candleHolderBlockItemsView().forEach(holder -> event.register(candleHolder, holder.get()));
     }
 }
