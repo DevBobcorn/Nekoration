@@ -90,6 +90,7 @@ public final class WoodenBlockRegistration {
     public static final Map<NekoWood, List<DeferredItem<BlockItem>>> WINDOW_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
     public static final Map<NekoWood, List<DeferredItem<? extends BlockItem>>> FURNITURE_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
     public static final Map<NekoWood, List<DeferredItem<? extends BlockItem>>> CONTAINER_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
+    public static final Map<NekoWood, List<DeferredItem<DyeableBlockItem>>> EASEL_MENU_BLOCK_ITEMS_BY_WOOD = new EnumMap<>(NekoWood.class);
 
     private static final String TAB_ICON_ITEM_ID = "oak_half_timber_p1";
     private static DeferredItem<DyeableBlockItem> tabIconItem;
@@ -114,6 +115,8 @@ public final class WoodenBlockRegistration {
             List<DeferredItem<? extends BlockItem>> furnitureByWood = FURNITURE_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood,
                     ignored -> new ArrayList<>());
             List<DeferredItem<? extends BlockItem>> containersByWood = CONTAINER_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood,
+                    ignored -> new ArrayList<>());
+            List<DeferredItem<DyeableBlockItem>> easelMenusByWood = EASEL_MENU_BLOCK_ITEMS_BY_WOOD.computeIfAbsent(wood,
                     ignored -> new ArrayList<>());
 
             for (int p = 0; p <= 9; p++) {
@@ -245,6 +248,7 @@ public final class WoodenBlockRegistration {
             EASEL_MENU_BLOCKS_FOR_ENTITY.add(easelMenu);
             DeferredItem<DyeableBlockItem> easelMenuItem = registerDyeableBlockItem(items, easelMenuId, easelMenu);
             EASEL_MENU_BLOCK_ITEMS.add(easelMenuItem);
+            easelMenusByWood.add(easelMenuItem);
             if (ORNAMENTS_TAB_ICON_ITEM_ID.equals(easelMenuId)) {
                 ornamentsTabIconItem = easelMenuItem;
             }
@@ -315,6 +319,10 @@ public final class WoodenBlockRegistration {
         return Collections.unmodifiableList(CONTAINER_BLOCK_ITEMS_BY_WOOD.getOrDefault(wood, List.of()));
     }
 
+    public static List<DeferredItem<DyeableBlockItem>> easelMenuItemsForWood(NekoWood wood) {
+        return Collections.unmodifiableList(EASEL_MENU_BLOCK_ITEMS_BY_WOOD.getOrDefault(wood, List.of()));
+    }
+
     public static List<DeferredItem<DyeableBlockItem>> easelMenuBlockItemsView() {
         return Collections.unmodifiableList(EASEL_MENU_BLOCK_ITEMS);
     }
@@ -338,7 +346,7 @@ public final class WoodenBlockRegistration {
         return easelMenuCategoryIconItem;
     }
 
-    /** Add easel menu stacks for all woods (Easel Menu category of the Ornaments tab). */
+    /** Add easel menu stacks for all woods (Easel Menu category of the Ornaments tab, Wooden Blocks tab). */
     public static void addEaselMenuCategoryStacks(Consumer<ItemStack> out) {
         for (var holder : easelMenuBlockItemsView()) {
             addPlainOrDyedStacks(holder.get(), out);
@@ -379,6 +387,13 @@ public final class WoodenBlockRegistration {
     /** Add container stacks for one wood (Wooden Blocks tab filter). */
     public static void addContainerStacksForWood(NekoWood wood, Consumer<ItemStack> out) {
         for (var holder : containerItemsForWood(wood)) {
+            addPlainOrDyedStacks(holder.get(), out);
+        }
+    }
+
+    /** Add easel menu stacks for one wood (Wooden Blocks tab filter). */
+    public static void addEaselMenuStacksForWood(NekoWood wood, Consumer<ItemStack> out) {
+        for (var holder : easelMenuItemsForWood(wood)) {
             addPlainOrDyedStacks(holder.get(), out);
         }
     }

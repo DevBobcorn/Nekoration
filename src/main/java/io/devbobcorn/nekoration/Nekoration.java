@@ -95,6 +95,7 @@ public class Nekoration {
                 WoodenBlockRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
                 WoodenBlockRegistration.addFurnitureCategoryStacks(output::accept);
                 WoodenBlockRegistration.addContainerCategoryStacks(output::accept);
+                WoodenBlockRegistration.addEaselMenuCategoryStacks(output::accept);
             })
             .build());
 
