@@ -3,25 +3,24 @@ package io.devbobcorn.nekoration.blocks.stone;
 import java.util.Map;
 
 import io.devbobcorn.nekoration.blocks.HorizontalBlock;
-import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.states.FrameConnection;
 import io.devbobcorn.nekoration.blocks.states.ModStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -51,19 +50,6 @@ public class FrameSideBlock extends HorizontalBlock {
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return shapes.get(state.getValue(FACING)).get(state.getValue(CONNECTION));
-    }
-
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hitResult) {
-        if (stack.getItem() instanceof AxeItem) {
-            if (level.isClientSide()) {
-                return ItemInteractionResult.SUCCESS;
-            }
-            level.setBlock(pos, state.cycle(CONNECTION), Block.UPDATE_ALL | Block.UPDATE_KNOWN_SHAPE);
-            return ItemInteractionResult.CONSUME;
-        }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     private static Map<Direction, Map<FrameConnection, VoxelShape>> createShapes() {
@@ -104,97 +90,88 @@ public class FrameSideBlock extends HorizontalBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        BlockState placed = super.getStateForPlacement(ctx);
-        if (placed == null) {
+        BlockState existing = ctx.getLevel().getBlockState(ctx.getClickedPos());
+        if (isSameKind(existing, ctx.getItemInHand()) && existing.getValue(CONNECTION) != FrameConnection.BOTH) {
+            return existing.setValue(CONNECTION, FrameConnection.BOTH);
+        }
+
+        BlockPos pos = ctx.getClickedPos();
+        Vec3 click = ctx.getClickLocation();
+        double x = click.x - pos.getX();
+        double z = click.z - pos.getZ();
+
+        Direction facing = getFacingAt(x, z);
+        FrameConnection connection = getConnectionAt(facing, x, z);
+        return this.defaultBlockState().setValue(FACING, facing).setValue(CONNECTION, connection);
+    }
+
+    @Override
+    protected boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {
+        return !useContext.replacingClickedOnBlock()
+                && isSameKind(state, useContext.getItemInHand())
+                && state.getValue(CONNECTION) != FrameConnection.BOTH;
+    }
+
+    protected boolean isSameKind(BlockState state, ItemStack stack) {
+        return state.getBlock() == this
+                && stack.getItem() instanceof BlockItem item
+                && item.getBlock() == this;
+    }
+
+    @Override
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest,
+            FluidState fluid) {
+        if (player != null && state.getValue(CONNECTION) == FrameConnection.BOTH) {
+            FrameConnection remaining = getRemainingConnection(state, level, pos, player);
+            if (remaining != null) {
+                level.setBlock(pos, state.setValue(CONNECTION, remaining), Block.UPDATE_ALL);
+                if (willHarvest) {
+                    player.awardStat(Stats.BLOCK_MINED.get(this));
+                    player.causeFoodExhaustion(0.005F);
+                    Block.popResource(level, pos, this.getCloneItemStack(level, pos, state));
+                }
+                return false;
+            }
+        }
+        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
+    }
+
+    private static FrameConnection getRemainingConnection(BlockState state, Level level, BlockPos pos, Player player) {
+        Vec3 start = player.getEyePosition();
+        Vec3 end = start.add(player.getViewVector(1.0F).scale(player.blockInteractionRange() + 1.0));
+        BlockHitResult hit = state.getShape(level, pos).clip(start, end, pos);
+        if (hit == null) {
             return null;
         }
-        Direction facing = placed.getValue(FACING);
-        FrameConnection connection = getConnection(ctx.getLevel(), ctx.getClickedPos(), facing);
-        return placed.setValue(CONNECTION, connection);
+
+        Vec3 location = hit.getLocation();
+        double x = location.x - pos.getX();
+        double z = location.z - pos.getZ();
+        FrameConnection broken = getConnectionAt(state.getValue(FACING), x, z);
+        return broken == FrameConnection.LEFT ? FrameConnection.RIGHT : FrameConnection.LEFT;
     }
 
-    @Override
-    protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level,
-            BlockPos pos, BlockPos neighborPos) {
-        Direction facing = state.getValue(FACING);
-        FrameConnection connection = getConnection(level, pos, facing);
-        return state.setValue(CONNECTION, connection);
+    private static Direction getFacingAt(double x, double z) {
+        Direction facing = Direction.NORTH;
+        double distance = 1.0 - z;
+        if (z < distance) {
+            facing = Direction.SOUTH;
+            distance = z;
+        }
+        if (x < distance) {
+            facing = Direction.EAST;
+            distance = x;
+        }
+        if (1.0 - x < distance) {
+            facing = Direction.WEST;
+        }
+        return facing;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() != newState.getBlock()) {
-            Direction facing = state.getValue(FACING);
-
-            BlockPos right = getRightBlock(pos, facing);
-            BlockPos left = getLeftBlock(pos, facing);
-
-            recalculateNeighbor(level, right);
-            recalculateNeighbor(level, right.above());
-            recalculateNeighbor(level, right.below());
-            recalculateNeighbor(level, left);
-            recalculateNeighbor(level, left.above());
-            recalculateNeighbor(level, left.below());
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
-
-    protected boolean canConnectTo(BlockState state, Direction facing) {
-        return state.getBlock() instanceof HorizontalConnectedBlock
-                && state.getValue(FACING) == facing;
-    }
-
-    private FrameConnection getConnection(LevelAccessor level, BlockPos pos, Direction facing) {
-        BlockPos left = getLeftBlock(pos, facing);
-        BlockPos right = getRightBlock(pos, facing);
-
-        boolean connectLeft = canConnectTo(level.getBlockState(left.above()), facing)
-                || canConnectTo(level.getBlockState(left), facing)
-                || canConnectTo(level.getBlockState(left.below()), facing);
-        boolean connectRight = canConnectTo(level.getBlockState(right.above()), facing)
-                || canConnectTo(level.getBlockState(right), facing)
-                || canConnectTo(level.getBlockState(right.below()), facing);
-
-        BlockState aboveState = level.getBlockState(pos.above());
-        BlockState belowState = level.getBlockState(pos.below());
-        connectLeft = connectLeft || hasLeftConnection(aboveState, facing) || hasLeftConnection(belowState, facing);
-        connectRight = connectRight || hasRightConnection(aboveState, facing) || hasRightConnection(belowState, facing);
-
-        if (connectLeft && !connectRight) {
-            return FrameConnection.LEFT;
-        }
-        if (connectRight && !connectLeft) {
-            return FrameConnection.RIGHT;
-        }
-        return FrameConnection.BOTH;
-    }
-
-    private boolean hasLeftConnection(BlockState state, Direction facing) {
-        if (!(state.getBlock() instanceof FrameSideBlock) || state.getValue(FACING) != facing) {
-            return false;
-        }
-        FrameConnection connection = state.getValue(CONNECTION);
-        return connection == FrameConnection.LEFT || connection == FrameConnection.BOTH;
-    }
-
-    private boolean hasRightConnection(BlockState state, Direction facing) {
-        if (!(state.getBlock() instanceof FrameSideBlock) || state.getValue(FACING) != facing) {
-            return false;
-        }
-        FrameConnection connection = state.getValue(CONNECTION);
-        return connection == FrameConnection.RIGHT || connection == FrameConnection.BOTH;
-    }
-
-    private void recalculateNeighbor(Level level, BlockPos neighborPos) {
-        BlockState neighborState = level.getBlockState(neighborPos);
-        if (!(neighborState.getBlock() instanceof FrameSideBlock)) {
-            return;
-        }
-
-        Direction neighborFacing = neighborState.getValue(FACING);
-        FrameConnection newConnection = getConnection(level, neighborPos, neighborFacing);
-        if (neighborState.getValue(CONNECTION) != newConnection) {
-            level.setBlock(neighborPos, neighborState.setValue(CONNECTION, newConnection), Block.UPDATE_CLIENTS);
-        }
+    private static FrameConnection getConnectionAt(Direction facing, double x, double z) {
+        Direction left = getLeftDir(facing);
+        double coord = left.getAxis() == Direction.Axis.X ? x : z;
+        boolean isLeft = left.getAxisDirection() == Direction.AxisDirection.POSITIVE ? coord >= 0.5 : coord < 0.5;
+        return isLeft ? FrameConnection.LEFT : FrameConnection.RIGHT;
     }
 }

@@ -46,13 +46,16 @@ public class DyeableFrameSideBlock extends FrameSideBlock {
         if (placed == null) {
             return null;
         }
-        ItemStack stack = ctx.getItemInHand();
-        if (stack.getItem() instanceof DyeableBlockItem) {
-            placed = placed.setValue(DyeableBlock.COLOR, DyeableBlockItem.getColor(stack));
-        } else {
-            placed = placed.setValue(DyeableBlock.COLOR, EnumNekoColor.WHITE);
-        }
-        return placed;
+        return placed.setValue(DyeableBlock.COLOR, getStackColor(ctx.getItemInHand()));
+    }
+
+    @Override
+    protected boolean isSameKind(BlockState state, ItemStack stack) {
+        return super.isSameKind(state, stack) && state.getValue(DyeableBlock.COLOR) == getStackColor(stack);
+    }
+
+    private static EnumNekoColor getStackColor(ItemStack stack) {
+        return stack.getItem() instanceof DyeableBlockItem ? DyeableBlockItem.getColor(stack) : EnumNekoColor.WHITE;
     }
 
     @Override
