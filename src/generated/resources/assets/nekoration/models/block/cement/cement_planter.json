@@ -2,6 +2,6 @@
   "parent": "nekoration:block/cement/planter",
   "textures": {
     "0": "nekoration:block/cement/cement_planter",
-    "1": "nekoration:block/cement/cement_top"
+    "1": "nekoration:block/cement/cement_frame"
   }
 }

@@ -390,6 +390,7 @@ public final class NekoCreativeTabFilterClient {
         if (isOrnamentTab(tab)) {
             NonNullList<ItemStack> out = NonNullList.create();
             switch (selectedOrnamentCategory) {
+                case POTS_AND_PLANTERS -> OrnamentRegistration.addPotsAndPlantersCategoryStacks(out::add);
                 case AWNING -> OrnamentRegistration.addAwningCategoryStacks(out::add);
                 case EASEL_MENU -> WoodenBlockRegistration.addEaselMenuCategoryStacks(out::add);
                 case FURNITURE -> WoodenBlockRegistration.addFurnitureCategoryStacks(out::add);

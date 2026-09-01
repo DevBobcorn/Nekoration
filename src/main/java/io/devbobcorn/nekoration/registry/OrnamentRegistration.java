@@ -154,4 +154,10 @@ public final class OrnamentRegistration {
                     : new ItemStack(item));
         }
     }
+
+    /** Add stone and cement pot and planter stacks (Pots and Planters category of the Ornaments tab). */
+    public static void addPotsAndPlantersCategoryStacks(Consumer<ItemStack> out) {
+        StoneBlockRegistration.addPotsAndPlantersStacks(out);
+        CementBlockRegistration.addPotsAndPlantersStacks(out);
+    }
 }

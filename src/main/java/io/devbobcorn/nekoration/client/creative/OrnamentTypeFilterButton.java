@@ -10,6 +10,7 @@ import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.OrnamentCategory;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
+import io.devbobcorn.nekoration.registry.CementBlockRegistration;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import net.minecraft.client.Minecraft;
@@ -55,6 +56,7 @@ public final class OrnamentTypeFilterButton extends AbstractButton {
 
     private static ItemStack iconStackFor(OrnamentCategory type) {
         return switch (type) {
+            case POTS_AND_PLANTERS -> DyeableBlockItem.createCreativeTabStack(CementBlockRegistration.potsCategoryIconItem().get(), EnumNekoColor.WHITE);
             case AWNING -> DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.awningCategoryIconItem().get(), EnumNekoColor.WHITE);
             case EASEL_MENU -> DyeableBlockItem.createCreativeTabStack(WoodenBlockRegistration.easelMenuCategoryIconItem().get(), EnumNekoColor.WHITE);
             case FURNITURE -> new ItemStack(WoodenBlockRegistration.furnitureCategoryIconItem().get());

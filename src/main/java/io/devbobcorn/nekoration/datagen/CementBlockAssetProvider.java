@@ -151,7 +151,7 @@ public final class CementBlockAssetProvider implements DataProvider {
     private void generatePot(CachedOutput output, List<CompletableFuture<?>> writes, String blockId, String part) {
         Map<String, Object> textures = new LinkedHashMap<>();
         textures.put("0", modLoc("block/cement/" + blockId));
-        textures.put("1", modLoc("block/cement/cement_top"));
+        textures.put("1", modLoc("block/cement/cement_frame"));
 
         writeJson(output, writes, blockModelPathProvider, "cement/" + blockId,
                 Map.of("parent", modLoc("block/cement/" + part), "textures", textures));

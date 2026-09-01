@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
@@ -17,6 +18,7 @@ import io.devbobcorn.nekoration.blocks.stone.FrameSideBlock;
 import io.devbobcorn.nekoration.blocks.stone.PotBlock;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
@@ -31,6 +33,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class StoneBlockRegistration {
     public static final List<DeferredItem<Item>> STONE_BLOCK_ITEMS = new ArrayList<>();
     public static final Map<NekoStone, List<Supplier<? extends Item>>> STONE_BLOCK_ITEMS_BY_STONE = new EnumMap<>(NekoStone.class);
+    private static final List<DeferredItem<Item>> POT_BLOCK_ITEMS = new ArrayList<>();
     
     private static final String TAB_ICON_ITEM_ID = "granite_tiles";
     private static DeferredItem<Item> tabIconItem;
@@ -124,6 +127,7 @@ public final class StoneBlockRegistration {
         DeferredBlock<Block> block = blocks.register(id, () -> new PotBlock(stone.stoneProperties(), radius));
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
+        POT_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
         return block;
     }
@@ -216,6 +220,13 @@ public final class StoneBlockRegistration {
     /** Items for the creative stone tab when filtering by {@link io.devbobcorn.nekoration.blocks.NekoStone}. */
     public static List<Supplier<? extends Item>> itemSuppliersForStone(NekoStone stone) {
         return Collections.unmodifiableList(STONE_BLOCK_ITEMS_BY_STONE.getOrDefault(stone, List.of()));
+    }
+
+    /** Add pot and planter stacks for every stone (Pots and Planters category of the Ornaments tab). */
+    public static void addPotsAndPlantersStacks(Consumer<ItemStack> out) {
+        for (var holder : POT_BLOCK_ITEMS) {
+            out.accept(new ItemStack(holder.get()));
+        }
     }
 
     /** Creative tab icon ({@value #TAB_ICON_ITEM_ID}). */

@@ -4,6 +4,7 @@ package io.devbobcorn.nekoration.blocks;
  * Category of ornament items for the Ornaments creative tab sub-filters.
  */
 public enum OrnamentCategory {
+    POTS_AND_PLANTERS,
     AWNING,
     EASEL_MENU,
     FURNITURE,
