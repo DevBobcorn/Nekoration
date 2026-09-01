@@ -50,6 +50,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
     private static final String PLANK_PALETTE_DIR = "plank_palettes";
     private static final String STONE_PALETTE_DIR = "stone_palettes";
     private static final String MINERAL_PALETTE_DIR = "mineral_palettes";
+    private static final int MASK_BLEND_SOURCE_COUNT = 3;
 
     private final Path templateTextureRoot;
     private final Path generatedBlockTextureRoot;
@@ -350,6 +351,65 @@ public final class NekoTextureAssetProvider implements DataProvider {
             graphics.dispose();
         }
         return composed;
+    }
+
+    public BufferedImage generateMaskBlendedTexture(Path sourceTextureDir, Path maskPath, List<String> sourceTexturePaths)
+            throws IOException {
+        if (sourceTexturePaths.size() != MASK_BLEND_SOURCE_COUNT) {
+            throw new IllegalStateException("Mask blending requires exactly " + MASK_BLEND_SOURCE_COUNT
+                    + " source texture paths (mapped to the mask's red, green and blue channels), but got "
+                    + sourceTexturePaths.size());
+        }
+
+        BufferedImage maskImage = readImage(maskPath);
+        List<BufferedImage> sourceImages = new ArrayList<>(sourceTexturePaths.size());
+        for (String sourceTexturePath : sourceTexturePaths) {
+            Path resolvedPath = sourceTextureDir.resolve(sourceTexturePath);
+            BufferedImage sourceImage = readImage(resolvedPath);
+            if (sourceImage.getWidth() != maskImage.getWidth() || sourceImage.getHeight() != maskImage.getHeight()) {
+                throw new IllegalStateException(
+                        "Source texture size " + sourceImage.getWidth() + "x" + sourceImage.getHeight() + " in "
+                                + sourceTextureDir + " does not match mask size " + maskImage.getWidth() + "x"
+                                + maskImage.getHeight() + " for " + resolvedPath.getFileName());
+            }
+            sourceImages.add(sourceImage);
+        }
+
+        int width = maskImage.getWidth();
+        int height = maskImage.getHeight();
+        BufferedImage blended = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int maskArgb = maskImage.getRGB(x, y);
+                int alpha = (maskArgb >>> 24) & 0xFF;
+                int weight0 = (maskArgb >>> 16) & 0xFF;
+                int weight1 = (maskArgb >>> 8) & 0xFF;
+                int weight2 = maskArgb & 0xFF;
+                int weightSum = weight0 + weight1 + weight2;
+
+                int red = 0;
+                int green = 0;
+                int blue = 0;
+                if (weightSum > 0) {
+                    int argb0 = sourceImages.get(0).getRGB(x, y);
+                    int argb1 = sourceImages.get(1).getRGB(x, y);
+                    int argb2 = sourceImages.get(2).getRGB(x, y);
+                    red = blendChannel(weight0, argb0 >>> 16 & 0xFF, weight1, argb1 >>> 16 & 0xFF, weight2,
+                            argb2 >>> 16 & 0xFF, weightSum);
+                    green = blendChannel(weight0, argb0 >>> 8 & 0xFF, weight1, argb1 >>> 8 & 0xFF, weight2,
+                            argb2 >>> 8 & 0xFF, weightSum);
+                    blue = blendChannel(weight0, argb0 & 0xFF, weight1, argb1 & 0xFF, weight2, argb2 & 0xFF, weightSum);
+                }
+                blended.setRGB(x, y, (alpha << 24) | (red << 16) | (green << 8) | blue);
+            }
+        }
+        return blended;
+    }
+
+    private static int blendChannel(int weight0, int channel0, int weight1, int channel1, int weight2, int channel2,
+            int weightSum) {
+        return (weight0 * channel0 + weight1 * channel1 + weight2 * channel2 + weightSum / 2) / weightSum;
     }
 
     private static BufferedImage readImage(Path path) throws IOException {
