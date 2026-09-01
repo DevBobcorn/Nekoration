@@ -35,6 +35,8 @@ public final class OrnamentRegistration {
 
     private static final String AWNING_CATEGORY_ICON_ITEM_ID = "awning_stripe_short";
     private static DeferredItem<DyeableBlockItem> awningCategoryIconItem;
+    private static final String MISC_CATEGORY_ICON_ITEM_ID = "gold_candle_holder";
+    private static DeferredItem<? extends BlockItem> miscCategoryIconItem;
 
     private OrnamentRegistration() {
     }
@@ -64,6 +66,9 @@ public final class OrnamentRegistration {
         DeferredItem<DyeableBlockItem> item = registerDyeableBlockItem(items, id, block);
         CANDLE_HOLDER_BLOCK_ITEMS.add(item);
         MISC_BLOCK_ITEMS.add(item);
+        if (MISC_CATEGORY_ICON_ITEM_ID.equals(id)) {
+            miscCategoryIconItem = item;
+        }
     }
 
     private static void registerFlowerBasket(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
@@ -142,8 +147,9 @@ public final class OrnamentRegistration {
         }
     }
 
+    /** Icon for the Misc category of the Ornaments tab ({@value #MISC_CATEGORY_ICON_ITEM_ID}). */
     public static DeferredItem<? extends BlockItem> miscCategoryIconItem() {
-        return MISC_BLOCK_ITEMS.getFirst();
+        return miscCategoryIconItem;
     }
 
     public static void addMiscCategoryStacks(Consumer<ItemStack> out) {
