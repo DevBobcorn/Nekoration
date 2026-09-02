@@ -17,27 +17,19 @@ public class ShortAwningBlock extends DyeableHorizontalBlock {
     private static final VoxelShape SHAPE_NORTH = Shapes.or(
             Block.box(0.0D, 8.0D, 0.0D, 16.0D, 12.0D, 5.333333D),
             Block.box(0.0D, 10.0D, 5.333333D, 16.0D, 14.0D, 10.666667D),
-            Block.box(0.0D, 12.0D, 10.666667D, 16.0D, 16.0D, 16.0D),
-            Block.box(1.0D, 4.0D, 2.0D, 2.0D, 11.0D, 16.0D),
-            Block.box(14.0D, 4.0D, 2.0D, 15.0D, 11.0D, 16.0D));
+            Block.box(0.0D, 12.0D, 10.666667D, 16.0D, 16.0D, 16.0D));
     private static final VoxelShape SHAPE_SOUTH = Shapes.or(
             Block.box(0.0D, 8.0D, 10.666667D, 16.0D, 12.0D, 16.0D),
             Block.box(0.0D, 10.0D, 5.333333D, 16.0D, 14.0D, 10.666667D),
-            Block.box(0.0D, 12.0D, 0.0D, 16.0D, 16.0D, 5.333333D),
-            Block.box(14.0D, 4.0D, 0.0D, 15.0D, 11.0D, 14.0D),
-            Block.box(1.0D, 4.0D, 0.0D, 2.0D, 11.0D, 14.0D));
+            Block.box(0.0D, 12.0D, 0.0D, 16.0D, 16.0D, 5.333333D));
     private static final VoxelShape SHAPE_EAST = Shapes.or(
             Block.box(10.666667D, 8.0D, 0.0D, 16.0D, 12.0D, 16.0D),
             Block.box(5.333333D, 10.0D, 0.0D, 10.666667D, 14.0D, 16.0D),
-            Block.box(0.0D, 12.0D, 0.0D, 5.333333D, 16.0D, 16.0D),
-            Block.box(0.0D, 4.0D, 1.0D, 14.0D, 11.0D, 2.0D),
-            Block.box(0.0D, 4.0D, 14.0D, 14.0D, 11.0D, 15.0D));
+            Block.box(0.0D, 12.0D, 0.0D, 5.333333D, 16.0D, 16.0D));
     private static final VoxelShape SHAPE_WEST = Shapes.or(
             Block.box(0.0D, 8.0D, 0.0D, 5.333333D, 12.0D, 16.0D),
             Block.box(5.333333D, 10.0D, 0.0D, 10.666667D, 14.0D, 16.0D),
-            Block.box(10.666667D, 12.0D, 0.0D, 16.0D, 16.0D, 16.0D),
-            Block.box(2.0D, 4.0D, 14.0D, 16.0D, 11.0D, 15.0D),
-            Block.box(2.0D, 4.0D, 1.0D, 16.0D, 11.0D, 2.0D));
+            Block.box(10.666667D, 12.0D, 0.0D, 16.0D, 16.0D, 16.0D));
 
     public ShortAwningBlock(Properties properties) {
         super(properties);
