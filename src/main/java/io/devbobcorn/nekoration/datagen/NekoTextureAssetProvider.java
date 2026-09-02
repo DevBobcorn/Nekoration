@@ -50,6 +50,8 @@ public final class NekoTextureAssetProvider implements DataProvider {
     private static final String PLANK_PALETTE_DIR = "plank_palettes";
     private static final String STONE_PALETTE_DIR = "stone_palettes";
     private static final String MINERAL_PALETTE_DIR = "mineral_palettes";
+    private static final String WOOL_PALETTE_DIR = "wool_palettes";
+    private static final String WOOL_MASK_DIR = "wool_masks";
     private static final int MASK_BLEND_SOURCE_COUNT = 3;
 
     private final Path templateTextureRoot;
@@ -71,6 +73,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
         Nekoration.LOGGER.info("Generating textures from {} to {}", templateTextureRoot, generatedBlockTextureRoot);
         try {
             generatePaletteMappedTextures(cachedOutput);
+            generateAwningTextures(cachedOutput);
             generateHalfTimberBackTextures(cachedOutput);
             generateGuiTextures(cachedOutput);
         } catch (IOException e) {
@@ -99,6 +102,45 @@ public final class NekoTextureAssetProvider implements DataProvider {
         PaletteTargets mineralPaletteTargets = resolvePaletteTargets(MINERAL_PALETTE_DIR);
         generateMappedTextureFolder(cachedOutput, "mineral", MINERAL_OVERLAYS,
                 mineralPaletteTargets.sourcePalettePath(), mineralPaletteTargets.targetPalettes());
+
+        PaletteTargets woolPaletteTargets = resolvePaletteTargets(WOOL_PALETTE_DIR);
+        generateMappedTextureFolder(cachedOutput, "wool", Map.of(),
+                woolPaletteTargets.sourcePalettePath(), woolPaletteTargets.targetPalettes());
+    }
+
+    private void generateAwningTextures(CachedOutput cachedOutput) throws IOException {
+        Path sourceDir = generatedBlockTextureRoot.resolve("wool");
+        Path maskDir = templateTextureRoot.resolve(WOOL_MASK_DIR);
+        if (!Files.isDirectory(sourceDir) || !Files.isDirectory(maskDir)) {
+            return;
+        }
+
+        PaletteTargets woolPaletteTargets = resolvePaletteTargets(WOOL_PALETTE_DIR);
+        for (Path targetPalettePath : woolPaletteTargets.targetPalettes()) {
+            String color = stripExtension(targetPalettePath.getFileName().toString());
+            String colorTexture = color + "/awning.png";
+
+            String pureMask;
+            String stripeMask;
+            List<String> pureSources;
+            List<String> stripeSources;
+            if (color.equals("white")) {
+                pureMask = "awning_pure_white.png";
+                stripeMask = "awning_stripe_white.png";
+                pureSources = List.of("white/awning.png", "yellow/awning.png", "white/awning.png");
+                stripeSources = List.of("white/awning.png", "yellow/awning.png", "pink/awning.png");
+            } else {
+                pureMask = "awning_pure.png";
+                stripeMask = "awning_stripe.png";
+                pureSources = List.of(colorTexture, "white/awning.png", colorTexture);
+                stripeSources = List.of(colorTexture, "white/awning.png", colorTexture);
+            }
+
+            writeTexture(cachedOutput, "awning/" + color + "_pure",
+                    generateMaskBlendedTexture(sourceDir, maskDir.resolve(pureMask), pureSources));
+            writeTexture(cachedOutput, "awning/" + color + "_stripe",
+                    generateMaskBlendedTexture(sourceDir, maskDir.resolve(stripeMask), stripeSources));
+        }
     }
 
     private PaletteTargets resolvePaletteTargets(String paletteDirectoryName) throws IOException {
@@ -154,9 +196,9 @@ public final class NekoTextureAssetProvider implements DataProvider {
                 if (overlayImage != null) {
                     mapped = composeOverlay(mapped, overlayImage, sourceImagePath);
                 }
-                String targetWoodName = stripExtension(targetPalettePath.getFileName().toString());
+                String targetVariantName = stripExtension(targetPalettePath.getFileName().toString());
                 String textureName = stripExtension(sourceImagePath.getFileName().toString());
-                writeTexture(cachedOutput, textureFolder + "/" + targetWoodName + "/" + textureName, mapped);
+                writeTexture(cachedOutput, textureFolder + "/" + targetVariantName + "/" + textureName, mapped);
             }
         }
     }

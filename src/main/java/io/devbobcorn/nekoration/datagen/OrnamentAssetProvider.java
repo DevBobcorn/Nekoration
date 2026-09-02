@@ -152,17 +152,12 @@ public final class OrnamentAssetProvider implements DataProvider {
             boolean stripe) {
         Map<String, Object> variants = new LinkedHashMap<>();
         for (String color : COLORS) {
-            writeModel(output, writes, colorModelPath(id, color), "awning/" + (shortAwning ? "awning_short" : "awning"),
-                    stripe ? Map.of("0", modLoc("block/awning/" + color + "_stripe_top"),
-                            "1", modLoc("block/awning/" + color + "_stripe"))
-                            : Map.of("0", "block/" + color + "_wool",
-                                    "1", modLoc("block/awning/" + color + "_pure")));
+            Map<String, String> textures = new LinkedHashMap<>();
+            textures.put("0", modLoc("block/awning/" + color + (stripe ? "_stripe" : "_pure")));
+            writeModel(output, writes, colorModelPath(id, color),
+                    "awning/" + (shortAwning ? "awning_short" : "awning"), textures);
             if (!shortAwning) {
-                writeModel(output, writes, colorEndModelPath(id, color), "awning/awning_end",
-                        stripe ? Map.of("0", modLoc("block/awning/" + color + "_stripe_top"),
-                                "1", modLoc("block/awning/" + color + "_stripe"))
-                                : Map.of("0", "block/" + color + "_wool",
-                                        "1", modLoc("block/awning/" + color + "_pure")));
+                writeModel(output, writes, colorEndModelPath(id, color), "awning/awning_end", textures);
             }
 
             for (String facing : List.of("north", "east", "south", "west")) {

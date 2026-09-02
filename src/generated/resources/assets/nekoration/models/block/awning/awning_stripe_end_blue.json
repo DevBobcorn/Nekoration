@@ -1,7 +1,6 @@
 {
   "parent": "nekoration:block/awning/awning_end",
   "textures": {
-    "0": "nekoration:block/awning/blue_stripe_top",
-    "1": "nekoration:block/awning/blue_stripe"
+    "0": "nekoration:block/awning/blue_stripe"
   }
 }

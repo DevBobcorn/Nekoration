@@ -1,7 +1,6 @@
 {
   "parent": "nekoration:block/awning/awning_end",
   "textures": {
-    "0": "block/pink_wool",
-    "1": "nekoration:block/awning/pink_pure"
+    "0": "nekoration:block/awning/pink_pure"
   }
 }
