@@ -15,6 +15,14 @@ public enum LampPostType implements StringRepresentable {
         this.name = name;
     }
 
+    /**
+     * Whether this type is part of a free-standing vertical post (base, pole, or
+     * capped top), as opposed to a wall-mounted bracket that extends sideways.
+     */
+    public boolean isPost() {
+        return this == TOP || this == POLE || this == BASE;
+    }
+
     @Override
     public String getSerializedName() {
         return name;

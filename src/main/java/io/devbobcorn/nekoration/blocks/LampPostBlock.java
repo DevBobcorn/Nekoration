@@ -83,18 +83,12 @@ public class LampPostBlock extends CrossCollisionBlock {
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
         if (direction.getAxis().isHorizontal()) {
-            return state.setValue(PROPERTY_BY_DIRECTION.get(direction),
+            state = state.setValue(PROPERTY_BY_DIRECTION.get(direction),
                     connectsTo(neighborState, level, neighborPos, direction.getOpposite()));
         }
-        LampPostType type = state.getValue(TYPE);
-        if (type == LampPostType.TOP && direction == Direction.UP && neighborState.getBlock() instanceof LampPostBlock) {
-            type = LampPostType.POLE;
-        } else if (direction == Direction.UP && isValidUpBlock(neighborState)) {
-            type = LampPostType.SIDE_UP;
-        } else if (direction == Direction.DOWN && isValidDownBlock(neighborState)) {
-            type = LampPostType.SIDE_DOWN;
-        }
-        return state.setValue(TYPE, type);
+        // The part type is fully re-derived from the current surroundings, so the
+        // result never depends on the order in which the parts were placed.
+        return state.setValue(TYPE, getType(level, pos));
     }
 
     private boolean connectsTo(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
@@ -105,14 +99,21 @@ public class LampPostBlock extends CrossCollisionBlock {
     private LampPostType getType(BlockGetter level, BlockPos pos) {
         BlockState below = level.getBlockState(pos.below());
         BlockState above = level.getBlockState(pos.above());
+        if (below.getBlock() instanceof LampPostBlock && below.getValue(TYPE).isPost()) {
+            // Part of a vertical post: only the topmost part carries the cap, so that
+            // the cap follows the post as blocks are added to or removed from the stack.
+            return above.getBlock() instanceof LampPostBlock && above.getValue(TYPE).isPost()
+                    ? LampPostType.POLE
+                    : LampPostType.TOP;
+        }
         if (below.isFaceSturdy(level, pos.below(), Direction.UP)) {
             return LampPostType.BASE;
         }
-        if (below.getBlock() instanceof LampPostBlock
-                && below.getValue(TYPE) != LampPostType.SIDE_UP
-                && below.getValue(TYPE) != LampPostType.SIDE_DOWN
-                && !(above.getBlock() instanceof LampPostBlock)) {
-            return LampPostType.TOP;
+        if (isValidUpBlock(above)) {
+            return LampPostType.SIDE_UP;
+        }
+        if (isValidDownBlock(below)) {
+            return LampPostType.SIDE_DOWN;
         }
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos neighborPos = pos.relative(direction);
