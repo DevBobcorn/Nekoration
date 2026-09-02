@@ -1,98 +1,98 @@
 {
-  "parent": "nekoration:block/awning/awning_stripe_short_white",
+  "parent": "nekoration:block/awning/short_awning_stripe_white",
   "overrides": [
     {
-      "model": "nekoration:block/awning/awning_stripe_short_white",
+      "model": "nekoration:block/awning/short_awning_stripe_white",
       "predicate": {
         "nekoration:color": 0.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_light_gray",
+      "model": "nekoration:block/awning/short_awning_stripe_light_gray",
       "predicate": {
         "nekoration:color": 1.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_gray",
+      "model": "nekoration:block/awning/short_awning_stripe_gray",
       "predicate": {
         "nekoration:color": 2.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_black",
+      "model": "nekoration:block/awning/short_awning_stripe_black",
       "predicate": {
         "nekoration:color": 3.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_brown",
+      "model": "nekoration:block/awning/short_awning_stripe_brown",
       "predicate": {
         "nekoration:color": 4.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_red",
+      "model": "nekoration:block/awning/short_awning_stripe_red",
       "predicate": {
         "nekoration:color": 5.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_orange",
+      "model": "nekoration:block/awning/short_awning_stripe_orange",
       "predicate": {
         "nekoration:color": 6.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_yellow",
+      "model": "nekoration:block/awning/short_awning_stripe_yellow",
       "predicate": {
         "nekoration:color": 7.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_lime",
+      "model": "nekoration:block/awning/short_awning_stripe_lime",
       "predicate": {
         "nekoration:color": 8.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_green",
+      "model": "nekoration:block/awning/short_awning_stripe_green",
       "predicate": {
         "nekoration:color": 9.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_cyan",
+      "model": "nekoration:block/awning/short_awning_stripe_cyan",
       "predicate": {
         "nekoration:color": 10.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_light_blue",
+      "model": "nekoration:block/awning/short_awning_stripe_light_blue",
       "predicate": {
         "nekoration:color": 11.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_blue",
+      "model": "nekoration:block/awning/short_awning_stripe_blue",
       "predicate": {
         "nekoration:color": 12.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_purple",
+      "model": "nekoration:block/awning/short_awning_stripe_purple",
       "predicate": {
         "nekoration:color": 13.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_magenta",
+      "model": "nekoration:block/awning/short_awning_stripe_magenta",
       "predicate": {
         "nekoration:color": 14.0
       }
     },
     {
-      "model": "nekoration:block/awning/awning_stripe_short_pink",
+      "model": "nekoration:block/awning/short_awning_stripe_pink",
       "predicate": {
         "nekoration:color": 15.0
       }

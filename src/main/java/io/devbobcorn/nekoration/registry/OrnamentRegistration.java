@@ -33,7 +33,7 @@ public final class OrnamentRegistration {
     private static final List<DeferredItem<? extends BlockItem>> MISC_BLOCK_ITEMS = new ArrayList<>();
     private static final List<DeferredBlock<Block>> LAMP_POST_BLOCKS = new ArrayList<>();
 
-    private static final String AWNING_CATEGORY_ICON_ITEM_ID = "awning_stripe_short";
+    private static final String AWNING_CATEGORY_ICON_ITEM_ID = "short_awning_stripe";
     private static DeferredItem<DyeableBlockItem> awningCategoryIconItem;
     private static final String MISC_CATEGORY_ICON_ITEM_ID = "gold_candle_holder";
     private static DeferredItem<? extends BlockItem> miscCategoryIconItem;
@@ -44,8 +44,8 @@ public final class OrnamentRegistration {
     public static void register(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {
         registerAwning(blocks, items, "awning_pure", false);
         registerAwning(blocks, items, "awning_stripe", false);
-        registerAwning(blocks, items, "awning_pure_short", true);
-        registerAwning(blocks, items, "awning_stripe_short", true);
+        registerAwning(blocks, items, "short_awning_pure", true);
+        registerAwning(blocks, items, "short_awning_stripe", true);
         registerWindowPlant(blocks, items, "window_plant");
         registerLampPost(blocks, items, "iron_lamp_post", Blocks.IRON_BLOCK);
         registerLampPost(blocks, items, "gold_lamp_post", Blocks.GOLD_BLOCK);

@@ -51,7 +51,7 @@ door_ids = ["quartz_door","chiseled_quartz_door","quartz_bricks_door","tall_quar
 doors_us = ["Quartz Door","Chiseled Quartz Door","Quartz Bricks Door","Tall Quartz Door","Tall Chiseled Quartz Door","Tall Quartz Bricks Door"]
 doors_cn = ["石英门","雕纹石英门","石英砖门","加高石英门","加高雕纹石英门","加高石英砖门"]
 
-decor_ids = ["awning_pure","awning_stripe","awning_pure_short","awning_stripe_short","window_plant"]
+decor_ids = ["awning_pure","awning_stripe","short_awning_pure","short_awning_stripe","window_plant"]
 decors_us = ["%s Awning","%s Stripe Awning","Short %s Awning","Short %s Stripe Awning","%s Flowering Window Plant"]
 decors_cn = ["%s雨篷","%s条纹雨篷","%s短篷","%s条纹短篷","开%s花的窗边植物"]
 

@@ -176,3 +176,20 @@ All block properties are carried over between v1 and v2, with two exceptions on 
 |3|firework|
 
 All properties of Lamp Posts are unchanged.
+
+## Awnings
+
+In v2, the word `short` moved from a suffix to a prefix of the Short Awning block ids. The item ids follow their block ids in both versions. Full Awning block ids are unchanged.
+
+|Old Name|Old Id|New Name|New Id|
+|--------|------|--------|------|
+|{Color} Awning|awning_pure|{Color} Awning|awning_pure|
+|{Color} Stripe Awning|awning_stripe|{Color} Stripe Awning|awning_stripe|
+|Short {Color} Awning|awning_pure_short|Short {Color} Awning|short_awning_pure|
+|Short {Color} Stripe Awning|awning_stripe_short|Short {Color} Stripe Awning|short_awning_stripe|
+
+All block properties are carried over between v1 and v2, with one exception:
+
+- They store their dye color in the `level` block property in v1, while v2 uses the `color` property as `EnumNekoColor`(like Cement Blocks). Convert their `level` property to the v2 `color` property using the [Colors](#colors) table.
+
+The `facing` property is preserved on all Awning blocks, and the `bottom` property(end cap) is preserved on full Awning blocks. Short Awning blocks have no `bottom` property in either version.

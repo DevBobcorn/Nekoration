@@ -38,8 +38,8 @@ public final class OrnamentAssetProvider implements DataProvider {
         List<CompletableFuture<?>> writes = new ArrayList<>();
         generateAwning(cachedOutput, writes, "awning_pure", false, false);
         generateAwning(cachedOutput, writes, "awning_stripe", false, true);
-        generateAwning(cachedOutput, writes, "awning_pure_short", true, false);
-        generateAwning(cachedOutput, writes, "awning_stripe_short", true, true);
+        generateAwning(cachedOutput, writes, "short_awning_pure", true, false);
+        generateAwning(cachedOutput, writes, "short_awning_stripe", true, true);
         for (String material : MINERAL_MATERIALS) {
             generateLampPost(cachedOutput, writes, material);
             generateCandleHolder(cachedOutput, writes, material);
