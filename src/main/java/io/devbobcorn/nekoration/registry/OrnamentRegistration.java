@@ -12,6 +12,7 @@ import io.devbobcorn.nekoration.blocks.WindowPlantBlock;
 import io.devbobcorn.nekoration.blocks.AwningBlock;
 import io.devbobcorn.nekoration.blocks.LampPostBlock;
 import io.devbobcorn.nekoration.blocks.ShortAwningBlock;
+import io.devbobcorn.nekoration.items.AwningBlockItem;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.BlockItem;
@@ -90,7 +91,9 @@ public final class OrnamentRegistration {
         DeferredBlock<Block> block = blocks.register(id, () -> shortAwning
                 ? new ShortAwningBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).noOcclusion())
                 : new AwningBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).noOcclusion()));
-        DeferredItem<DyeableBlockItem> item = registerDyeableBlockItem(items, id, block);
+        DeferredItem<DyeableBlockItem> item = shortAwning
+                ? registerDyeableBlockItem(items, id, block)
+                : registerAwningBlockItem(items, id, block);
         AWNING_BLOCK_ITEMS.add(item);
         if (AWNING_CATEGORY_ICON_ITEM_ID.equals(id)) {
             awningCategoryIconItem = item;
@@ -120,6 +123,11 @@ public final class OrnamentRegistration {
     private static DeferredItem<DyeableBlockItem> registerDyeableBlockItem(DeferredRegister.Items items, String id,
             DeferredBlock<Block> block) {
         return items.registerItem(id, props -> new DyeableBlockItem(block.get(), props), new net.minecraft.world.item.Item.Properties());
+    }
+
+    private static DeferredItem<DyeableBlockItem> registerAwningBlockItem(DeferredRegister.Items items, String id,
+            DeferredBlock<Block> block) {
+        return items.registerItem(id, props -> new AwningBlockItem(block.get(), props), new net.minecraft.world.item.Item.Properties());
     }
 
     public static DeferredBlock<Block> windowPlantBlock() {
