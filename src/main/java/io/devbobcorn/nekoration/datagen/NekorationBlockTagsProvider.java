@@ -24,5 +24,9 @@ public final class NekorationBlockTagsProvider extends TagsProvider<Block> {
     protected void addTags(HolderLookup.Provider provider) {
         tag(BlockTags.FENCES).addAll(OrnamentRegistration.lampPostBlocksView().stream()
                 .map(DeferredBlock::getKey).toList());
+        tag(BlockTags.DOORS).addAll(OrnamentRegistration.doorBlocksView().stream()
+                .map(DeferredBlock::getKey).toList());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addAll(OrnamentRegistration.doorBlocksView().stream()
+                .map(DeferredBlock::getKey).toList());
     }
 }

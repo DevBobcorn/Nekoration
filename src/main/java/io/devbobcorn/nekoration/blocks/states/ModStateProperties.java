@@ -11,6 +11,8 @@ public final class ModStateProperties {
             EnumProperty.create("vertical_connection", VerticalConnection.class);
     public static final EnumProperty<LampPostType> LAMP_POST_TYPE =
             EnumProperty.create("post_type", LampPostType.class);
+    public static final EnumProperty<DoorSegment> DOOR_SEGMENT =
+            EnumProperty.create("segment", DoorSegment.class);
 
     private ModStateProperties() {
     }

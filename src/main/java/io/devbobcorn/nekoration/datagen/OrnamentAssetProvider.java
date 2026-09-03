@@ -23,6 +23,13 @@ public final class OrnamentAssetProvider implements DataProvider {
             .map(EnumNekoColor::getSerializedName).toList();
     private static final List<String> MINERAL_MATERIALS = List.of("iron", "gold", "quartz");
     private static final List<String> DIRECTIONS = List.of("north", "east", "south", "west");
+    private static final List<String> DOOR_FACINGS = List.of("east", "south", "west", "north");
+    private static final Map<String, Integer> DOOR_CLOSED_ROTATIONS = Map.of(
+            "east", 0, "south", 90, "west", 180, "north", 270);
+    private static final Map<String, Integer> DOOR_OPEN_LEFT_ROTATIONS = Map.of(
+            "east", 90, "south", 180, "west", 270, "north", 0);
+    private static final Map<String, Integer> DOOR_OPEN_RIGHT_ROTATIONS = Map.of(
+            "east", 270, "south", 0, "west", 90, "north", 180);
     private final PackOutput.PathProvider blockstates;
     private final PackOutput.PathProvider models;
     private final PackOutput.PathProvider items;
@@ -45,7 +52,78 @@ public final class OrnamentAssetProvider implements DataProvider {
             generateCandleHolder(cachedOutput, writes, material);
             generateFlowerBasket(cachedOutput, writes, material);
         }
+        generateDoor(cachedOutput, writes, "quartz_door", false);
+        generateDoor(cachedOutput, writes, "chiseled_quartz_door", false);
+        generateDoor(cachedOutput, writes, "quartz_bricks_door", false);
+        generateDoor(cachedOutput, writes, "tall_quartz_door", true);
+        generateDoor(cachedOutput, writes, "tall_chiseled_quartz_door", true);
+        generateDoor(cachedOutput, writes, "tall_quartz_bricks_door", true);
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
+    }
+
+    /** Blockstate, block model and item model generator for quartz doors. */
+    private void generateDoor(CachedOutput output, List<CompletableFuture<?>> writes, String id, boolean tall) {
+        String modelPrefix = "door/" + id;
+        String bottomTexture = modLoc("block/door/" + id + "_bottom");
+        String topTexture = modLoc("block/door/" + id + "_top");
+
+        // The wide faces of the bottom segment use the bottom texture; the edges of the
+        // regular door reuse the top texture, like the 1.19 version of this mod did.
+        Map<String, String> bottomTextures = new LinkedHashMap<>();
+        bottomTextures.put("bottom", bottomTexture);
+        bottomTextures.put("side", tall ? bottomTexture : topTexture);
+        writeModel(output, writes, modelPrefix + "_bottom",
+                "door/door" + (tall ? "_tall" : "") + "_bottom", bottomTextures);
+        writeModel(output, writes, modelPrefix + "_bottom_hinge",
+                "door/door" + (tall ? "_tall" : "") + "_bottom_rh", bottomTextures);
+
+        if (tall) {
+            Map<String, String> middleTextures = new LinkedHashMap<>();
+            middleTextures.put("middle", modLoc("block/door/" + id + "_middle"));
+            middleTextures.put("side", modLoc("block/door/" + id + "_middle"));
+            writeModel(output, writes, modelPrefix + "_middle", "door/door_tall_middle", middleTextures);
+            writeModel(output, writes, modelPrefix + "_middle_hinge", "door/door_tall_middle_rh", middleTextures);
+        }
+
+        Map<String, String> topTextures = new LinkedHashMap<>();
+        topTextures.put("top", topTexture);
+        topTextures.put("side", topTexture);
+        writeModel(output, writes, modelPrefix + "_top", "door/door_top", topTextures);
+        writeModel(output, writes, modelPrefix + "_top_hinge", "door/door_top_rh", topTextures);
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        // Tall doors are keyed by "segment" (lower/middle/upper), regular doors by vanilla "half".
+        List<String> parts = tall ? List.of("segment=lower", "segment=middle", "segment=upper")
+                : List.of("half=lower", "half=upper");
+        for (int i = 0; i < parts.size(); i++) {
+            String part = parts.get(i);
+            String baseModel = modLoc("block/" + modelPrefix + switch (i) {
+                case 1 -> tall ? "_middle" : "_top";
+                case 2 -> "_top";
+                default -> "_bottom";
+            });
+            String hingeModel = modLoc("block/" + modelPrefix + switch (i) {
+                case 1 -> tall ? "_middle_hinge" : "_top_hinge";
+                case 2 -> "_top_hinge";
+                default -> "_bottom_hinge";
+            });
+            for (String facing : DOOR_FACINGS) {
+                variants.put("facing=" + facing + "," + part + ",hinge=left,open=false",
+                        facingVariant(baseModel, DOOR_CLOSED_ROTATIONS.get(facing)));
+                variants.put("facing=" + facing + "," + part + ",hinge=right,open=false",
+                        facingVariant(hingeModel, DOOR_CLOSED_ROTATIONS.get(facing)));
+                variants.put("facing=" + facing + "," + part + ",hinge=left,open=true",
+                        facingVariant(hingeModel, DOOR_OPEN_LEFT_ROTATIONS.get(facing)));
+                variants.put("facing=" + facing + "," + part + ",hinge=right,open=true",
+                        facingVariant(baseModel, DOOR_OPEN_RIGHT_ROTATIONS.get(facing)));
+            }
+        }
+        write(output, writes, blockstates, id, Map.of("variants", variants));
+
+        Map<String, Object> itemBody = new LinkedHashMap<>();
+        itemBody.put("parent", "item/generated");
+        itemBody.put("textures", Map.of("layer0", modLoc("item/" + id)));
+        write(output, writes, items, id, itemBody);
     }
 
     private void generateCandleHolder(CachedOutput output, List<CompletableFuture<?>> writes, String material) {

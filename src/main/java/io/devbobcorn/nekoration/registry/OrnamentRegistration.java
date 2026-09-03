@@ -8,6 +8,8 @@ import java.util.function.Consumer;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.blocks.CandleHolderBlock;
 import io.devbobcorn.nekoration.blocks.FlowerBasketBlock;
+import io.devbobcorn.nekoration.blocks.NekoDoorBlock;
+import io.devbobcorn.nekoration.blocks.TallDoorBlock;
 import io.devbobcorn.nekoration.blocks.WindowPlantBlock;
 import io.devbobcorn.nekoration.blocks.AwningBlock;
 import io.devbobcorn.nekoration.blocks.LampPostBlock;
@@ -20,7 +22,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -36,6 +41,7 @@ public final class OrnamentRegistration {
     public static final List<DeferredItem<BlockItem>> FURNITURE_BLOCK_ITEMS = new ArrayList<>();
     private static final List<DeferredItem<? extends BlockItem>> MISC_BLOCK_ITEMS = new ArrayList<>();
     private static final List<DeferredBlock<Block>> LAMP_POST_BLOCKS = new ArrayList<>();
+    private static final List<DeferredBlock<Block>> DOOR_BLOCKS = new ArrayList<>();
 
     private static final String AWNING_CATEGORY_ICON_ITEM_ID = "short_awning_stripe";
     private static DeferredItem<DyeableBlockItem> awningCategoryIconItem;
@@ -60,7 +66,43 @@ public final class OrnamentRegistration {
         registerFlowerBasket(blocks, items, "iron_flower_basket", Blocks.IRON_BLOCK);
         registerFlowerBasket(blocks, items, "gold_flower_basket", Blocks.GOLD_BLOCK);
         registerFlowerBasket(blocks, items, "quartz_flower_basket", Blocks.QUARTZ_BLOCK);
+        registerDoors(blocks, items);
         registerPumpkinFurniture(blocks, items);
+    }
+
+    private static void registerDoors(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {
+        DeferredBlock<Block> tallQuartz = registerTallDoor(blocks, "tall_quartz_door");
+        DeferredBlock<Block> tallChiseled = registerTallDoor(blocks, "tall_chiseled_quartz_door");
+        DeferredBlock<Block> tallBricks = registerTallDoor(blocks, "tall_quartz_bricks_door");
+
+        registerDoor(blocks, items, "quartz_door", tallQuartz);
+        registerDoor(blocks, items, "chiseled_quartz_door", tallChiseled);
+        registerDoor(blocks, items, "quartz_bricks_door", tallBricks);
+
+        MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem("tall_quartz_door", tallQuartz));
+        MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem("tall_chiseled_quartz_door", tallChiseled));
+        MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem("tall_quartz_bricks_door", tallBricks));
+    }
+
+    private static DeferredBlock<Block> registerTallDoor(DeferredRegister.Blocks blocks, String id) {
+        DeferredBlock<Block> block = blocks.register(id, () -> new TallDoorBlock(doorProperties()));
+        DOOR_BLOCKS.add(block);
+        return block;
+    }
+
+    private static void registerDoor(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            DeferredBlock<Block> tallVariant) {
+        DeferredBlock<Block> block = blocks.register(id,
+                () -> new NekoDoorBlock(doorProperties(), () -> tallVariant.get()));
+        MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem(id, block));
+        DOOR_BLOCKS.add(block);
+    }
+
+    private static BlockBehaviour.Properties doorProperties() {
+        return BlockBehaviour.Properties.ofFullCopy(Blocks.QUARTZ_BLOCK)
+                .strength(2.0F, 3.0F)
+                .noOcclusion()
+                .pushReaction(PushReaction.DESTROY);
     }
 
     private static void registerPumpkinFurniture(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {
@@ -124,6 +166,10 @@ public final class OrnamentRegistration {
 
     public static List<DeferredBlock<Block>> lampPostBlocksView() {
         return Collections.unmodifiableList(LAMP_POST_BLOCKS);
+    }
+
+    public static List<DeferredBlock<Block>> doorBlocksView() {
+        return Collections.unmodifiableList(DOOR_BLOCKS);
     }
 
     public static List<DeferredItem<DyeableBlockItem>> candleHolderBlockItemsView() {

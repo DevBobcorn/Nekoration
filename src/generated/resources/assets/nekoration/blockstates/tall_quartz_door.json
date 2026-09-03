@@ -1,0 +1,184 @@
+{
+  "variants": {
+    "facing=east,segment=lower,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom"
+    },
+    "facing=east,segment=lower,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom_hinge",
+      "y": 90
+    },
+    "facing=east,segment=lower,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom_hinge"
+    },
+    "facing=east,segment=lower,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom",
+      "y": 270
+    },
+    "facing=east,segment=middle,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_middle"
+    },
+    "facing=east,segment=middle,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_middle_hinge",
+      "y": 90
+    },
+    "facing=east,segment=middle,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_middle_hinge"
+    },
+    "facing=east,segment=middle,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_middle",
+      "y": 270
+    },
+    "facing=east,segment=upper,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_top"
+    },
+    "facing=east,segment=upper,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_top_hinge",
+      "y": 90
+    },
+    "facing=east,segment=upper,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_top_hinge"
+    },
+    "facing=east,segment=upper,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_top",
+      "y": 270
+    },
+    "facing=north,segment=lower,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom",
+      "y": 270
+    },
+    "facing=north,segment=lower,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom_hinge"
+    },
+    "facing=north,segment=lower,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom_hinge",
+      "y": 270
+    },
+    "facing=north,segment=lower,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom",
+      "y": 180
+    },
+    "facing=north,segment=middle,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_middle",
+      "y": 270
+    },
+    "facing=north,segment=middle,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_middle_hinge"
+    },
+    "facing=north,segment=middle,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_middle_hinge",
+      "y": 270
+    },
+    "facing=north,segment=middle,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_middle",
+      "y": 180
+    },
+    "facing=north,segment=upper,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_top",
+      "y": 270
+    },
+    "facing=north,segment=upper,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_top_hinge"
+    },
+    "facing=north,segment=upper,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_top_hinge",
+      "y": 270
+    },
+    "facing=north,segment=upper,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_top",
+      "y": 180
+    },
+    "facing=south,segment=lower,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom",
+      "y": 90
+    },
+    "facing=south,segment=lower,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom_hinge",
+      "y": 180
+    },
+    "facing=south,segment=lower,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom_hinge",
+      "y": 90
+    },
+    "facing=south,segment=lower,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom"
+    },
+    "facing=south,segment=middle,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_middle",
+      "y": 90
+    },
+    "facing=south,segment=middle,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_middle_hinge",
+      "y": 180
+    },
+    "facing=south,segment=middle,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_middle_hinge",
+      "y": 90
+    },
+    "facing=south,segment=middle,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_middle"
+    },
+    "facing=south,segment=upper,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_top",
+      "y": 90
+    },
+    "facing=south,segment=upper,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_top_hinge",
+      "y": 180
+    },
+    "facing=south,segment=upper,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_top_hinge",
+      "y": 90
+    },
+    "facing=south,segment=upper,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_top"
+    },
+    "facing=west,segment=lower,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom",
+      "y": 180
+    },
+    "facing=west,segment=lower,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom_hinge",
+      "y": 270
+    },
+    "facing=west,segment=lower,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom_hinge",
+      "y": 180
+    },
+    "facing=west,segment=lower,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_bottom",
+      "y": 90
+    },
+    "facing=west,segment=middle,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_middle",
+      "y": 180
+    },
+    "facing=west,segment=middle,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_middle_hinge",
+      "y": 270
+    },
+    "facing=west,segment=middle,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_middle_hinge",
+      "y": 180
+    },
+    "facing=west,segment=middle,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_middle",
+      "y": 90
+    },
+    "facing=west,segment=upper,hinge=left,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_top",
+      "y": 180
+    },
+    "facing=west,segment=upper,hinge=left,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_top_hinge",
+      "y": 270
+    },
+    "facing=west,segment=upper,hinge=right,open=false": {
+      "model": "nekoration:block/door/tall_quartz_door_top_hinge",
+      "y": 180
+    },
+    "facing=west,segment=upper,hinge=right,open=true": {
+      "model": "nekoration:block/door/tall_quartz_door_top",
+      "y": 90
+    }
+  }
+}
