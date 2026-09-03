@@ -16,13 +16,14 @@ import io.devbobcorn.nekoration.blocks.stone.ColumnBlock;
 import io.devbobcorn.nekoration.blocks.stone.DirectionalColumnBlock;
 import io.devbobcorn.nekoration.blocks.stone.FrameSideBlock;
 import io.devbobcorn.nekoration.blocks.stone.PotBlock;
+import io.devbobcorn.nekoration.blocks.stone.SelfDroppingBlock;
+import io.devbobcorn.nekoration.blocks.stone.SelfDroppingSlabBlock;
+import io.devbobcorn.nekoration.blocks.stone.SelfDroppingStairBlock;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.StairBlock;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -114,7 +115,7 @@ public final class StoneBlockRegistration {
 
     private static DeferredBlock<Block> registerBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
-        DeferredBlock<Block> block = blocks.register(id, () -> new Block(stone.stoneProperties()));
+        DeferredBlock<Block> block = blocks.register(id, () -> new SelfDroppingBlock(stone.stoneProperties()));
         trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
@@ -194,7 +195,7 @@ public final class StoneBlockRegistration {
     private static void registerStairBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             DeferredBlock<Block> sourceBlock, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new StairBlock(sourceBlock.get().defaultBlockState(), stone.stoneProperties()));
+                () -> new SelfDroppingStairBlock(sourceBlock.get().defaultBlockState(), stone.stoneProperties()));
         trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
@@ -204,7 +205,7 @@ public final class StoneBlockRegistration {
     private static void registerStairBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             Block sourceBlock, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new StairBlock(sourceBlock.defaultBlockState(), stone.stoneProperties()));
+                () -> new SelfDroppingStairBlock(sourceBlock.defaultBlockState(), stone.stoneProperties()));
         trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
@@ -213,7 +214,7 @@ public final class StoneBlockRegistration {
 
     private static void registerSlabBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
-        DeferredBlock<Block> block = blocks.register(id, () -> new SlabBlock(stone.stoneProperties()));
+        DeferredBlock<Block> block = blocks.register(id, () -> new SelfDroppingSlabBlock(stone.stoneProperties()));
         trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);

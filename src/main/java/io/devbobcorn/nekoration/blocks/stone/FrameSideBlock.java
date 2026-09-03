@@ -1,5 +1,7 @@
 package io.devbobcorn.nekoration.blocks.stone;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import io.devbobcorn.nekoration.blocks.HorizontalBlock;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -110,6 +113,20 @@ public class FrameSideBlock extends HorizontalBlock {
         return !useContext.replacingClickedOnBlock()
                 && isSameKind(state, useContext.getItemInHand())
                 && state.getValue(CONNECTION) != FrameConnection.BOTH;
+    }
+
+    /** Number of items this frame side drops: one per side (left/right) of the frame still present. */
+    protected int getDropCount(BlockState state) {
+        return state.getValue(CONNECTION) == FrameConnection.BOTH ? 2 : 1;
+    }
+
+    @Override
+    protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        List<ItemStack> drops = new ArrayList<>(getDropCount(state));
+        for (int i = 0; i < getDropCount(state); i++) {
+            drops.add(new ItemStack(asItem()));
+        }
+        return drops;
     }
 
     protected boolean isSameKind(BlockState state, ItemStack stack) {

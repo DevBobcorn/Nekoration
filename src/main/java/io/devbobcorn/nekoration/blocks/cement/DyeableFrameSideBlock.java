@@ -1,6 +1,6 @@
 package io.devbobcorn.nekoration.blocks.cement;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
@@ -85,8 +85,13 @@ public class DyeableFrameSideBlock extends FrameSideBlock {
 
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack stack = new ItemStack(this.asItem());
-        DyeableBlockItem.setColor(stack, state.getValue(DyeableBlock.COLOR));
-        return Collections.singletonList(stack);
+        // One item per side of the frame, each keeping the dyed color.
+        List<ItemStack> drops = new ArrayList<>(getDropCount(state));
+        for (int i = 0; i < getDropCount(state); i++) {
+            ItemStack stack = new ItemStack(this.asItem());
+            DyeableBlockItem.setColor(stack, state.getValue(DyeableBlock.COLOR));
+            drops.add(stack);
+        }
+        return drops;
     }
 }
