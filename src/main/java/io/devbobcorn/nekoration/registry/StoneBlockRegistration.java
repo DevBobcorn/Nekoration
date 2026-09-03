@@ -34,6 +34,8 @@ public final class StoneBlockRegistration {
     public static final List<DeferredItem<Item>> STONE_BLOCK_ITEMS = new ArrayList<>();
     public static final Map<NekoStone, List<Supplier<? extends Item>>> STONE_BLOCK_ITEMS_BY_STONE = new EnumMap<>(NekoStone.class);
     private static final List<DeferredItem<Item>> POT_BLOCK_ITEMS = new ArrayList<>();
+    /** All mod-registered stone blocks (mineable tags). */
+    private static final List<DeferredBlock<Block>> STONE_BLOCKS = new ArrayList<>();
     
     private static final String TAB_ICON_ITEM_ID = "granite_tiles";
     private static DeferredItem<Item> tabIconItem;
@@ -113,6 +115,7 @@ public final class StoneBlockRegistration {
     private static DeferredBlock<Block> registerBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id, () -> new Block(stone.stoneProperties()));
+        trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
@@ -125,6 +128,7 @@ public final class StoneBlockRegistration {
     private static DeferredBlock<Block> registerPotBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
         int radius, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id, () -> new PotBlock(stone.stoneProperties(), radius));
+        trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         POT_BLOCK_ITEMS.add(blockItem);
@@ -136,6 +140,7 @@ public final class StoneBlockRegistration {
             VerticalConnectedBlock.ConnectionType connectionType, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new VerticalConnectedBlock(stone.stoneProperties(), connectionType, false));
+        trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
@@ -146,6 +151,7 @@ public final class StoneBlockRegistration {
             HorizontalConnectedBlock.ConnectionType connectionType, int thickness, int height, int bottom, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new HorizontalConnectedBlock(stone.stoneProperties(), connectionType, false, thickness, height, bottom));
+        trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
@@ -156,6 +162,7 @@ public final class StoneBlockRegistration {
             List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new FrameSideBlock(stone.stoneProperties()));
+        trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
@@ -166,6 +173,7 @@ public final class StoneBlockRegistration {
             List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new BaseBlock(stone.stoneProperties()));
+        trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
@@ -176,6 +184,7 @@ public final class StoneBlockRegistration {
             boolean hasHorizontalAxis, int topPartHeight, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> hasHorizontalAxis ? new DirectionalColumnBlock(stone.stoneProperties(), topPartHeight) : new ColumnBlock(stone.stoneProperties(), topPartHeight));
+        trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
@@ -186,6 +195,7 @@ public final class StoneBlockRegistration {
             DeferredBlock<Block> sourceBlock, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new StairBlock(sourceBlock.get().defaultBlockState(), stone.stoneProperties()));
+        trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
@@ -195,6 +205,7 @@ public final class StoneBlockRegistration {
             Block sourceBlock, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new StairBlock(sourceBlock.defaultBlockState(), stone.stoneProperties()));
+        trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
@@ -203,9 +214,14 @@ public final class StoneBlockRegistration {
     private static void registerSlabBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id, () -> new SlabBlock(stone.stoneProperties()));
+        trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         blockItemsByStone.add(blockItem);
+    }
+
+    private static void trackStoneBlock(DeferredBlock<Block> block) {
+        STONE_BLOCKS.add(block);
     }
 
     private static DeferredItem<Item> registerBlockItem(DeferredRegister.Items items, String id,
@@ -215,6 +231,10 @@ public final class StoneBlockRegistration {
 
     public static List<DeferredItem<Item>> blockItemsView() {
         return Collections.unmodifiableList(STONE_BLOCK_ITEMS);
+    }
+
+    public static List<DeferredBlock<Block>> stoneBlocksView() {
+        return Collections.unmodifiableList(STONE_BLOCKS);
     }
 
     /** Items for the creative stone tab when filtering by {@link io.devbobcorn.nekoration.blocks.NekoStone}. */

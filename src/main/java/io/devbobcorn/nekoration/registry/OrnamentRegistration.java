@@ -22,9 +22,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -47,6 +46,11 @@ public final class OrnamentRegistration {
     private static DeferredItem<DyeableBlockItem> awningCategoryIconItem;
     private static final String MISC_CATEGORY_ICON_ITEM_ID = "gold_candle_holder";
     private static DeferredItem<? extends BlockItem> miscCategoryIconItem;
+
+    private static final List<DeferredBlock<Block>> AWNING_BLOCKS = new ArrayList<>();
+    private static final List<DeferredBlock<Block>> CANDLE_HOLDER_BLOCKS = new ArrayList<>();
+    private static final List<DeferredBlock<Block>> FLOWER_BASKET_BLOCKS = new ArrayList<>();
+    private static final List<DeferredBlock<Block>> PUMPKIN_FURNITURE_BLOCKS = new ArrayList<>();
 
     private OrnamentRegistration() {
     }
@@ -100,7 +104,6 @@ public final class OrnamentRegistration {
 
     private static BlockBehaviour.Properties doorProperties() {
         return BlockBehaviour.Properties.ofFullCopy(Blocks.QUARTZ_BLOCK)
-                .strength(2.0F, 3.0F)
                 .noOcclusion()
                 .pushReaction(PushReaction.DESTROY);
     }
@@ -108,22 +111,24 @@ public final class OrnamentRegistration {
     private static void registerPumpkinFurniture(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {
         DeferredBlock<Block> table = blocks.register("pumpkin_table", () -> new TableBlock(pumpkinFurnitureProperties()));
         FURNITURE_BLOCK_ITEMS.add(items.registerSimpleBlockItem("pumpkin_table", table));
+        PUMPKIN_FURNITURE_BLOCKS.add(table);
 
         DeferredBlock<Block> chair = blocks.register("pumpkin_chair",
                 () -> new ChairBlock(pumpkinFurnitureProperties(), 8, 24));
         FURNITURE_BLOCK_ITEMS.add(items.registerSimpleBlockItem("pumpkin_chair", chair));
+        PUMPKIN_FURNITURE_BLOCKS.add(chair);
     }
 
     private static BlockBehaviour.Properties pumpkinFurnitureProperties() {
-        return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(2.0F, 3.0F)
-                .sound(SoundType.WOOD).noOcclusion();
+        return BlockBehaviour.Properties.ofFullCopy(Blocks.PUMPKIN).noOcclusion();
     }
 
     private static void registerCandleHolder(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             Block material) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new CandleHolderBlock(BlockBehaviour.Properties.ofFullCopy(material).strength(0.0F).noOcclusion()
+                () -> new CandleHolderBlock(BlockBehaviour.Properties.ofFullCopy(material).noOcclusion()
                         .lightLevel(state -> state.getValue(CandleHolderBlock.FLAME).isLit() ? 15 : 0)));
+        CANDLE_HOLDER_BLOCKS.add(block);
         DeferredItem<DyeableBlockItem> item = registerDyeableBlockItem(items, id, block);
         CANDLE_HOLDER_BLOCK_ITEMS.add(item);
         MISC_BLOCK_ITEMS.add(item);
@@ -135,14 +140,15 @@ public final class OrnamentRegistration {
     private static void registerFlowerBasket(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             Block material) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new FlowerBasketBlock(BlockBehaviour.Properties.ofFullCopy(material).strength(0.0F).noOcclusion()));
+                () -> new FlowerBasketBlock(BlockBehaviour.Properties.ofFullCopy(material).noOcclusion()));
+        FLOWER_BASKET_BLOCKS.add(block);
         MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem(id, block));
     }
 
     private static void registerLampPost(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             Block material) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new LampPostBlock(BlockBehaviour.Properties.ofFullCopy(material).strength(2, 6).noOcclusion()));
+                () -> new LampPostBlock(BlockBehaviour.Properties.ofFullCopy(material).noOcclusion()));
         LAMP_POST_BLOCKS.add(block);
         MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem(id, block));
     }
@@ -151,6 +157,7 @@ public final class OrnamentRegistration {
         DeferredBlock<Block> block = blocks.register(id, () -> shortAwning
                 ? new ShortAwningBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).noOcclusion())
                 : new AwningBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL).noOcclusion()));
+        AWNING_BLOCKS.add(block);
         DeferredItem<DyeableBlockItem> item = shortAwning
                 ? registerDyeableBlockItem(items, id, block)
                 : registerAwningBlockItem(items, id, block);
@@ -174,6 +181,31 @@ public final class OrnamentRegistration {
 
     public static List<DeferredItem<DyeableBlockItem>> candleHolderBlockItemsView() {
         return Collections.unmodifiableList(CANDLE_HOLDER_BLOCK_ITEMS);
+    }
+
+    public static List<DeferredBlock<Block>> awningBlocksView() {
+        return Collections.unmodifiableList(AWNING_BLOCKS);
+    }
+
+    public static List<DeferredBlock<Block>> candleHolderBlocksView() {
+        return Collections.unmodifiableList(CANDLE_HOLDER_BLOCKS);
+    }
+
+    public static List<DeferredBlock<Block>> flowerBasketBlocksView() {
+        return Collections.unmodifiableList(FLOWER_BASKET_BLOCKS);
+    }
+
+    public static List<DeferredBlock<Block>> pumpkinFurnitureBlocksView() {
+        return Collections.unmodifiableList(PUMPKIN_FURNITURE_BLOCKS);
+    }
+
+    /** Registers ornaments as flammable, matching their material blocks (wool and leaves: 30/60). */
+    public static void registerFlammability() {
+        FireBlock fire = (FireBlock) Blocks.FIRE;
+        for (DeferredBlock<Block> holder : AWNING_BLOCKS) {
+            fire.setFlammable(holder.get(), 30, 60);
+        }
+        fire.setFlammable(WINDOW_PLANT_BLOCK.get(), 30, 60);
     }
 
     private static void registerWindowPlant(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id) {

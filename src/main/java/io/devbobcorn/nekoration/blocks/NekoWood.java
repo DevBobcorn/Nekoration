@@ -25,6 +25,11 @@ public enum NekoWood {
         return name().toLowerCase();
     }
 
+    /** Nether woods (crimson/warped) are not flammable, matching their vanilla planks. */
+    public boolean isFlammable() {
+        return this != CRIMSON && this != WARPED;
+    }
+
     public BlockBehaviour.Properties plankProperties() {
         return BlockBehaviour.Properties.ofFullCopy(vanillaPlanks());
     }

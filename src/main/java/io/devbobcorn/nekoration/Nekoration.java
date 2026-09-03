@@ -15,6 +15,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -128,6 +129,7 @@ public class Nekoration {
         ModEntities.REGISTER.register(modEventBus);
         ModMenuTypes.REGISTER.register(modEventBus);
         modEventBus.addListener(NekorationNetwork::register);
+        modEventBus.addListener(this::onCommonSetup);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Nekoration) to respond directly to events.
@@ -143,5 +145,12 @@ public class Nekoration {
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
+    }
+
+    private void onCommonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            WoodenBlockRegistration.registerFlammability();
+            OrnamentRegistration.registerFlammability();
+        });
     }
 }

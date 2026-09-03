@@ -38,6 +38,8 @@ public final class CementBlockRegistration {
 
     private static List<DeferredItem<Item>> blockItems;
 
+    private static List<DeferredBlock<? extends Block>> cementBlocks;
+
     private static final List<DeferredItem<Item>> potBlockItems = new ArrayList<>();
 
     private CementBlockRegistration() {
@@ -76,6 +78,18 @@ public final class CementBlockRegistration {
         registerBlockItem(items, "cement_frame_side", CEMENT_FRAME_SIDE),
         registerPotItem(items, "cement_pot", CEMENT_POT),
         registerPotItem(items, "cement_planter", CEMENT_PLANTER));
+
+    cementBlocks = List.of(
+        CEMENT,
+        TRIMMED_CEMENT,
+        PANELED_CEMENT,
+        LAYERED_CEMENT,
+        CEMENT_FRAME_HEAD,
+        CEMENT_FRAME_PEAK,
+        CEMENT_FRAME_SILL,
+        CEMENT_FRAME_SIDE,
+        CEMENT_POT,
+        CEMENT_PLANTER);
     }
 
     private static DeferredItem<Item> registerPotItem(DeferredRegister.Items items, String id,
@@ -97,6 +111,10 @@ public final class CementBlockRegistration {
 
     public static List<DeferredItem<Item>> blockItemsView() {
     return blockItems;
+    }
+
+    public static List<DeferredBlock<? extends Block>> cementBlocksView() {
+    return cementBlocks;
     }
 
     /** Creative tab icon ({@value #TAB_ICON_ITEM_ID}). */
