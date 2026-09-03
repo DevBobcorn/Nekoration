@@ -33,8 +33,6 @@ public class ChairBlock extends HorizontalDirectionalBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final MapCodec<ChairBlock> CODEC = simpleCodec(ChairBlock::new);
 
-    private static final double SIDE_INSET = 2.0D;
-    private static final double LEG_THICKNESS = 2.0D;
     private static final double SEAT_THICKNESS = 2.0D;
     private static final double BACK_REST_THICKNESS = 2.0D;
 
@@ -46,30 +44,34 @@ public class ChairBlock extends HorizontalDirectionalBlock {
     }
 
     public ChairBlock(Properties properties, int seatHeight, int backRestHeight) {
+        this(properties, seatHeight, backRestHeight, 2, 2);
+    }
+
+    public ChairBlock(Properties properties, int seatHeight, int backRestHeight, int sideInset, int legThickness) {
         super(properties);
         this.seatYOffset = (seatHeight - 8.0D) / 16.0D;
         double seatBottom = seatHeight - SEAT_THICKNESS;
         double legHeight = seatBottom;
-        VoxelShape frontLeftLeg = Block.box(SIDE_INSET, 0.0D, SIDE_INSET, SIDE_INSET + LEG_THICKNESS, legHeight,
-                SIDE_INSET + LEG_THICKNESS);
-        VoxelShape frontRightLeg = Block.box(16.0D - SIDE_INSET - LEG_THICKNESS, 0.0D, SIDE_INSET, 16.0D - SIDE_INSET,
-                legHeight, SIDE_INSET + LEG_THICKNESS);
-        VoxelShape backLeftLeg = Block.box(SIDE_INSET, 0.0D, 16.0D - SIDE_INSET - LEG_THICKNESS, SIDE_INSET + LEG_THICKNESS,
-                legHeight, 16.0D - SIDE_INSET);
-        VoxelShape backRightLeg = Block.box(16.0D - SIDE_INSET - LEG_THICKNESS, 0.0D, 16.0D - SIDE_INSET - LEG_THICKNESS,
-                16.0D - SIDE_INSET, legHeight, 16.0D - SIDE_INSET);
-        VoxelShape seat = Block.box(SIDE_INSET, seatBottom, SIDE_INSET, 16.0D - SIDE_INSET, seatHeight,
-                16.0D - SIDE_INSET);
+        VoxelShape frontLeftLeg = Block.box(sideInset, 0.0D, sideInset, sideInset + legThickness, legHeight,
+                sideInset + legThickness);
+        VoxelShape frontRightLeg = Block.box(16.0D - sideInset - legThickness, 0.0D, sideInset, 16.0D - sideInset,
+                legHeight, sideInset + legThickness);
+        VoxelShape backLeftLeg = Block.box(sideInset, 0.0D, 16.0D - sideInset - legThickness, sideInset + legThickness,
+                legHeight, 16.0D - sideInset);
+        VoxelShape backRightLeg = Block.box(16.0D - sideInset - legThickness, 0.0D, 16.0D - sideInset - legThickness,
+                16.0D - sideInset, legHeight, 16.0D - sideInset);
+        VoxelShape seat = Block.box(sideInset, seatBottom, sideInset, 16.0D - sideInset, seatHeight,
+                16.0D - sideInset);
         VoxelShape baseShape = Shapes.or(frontLeftLeg, frontRightLeg, backLeftLeg, backRightLeg, seat);
         VoxelShape[] backRests = new VoxelShape[4];
-        backRests[1] = Block.box(16.0D - SIDE_INSET - BACK_REST_THICKNESS, seatHeight, SIDE_INSET,
-                16.0D - SIDE_INSET, backRestHeight, 16.0D - SIDE_INSET);
-        backRests[3] = Block.box(SIDE_INSET, seatHeight, SIDE_INSET, SIDE_INSET + BACK_REST_THICKNESS,
-                backRestHeight, 16.0D - SIDE_INSET);
-        backRests[0] = Block.box(SIDE_INSET, seatHeight, SIDE_INSET, 16.0D - SIDE_INSET, backRestHeight,
-                SIDE_INSET + BACK_REST_THICKNESS);
-        backRests[2] = Block.box(SIDE_INSET, seatHeight, 16.0D - SIDE_INSET - BACK_REST_THICKNESS, 16.0D - SIDE_INSET,
-                backRestHeight, 16.0D - SIDE_INSET);
+        backRests[1] = Block.box(16.0D - sideInset - BACK_REST_THICKNESS, seatHeight, sideInset,
+                16.0D - sideInset, backRestHeight, 16.0D - sideInset);
+        backRests[3] = Block.box(sideInset, seatHeight, sideInset, sideInset + BACK_REST_THICKNESS,
+                backRestHeight, 16.0D - sideInset);
+        backRests[0] = Block.box(sideInset, seatHeight, sideInset, 16.0D - sideInset, backRestHeight,
+                sideInset + BACK_REST_THICKNESS);
+        backRests[2] = Block.box(sideInset, seatHeight, 16.0D - sideInset - BACK_REST_THICKNESS, 16.0D - sideInset,
+                backRestHeight, 16.0D - sideInset);
         for (int i = 0; i < 4; i++) {
             chairShapes[i] = Shapes.or(backRests[i], baseShape);
         }

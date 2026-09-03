@@ -15,7 +15,7 @@ import io.devbobcorn.nekoration.blocks.AwningBlock;
 import io.devbobcorn.nekoration.blocks.LampPostBlock;
 import io.devbobcorn.nekoration.blocks.ShortAwningBlock;
 import io.devbobcorn.nekoration.blocks.furniture.ChairBlock;
-import io.devbobcorn.nekoration.blocks.furniture.TableBlock;
+import io.devbobcorn.nekoration.blocks.furniture.PumpkinTableBlock;
 import io.devbobcorn.nekoration.items.AwningBlockItem;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -109,12 +109,12 @@ public final class OrnamentRegistration {
     }
 
     private static void registerPumpkinFurniture(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {
-        DeferredBlock<Block> table = blocks.register("pumpkin_table", () -> new TableBlock(pumpkinFurnitureProperties()));
+        DeferredBlock<Block> table = blocks.register("pumpkin_table", () -> new PumpkinTableBlock(pumpkinFurnitureProperties()));
         FURNITURE_BLOCK_ITEMS.add(items.registerSimpleBlockItem("pumpkin_table", table));
         PUMPKIN_FURNITURE_BLOCKS.add(table);
 
         DeferredBlock<Block> chair = blocks.register("pumpkin_chair",
-                () -> new ChairBlock(pumpkinFurnitureProperties(), 8, 24));
+                () -> new ChairBlock(pumpkinFurnitureProperties(), 8, 24, 1, 4));
         FURNITURE_BLOCK_ITEMS.add(items.registerSimpleBlockItem("pumpkin_chair", chair));
         PUMPKIN_FURNITURE_BLOCKS.add(chair);
     }
