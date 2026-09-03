@@ -394,7 +394,10 @@ public final class NekoCreativeTabFilterClient {
                 case POTS_AND_PLANTERS -> OrnamentRegistration.addPotsAndPlantersCategoryStacks(out::add);
                 case AWNING -> OrnamentRegistration.addAwningCategoryStacks(out::add);
                 case EASEL_MENU -> WoodenBlockRegistration.addEaselMenuCategoryStacks(out::add);
-                case FURNITURE -> WoodenBlockRegistration.addFurnitureCategoryStacks(out::add);
+                case FURNITURE -> {
+                    WoodenBlockRegistration.addFurnitureCategoryStacks(out::add);
+                    OrnamentRegistration.addFurnitureCategoryStacks(out::add);
+                }
                 case CONTAINER -> WoodenBlockRegistration.addContainerCategoryStacks(out::add);
                 case MISC -> OrnamentRegistration.addMiscCategoryStacks(out::add);
             }

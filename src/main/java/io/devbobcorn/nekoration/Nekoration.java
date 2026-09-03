@@ -108,6 +108,7 @@ public class Nekoration {
                 OrnamentRegistration.addAwningCategoryStacks(output::accept);
                 WoodenBlockRegistration.addEaselMenuCategoryStacks(output::accept);
                 WoodenBlockRegistration.addFurnitureCategoryStacks(output::accept);
+                OrnamentRegistration.addFurnitureCategoryStacks(output::accept);
                 WoodenBlockRegistration.addContainerCategoryStacks(output::accept);
                 OrnamentRegistration.addPotsAndPlantersCategoryStacks(output::accept);
                 OrnamentRegistration.addMiscCategoryStacks(output::accept);

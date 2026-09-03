@@ -25,6 +25,11 @@ furniture_ids = ["easel_menu","table","round_table","glass_table","round_glass_t
 furniture_us = ["%s {wood} Easel Menu","{wood} Table","{wood} Round Table","{wood} Glass Table","{wood} Round Glass Table","{wood} Chair","{wood} Armchair","{wood} Bench","{wood} Cabinet","{wood} Drawer","{wood} Chest of Drawers","{wood} Cupboard","{wood} Wall Shelf"]
 furniture_cn = ["%s{wood}展架","{wood}桌子","{wood}圆桌","{wood}玻璃桌","{wood}圆玻璃桌","{wood}椅子","{wood}扶手椅","{wood}长椅","{wood}储物柜","{wood}抽屉","{wood}斗柜","{wood}橱柜","{wood}墙架"]
 
+# Furniture blocks not tied to a wood type (Ornaments tab, Furniture category)
+furniture2_ids = ["pumpkin_table","pumpkin_chair"]
+furnitures2_us = ["Pumpkin Table","Pumpkin Chair"]
+furnitures2_cn = ["南瓜桌","南瓜椅"]
+
 stone_ids = ["stone", "granite", "diorite", "andesite", "calcite", "dripstone", "tuff", "sandstone", "red_sandstone"]
 stones_us = ["Stone", "Granite", "Diorite", "Andesite", "Calcite", "Dripstone", "Tuff", "Sandstone", "Red Sandstone"]
 stones_cn = ["石头", "花岗岩", "闪长岩", "安山岩", "方解石", "滴水石", "凝灰岩", "砂岩", "红砂岩"]
@@ -190,6 +195,10 @@ for d_i in range(0, len(decor_ids)):
 for d_i in range(0, len(decortype_ids)):
     obj_us['decortype.nekoration.' + decortype_ids[d_i]] = decortypes_us[d_i]
     obj_cn['decortype.nekoration.' + decortype_ids[d_i]] = decortypes_cn[d_i]
+
+for f_i in range(0, len(furniture2_ids)):
+    obj_us['block.nekoration.' + furniture2_ids[f_i]] = furnitures2_us[f_i]
+    obj_cn['block.nekoration.' + furniture2_ids[f_i]] = furnitures2_cn[f_i]
 
 for m_i in range(0, len(misc_ids)):
     obj_us['block.nekoration.' + misc_ids[m_i]] = miscs_us[m_i]

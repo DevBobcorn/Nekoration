@@ -12,6 +12,8 @@ import io.devbobcorn.nekoration.blocks.WindowPlantBlock;
 import io.devbobcorn.nekoration.blocks.AwningBlock;
 import io.devbobcorn.nekoration.blocks.LampPostBlock;
 import io.devbobcorn.nekoration.blocks.ShortAwningBlock;
+import io.devbobcorn.nekoration.blocks.furniture.ChairBlock;
+import io.devbobcorn.nekoration.blocks.furniture.TableBlock;
 import io.devbobcorn.nekoration.items.AwningBlockItem;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -31,6 +33,7 @@ public final class OrnamentRegistration {
     public static DeferredItem<DyeableBlockItem> WINDOW_PLANT_BLOCK_ITEM;
     public static final List<DeferredItem<DyeableBlockItem>> AWNING_BLOCK_ITEMS = new ArrayList<>();
     public static final List<DeferredItem<DyeableBlockItem>> CANDLE_HOLDER_BLOCK_ITEMS = new ArrayList<>();
+    public static final List<DeferredItem<BlockItem>> FURNITURE_BLOCK_ITEMS = new ArrayList<>();
     private static final List<DeferredItem<? extends BlockItem>> MISC_BLOCK_ITEMS = new ArrayList<>();
     private static final List<DeferredBlock<Block>> LAMP_POST_BLOCKS = new ArrayList<>();
 
@@ -57,6 +60,21 @@ public final class OrnamentRegistration {
         registerFlowerBasket(blocks, items, "iron_flower_basket", Blocks.IRON_BLOCK);
         registerFlowerBasket(blocks, items, "gold_flower_basket", Blocks.GOLD_BLOCK);
         registerFlowerBasket(blocks, items, "quartz_flower_basket", Blocks.QUARTZ_BLOCK);
+        registerPumpkinFurniture(blocks, items);
+    }
+
+    private static void registerPumpkinFurniture(DeferredRegister.Blocks blocks, DeferredRegister.Items items) {
+        DeferredBlock<Block> table = blocks.register("pumpkin_table", () -> new TableBlock(pumpkinFurnitureProperties()));
+        FURNITURE_BLOCK_ITEMS.add(items.registerSimpleBlockItem("pumpkin_table", table));
+
+        DeferredBlock<Block> chair = blocks.register("pumpkin_chair",
+                () -> new ChairBlock(pumpkinFurnitureProperties(), 8, 24));
+        FURNITURE_BLOCK_ITEMS.add(items.registerSimpleBlockItem("pumpkin_chair", chair));
+    }
+
+    private static BlockBehaviour.Properties pumpkinFurnitureProperties() {
+        return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(2.0F, 3.0F)
+                .sound(SoundType.WOOD).noOcclusion();
     }
 
     private static void registerCandleHolder(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
@@ -158,6 +176,13 @@ public final class OrnamentRegistration {
     /** Icon for the Misc category of the Ornaments tab ({@value #MISC_CATEGORY_ICON_ITEM_ID}). */
     public static DeferredItem<? extends BlockItem> miscCategoryIconItem() {
         return miscCategoryIconItem;
+    }
+
+    /** Add pumpkin furniture stacks (Furniture category of the Ornaments tab). */
+    public static void addFurnitureCategoryStacks(Consumer<ItemStack> out) {
+        for (var holder : FURNITURE_BLOCK_ITEMS) {
+            out.accept(new ItemStack(holder.get()));
+        }
     }
 
     public static void addMiscCategoryStacks(Consumer<ItemStack> out) {
