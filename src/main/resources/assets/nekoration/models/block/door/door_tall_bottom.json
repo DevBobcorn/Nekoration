@@ -1,8 +1,7 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "#bottom",
-        "knob": "nekoration:block/door/knob_tall"
+        "particle": "#bottom"
     },
     "elements": [
         {
@@ -14,14 +13,6 @@
                 "south": { "uv": [  0, 0,  3, 16 ], "texture": "#side", "cullface": "south" },
                 "west":  { "uv": [  0, 0, 16, 16 ], "texture": "#bottom", "cullface": "west" },
                 "east":  { "uv": [ 16, 0,  0, 16 ], "texture": "#bottom" }
-            }
-        },
-        {
-            "from": [ -0.1, 0, 0 ],
-            "to": [ 3.1, 16, 16 ],
-            "faces": {
-                "east": { "uv": [ 16, 0, 0, 16 ], "texture": "#knob" },
-                "west": { "uv": [ 0, 0, 16, 16 ], "texture": "#knob" }
             }
         }
     ],

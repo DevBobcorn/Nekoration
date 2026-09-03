@@ -64,8 +64,8 @@ public final class OrnamentAssetProvider implements DataProvider {
     /** Blockstate, block model and item model generator for quartz doors. */
     private void generateDoor(CachedOutput output, List<CompletableFuture<?>> writes, String id, boolean tall) {
         String modelPrefix = "door/" + id;
-        String bottomTexture = modLoc("block/door/" + id + "_bottom");
-        String topTexture = modLoc("block/door/" + id + "_top");
+        String bottomTexture = modLoc("block/quartz_door/white/" + id + "_bottom");
+        String topTexture = modLoc("block/quartz_door/white/" + id + "_top");
 
         // The wide faces of the bottom segment use the bottom texture; the edges of the
         // regular door reuse the top texture, like the 1.19 version of this mod did.
@@ -79,8 +79,8 @@ public final class OrnamentAssetProvider implements DataProvider {
 
         if (tall) {
             Map<String, String> middleTextures = new LinkedHashMap<>();
-            middleTextures.put("middle", modLoc("block/door/" + id + "_middle"));
-            middleTextures.put("side", modLoc("block/door/" + id + "_middle"));
+            middleTextures.put("middle", modLoc("block/quartz_door/white/" + id + "_middle"));
+            middleTextures.put("side", modLoc("block/quartz_door/white/" + id + "_middle"));
             writeModel(output, writes, modelPrefix + "_middle", "door/door_tall_middle", middleTextures);
             writeModel(output, writes, modelPrefix + "_middle_hinge", "door/door_tall_middle_rh", middleTextures);
         }

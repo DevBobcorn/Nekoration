@@ -47,10 +47,18 @@ public final class NekoTextureAssetProvider implements DataProvider {
     private static final Map<String, String> MINERAL_OVERLAYS = Map.of(
             "candle_holder.png", "candle_holder_candle.png",
             "flower_basket.png", "flower_basket_flowers.png");
+    private static final Map<String, String> QUARTZ_DOOR_OVERLAYS = Map.of(
+            "quartz_door_bottom.png", "knob.png",
+            "chiseled_quartz_door_bottom.png", "knob.png",
+            "quartz_bricks_door_bottom.png", "knob.png",
+            "tall_quartz_door_bottom.png", "knob_tall.png",
+            "tall_chiseled_quartz_door_bottom.png", "knob_tall.png",
+            "tall_quartz_bricks_door_bottom.png", "knob_tall.png");
     private static final String PLANK_PALETTE_DIR = "plank_palettes";
     private static final String STONE_PALETTE_DIR = "stone_palettes";
     private static final String MINERAL_PALETTE_DIR = "mineral_palettes";
     private static final String WOOL_PALETTE_DIR = "wool_palettes";
+    private static final String QUARTZ_DOOR_PALETTE_DIR = "quartz_door_palettes";
     private static final String WOOL_MASK_DIR = "wool_masks";
     private static final int MASK_BLEND_SOURCE_COUNT = 3;
 
@@ -102,6 +110,10 @@ public final class NekoTextureAssetProvider implements DataProvider {
         PaletteTargets mineralPaletteTargets = resolvePaletteTargets(MINERAL_PALETTE_DIR);
         generateMappedTextureFolder(cachedOutput, "mineral", MINERAL_OVERLAYS,
                 mineralPaletteTargets.sourcePalettePath(), mineralPaletteTargets.targetPalettes());
+        
+        PaletteTargets quartzDoorPaletteTargets = resolvePaletteTargets(QUARTZ_DOOR_PALETTE_DIR);
+        generateMappedTextureFolder(cachedOutput, "quartz_door", QUARTZ_DOOR_OVERLAYS,
+                quartzDoorPaletteTargets.sourcePalettePath(), quartzDoorPaletteTargets.targetPalettes());
 
         PaletteTargets woolPaletteTargets = resolvePaletteTargets(WOOL_PALETTE_DIR);
         generateMappedTextureFolder(cachedOutput, "wool", Map.of(),

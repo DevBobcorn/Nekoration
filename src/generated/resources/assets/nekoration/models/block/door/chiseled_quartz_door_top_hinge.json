@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/door/door_top_rh",
   "textures": {
-    "side": "nekoration:block/door/chiseled_quartz_door_top",
-    "top": "nekoration:block/door/chiseled_quartz_door_top"
+    "side": "nekoration:block/quartz_door/white/chiseled_quartz_door_top",
+    "top": "nekoration:block/quartz_door/white/chiseled_quartz_door_top"
   }
 }
