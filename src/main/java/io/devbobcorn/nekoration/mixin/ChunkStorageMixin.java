@@ -27,4 +27,12 @@ abstract class ChunkStorageMixin {
             CallbackInfoReturnable<CompoundTag> callback) {
         LegacyWorldUpgrader.upgradeChunk(chunkData);
     }
+
+    @Inject(method = "upgradeChunkTag", at = @At("RETURN"))
+    private void nekoration$finalizeLegacyItems(ResourceKey<Level> levelKey,
+            Supplier<DimensionDataStorage> storage, CompoundTag chunkData,
+            Optional<ResourceKey<MapCodec<? extends ChunkGenerator>>> chunkGeneratorKey,
+            CallbackInfoReturnable<CompoundTag> callback) {
+        LegacyWorldUpgrader.finalizeItemStacks(callback.getReturnValue());
+    }
 }

@@ -6,8 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.util.datafix.DataFixTypes;
+import net.minecraft.util.datafix.DataFixers;
 
 class LegacyWorldUpgraderTest {
     @Test
@@ -110,6 +114,71 @@ class LegacyWorldUpgraderTest {
         assertEquals("nekoration:stone_base", currentCollision.getString("id"));
     }
 
+    @Test
+    void movesResidualContainerColorIntoCustomData() {
+        CompoundTag root = new CompoundTag();
+        CompoundTag blockEntity = new CompoundTag();
+        ListTag items = new ListTag();
+        CompoundTag awning = modernStackWithLegacyTag("awning_stripe", 15);
+        CompoundTag plant = modernStackWithLegacyTag("window_plant", 9);
+        CompoundTag components = new CompoundTag();
+        CompoundTag existingCustomData = new CompoundTag();
+        existingCustomData.putString("note", "preserved");
+        components.put("minecraft:custom_data", existingCustomData);
+        awning.put("components", components);
+        items.add(awning);
+        items.add(plant);
+        blockEntity.put("Items", items);
+        ListTag blockEntities = new ListTag();
+        blockEntities.add(blockEntity);
+        root.put("block_entities", blockEntities);
+
+        LegacyWorldUpgrader.finalizeItemStacks(root);
+
+        assertEquals(15, customData(awning).getByte("color"));
+        assertEquals("preserved", customData(awning).getString("note"));
+        assertEquals(9, customData(plant).getByte("color"));
+        assertFalse(awning.contains("tag"));
+        assertFalse(plant.contains("tag"));
+
+        CompoundTag finalized = root.copy();
+        LegacyWorldUpgrader.finalizeItemStacks(root);
+        assertEquals(finalized, root);
+    }
+
+    @Test
+    void preservesContainerColorThroughVanillaChunkDataFixes() {
+        SharedConstants.tryDetectVersion();
+        CompoundTag chunk = new CompoundTag();
+        NbtUtils.addDataVersion(chunk, 3120);
+        CompoundTag blockEntity = new CompoundTag();
+        blockEntity.putString("id", "nekoration:item_display");
+        ListTag items = new ListTag();
+        items.add(stack("awning_stripe", "color", 11));
+        items.add(stack("bench", "color", 0));
+        blockEntity.put("Items", items);
+        ListTag blockEntities = new ListTag();
+        blockEntities.add(blockEntity);
+        chunk.put("block_entities", blockEntities);
+
+        LegacyWorldUpgrader.upgradeChunk(chunk);
+        CompoundTag fixed = DataFixTypes.CHUNK.update(
+                DataFixers.getDataFixer(), chunk, 3120,
+                SharedConstants.getCurrentVersion().getDataVersion().getVersion());
+        LegacyWorldUpgrader.finalizeItemStacks(fixed);
+
+        CompoundTag fixedStack = fixed.getList("block_entities", 10)
+                .getCompound(0).getList("Items", 10).getCompound(0);
+        assertEquals(15, customData(fixedStack).getByte("color"), fixedStack::toString);
+        assertEquals(1, fixedStack.getInt("count"));
+        assertFalse(fixedStack.contains("Count"));
+        CompoundTag fixedBench = fixed.getList("block_entities", 10)
+                .getCompound(0).getList("Items", 10).getCompound(1);
+        assertEquals("nekoration:dark_oak_bench", fixedBench.getString("id"));
+        assertEquals(1, fixedBench.getInt("count"));
+        assertFalse(fixedBench.contains("Count"));
+    }
+
     private static CompoundTag state(String path, String... properties) {
         CompoundTag state = new CompoundTag();
         state.putString("Name", "nekoration:" + path);
@@ -135,5 +204,19 @@ class LegacyWorldUpgraderTest {
             stack.put("tag", itemTag);
         }
         return stack;
+    }
+
+    private static CompoundTag modernStackWithLegacyTag(String path, int color) {
+        CompoundTag stack = new CompoundTag();
+        stack.putString("id", "nekoration:" + path);
+        stack.putInt("count", 1);
+        CompoundTag legacyTag = new CompoundTag();
+        legacyTag.putByte("color", (byte) color);
+        stack.put("tag", legacyTag);
+        return stack;
+    }
+
+    private static CompoundTag customData(CompoundTag stack) {
+        return stack.getCompound("components").getCompound("minecraft:custom_data");
     }
 }

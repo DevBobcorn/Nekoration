@@ -100,6 +100,11 @@ public final class LegacyWorldUpgrader {
         upgradeNestedTag(data);
     }
 
+    /** Moves custom item data left outside components by data fixes for modded containers. */
+    public static void finalizeItemStacks(CompoundTag data) {
+        finalizeNestedTag(data);
+    }
+
     private static void upgradeNestedTag(Tag tag) {
         if (tag instanceof CompoundTag compound) {
             upgradeItemStack(compound);
@@ -111,6 +116,51 @@ public final class LegacyWorldUpgrader {
                 upgradeNestedTag(list.get(index));
             }
         }
+    }
+
+    private static void finalizeNestedTag(Tag tag) {
+        if (tag instanceof CompoundTag compound) {
+            finalizeItemStack(compound);
+            for (String key : Set.copyOf(compound.getAllKeys())) {
+                finalizeNestedTag(compound.get(key));
+            }
+        } else if (tag instanceof ListTag list) {
+            for (int index = 0; index < list.size(); index++) {
+                finalizeNestedTag(list.get(index));
+            }
+        }
+    }
+
+    static boolean finalizeItemStack(CompoundTag stack) {
+        boolean legacyCount = stack.contains("Count", Tag.TAG_ANY_NUMERIC);
+        if ((!legacyCount && !stack.contains("count", Tag.TAG_ANY_NUMERIC))
+                || !stack.getString("id").startsWith(PREFIX)) {
+            return false;
+        }
+
+        if (legacyCount) {
+            stack.putInt("count", stack.getInt("Count"));
+            stack.remove("Count");
+        }
+
+        boolean movedLegacyTag = false;
+        if (stack.contains("tag", Tag.TAG_COMPOUND)) {
+            CompoundTag legacyTag = stack.getCompound("tag");
+            if (!legacyTag.isEmpty()) {
+                CompoundTag components = stack.contains("components", Tag.TAG_COMPOUND)
+                        ? stack.getCompound("components")
+                        : new CompoundTag();
+                CompoundTag customData = components.contains("minecraft:custom_data", Tag.TAG_COMPOUND)
+                        ? components.getCompound("minecraft:custom_data")
+                        : new CompoundTag();
+                customData.merge(legacyTag);
+                components.put("minecraft:custom_data", customData);
+                stack.put("components", components);
+            }
+            stack.remove("tag");
+            movedLegacyTag = true;
+        }
+        return legacyCount || movedLegacyTag;
     }
 
     static boolean upgradeItemStack(CompoundTag stack) {

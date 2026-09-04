@@ -16,4 +16,10 @@ abstract class SimpleRegionStorageMixin {
             CallbackInfoReturnable<CompoundTag> callback) {
         LegacyWorldUpgrader.upgradeItemStacks(data);
     }
+
+    @Inject(method = "upgradeChunkTag(Lnet/minecraft/nbt/CompoundTag;I)Lnet/minecraft/nbt/CompoundTag;", at = @At("RETURN"))
+    private void nekoration$finalizeLegacyItems(CompoundTag data, int version,
+            CallbackInfoReturnable<CompoundTag> callback) {
+        LegacyWorldUpgrader.finalizeItemStacks(callback.getReturnValue());
+    }
 }
