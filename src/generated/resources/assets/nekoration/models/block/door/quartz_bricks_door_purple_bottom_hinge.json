@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/door/door_bottom_rh",
+  "textures": {
+    "bottom": "nekoration:block/quartz_door/purple/quartz_bricks_door_bottom",
+    "side": "nekoration:block/quartz_door/purple/quartz_bricks_door_top"
+  }
+}

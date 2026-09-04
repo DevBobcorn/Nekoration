@@ -193,3 +193,29 @@ All block properties are carried over between v1 and v2, with one exception:
 - They store their dye color in the `level` block property in v1, while v2 uses the `color` property as `EnumNekoColor`(like Cement Blocks). Convert their `level` property to the v2 `color` property using the [Colors](#colors) table.
 
 The `facing` property is preserved on all Awning blocks, and the `bottom` property(end cap) is preserved on full Awning blocks. Short Awning blocks have no `bottom` property in either version.
+
+## Quartz Doors
+
+Doors in v1 used numbered ids; in v2 they are named after their quartz pattern, with the word `tall` moving from a suffix to a prefix. The item ids follow their block ids in both versions.
+
+|Old Name|Old Id|New Name|New Id|
+|--------|------|--------|------|
+|Quartz Door|door_1|Quartz Door|quartz_door|
+|Chiseled Quartz Door|door_2|Chiseled Quartz Door|chiseled_quartz_door|
+|Quartz Bricks Door|door_3|Quartz Bricks Door|quartz_bricks_door|
+|Tall Quartz Door|door_tall_1|Tall Quartz Door|tall_quartz_door|
+|Tall Chiseled Quartz Door|door_tall_2|Tall Chiseled Quartz Door|tall_chiseled_quartz_door|
+|Tall Quartz Bricks Door|door_tall_3|Tall Quartz Bricks Door|tall_quartz_bricks_door|
+
+All doors are dyeable in both versions, and every door block keeps its own dye color(two halves for regular doors, three segments for tall doors), so convert each block's color separately:
+
+- They store their dye color in the `level` block property in v1, while v2 uses the `color` property as `EnumNekoColor`(like Cement Blocks). Convert their `level` property to the v2 `color` property using the [Colors](#colors) table.
+- The `facing`, `hinge`, `open` and `powered` properties are carried over between v1 and v2 on all doors.
+
+Tall Doors changed from two block positions to three:
+
+- In v1 a Tall Door occupies two blocks(rendered three blocks tall by a 32-high model on the upper half) and uses the vanilla `half` property. In v2 it occupies three blocks distinguished by the `segment` property(`lower`, `middle`, `upper`). The v2 `half` property is redundant and kept in sync(`lower` for the lower segment, `upper` for the other two); derive it from `segment` instead of copying it from v1 data.
+- When upgrading, the v1 lower block becomes the v2 `segment=lower` block at the same position and keeps its dye color. The v1 upper block becomes the v2 `segment=middle` block at the same position, and a new `segment=upper` block is placed one above it; both take the v1 upper block's dye color, since the v1 upper half rendered both sections.
+- The block above a v1 Tall Door's upper half must be empty or replaceable for the new upper segment.
+
+Door item stacks only need their id renamed: v1 door items carried no dye color data. In v2, breaking a door drops an item that remembers the dye color of the lower half / segment it was broken from, and placing it restores that color.

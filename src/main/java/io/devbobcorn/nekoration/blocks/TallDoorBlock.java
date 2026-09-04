@@ -8,8 +8,10 @@ import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
 
+import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.blocks.states.DoorSegment;
 import io.devbobcorn.nekoration.blocks.states.ModStateProperties;
+import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -50,6 +52,7 @@ public class TallDoorBlock extends NekoDoorBlock {
                 .setValue(HINGE, DoorHingeSide.LEFT)
                 .setValue(POWERED, Boolean.valueOf(false))
                 .setValue(HALF, DoubleBlockHalf.LOWER)
+                .setValue(COLOR, EnumNekoColor.WHITE)
                 .setValue(SEGMENT, DoorSegment.LOWER));
     }
 
@@ -62,7 +65,8 @@ public class TallDoorBlock extends NekoDoorBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         // Note: HALF must stay in the state definition, the vanilla DoorBlock constructor
         // sets it when registering the default state.
-        builder.add(HALF, FACING, OPEN, HINGE, POWERED, SEGMENT);
+        super.createBlockStateDefinition(builder);
+        builder.add(SEGMENT);
     }
 
     /** Sets the segment while keeping the redundant vanilla {@code half} property consistent. */
@@ -85,8 +89,9 @@ public class TallDoorBlock extends NekoDoorBlock {
                     .setValue(HINGE, this.getHinge(context))
                     .setValue(POWERED, Boolean.valueOf(flag))
                     .setValue(OPEN, Boolean.valueOf(flag))
-                    .setValue(SEGMENT, DoorSegment.LOWER)
-                    .setValue(HALF, DoubleBlockHalf.LOWER);
+                    .setValue(HALF, DoubleBlockHalf.LOWER)
+                    .setValue(COLOR, colorFromItem(context.getItemInHand()))
+                    .setValue(SEGMENT, DoorSegment.LOWER);
         }
         return null;
     }
@@ -104,9 +109,10 @@ public class TallDoorBlock extends NekoDoorBlock {
         if (facing.getAxis() == Direction.Axis.Y) {
             DoorSegment expected = expectedNeighborSegment(doorsegment, facing);
             if (expected != null) {
-                // Copy the changed neighbor so opening / redstone keeps all segments in sync, or pop off.
+                // Copy the changed neighbor so opening / redstone keeps all segments in sync, or pop
+                // off. Keep this segment's dye color, so segments can be dyed individually.
                 return facingState.is(this) && facingState.getValue(SEGMENT) == expected
-                        ? withSegment(facingState, doorsegment)
+                        ? withSegment(facingState, doorsegment).setValue(COLOR, state.getValue(COLOR))
                         : Blocks.AIR.defaultBlockState();
             }
         }
@@ -218,8 +224,11 @@ public class TallDoorBlock extends NekoDoorBlock {
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         // Only the lower segment drops, otherwise breaking the door could yield multiple items.
-        return state.getValue(SEGMENT) == DoorSegment.LOWER
-                ? Collections.singletonList(new ItemStack(this.asItem()))
-                : Collections.emptyList();
+        if (state.getValue(SEGMENT) != DoorSegment.LOWER) {
+            return Collections.emptyList();
+        }
+        ItemStack stack = new ItemStack(this.asItem());
+        DyeableBlockItem.setColor(stack, state.getValue(COLOR));
+        return Collections.singletonList(stack);
     }
 }

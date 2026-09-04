@@ -83,9 +83,9 @@ public final class OrnamentRegistration {
         registerDoor(blocks, items, "chiseled_quartz_door", tallChiseled);
         registerDoor(blocks, items, "quartz_bricks_door", tallBricks);
 
-        MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem("tall_quartz_door", tallQuartz));
-        MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem("tall_chiseled_quartz_door", tallChiseled));
-        MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem("tall_quartz_bricks_door", tallBricks));
+        MISC_BLOCK_ITEMS.add(registerDyeableBlockItem(items, "tall_quartz_door", tallQuartz));
+        MISC_BLOCK_ITEMS.add(registerDyeableBlockItem(items, "tall_chiseled_quartz_door", tallChiseled));
+        MISC_BLOCK_ITEMS.add(registerDyeableBlockItem(items, "tall_quartz_bricks_door", tallBricks));
     }
 
     private static DeferredBlock<Block> registerTallDoor(DeferredRegister.Blocks blocks, String id) {
@@ -98,7 +98,7 @@ public final class OrnamentRegistration {
             DeferredBlock<Block> tallVariant) {
         DeferredBlock<Block> block = blocks.register(id,
                 () -> new NekoDoorBlock(doorProperties(), () -> tallVariant.get()));
-        MISC_BLOCK_ITEMS.add(items.registerSimpleBlockItem(id, block));
+        MISC_BLOCK_ITEMS.add(registerDyeableBlockItem(items, id, block));
         DOOR_BLOCKS.add(block);
     }
 

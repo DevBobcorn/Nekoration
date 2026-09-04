@@ -8,7 +8,10 @@ import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
 
+import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.blocks.states.DoorSegment;
+import io.devbobcorn.nekoration.common.VanillaCompat;
+import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -21,22 +24,27 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Quartz door spanning two blocks. Using bone meal grows it into its tall (three blocks) variant.
+ * Quartz door spanning two blocks. Each half keeps its own dye color; using bone meal grows it
+ * into its tall (three blocks) variant.
  */
 public class NekoDoorBlock extends DoorBlock {
     public static final MapCodec<NekoDoorBlock> CODEC = simpleCodec(NekoDoorBlock::new);
+    public static final EnumProperty<EnumNekoColor> COLOR = DyeableBlock.COLOR;
 
     /** Tall variant this door grows into with bone meal, if any. */
     private final Supplier<? extends Block> tallVariant;
@@ -48,11 +56,18 @@ public class NekoDoorBlock extends DoorBlock {
     public NekoDoorBlock(Properties properties, @Nullable Supplier<? extends Block> tallVariant) {
         super(BlockSetType.OAK, properties);
         this.tallVariant = tallVariant;
+        this.registerDefaultState(this.defaultBlockState().setValue(COLOR, EnumNekoColor.WHITE));
     }
 
     @Override
     public MapCodec<? extends DoorBlock> codec() {
         return CODEC;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(COLOR);
     }
 
     @Nullable
@@ -67,9 +82,15 @@ public class NekoDoorBlock extends DoorBlock {
                     .setValue(HINGE, this.getHinge(context))
                     .setValue(POWERED, Boolean.valueOf(flag))
                     .setValue(OPEN, Boolean.valueOf(flag))
-                    .setValue(HALF, DoubleBlockHalf.LOWER);
+                    .setValue(HALF, DoubleBlockHalf.LOWER)
+                    .setValue(COLOR, colorFromItem(context.getItemInHand()));
         }
         return null;
+    }
+
+    /** Dye color stored in the placing item, for dyeable door items. */
+    protected static EnumNekoColor colorFromItem(ItemStack stack) {
+        return stack.getItem() instanceof DyeableBlockItem ? DyeableBlockItem.getColor(stack) : EnumNekoColor.WHITE;
     }
 
     /**
@@ -127,9 +148,10 @@ public class NekoDoorBlock extends DoorBlock {
             BlockPos currentPos, BlockPos facingPos) {
         DoubleBlockHalf doubleblockhalf = state.getValue(HALF);
         if (facing.getAxis() == Direction.Axis.Y && doubleblockhalf == DoubleBlockHalf.LOWER == (facing == Direction.UP)) {
-            // Only match other halves of the same door; other door types (e.g. tall doors) must not be copied.
+            // Only match other halves of the same door; other door types (e.g. tall doors) must not
+            // be copied. Keep this half's dye color, so halves can be dyed individually.
             return facingState.is(this) && facingState.getValue(HALF) != doubleblockhalf
-                    ? facingState.setValue(HALF, doubleblockhalf)
+                    ? facingState.setValue(HALF, doubleblockhalf).setValue(COLOR, state.getValue(COLOR))
                     : Blocks.AIR.defaultBlockState();
         }
         return doubleblockhalf == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos)
@@ -140,13 +162,33 @@ public class NekoDoorBlock extends DoorBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hitResult) {
-        if (stack.is(Items.BONE_MEAL) && tallVariant != null && tryGrow(level, pos, state, tallVariant.get())) {
-            if (!level.isClientSide && !player.getAbilities().instabuild) {
-                stack.shrink(1);
+        if (stack.is(Items.BONE_MEAL) && tallVariant != null) {
+            if (tryGrow(level, pos, state, tallVariant.get())) {
+                if (!level.isClientSide && !player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        }
+        Integer colorIndex = dyeColorOf(stack);
+        if (colorIndex != null) {
+            // Only the used block changes color, so each half is dyed individually.
+            if (level.isClientSide()) {
+                return ItemInteractionResult.SUCCESS;
+            }
+            EnumNekoColor next = EnumNekoColor.getColorEnumFromId(colorIndex.byteValue());
+            level.setBlock(pos, state.setValue(COLOR, next), Block.UPDATE_ALL);
+            return ItemInteractionResult.CONSUME;
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
+    /** Color index carried by dye or raw color items, or {@code null} if the item cannot dye. */
+    @Nullable
+    private static Integer dyeColorOf(ItemStack stack) {
+        Integer raw = VanillaCompat.RAW_COLOR_ITEMS.get(stack.getItem());
+        return raw != null ? raw : VanillaCompat.COLOR_ITEMS.get(stack.getItem());
     }
 
     /** Replaces this 2-block door with the 3-block tall variant, keeping its orientation. */
@@ -157,16 +199,24 @@ public class NekoDoorBlock extends DoorBlock {
             return false;
         }
         if (!level.isClientSide) {
+            BlockState lowerState = level.getBlockState(blockpos);
+            BlockState upperState = level.getBlockState(blockpos.above());
+            EnumNekoColor lowerColor = lowerState.is(this) ? lowerState.getValue(COLOR) : EnumNekoColor.WHITE;
+            EnumNekoColor upperColor = upperState.is(this) ? upperState.getValue(COLOR) : lowerColor;
             BlockState blockstate = TallDoorBlock.withSegment(tallBlock.defaultBlockState()
                     .setValue(FACING, state.getValue(FACING))
                     .setValue(HINGE, state.getValue(HINGE))
                     .setValue(OPEN, state.getValue(OPEN))
-                    .setValue(POWERED, state.getValue(POWERED)), DoorSegment.LOWER);
+                    .setValue(POWERED, state.getValue(POWERED))
+                    .setValue(COLOR, lowerColor), DoorSegment.LOWER);
             // Clear the old upper half without shape updates so the lower half does not pop off first.
             level.setBlock(blockpos.above(), Blocks.AIR.defaultBlockState(), 3, 0);
             level.setBlock(blockpos, blockstate, 3);
-            level.setBlock(blockpos.above(), TallDoorBlock.withSegment(blockstate, DoorSegment.MIDDLE), 3);
-            level.setBlock(toppos, TallDoorBlock.withSegment(blockstate, DoorSegment.UPPER), 3);
+            // The inserted middle segment takes the upper half's color, which visually continues into it.
+            level.setBlock(blockpos.above(), TallDoorBlock.withSegment(blockstate, DoorSegment.MIDDLE)
+                    .setValue(COLOR, upperColor), 3);
+            level.setBlock(toppos, TallDoorBlock.withSegment(blockstate, DoorSegment.UPPER)
+                    .setValue(COLOR, upperColor), 3);
         }
         level.addParticle(ParticleTypes.EXPLOSION_EMITTER,
                 (double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.5D, (double) blockpos.getZ() + 0.5D,
@@ -175,10 +225,20 @@ public class NekoDoorBlock extends DoorBlock {
     }
 
     @Override
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+        ItemStack stack = super.getCloneItemStack(level, pos, state);
+        DyeableBlockItem.setColor(stack, state.getValue(COLOR));
+        return stack;
+    }
+
+    @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         // Only the lower half drops, otherwise breaking the door could yield two items.
-        return state.getValue(HALF) == DoubleBlockHalf.LOWER
-                ? Collections.singletonList(new ItemStack(this.asItem()))
-                : Collections.emptyList();
+        if (state.getValue(HALF) != DoubleBlockHalf.LOWER) {
+            return Collections.emptyList();
+        }
+        ItemStack stack = new ItemStack(this.asItem());
+        DyeableBlockItem.setColor(stack, state.getValue(COLOR));
+        return Collections.singletonList(stack);
     }
 }
