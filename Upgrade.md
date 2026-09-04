@@ -274,9 +274,14 @@ The v1 `phonograph`, `custom` and `prismap_table` block entity types have no v2 
 
 The following v1 features have no v2 implementation yet, so their data cannot be upgraded and would be lost when loading an old save; the auto upgrader should skip them(and keep a report) until they are ported:
 
-- Thin Stone Blocks: `stone_bottom_thin`, `stone_pillar_thin`, `stone_doric_thin`, `stone_ionic_thin` and `stone_corinthian_thin`(dyeable; the four pillar variants also have `vertical_connection`).
 - Phonograph: the `phonograph` block and its block entity.
 - Custom Block: the `custom` block, its block entity and the itemless `dream_was_taken` block.
 - Prismap Table: the `prismap_table` block and its block entity.
 - Items: the Paw and Paw Tweak items(`paw`, `paw_up`, `paw_down`, `paw_left`, `paw_right`, `paw_near`, `paw_far`, `paw_15`, `paw_90`), `arrow_hint`, `palette`, `camera`, `painting` and `wallpaper`.
 - Entity types: `painting` and `wallpaper`(v1 saves may contain saved entities of these types; only the `seat` entity type is ported, with an unchanged id).
+
+## Won't be Ported
+
+The following v1 features are never present in a release, and won't be implemented in v2; the auto upgrader should skip them:
+
+- Thin Stone Blocks: `stone_bottom_thin`, `stone_pillar_thin`, `stone_doric_thin`, `stone_ionic_thin` and `stone_corinthian_thin`(dyeable; the four pillar variants also have `vertical_connection`).
