@@ -40,6 +40,10 @@ For a v1 `window_frame` with `frame_part=middle`, convert the two Boolean edge p
 
 The v1 `frame_part` property is represented by the selected v2 block id and should then be discarded. V2 frame-side blocks occupy the full block height. The `false`/`false` combination has no direct v2 equivalent, so use the default `both` state.
 
+### Window Plants
+
+The `window_plant` block id is unchanged between v1 and v2. Convert its `level` property to the v2 `color` property using the [Colors](#colors) table, and preserve `horizontal_connection` and `facing`.
+
 ## Colors
 The ordinal of dye color enum has changed from v1 to v2. This is used in block properties:
 
@@ -62,6 +66,8 @@ The ordinal of dye color enum has changed from v1 to v2. This is used in block p
 |White|14|0|
 |Yellow|15|7|
 
+The same table applies to the `color` NBT byte tag of dyeable item stacks (see [Item Stacks](#item-stacks)) and to the v1 `age` property of Half-Timber Blocks, since v1 stored dye colors with one shared ordinal everywhere.
+
 ## Cement Blocks (known as Stone Blocks in v1)
 
 Stone Blocks in v1 are reimplemented as Cement Blocks. Note that in v1 the dye color is stored in the `level` block property of a blockstate, while in v2 they're moved to a block property called `color` as `EnumNekoColor` instead of a number(still serialized as a number though).
@@ -69,6 +75,10 @@ Stone Blocks in v1 are reimplemented as Cement Blocks. Note that in v1 the dye c
 Not to be confused with Stone Blocks in v2, those are not relavant to Cement Blocks.
 
 When upgrading the data, turn `stone_frame`, `stone_frame_bottom`, `stone_pillar`, `stone_doric`, `stone_ionic`, `stone_corinthian` and `stone_pillar_bottom` all into `paneled_cement`. For these blocks whose id ends with `_bottom` from v1 data, set their `vertical_connection` property set to `s0` in new block data.
+
+`stone_base` becomes `cement`, which is also vertically connected, so preserve its `vertical_connection` property. `stone_base_bottom` becomes the non-connected `trimmed_cement`, so drop its connection data. The v1 pots have no properties besides `level`.
+
+**Beware of id collisions:** v2 also registers new, non-dyeable natural stone blocks named `stone_base`, `stone_pot` and `stone_planter` (per-stone variants of the new Stone Blocks family). These are unrelated to the v1 blocks of the same names; always remap the v1 ids to the Cement Block ids instead of keeping them.
 
 Block id mapping:
 
@@ -84,6 +94,8 @@ Block id mapping:
 |{Color} Corinthian Stone Pillar|stone_corinthian|{Color} Paneled Cement|paneled_cement|
 |{Color} Stone Pillar Bottom|stone_pillar_bottom|{Color} Paneled Cement|paneled_cement|
 |{Color} Layered Stone|stone_layered|{Color} Layered Cement|layered_cement|
+|{Color} Stone Pot|stone_pot|{Color} Cement Pot|cement_pot|
+|{Color} Stone Planter|stone_planter|{Color} Cement Planter|cement_planter|
 
 ## Wooden Blocks
 
@@ -110,13 +122,17 @@ When upgrading data for all Wooden Blocks with `level` property, take the `level
 |White|14|birch|
 |Yellow|15|birch|
 
-Half-Timber Blocks additionally used to have a secondary color block property which is stored as a number in `age` property in v1, and moved to `color` property and stored as `EnumNekoColor`(similar to Cement Blocks) in v2.
+Half-Timber Blocks additionally used to have a secondary color block property which is stored as a number in `age` property in v1, and moved to `color` property and stored as `EnumNekoColor`(similar to Cement Blocks) in v2. The `age` value uses the v1 dye color ordinal, so convert it with the [Colors](#colors) table.
 
 When upgrading `half_timber_pillar_p0`, `half_timber_pillar_p1` and `half_timber_pillar_p2` to the new version, turn them into `{wood_type_id}_half_timber_p0`, `{wood_type_id}_half_timber_p1` and `{wood_type_id}_half_timber_p2` respectively, and preserve the `vertical_connection` block property. `half_timber_p0`, `half_timber_p1` and `half_timber_p2` from old data will also be turned into `{wood_type_id}_half_timber_p0`, `{wood_type_id}_half_timber_p1` and `{wood_type_id}_half_timber_p2`, and have their `vertical_connection` property set to `s0`.
 
 `shelf` from v1 should be turned into `{wood_type_id}_cupboard` in v2, the content items should be kept.
 
-`easel_menu` and `easel_menu_white` are merged and split(by Wood Type) into `{wood_type_id}_easel_menu`, with 16 dye colors distinguished by the `color` block property.
+`easel_menu` and `easel_menu_white` are merged and split(by Wood Type) into `{wood_type_id}_easel_menu`, with 16 dye colors distinguished by the `color` block property: the regular v1 `easel_menu` had a black board, so give it `color=black`; `easel_menu_white` gets `color=white`.
+
+The v1 Window Blocks (`window_simple`, `window_arch`, `window_cross`, `window_shade` and `window_lancet`) carry a `vertical_connection` property, but their v2 counterparts have no block properties at all; discard `vertical_connection` when upgrading them.
+
+Other than the removed `level` property, the remaining properties of Wooden Blocks are carried over: `facing` on Chairs, Armchairs, Benches, Drawers, Cabinets, Drawer Chests, Cupboards, Shelves, Wall Shelves and Easel Menus; `open` on Drawers, Cabinets, Drawer Chests, Cupboards, Shelves and Wall Shelves; `bottom` on Cupboards and Shelves; `horizontal_connection` on Benches and Wall Shelves. Tables, Round Tables, Glass Tables and Round Glass Tables have no other properties.
 
 Block id mapping:
 
@@ -124,13 +140,22 @@ Block id mapping:
 |--------|------|--------|------|
 |{Wood Type} {Color} Half Timber|half_timber_p0|{Color} {Wood Type} Half-Timber|{wood_type_id}_half_timber_p0|
 |{Wood Type} Slash {Color} Half Timber|half_timber_p1|{Color} Bend Sinister {Wood Type} Half-Timber|{wood_type_id}_half_timber_p1|
-|...|...|...|...|
+|{Wood Type} Backslash {Color} Half Timber|half_timber_p2|{Color} Bend {Wood Type} Half-Timber|{wood_type_id}_half_timber_p2|
+|{Wood Type} Bi-Slash {Color} Half Timber|half_timber_p3|{Color} Double Bend Sinister {Wood Type} Half-Timber|{wood_type_id}_half_timber_p3|
+|{Wood Type} Bi-Backslash {Color} Half Timber|half_timber_p4|{Color} Double Bend {Wood Type} Half-Timber|{wood_type_id}_half_timber_p4|
+|{Wood Type} Center {Color} Half Timber|half_timber_p5|{Color} Center {Wood Type} Half-Timber|{wood_type_id}_half_timber_p5|
+|{Wood Type} Cross {Color} Half Timber|half_timber_p6|{Color} Roundel {Wood Type} Half-Timber|{wood_type_id}_half_timber_p6|
+|{Wood Type} Diamond {Color} Half Timber|half_timber_p7|{Color} Saltire {Wood Type} Half-Timber|{wood_type_id}_half_timber_p7|
+|{Wood Type} Checkered {Color} Half Timber|half_timber_p8|{Color} Pale {Wood Type} Half-Timber|{wood_type_id}_half_timber_p8|
 |{Wood Type} Double {Color} Half Timber|half_timber_p9|{Color} Double {Wood Type} Half-Timber|{wood_type_id}_half_timber_p9|
 |{Wood Type} {Color} Half Timber Pillar|half_timber_pillar_p0|{Color} {Wood Type} Half-Timber|{wood_type_id}_half_timber_p0|
 |{Wood Type} Slash {Color} Half Timber Pillar|half_timber_pillar_p1|{Color} Bend Sinister {Wood Type} Half-Timber|{wood_type_id}_half_timber_p1|
-|...|...|...|...|
+|{Wood Type} Backslash {Color} Half Timber Pillar|half_timber_pillar_p2|{Color} Bend {Wood Type} Half-Timber|{wood_type_id}_half_timber_p2|
 |{Wood Type} Simple Window|window_simple|Simple {Wood Type} Window|{wood_type_id}_window_simple|
-|...|...|...|...|
+|{Wood Type} Arch Window|window_arch|Arch {Wood Type} Window|{wood_type_id}_window_arch|
+|{Wood Type} Cross Window|window_cross|Cross {Wood Type} Window|{wood_type_id}_window_cross|
+|{Wood Type} Shade Window|window_shade|Shade {Wood Type} Window|{wood_type_id}_window_shade|
+|{Wood Type} Lancet Window|window_lancet|Lancet {Wood Type} Window|{wood_type_id}_window_lancet|
 |{Wood Type} Easel Menu|easel_menu|{Color} {Wood Type} Easel Menu|{wood_type_id}_easel_menu|
 |{Wood Type} White Easel Menu|easel_menu_white|{Color} {Wood Type} Easel Menu|{wood_type_id}_easel_menu|
 |{Wood Type} Table|{wood_type_id}_table|{Wood Type} Table|{wood_type_id}_table|
@@ -146,6 +171,10 @@ Block id mapping:
 |{Wood Type} Cupboard|cupboard|{Wood Type} Cupboard|{wood_type_id}_cupboard|
 |{Wood Type} Shelf|shelf|{Wood Type} Cupboard|{wood_type_id}_cupboard|
 |{Wood Type} Wall Shelf|wall_shelf|{Wood Type} Wall Shelf|{wood_type_id}_wall_shelf|
+
+## Pumpkin Furniture
+
+`pumpkin_table` and `pumpkin_chair` keep their ids and properties(`facing` on the chair) between v1 and v2, so no conversion is needed for them.
 
 ## Lamp Posts, Candle Holders and Flower Baskets
 
@@ -219,3 +248,35 @@ Tall Doors changed from two block positions to three:
 - The block above a v1 Tall Door's upper half must be empty or replaceable for the new upper segment.
 
 Door item stacks only need their id renamed: v1 door items carried no dye color data. In v2, breaking a door drops an item that remembers the dye color of the lower half / segment it was broken from, and placing it restores that color.
+
+## Item Stacks
+
+Item stacks found in inventories(chests, item frames, dropped items, etc.) need their ids renamed like their blocks, and dyeable items also carry color data in NBT that must be converted. In v1 the color is a `color` byte tag on the stack, in v2 it is a `color` byte tag inside the stack's custom data component.
+
+- Dyeable items whose v1 `color` tag holds a dye color(Cement family, Frame Blocks, Window Plants, Awning blocks, Candle Holders, Stone Pots and Planters): convert the tag value with the [Colors](#colors) table, and rename the id like the block.
+- Dyeable wooden items whose v1 `color` tag holds a wood type(Windows, Glass Tables, Armchairs, Benches, Drawers, Cabinets, Drawer Chests, Cupboards, Shelves, Wall Shelves): use the tag value with the wood type lookup table to build the new id, then drop the tag. When the tag is absent, default to `dark_oak`(index 0).
+- Easel Menu items follow the wooden rule for their wood type, and additionally set the new `color` tag to `black` for `easel_menu` and `white` for `easel_menu_white`.
+- Half-Timber items carry two tags: `color_0`(wood type, builds the new id) and `color_1`(dye color, becomes the new `color` tag via the [Colors](#colors) table).
+- Door items and the per-wood Table, Round Table and Chair items carried no color data; only rename their ids.
+
+## Block Entities
+
+The block entity type ids `cabinet`, `item_display` and `easel_menu` are unchanged between v1 and v2, so the saved block entity data(container contents, easel menu text and items) survives as long as the upgraded block at that position still belongs to the same entity type:
+
+- `cabinet`: v1 Drawers, Cabinets and Drawer Chests become their `{wood_type_id}` counterparts, which are all still `cabinet` entity blocks.
+- `item_display`: v1 Cupboards, Shelves and Wall Shelves become `{wood_type_id}` Cupboards(v1 Shelves included, since `{wood_type_id}_cupboard` is an `item_display` entity block) and Wall Shelves.
+- `easel_menu`: v1 Easel Menus become `{wood_type_id}` Easel Menus.
+
+The v1 `phonograph`, `custom` and `prismap_table` block entity types have no v2 counterpart yet(see below).
+
+## Not Yet Ported
+
+The following v1 features have no v2 implementation yet, so their data cannot be upgraded and would be lost when loading an old save; the auto upgrader should skip them(and keep a report) until they are ported:
+
+- Thin Stone Blocks: `stone_bottom_thin`, `stone_pillar_thin`, `stone_doric_thin`, `stone_ionic_thin` and `stone_corinthian_thin`(dyeable; the four pillar variants also have `vertical_connection`).
+- Phonograph: the `phonograph` block and its block entity.
+- Custom Block: the `custom` block, its block entity and the itemless `dream_was_taken` block.
+- Prismap Table: the `prismap_table` block and its block entity.
+- Items: the Paw and Paw Tweak items(`paw`, `paw_up`, `paw_down`, `paw_left`, `paw_right`, `paw_near`, `paw_far`, `paw_15`, `paw_90`), `arrow_hint`, `palette`, `camera`, `painting` and `wallpaper`.
+- Entity types: `painting` and `wallpaper`(v1 saves may contain saved entities of these types; only the `seat` entity type is ported, with an unchanged id).
+
