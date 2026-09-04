@@ -59,6 +59,57 @@ class LegacyWorldUpgraderTest {
         assertEquals(firstResult, chunk);
     }
 
+    @Test
+    void upgradesLegacyItemIdsAndColors() {
+        CompoundTag cement = stack("stone_pot", "color", 14);
+        assertTrue(LegacyWorldUpgrader.upgradeItemStack(cement));
+        assertEquals("nekoration:cement_pot", cement.getString("id"));
+        assertEquals(0, cement.getCompound("tag").getByte("color"));
+
+        CompoundTag frame = stack("window_frame", "color", 1);
+        LegacyWorldUpgrader.upgradeItemStack(frame);
+        assertEquals("nekoration:cement_frame_side", frame.getString("id"));
+        assertEquals(12, frame.getCompound("tag").getByte("color"));
+
+        CompoundTag timber = stack("half_timber_pillar_p2", "color_0", 11, "color_1", 13);
+        assertTrue(LegacyWorldUpgrader.upgradeItemStack(timber));
+        assertEquals("nekoration:cherry_half_timber_p2", timber.getString("id"));
+        assertEquals(5, timber.getCompound("tag").getByte("color"));
+        assertFalse(timber.getCompound("tag").contains("color_0"));
+        assertFalse(timber.getCompound("tag").contains("color_1"));
+
+        CompoundTag easel = stack("easel_menu_white", "color", 9);
+        LegacyWorldUpgrader.upgradeItemStack(easel);
+        assertEquals("nekoration:crimson_easel_menu", easel.getString("id"));
+        assertEquals(0, easel.getCompound("tag").getByte("color"));
+
+        CompoundTag door = stack("door_tall_3");
+        LegacyWorldUpgrader.upgradeItemStack(door);
+        assertEquals("nekoration:tall_quartz_bricks_door", door.getString("id"));
+    }
+
+    @Test
+    void upgradesNestedInventoriesWithoutTouchingCurrentStacks() {
+        CompoundTag root = new CompoundTag();
+        CompoundTag blockEntity = new CompoundTag();
+        ListTag items = new ListTag();
+        items.add(stack("bench"));
+        blockEntity.put("Items", items);
+        ListTag blockEntities = new ListTag();
+        blockEntities.add(blockEntity);
+        root.put("block_entities", blockEntities);
+
+        CompoundTag currentCollision = new CompoundTag();
+        currentCollision.putString("id", "nekoration:stone_base");
+        currentCollision.putInt("count", 1);
+        root.put("current", currentCollision);
+
+        LegacyWorldUpgrader.upgradeItemStacks(root);
+
+        assertEquals("nekoration:dark_oak_bench", items.getCompound(0).getString("id"));
+        assertEquals("nekoration:stone_base", currentCollision.getString("id"));
+    }
+
     private static CompoundTag state(String path, String... properties) {
         CompoundTag state = new CompoundTag();
         state.putString("Name", "nekoration:" + path);
@@ -70,5 +121,19 @@ class LegacyWorldUpgraderTest {
             state.put("Properties", propertyTag);
         }
         return state;
+    }
+
+    private static CompoundTag stack(String path, Object... tags) {
+        CompoundTag stack = new CompoundTag();
+        stack.putString("id", "nekoration:" + path);
+        stack.putByte("Count", (byte) 1);
+        if (tags.length > 0) {
+            CompoundTag itemTag = new CompoundTag();
+            for (int i = 0; i < tags.length; i += 2) {
+                itemTag.putInt((String) tags[i], (Integer) tags[i + 1]);
+            }
+            stack.put("tag", itemTag);
+        }
+        return stack;
     }
 }

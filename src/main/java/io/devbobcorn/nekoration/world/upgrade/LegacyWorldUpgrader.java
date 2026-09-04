@@ -19,6 +19,9 @@ public final class LegacyWorldUpgrader {
             "dark_oak", "warped", "spruce", "warped", "jungle", "warped", "warped", "oak",
             "warped", "crimson", "acacia", "cherry", "mangrove", "mangrove", "birch", "birch"
     };
+    private static final byte[] V2_COLOR_IDS = {
+            3, 12, 4, 10, 2, 9, 11, 1, 8, 14, 6, 15, 13, 5, 0, 7
+    };
 
     private static final Map<String, String> SIMPLE_RENAMES = Map.ofEntries(
             Map.entry("window_top", "cement_frame_peak"),
@@ -53,6 +56,14 @@ public final class LegacyWorldUpgrader {
             Map.entry("door_tall_2", "tall_chiseled_quartz_door"),
             Map.entry("door_tall_3", "tall_quartz_bricks_door"));
 
+    private static final Set<String> COLOR_ITEMS = Set.of(
+            "window_top", "window_sill", "window_frame", "window_plant",
+            "stone_base", "stone_base_bottom", "stone_frame", "stone_frame_bottom", "stone_pillar",
+            "stone_doric", "stone_ionic", "stone_corinthian", "stone_pillar_bottom", "stone_layered",
+            "stone_pot", "stone_planter", "candle_holder_iron", "candle_holder_gold",
+            "candle_holder_quartz", "awning_pure", "awning_stripe", "awning_pure_short",
+            "awning_stripe_short");
+
     private static final Set<String> COLOR_BLOCKS = Set.of(
             "window_top", "window_sill", "window_frame", "window_plant",
             "stone_base", "stone_base_bottom", "stone_frame", "stone_frame_bottom", "stone_pillar",
@@ -72,6 +83,7 @@ public final class LegacyWorldUpgrader {
     }
 
     public static void upgradeChunk(CompoundTag chunk) {
+        upgradeItemStacks(chunk);
         ListTag sections = chunk.getList("sections", Tag.TAG_COMPOUND);
         for (int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++) {
             CompoundTag section = sections.getCompound(sectionIndex);
@@ -81,6 +93,89 @@ public final class LegacyWorldUpgrader {
                 upgradeBlockState(palette.getCompound(paletteIndex));
             }
         }
+    }
+
+    /** Rewrites every legacy-format item stack nested in the supplied saved data. */
+    public static void upgradeItemStacks(CompoundTag data) {
+        upgradeNestedTag(data);
+    }
+
+    private static void upgradeNestedTag(Tag tag) {
+        if (tag instanceof CompoundTag compound) {
+            upgradeItemStack(compound);
+            for (String key : Set.copyOf(compound.getAllKeys())) {
+                upgradeNestedTag(compound.get(key));
+            }
+        } else if (tag instanceof ListTag list) {
+            for (int index = 0; index < list.size(); index++) {
+                upgradeNestedTag(list.get(index));
+            }
+        }
+    }
+
+    static boolean upgradeItemStack(CompoundTag stack) {
+        // V1 stacks use Count; requiring it also distinguishes colliding v2 item ids after migration.
+        if (!stack.contains("Count", Tag.TAG_ANY_NUMERIC)) {
+            return false;
+        }
+        String id = stack.getString("id");
+        if (!id.startsWith(PREFIX)) {
+            return false;
+        }
+
+        String oldPath = id.substring(PREFIX.length());
+        String newPath = SIMPLE_RENAMES.getOrDefault(oldPath, oldPath);
+        CompoundTag itemTag = stack.contains("tag", Tag.TAG_COMPOUND)
+                ? stack.getCompound("tag")
+                : new CompoundTag();
+        boolean recognized = SIMPLE_RENAMES.containsKey(oldPath) || COLOR_ITEMS.contains(oldPath);
+
+        if (oldPath.startsWith("half_timber_p")) {
+            String wood = V1_WOODS[getItemOrdinal(itemTag, "color_0", 0)];
+            String pattern = oldPath.replace("half_timber_pillar_", "half_timber_");
+            newPath = wood + "_" + pattern;
+            itemTag.putByte("color", V2_COLOR_IDS[getItemOrdinal(itemTag, "color_1", 0)]);
+            itemTag.remove("color_0");
+            itemTag.remove("color_1");
+            recognized = true;
+        } else if (WOODEN_BLOCKS.contains(oldPath)) {
+            String wood = V1_WOODS[getItemOrdinal(itemTag, "color", 0)];
+            itemTag.remove("color");
+            String suffix = switch (oldPath) {
+                case "glass_round_table" -> "round_glass_table";
+                case "arm_chair" -> "armchair";
+                case "shelf" -> "cupboard";
+                case "easel_menu_white" -> "easel_menu";
+                default -> oldPath;
+            };
+            newPath = wood + "_" + suffix;
+            if (oldPath.equals("easel_menu") || oldPath.equals("easel_menu_white")) {
+                itemTag.putByte("color", oldPath.equals("easel_menu_white") ? (byte) 0 : (byte) 3);
+            }
+            recognized = true;
+        } else if (COLOR_ITEMS.contains(oldPath)) {
+            itemTag.putByte("color", V2_COLOR_IDS[getItemOrdinal(itemTag, "color", 0)]);
+            if (oldPath.equals("window_frame")) {
+                newPath = "cement_frame_side";
+            }
+        }
+
+        if (!recognized) {
+            return false;
+        }
+        stack.putString("id", PREFIX + newPath);
+        if (!itemTag.isEmpty()) {
+            stack.put("tag", itemTag);
+        }
+        return true;
+    }
+
+    private static int getItemOrdinal(CompoundTag itemTag, String key, int defaultValue) {
+        if (!itemTag.contains(key, Tag.TAG_ANY_NUMERIC)) {
+            return defaultValue;
+        }
+        int ordinal = itemTag.getInt(key);
+        return ordinal >= 0 && ordinal < 16 ? ordinal : defaultValue;
     }
 
     static boolean upgradeBlockState(CompoundTag state) {

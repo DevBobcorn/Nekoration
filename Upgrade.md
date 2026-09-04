@@ -254,6 +254,7 @@ Door item stacks only need their id renamed: v1 door items carried no dye color 
 Item stacks found in inventories(chests, item frames, dropped items, etc.) need their ids renamed like their blocks, and dyeable items also carry color data in NBT that must be converted. In v1 the color is a `color` byte tag on the stack, in v2 it is a `color` byte tag inside the stack's custom data component.
 
 - Dyeable items whose v1 `color` tag holds a dye color(Cement family, Frame Blocks, Window Plants, Awning blocks, Candle Holders, Stone Pots and Planters): convert the tag value with the [Colors](#colors) table, and rename the id like the block.
+- A `window_frame` item has no `frame_part` data from which to select one of the three v2 blocks, so convert it to `cement_frame_side`.
 - Dyeable wooden items whose v1 `color` tag holds a wood type(Windows, Glass Tables, Armchairs, Benches, Drawers, Cabinets, Drawer Chests, Cupboards, Shelves, Wall Shelves): use the tag value with the wood type lookup table to build the new id, then drop the tag. When the tag is absent, default to `dark_oak`(index 0).
 - Easel Menu items follow the wooden rule for their wood type, and additionally set the new `color` tag to `black` for `easel_menu` and `white` for `easel_menu_white`.
 - Half-Timber items carry two tags: `color_0`(wood type, builds the new id) and `color_1`(dye color, becomes the new `color` tag via the [Colors](#colors) table).
@@ -279,4 +280,3 @@ The following v1 features have no v2 implementation yet, so their data cannot be
 - Prismap Table: the `prismap_table` block and its block entity.
 - Items: the Paw and Paw Tweak items(`paw`, `paw_up`, `paw_down`, `paw_left`, `paw_right`, `paw_near`, `paw_far`, `paw_15`, `paw_90`), `arrow_hint`, `palette`, `camera`, `painting` and `wallpaper`.
 - Entity types: `painting` and `wallpaper`(v1 saves may contain saved entities of these types; only the `seat` entity type is ported, with an unchanged id).
-

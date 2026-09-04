@@ -4,7 +4,10 @@
   "package": "io.devbobcorn.nekoration.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ChunkStorageMixin"
+    "ChunkStorageMixin",
+    "LevelStorageSourceMixin",
+    "PlayerDataStorageMixin",
+    "SimpleRegionStorageMixin"
   ],
   "injectors": {
     "defaultRequire": 1
