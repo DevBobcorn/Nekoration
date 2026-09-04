@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.devbobcorn.nekoration.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ChunkStorageMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
