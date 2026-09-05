@@ -5,8 +5,7 @@ package io.devbobcorn.nekoration.blocks;
  */
 public enum OrnamentCategory {
     POTS_AND_PLANTERS,
-    AWNING,
-    EASEL_MENU,
+    WINDOW_ATTACHMENT,
     FURNITURE,
     CONTAINER,
     MISC;

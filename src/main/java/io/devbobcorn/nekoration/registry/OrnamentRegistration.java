@@ -234,12 +234,12 @@ public final class OrnamentRegistration {
         return WINDOW_PLANT_BLOCK_ITEM;
     }
 
-    /** Icon for the Awning category of the Ornaments tab ({@value #AWNING_CATEGORY_ICON_ITEM_ID}). */
+    /** Icon for the Window Attachment category of the Ornaments tab ({@value #AWNING_CATEGORY_ICON_ITEM_ID}). */
     public static DeferredItem<DyeableBlockItem> awningCategoryIconItem() {
         return awningCategoryIconItem;
     }
 
-    /** Add awning and window plant stacks in every color (Awning category of the Ornaments tab). */
+    /** Add awning and window plant stacks in every color (Window Attachment category of the Ornaments tab). */
     public static void addAwningCategoryStacks(Consumer<ItemStack> out) {
         for (var holder : awningBlockItemsView()) {
             for (EnumNekoColor color : EnumNekoColor.values()) {

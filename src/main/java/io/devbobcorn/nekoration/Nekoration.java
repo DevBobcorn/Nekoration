@@ -96,7 +96,6 @@ public class Nekoration {
                 WoodenBlockRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
                 WoodenBlockRegistration.addFurnitureCategoryStacks(output::accept);
                 WoodenBlockRegistration.addContainerCategoryStacks(output::accept);
-                WoodenBlockRegistration.addEaselMenuCategoryStacks(output::accept);
             })
             .build());
 
@@ -107,7 +106,6 @@ public class Nekoration {
             .withTabsBefore(NEKORATION_WOODEN_BLOCKS_TAB.getKey())
             .displayItems((parameters, output) -> {
                 OrnamentRegistration.addAwningCategoryStacks(output::accept);
-                WoodenBlockRegistration.addEaselMenuCategoryStacks(output::accept);
                 WoodenBlockRegistration.addFurnitureCategoryStacks(output::accept);
                 OrnamentRegistration.addFurnitureCategoryStacks(output::accept);
                 WoodenBlockRegistration.addContainerCategoryStacks(output::accept);

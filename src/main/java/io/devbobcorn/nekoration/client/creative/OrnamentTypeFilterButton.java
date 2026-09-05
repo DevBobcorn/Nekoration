@@ -57,8 +57,7 @@ public final class OrnamentTypeFilterButton extends AbstractButton {
     private static ItemStack iconStackFor(OrnamentCategory type) {
         return switch (type) {
             case POTS_AND_PLANTERS -> DyeableBlockItem.createCreativeTabStack(CementBlockRegistration.potsCategoryIconItem().get(), EnumNekoColor.WHITE);
-            case AWNING -> DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.awningCategoryIconItem().get(), EnumNekoColor.WHITE);
-            case EASEL_MENU -> DyeableBlockItem.createCreativeTabStack(WoodenBlockRegistration.easelMenuCategoryIconItem().get(), EnumNekoColor.WHITE);
+            case WINDOW_ATTACHMENT -> DyeableBlockItem.createCreativeTabStack(OrnamentRegistration.awningCategoryIconItem().get(), EnumNekoColor.WHITE);
             case FURNITURE -> new ItemStack(WoodenBlockRegistration.furnitureCategoryIconItem().get());
             case CONTAINER -> new ItemStack(WoodenBlockRegistration.containerCategoryIconItem().get());
             case MISC -> new ItemStack(OrnamentRegistration.miscCategoryIconItem().get());

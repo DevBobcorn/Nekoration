@@ -369,7 +369,6 @@ public final class NekoCreativeTabFilterClient {
             }
             WoodenBlockRegistration.addFurnitureStacksForWood(selectedWood, out::add);
             WoodenBlockRegistration.addContainerStacksForWood(selectedWood, out::add);
-            WoodenBlockRegistration.addEaselMenuStacksForWood(selectedWood, out::add);
             out.sort(HalfTimberCreativeTabOrdering.stackComparator());
             prependFilterIconIfMissing(new ItemStack(selectedWood.vanillaPlanks().asItem()), out);
             picker.items.clear();
@@ -392,8 +391,7 @@ public final class NekoCreativeTabFilterClient {
             NonNullList<ItemStack> out = NonNullList.create();
             switch (selectedOrnamentCategory) {
                 case POTS_AND_PLANTERS -> OrnamentRegistration.addPotsAndPlantersCategoryStacks(out::add);
-                case AWNING -> OrnamentRegistration.addAwningCategoryStacks(out::add);
-                case EASEL_MENU -> WoodenBlockRegistration.addEaselMenuCategoryStacks(out::add);
+                case WINDOW_ATTACHMENT -> OrnamentRegistration.addAwningCategoryStacks(out::add);
                 case FURNITURE -> {
                     WoodenBlockRegistration.addFurnitureCategoryStacks(out::add);
                     OrnamentRegistration.addFurnitureCategoryStacks(out::add);

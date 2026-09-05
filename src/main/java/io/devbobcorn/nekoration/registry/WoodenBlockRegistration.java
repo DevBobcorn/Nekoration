@@ -105,8 +105,6 @@ public final class WoodenBlockRegistration {
     private static DeferredItem<DyeableBlockItem> tabIconItem;
     private static final String ORNAMENTS_TAB_ICON_ITEM_ID = "spruce_easel_menu";
     private static DeferredItem<DyeableBlockItem> ornamentsTabIconItem;
-    private static final String EASEL_MENU_CATEGORY_ICON_ITEM_ID = "oak_easel_menu";
-    private static DeferredItem<DyeableBlockItem> easelMenuCategoryIconItem;
     private static final String FURNITURE_CATEGORY_ICON_ITEM_ID = "spruce_table";
     private static DeferredItem<BlockItem> furnitureCategoryIconItem;
     private static final String CONTAINER_CATEGORY_ICON_ITEM_ID = "acacia_drawer_chest";
@@ -279,9 +277,6 @@ public final class WoodenBlockRegistration {
             if (ORNAMENTS_TAB_ICON_ITEM_ID.equals(easelMenuId)) {
                 ornamentsTabIconItem = easelMenuItem;
             }
-            if (EASEL_MENU_CATEGORY_ICON_ITEM_ID.equals(easelMenuId)) {
-                easelMenuCategoryIconItem = easelMenuItem;
-            }
         }
 
     }
@@ -386,18 +381,6 @@ public final class WoodenBlockRegistration {
         return ornamentsTabIconItem;
     }
 
-    /** Icon for the Easel Menu category of the Ornaments tab ({@value #EASEL_MENU_CATEGORY_ICON_ITEM_ID}). */
-    public static DeferredItem<DyeableBlockItem> easelMenuCategoryIconItem() {
-        return easelMenuCategoryIconItem;
-    }
-
-    /** Add easel menu stacks for all woods (Easel Menu category of the Ornaments tab, Wooden Blocks tab). */
-    public static void addEaselMenuCategoryStacks(Consumer<ItemStack> out) {
-        for (var holder : easelMenuBlockItemsView()) {
-            addPlainOrDyedStacks(holder.get(), out);
-        }
-    }
-
     /** Icon for the Furniture category of the Ornaments tab ({@value #FURNITURE_CATEGORY_ICON_ITEM_ID}). */
     public static DeferredItem<BlockItem> furnitureCategoryIconItem() {
         return furnitureCategoryIconItem;
@@ -415,10 +398,10 @@ public final class WoodenBlockRegistration {
         }
     }
 
-    /** Add container stacks for all woods (Container category of the Ornaments tab, Wooden Blocks tab). */
+    /** Add container and easel menu stacks for all woods, grouped by wood (Container category of the Ornaments tab, Wooden Blocks tab). */
     public static void addContainerCategoryStacks(Consumer<ItemStack> out) {
-        for (var holder : containerBlockItemsView()) {
-            addPlainOrDyedStacks(holder.get(), out);
+        for (NekoWood wood : NekoWood.values()) {
+            addContainerStacksForWood(wood, out);
         }
     }
 
@@ -429,15 +412,11 @@ public final class WoodenBlockRegistration {
         }
     }
 
-    /** Add container stacks for one wood (Wooden Blocks tab filter). */
+    /** Add container and easel menu stacks for one wood, easel menus right after the other containers (Wooden Blocks tab filter). */
     public static void addContainerStacksForWood(NekoWood wood, Consumer<ItemStack> out) {
         for (var holder : containerItemsForWood(wood)) {
             addPlainOrDyedStacks(holder.get(), out);
         }
-    }
-
-    /** Add easel menu stacks for one wood (Wooden Blocks tab filter). */
-    public static void addEaselMenuStacksForWood(NekoWood wood, Consumer<ItemStack> out) {
         for (var holder : easelMenuItemsForWood(wood)) {
             addPlainOrDyedStacks(holder.get(), out);
         }
