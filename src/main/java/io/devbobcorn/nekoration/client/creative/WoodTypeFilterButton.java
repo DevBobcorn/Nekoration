@@ -23,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public final class WoodTypeFilterButton extends AbstractButton {
     private static final ResourceLocation TABS = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "textures/gui/tabs.png");
+    private static final ResourceLocation BOP_TABS = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "textures/gui/tabs_bop.png");
 
     private @Nullable NekoWood wood;
     private ItemStack icon = ItemStack.EMPTY;
@@ -88,7 +89,7 @@ public final class WoodTypeFilterButton extends AbstractButton {
         graphics.pose().translate(getX() + drawW / 2f, getY() + 14f, 0f);
         graphics.pose().mulPose(new Quaternionf().rotationZ((float) (Math.PI * 3 / 2)));
         graphics.pose().translate(-14f, -drawW / 2f, 0f);
-        graphics.blit(TABS, 0, 0, 28, textureY, 28, drawW, 256, 256);
+        graphics.blit(wood.isBiomesOPlenty() ? BOP_TABS : TABS, 0, 0, 28, textureY, 28, drawW, 256, 256);
         graphics.pose().popPose();
         if (!icon.isEmpty()) {
             graphics.renderItem(icon, getX() + 8, getY() + 6);
