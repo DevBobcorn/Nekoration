@@ -370,7 +370,7 @@ public final class NekoCreativeTabFilterClient {
             WoodenBlockRegistration.addFurnitureStacksForWood(selectedWood, out::add);
             WoodenBlockRegistration.addContainerStacksForWood(selectedWood, out::add);
             out.sort(HalfTimberCreativeTabOrdering.stackComparator());
-            prependFilterIconIfMissing(new ItemStack(selectedWood.vanillaPlanks().asItem()), out);
+            prependFilterIconIfMissing(new ItemStack(selectedWood.planks().asItem()), out);
             picker.items.clear();
             picker.items.addAll(out);
             picker.scrollTo(0f);

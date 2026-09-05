@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/furniture/round_table",
+  "textures": {
+    "leg": "nekoration:block/furniture/dead_leg",
+    "top": "nekoration:block/furniture/glass_round_top"
+  }
+}

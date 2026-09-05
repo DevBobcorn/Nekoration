@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nekoration:block/furniture/maple/chair",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "nekoration:block/furniture/maple/chair"
+    },
+    "facing=south": {
+      "model": "nekoration:block/furniture/maple/chair",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nekoration:block/furniture/maple/chair",
+      "y": 270
+    }
+  }
+}

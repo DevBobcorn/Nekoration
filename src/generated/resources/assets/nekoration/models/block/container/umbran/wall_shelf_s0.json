@@ -1,0 +1,6 @@
+{
+  "parent": "nekoration:block/container/wall_shelf_s0",
+  "textures": {
+    "0": "nekoration:block/furniture/umbran_top"
+  }
+}

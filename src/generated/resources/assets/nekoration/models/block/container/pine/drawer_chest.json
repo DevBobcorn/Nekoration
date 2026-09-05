@@ -1,0 +1,9 @@
+{
+  "parent": "nekoration:block/container/drawer_chest",
+  "textures": {
+    "0": "nekoration:block/furniture/pine_top",
+    "1": "nekoration:block/container/pine/drawer_chest_front",
+    "3": "nekoration:block/container/pine/cabinet_side",
+    "4": "nekoration:block/container/pine/cabinet_back"
+  }
+}

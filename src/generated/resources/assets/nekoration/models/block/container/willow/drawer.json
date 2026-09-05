@@ -1,0 +1,9 @@
+{
+  "parent": "nekoration:block/container/drawer",
+  "textures": {
+    "0": "nekoration:block/furniture/willow_top",
+    "1": "nekoration:block/container/willow/drawer_front",
+    "3": "nekoration:block/container/willow/drawer_side",
+    "4": "nekoration:block/container/willow/drawer_back"
+  }
+}

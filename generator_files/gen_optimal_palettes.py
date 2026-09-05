@@ -4,9 +4,9 @@ import numpy as np
 from PIL import Image
 from scipy.optimize import linear_sum_assignment
 
-SOURCE_IMAGE = Path("wool_textures/white_wool_simplified.png")
-TARGET_IMAGE_DIR = Path("wool_textures")
-OUTPUT_DIR = Path("wool_palettes")
+SOURCE_IMAGE = Path("plank_textures/grayscale_planks.png")
+TARGET_IMAGE_DIR = Path("plank_textures")
+OUTPUT_DIR = Path("plank_palettes")
 
 
 def find_optimal_color_mapping(source_path: Path, target_path: Path) -> np.ndarray:
@@ -96,7 +96,7 @@ def main():
 
     for target_path in target_paths:
         colors = find_optimal_color_mapping(source_path, target_path)
-        output_path = output_dir / f"{target_path.stem.removesuffix('_wool')}.png"
+        output_path = output_dir / f"{target_path.stem.removesuffix('_planks')}.png"
         save_palette_strip(colors, output_path)
         print(f"Palette saved to: {output_path} ({len(colors)}x1)")
 

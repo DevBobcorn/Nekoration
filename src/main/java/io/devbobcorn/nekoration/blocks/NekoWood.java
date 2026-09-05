@@ -1,5 +1,7 @@
 package io.devbobcorn.nekoration.blocks;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -19,7 +21,21 @@ public enum NekoWood {
     CHERRY,
     BAMBOO,
     CRIMSON,
-    WARPED;
+    WARPED,
+    // Biome O' Plenty Wood Types
+    FIR,
+    PINE,
+    MAPLE,
+    REDWOOD,
+    MAHOGANY,
+    JACARANDA,
+    PALM,
+    WILLOW,
+    DEAD,
+    MAGIC,
+    UMBRAN,
+    HELLBARK,
+    EMPYREAL;
 
     public String id() {
         return name().toLowerCase();
@@ -31,11 +47,11 @@ public enum NekoWood {
     }
 
     public BlockBehaviour.Properties plankProperties() {
-        return BlockBehaviour.Properties.ofFullCopy(vanillaPlanks());
+        return BlockBehaviour.Properties.ofFullCopy(planks());
     }
 
-    /** Vanilla plank block for this wood (icons, sounds, creative filter). */
-    public Block vanillaPlanks() {
+    /** Plank block used for properties and creative icons, with oak as the optional-mod fallback. */
+    public Block planks() {
         return switch (this) {
             case OAK -> Blocks.OAK_PLANKS;
             case SPRUCE -> Blocks.SPRUCE_PLANKS;
@@ -48,12 +64,19 @@ public enum NekoWood {
             case BAMBOO -> Blocks.BAMBOO_PLANKS;
             case CRIMSON -> Blocks.CRIMSON_PLANKS;
             case WARPED -> Blocks.WARPED_PLANKS;
+            default -> BuiltInRegistries.BLOCK.getOptional(
+                    ResourceLocation.fromNamespaceAndPath("biomesoplenty", id() + "_planks"))
+                    .orElse(Blocks.OAK_PLANKS);
         };
     }
 
-    /** {@code block.minecraft.<id>_planks} */
-    public String vanillaPlanksDescriptionId() {
-        return "block.minecraft." + id() + "_planks";
+    public boolean isBiomesOPlenty() {
+        return ordinal() >= FIR.ordinal();
+    }
+
+    /** Texture used by furniture models; BOP textures are bundled so the variants work without BOP. */
+    public String plankTexture() {
+        return (isBiomesOPlenty() ? "nekoration:" : "") + "block/" + id() + "_planks";
     }
 
     /** {@code wood.nekoration.<id>} (e.g. {@code wood.nekoration.oak}). */

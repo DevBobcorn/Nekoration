@@ -1,0 +1,10 @@
+{
+  "parent": "nekoration:block/container/drawer_open",
+  "textures": {
+    "0": "nekoration:block/furniture/dead_top",
+    "1": "nekoration:block/container/dead/drawer_front_open",
+    "2": "nekoration:block/container/dead/drawer_front",
+    "3": "nekoration:block/container/dead/drawer_side",
+    "4": "nekoration:block/container/dead/drawer_back"
+  }
+}

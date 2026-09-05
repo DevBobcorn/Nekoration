@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/furniture/chair",
+  "textures": {
+    "side": "nekoration:block/maple_planks",
+    "top": "nekoration:block/furniture/maple_top"
+  }
+}

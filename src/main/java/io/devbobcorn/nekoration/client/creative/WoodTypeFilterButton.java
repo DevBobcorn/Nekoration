@@ -44,7 +44,7 @@ public final class WoodTypeFilterButton extends AbstractButton {
             setToggledVisual(true);
             return;
         }
-        this.icon = new ItemStack(type.vanillaPlanks().asItem());
+        this.icon = new ItemStack(type.planks().asItem());
         setTooltip(Tooltip.create(Component.translatable(type.descriptionId())));
         setToggledVisual(enabled);
     }

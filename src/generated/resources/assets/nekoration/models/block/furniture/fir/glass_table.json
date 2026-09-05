@@ -1,0 +1,6 @@
+{
+  "parent": "nekoration:block/furniture/glass_table",
+  "textures": {
+    "top": "nekoration:block/furniture/fir_top"
+  }
+}

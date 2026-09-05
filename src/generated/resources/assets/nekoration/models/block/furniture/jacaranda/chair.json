@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/furniture/chair",
+  "textures": {
+    "side": "nekoration:block/jacaranda_planks",
+    "top": "nekoration:block/furniture/jacaranda_top"
+  }
+}

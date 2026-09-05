@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nekoration:block/window/umbran/window_cross"
+  }
+}

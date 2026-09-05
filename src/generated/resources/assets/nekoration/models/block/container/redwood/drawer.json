@@ -1,0 +1,9 @@
+{
+  "parent": "nekoration:block/container/drawer",
+  "textures": {
+    "0": "nekoration:block/furniture/redwood_top",
+    "1": "nekoration:block/container/redwood/drawer_front",
+    "3": "nekoration:block/container/redwood/drawer_side",
+    "4": "nekoration:block/container/redwood/drawer_back"
+  }
+}

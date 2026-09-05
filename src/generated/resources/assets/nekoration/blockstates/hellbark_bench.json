@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "facing=east,horizontal_connection=d0": {
+      "model": "nekoration:block/furniture/hellbark/bench_t0",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=d1": {
+      "model": "nekoration:block/furniture/hellbark/bench_t2",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=s0": {
+      "model": "nekoration:block/furniture/hellbark/bench_s0",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=t0": {
+      "model": "nekoration:block/furniture/hellbark/bench_t0",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=t1": {
+      "model": "nekoration:block/furniture/hellbark/bench_t1",
+      "y": 90
+    },
+    "facing=east,horizontal_connection=t2": {
+      "model": "nekoration:block/furniture/hellbark/bench_t2",
+      "y": 90
+    },
+    "facing=north,horizontal_connection=d0": {
+      "model": "nekoration:block/furniture/hellbark/bench_t0"
+    },
+    "facing=north,horizontal_connection=d1": {
+      "model": "nekoration:block/furniture/hellbark/bench_t2"
+    },
+    "facing=north,horizontal_connection=s0": {
+      "model": "nekoration:block/furniture/hellbark/bench_s0"
+    },
+    "facing=north,horizontal_connection=t0": {
+      "model": "nekoration:block/furniture/hellbark/bench_t0"
+    },
+    "facing=north,horizontal_connection=t1": {
+      "model": "nekoration:block/furniture/hellbark/bench_t1"
+    },
+    "facing=north,horizontal_connection=t2": {
+      "model": "nekoration:block/furniture/hellbark/bench_t2"
+    },
+    "facing=south,horizontal_connection=d0": {
+      "model": "nekoration:block/furniture/hellbark/bench_t0",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=d1": {
+      "model": "nekoration:block/furniture/hellbark/bench_t2",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=s0": {
+      "model": "nekoration:block/furniture/hellbark/bench_s0",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=t0": {
+      "model": "nekoration:block/furniture/hellbark/bench_t0",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=t1": {
+      "model": "nekoration:block/furniture/hellbark/bench_t1",
+      "y": 180
+    },
+    "facing=south,horizontal_connection=t2": {
+      "model": "nekoration:block/furniture/hellbark/bench_t2",
+      "y": 180
+    },
+    "facing=west,horizontal_connection=d0": {
+      "model": "nekoration:block/furniture/hellbark/bench_t0",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=d1": {
+      "model": "nekoration:block/furniture/hellbark/bench_t2",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=s0": {
+      "model": "nekoration:block/furniture/hellbark/bench_s0",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=t0": {
+      "model": "nekoration:block/furniture/hellbark/bench_t0",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=t1": {
+      "model": "nekoration:block/furniture/hellbark/bench_t1",
+      "y": 270
+    },
+    "facing=west,horizontal_connection=t2": {
+      "model": "nekoration:block/furniture/hellbark/bench_t2",
+      "y": 270
+    }
+  }
+}

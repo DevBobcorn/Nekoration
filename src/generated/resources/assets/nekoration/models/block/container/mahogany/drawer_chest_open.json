@@ -1,0 +1,10 @@
+{
+  "parent": "nekoration:block/container/drawer_chest_open",
+  "textures": {
+    "0": "nekoration:block/furniture/mahogany_top",
+    "1": "nekoration:block/container/mahogany/drawer_chest_front_open",
+    "2": "nekoration:block/container/mahogany/drawer_chest_front",
+    "3": "nekoration:block/container/mahogany/cabinet_side",
+    "4": "nekoration:block/container/mahogany/cabinet_back"
+  }
+}

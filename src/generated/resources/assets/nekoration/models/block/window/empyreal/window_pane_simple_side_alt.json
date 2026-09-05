@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/window/template_window_pane_side_alt",
+  "textures": {
+    "edge": "nekoration:block/window/empyreal/window_top",
+    "pane": "nekoration:block/window/empyreal/window_simple"
+  }
+}

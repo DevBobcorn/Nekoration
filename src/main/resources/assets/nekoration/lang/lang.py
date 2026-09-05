@@ -6,9 +6,9 @@ color_ids = ["black","blue","brown","cyan","gray","green","light_blue","light_gr
 colors_us  = ["Black","Blue","Brown","Cyan","Gray","Green","Light Blue","Light Gray","Lime","Magenta","Orange","Pink","Purple","Red","White","Yellow","Some","Blank"]
 colors_cn = ["黑色","蓝色","棕色","青色","灰色","绿色","淡蓝色","淡灰色","黄绿色","品红色","橙色","粉色","紫色","红色","白色","黄色","","空白"]
 
-wood_ids = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"]
-woods_us = ["Oak", "Spruce", "Birch", "Jungle", "Acacia", "Dark Oak", "Mangrove", "Cherry", "Bamboo", "Crimson", "Warped"]
-woods_cn = ["橡木", "云杉木", "白桦木", "丛林木", "金合欢木", "深色橡木", "红树木", "樱花木", "竹", "绯红木", "诡异木"]
+wood_ids = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped", "fir", "pine", "maple", "redwood", "mahogany", "jacaranda", "palm", "willow", "dead", "magic", "umbran", "hellbark", "empyreal"]
+woods_us = ["Oak", "Spruce", "Birch", "Jungle", "Acacia", "Dark Oak", "Mangrove", "Cherry", "Bamboo", "Crimson", "Warped", "Fir", "Pine", "Maple", "Redwood", "Mahogany", "Jacaranda", "Palm", "Willow", "Dead", "Magic", "Umbran", "Hellbark", "Empyreal"]
+woods_cn = ["橡木", "云杉木", "白桦木", "丛林木", "金合欢木", "深色橡木", "红树木", "樱花木", "竹", "绯红木", "诡异木", "冷杉木", "松木", "枫木", "红杉木", "桃花心木", "蓝花楹木", "棕榈木", "柳木", "枯木", "魔法木", "暗影木", "地狱皮木", "天界木"]
 
 half_timber_ids = ["p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"]
 half_timbers_us = ["{wood} Half-Timber", "Bend Sinister {wood} Half-Timber", "Bend {wood} Half-Timber", "Double Bend Sinister {wood} Half-Timber", "Double Bend {wood} Half-Timber", "Center {wood} Half-Timber", "Roundel {wood} Half-Timber", "Saltire {wood} Half-Timber", "Pale {wood} Half-Timber", "Double {wood} Half-Timber"]

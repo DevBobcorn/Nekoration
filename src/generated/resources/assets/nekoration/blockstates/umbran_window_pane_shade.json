@@ -1,0 +1,77 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "nekoration:block/window/umbran/window_pane_shade_post"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/window/umbran/window_pane_shade_side"
+      },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/window/umbran/window_pane_shade_noside"
+      },
+      "when": {
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/window/umbran/window_pane_shade_side_alt"
+      },
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/window/umbran/window_pane_shade_noside_alt",
+        "y": 90
+      },
+      "when": {
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/window/umbran/window_pane_shade_side_alt",
+        "y": 90
+      },
+      "when": {
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/window/umbran/window_pane_shade_noside",
+        "y": 270
+      },
+      "when": {
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/window/umbran/window_pane_shade_side",
+        "y": 90
+      },
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "nekoration:block/window/umbran/window_pane_shade_noside_alt"
+      },
+      "when": {
+        "east": "false"
+      }
+    }
+  ]
+}

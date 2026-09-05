@@ -1,0 +1,6 @@
+{
+  "parent": "nekoration:block/furniture/table",
+  "textures": {
+    "top": "nekoration:block/furniture/jacaranda_top"
+  }
+}

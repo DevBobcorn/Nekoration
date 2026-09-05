@@ -135,6 +135,11 @@ dependencies {
     compileOnly "maven.modrinth:jade:${jade_version}+neoforge"
     // localRuntime "maven.modrinth:jade:${jade_version}+neoforge"
 
+    // Optional: Biomes O' Plenty and its required libraries for runtime testing.
+    localRuntime "maven.modrinth:biomes-o-plenty:${biomes_o_plenty_modrinth_version_id}"
+    localRuntime "maven.modrinth:glitchcore:${glitchcore_modrinth_version_id}"
+    localRuntime "maven.modrinth:terrablender:${terrablender_modrinth_version_id}"
+
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
@@ -174,6 +179,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_name               : mod_name,
             mod_license            : mod_license,
             mod_version            : mod_version,
+            biomes_o_plenty_version: biomes_o_plenty_version,
     ]
     inputs.properties replaceProperties
     expand replaceProperties
