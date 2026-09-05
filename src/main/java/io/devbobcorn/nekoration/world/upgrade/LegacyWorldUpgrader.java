@@ -16,8 +16,8 @@ public final class LegacyWorldUpgrader {
             "lime", "magenta", "orange", "pink", "purple", "red", "white", "yellow"
     };
     private static final String[] V1_WOODS = {
-            "dark_oak", "warped", "spruce", "warped", "jungle", "warped", "warped", "oak",
-            "warped", "crimson", "acacia", "cherry", "mangrove", "mangrove", "birch", "birch"
+            "dark_oak", "magic", "spruce", "warped", "jungle", "pine", "magic", "oak",
+            "willow", "crimson", "acacia", "cherry", "mangrove", "redwood", "birch", "palm"
     };
     private static final byte[] V2_COLOR_IDS = {
             3, 12, 4, 10, 2, 9, 11, 1, 8, 14, 6, 15, 13, 5, 0, 7

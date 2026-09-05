@@ -14,6 +14,11 @@ import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.util.datafix.DataFixers;
 
 class LegacyWorldUpgraderTest {
+    private static final String[] V1_WOODS = {
+            "dark_oak", "magic", "spruce", "warped", "jungle", "pine", "magic", "oak",
+            "willow", "crimson", "acacia", "cherry", "mangrove", "redwood", "birch", "palm"
+    };
+
     @Test
     void upgradesRepresentativeBlockStates() {
         CompoundTag legacyStone = state("stone_base", "level", "14", "vertical_connection", "d0");
@@ -90,6 +95,19 @@ class LegacyWorldUpgraderTest {
         CompoundTag door = stack("door_tall_3");
         LegacyWorldUpgrader.upgradeItemStack(door);
         assertEquals("nekoration:tall_quartz_bricks_door", door.getString("id"));
+    }
+
+    @Test
+    void mapsEveryLegacyWoodOrdinalForBlocksAndItems() {
+        for (int ordinal = 0; ordinal < V1_WOODS.length; ordinal++) {
+            CompoundTag block = state("bench", "level", Integer.toString(ordinal));
+            LegacyWorldUpgrader.upgradeBlockState(block);
+            assertEquals("nekoration:" + V1_WOODS[ordinal] + "_bench", block.getString("Name"));
+
+            CompoundTag item = stack("bench", "color", ordinal);
+            LegacyWorldUpgrader.upgradeItemStack(item);
+            assertEquals("nekoration:" + V1_WOODS[ordinal] + "_bench", item.getString("id"));
+        }
     }
 
     @Test

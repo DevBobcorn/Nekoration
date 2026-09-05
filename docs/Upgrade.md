@@ -106,21 +106,21 @@ When upgrading data for all Wooden Blocks with `level` property, take the `level
 |Dye Color|`level` Property Value|wood_type_id|
 |---------|----------------------|---------|
 |Black|0|dark_oak|
-|Blue|1|warped|
+|Blue|1|magic|
 |Brown|2|spruce|
 |Cyan|3|warped|
 |Gray|4|jungle|
-|Green|5|warped|
-|Light Blue|6|warped|
+|Green|5|pine|
+|Light Blue|6|magic|
 |Light Gray|7|oak|
-|Lime|8|warped|
+|Lime|8|willow|
 |Magenta|9|crimson|
 |Orange|10|acacia|
 |Pink|11|cherry|
 |Purple|12|mangrove|
-|Red|13|mangrove|
+|Red|13|redwood|
 |White|14|birch|
-|Yellow|15|birch|
+|Yellow|15|palm|
 
 Half-Timber Blocks additionally used to have a secondary color block property which is stored as a number in `age` property in v1, and moved to `color` property and stored as `EnumNekoColor`(similar to Cement Blocks) in v2. The `age` value uses the v1 dye color ordinal, so convert it with the [Colors](#colors) table.
 
