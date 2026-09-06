@@ -1,6 +1,7 @@
 package io.devbobcorn.nekoration.world.upgrade;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -88,22 +89,84 @@ public final class LegacyWorldUpgrader {
     public static void upgradeChunk(CompoundTag chunk) {
         upgradeItemStacks(chunk);
         ListTag sections = chunk.getList("sections", Tag.TAG_COMPOUND);
+        Map<Integer, SectionBlockStates> sectionsByY = new HashMap<>();
         for (int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++) {
             CompoundTag section = sections.getCompound(sectionIndex);
-            CompoundTag blockStates = section.getCompound("block_states");
-            ListTag palette = blockStates.getList("palette", Tag.TAG_COMPOUND);
-            for (int paletteIndex = 0; paletteIndex < palette.size(); paletteIndex++) {
-                upgradeBlockState(palette.getCompound(paletteIndex));
+            SectionBlockStates blockStates = SectionBlockStates.read(section);
+            if (blockStates != null) {
+                sectionsByY.putIfAbsent((int) section.getByte("Y"), blockStates);
             }
-            deduplicatePalette(blockStates, palette);
+        }
+
+        boolean insertedTallDoorTop = false;
+        for (Map.Entry<Integer, SectionBlockStates> entry : sectionsByY.entrySet()) {
+            int sectionY = entry.getKey();
+            SectionBlockStates source = entry.getValue();
+            if (source.values == null) {
+                continue;
+            }
+            for (int index = 0; index < source.values.length; index++) {
+                CompoundTag state = source.palette.get(source.values[index]);
+                if (!isLegacyTallDoorUpper(state)) {
+                    continue;
+                }
+
+                int localY = index >> 8;
+                SectionBlockStates target = localY < 15 ? source : sectionsByY.get(sectionY + 1);
+                if (target == null || target.values == null) {
+                    continue;
+                }
+                int targetIndex = localY < 15 ? index + 256 : index & 255;
+                CompoundTag upperState = state.copy();
+                upgradeBlockState(upperState);
+                upperState.getCompound("Properties").putString("segment", "upper");
+                CompoundTag targetState = target.palette.get(target.values[targetIndex]);
+                if (targetState.equals(upperState)) {
+                    continue;
+                }
+                if (!isAir(targetState)) {
+                    continue;
+                }
+                target.values[targetIndex] = target.palette.size();
+                target.palette.add(upperState);
+                target.dirty = true;
+                insertedTallDoorTop = true;
+            }
+        }
+
+        for (SectionBlockStates section : sectionsByY.values()) {
+            for (CompoundTag state : section.palette) {
+                section.dirty |= upgradeBlockState(state);
+            }
+            section.write();
+        }
+        if (insertedTallDoorTop) {
+            chunk.remove("Heightmaps");
+            chunk.remove("isLightOn");
         }
     }
 
-    private static void deduplicatePalette(CompoundTag blockStates, ListTag palette) {
+    private static boolean isLegacyTallDoorUpper(CompoundTag state) {
+        String name = state.getString("Name");
+        if (!name.equals(PREFIX + "door_tall_1") && !name.equals(PREFIX + "door_tall_2")
+                && !name.equals(PREFIX + "door_tall_3")) {
+            return false;
+        }
+        return state.getCompound("Properties").getString("half").equals("upper");
+    }
+
+    private static boolean isAir(CompoundTag state) {
+        return switch (state.getString("Name")) {
+            case "minecraft:air", "minecraft:cave_air", "minecraft:void_air" -> true;
+            default -> false;
+        };
+    }
+
+    private static void writePalette(CompoundTag blockStates, List<CompoundTag> palette, int[] values) {
         List<CompoundTag> uniqueStates = new ArrayList<>();
         int[] remappedPalette = new int[palette.size()];
         for (int oldIndex = 0; oldIndex < palette.size(); oldIndex++) {
-            CompoundTag state = palette.getCompound(oldIndex);
+            CompoundTag state = palette.get(oldIndex);
             int newIndex = uniqueStates.indexOf(state);
             if (newIndex < 0) {
                 newIndex = uniqueStates.size();
@@ -111,15 +174,8 @@ public final class LegacyWorldUpgrader {
             }
             remappedPalette[oldIndex] = newIndex;
         }
-        if (uniqueStates.size() == palette.size()) {
-            return;
-        }
-
-        int[] values = new int[4096];
-        SimpleBitStorage oldStorage = new SimpleBitStorage(
-                serializedBlockStateBits(palette.size()), values.length, blockStates.getLongArray("data"));
         for (int index = 0; index < values.length; index++) {
-            values[index] = remappedPalette[oldStorage.get(index)];
+            values[index] = remappedPalette[values[index]];
         }
 
         ListTag newPalette = new ListTag();
@@ -136,6 +192,60 @@ public final class LegacyWorldUpgrader {
 
     private static int serializedBlockStateBits(int paletteSize) {
         return Math.max(4, 32 - Integer.numberOfLeadingZeros(paletteSize - 1));
+    }
+
+    private static final class SectionBlockStates {
+        private final CompoundTag blockStates;
+        private final List<CompoundTag> palette;
+        private final int[] values;
+        private boolean dirty;
+
+        private SectionBlockStates(CompoundTag blockStates, List<CompoundTag> palette, int[] values) {
+            this.blockStates = blockStates;
+            this.palette = palette;
+            this.values = values;
+        }
+
+        private static SectionBlockStates read(CompoundTag section) {
+            if (!section.contains("block_states", Tag.TAG_COMPOUND)) {
+                return null;
+            }
+            CompoundTag blockStates = section.getCompound("block_states");
+            ListTag paletteTag = blockStates.getList("palette", Tag.TAG_COMPOUND);
+            if (paletteTag.isEmpty()) {
+                return null;
+            }
+            List<CompoundTag> palette = new ArrayList<>(paletteTag.size());
+            for (int index = 0; index < paletteTag.size(); index++) {
+                palette.add(paletteTag.getCompound(index));
+            }
+
+            int[] values = new int[4096];
+            if (palette.size() > 1) {
+                if (!blockStates.contains("data", Tag.TAG_LONG_ARRAY)) {
+                    return new SectionBlockStates(blockStates, palette, null);
+                }
+                try {
+                    SimpleBitStorage storage = new SimpleBitStorage(
+                            serializedBlockStateBits(palette.size()), values.length, blockStates.getLongArray("data"));
+                    storage.unpack(values);
+                } catch (RuntimeException exception) {
+                    return new SectionBlockStates(blockStates, palette, null);
+                }
+                for (int value : values) {
+                    if (value >= palette.size()) {
+                        return new SectionBlockStates(blockStates, palette, null);
+                    }
+                }
+            }
+            return new SectionBlockStates(blockStates, palette, values);
+        }
+
+        private void write() {
+            if (values != null && (dirty || palette.size() != Set.copyOf(palette).size())) {
+                writePalette(blockStates, palette, values);
+            }
+        }
     }
 
     /** Rewrites every legacy-format item stack nested in the supplied saved data. */

@@ -156,6 +156,60 @@ class LegacyWorldUpgraderTest {
     }
 
     @Test
+    void insertsTallDoorUpperSegmentInSameSection() {
+        CompoundTag upperDoor = state("door_tall_2", "level", "2", "half", "upper",
+                "facing", "north", "hinge", "left", "open", "false", "powered", "false");
+        CompoundTag section = section(0, minecraftState("air"), upperDoor);
+        setSectionValue(section, 4, 1);
+        CompoundTag chunk = chunk(section);
+
+        LegacyWorldUpgrader.upgradeChunk(chunk);
+
+        assertEquals("middle", sectionState(section, 4).getCompound("Properties").getString("segment"));
+        CompoundTag top = sectionState(section, 4 + 256);
+        assertEquals("nekoration:tall_chiseled_quartz_door", top.getString("Name"));
+        assertEquals("upper", top.getCompound("Properties").getString("segment"));
+        assertEquals("upper", top.getCompound("Properties").getString("half"));
+        assertEquals("brown", top.getCompound("Properties").getString("color"));
+
+        CompoundTag upgraded = chunk.copy();
+        LegacyWorldUpgrader.upgradeChunk(chunk);
+        assertEquals(upgraded, chunk);
+    }
+
+    @Test
+    void insertsTallDoorUpperSegmentAcrossSectionBoundary() {
+        CompoundTag upperDoor = state("door_tall_1", "level", "14", "half", "upper",
+                "facing", "east", "hinge", "right", "open", "true", "powered", "false");
+        CompoundTag lowerSection = section(-1, minecraftState("air"), upperDoor);
+        CompoundTag upperSection = section(0, minecraftState("air"));
+        setSectionValue(lowerSection, (15 << 8) | 7, 1);
+        CompoundTag chunk = chunk(lowerSection, upperSection);
+
+        LegacyWorldUpgrader.upgradeChunk(chunk);
+
+        CompoundTag top = sectionState(upperSection, 7);
+        assertEquals("nekoration:tall_quartz_door", top.getString("Name"));
+        assertEquals("upper", top.getCompound("Properties").getString("segment"));
+        assertEquals("white", top.getCompound("Properties").getString("color"));
+        assertFalse(chunk.contains("Heightmaps"));
+        assertFalse(chunk.contains("isLightOn"));
+    }
+
+    @Test
+    void doesNotOverwriteBlockAboveTallDoor() {
+        CompoundTag upperDoor = state("door_tall_3", "level", "0", "half", "upper");
+        CompoundTag section = section(0, minecraftState("air"), upperDoor, minecraftState("stone"));
+        setSectionValue(section, 0, 1);
+        setSectionValue(section, 256, 2);
+        CompoundTag chunk = chunk(section);
+
+        LegacyWorldUpgrader.upgradeChunk(chunk);
+
+        assertEquals("minecraft:stone", sectionState(section, 256).getString("Name"));
+    }
+
+    @Test
     void upgradesLegacyItemIdsAndColors() {
         CompoundTag cement = stack("stone_pot", "color", 14);
         assertTrue(LegacyWorldUpgrader.upgradeItemStack(cement));
@@ -301,6 +355,56 @@ class LegacyWorldUpgraderTest {
         CompoundTag state = new CompoundTag();
         state.putString("Name", "minecraft:" + path);
         return state;
+    }
+
+    private static CompoundTag section(int sectionY, CompoundTag... states) {
+        CompoundTag section = new CompoundTag();
+        section.putByte("Y", (byte) sectionY);
+        CompoundTag blockStates = new CompoundTag();
+        ListTag palette = new ListTag();
+        for (CompoundTag state : states) {
+            palette.add(state);
+        }
+        blockStates.put("palette", palette);
+        if (states.length > 1) {
+            blockStates.putLongArray("data", new SimpleBitStorage(4, 4096).getRaw());
+        }
+        section.put("block_states", blockStates);
+        return section;
+    }
+
+    private static CompoundTag chunk(CompoundTag... sections) {
+        CompoundTag chunk = new CompoundTag();
+        ListTag sectionList = new ListTag();
+        for (CompoundTag section : sections) {
+            sectionList.add(section);
+        }
+        chunk.put("sections", sectionList);
+        chunk.put("Heightmaps", new CompoundTag());
+        chunk.putBoolean("isLightOn", true);
+        return chunk;
+    }
+
+    private static void setSectionValue(CompoundTag section, int index, int paletteIndex) {
+        CompoundTag blockStates = section.getCompound("block_states");
+        int paletteSize = blockStates.getList("palette", 10).size();
+        SimpleBitStorage storage = new SimpleBitStorage(
+                Math.max(4, 32 - Integer.numberOfLeadingZeros(paletteSize - 1)), 4096,
+                blockStates.getLongArray("data"));
+        storage.set(index, paletteIndex);
+        blockStates.putLongArray("data", storage.getRaw());
+    }
+
+    private static CompoundTag sectionState(CompoundTag section, int index) {
+        CompoundTag blockStates = section.getCompound("block_states");
+        ListTag palette = blockStates.getList("palette", 10);
+        if (palette.size() == 1) {
+            return palette.getCompound(0);
+        }
+        SimpleBitStorage storage = new SimpleBitStorage(
+                Math.max(4, 32 - Integer.numberOfLeadingZeros(palette.size() - 1)), 4096,
+                blockStates.getLongArray("data"));
+        return palette.getCompound(storage.get(index));
     }
 
     private static CompoundTag stack(String path, Object... tags) {
