@@ -10,6 +10,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.util.SimpleBitStorage;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.util.datafix.DataFixers;
 
@@ -46,6 +47,27 @@ class LegacyWorldUpgraderTest {
     }
 
     @Test
+    void removesIncompleteWindowFrameHeadsAndSills() {
+        CompoundTag head = state("window_frame", "level", "0", "frame_part", "top",
+                "left", "true", "right", "false", "facing", "north");
+        CompoundTag sill = state("window_frame", "level", "0", "frame_part", "bottom",
+                "left", "false", "right", "false", "facing", "north");
+        CompoundTag completeHead = state("window_frame", "level", "0", "frame_part", "top",
+                "left", "true", "right", "true", "facing", "north");
+
+        LegacyWorldUpgrader.upgradeBlockState(head);
+        LegacyWorldUpgrader.upgradeBlockState(sill);
+        LegacyWorldUpgrader.upgradeBlockState(completeHead);
+
+        assertEquals("minecraft:air", head.getString("Name"));
+        assertFalse(head.contains("Properties"));
+        assertEquals("minecraft:air", sill.getString("Name"));
+        assertFalse(sill.contains("Properties"));
+        assertEquals("nekoration:cement_frame_head", completeHead.getString("Name"));
+        assertEquals("s0", completeHead.getCompound("Properties").getString("horizontal_connection"));
+    }
+
+    @Test
     void upgradesChunkPalettesIdempotently() {
         CompoundTag chunk = new CompoundTag();
         CompoundTag section = new CompoundTag();
@@ -66,6 +88,71 @@ class LegacyWorldUpgraderTest {
         assertEquals("nekoration:gold_lamp_post", palette.getCompound(0).getString("Name"));
         assertEquals("yellow", palette.getCompound(1).getCompound("Properties").getString("color"));
         assertEquals(firstResult, chunk);
+    }
+
+    @Test
+    void deduplicatesUpgradedChunkPaletteAndRemapsStorage() {
+        CompoundTag chunk = new CompoundTag();
+        CompoundTag section = new CompoundTag();
+        CompoundTag blockStates = new CompoundTag();
+        ListTag palette = new ListTag();
+        palette.add(minecraftState("air"));
+        palette.add(state("window_frame", "level", "0", "frame_part", "top",
+                "left", "true", "right", "false", "facing", "north"));
+        palette.add(state("stone_frame", "level", "0"));
+        palette.add(state("stone_pillar", "level", "0"));
+        blockStates.put("palette", palette);
+        int[] values = new int[4096];
+        values[0] = 0;
+        values[1] = 1;
+        values[2] = 2;
+        values[3] = 3;
+        blockStates.putLongArray("data", new SimpleBitStorage(4, values.length, values).getRaw());
+        section.put("block_states", blockStates);
+        ListTag sections = new ListTag();
+        sections.add(section);
+        chunk.put("sections", sections);
+
+        LegacyWorldUpgrader.upgradeChunk(chunk);
+
+        ListTag upgradedPalette = blockStates.getList("palette", 10);
+        assertEquals(2, upgradedPalette.size());
+        assertEquals("minecraft:air", upgradedPalette.getCompound(0).getString("Name"));
+        assertEquals("nekoration:paneled_cement", upgradedPalette.getCompound(1).getString("Name"));
+        SimpleBitStorage storage = new SimpleBitStorage(4, values.length, blockStates.getLongArray("data"));
+        assertEquals(0, storage.get(0));
+        assertEquals(0, storage.get(1));
+        assertEquals(1, storage.get(2));
+        assertEquals(1, storage.get(3));
+    }
+
+    @Test
+    void repacksChunkStorageWhenDeduplicationReducesBitWidth() {
+        CompoundTag chunk = new CompoundTag();
+        CompoundTag section = new CompoundTag();
+        CompoundTag blockStates = new CompoundTag();
+        ListTag palette = new ListTag();
+        for (int index = 0; index < 15; index++) {
+            palette.add(minecraftState("test_" + index));
+        }
+        palette.add(state("stone_frame", "level", "0"));
+        palette.add(state("stone_pillar", "level", "0"));
+        blockStates.put("palette", palette);
+        int[] values = new int[4096];
+        values[0] = 15;
+        values[1] = 16;
+        blockStates.putLongArray("data", new SimpleBitStorage(5, values.length, values).getRaw());
+        section.put("block_states", blockStates);
+        ListTag sections = new ListTag();
+        sections.add(section);
+        chunk.put("sections", sections);
+
+        LegacyWorldUpgrader.upgradeChunk(chunk);
+
+        assertEquals(16, blockStates.getList("palette", 10).size());
+        SimpleBitStorage storage = new SimpleBitStorage(4, values.length, blockStates.getLongArray("data"));
+        assertEquals(15, storage.get(0));
+        assertEquals(15, storage.get(1));
     }
 
     @Test
@@ -207,6 +294,12 @@ class LegacyWorldUpgraderTest {
             }
             state.put("Properties", propertyTag);
         }
+        return state;
+    }
+
+    private static CompoundTag minecraftState(String path) {
+        CompoundTag state = new CompoundTag();
+        state.putString("Name", "minecraft:" + path);
         return state;
     }
 

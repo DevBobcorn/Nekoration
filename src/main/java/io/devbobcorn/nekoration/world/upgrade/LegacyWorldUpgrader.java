@@ -1,5 +1,7 @@
 package io.devbobcorn.nekoration.world.upgrade;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -7,6 +9,7 @@ import io.devbobcorn.nekoration.Nekoration;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.util.SimpleBitStorage;
 
 /** Rewrites v1 data before Minecraft attempts to resolve its registry ids. */
 public final class LegacyWorldUpgrader {
@@ -92,7 +95,47 @@ public final class LegacyWorldUpgrader {
             for (int paletteIndex = 0; paletteIndex < palette.size(); paletteIndex++) {
                 upgradeBlockState(palette.getCompound(paletteIndex));
             }
+            deduplicatePalette(blockStates, palette);
         }
+    }
+
+    private static void deduplicatePalette(CompoundTag blockStates, ListTag palette) {
+        List<CompoundTag> uniqueStates = new ArrayList<>();
+        int[] remappedPalette = new int[palette.size()];
+        for (int oldIndex = 0; oldIndex < palette.size(); oldIndex++) {
+            CompoundTag state = palette.getCompound(oldIndex);
+            int newIndex = uniqueStates.indexOf(state);
+            if (newIndex < 0) {
+                newIndex = uniqueStates.size();
+                uniqueStates.add(state);
+            }
+            remappedPalette[oldIndex] = newIndex;
+        }
+        if (uniqueStates.size() == palette.size()) {
+            return;
+        }
+
+        int[] values = new int[4096];
+        SimpleBitStorage oldStorage = new SimpleBitStorage(
+                serializedBlockStateBits(palette.size()), values.length, blockStates.getLongArray("data"));
+        for (int index = 0; index < values.length; index++) {
+            values[index] = remappedPalette[oldStorage.get(index)];
+        }
+
+        ListTag newPalette = new ListTag();
+        newPalette.addAll(uniqueStates);
+        blockStates.put("palette", newPalette);
+        if (uniqueStates.size() == 1) {
+            blockStates.remove("data");
+        } else {
+            SimpleBitStorage newStorage = new SimpleBitStorage(
+                    serializedBlockStateBits(uniqueStates.size()), values.length, values);
+            blockStates.putLongArray("data", newStorage.getRaw());
+        }
+    }
+
+    private static int serializedBlockStateBits(int paletteSize) {
+        return Math.max(4, 32 - Integer.numberOfLeadingZeros(paletteSize - 1));
     }
 
     /** Rewrites every legacy-format item stack nested in the supplied saved data. */
@@ -283,7 +326,7 @@ public final class LegacyWorldUpgrader {
             properties.putString("half", segment.equals("lower") ? "lower" : "upper");
         }
 
-        state.putString("Name", PREFIX + newPath);
+        state.putString("Name", newPath.equals("minecraft:air") ? newPath : PREFIX + newPath);
         if (properties.isEmpty()) {
             state.remove("Properties");
         } else {
@@ -294,14 +337,20 @@ public final class LegacyWorldUpgrader {
 
     private static String upgradeWindowFrame(CompoundTag properties) {
         String framePart = properties.getString("frame_part");
+        boolean left = properties.getString("left").equals("true");
+        boolean right = properties.getString("right").equals("true");
+        if (!framePart.equals("middle") && (!left || !right)) {
+            for (String key : Set.copyOf(properties.getAllKeys())) {
+                properties.remove(key);
+            }
+            return "minecraft:air";
+        }
         String newPath = switch (framePart) {
             case "top" -> "cement_frame_head";
             case "middle" -> "cement_frame_side";
             default -> "cement_frame_sill";
         };
         if (framePart.equals("middle")) {
-            boolean left = properties.getString("left").equals("true");
-            boolean right = properties.getString("right").equals("true");
             properties.putString("frame_connection", left == right ? "both" : left ? "right" : "left");
         } else {
             properties.putString("horizontal_connection", "s0");

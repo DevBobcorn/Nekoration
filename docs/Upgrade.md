@@ -25,9 +25,9 @@ The dyeable Window Frame Blocks from v1 are Cement Frame Blocks in v2. Convert t
 |-----------|-----------|---------------|
 |window_top|cement_frame_peak|Preserve `horizontal_connection`|
 |window_sill|cement_frame_sill|Preserve `horizontal_connection`|
-|window_frame with `frame_part=top`|cement_frame_head|Remove `frame_part`, `left` and `right`; recalculate `horizontal_connection` from adjacent converted frame-head blocks|
+|window_frame with `frame_part=top`|cement_frame_head|Replace with air if `left` and `right` are not both `true`; remove `frame_part`, `left` and `right`; recalculate `horizontal_connection` from adjacent converted frame-head blocks|
 |window_frame with `frame_part=middle`|cement_frame_side|Remove `frame_part`, `left` and `right`; set `frame_connection` as described below|
-|window_frame with `frame_part=bottom`|cement_frame_sill|Remove `frame_part`, `left` and `right`; recalculate `horizontal_connection` from adjacent converted frame-sill blocks|
+|window_frame with `frame_part=bottom`|cement_frame_sill|Replace with air if `left` and `right` are not both `true`; remove `frame_part`, `left` and `right`; recalculate `horizontal_connection` from adjacent converted frame-sill blocks|
 
 For a v1 `window_frame` with `frame_part=middle`, convert the two Boolean edge properties to the v2 `frame_connection` property. The left/right names are reversed because the v1 properties named the rendered edge while the v2 values name the side to which the frame connects.
 
