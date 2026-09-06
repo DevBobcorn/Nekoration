@@ -1,5 +1,5 @@
 {
-  "parent": "nekoration:block/furniture/round_table",
+  "parent": "nekoration:block/furniture/round_glass_table",
   "textures": {
     "leg": "nekoration:block/furniture/warped_leg",
     "top": "nekoration:block/furniture/glass_round_top"

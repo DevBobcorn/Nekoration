@@ -101,7 +101,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
         String roundGlassTableId = woodId + "_round_glass_table";
         writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/round_glass_table",
                 Map.of(
-                        "parent", modLoc("block/furniture/round_table"),
+                        "parent", modLoc("block/furniture/round_glass_table"),
                         "textures", Map.of(
                                 "top", modLoc("block/furniture/glass_round_top"),
                                 "leg", furnitureTexture(wood, "leg"))));

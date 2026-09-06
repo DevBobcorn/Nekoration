@@ -61,16 +61,14 @@ public class DyeableFrameSideBlock extends FrameSideBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hitResult) {
-        boolean canColor = VanillaCompat.RAW_COLOR_ITEMS.containsKey(stack.getItem())
-                || VanillaCompat.COLOR_ITEMS.containsKey(stack.getItem());
+        boolean canColor = VanillaCompat.COLOR_ITEMS.containsKey(stack.getItem());
         if (!canColor) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }
         if (level.isClientSide()) {
             return ItemInteractionResult.SUCCESS;
         }
-        Integer raw = VanillaCompat.RAW_COLOR_ITEMS.get(stack.getItem());
-        int colorIndex = raw != null ? raw : VanillaCompat.COLOR_ITEMS.get(stack.getItem());
+        int colorIndex = VanillaCompat.COLOR_ITEMS.get(stack.getItem());
         EnumNekoColor next = EnumNekoColor.getColorEnumFromId((byte) colorIndex);
         level.setBlock(pos, state.setValue(DyeableBlock.COLOR, next), Block.UPDATE_ALL);
         return ItemInteractionResult.CONSUME;

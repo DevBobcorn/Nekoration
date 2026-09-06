@@ -63,7 +63,7 @@ public final class CementBlockRegistration {
     CEMENT_FRAME_SIDE = blocks.register("cement_frame_side",
         () -> new DyeableFrameSideBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
     CEMENT_POT = blocks.register("cement_pot",
-        () -> new DyeablePotBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 7));
+        () -> new DyeablePotBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 6));
     CEMENT_PLANTER = blocks.register("cement_planter",
         () -> new DyeablePotBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 8));
 

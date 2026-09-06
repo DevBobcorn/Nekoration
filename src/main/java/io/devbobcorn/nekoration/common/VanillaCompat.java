@@ -14,8 +14,6 @@ import net.minecraft.world.item.Items;
 public final class VanillaCompat {
     /** Dye items to color mapping. */
     public static final Map<Item, Integer> COLOR_ITEMS = createColorItemsMap();
-    /** Raw material to color mapping. */
-    public static final Map<Item, Integer> RAW_COLOR_ITEMS = createRawColorItemsMap();
     /** Item to candle flame type mapping (candle holders). */
     public static final Map<Item, CandleFlameType> FLAME_ITEMS = createFlameItemsMap();
 
@@ -40,53 +38,6 @@ public final class VanillaCompat {
         map.put(Items.PURPLE_DYE, 13);
         map.put(Items.MAGENTA_DYE, 14);
         map.put(Items.PINK_DYE, 15);
-        return Collections.unmodifiableMap(map);
-    }
-
-    private static Map<Item, Integer> createRawColorItemsMap() {
-        Map<Item, Integer> map = new HashMap<>();
-        // White
-        map.put(Items.BONE_MEAL, 0);
-        map.put(Items.LILY_OF_THE_VALLEY, 0);
-        // Light Gray
-        map.put(Items.AZURE_BLUET, 1);
-        map.put(Items.OXEYE_DAISY, 1);
-        map.put(Items.WHITE_TULIP, 1);
-        // Gray
-        map.put(Items.STONE, 2);
-        map.put(Items.COBBLESTONE, 2);
-        // Black
-        map.put(Items.INK_SAC, 3);
-        map.put(Items.WITHER_ROSE, 3);
-        // Brown
-        map.put(Items.COCOA_BEANS, 4);
-        // Red
-        map.put(Items.POPPY, 5);
-        map.put(Items.ROSE_BUSH, 5);
-        map.put(Items.RED_TULIP, 5);
-        map.put(Items.BEETROOT, 5);
-        // Orange
-        map.put(Items.ORANGE_TULIP, 6);
-        // Yellow
-        map.put(Items.DANDELION, 7);
-        map.put(Items.SUNFLOWER, 7);
-        // Lime
-        map.put(Items.SEA_PICKLE, 8);
-        // Green
-        map.put(Items.CACTUS, 9);
-        // Cyan
-        map.put(Items.CORNFLOWER, 10);
-        // Light Blue
-        map.put(Items.BLUE_ORCHID, 11);
-        // Blue
-        map.put(Items.LAPIS_LAZULI, 12);
-        // Purple
-        map.put(Items.ALLIUM, 13);
-        // Magenta
-        map.put(Items.LILAC, 14);
-        // Pink
-        map.put(Items.PEONY, 15);
-        map.put(Items.PINK_TULIP, 15);
         return Collections.unmodifiableMap(map);
     }
 

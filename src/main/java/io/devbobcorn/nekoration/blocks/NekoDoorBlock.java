@@ -187,8 +187,7 @@ public class NekoDoorBlock extends DoorBlock {
     /** Color index carried by dye or raw color items, or {@code null} if the item cannot dye. */
     @Nullable
     private static Integer dyeColorOf(ItemStack stack) {
-        Integer raw = VanillaCompat.RAW_COLOR_ITEMS.get(stack.getItem());
-        return raw != null ? raw : VanillaCompat.COLOR_ITEMS.get(stack.getItem());
+        return VanillaCompat.COLOR_ITEMS.get(stack.getItem());
     }
 
     /** Replaces this 2-block door with the 3-block tall variant, keeping its orientation. */

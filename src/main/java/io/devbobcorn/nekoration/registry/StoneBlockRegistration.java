@@ -94,7 +94,7 @@ public final class StoneBlockRegistration {
             registerColumnBlock(blocks, items, stoneId + "_column_doric", false, 3, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_ionic", true, 7, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_corinthian", false, 7, blockItemsByStone, stone);
-            registerPotBlock(blocks, items, stoneId + "_pot", 7, blockItemsByStone, stone);
+            registerPotBlock(blocks, items, stoneId + "_pot", 6, blockItemsByStone, stone);
             registerPotBlock(blocks, items, stoneId + "_planter", 8, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(blocks, items, stoneId + "_frame_head",
                     HorizontalConnectedBlock.ConnectionType.BEAM, 2, 3, 0, blockItemsByStone, stone);
