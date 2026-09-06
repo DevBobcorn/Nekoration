@@ -14,17 +14,15 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Connected texture behaviour for {@code cement} blocks. Each base tile
- * ({@code cement_t0}, {@code cement_t1}, {@code cement_t2}, {@code cement_top})
- * is swapped for its 2x2 {@code _connected} sheet, and the variant tile is picked
- * from the block's world position instead of neighbour connectivity.
+ * Connected texture behaviour for full-cube cement blocks. Top faces and the base
+ * cement block's side tiles use position-based texture variation.
  */
 public class CementCTBehaviour extends NekoConnectedTextureBehaviour {
-    private static final Set<String> CT_TEXTURES = Set.of(
+    private static final Set<String> POSITION_TEXTURES = Set.of(
             "cement_t0",
             "cement_t1",
-            "cement_t2",
-            "cement_top");
+            "cement_t2");
+    private static final String TOP_TEXTURE = "cement_top";
 
     @Override
     @Nullable
@@ -45,26 +43,38 @@ public class CementCTBehaviour extends NekoConnectedTextureBehaviour {
 
         int slashIndex = path.lastIndexOf('/') + 1;
         String textureName = path.substring(slashIndex);
-        if (!CT_TEXTURES.contains(textureName) || textureName.endsWith("_connected")) {
+        NekoCTType type = getType(state, direction, textureName);
+        if (type == null || textureName.endsWith("_connected")) {
             return null;
         }
 
         ResourceLocation connected = ResourceLocation.fromNamespaceAndPath(
                 original.getNamespace(),
                 path + "_connected");
-        return NekoCTSpriteShifter.getCT(NekoCTTypes.POSITION, original, connected);
+        return NekoCTSpriteShifter.getCT(type, original, connected);
     }
 
     @Override
     @Nullable
     public NekoCTType getDataType(BlockAndTintGetter world, BlockPos pos, BlockState state, Direction direction) {
-        if (!supportsSourceBlock(state)) {
-            return null;
+        if (direction == Direction.UP && supportsSourceBlock(state)) {
+            return NekoCTTypes.POSITION;
         }
-        return NekoCTTypes.POSITION;
+        return state.getBlock() == CementBlockRegistration.CEMENT.get() ? NekoCTTypes.POSITION : null;
     }
 
     protected boolean supportsSourceBlock(BlockState state) {
-        return state.getBlock() == CementBlockRegistration.CEMENT.get();
+        return CementBlockRegistration.isFullCube(state.getBlock());
+    }
+
+    @Nullable
+    private static NekoCTType getType(BlockState state, Direction direction, String textureName) {
+        if (direction == Direction.UP && TOP_TEXTURE.equals(textureName)) {
+            return NekoCTTypes.POSITION;
+        }
+        if (state.getBlock() == CementBlockRegistration.CEMENT.get() && POSITION_TEXTURES.contains(textureName)) {
+            return NekoCTTypes.POSITION;
+        }
+        return null;
     }
 }

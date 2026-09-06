@@ -22,6 +22,9 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class CementBlockRegistration {
+    private static final List<String> FULL_CUBE_BLOCK_IDS = List.of(
+        "cement", "trimmed_cement", "paneled_cement", "layered_cement");
+
     public static DeferredBlock<DyeableVerticalConnectedBlock> CEMENT;
     public static DeferredBlock<DyeableBlock> TRIMMED_CEMENT;
     public static DeferredBlock<DyeableVerticalConnectedBlock> PANELED_CEMENT;
@@ -115,6 +118,17 @@ public final class CementBlockRegistration {
 
     public static List<DeferredBlock<? extends Block>> cementBlocksView() {
     return cementBlocks;
+    }
+
+    public static List<String> fullCubeBlockIds() {
+    return FULL_CUBE_BLOCK_IDS;
+    }
+
+    public static boolean isFullCube(Block block) {
+    return block == CEMENT.get()
+        || block == TRIMMED_CEMENT.get()
+        || block == PANELED_CEMENT.get()
+        || block == LAYERED_CEMENT.get();
     }
 
     /** Creative tab icon ({@value #TAB_ICON_ITEM_ID}). */

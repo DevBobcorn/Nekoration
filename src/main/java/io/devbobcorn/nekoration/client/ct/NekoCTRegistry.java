@@ -6,6 +6,7 @@ import java.util.function.Function;
 
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.NekoWood;
+import io.devbobcorn.nekoration.registry.CementBlockRegistration;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration.WindowVariant;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
@@ -29,8 +30,10 @@ public final class NekoCTRegistry {
         bootstrapped = true;
 
         CementCTBehaviour cementBehaviour = new CementCTBehaviour();
-        CT_MODELS.put(ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "cement"),
-                model -> new NekoCTModel(model, cementBehaviour));
+        for (String blockId : CementBlockRegistration.fullCubeBlockIds()) {
+            CT_MODELS.put(ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, blockId),
+                    model -> new NekoCTModel(model, cementBehaviour));
+        }
 
         WindowCTBehaviour windowBehaviour = new WindowCTBehaviour();
         WindowPaneCTBehaviour paneBehaviour = new WindowPaneCTBehaviour();
