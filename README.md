@@ -33,7 +33,7 @@ The name 'Nekoration' is a compound of 'cat' in Japanese(ねこ, neko) and 'deco
 ## <span style="color: #ffcc00;">Features</span>
 
 ### Dyeing
-Some of Nekoration's blocks are dyeable using vanilla dyes, so that you can turn almost everything in this mod to your favorite tint!
+Many of Nekoration's blocks are dyeable using vanilla dyes, so that you can paint your build with your favorite tint!
 
 ### Connected Models and Textures
 Many blocks in Nekoration supports both model and texture connecting, to name a few, Half-Timber Pillars and Lamp Posts. When being placed by players, they'll automatically adapt to visually connect to adjacent blocks.

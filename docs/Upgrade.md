@@ -117,7 +117,7 @@ When upgrading data for all Wooden Blocks with `level` property, take the `level
 |Magenta|9|crimson|
 |Orange|10|acacia|
 |Pink|11|cherry|
-|Purple|12|mangrove|
+|Purple|12|umbran|
 |Red|13|redwood|
 |White|14|birch|
 |Yellow|15|palm|

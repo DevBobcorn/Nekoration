@@ -17,7 +17,7 @@ import net.minecraft.util.datafix.DataFixers;
 class LegacyWorldUpgraderTest {
     private static final String[] V1_WOODS = {
             "dark_oak", "magic", "spruce", "warped", "jungle", "pine", "magic", "oak",
-            "willow", "crimson", "acacia", "cherry", "mangrove", "redwood", "birch", "palm"
+            "willow", "crimson", "acacia", "cherry", "umbran", "redwood", "birch", "palm"
     };
 
     @Test
