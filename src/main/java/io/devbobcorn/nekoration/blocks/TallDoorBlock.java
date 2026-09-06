@@ -197,15 +197,21 @@ public class TallDoorBlock extends NekoDoorBlock {
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos))) {
-            // Remove the segments below the broken one first so they do not drop their item.
+            // Remove bottom-up so the item-bearing lower segment cannot be broken by a shape update.
+            int segmentsBelow = switch (state.getValue(SEGMENT)) {
+                case LOWER -> 0;
+                case MIDDLE -> 1;
+                case UPPER -> 2;
+            };
             BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-            blockpos$mutableblockpos.set(pos).move(Direction.DOWN);
-            while (level.getBlockState(blockpos$mutableblockpos).is(this)) {
+            blockpos$mutableblockpos.set(pos).move(Direction.DOWN, segmentsBelow);
+            while (blockpos$mutableblockpos.getY() < pos.getY()
+                    && level.getBlockState(blockpos$mutableblockpos).is(this)) {
                 BlockState blockstate = level.getBlockState(blockpos$mutableblockpos);
                 level.setBlock(blockpos$mutableblockpos, Blocks.AIR.defaultBlockState(), 35,
                         level.isClientSide ? 0 : 2);
                 level.levelEvent(player, 2001, blockpos$mutableblockpos, Block.getId(blockstate));
-                blockpos$mutableblockpos.move(Direction.DOWN);
+                blockpos$mutableblockpos.move(Direction.UP);
             }
         }
         return super.playerWillDestroy(level, pos, state, player);
