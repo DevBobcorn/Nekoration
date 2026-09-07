@@ -26,6 +26,52 @@ public final class LegacyWorldUpgrader {
     private static final byte[] V2_COLOR_IDS = {
             3, 12, 4, 10, 2, 9, 11, 1, 8, 14, 6, 15, 13, 5, 0, 7
     };
+    private static final String[] VANILLA_DYE_NAMES = {
+            "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
+            "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black"
+    };
+    private static final Map<String, String> BANNER_PATTERN_IDS = Map.ofEntries(
+            Map.entry("b", "minecraft:base"),
+            Map.entry("bl", "minecraft:square_bottom_left"),
+            Map.entry("br", "minecraft:square_bottom_right"),
+            Map.entry("tl", "minecraft:square_top_left"),
+            Map.entry("tr", "minecraft:square_top_right"),
+            Map.entry("bs", "minecraft:stripe_bottom"),
+            Map.entry("ts", "minecraft:stripe_top"),
+            Map.entry("ls", "minecraft:stripe_left"),
+            Map.entry("rs", "minecraft:stripe_right"),
+            Map.entry("cs", "minecraft:stripe_center"),
+            Map.entry("ms", "minecraft:stripe_middle"),
+            Map.entry("drs", "minecraft:stripe_downright"),
+            Map.entry("dls", "minecraft:stripe_downleft"),
+            Map.entry("ss", "minecraft:small_stripes"),
+            Map.entry("cr", "minecraft:cross"),
+            Map.entry("sc", "minecraft:straight_cross"),
+            Map.entry("bt", "minecraft:triangle_bottom"),
+            Map.entry("tt", "minecraft:triangle_top"),
+            Map.entry("bts", "minecraft:triangles_bottom"),
+            Map.entry("tts", "minecraft:triangles_top"),
+            Map.entry("ld", "minecraft:diagonal_left"),
+            Map.entry("rd", "minecraft:diagonal_up_right"),
+            Map.entry("lud", "minecraft:diagonal_up_left"),
+            Map.entry("rud", "minecraft:diagonal_right"),
+            Map.entry("mc", "minecraft:circle"),
+            Map.entry("mr", "minecraft:rhombus"),
+            Map.entry("vh", "minecraft:half_vertical"),
+            Map.entry("hh", "minecraft:half_horizontal"),
+            Map.entry("vhr", "minecraft:half_vertical_right"),
+            Map.entry("hhb", "minecraft:half_horizontal_bottom"),
+            Map.entry("bo", "minecraft:border"),
+            Map.entry("cbo", "minecraft:curly_border"),
+            Map.entry("gra", "minecraft:gradient"),
+            Map.entry("gru", "minecraft:gradient_up"),
+            Map.entry("bri", "minecraft:bricks"),
+            Map.entry("glb", "minecraft:globe"),
+            Map.entry("cre", "minecraft:creeper"),
+            Map.entry("sku", "minecraft:skull"),
+            Map.entry("flo", "minecraft:flower"),
+            Map.entry("moj", "minecraft:mojang"),
+            Map.entry("pig", "minecraft:piglin"));
 
     private static final Map<String, String> SIMPLE_RENAMES = Map.ofEntries(
             Map.entry("window_top", "cement_frame_peak"),
@@ -261,6 +307,7 @@ public final class LegacyWorldUpgrader {
     private static void upgradeNestedTag(Tag tag) {
         if (tag instanceof CompoundTag compound) {
             upgradeItemStack(compound);
+            upgradeWallpaperEntity(compound);
             for (String key : Set.copyOf(compound.getAllKeys())) {
                 upgradeNestedTag(compound.get(key));
             }
@@ -299,19 +346,33 @@ public final class LegacyWorldUpgrader {
         boolean movedLegacyTag = false;
         if (stack.contains("tag", Tag.TAG_COMPOUND)) {
             CompoundTag legacyTag = stack.getCompound("tag");
+            CompoundTag components = stack.contains("components", Tag.TAG_COMPOUND)
+                    ? stack.getCompound("components")
+                    : new CompoundTag();
+            if (stack.getString("id").equals(PREFIX + "wallpaper")) {
+                moveWallpaperItemData(legacyTag, components);
+            }
             if (!legacyTag.isEmpty()) {
-                CompoundTag components = stack.contains("components", Tag.TAG_COMPOUND)
-                        ? stack.getCompound("components")
-                        : new CompoundTag();
                 CompoundTag customData = components.contains("minecraft:custom_data", Tag.TAG_COMPOUND)
                         ? components.getCompound("minecraft:custom_data")
                         : new CompoundTag();
                 customData.merge(legacyTag);
                 components.put("minecraft:custom_data", customData);
-                stack.put("components", components);
             }
+            stack.put("components", components);
             stack.remove("tag");
             movedLegacyTag = true;
+        }
+        if (stack.getString("id").equals(PREFIX + "wallpaper")
+                && stack.contains("components", Tag.TAG_COMPOUND)) {
+            CompoundTag components = stack.getCompound("components");
+            if (components.contains("minecraft:custom_data", Tag.TAG_COMPOUND)) {
+                CompoundTag customData = components.getCompound("minecraft:custom_data");
+                movedLegacyTag |= moveWallpaperItemData(customData, components);
+                if (customData.isEmpty()) {
+                    components.remove("minecraft:custom_data");
+                }
+            }
         }
         return legacyCount || movedLegacyTag;
     }
@@ -331,7 +392,8 @@ public final class LegacyWorldUpgrader {
         CompoundTag itemTag = stack.contains("tag", Tag.TAG_COMPOUND)
                 ? stack.getCompound("tag")
                 : new CompoundTag();
-        boolean recognized = SIMPLE_RENAMES.containsKey(oldPath) || COLOR_ITEMS.contains(oldPath);
+        boolean recognized = SIMPLE_RENAMES.containsKey(oldPath) || COLOR_ITEMS.contains(oldPath)
+                || oldPath.equals("wallpaper");
 
         if (oldPath.startsWith("half_timber_p")) {
             String wood = V1_WOODS[getItemOrdinal(itemTag, "color_0", 0)];
@@ -361,6 +423,13 @@ public final class LegacyWorldUpgrader {
             if (oldPath.equals("window_frame")) {
                 newPath = "cement_frame_side";
             }
+        } else if (oldPath.equals("wallpaper")) {
+            CompoundTag components = stack.contains("components", Tag.TAG_COMPOUND)
+                    ? stack.getCompound("components")
+                    : new CompoundTag();
+            if (moveWallpaperItemData(itemTag, components)) {
+                stack.put("components", components);
+            }
         }
 
         if (!recognized) {
@@ -371,6 +440,72 @@ public final class LegacyWorldUpgrader {
             stack.put("tag", itemTag);
         }
         return true;
+    }
+
+    static boolean upgradeWallpaperEntity(CompoundTag entity) {
+        if (!entity.getString("id").equals(PREFIX + "wallpaper")
+                || (!entity.contains("Base", Tag.TAG_ANY_NUMERIC)
+                        && !entity.contains("Patterns", Tag.TAG_LIST))) {
+            return false;
+        }
+
+        CompoundTag item = entity.contains("Item", Tag.TAG_COMPOUND)
+                ? entity.getCompound("Item")
+                : new CompoundTag();
+        item.putString("id", PREFIX + "wallpaper");
+        item.putInt("count", 1);
+        CompoundTag components = item.contains("components", Tag.TAG_COMPOUND)
+                ? item.getCompound("components")
+                : new CompoundTag();
+        moveWallpaperPatternData(entity, components);
+        item.put("components", components);
+        entity.put("Item", item);
+        entity.remove("Base");
+        entity.remove("Patterns");
+        return true;
+    }
+
+    private static boolean moveWallpaperItemData(CompoundTag itemTag, CompoundTag components) {
+        if (!itemTag.contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
+            return false;
+        }
+        CompoundTag wallpaperData = itemTag.getCompound("BlockEntityTag");
+        boolean moved = moveWallpaperPatternData(wallpaperData, components);
+        if (moved) {
+            wallpaperData.remove("Base");
+            wallpaperData.remove("Patterns");
+            if (wallpaperData.isEmpty()) {
+                itemTag.remove("BlockEntityTag");
+            }
+        }
+        return moved;
+    }
+
+    private static boolean moveWallpaperPatternData(CompoundTag legacyData, CompoundTag components) {
+        boolean moved = false;
+        if (legacyData.contains("Base", Tag.TAG_ANY_NUMERIC)) {
+            components.putString("minecraft:base_color", vanillaDyeName(legacyData.getInt("Base")));
+            moved = true;
+        }
+        if (legacyData.contains("Patterns", Tag.TAG_LIST)) {
+            ListTag oldPatterns = legacyData.getList("Patterns", Tag.TAG_COMPOUND);
+            ListTag newPatterns = new ListTag();
+            for (int index = 0; index < oldPatterns.size(); index++) {
+                CompoundTag oldPattern = oldPatterns.getCompound(index);
+                CompoundTag newPattern = new CompoundTag();
+                String pattern = oldPattern.getString("Pattern");
+                newPattern.putString("pattern", BANNER_PATTERN_IDS.getOrDefault(pattern, pattern));
+                newPattern.putString("color", vanillaDyeName(oldPattern.getInt("Color")));
+                newPatterns.add(newPattern);
+            }
+            components.put("minecraft:banner_patterns", newPatterns);
+            moved = true;
+        }
+        return moved;
+    }
+
+    private static String vanillaDyeName(int id) {
+        return VANILLA_DYE_NAMES[id >= 0 && id < VANILLA_DYE_NAMES.length ? id : 0];
     }
 
     private static int getItemOrdinal(CompoundTag itemTag, String key, int defaultValue) {

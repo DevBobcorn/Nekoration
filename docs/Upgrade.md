@@ -259,6 +259,11 @@ Item stacks found in inventories(chests, item frames, dropped items, etc.) need 
 - Easel Menu items follow the wooden rule for their wood type, and additionally set the new `color` tag to `black` for `easel_menu` and `white` for `easel_menu_white`.
 - Half-Timber items carry two tags: `color_0`(wood type, builds the new id) and `color_1`(dye color, becomes the new `color` tag via the [Colors](#colors) table).
 - Door items and the per-wood Table, Round Table and Chair items carried no color data; only rename their ids.
+- Wallpaper items keep their id. Move `BlockEntityTag.Base` to the `minecraft:base_color` component and convert each `BlockEntityTag.Patterns` entry to the 1.21 `minecraft:banner_patterns` component, replacing legacy pattern hashes and numeric vanilla dye ids with registry ids and color names.
+
+## Entities
+
+The `wallpaper` entity id is unchanged. Move its root `Base` and `Patterns` fields into a serialized `nekoration:wallpaper` stack in the entity's `Item` field using the same component conversion as wallpaper items. Preserve `Facing` and `Part` so the entity retains its wall direction and full/upper/lower shape.
 
 ## Block Entities
 
@@ -277,8 +282,8 @@ The following v1 features have no v2 implementation yet, so their data cannot be
 - Phonograph: the `phonograph` block and its block entity.
 - Custom Block: the `custom` block, its block entity and the itemless `dream_was_taken` block.
 - Prismap Table: the `prismap_table` block and its block entity.
-- Items: the Paw and Paw Tweak items(`paw`, `paw_up`, `paw_down`, `paw_left`, `paw_right`, `paw_near`, `paw_far`, `paw_15`, `paw_90`), `arrow_hint`, `palette`, `camera`, `painting` and `wallpaper`.
-- Entity types: `painting` and `wallpaper`(v1 saves may contain saved entities of these types; only the `seat` entity type is ported, with an unchanged id).
+- Items: the Paw and Paw Tweak items(`paw`, `paw_up`, `paw_down`, `paw_left`, `paw_right`, `paw_near`, `paw_far`, `paw_15`, `paw_90`), `arrow_hint`, `palette`, `camera` and `painting`.
+- Entity types: `painting` (v1 saves may contain saved entities of this type).
 
 ## Won't be Ported
 

@@ -240,6 +240,132 @@ class LegacyWorldUpgraderTest {
     }
 
     @Test
+    void upgradesWallpaperPatternComponentsOnItems() {
+        CompoundTag wallpaper = legacyWallpaperStack(3,
+                pattern("ss", 11), pattern("cbo", 15));
+
+        assertTrue(LegacyWorldUpgrader.upgradeItemStack(wallpaper));
+
+        CompoundTag components = wallpaper.getCompound("components");
+        assertEquals("light_blue", components.getString("minecraft:base_color"));
+        ListTag patterns = components.getList("minecraft:banner_patterns", 10);
+        assertEquals(2, patterns.size());
+        assertEquals("minecraft:small_stripes", patterns.getCompound(0).getString("pattern"));
+        assertEquals("blue", patterns.getCompound(0).getString("color"));
+        assertEquals("minecraft:curly_border", patterns.getCompound(1).getString("pattern"));
+        assertEquals("black", patterns.getCompound(1).getString("color"));
+        assertFalse(wallpaper.getCompound("tag").contains("BlockEntityTag"));
+    }
+
+    @Test
+    void upgradesWallpaperPatternDataOnEntities() {
+        CompoundTag entity = new CompoundTag();
+        entity.putString("id", "nekoration:wallpaper");
+        entity.putInt("Base", 14);
+        ListTag patterns = new ListTag();
+        patterns.add(pattern("moj", 1));
+        entity.put("Patterns", patterns);
+
+        assertTrue(LegacyWorldUpgrader.upgradeWallpaperEntity(entity));
+
+        assertFalse(entity.contains("Base"));
+        assertFalse(entity.contains("Patterns"));
+        CompoundTag item = entity.getCompound("Item");
+        assertEquals("nekoration:wallpaper", item.getString("id"));
+        assertEquals(1, item.getInt("count"));
+        CompoundTag components = item.getCompound("components");
+        assertEquals("red", components.getString("minecraft:base_color"));
+        CompoundTag pattern = components.getList("minecraft:banner_patterns", 10).getCompound(0);
+        assertEquals("minecraft:mojang", pattern.getString("pattern"));
+        assertEquals("orange", pattern.getString("color"));
+    }
+
+    @Test
+    void finalizesWallpaperPatternDataLeftInCustomData() {
+        CompoundTag wallpaper = new CompoundTag();
+        wallpaper.putString("id", "nekoration:wallpaper");
+        wallpaper.putInt("count", 1);
+        CompoundTag blockEntityTag = new CompoundTag();
+        blockEntityTag.putInt("Base", 7);
+        ListTag oldPatterns = new ListTag();
+        oldPatterns.add(pattern("bri", 8));
+        blockEntityTag.put("Patterns", oldPatterns);
+        CompoundTag customData = new CompoundTag();
+        customData.put("BlockEntityTag", blockEntityTag);
+        customData.putString("note", "preserved");
+        CompoundTag components = new CompoundTag();
+        components.put("minecraft:custom_data", customData);
+        wallpaper.put("components", components);
+
+        assertTrue(LegacyWorldUpgrader.finalizeItemStack(wallpaper));
+
+        assertEquals("gray", components.getString("minecraft:base_color"));
+        CompoundTag converted = components.getList("minecraft:banner_patterns", 10).getCompound(0);
+        assertEquals("minecraft:bricks", converted.getString("pattern"));
+        assertEquals("light_gray", converted.getString("color"));
+        assertEquals("preserved", components.getCompound("minecraft:custom_data").getString("note"));
+        assertFalse(components.getCompound("minecraft:custom_data").contains("BlockEntityTag"));
+    }
+
+    @Test
+    void preservesWallpaperPatternsInPlayerInventoryThroughVanillaDataFixes() {
+        SharedConstants.tryDetectVersion();
+        CompoundTag player = new CompoundTag();
+        NbtUtils.addDataVersion(player, 3120);
+        ListTag items = new ListTag();
+        items.add(legacyWallpaperStack(12, pattern("cre", 13)));
+        player.put("Inventory", items);
+
+        LegacyWorldUpgrader.upgradeItemStacks(player);
+        CompoundTag fixed = DataFixTypes.PLAYER.update(
+                DataFixers.getDataFixer(), player, 3120,
+                SharedConstants.getCurrentVersion().getDataVersion().getVersion());
+
+        CompoundTag fixedStack = fixed.getList("Inventory", 10).getCompound(0);
+        CompoundTag components = fixedStack.getCompound("components");
+        assertEquals(1, fixedStack.getInt("count"));
+        assertFalse(fixedStack.contains("Count"));
+        assertEquals("brown", components.getString("minecraft:base_color"));
+        CompoundTag pattern = components.getList("minecraft:banner_patterns", 10).getCompound(0);
+        assertEquals("minecraft:creeper", pattern.getString("pattern"));
+        assertEquals("green", pattern.getString("color"));
+    }
+
+    @Test
+    void preservesWallpaperEntityPatternsThroughVanillaDataFixes() {
+        SharedConstants.tryDetectVersion();
+        CompoundTag entityChunk = new CompoundTag();
+        NbtUtils.addDataVersion(entityChunk, 3120);
+        CompoundTag wallpaper = new CompoundTag();
+        wallpaper.putString("id", "nekoration:wallpaper");
+        wallpaper.putInt("Base", 4);
+        ListTag oldPatterns = new ListTag();
+        oldPatterns.add(pattern("flo", 6));
+        wallpaper.put("Patterns", oldPatterns);
+        ListTag entities = new ListTag();
+        entities.add(wallpaper);
+        entityChunk.put("Entities", entities);
+
+        LegacyWorldUpgrader.upgradeItemStacks(entityChunk);
+        CompoundTag fixed = DataFixTypes.ENTITY_CHUNK.update(
+                DataFixers.getDataFixer(), entityChunk, 3120,
+                SharedConstants.getCurrentVersion().getDataVersion().getVersion());
+        LegacyWorldUpgrader.finalizeItemStacks(fixed);
+
+        CompoundTag fixedEntity = fixed.getList("Entities", 10).getCompound(0);
+        assertFalse(fixedEntity.contains("Base"));
+        assertFalse(fixedEntity.contains("Patterns"));
+        CompoundTag fixedStack = fixedEntity.getCompound("Item");
+        assertEquals("nekoration:wallpaper", fixedStack.getString("id"));
+        assertEquals(1, fixedStack.getInt("count"));
+        CompoundTag components = fixedStack.getCompound("components");
+        assertEquals("yellow", components.getString("minecraft:base_color"));
+        CompoundTag pattern = components.getList("minecraft:banner_patterns", 10).getCompound(0);
+        assertEquals("minecraft:flower", pattern.getString("pattern"));
+        assertEquals("pink", pattern.getString("color"));
+    }
+
+    @Test
     void mapsEveryLegacyWoodOrdinalForBlocksAndItems() {
         for (int ordinal = 0; ordinal < V1_WOODS.length; ordinal++) {
             CompoundTag block = state("bench", "level", Integer.toString(ordinal));
@@ -430,6 +556,28 @@ class LegacyWorldUpgraderTest {
         legacyTag.putByte("color", (byte) color);
         stack.put("tag", legacyTag);
         return stack;
+    }
+
+    private static CompoundTag legacyWallpaperStack(int baseColor, CompoundTag... patterns) {
+        CompoundTag stack = stack("wallpaper");
+        CompoundTag blockEntityTag = new CompoundTag();
+        blockEntityTag.putInt("Base", baseColor);
+        ListTag patternList = new ListTag();
+        for (CompoundTag pattern : patterns) {
+            patternList.add(pattern);
+        }
+        blockEntityTag.put("Patterns", patternList);
+        CompoundTag itemTag = new CompoundTag();
+        itemTag.put("BlockEntityTag", blockEntityTag);
+        stack.put("tag", itemTag);
+        return stack;
+    }
+
+    private static CompoundTag pattern(String id, int color) {
+        CompoundTag pattern = new CompoundTag();
+        pattern.putString("Pattern", id);
+        pattern.putInt("Color", color);
+        return pattern;
     }
 
     private static CompoundTag customData(CompoundTag stack) {
