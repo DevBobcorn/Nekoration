@@ -12,6 +12,11 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
@@ -22,10 +27,13 @@ import io.devbobcorn.nekoration.client.creative.NekoCreativeTabFilterClient;
 import io.devbobcorn.nekoration.client.ct.NekoModelSwapper;
 import io.devbobcorn.nekoration.client.rendering.ItemDisplayBlockEntityRenderer;
 import io.devbobcorn.nekoration.client.rendering.SeatEntityRenderer;
+import io.devbobcorn.nekoration.client.rendering.WallpaperItemRenderer;
+import io.devbobcorn.nekoration.client.rendering.WallpaperRenderer;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
 import io.devbobcorn.nekoration.registry.ModEntities;
 import io.devbobcorn.nekoration.registry.ModMenuTypes;
+import io.devbobcorn.nekoration.registry.ModItems;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
@@ -41,6 +49,8 @@ public class NekorationClient {
         // EntityRenderersEvent fires on the mod event bus.
         modEventBus.addListener(NekorationClient::registerRenderers);
         modEventBus.addListener(NekorationClient::registerScreens);
+        modEventBus.addListener(NekorationClient::registerLayerDefinitions);
+        modEventBus.addListener(NekorationClient::registerClientExtensions);
         NekoModelSwapper.registerListeners(modEventBus);
     }
 
@@ -57,6 +67,26 @@ public class NekorationClient {
         event.registerBlockEntityRenderer(ModBlockEntities.ITEM_DISPLAY.get(), ItemDisplayBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.EASEL_MENU.get(), EaselMenuBlockEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.SEAT.get(), SeatEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.WALLPAPER.get(), WallpaperRenderer::new);
+    }
+
+    private static void registerLayerDefinitions(RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(WallpaperRenderer.LAYER, WallpaperRenderer::createBodyLayer);
+    }
+
+    private static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+        event.registerItem(new IClientItemExtensions() {
+            private WallpaperItemRenderer renderer;
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if (renderer == null) {
+                    Minecraft minecraft = Minecraft.getInstance();
+                    renderer = new WallpaperItemRenderer(minecraft.getBlockEntityRenderDispatcher(), minecraft.getEntityModels());
+                }
+                return renderer;
+            }
+        }, ModItems.WALLPAPER.get());
     }
 
     private static void registerScreens(RegisterMenuScreensEvent event) {

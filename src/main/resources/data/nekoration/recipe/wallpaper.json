@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "###",
+    "#S#",
+    "###"
+  ],
+  "key": {
+    "#": "minecraft:paper",
+    "S": "minecraft:slime_ball"
+  },
+  "result": {
+    "id": "nekoration:wallpaper",
+    "count": 16
+  }
+}

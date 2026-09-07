@@ -270,6 +270,7 @@ public final class OrnamentRegistration {
                     ? DyeableBlockItem.createCreativeTabStack(dyeable, EnumNekoColor.WHITE)
                     : new ItemStack(item));
         }
+        out.accept(new ItemStack(ModItems.WALLPAPER.get()));
     }
 
     /** Add stone and cement pot and planter stacks (Pots and Planters category of the Ornaments tab). */

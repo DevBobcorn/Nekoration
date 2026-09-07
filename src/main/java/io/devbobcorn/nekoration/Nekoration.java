@@ -28,6 +28,8 @@ import io.devbobcorn.nekoration.registry.ModBlockEntities;
 import io.devbobcorn.nekoration.registry.CementBlockRegistration;
 import io.devbobcorn.nekoration.registry.ModEntities;
 import io.devbobcorn.nekoration.registry.ModMenuTypes;
+import io.devbobcorn.nekoration.registry.ModItems;
+import io.devbobcorn.nekoration.registry.ModRecipes;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import io.devbobcorn.nekoration.registry.StoneBlockRegistration;
@@ -50,6 +52,7 @@ public class Nekoration {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     static {
+        ModItems.register();
         WoodenBlockRegistration.register(BLOCKS, ITEMS);
         StoneBlockRegistration.register(BLOCKS, ITEMS);
         CementBlockRegistration.register(BLOCKS, ITEMS);
@@ -126,6 +129,7 @@ public class Nekoration {
         ModBlockEntities.REGISTER.register(modEventBus);
         ModEntities.REGISTER.register(modEventBus);
         ModMenuTypes.REGISTER.register(modEventBus);
+        ModRecipes.REGISTER.register(modEventBus);
         modEventBus.addListener(NekorationNetwork::register);
         modEventBus.addListener(this::onCommonSetup);
 
