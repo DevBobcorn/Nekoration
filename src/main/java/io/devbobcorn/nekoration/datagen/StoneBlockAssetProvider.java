@@ -74,7 +74,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateVerticalConnectedStoneCubeAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
             generateHorizontalConnectedStoneCubeAssets(cachedOutput, "horizontal_chiseled_smooth", "chiseled_smooth", true, writes, stoneId);
 
-            generateStoneBaseAssets(cachedOutput, writes, stoneId);
+            generateStonePedestalAssets(cachedOutput, writes, stoneId);
             generateStoneColumnAssets(cachedOutput, "column_doric", false, writes, stoneId);
             generateStoneColumnAssets(cachedOutput, "column_ionic", true, writes, stoneId);
             generateStoneColumnAssets(cachedOutput, "column_corinthian", false, writes, stoneId);
@@ -295,19 +295,19 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/stone/" + variantId)));
     }
 
-    private void generateStoneBaseAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String stoneId) {
-        Map<String, Object> baseTextures = new LinkedHashMap<>();
-        baseTextures.put("0", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
-        baseTextures.put("1", modLoc("block/stone/" + stoneId + "_polished_smooth"));
-        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + stoneId + "_base",
-                Map.of("parent", modLoc("block/stone/base"), "textures", baseTextures));
+    private void generateStonePedestalAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String stoneId) {
+        Map<String, Object> pedestalTextures = new LinkedHashMap<>();
+        pedestalTextures.put("0", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
+        pedestalTextures.put("1", modLoc("block/stone/" + stoneId + "_polished_smooth"));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + stoneId + "_pedestal",
+                Map.of("parent", modLoc("block/stone/pedestal"), "textures", pedestalTextures));
 
         Map<String, Object> variants = new LinkedHashMap<>();
-        variants.put("", Map.of("model", modLoc("block/stone/" + stoneId + "_base")));
-        writeJson(cachedOutput, writes, blockstatePathProvider, stoneId + "_base", Map.of("variants", variants));
+        variants.put("", Map.of("model", modLoc("block/stone/" + stoneId + "_pedestal")));
+        writeJson(cachedOutput, writes, blockstatePathProvider, stoneId + "_pedestal", Map.of("variants", variants));
 
-        writeJson(cachedOutput, writes, itemModelPathProvider, stoneId + "_base",
-                Map.of("parent", modLoc("block/stone/" + stoneId + "_base")));
+        writeJson(cachedOutput, writes, itemModelPathProvider, stoneId + "_pedestal",
+                Map.of("parent", modLoc("block/stone/" + stoneId + "_pedestal")));
     }
 
     private void generateStoneColumnAssets(CachedOutput cachedOutput, String variant,

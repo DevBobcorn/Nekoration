@@ -23,11 +23,12 @@ class LegacyWorldUpgraderTest {
     @Test
     void upgradesRepresentativeBlockStates() {
         CompoundTag legacyStone = state("stone_base", "level", "14", "vertical_connection", "d0");
-        CompoundTag currentStone = state("stone_base");
+        CompoundTag legacyStoneWithoutProperties = state("stone_base");
         assertTrue(LegacyWorldUpgrader.upgradeBlockState(legacyStone));
         assertEquals("nekoration:cement", legacyStone.getString("Name"));
         assertEquals("white", legacyStone.getCompound("Properties").getString("color"));
-        assertFalse(LegacyWorldUpgrader.upgradeBlockState(currentStone));
+        assertTrue(LegacyWorldUpgrader.upgradeBlockState(legacyStoneWithoutProperties));
+        assertEquals("nekoration:cement", legacyStoneWithoutProperties.getString("Name"));
 
         CompoundTag frame = state("window_frame", "level", "0", "frame_part", "middle",
                 "left", "true", "right", "false", "facing", "north");
@@ -263,14 +264,14 @@ class LegacyWorldUpgraderTest {
         root.put("block_entities", blockEntities);
 
         CompoundTag currentCollision = new CompoundTag();
-        currentCollision.putString("id", "nekoration:stone_base");
+        currentCollision.putString("id", "nekoration:stone_pot");
         currentCollision.putInt("count", 1);
         root.put("current", currentCollision);
 
         LegacyWorldUpgrader.upgradeItemStacks(root);
 
         assertEquals("nekoration:dark_oak_bench", items.getCompound(0).getString("id"));
-        assertEquals("nekoration:stone_base", currentCollision.getString("id"));
+        assertEquals("nekoration:stone_pot", currentCollision.getString("id"));
     }
 
     @Test

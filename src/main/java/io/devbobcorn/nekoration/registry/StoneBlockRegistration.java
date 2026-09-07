@@ -11,10 +11,10 @@ import java.util.function.Supplier;
 import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.NekoStone;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
-import io.devbobcorn.nekoration.blocks.stone.BaseBlock;
 import io.devbobcorn.nekoration.blocks.stone.ColumnBlock;
 import io.devbobcorn.nekoration.blocks.stone.DirectionalColumnBlock;
 import io.devbobcorn.nekoration.blocks.stone.FrameSideBlock;
+import io.devbobcorn.nekoration.blocks.stone.PedestalBlock;
 import io.devbobcorn.nekoration.blocks.stone.PotBlock;
 import io.devbobcorn.nekoration.blocks.stone.SelfDroppingBlock;
 import io.devbobcorn.nekoration.blocks.stone.SelfDroppingSlabBlock;
@@ -90,7 +90,7 @@ public final class StoneBlockRegistration {
                     VerticalConnectedBlock.ConnectionType.PILLAR, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(blocks, items, "horizontal_chiseled_smooth_" + stoneId,
                     HorizontalConnectedBlock.ConnectionType.BEAM, 16, 16, 0, blockItemsByStone, stone);
-            registerBaseBlock(blocks, items, stoneId + "_base", blockItemsByStone, stone);
+            registerPedestalBlock(blocks, items, stoneId + "_pedestal", blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_doric", false, 3, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_ionic", true, 7, blockItemsByStone, stone);
             registerColumnBlock(blocks, items, stoneId + "_column_corinthian", false, 7, blockItemsByStone, stone);
@@ -170,10 +170,10 @@ public final class StoneBlockRegistration {
         return block;
     }
 
-    private static DeferredBlock<Block> registerBaseBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+    private static DeferredBlock<Block> registerPedestalBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> block = blocks.register(id,
-                () -> new BaseBlock(stone.stoneProperties()));
+                () -> new PedestalBlock(stone.stoneProperties()));
         trackStoneBlock(block);
         DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);

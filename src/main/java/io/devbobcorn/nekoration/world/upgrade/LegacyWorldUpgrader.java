@@ -81,7 +81,7 @@ public final class LegacyWorldUpgrader {
             "window_simple", "window_arch", "window_cross", "window_shade", "window_lancet",
             "glass_table", "glass_round_table", "arm_chair", "bench", "drawer", "cabinet",
             "drawer_chest", "cupboard", "shelf", "wall_shelf", "easel_menu", "easel_menu_white");
-    private static final Set<String> COLLIDING_STONE_IDS = Set.of("stone_base", "stone_pot", "stone_planter");
+    private static final Set<String> COLLIDING_STONE_IDS = Set.of("stone_pot", "stone_planter");
 
     private LegacyWorldUpgrader() {
     }

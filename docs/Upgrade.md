@@ -78,7 +78,7 @@ When upgrading the data, turn `stone_frame`, `stone_frame_bottom`, `stone_pillar
 
 `stone_base` becomes `cement`, which is also vertically connected, so preserve its `vertical_connection` property. `stone_base_bottom` becomes the non-connected `trimmed_cement`, so drop its connection data. The v1 pots have no properties besides `level`.
 
-**Beware of id collisions:** v2 also registers new, non-dyeable natural stone blocks named `stone_base`, `stone_pot` and `stone_planter` (per-stone variants of the new Stone Blocks family). These are unrelated to the v1 blocks of the same names; always remap the v1 ids to the Cement Block ids instead of keeping them.
+**Beware of id collisions:** v2 also registers new, non-dyeable natural stone blocks named `stone_pot` and `stone_planter` (per-stone variants of the new Stone Blocks family). These are unrelated to the v1 blocks of the same names; always remap the v1 ids to the Cement Block ids instead of keeping them.
 
 Block id mapping:
 

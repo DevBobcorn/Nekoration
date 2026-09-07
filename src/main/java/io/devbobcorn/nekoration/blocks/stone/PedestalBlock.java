@@ -13,20 +13,20 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BaseBlock extends Block {
-    private final VoxelShape shapeBase;
+public class PedestalBlock extends Block {
+    private final VoxelShape shapePedestal;
 
-    public BaseBlock(Properties settings) {
+    public PedestalBlock(Properties settings) {
         super(settings);
         VoxelShape shapePartBottom = box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
         VoxelShape shapePartTop = box(0.0D, 13.0D, 0.0D, 16.0D, 16.0D, 16.0D);
         VoxelShape shapePartMiddle = box(1.0D, 6.0D, 1.0D, 15.0D, 13.0D, 15.0D);
-        this.shapeBase = Shapes.or(shapePartBottom, shapePartMiddle, shapePartTop);
+        this.shapePedestal = Shapes.or(shapePartBottom, shapePartMiddle, shapePartTop);
     }
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return this.shapeBase;
+        return this.shapePedestal;
     }
 
     @Override
