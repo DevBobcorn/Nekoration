@@ -1,6 +1,7 @@
 package io.devbobcorn.nekoration.registry;
 
 import io.devbobcorn.nekoration.Nekoration;
+import io.devbobcorn.nekoration.entities.PaintingEntity;
 import io.devbobcorn.nekoration.entities.SeatEntity;
 import io.devbobcorn.nekoration.entities.WallpaperEntity;
 import net.minecraft.core.registries.Registries;
@@ -22,6 +23,13 @@ public final class ModEntities {
                     .clientTrackingRange(1)
                     .updateInterval(Integer.MAX_VALUE)
                     .build(Nekoration.MODID + ":seat"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<PaintingEntity>> PAINTING = REGISTER.register("painting",
+            () -> EntityType.Builder.<PaintingEntity>of(PaintingEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(10)
+                    .updateInterval(Integer.MAX_VALUE)
+                    .build(Nekoration.MODID + ":painting"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<WallpaperEntity>> WALLPAPER = REGISTER.register("wallpaper",
             () -> EntityType.Builder.<WallpaperEntity>of(WallpaperEntity::new, MobCategory.MISC)

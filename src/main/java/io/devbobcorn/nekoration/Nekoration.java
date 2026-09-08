@@ -114,6 +114,9 @@ public class Nekoration {
                 WoodenBlockRegistration.addContainerCategoryStacks(output::accept);
                 OrnamentRegistration.addPotsAndPlantersCategoryStacks(output::accept);
                 OrnamentRegistration.addMiscCategoryStacks(output::accept);
+                // Paintings & Palettes...
+                output.accept(new ItemStack(ModItems.PAINTING.get()));
+                output.accept(new ItemStack(ModItems.PALETTE.get()));
             })
             .build());
 
@@ -140,6 +143,7 @@ public class Nekoration {
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.SERVER, NekoConfig.SERVER_SPEC);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, NekoConfig.CLIENT_SPEC);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

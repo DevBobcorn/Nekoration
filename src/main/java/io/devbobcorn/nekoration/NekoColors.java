@@ -1,6 +1,12 @@
 package io.devbobcorn.nekoration;
 
+import java.awt.Color;
+
+import org.joml.Vector3d;
+
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 
 /**
@@ -8,6 +14,55 @@ import net.minecraft.util.StringRepresentable;
  */
 public final class NekoColors {
     private NekoColors() {
+    }
+
+    // RGB color math helpers (used by painting & palette)...
+    public static Color getRGBColor(Vec3i vec) {
+        return new Color(Math.min(Math.max(vec.getX(), 0), 255), Math.min(Math.max(vec.getY(), 0), 255), Math.min(Math.max(vec.getZ(), 0), 255));
+    }
+
+    public static Color getRGBColor(Vector3d vec) {
+        return new Color(Math.min(Math.max((int) vec.x, 0), 255), Math.min(Math.max((int) vec.y, 0), 255), Math.min(Math.max((int) vec.z, 0), 255));
+    }
+
+    public static Color getRGBColor(int col) {
+        return new Color((col & 0xff0000) >> 16, (col & 0xff00) >> 8, col & 0xff);
+    }
+
+    public static int[] getRGBArray(int col) {
+        return new int[] { ((col & 0xff0000) >> 16), ((col & 0xff00) >> 8), (col & 0xff) };
+    }
+
+    public static int getRGBColorBetween(double frac, int lc, int rc) {
+        int red1 = (lc & 0xff0000) >> 16;
+        int green1 = (lc & 0xff00) >> 8;
+        int blue1 = lc & 0xff;
+
+        int red2 = (rc & 0xff0000) >> 16;
+        int green2 = (rc & 0xff00) >> 8;
+        int blue2 = rc & 0xff;
+
+        int red3 = (int) Mth.lerp(frac, red1, red2);
+        int green3 = (int) Mth.lerp(frac, green1, green2);
+        int blue3 = (int) Mth.lerp(frac, blue1, blue2);
+
+        return (red3 << 16) + (green3 << 8) + blue3;
+    }
+
+    public static Color getRGBColorBetween(double frac, Color lc, Color rc) {
+        return new Color((int) Mth.lerp(frac, lc.getRed(), rc.getRed()), (int) Mth.lerp(frac, lc.getGreen(), rc.getGreen()), (int) Mth.lerp(frac, lc.getBlue(), rc.getBlue()));
+    }
+
+    public static int getRed(int c) {
+        return (c & 0xff0000) >> 16;
+    }
+
+    public static int getGreen(int c) {
+        return (c & 0xff00) >> 8;
+    }
+
+    public static int getBlue(int c) {
+        return c & 0xff;
     }
 
     /**

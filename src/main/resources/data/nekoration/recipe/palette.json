@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "pattern": [
+        "RGB",
+        "###"
+    ],
+    "key": {
+        "R": "minecraft:red_dye",
+        "G": "minecraft:green_dye",
+        "B": "minecraft:blue_dye",
+        "#": "#minecraft:planks"
+    },
+    "result": {
+        "id": "nekoration:palette",
+        "count": 1
+    }
+}

@@ -29,7 +29,9 @@ import io.devbobcorn.nekoration.client.rendering.ItemDisplayBlockEntityRenderer;
 import io.devbobcorn.nekoration.client.rendering.SeatEntityRenderer;
 import io.devbobcorn.nekoration.client.rendering.WallpaperItemRenderer;
 import io.devbobcorn.nekoration.client.rendering.WallpaperRenderer;
+import io.devbobcorn.nekoration.client.rendering.entities.PaintingRenderer;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
+import io.devbobcorn.nekoration.items.PaintingItem;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
 import io.devbobcorn.nekoration.registry.ModEntities;
 import io.devbobcorn.nekoration.registry.ModMenuTypes;
@@ -61,6 +63,10 @@ public class NekorationClient {
                 DyeableBlockItem.getColor(stack).getNbtId();
         ResourceLocation colorId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "color");
         OrnamentRegistration.awningBlockItemsView().forEach(item -> ItemProperties.register(item.get(), colorId, color));
+        // Painting item: blank / painted / magic link model override...
+        ItemPropertyFunction paintingType = (stack, level, entity, seed) -> (float) PaintingItem.getType(stack);
+        ResourceLocation typeId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "type");
+        ItemProperties.register(ModItems.PAINTING.get(), typeId, paintingType);
     }
 
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
@@ -68,6 +74,7 @@ public class NekorationClient {
         event.registerBlockEntityRenderer(ModBlockEntities.EASEL_MENU.get(), EaselMenuBlockEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.SEAT.get(), SeatEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.WALLPAPER.get(), WallpaperRenderer::new);
+        event.registerEntityRenderer(ModEntities.PAINTING.get(), PaintingRenderer::new);
     }
 
     private static void registerLayerDefinitions(RegisterLayerDefinitions event) {

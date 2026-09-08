@@ -397,7 +397,11 @@ public final class NekoCreativeTabFilterClient {
                     OrnamentRegistration.addFurnitureCategoryStacks(out::add);
                 }
                 case CONTAINER -> WoodenBlockRegistration.addContainerCategoryStacks(out::add);
-                case MISC -> OrnamentRegistration.addMiscCategoryStacks(out::add);
+                case MISC -> {
+                    OrnamentRegistration.addMiscCategoryStacks(out::add);
+                    out.add(new ItemStack(io.devbobcorn.nekoration.registry.ModItems.PAINTING.get()));
+                    out.add(new ItemStack(io.devbobcorn.nekoration.registry.ModItems.PALETTE.get()));
+                }
             }
             picker.items.clear();
             picker.items.addAll(out);
