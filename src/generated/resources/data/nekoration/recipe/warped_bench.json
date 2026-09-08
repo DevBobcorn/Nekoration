@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:warped_planks"
+    },
+    "T": {
+      "item": "minecraft:warped_sign"
+    }
+  },
+  "pattern": [
+    "T  ",
+    "###",
+    "# #"
+  ],
+  "result": {
+    "count": 4,
+    "id": "nekoration:warped_bench"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_polished_smooth_dripstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "nekoration:polished_smooth_dripstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "nekoration:polished_smooth_dripstone_stairs_from_polished_smooth_dripstone_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_polished_smooth_dripstone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "nekoration:polished_smooth_dripstone_stairs_from_polished_smooth_dripstone_stonecutting"
+    ]
+  }
+}

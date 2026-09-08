@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:oak_planks"
+    },
+    "T": {
+      "item": "minecraft:oak_sign"
+    }
+  },
+  "pattern": [
+    "T  ",
+    "###",
+    "# #"
+  ],
+  "result": {
+    "count": 4,
+    "id": "nekoration:oak_bench"
+  }
+}

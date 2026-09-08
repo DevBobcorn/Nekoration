@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:oak_planks"
+    },
+    "0": {
+      "item": "minecraft:purple_concrete"
+    }
+  },
+  "pattern": [
+    "#0#",
+    "#0#",
+    "# #"
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 13
+      }
+    },
+    "count": 4,
+    "id": "nekoration:oak_easel_menu"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:crimson_planks"
+    },
+    "0": {
+      "item": "minecraft:chest"
+    }
+  },
+  "pattern": [
+    "###",
+    "#0#",
+    "#0#"
+  ],
+  "result": {
+    "count": 1,
+    "id": "nekoration:crimson_drawer_chest"
+  }
+}

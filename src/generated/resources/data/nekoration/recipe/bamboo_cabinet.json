@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:bamboo_planks"
+    },
+    "0": {
+      "item": "minecraft:chest"
+    }
+  },
+  "pattern": [
+    "###",
+    "0#0",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "nekoration:bamboo_cabinet"
+  }
+}

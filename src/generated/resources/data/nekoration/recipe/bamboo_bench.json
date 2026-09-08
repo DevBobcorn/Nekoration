@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:bamboo_planks"
+    },
+    "T": {
+      "item": "minecraft:bamboo_sign"
+    }
+  },
+  "pattern": [
+    "T  ",
+    "###",
+    "# #"
+  ],
+  "result": {
+    "count": 4,
+    "id": "nekoration:bamboo_bench"
+  }
+}

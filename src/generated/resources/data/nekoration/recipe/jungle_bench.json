@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:jungle_planks"
+    },
+    "T": {
+      "item": "minecraft:jungle_sign"
+    }
+  },
+  "pattern": [
+    "T  ",
+    "###",
+    "# #"
+  ],
+  "result": {
+    "count": 4,
+    "id": "nekoration:jungle_bench"
+  }
+}

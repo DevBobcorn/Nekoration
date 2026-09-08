@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "0": {
+      "item": "nekoration:dark_oak_window_simple"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "111",
+    "101",
+    "111"
+  ],
+  "result": {
+    "count": 1,
+    "id": "nekoration:dark_oak_window_shade"
+  }
+}

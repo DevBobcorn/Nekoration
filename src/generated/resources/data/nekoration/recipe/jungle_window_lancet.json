@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "0": {
+      "item": "nekoration:jungle_window_simple"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " 1 ",
+    "101",
+    "111"
+  ],
+  "result": {
+    "count": 1,
+    "id": "nekoration:jungle_window_lancet"
+  }
+}

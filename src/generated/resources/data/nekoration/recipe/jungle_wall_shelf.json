@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:jungle_pressure_plate"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "##",
+    "1 "
+  ],
+  "result": {
+    "count": 1,
+    "id": "nekoration:jungle_wall_shelf"
+  }
+}

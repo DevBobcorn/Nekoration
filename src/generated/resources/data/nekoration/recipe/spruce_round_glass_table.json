@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:spruce_planks"
+    },
+    "0": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    "000",
+    " # ",
+    " # "
+  ],
+  "result": {
+    "count": 4,
+    "id": "nekoration:spruce_round_glass_table"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:dark_oak_planks"
+    },
+    "T": {
+      "item": "minecraft:dark_oak_sign"
+    }
+  },
+  "pattern": [
+    "T  ",
+    "###",
+    "# #"
+  ],
+  "result": {
+    "count": 4,
+    "id": "nekoration:dark_oak_bench"
+  }
+}

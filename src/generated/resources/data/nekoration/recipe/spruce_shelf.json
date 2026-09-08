@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:spruce_planks"
+    },
+    "1": {
+      "item": "minecraft:spruce_pressure_plate"
+    }
+  },
+  "pattern": [
+    "###",
+    "#1 ",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "nekoration:spruce_cupboard"
+  }
+}

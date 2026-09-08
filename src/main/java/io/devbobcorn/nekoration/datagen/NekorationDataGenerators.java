@@ -31,5 +31,8 @@ public final class NekorationDataGenerators {
                 event.includeServer(),
                 new NekorationBlockTagsProvider(event.getGenerator().getPackOutput(), event.getLookupProvider(),
                         event.getExistingFileHelper()));
+        event.getGenerator().addProvider(
+                event.includeServer(),
+                new NekoRecipeProvider(event.getGenerator().getPackOutput(), event.getLookupProvider()));
     }
 }

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:crimson_planks"
+    },
+    "0": {
+      "item": "minecraft:pink_concrete"
+    }
+  },
+  "pattern": [
+    "#0#",
+    "#0#",
+    "# #"
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 15
+      }
+    },
+    "count": 4,
+    "id": "nekoration:crimson_easel_menu"
+  }
+}

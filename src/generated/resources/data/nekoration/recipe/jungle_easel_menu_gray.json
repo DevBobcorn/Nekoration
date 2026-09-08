@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:jungle_planks"
+    },
+    "0": {
+      "item": "minecraft:gray_concrete"
+    }
+  },
+  "pattern": [
+    "#0#",
+    "#0#",
+    "# #"
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 2
+      }
+    },
+    "count": 4,
+    "id": "nekoration:jungle_easel_menu"
+  }
+}

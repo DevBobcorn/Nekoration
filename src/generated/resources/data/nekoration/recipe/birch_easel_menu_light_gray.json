@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:birch_planks"
+    },
+    "0": {
+      "item": "minecraft:light_gray_concrete"
+    }
+  },
+  "pattern": [
+    "#0#",
+    "#0#",
+    "# #"
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 1
+      }
+    },
+    "count": 4,
+    "id": "nekoration:birch_easel_menu"
+  }
+}

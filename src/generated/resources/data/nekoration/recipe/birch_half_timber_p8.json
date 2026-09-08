@@ -1,0 +1,26 @@
+{
+  "type": "nekoration:neko_color_inherit",
+  "category": "building",
+  "key": {
+    "0": {
+      "item": "nekoration:birch_half_timber_p0"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "111",
+    "101",
+    "111"
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 0
+      }
+    },
+    "count": 1,
+    "id": "nekoration:birch_half_timber_p8"
+  }
+}

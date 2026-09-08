@@ -1,0 +1,26 @@
+{
+  "type": "nekoration:neko_color_inherit",
+  "category": "building",
+  "key": {
+    "0": {
+      "item": "nekoration:mangrove_half_timber_p0"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "  1",
+    " 0 ",
+    "1 1"
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 0
+      }
+    },
+    "count": 1,
+    "id": "nekoration:mangrove_half_timber_p3"
+  }
+}

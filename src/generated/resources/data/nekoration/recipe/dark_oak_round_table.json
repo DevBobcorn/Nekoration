@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:dark_oak_planks"
+    }
+  },
+  "pattern": [
+    "###",
+    " # ",
+    " # "
+  ],
+  "result": {
+    "count": 4,
+    "id": "nekoration:dark_oak_round_table"
+  }
+}

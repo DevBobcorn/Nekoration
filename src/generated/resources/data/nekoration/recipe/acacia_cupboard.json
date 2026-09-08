@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:acacia_planks"
+    },
+    "0": {
+      "item": "minecraft:glass_pane"
+    },
+    "1": {
+      "item": "minecraft:acacia_pressure_plate"
+    }
+  },
+  "pattern": [
+    "###",
+    "#10",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "nekoration:acacia_cupboard"
+  }
+}
