@@ -12,6 +12,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -23,6 +24,7 @@ import net.neoforged.neoforge.common.NeoForge;
 
 import io.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import io.devbobcorn.nekoration.client.rendering.EaselMenuBlockEntityRenderer;
+import io.devbobcorn.nekoration.client.rendering.PaintingTooltipRenderer;
 import io.devbobcorn.nekoration.client.creative.NekoCreativeTabFilterClient;
 import io.devbobcorn.nekoration.client.ct.NekoModelSwapper;
 import io.devbobcorn.nekoration.client.rendering.ItemDisplayBlockEntityRenderer;
@@ -32,6 +34,7 @@ import io.devbobcorn.nekoration.client.rendering.WallpaperRenderer;
 import io.devbobcorn.nekoration.client.rendering.entities.PaintingRenderer;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.items.PaintingItem;
+import io.devbobcorn.nekoration.items.PaintingTooltipComponent;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
 import io.devbobcorn.nekoration.registry.ModEntities;
 import io.devbobcorn.nekoration.registry.ModMenuTypes;
@@ -46,13 +49,14 @@ public class NekorationClient {
     public NekorationClient(IEventBus modEventBus, ModContainer container) {
         // Allows NeoForge to create a config screen for this mod's configs.
         // The config screen is accessed by going to the Mods screen > clicking on your mod > clicking on config.
-        // Do not forget to add translations for your config options to the en_us.json file.
+        // Do not forget to add translations for the en_us.json file.
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
         // EntityRenderersEvent fires on the mod event bus.
         modEventBus.addListener(NekorationClient::registerRenderers);
         modEventBus.addListener(NekorationClient::registerScreens);
         modEventBus.addListener(NekorationClient::registerLayerDefinitions);
         modEventBus.addListener(NekorationClient::registerClientExtensions);
+        modEventBus.addListener(NekorationClient::registerTooltipComponents);
         NekoModelSwapper.registerListeners(modEventBus);
     }
 
@@ -94,6 +98,11 @@ public class NekorationClient {
                 return renderer;
             }
         }, ModItems.WALLPAPER.get());
+    }
+
+    private static void registerTooltipComponents(RegisterClientTooltipComponentFactoriesEvent event) {
+        // The painting content preview in a painted painting item's tooltip...
+        event.register(PaintingTooltipComponent.class, PaintingTooltipRenderer::new);
     }
 
     private static void registerScreens(RegisterMenuScreensEvent event) {

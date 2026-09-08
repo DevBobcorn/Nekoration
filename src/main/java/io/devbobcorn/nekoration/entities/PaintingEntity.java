@@ -138,7 +138,7 @@ public class PaintingEntity extends HangingEntity implements IEntityWithComplexS
             if (stack.getItem() == ModItems.PAINTING.get()
                     && PaintingItem.getType(stack) == PaintingItem.Type.BLANK.id) { // A blank painting...
                 // Turn it into a link to itself...
-                PaintingItem.setLink(stack, (short) (getWidth() / 16), (short) (getHeight() / 16), this.data.getUUID(), this.getId());
+                PaintingItem.setLink(stack, (short) (this.data.getWidth() / 16), (short) (this.data.getHeight() / 16), this.data.getUUID(), this.getId());
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
@@ -150,11 +150,11 @@ public class PaintingEntity extends HangingEntity implements IEntityWithComplexS
             PaintingItem.setSize(result, (short) 1, (short) 1);
             return result;
         }
-        if (getWidth() <= 96 && getHeight() <= 96) { // The painting with its content
-            PaintingItem.setContent(result, (short) (getWidth() / 16), (short) (getHeight() / 16), this.data.getUUID(), this.data.getPixels());
+        if (this.data.getWidth() <= 96 && this.data.getHeight() <= 96) { // The painting with its content
+            PaintingItem.setContent(result, (short) (this.data.getWidth() / 16), (short) (this.data.getHeight() / 16), this.data.getUUID(), this.data.getPixels());
         } else {
             // Create a link to this Painting Entity...
-            PaintingItem.setLink(result, (short) (getWidth() / 16), (short) (getHeight() / 16), this.data.getUUID(), this.getId());
+            PaintingItem.setLink(result, (short) (this.data.getWidth() / 16), (short) (this.data.getHeight() / 16), this.data.getUUID(), this.getId());
         }
         return result;
     }
@@ -170,11 +170,11 @@ public class PaintingEntity extends HangingEntity implements IEntityWithComplexS
             PaintingItem.setSize(result, (short) 1, (short) 1);
             return result;
         }
-        if (getWidth() <= 96 && getHeight() <= 96) { // The painting with its content
-            PaintingItem.setContent(result, (short) (getWidth() / 16), (short) (getHeight() / 16), this.data.getUUID(), this.data.getPixels());
+        if (this.data.getWidth() <= 96 && this.data.getHeight() <= 96) { // The painting with its content
+            PaintingItem.setContent(result, (short) (this.data.getWidth() / 16), (short) (this.data.getHeight() / 16), this.data.getUUID(), this.data.getPixels());
         } else {
             // Create a blank painting of the same size...
-            PaintingItem.setSize(result, (short) (getWidth() / 16), (short) (getHeight() / 16));
+            PaintingItem.setSize(result, (short) (this.data.getWidth() / 16), (short) (this.data.getHeight() / 16));
         }
         return result;
     }

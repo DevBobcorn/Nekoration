@@ -62,8 +62,11 @@ public class PaintingRenderer extends EntityRenderer<PaintingEntity> {
         float woodU1 = woodTex.getU1();
         float woodV0 = woodTex.getV0();
         float woodV1 = woodTex.getV1();
-        float woodV_ = woodTex.getV(1.0F);
-        float woodU_ = woodTex.getU(1.0F);
+        // Vanilla maps the side faces to a 1/16 strip of the back sprite,
+        // instead of stretching the whole texture onto them.
+        // Up/Down faces use the top 1-texel row, Left/Right faces use the leftmost 1-texel column.
+        float woodV_ = woodTex.getV(0.0625F);
+        float woodU_ = woodTex.getU(0.0625F);
 
         short blocHorCount = (short) (width / 16);
         short blocVerCount = (short) (height / 16);
