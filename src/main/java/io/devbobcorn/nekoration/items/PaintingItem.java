@@ -1,5 +1,6 @@
 package io.devbobcorn.nekoration.items;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 
@@ -194,5 +196,20 @@ public class PaintingItem extends Item {
     @Override
     public Component getName(ItemStack stack) {
         return Component.translatable(this.getDescriptionId(stack) + '.' + Type.fromId(getType(stack)).name, getWidth(stack), getHeight(stack));
+    }
+
+    @Override
+    public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
+        if (getType(stack) != Type.PAINTED.id)
+            return Optional.empty();
+        CompoundTag tag = getTag(stack);
+        if (!tag.hasUUID(DATAID) || !tag.contains(PIXELS))
+            return Optional.empty();
+        short w = (short) getWidth(stack);
+        short h = (short) getHeight(stack);
+        int[] pixels = tag.getIntArray(PIXELS);
+        if (pixels.length != w * 16 * h * 16) // The pixel data doesn't match the size; skip the preview...
+            return Optional.empty();
+        return Optional.of(new PaintingTooltipComponent(w, h, tag.getUUID(DATAID), pixels));
     }
 }
