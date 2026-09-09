@@ -13,11 +13,9 @@ import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.recipes.ColorInheritShapedRecipe;
 import io.devbobcorn.nekoration.recipes.ColorInheritStonecuttingRecipe;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -37,7 +35,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
 
 /**
  * Recipe generator for wooden, cement and stone blocks, ported from
@@ -239,11 +236,8 @@ public final class NekoRecipeProvider extends RecipeProvider {
             stonecutting(output, polishedSmooth, polishedSmoothId + "_stairs");
             stonecutting(output, polishedSmooth, polishedSmoothId + "_slab");
             twoByTwoRecipe(output, smoothSource, polishedSmoothId);
-            stonecutting(output, baseStone, polishedSmoothId);
             stairsRecipe(output, polishedSmooth, polishedSmoothId + "_stairs");
             slabRecipe(output, polishedSmooth, polishedSmoothId + "_slab");
-            stonecutting(output, baseStone, polishedSmoothId + "_stairs");
-            stonecutting(output, baseStone, polishedSmoothId + "_slab");
 
             Item polishedSource;
             if (stone.needsPolishedVariant()) {
@@ -303,7 +297,6 @@ public final class NekoRecipeProvider extends RecipeProvider {
                 stonecutting(output, bricksSource, "chiseled_" + stoneId + "_bricks");
             }
             chiseledRecipe(output, smoothSlab, "chiseled_smooth_" + stoneId);
-            stonecutting(output, baseStone, "chiseled_smooth_" + stoneId);
             stonecutting(output, smoothSource, "chiseled_smooth_" + stoneId);
         }
     }
