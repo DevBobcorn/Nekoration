@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_polished_stone_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "nekoration:polished_stone_slab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "nekoration:chiseled_stone"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_polished_stone_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "nekoration:chiseled_stone"
+    ]
+  }
+}

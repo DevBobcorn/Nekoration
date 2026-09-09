@@ -197,15 +197,19 @@ public final class NekoRecipeProvider extends RecipeProvider {
             String stoneId = stone.id();
             Item baseStone = stone.vanillaStoneBlock().asItem();
             Item smoothSource;
+            Item smoothSlab;
             if (stone.needsSmoothVariant()) {
                 Item smooth = modItem("smooth_" + stoneId);
                 smoothSource = smooth;
+                smoothSlab = modItem("smooth_" + stoneId + "_slab");
                 SimpleCookingRecipeBuilder.smelting(Ingredient.of(baseStone), RecipeCategory.BUILDING_BLOCKS,
                         smooth, SMELTING_XP, SMELTING_TIME)
                         .unlockedBy(hasName(baseStone), has(baseStone))
                         .save(output, modLoc("smooth_" + stoneId + "_from_smelting"));
                 stonecutting(output, smoothSource, "smooth_" + stoneId + "_stairs");
                 stonecutting(output, smoothSource, "smooth_" + stoneId + "_slab");
+                stairsRecipe(output, smoothSource, "smooth_" + stoneId + "_stairs");
+                slabRecipe(output, smoothSource, "smooth_" + stoneId + "_slab");
             } else {
                 smoothSource = switch (stone) {
                     case STONE -> Items.SMOOTH_STONE;
@@ -213,14 +217,84 @@ public final class NekoRecipeProvider extends RecipeProvider {
                     case RED_SANDSTONE -> Items.SMOOTH_RED_SANDSTONE;
                     default -> throw new IllegalStateException("No vanilla smooth block for " + stone);
                 };
+                smoothSlab = stone.vanillaSmoothSlabBlock().asItem();
                 if (stone == NekoStone.STONE) {
                     stonecutting(output, smoothSource, "smooth_stone_stairs");
+                    stairsRecipe(output, smoothSource, "smooth_stone_stairs");
                 }
             }
-            stonecutting(output, smoothSource, "polished_smooth_" + stoneId);
-            Item polishedSmooth = modItem("polished_smooth_" + stoneId);
-            stonecutting(output, polishedSmooth, "polished_smooth_" + stoneId + "_stairs");
-            stonecutting(output, polishedSmooth, "polished_smooth_" + stoneId + "_slab");
+            String polishedSmoothId = "polished_smooth_" + stoneId;
+            Item polishedSmooth = modItem(polishedSmoothId);
+            stonecutting(output, smoothSource, polishedSmoothId);
+            stonecutting(output, polishedSmooth, polishedSmoothId + "_stairs");
+            stonecutting(output, polishedSmooth, polishedSmoothId + "_slab");
+            twoByTwoRecipe(output, smoothSource, polishedSmoothId);
+            stonecutting(output, baseStone, polishedSmoothId);
+            stairsRecipe(output, polishedSmooth, polishedSmoothId + "_stairs");
+            slabRecipe(output, polishedSmooth, polishedSmoothId + "_slab");
+            stonecutting(output, baseStone, polishedSmoothId + "_stairs");
+            stonecutting(output, baseStone, polishedSmoothId + "_slab");
+
+            Item polishedSource;
+            if (stone.needsPolishedVariant()) {
+                Item polished = modItem("polished_" + stoneId);
+                polishedSource = polished;
+                twoByTwoRecipe(output, baseStone, "polished_" + stoneId);
+                stonecutting(output, baseStone, "polished_" + stoneId);
+                stairsRecipe(output, polished, "polished_" + stoneId + "_stairs");
+                slabRecipe(output, polished, "polished_" + stoneId + "_slab");
+                stonecutting(output, baseStone, "polished_" + stoneId + "_stairs");
+                stonecutting(output, polished, "polished_" + stoneId + "_stairs");
+                stonecutting(output, baseStone, "polished_" + stoneId + "_slab");
+                stonecutting(output, polished, "polished_" + stoneId + "_slab");
+            } else {
+                polishedSource = stone.vanillaPolishedStoneBlock().asItem();
+            }
+
+            Item bricksSource;
+            if (stone.needsBricksVariant()) {
+                Item bricks = modItem(stoneId + "_bricks");
+                bricksSource = bricks;
+                twoByTwoRecipe(output, polishedSource, stoneId + "_bricks");
+                stonecutting(output, baseStone, stoneId + "_bricks");
+                stonecutting(output, polishedSource, stoneId + "_bricks");
+                stairsRecipe(output, bricks, stoneId + "_bricks_stairs");
+                slabRecipe(output, bricks, stoneId + "_bricks_slab");
+                stonecutting(output, baseStone, stoneId + "_bricks_stairs");
+                stonecutting(output, bricks, stoneId + "_bricks_stairs");
+                stonecutting(output, baseStone, stoneId + "_bricks_slab");
+                stonecutting(output, bricks, stoneId + "_bricks_slab");
+            } else {
+                bricksSource = stone.vanillaBricksStoneBlock().asItem();
+            }
+
+            Item tiles = modItem(stoneId + "_tiles");
+            twoByTwoRecipe(output, bricksSource, stoneId + "_tiles");
+            stonecutting(output, baseStone, stoneId + "_tiles");
+            stonecutting(output, bricksSource, stoneId + "_tiles");
+            stairsRecipe(output, tiles, stoneId + "_tiles_stairs");
+            slabRecipe(output, tiles, stoneId + "_tiles_slab");
+            stonecutting(output, baseStone, stoneId + "_tiles_stairs");
+            stonecutting(output, tiles, stoneId + "_tiles_stairs");
+            stonecutting(output, baseStone, stoneId + "_tiles_slab");
+            stonecutting(output, tiles, stoneId + "_tiles_slab");
+
+            if (stone.needsChiseledVariant()) {
+                Item polishedSlab = stone.needsPolishedVariant()
+                        ? modItem("polished_" + stoneId + "_slab")
+                        : stone.vanillaPolishedSlabBlock().asItem();
+                chiseledRecipe(output, polishedSlab, "chiseled_" + stoneId);
+                stonecutting(output, baseStone, "chiseled_" + stoneId);
+                stonecutting(output, polishedSource, "chiseled_" + stoneId);
+            }
+            if (stone.needsChiseledBricksVariant()) {
+                chiseledRecipe(output, modItem(stoneId + "_bricks_slab"), "chiseled_" + stoneId + "_bricks");
+                stonecutting(output, baseStone, "chiseled_" + stoneId + "_bricks");
+                stonecutting(output, bricksSource, "chiseled_" + stoneId + "_bricks");
+            }
+            chiseledRecipe(output, smoothSlab, "chiseled_smooth_" + stoneId);
+            stonecutting(output, baseStone, "chiseled_smooth_" + stoneId);
+            stonecutting(output, smoothSource, "chiseled_smooth_" + stoneId);
         }
     }
 
@@ -229,6 +303,42 @@ public final class NekoRecipeProvider extends RecipeProvider {
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(source), RecipeCategory.BUILDING_BLOCKS, modItem(resultId))
                 .unlockedBy(hasName(source), has(source))
                 .save(output, modLoc(resultId + "_from_" + sourceName + "_stonecutting"));
+    }
+
+    /** {@code SS}/{@code SS} -> 4 results (vanilla polished/bricks/tiles pattern). */
+    private void twoByTwoRecipe(RecipeOutput output, ItemLike source, String resultId) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, modItem(resultId), 4)
+                .pattern("SS").pattern("SS")
+                .define('S', source)
+                .unlockedBy(hasName(source), has(source))
+                .save(output, modLoc(resultId));
+    }
+
+    /** Vanilla stairs pattern -> 4 stairs. */
+    private void stairsRecipe(RecipeOutput output, ItemLike source, String resultId) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, modItem(resultId), 4)
+                .pattern("S  ").pattern("SS ").pattern("SSS")
+                .define('S', source)
+                .unlockedBy(hasName(source), has(source))
+                .save(output, modLoc(resultId));
+    }
+
+    /** Vanilla slab pattern -> 6 slabs. */
+    private void slabRecipe(RecipeOutput output, ItemLike source, String resultId) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, modItem(resultId), 6)
+                .pattern("SSS")
+                .define('S', source)
+                .unlockedBy(hasName(source), has(source))
+                .save(output, modLoc(resultId));
+    }
+
+    /** Vanilla chiseled pattern: 2 slabs in a column -> 1 result. */
+    private void chiseledRecipe(RecipeOutput output, ItemLike source, String resultId) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, modItem(resultId))
+                .pattern("S").pattern("S")
+                .define('S', source)
+                .unlockedBy(hasName(source), has(source))
+                .save(output, modLoc(resultId));
     }
 
     private void saveWindowVariant(RecipeOutput output, String woodId, String variant, String[] pattern,

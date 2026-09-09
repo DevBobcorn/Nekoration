@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "nekoration:polished_dripstone"
+  },
+  "result": {
+    "count": 1,
+    "id": "nekoration:polished_dripstone_stairs"
+  }
+}

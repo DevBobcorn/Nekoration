@@ -110,6 +110,46 @@ public enum NekoStone {
         };
     }
 
+    /** Vanilla polished block for this stone type (when the mod doesn't register its own). */
+    public Block vanillaPolishedStoneBlock() {
+        return switch (this) {
+            case GRANITE -> Blocks.POLISHED_GRANITE;
+            case DIORITE -> Blocks.POLISHED_DIORITE;
+            case ANDESITE -> Blocks.POLISHED_ANDESITE;
+            case TUFF -> Blocks.POLISHED_TUFF;
+            default -> throw new IllegalStateException("No vanilla polished block for " + this);
+        };
+    }
+
+    /** Vanilla polished slab for this stone type (when the mod doesn't register its own). */
+    public Block vanillaPolishedSlabBlock() {
+        return switch (this) {
+            case GRANITE -> Blocks.POLISHED_GRANITE_SLAB;
+            case DIORITE -> Blocks.POLISHED_DIORITE_SLAB;
+            case ANDESITE -> Blocks.POLISHED_ANDESITE_SLAB;
+            default -> throw new IllegalStateException("No vanilla polished slab block for " + this);
+        };
+    }
+
+    /** Vanilla bricks block for this stone type (when the mod doesn't register its own). */
+    public Block vanillaBricksStoneBlock() {
+        return switch (this) {
+            case TUFF -> Blocks.TUFF_BRICKS;
+            case STONE -> Blocks.STONE_BRICKS;
+            default -> throw new IllegalStateException("No vanilla bricks block for " + this);
+        };
+    }
+
+    /** Vanilla smooth slab block for this stone type (when the mod doesn't register its own). */
+    public Block vanillaSmoothSlabBlock() {
+        return switch (this) {
+            case STONE -> Blocks.SMOOTH_STONE_SLAB;
+            case SANDSTONE -> Blocks.SMOOTH_SANDSTONE_SLAB;
+            case RED_SANDSTONE -> Blocks.SMOOTH_RED_SANDSTONE_SLAB;
+            default -> throw new IllegalStateException("No vanilla smooth slab block for " + this);
+        };
+    }
+
     /** Vanilla chiseled block for this stone type. */
     public Block vanillaChiseledStoneBlock() {
         return switch (this) {

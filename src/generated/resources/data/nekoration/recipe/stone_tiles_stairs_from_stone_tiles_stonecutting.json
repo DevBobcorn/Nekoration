@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "nekoration:stone_tiles"
+  },
+  "result": {
+    "count": 1,
+    "id": "nekoration:stone_tiles_stairs"
+  }
+}
