@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_calcite_bricks_slab": {
+    "has_calcite_brick_slab": {
       "conditions": {
         "items": [
           {
-            "items": "nekoration:calcite_bricks_slab"
+            "items": "nekoration:calcite_brick_slab"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_calcite_bricks_slab"
+      "has_calcite_brick_slab"
     ]
   ],
   "rewards": {

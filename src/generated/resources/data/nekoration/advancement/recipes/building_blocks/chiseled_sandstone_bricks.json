@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sandstone_bricks_slab": {
+    "has_sandstone_brick_slab": {
       "conditions": {
         "items": [
           {
-            "items": "nekoration:sandstone_bricks_slab"
+            "items": "nekoration:sandstone_brick_slab"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_sandstone_bricks_slab"
+      "has_sandstone_brick_slab"
     ]
   ],
   "rewards": {

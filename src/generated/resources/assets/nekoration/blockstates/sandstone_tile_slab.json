@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "nekoration:block/stone/sandstone_tile_slab"
+    },
+    "type=double": {
+      "model": "nekoration:block/stone/sandstone_tiles"
+    },
+    "type=top": {
+      "model": "nekoration:block/stone/sandstone_tile_slab_top"
+    }
+  }
+}

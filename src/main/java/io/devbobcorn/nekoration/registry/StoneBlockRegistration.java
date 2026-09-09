@@ -109,8 +109,9 @@ public final class StoneBlockRegistration {
     private static void registerStoneBlockSet(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
             List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         DeferredBlock<Block> fullBlock = registerBlock(blocks, items, id, blockItemsByStone, stone);
-        registerStairBlock(blocks, items, id + "_stairs", fullBlock, blockItemsByStone, stone);
-        registerSlabBlock(blocks, items, id + "_slab", blockItemsByStone, stone);
+        String variantId = NekoStone.singularizedSetId(id);
+        registerStairBlock(blocks, items, variantId + "_stairs", fullBlock, blockItemsByStone, stone);
+        registerSlabBlock(blocks, items, variantId + "_slab", blockItemsByStone, stone);
     }
 
     private static DeferredBlock<Block> registerBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,

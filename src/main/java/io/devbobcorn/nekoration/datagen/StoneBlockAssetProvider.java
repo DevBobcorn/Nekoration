@@ -128,7 +128,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
             List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
         String textureId = stoneId + "_" + variant;
-        generateStoneStairAssets(cachedOutput, variantId, textureId, writes);
+        generateStoneStairAssets(cachedOutput, NekoStone.singularizedSetId(variantId), textureId, writes);
     }
 
     private void generateStoneStairAssets(CachedOutput cachedOutput, String variantId, String textureId,
@@ -165,12 +165,13 @@ public final class StoneBlockAssetProvider implements DataProvider {
             List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
         String textureId = stoneId + "_" + variant;
-        generateStoneSlabAssets(cachedOutput, variantId, textureId, hasSlabTexture, writes);
+        generateStoneSlabAssets(cachedOutput, NekoStone.singularizedSetId(variantId), textureId, hasSlabTexture,
+                writes, variantId);
     }
 
-    private void generateStoneSlabAssets(CachedOutput cachedOutput, String variantId, String textureId, boolean hasSlabTexture,
-            List<CompletableFuture<?>> writes) {
-        String slabId = variantId + "_slab";
+    private void generateStoneSlabAssets(CachedOutput cachedOutput, String slabVariantId, String textureId,
+            boolean hasSlabTexture, List<CompletableFuture<?>> writes, String fullBlockId) {
+        String slabId = slabVariantId + "_slab";
         String sideTextureId = hasSlabTexture ? textureId + "_slab" : textureId;
 
         Map<String, Object> slabTextures = new LinkedHashMap<>();
@@ -197,7 +198,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
         variants.put("type=bottom", Map.of("model", modLoc("block/stone/" + slabId)));
         variants.put("type=top", Map.of("model", modLoc("block/stone/" + slabId + "_top")));
         variants.put("type=double", Map.of("model", hasSlabTexture ?
-                modLoc("block/stone/" + slabId + "_double") : modLoc("block/stone/" + variantId)));
+                modLoc("block/stone/" + slabId + "_double") : modLoc("block/stone/" + fullBlockId)));
         writeJson(cachedOutput, writes, blockstatePathProvider, slabId, Map.of("variants", variants));
         writeJson(cachedOutput, writes, itemModelPathProvider, slabId,
                 Map.of("parent", modLoc("block/stone/" + slabId)));

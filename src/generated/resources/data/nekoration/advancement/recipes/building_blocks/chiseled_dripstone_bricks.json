@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_dripstone_bricks_slab": {
+    "has_dripstone_brick_slab": {
       "conditions": {
         "items": [
           {
-            "items": "nekoration:dripstone_bricks_slab"
+            "items": "nekoration:dripstone_brick_slab"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_dripstone_bricks_slab"
+      "has_dripstone_brick_slab"
     ]
   ],
   "rewards": {

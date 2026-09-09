@@ -40,6 +40,17 @@ public enum NekoStone {
         return name().toLowerCase();
     }
 
+    /** Vanilla-style singular stair/slab base id for a block-set id ({@code granite_bricks} -> {@code granite_brick}). */
+    public static String singularizedSetId(String setId) {
+        if (setId.endsWith("_bricks")) {
+            return setId.substring(0, setId.length() - "_bricks".length()) + "_brick";
+        }
+        if (setId.endsWith("_tiles")) {
+            return setId.substring(0, setId.length() - "_tiles".length()) + "_tile";
+        }
+        return setId;
+    }
+
     public boolean needsSmoothVariant() {
         return needsSmoothVariant;
     }

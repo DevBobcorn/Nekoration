@@ -262,12 +262,12 @@ public final class NekoRecipeProvider extends RecipeProvider {
                 twoByTwoRecipe(output, polishedSource, stoneId + "_bricks");
                 stonecutting(output, baseStone, stoneId + "_bricks");
                 stonecutting(output, polishedSource, stoneId + "_bricks");
-                stairsRecipe(output, bricks, stoneId + "_bricks_stairs");
-                slabRecipe(output, bricks, stoneId + "_bricks_slab");
-                stonecutting(output, baseStone, stoneId + "_bricks_stairs");
-                stonecutting(output, bricks, stoneId + "_bricks_stairs");
-                stonecutting(output, baseStone, stoneId + "_bricks_slab");
-                stonecutting(output, bricks, stoneId + "_bricks_slab");
+                stairsRecipe(output, bricks, stoneId + "_brick_stairs");
+                slabRecipe(output, bricks, stoneId + "_brick_slab");
+                stonecutting(output, baseStone, stoneId + "_brick_stairs");
+                stonecutting(output, bricks, stoneId + "_brick_stairs");
+                stonecutting(output, baseStone, stoneId + "_brick_slab");
+                stonecutting(output, bricks, stoneId + "_brick_slab");
             } else {
                 bricksSource = stone.vanillaBricksStoneBlock().asItem();
             }
@@ -276,12 +276,12 @@ public final class NekoRecipeProvider extends RecipeProvider {
             twoByTwoRecipe(output, bricksSource, stoneId + "_tiles");
             stonecutting(output, baseStone, stoneId + "_tiles");
             stonecutting(output, bricksSource, stoneId + "_tiles");
-            stairsRecipe(output, tiles, stoneId + "_tiles_stairs");
-            slabRecipe(output, tiles, stoneId + "_tiles_slab");
-            stonecutting(output, baseStone, stoneId + "_tiles_stairs");
-            stonecutting(output, tiles, stoneId + "_tiles_stairs");
-            stonecutting(output, baseStone, stoneId + "_tiles_slab");
-            stonecutting(output, tiles, stoneId + "_tiles_slab");
+            stairsRecipe(output, tiles, stoneId + "_tile_stairs");
+            slabRecipe(output, tiles, stoneId + "_tile_slab");
+            stonecutting(output, baseStone, stoneId + "_tile_stairs");
+            stonecutting(output, tiles, stoneId + "_tile_stairs");
+            stonecutting(output, baseStone, stoneId + "_tile_slab");
+            stonecutting(output, tiles, stoneId + "_tile_slab");
 
             if (stone.needsChiseledVariant()) {
                 Item polishedSlab = stone.needsPolishedVariant()
@@ -292,7 +292,7 @@ public final class NekoRecipeProvider extends RecipeProvider {
                 stonecutting(output, polishedSource, "chiseled_" + stoneId);
             }
             if (stone.needsChiseledBricksVariant()) {
-                chiseledRecipe(output, modItem(stoneId + "_bricks_slab"), "chiseled_" + stoneId + "_bricks");
+                chiseledRecipe(output, modItem(stoneId + "_brick_slab"), "chiseled_" + stoneId + "_bricks");
                 stonecutting(output, baseStone, "chiseled_" + stoneId + "_bricks");
                 stonecutting(output, bricksSource, "chiseled_" + stoneId + "_bricks");
             }
