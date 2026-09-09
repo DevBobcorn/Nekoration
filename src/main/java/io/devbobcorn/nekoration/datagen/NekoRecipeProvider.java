@@ -27,6 +27,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -189,6 +190,15 @@ public final class NekoRecipeProvider extends RecipeProvider {
         for (String variant : CEMENT_VARIANTS) {
             saveColorInheritStonecutting(output, modLoc(variant + "_from_cement_stonecutting"),
                     RecipeCategory.BUILDING_BLOCKS, cement, dyed(modItem(variant), EnumNekoColor.WHITE, 1));
+        }
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            Item dye = vanillaItem(color.getSerializedName() + "_dye");
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, dyed(cement, color, 2))
+                    .requires(Items.DRIPSTONE_BLOCK)
+                    .requires(Items.CLAY)
+                    .requires(dye)
+                    .unlockedBy(hasName(dye), has(dye))
+                    .save(output, modLoc("cement_" + color.getSerializedName()));
         }
     }
 

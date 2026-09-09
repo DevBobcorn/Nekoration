@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:dripstone_block"
+    },
+    {
+      "item": "minecraft:clay"
+    },
+    {
+      "item": "minecraft:brown_dye"
+    }
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 4
+      }
+    },
+    "count": 2,
+    "id": "nekoration:cement"
+  }
+}
