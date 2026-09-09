@@ -2,6 +2,8 @@ package io.devbobcorn.nekoration.blocks;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -73,6 +75,11 @@ public enum NekoStone {
 
     public BlockBehaviour.Properties stoneProperties() {
         return BlockBehaviour.Properties.ofFullCopy(vanillaStoneBlock());
+    }
+
+    /** Wall-style properties for this stone type (vanilla walls use the base stone properties, forced non-solid). */
+    public BlockBehaviour.Properties wallStoneProperties() {
+        return BlockBehaviour.Properties.ofFullCopy(vanillaStoneBlock()).forceSolidOn();
     }
 
     /** Vanilla stone block for this type (icons, sounds, creative filter). */
@@ -178,6 +185,45 @@ public enum NekoStone {
             case TUFF -> Blocks.CHISELED_TUFF_BRICKS;
             default -> throw new IllegalStateException("No vanilla chiseled bricks block for " + this);
         };
+    }
+
+    /** Vanilla wall block for this stone type ({@code null} when vanilla provides none). */
+    @Nullable
+    public Block vanillaWallBlock() {
+        return switch (this) {
+            case GRANITE -> Blocks.GRANITE_WALL;
+            case DIORITE -> Blocks.DIORITE_WALL;
+            case ANDESITE -> Blocks.ANDESITE_WALL;
+            case TUFF -> Blocks.TUFF_WALL;
+            case SANDSTONE -> Blocks.SANDSTONE_WALL;
+            case RED_SANDSTONE -> Blocks.RED_SANDSTONE_WALL;
+            default -> null;
+        };
+    }
+
+    /** Vanilla polished wall block for this stone type ({@code null} when vanilla provides none). */
+    @Nullable
+    public Block vanillaPolishedWallBlock() {
+        return switch (this) {
+            case TUFF -> Blocks.POLISHED_TUFF_WALL;
+            default -> null;
+        };
+    }
+
+    /** Vanilla brick wall block for this stone type ({@code null} when vanilla provides none). */
+    @Nullable
+    public Block vanillaBrickWallBlock() {
+        return switch (this) {
+            case STONE -> Blocks.STONE_BRICK_WALL;
+            case TUFF -> Blocks.TUFF_BRICK_WALL;
+            default -> null;
+        };
+    }
+
+    /** Vanilla tile wall block for this stone type ({@code null} when vanilla provides none; only deepslate has one). */
+    @Nullable
+    public Block vanillaTileWallBlock() {
+        return null;
     }
 
     /** {@code block.minecraft.<id>} (e.g. {@code block.minecraft.granite}). */

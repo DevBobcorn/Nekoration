@@ -1,0 +1,31 @@
+{
+  "values": [
+    "nekoration:polished_granite_wall",
+    "nekoration:granite_brick_wall",
+    "nekoration:granite_tile_wall",
+    "nekoration:polished_diorite_wall",
+    "nekoration:diorite_brick_wall",
+    "nekoration:diorite_tile_wall",
+    "nekoration:polished_andesite_wall",
+    "nekoration:andesite_brick_wall",
+    "nekoration:andesite_tile_wall",
+    "nekoration:calcite_wall",
+    "nekoration:polished_calcite_wall",
+    "nekoration:calcite_brick_wall",
+    "nekoration:calcite_tile_wall",
+    "nekoration:dripstone_wall",
+    "nekoration:polished_dripstone_wall",
+    "nekoration:dripstone_brick_wall",
+    "nekoration:dripstone_tile_wall",
+    "nekoration:tuff_tile_wall",
+    "nekoration:polished_sandstone_wall",
+    "nekoration:sandstone_brick_wall",
+    "nekoration:sandstone_tile_wall",
+    "nekoration:polished_red_sandstone_wall",
+    "nekoration:red_sandstone_brick_wall",
+    "nekoration:red_sandstone_tile_wall",
+    "nekoration:stone_wall",
+    "nekoration:polished_stone_wall",
+    "nekoration:stone_tile_wall"
+  ]
+}

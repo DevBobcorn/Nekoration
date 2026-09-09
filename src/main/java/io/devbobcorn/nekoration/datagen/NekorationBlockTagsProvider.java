@@ -30,6 +30,9 @@ public final class NekorationBlockTagsProvider extends TagsProvider<Block> {
         tag(BlockTags.DOORS).addAll(OrnamentRegistration.doorBlocksView().stream()
                 .map(DeferredBlock::getKey).toList());
 
+        tag(BlockTags.WALLS).addAll(StoneBlockRegistration.stoneWallBlocksView().stream()
+                .map(DeferredBlock::getKey).toList());
+
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .addAll(WoodenBlockRegistration.woodenBlocksView().stream()
                         .map(DeferredBlock::getKey).toList())

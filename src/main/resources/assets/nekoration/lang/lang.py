@@ -179,6 +179,21 @@ for s_i in range(0, len(stone_ids)):
         obj_us['block.nekoration.' + block_id] = stone_blocks_us[ss_i].format(stone=stone_us)
         obj_cn['block.nekoration.' + block_id] = stone_blocks_cn[ss_i].format(stone=stone_cn)
 
+# Stone walls (mod only registers the ones vanilla 1.21 doesn't provide)
+def add_stone_wall_lang(wall_stone_ids, id_template, us_template, cn_template):
+    for wall_id in wall_stone_ids:
+        s_i = stone_ids.index(wall_id)
+        block_id = id_template.format(stone=wall_id)
+        obj_us['block.nekoration.' + block_id] = us_template.format(stone=stones_us[s_i])
+        obj_cn['block.nekoration.' + block_id] = cn_template.format(stone=stones_cn[s_i])
+
+add_stone_wall_lang(["calcite", "dripstone", "stone"], "{stone}_wall", "{stone} Wall", "{stone}墙")
+add_stone_wall_lang(["stone", "granite", "diorite", "andesite", "calcite", "dripstone", "sandstone", "red_sandstone"],
+    "polished_{stone}_wall", "Polished {stone} Wall", "磨制{stone}墙")
+add_stone_wall_lang(["granite", "diorite", "andesite", "calcite", "dripstone", "sandstone", "red_sandstone"],
+    "{stone}_brick_wall", "{stone} Brick Wall", "{stone}砖墙")
+add_stone_wall_lang(stone_ids, "{stone}_tile_wall", "{stone} Tile Wall", "{stone}瓦墙")
+
 # Vanilla smooth stone has block + slab only; mod adds stairs
 obj_us['block.nekoration.smooth_stone_stairs'] = 'Smooth Stone Stairs'
 obj_cn['block.nekoration.smooth_stone_stairs'] = '平滑石头楼梯'

@@ -42,6 +42,13 @@ public final class StoneBlockAssetProvider implements DataProvider {
         List<CompletableFuture<?>> writes = new ArrayList<>();
         for (NekoStone stone : NekoStone.values()) {
             String stoneId = stone.id();
+            if (stone.vanillaWallBlock() == null) {
+                String plainTextureId = switch (stone) {
+                    case DRIPSTONE -> "block/dripstone_block";
+                    default -> "block/" + stoneId;
+                };
+                generateStoneWallAssets(cachedOutput, stoneId + "_wall", plainTextureId, writes);
+            }
             if (stone.needsSmoothVariant()) {
                 generateStoneCubeAllAssets(cachedOutput, "smooth", true, writes, stoneId);
                 generateStoneStairAssets(cachedOutput, "smooth", true, writes, stoneId);
@@ -53,6 +60,10 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 generateStoneCubeAllAssets(cachedOutput, "polished", true, writes, stoneId);
                 generateStoneStairAssets(cachedOutput, "polished", true, writes, stoneId);
                 generateStoneSlabAssets(cachedOutput, "polished", true, false, writes, stoneId);
+            }
+            if (stone.vanillaPolishedWallBlock() == null) {
+                generateStoneWallAssets(cachedOutput, "polished_" + stoneId + "_wall",
+                        modLoc("block/stone/" + stoneId + "_polished"), writes);
             }
             generateStoneCubeAllAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
             generateStoneStairAssets(cachedOutput, "polished_smooth", true, writes, stoneId);
@@ -68,9 +79,15 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 generateStoneStairAssets(cachedOutput, "bricks", false, writes, stoneId);
                 generateStoneSlabAssets(cachedOutput, "bricks", false, false, writes, stoneId);
             }
+            if (stone.vanillaBrickWallBlock() == null) {
+                generateStoneWallAssets(cachedOutput, stoneId + "_brick_wall",
+                        modLoc("block/stone/" + stoneId + "_bricks"), writes);
+            }
             generateStoneCubeAllAssets(cachedOutput, "tiles", false, writes, stoneId);
             generateStoneStairAssets(cachedOutput, "tiles", false, writes, stoneId);
             generateStoneSlabAssets(cachedOutput, "tiles", false, false, writes, stoneId);
+            generateStoneWallAssets(cachedOutput, stoneId + "_tile_wall",
+                    modLoc("block/stone/" + stoneId + "_tiles"), writes);
             generateVerticalConnectedStoneCubeAssets(cachedOutput, "chiseled_smooth", true, writes, stoneId);
             generateHorizontalConnectedStoneCubeAssets(cachedOutput, "horizontal_chiseled_smooth", "chiseled_smooth", true, writes, stoneId);
 
@@ -107,6 +124,47 @@ public final class StoneBlockAssetProvider implements DataProvider {
 
         writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
                 Map.of("parent", modLoc("block/stone/" + variantId)));
+    }
+
+    private void generateStoneWallAssets(CachedOutput cachedOutput, String variantId, String textureId,
+            List<CompletableFuture<?>> writes) {
+        Map<String, Object> textures = new LinkedHashMap<>();
+        textures.put("wall", textureId);
+
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_wall_post",
+                Map.of("parent", "block/template_wall_post", "textures", textures));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_wall_side",
+                Map.of("parent", "block/template_wall_side", "textures", textures));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_wall_side_tall",
+                Map.of("parent", "block/template_wall_side_tall", "textures", textures));
+        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_wall_inventory",
+                Map.of("parent", "block/wall_inventory", "textures", textures));
+
+        List<Map<String, Object>> parts = new ArrayList<>();
+        parts.add(Map.of("apply", Map.of("model", modLoc("block/stone/" + variantId + "_wall_post")),
+                "when", Map.of("up", "true")));
+        for (String direction : List.of("north", "east", "south", "west")) {
+            int yRotation = switch (direction) {
+                case "east" -> 90;
+                case "south" -> 180;
+                case "west" -> 270;
+                default -> 0;
+            };
+            for (String side : List.of("low", "tall")) {
+                Map<String, Object> apply = new LinkedHashMap<>();
+                apply.put("model", modLoc("block/stone/" + variantId
+                        + ("tall".equals(side) ? "_wall_side_tall" : "_wall_side")));
+                apply.put("uvlock", true);
+                if (yRotation != 0) {
+                    apply.put("y", yRotation);
+                }
+                parts.add(Map.of("apply", apply, "when", Map.of(direction, side)));
+            }
+        }
+        writeJson(cachedOutput, writes, blockstatePathProvider, variantId, Map.of("multipart", parts));
+
+        writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
+                Map.of("parent", modLoc("block/stone/" + variantId + "_wall_inventory")));
     }
 
     private void generateChiseledStoneColumnAssets(CachedOutput cachedOutput, String variantId, String sideTextureId,

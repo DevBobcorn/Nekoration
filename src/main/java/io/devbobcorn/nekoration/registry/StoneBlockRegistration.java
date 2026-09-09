@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import javax.annotation.Nullable;
+
 import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.NekoStone;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
@@ -19,6 +21,7 @@ import io.devbobcorn.nekoration.blocks.stone.PotBlock;
 import io.devbobcorn.nekoration.blocks.stone.SelfDroppingBlock;
 import io.devbobcorn.nekoration.blocks.stone.SelfDroppingSlabBlock;
 import io.devbobcorn.nekoration.blocks.stone.SelfDroppingStairBlock;
+import io.devbobcorn.nekoration.blocks.stone.SelfDroppingWallBlock;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -37,6 +40,8 @@ public final class StoneBlockRegistration {
     private static final List<DeferredItem<Item>> POT_BLOCK_ITEMS = new ArrayList<>();
     /** All mod-registered stone blocks (mineable tags). */
     private static final List<DeferredBlock<Block>> STONE_BLOCKS = new ArrayList<>();
+    /** All mod-registered stone walls (walls tag). */
+    private static final List<DeferredBlock<Block>> STONE_WALL_BLOCKS = new ArrayList<>();
     
     private static final String TAB_ICON_ITEM_ID = "granite_tiles";
     private static DeferredItem<Item> tabIconItem;
@@ -49,6 +54,7 @@ public final class StoneBlockRegistration {
             String stoneId = stone.id();
             List<Supplier<? extends Item>> blockItemsByStone = STONE_BLOCK_ITEMS_BY_STONE.computeIfAbsent(stone,
                 ignored -> new ArrayList<>());
+            registerWallBlock(blocks, items, stoneId + "_wall", stone.vanillaWallBlock(), blockItemsByStone, stone);
             if (stone.needsPolishedVariant()) {
                 registerStoneBlockSet(blocks, items, "polished_" + stoneId, blockItemsByStone, stone);
             } else {
@@ -56,6 +62,7 @@ public final class StoneBlockRegistration {
                     blockItemsByStone.add(() -> polishedBlock.asItem());
                 }
             }
+            registerWallBlock(blocks, items, "polished_" + stoneId + "_wall", stone.vanillaPolishedWallBlock(), blockItemsByStone, stone);
             if (stone.needsBricksVariant()) {
                 registerStoneBlockSet(blocks, items, stoneId + "_bricks", blockItemsByStone, stone);
             } else {
@@ -63,7 +70,9 @@ public final class StoneBlockRegistration {
                     blockItemsByStone.add(() -> bricksBlock.asItem());
                 }
             }
+            registerWallBlock(blocks, items, stoneId + "_brick_wall", stone.vanillaBrickWallBlock(), blockItemsByStone, stone);
             registerStoneBlockSet(blocks, items, stoneId + "_tiles", blockItemsByStone, stone);
+            registerWallBlock(blocks, items, stoneId + "_tile_wall", stone.vanillaTileWallBlock(), blockItemsByStone, stone);
             if (stone.needsSmoothVariant()) {
                 registerStoneBlockSet(blocks, items, "smooth_" + stoneId, blockItemsByStone, stone);
             } else {
@@ -112,6 +121,21 @@ public final class StoneBlockRegistration {
         String variantId = NekoStone.singularizedSetId(id);
         registerStairBlock(blocks, items, variantId + "_stairs", fullBlock, blockItemsByStone, stone);
         registerSlabBlock(blocks, items, variantId + "_slab", blockItemsByStone, stone);
+    }
+
+    /** Registers a wall block, or uses the vanilla wall when one is provided. */
+    private static void registerWallBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
+            @Nullable Block vanillaWall, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+        if (vanillaWall != null) {
+            blockItemsByStone.add(() -> vanillaWall.asItem());
+            return;
+        }
+        DeferredBlock<Block> block = blocks.register(id, () -> new SelfDroppingWallBlock(stone.wallStoneProperties()));
+        trackStoneBlock(block);
+        STONE_WALL_BLOCKS.add(block);
+        DeferredItem<Item> blockItem = registerBlockItem(items, id, block);
+        STONE_BLOCK_ITEMS.add(blockItem);
+        blockItemsByStone.add(blockItem);
     }
 
     private static DeferredBlock<Block> registerBlock(DeferredRegister.Blocks blocks, DeferredRegister.Items items, String id,
@@ -237,6 +261,11 @@ public final class StoneBlockRegistration {
 
     public static List<DeferredBlock<Block>> stoneBlocksView() {
         return Collections.unmodifiableList(STONE_BLOCKS);
+    }
+
+    /** All mod-registered stone walls (vanilla-provided walls excluded). */
+    public static List<DeferredBlock<Block>> stoneWallBlocksView() {
+        return Collections.unmodifiableList(STONE_WALL_BLOCKS);
     }
 
     /** Items for the creative stone tab when filtering by {@link io.devbobcorn.nekoration.blocks.NekoStone}. */

@@ -203,6 +203,11 @@ public final class NekoRecipeProvider extends RecipeProvider {
         for (NekoStone stone : NekoStone.values()) {
             String stoneId = stone.id();
             Item baseStone = stone.vanillaStoneBlock().asItem();
+            if (stone.vanillaWallBlock() == null) {
+                String wallId = stoneId + "_wall";
+                wallRecipe(output, baseStone, wallId);
+                stonecutting(output, baseStone, wallId);
+            }
             Item smoothSource;
             Item smoothSlab;
             if (stone.needsSmoothVariant()) {
@@ -254,6 +259,12 @@ public final class NekoRecipeProvider extends RecipeProvider {
             } else {
                 polishedSource = stone.vanillaPolishedStoneBlock().asItem();
             }
+            if (stone.vanillaPolishedWallBlock() == null) {
+                String polishedWallId = "polished_" + stoneId + "_wall";
+                wallRecipe(output, polishedSource, polishedWallId);
+                stonecutting(output, baseStone, polishedWallId);
+                stonecutting(output, polishedSource, polishedWallId);
+            }
 
             Item bricksSource;
             if (stone.needsBricksVariant()) {
@@ -271,6 +282,12 @@ public final class NekoRecipeProvider extends RecipeProvider {
             } else {
                 bricksSource = stone.vanillaBricksStoneBlock().asItem();
             }
+            if (stone.vanillaBrickWallBlock() == null) {
+                String brickWallId = stoneId + "_brick_wall";
+                wallRecipe(output, bricksSource, brickWallId);
+                stonecutting(output, baseStone, brickWallId);
+                stonecutting(output, bricksSource, brickWallId);
+            }
 
             Item tiles = modItem(stoneId + "_tiles");
             twoByTwoRecipe(output, bricksSource, stoneId + "_tiles");
@@ -282,6 +299,11 @@ public final class NekoRecipeProvider extends RecipeProvider {
             stonecutting(output, tiles, stoneId + "_tile_stairs");
             stonecutting(output, baseStone, stoneId + "_tile_slab");
             stonecutting(output, tiles, stoneId + "_tile_slab");
+
+            String tileWallId = stoneId + "_tile_wall";
+            wallRecipe(output, tiles, tileWallId);
+            stonecutting(output, baseStone, tileWallId);
+            stonecutting(output, tiles, tileWallId);
 
             if (stone.needsChiseledVariant()) {
                 Item polishedSlab = stone.needsPolishedVariant()
@@ -330,6 +352,15 @@ public final class NekoRecipeProvider extends RecipeProvider {
     private void slabRecipe(RecipeOutput output, ItemLike source, String resultId) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, modItem(resultId), 6)
                 .pattern("SSS")
+                .define('S', source)
+                .unlockedBy(hasName(source), has(source))
+                .save(output, modLoc(resultId));
+    }
+
+    /** Vanilla wall pattern: two rows of 3 -> 6 walls. */
+    private void wallRecipe(RecipeOutput output, ItemLike source, String resultId) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, modItem(resultId), 6)
+                .pattern("SSS").pattern("SSS")
                 .define('S', source)
                 .unlockedBy(hasName(source), has(source))
                 .save(output, modLoc(resultId));

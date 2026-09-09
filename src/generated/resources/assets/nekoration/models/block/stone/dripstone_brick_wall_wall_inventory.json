@@ -1,0 +1,6 @@
+{
+  "parent": "block/wall_inventory",
+  "textures": {
+    "wall": "nekoration:block/stone/dripstone_bricks"
+  }
+}

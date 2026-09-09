@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "nekoration:sandstone_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "nekoration:sandstone_brick_wall"
+  }
+}
