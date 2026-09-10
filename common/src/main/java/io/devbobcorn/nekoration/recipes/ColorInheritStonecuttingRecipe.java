@@ -5,9 +5,10 @@ import io.devbobcorn.nekoration.registry.ModRecipes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
@@ -15,9 +16,14 @@ import net.minecraft.world.level.block.Blocks;
  * Stonecutting recipe that transfers the dye color (see {@link DyeableBlockItem})
  * of the input stack to the result, so e.g. cutting red Cement yields a red variant.
  */
-public class ColorInheritStonecuttingRecipe extends SingleItemRecipe {
+public class ColorInheritStonecuttingRecipe extends StonecutterRecipe {
     public ColorInheritStonecuttingRecipe(String group, Ingredient ingredient, ItemStack result) {
-        super(RecipeType.STONECUTTING, ModRecipes.NEKO_STONECUTTING.get(), group, ingredient, result);
+        super(group, ingredient, result);
+    }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return ModRecipes.NEKO_STONECUTTING.get();
     }
 
     @Override

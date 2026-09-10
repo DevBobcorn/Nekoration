@@ -161,11 +161,6 @@ public final class NekoRecipeProvider extends RecipeProvider {
                     .define('#', planks).define('1', pressurePlateOf(wood)).define('0', Items.GLASS_PANE)
                     .unlockedBy(unlockContainers, has(Items.CHEST))
                     .save(output, modLoc(woodId + "_cupboard"));
-            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, modItem(woodId + "_cupboard"))
-                    .pattern("###").pattern("#1 ").pattern("###")
-                    .define('#', planks).define('1', pressurePlateOf(wood))
-                    .unlockedBy(unlockContainers, has(Items.CHEST))
-                    .save(output, modLoc(woodId + "_shelf"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, modItem(woodId + "_wall_shelf"))
                     .pattern("##").pattern("1 ")
                     .define('1', Items.STICK).define('#', pressurePlateOf(wood))
