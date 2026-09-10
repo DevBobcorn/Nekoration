@@ -129,9 +129,7 @@ dependencies {
 
     // JEI for runtime testing only: available in the dev game instance, but not
     // a compile or published dependency (localRuntime, not runtimeOnly/implementation).
-    // NOTE: disabled for now — recent JEI builds require NeoForge 21.1.238+ while
-    // this project pins 21.1.224. Re-enable together with a NeoForge version bump.
-    // localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
 tasks.named('test', Test).configure {
@@ -151,6 +149,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_license            : mod_license,
             mod_version            : mod_version,
             biomes_o_plenty_version: biomes_o_plenty_version,
+            jei_version             : jei_version,
     ]
     inputs.properties replaceProperties
     expand replaceProperties

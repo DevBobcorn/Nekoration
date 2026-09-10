@@ -1,5 +1,8 @@
 plugins {
-    id 'fabric-loom' version '1.11.8'
+    // 1.13.6 matches the Loom version JEI 19.53.0.426 was built with; older Loom
+    // refuses to consume mod jars produced by a newer Loom ("Mod was built with
+    // a newer version of Loom").
+    id 'fabric-loom' version '1.13.6'
 }
 
 base {
@@ -50,4 +53,15 @@ processResources {
     filesMatching('fabric.mod.json') {
         expand 'version': modVersion
     }
+}
+
+repositories {
+    // JEI and other BlameJared-hosted mods.
+    maven { url = "https://maven.blamejared.com/" }
+}
+
+// JEI for runtime testing only: available in the dev game instance, but not
+// a compile or published dependency (modLocalRuntime, not modImplementation).
+dependencies {
+    modLocalRuntime "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
 }

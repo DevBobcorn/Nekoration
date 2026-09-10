@@ -26,6 +26,7 @@
   },
   "suggests": {
     "biomesoplenty": "*",
-    "jade": "*"
+    "jade": "*",
+    "jei": "*"
   }
 }
