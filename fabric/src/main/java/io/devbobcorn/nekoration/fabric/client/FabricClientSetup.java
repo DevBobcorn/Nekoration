@@ -50,6 +50,9 @@ public final class FabricClientSetup {
                         (stack, level, entity, seed) -> property.call(stack, level, entity, seed)));
         // CT models.
         ModelLoadingPlugin.register(new FabricModelSwapper());
+        // Block render layers from model "render_type" (Fabric has no per-model
+        // render type support; NeoForge reads that field on its own).
+        FabricBlockRenderTypes.register();
         // Colors (Fabric's registries accept the vanilla provider interfaces).
         NekoColorHandlers.registerBlockColors((color, blocks) -> ColorProviderRegistry.BLOCK.register(color,
                 blocks.toArray(new net.minecraft.world.level.block.Block[0])));
