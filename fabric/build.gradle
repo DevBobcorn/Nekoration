@@ -1,0 +1,53 @@
+plugins {
+    id 'fabric-loom' version '1.11.8'
+}
+
+base {
+    archivesName = 'nekoration-fabric'
+}
+
+// Shared resource locations in the common module.
+def commonGeneratedResources = project(':common').file('src/generated/resources')
+def commonMainResources = project(':common').file('src/main/resources')
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    // REQUIRED — official mappings keep the common source tree compiling unchanged.
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    // Annotations used by the common sources (on NeoForge's classpath out of the box).
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+}
+
+loom {
+    // Widens the same vanilla members the common module ATs (see common/build.gradle).
+    accessWidenerPath = project(':common').file('src/main/resources/nekoration.accesswidener')
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+    }
+}
+
+// The common module's resources (shared assets + datagen output) are packaged
+// and placed on the dev-run classpath via this source set.
+sourceSets.main.resources {
+    srcDirs += commonGeneratedResources
+    srcDirs += commonMainResources
+    exclude '**/*.bbmodel'          // BlockBench project files
+    exclude '.cache/**'             // datagen cache files
+}
+
+def modVersion = project.mod_version
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    inputs.property 'version', modVersion
+    filesMatching('fabric.mod.json') {
+        expand 'version': modVersion
+    }
+}

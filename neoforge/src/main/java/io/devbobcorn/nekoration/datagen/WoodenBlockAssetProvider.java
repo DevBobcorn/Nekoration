@@ -521,7 +521,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
     private static Path resolveContainerTemplateModelRoot() {
         Path probe = Path.of("").toAbsolutePath();
         for (Path current = probe; current != null; current = current.getParent()) {
-            Path candidate = current.resolve("src/main/resources/assets/" + Nekoration.MODID + "/models/block/container");
+            Path candidate = current.resolve("common/src/main/resources/assets/" + Nekoration.MODID + "/models/block/container");
             if (Files.isDirectory(candidate)) {
                 return candidate;
             }

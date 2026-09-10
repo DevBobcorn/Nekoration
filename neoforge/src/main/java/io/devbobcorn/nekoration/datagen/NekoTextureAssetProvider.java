@@ -70,8 +70,10 @@ public final class NekoTextureAssetProvider implements DataProvider {
 
     public NekoTextureAssetProvider(PackOutput output) {
         this.templateTextureRoot = resolveTemplateTextureRoot();
-        Path assetsRoot = templateTextureRoot.getParent()
-                .resolve("src/generated/resources/assets/" + Nekoration.MODID + "/textures");
+        // Derive the texture output from the data run's --output folder so the
+        // provider follows it instead of a hardcoded source-tree location.
+        Path assetsRoot = output.getOutputFolder()
+                .resolve("assets/" + Nekoration.MODID + "/textures");
         this.generatedBlockTextureRoot = assetsRoot.resolve("block");
         this.generatedGuiTextureRoot = assetsRoot.resolve("gui");
     }
@@ -109,7 +111,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
 
     private void generateBiomesOPlentyFurnitureTextures(CachedOutput cachedOutput) throws IOException {
         Path furnitureDir = templateTextureRoot.getParent()
-                .resolve("src/main/resources/assets/" + Nekoration.MODID + "/textures/block/furniture");
+                .resolve("common/src/main/resources/assets/" + Nekoration.MODID + "/textures/block/furniture");
         Path paletteDir = templateTextureRoot.resolve(PLANK_PALETTE_DIR);
 
         for (NekoWood wood : NekoWood.values()) {

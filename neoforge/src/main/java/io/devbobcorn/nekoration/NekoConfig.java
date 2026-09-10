@@ -1,6 +1,7 @@
 package io.devbobcorn.nekoration;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
+import io.devbobcorn.nekoration.xplat.NekoConfigData;
 
 /**
  * Gameplay settings (server-synced where applicable).
@@ -40,6 +41,29 @@ public final class NekoConfig {
     public static final ModConfigSpec CLIENT_SPEC;
 
     public static final Client CLIENT;
+
+    /** Loader-agnostic view of the client config for common code. */
+    public static final NekoConfigData DATA = new NekoConfigData() {
+        @Override
+        public boolean useImageRendering() {
+            return CLIENT.useImageRendering.get();
+        }
+
+        @Override
+        public boolean simplifyRendering() {
+            return CLIENT.simplifyRendering.get();
+        }
+
+        @Override
+        public boolean debugMode() {
+            return CLIENT.debugMode.get();
+        }
+
+        @Override
+        public int maxUndoLimit() {
+            return CLIENT.maxUndoLimit.get();
+        }
+    };
 
     static {
         CLIENT = new Client(CLIENT_BUILDER);

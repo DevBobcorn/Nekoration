@@ -8,15 +8,15 @@
 
 The development of Nekoration remained halted in the past few years, and there has not been new official releases for Minecraft 1.20 and later during the time period.
 
-In the past few months, Nekoration has undergone a complete redesign and rewrite. The upgraded version will be known as v2, with revamped models and textures, new QoL features and more. Releases for NeoForge 1.21.1 are expected to be available in the upcoming months, and Forge 1.20.1 backport will soon follow.
+In the past few months, Nekoration has undergone a complete redesign and rewrite. The upgraded version will be known as v2, with revamped models and textures, new QoL features and more. Releases for Minecraft 1.21.1 are expected to be available in the upcoming months, and Minecraft 1.20.1 backport will soon follow.
 
 Here's a quick lookup table for you to check which version you can use for your game:
 
 | Minecraft Version |Nekoration Version                                                             |
 | ----------------- |------------------------------------------------------------------------------ |
 | 1.16.5-1.19.2     |v1 for Forge                                                                   |
-| 1.20.1            |<a href="https://www.curseforge.com/minecraft/mc-mods/nekoration-reborn" target="_blank" rel="noopener noreferrer">v1 unofficial port for Forge by Flechazo098</a>;<br>v2 Forge official backport planned |
-| 1.21.1            |Upcoming v2 for NeoForge, with built-in data upgrader                                   |
+| 1.20.1            |<a href="https://www.curseforge.com/minecraft/mc-mods/nekoration-reborn" target="_blank" rel="noopener noreferrer">v1 unofficial port for Forge by Flechazo098</a>;<br>v2 official backport planned |
+| 1.21.1            |Upcoming v2 for NeoForge and Fabric, with built-in data upgrader                                   |
 
 <div style="padding: 15px; border-left: 5px solid #d9534f; background-color: #fdf7f7; color: #b94a48; border-radius: 4px; margin: 10px 0;">
   ALWAYS backup your save before opening it in a new game instance!
@@ -25,7 +25,7 @@ Here's a quick lookup table for you to check which version you can use for your 
 Since v2 is a complete rewrite from scratch, many ids and data values have changed from the previous version. You can see <a href="https://github.com/DevBobcorn/Nekoration/blob/main/docs/Upgrade.md" target="_blank" rel="noopener noreferrer">here</a> for a technical breakdown of what has changed. A world data upgrader is implemented in Nekoration v2 to handle to data change automatically and you can just load in your old save with v1 mod and continue building. Do remember to backup your old save, just in case.
 
 ## <span style="color: #ff6600;">Introduction</span>  
-Nekoration is a <span style="color: #ff6600;">NeoForge</span> mod for Minecraft which adds lots of decorational stuff to the game, allowing players to have a wider choice when building &amp; creating.
+Nekoration is a <span style="color: #ff6600;">NeoForge</span> &amp; <span style="color: #00b09b;">Fabric</span> mod for Minecraft which adds lots of decorational stuff to the game, allowing players to have a wider choice when building &amp; creating.
 
 ## <span style="color: #ff9900;">About Its Name</span>  
 The name 'Nekoration' is a compound of 'cat' in Japanese(ねこ, neko) and 'decoration', suggesting that the mod is both ornamental and cats-friendly…&nbsp;&nbsp;^._.^= ∫

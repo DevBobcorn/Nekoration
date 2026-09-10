@@ -346,3 +346,33 @@ Sizing: Phase 1 is the bulk (registration facade + 36-file de-neoforging, but ~1
 - In WSL, let foojay resolve a Linux JDK 21 for toolchains, or run Gradle from the Windows side (`gradlew.bat`) to reuse the Microsoft JDK and existing caches; either is fine — builds must just stay consistent.
 - `.vscode/launch.json` currently points at MDG devlaunch files (`build/moddev/*Run*.txt`, `-Dfml.modFolders`) → neoforge-only; add per-module entries in Phase 4 (Loom generates its own dev-launch config too).
 - Keep the Tencent Gradle mirror in the wrapper.
+
+---
+
+## 12. Implementation status (updated 2026-09-10)
+
+Phases 0–3 are implemented and verified; Phase 4 polish items remain.
+
+**Done**
+
+- Phase 0: three-module build (`common`, `neoforge`, `fabric`); Loom 1.11.8 on Gradle 9.2.1 with configuration cache; BOP-style source injection in the root `build.gradle` (main compile only); datagen writes to `common/src/generated/resources`.
+- Phase 1: `xplat` layer (`NekoPlatform`/`NekoPlatformImpl`, `NekoRegistrar`, `RegistrySupplier`, `PayloadContext`, `NekoConfigData`); all 9+ registry classes rewritten on the facade and moved to common; every `net.neoforged` import removed from common (common compiles against NeoForm vanilla + mojmap); entries split into `NekorationNeoForge(Client)`; payloads live in common; `NekoConfig` (NeoForge `ModConfigSpec`) implements `NekoConfigData`.
+- Phase 2 (folded into Phase 1): `NekoClientSetup`, `NekoColorHandlers`, `NekoCreativeTabFilterClient`, placement-hint renderers all split into common logic + `neoforge.client.*` wiring; CT system split into a common core (`NekoCTModel`, `NekoCTRegistry`) plus per-platform shells (`NeoForgeCTModel` via model data; `FabricCTModel` via the Fabric renderer API — note: the plan §6 client-side-store idea was not viable since vanilla `getQuads` has no position, so the shells differ per loader instead).
+- Phase 3: `FabricRegistrar` (Registry.registerForHolder), `FabricNetwork`, `FabricConfig` (JSON), `NekorationFabric(Client)`, full client hooks (renderers, colors, layers, item properties, BEWLR, tooltip component, block outline, creative filter, CT, screens via reflection because vanilla `MenuScreens.register` is private and fabric removed `HandledScreens`); `nekoration.accesswidener` mirrors the common AT.
+- Verified: `:common:build` (vanilla-only), `:neoforge:build` + test, `:fabric:build`; `runServer` on both loaders reaches full startup; `runClient` on both reaches the title screen with zero missing models; `runData` output is diff-empty.
+
+**Divergences from the plan worth knowing**
+
+- `PaintingEntity` no longer uses `IEntityWithComplexSpawn`; the server sends a common `PaintingInitPayload` from `startSeenByPlayer`.
+- `PotBlock.canSustainPlant` (NeoForge `TriState`) was dropped; `FrameSideBlock` break-to-reconnect now goes through `playerWillDestroy`/`playerDestroy` (vanilla has no cancellable destroy hook); `CreativeModeTab` ordering uses registration order (vanilla has no `withTabsBefore`); `FireBlock`-based flammability registration moved to the platform modules.
+- Client-class references were purged from all server-loaded common classes (fabric's env check refuses to load them); the client messaging/handling logic lives in `ClientHelper`.
+- Hand-written assets (`assets/`, `data/`) moved from the neoforge module to `common/src/main/resources` so both loaders package them; the neoforge module keeps `nekoration.mixins.json` and the mods.toml template.
+- JEI `localRuntime` is disabled in `neoforge/build.gradle` (current JEI requires NeoForge 21.1.238+; the project pins 21.1.224). Hand-written recipe JSONs (`painting`/`palette`/`wallpaper`) were fixed to the 1.21.1 ingredient format.
+- Texture datagen no longer hardcodes a source-tree output path: `NekoTextureAssetProvider` derives its output root from the data run's `--output` (`PackOutput#getOutputFolder`), and both texture providers read their hand-written inputs from `common/src/main/resources` after the asset move. (A stale repo-root `src/generated/...` path briefly left orphaned BOP plank PNGs from a failed pre-fix datagen run — cleaned up.)
+
+**Remaining (Phase 4)**
+
+- Jade fabric artifact + plugin (kept neoforge-only for now, as the plan allows).
+- Publishing matrix (Minotaur/cursegradle per loader) and CI workflows.
+- Fabric CT visuals: compare against neoforge screenshots (the quad emission path uses `fromVanilla` + `spriteBake`; verify in-game and adjust if atlas mapping differs).
+- Fabric dev launch entries in `.vscode/launch.json` (Loom generates them on IDE sync; stale root-project entries were removed).

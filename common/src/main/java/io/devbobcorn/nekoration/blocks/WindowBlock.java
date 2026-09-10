@@ -1,0 +1,48 @@
+package io.devbobcorn.nekoration.blocks;
+
+import java.util.Collections;
+import java.util.List;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+
+/**
+ * Window block with connected textures.
+ */
+public class WindowBlock extends Block {
+
+    public WindowBlock(Properties settings) {
+        super(settings);
+        registerDefaultState(stateDefinition.any());
+    }
+
+    @Override
+    protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        return Collections.singletonList(new ItemStack(asItem()));
+    }
+
+    @Override
+    public boolean skipRendering(BlockState state, BlockState adjacentState, Direction side) {
+        return adjacentState.getBlock() instanceof WindowBlock;
+    }
+
+    @Override
+    public float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
+        return 0.5F;
+    }
+
+    @Override
+    protected boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+        return true;
+    }
+
+    @Override
+    protected int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
+        return 0;
+    }
+}

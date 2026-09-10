@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "pattern": [
+        "###",
+        "#0#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:bamboo"
+        },
+        "0": {
+            "item": "minecraft:white_wool"
+        }
+    },
+    "result": {
+        "id": "nekoration:painting",
+        "count": 1
+    }
+}

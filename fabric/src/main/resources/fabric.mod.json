@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "nekoration",
+  "version": "${version}",
+  "name": "Nekoration",
+  "description": "Decorate your world with furniture, windows and paintings.",
+  "authors": [
+    "DevBobcorn"
+  ],
+  "license": "MIT License",
+  "environment": "*",
+  "accessWidener": "nekoration.accesswidener",
+  "entrypoints": {
+    "main": [
+      "io.devbobcorn.nekoration.fabric.NekorationFabric"
+    ],
+    "client": [
+      "io.devbobcorn.nekoration.fabric.NekorationFabricClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "biomesoplenty": "*",
+    "jade": "*"
+  }
+}

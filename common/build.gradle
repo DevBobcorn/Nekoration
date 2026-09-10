@@ -1,0 +1,22 @@
+plugins {
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+
+base {
+    archivesName = 'nekoration-common'
+}
+
+// Datagen output lives here so every loader module packages the same generated
+// resources (the data run in the neoforge module writes into this folder).
+sourceSets.main.resources {
+    setSrcDirs(['src/generated/resources', 'src/main/resources'])
+    exclude '**/*.bbmodel'          // BlockBench project files
+    exclude '.cache/**'             // datagen cache files
+}
+
+// Common compiles against vanilla Minecraft only (NeoForm = MC + official
+// mappings). No NeoForge API is available here, which forces clean abstraction.
+neoForge {
+    neoFormVersion = project.neo_form_version
+    accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+}

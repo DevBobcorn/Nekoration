@@ -1,0 +1,5 @@
+accessWidener v2 named
+
+# Mirrors META-INF/accesstransformer.cfg from the common module.
+
+accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier

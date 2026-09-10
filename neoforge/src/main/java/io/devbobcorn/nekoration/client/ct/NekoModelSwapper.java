@@ -3,7 +3,6 @@ package io.devbobcorn.nekoration.client.ct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
@@ -25,20 +24,16 @@ public final class NekoModelSwapper {
 
     private static void onModelBake(ModelEvent.ModifyBakingResult event) {
         Map<ModelResourceLocation, BakedModel> modelRegistry = event.getModels();
-        for (Map.Entry<ResourceLocation, Function<BakedModel, ? extends BakedModel>> entry : NekoCTRegistry.getModelFactories()
+        for (Map.Entry<ResourceLocation, NekoConnectedTextureBehaviour> entry : NekoCTRegistry.getBehaviours()
                 .entrySet()) {
-            swapModels(modelRegistry, getAllBlockStateModelLocations(entry.getKey()), entry.getValue());
-        }
-    }
-
-    private static void swapModels(Map<ModelResourceLocation, BakedModel> modelRegistry, List<ModelResourceLocation> locations,
-            Function<BakedModel, ? extends BakedModel> factory) {
-        for (ModelResourceLocation location : locations) {
-            BakedModel current = modelRegistry.get(location);
-            if (current == null) {
-                continue;
+            List<ModelResourceLocation> locations = getAllBlockStateModelLocations(entry.getKey());
+            for (ModelResourceLocation location : locations) {
+                BakedModel current = modelRegistry.get(location);
+                if (current == null) {
+                    continue;
+                }
+                modelRegistry.put(location, new NeoForgeCTModel(current, entry.getValue()));
             }
-            modelRegistry.put(location, factory.apply(current));
         }
     }
 
