@@ -48,22 +48,18 @@ public final class FabricCTModel implements BakedModel, FabricBakedModel {
                     continue;
                 }
                 emitter.fromVanilla(quad, material(), quad.getDirection());
-                // Normalize UVs against the original sprite...
-                emitter.spriteBake(quad.getSprite(), net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView.BAKE_NORMALIZED);
+                // Vanilla quads already carry final, normalized atlas UVs.
                 int index = data.get(quad.getDirection());
                 NekoCTSpriteShiftEntry shift = index == -1 ? null
                         : core.behaviour().getShift(state, quad.getDirection(), quad.getSprite());
                 if (shift != null && quad.getSprite() == shift.getOriginal()) {
                     for (int vertex = 0; vertex < 4; vertex++) {
-                        float u = emitter.spriteU(vertex, 0);
-                        float v = emitter.spriteV(vertex, 0);
-                        // Sprite shift math uses [0..16] sprite-local coordinates.
-                        emitter.sprite(vertex, 0,
-                                shift.getTargetU(u * 16, index) / 16.0F,
-                                shift.getTargetV(v * 16, index) / 16.0F);
+                        float u = emitter.u(vertex);
+                        float v = emitter.v(vertex);
+                        // Sprite shift math un-interpolates from the original sprite's
+                        // atlas coordinates and returns target sprite atlas coordinates.
+                        emitter.uv(vertex, shift.getTargetU(u, index), shift.getTargetV(v, index));
                     }
-                    // Bind the target sprite region.
-                    emitter.spriteBake(shift.getTarget(), net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView.BAKE_NORMALIZED);
                 }
                 emitter.emit();
             }
