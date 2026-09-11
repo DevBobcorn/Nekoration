@@ -18,10 +18,14 @@ subprojects {
     }
 
     if (it.name != 'common') {
-        // So IDEs resolve common classes while editing platform sources.
+        // Keep the project dependency for the compiler and the Java language
+        // server: the platform source sets must include common sources so VSCode
+        // can resolve symbols while editing Fabric/NeoForge sources.
         dependencies {
             compileOnly project(':common')
         }
+
+        sourceSets.main.java.srcDir project(':common').sourceSets.main.java
 
         // Recompile the common sources together with the platform sources.
         // (Only the main compile; test classes get common classes via the
