@@ -26,4 +26,13 @@ public interface RegistrySupplier<T> extends Supplier<T> {
     default T getOrNull() {
         return get();
     }
+
+    /**
+     * Reinterprets this supplier's key as a key of the given registry type.
+     * Keys are name+registry pairs with no static type at runtime, so this is safe.
+     */
+    @SuppressWarnings("unchecked")
+    default <U> ResourceKey<U> castKey() {
+        return (ResourceKey<U>) getKey();
+    }
 }

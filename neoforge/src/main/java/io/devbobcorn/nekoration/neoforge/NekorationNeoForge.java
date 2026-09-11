@@ -5,7 +5,6 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import io.devbobcorn.nekoration.NekoConfig;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.neoforge.xplat.NeoForgeRegistrar;

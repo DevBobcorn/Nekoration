@@ -13,7 +13,6 @@ import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeablePotBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.CementBlockRegistration;
-import io.devbobcorn.nekoration.xplat.RegistrySupplier;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import net.minecraft.client.color.block.BlockColor;

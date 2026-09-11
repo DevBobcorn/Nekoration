@@ -2,7 +2,6 @@ package io.devbobcorn.nekoration.client.creative;
 
 import io.devbobcorn.nekoration.HalfTimberCreativeTabOrdering;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
-import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.NekoStone;
 import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.blocks.OrnamentCategory;

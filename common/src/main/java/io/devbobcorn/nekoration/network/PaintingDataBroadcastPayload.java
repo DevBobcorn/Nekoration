@@ -1,7 +1,5 @@
 package io.devbobcorn.nekoration.network;
 
-import com.mojang.logging.LogUtils;
-
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.client.ClientHelper;
 import net.minecraft.network.FriendlyByteBuf;
@@ -9,7 +7,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import io.devbobcorn.nekoration.xplat.PayloadContext;
-import org.slf4j.Logger;
 
 /**
  * Server -> client sync packet for a part of a painting's pixel data.
@@ -18,8 +15,6 @@ import org.slf4j.Logger;
  */
 public record PaintingDataBroadcastPayload(int paintingId, byte partX, byte partY, byte partW, byte partH,
         int[] pixels, int compositeHash) implements CustomPacketPayload {
-
-    private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final Type<PaintingDataBroadcastPayload> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "painting_data_broadcast"));

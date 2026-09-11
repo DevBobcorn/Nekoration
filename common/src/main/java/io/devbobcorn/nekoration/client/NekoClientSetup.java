@@ -38,7 +38,7 @@ public final class NekoClientSetup {
     }
 
     /** Registers block-entity and entity renderers through the platform hook. */
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("rawtypes")
     public static void registerRenderers(
             BiConsumer<BlockEntityType<?>, BlockEntityRendererProvider> blockEntityRegistrar,
             BiConsumer<EntityType<?>, EntityRendererProvider> entityRegistrar) {
@@ -56,15 +56,15 @@ public final class NekoClientSetup {
     }
 
     /** Registers menu screens through the platform hook. */
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public static void registerScreens(BiConsumer<net.minecraft.world.inventory.MenuType<?>, MenuScreenConstructor> registrar) {
+    public static void registerScreens(
+            BiConsumer<net.minecraft.world.inventory.MenuType<?>, MenuScreenConstructor<?, ?>> registrar) {
         registrar.accept(ModMenuTypes.EASEL_MENU.get(),
-                (MenuScreenConstructor) (menu, inventory, title) -> new EaselMenuScreen(
-                        (io.devbobcorn.nekoration.blocks.containers.EaselMenuMenu) menu, inventory, title));
+                (MenuScreenConstructor<io.devbobcorn.nekoration.blocks.containers.EaselMenuMenu, EaselMenuScreen>) (menu, inventory, title) -> new EaselMenuScreen(
+                        menu, inventory, title));
     }
 
     /** Registers the item model override properties through the platform hook. */
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("deprecation")
     public static void registerItemProperties(ItemPropertyRegistrar registrar) {
         ItemPropertyFunction color = (stack, level, entity, seed) ->
                 DyeableBlockItem.getColor(stack).getNbtId();
@@ -79,6 +79,7 @@ public final class NekoClientSetup {
     /** Platform hook: item + override id + property function. */
     @FunctionalInterface
     public interface ItemPropertyRegistrar {
+        @SuppressWarnings("deprecation")
         void register(Item item, ResourceLocation id, ItemPropertyFunction property);
     }
 }

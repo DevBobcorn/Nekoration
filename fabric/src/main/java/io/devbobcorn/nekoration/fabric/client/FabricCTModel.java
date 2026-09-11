@@ -3,7 +3,6 @@ package io.devbobcorn.nekoration.fabric.client;
 import java.util.function.Supplier;
 
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
-import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -23,7 +22,7 @@ import io.devbobcorn.nekoration.client.ct.NekoCTSpriteShiftEntry;
  * computed from the render view at quad-emission time (the Fabric renderer
  * API provides the position, vanilla {@code getQuads} does not).
  */
-public final class FabricCTModel implements BakedModel, FabricBakedModel {
+public final class FabricCTModel implements BakedModel {
     private final NekoCTModel core;
     private RenderMaterial material;
 
@@ -90,7 +89,10 @@ public final class FabricCTModel implements BakedModel, FabricBakedModel {
 
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<RandomSource> randomSupplier, RenderContext context) {
-        context.fallbackConsumer().accept(core.originalModel());
+        // Route through the wrapped model's own emit logic (the non-deprecated
+        // replacement for the removed fallbackConsumer()). Fabric API
+        // interface-injects FabricBakedModel onto BakedModel at compile time.
+        core.originalModel().emitItemQuads(stack, randomSupplier, context);
     }
 
     // BakedModel delegation

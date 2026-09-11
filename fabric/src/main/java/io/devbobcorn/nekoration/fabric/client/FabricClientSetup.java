@@ -1,11 +1,9 @@
 package io.devbobcorn.nekoration.fabric.client;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
 
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -21,7 +19,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.phys.BlockHitResult;
-import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.client.NekoClientSetup;
 import io.devbobcorn.nekoration.client.NekoColorHandlers;
 import io.devbobcorn.nekoration.client.creative.NekoCreativeTabFilterClient;
@@ -40,8 +37,12 @@ public final class FabricClientSetup {
     }
 
     public static void initialize() {
-        // Renderers via Fabric's registries.
-        NekoClientSetup.registerRenderers(BlockEntityRendererRegistry::register, EntityRendererRegistry::register);
+        // Renderers: block-entity renderers through vanilla's registry (widened
+        // by Fabric's transitive access wideners), entity renderers through
+        // Fabric's own registry hook.
+        NekoClientSetup.registerRenderers(
+                net.minecraft.client.renderer.blockentity.BlockEntityRenderers::register,
+                EntityRendererRegistry::register);
         // Model layers.
         NekoClientSetup.registerLayerDefinitions((layer, supplier) -> EntityModelLayerRegistry.registerModelLayer(layer, supplier::get));
         // Item model overrides (on Fabric the public overload takes a clamped provider).
@@ -94,7 +95,7 @@ public final class FabricClientSetup {
                 io.devbobcorn.nekoration.network.PaintingInitPayload.STREAM_CODEC);
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 io.devbobcorn.nekoration.network.PaintingDataBroadcastPayload.TYPE,
-                (payload, context) -> payload.handle(payload, new io.devbobcorn.nekoration.xplat.PayloadContext() {
+                (payload, context) -> io.devbobcorn.nekoration.network.PaintingDataBroadcastPayload.handle(payload, new io.devbobcorn.nekoration.xplat.PayloadContext() {
                     @Override
                     public net.minecraft.world.entity.player.Player player() {
                         return context.player();
@@ -107,7 +108,7 @@ public final class FabricClientSetup {
                 }));
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 io.devbobcorn.nekoration.network.PaintingInitPayload.TYPE,
-                (payload, context) -> payload.handle(payload, new io.devbobcorn.nekoration.xplat.PayloadContext() {
+                (payload, context) -> io.devbobcorn.nekoration.network.PaintingInitPayload.handle(payload, new io.devbobcorn.nekoration.xplat.PayloadContext() {
                     @Override
                     public net.minecraft.world.entity.player.Player player() {
                         return context.player();
@@ -148,7 +149,6 @@ public final class FabricClientSetup {
      * the minecraft package, so the registration happens reflectively (the
      * NeoForge build uses its own event instead).
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
     private static void registerScreens() {
         try {
             java.lang.reflect.Method register = null;

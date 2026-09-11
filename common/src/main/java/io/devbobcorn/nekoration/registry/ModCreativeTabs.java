@@ -7,7 +7,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
-import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.HalfTimberCreativeTabOrdering;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.xplat.NekoRegistrar;
@@ -15,7 +14,9 @@ import io.devbobcorn.nekoration.xplat.RegistrySupplier;
 
 /**
  * Creative mode tabs. Uses the vanilla builder overload (row + column) so the
- * same code compiles on every loader.
+ * same code compiles on every loader. (Mojang marks that overload deprecated
+ * in the 1.21.1 mappings, but it remains the only cross-loader-compatible
+ * builder entry point, so deprecation is intentionally suppressed.)
  */
 public final class ModCreativeTabs {
     public static RegistrySupplier<CreativeModeTab> NEKORATION_CEMENT_BLOCKS_TAB;

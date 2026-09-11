@@ -1,16 +1,12 @@
 package io.devbobcorn.nekoration.fabric.network;
 
-import java.util.List;
-
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import io.devbobcorn.nekoration.network.EaselMenuUpdatePayload;
-import io.devbobcorn.nekoration.network.PaintingDataBroadcastPayload;
 import io.devbobcorn.nekoration.network.PaintingDataUpdatePayload;
-import io.devbobcorn.nekoration.network.PaintingInitPayload;
 import io.devbobcorn.nekoration.network.PaintingSizeUpdatePayload;
 import io.devbobcorn.nekoration.network.PaletteUpdatePayload;
 import io.devbobcorn.nekoration.xplat.PayloadContext;
@@ -31,13 +27,13 @@ public final class FabricNetwork {
         PayloadTypeRegistry.playC2S().register(PaletteUpdatePayload.TYPE, PaletteUpdatePayload.STREAM_CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(EaselMenuUpdatePayload.TYPE,
-                (payload, context) -> payload.handle(payload, serverContext(context.player())));
+                (payload, context) -> EaselMenuUpdatePayload.handle(payload, serverContext(context.player())));
         ServerPlayNetworking.registerGlobalReceiver(PaintingDataUpdatePayload.TYPE,
-                (payload, context) -> payload.handle(payload, serverContext(context.player())));
+                (payload, context) -> PaintingDataUpdatePayload.handle(payload, serverContext(context.player())));
         ServerPlayNetworking.registerGlobalReceiver(PaintingSizeUpdatePayload.TYPE,
-                (payload, context) -> payload.handle(payload, serverContext(context.player())));
+                (payload, context) -> PaintingSizeUpdatePayload.handle(payload, serverContext(context.player())));
         ServerPlayNetworking.registerGlobalReceiver(PaletteUpdatePayload.TYPE,
-                (payload, context) -> payload.handle(payload, serverContext(context.player())));
+                (payload, context) -> PaletteUpdatePayload.handle(payload, serverContext(context.player())));
     }
 
     public static void sendToClient(ServerPlayer player, CustomPacketPayload payload) {

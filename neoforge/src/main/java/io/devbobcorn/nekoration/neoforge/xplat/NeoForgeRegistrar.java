@@ -9,7 +9,6 @@ import java.util.function.Supplier;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -24,29 +23,31 @@ public final class NeoForgeRegistrar implements NekoRegistrar {
     private final Map<ResourceKey<? extends Registry<?>>, DeferredRegister<?>> registers = new HashMap<>();
     private final List<DeferredRegister<?>> ordered = new ArrayList<>();
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    private DeferredRegister<?> registrarFor(ResourceKey<? extends Registry<?>> registryKey) {
+    private <T> DeferredRegister<T> registrarFor(ResourceKey<? extends Registry<T>> registryKey) {
         DeferredRegister<?> existing = registers.get(registryKey);
         if (existing != null) {
-            return existing;
+            @SuppressWarnings("unchecked")
+            DeferredRegister<T> cast = (DeferredRegister<T>) existing;
+            return cast;
         }
-        DeferredRegister<?> created = DeferredRegister.create((ResourceKey) registryKey, Nekoration.MODID);
+        DeferredRegister<T> created = DeferredRegister.create(registryKey, Nekoration.MODID);
         registers.put(registryKey, created);
         ordered.add(created);
         return created;
     }
 
     @Override
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("unchecked")
     public <T, R extends T> RegistrySupplier<R> register(ResourceKey<Registry<T>> registry, String name,
             Supplier<R> factory) {
-        DeferredRegister register = registrarFor((ResourceKey) registry);
+        DeferredRegister<T> register = registrarFor(registry);
         DeferredHolder<T, R> holder = register.register(name, factory);
-        return new NeoForgeRegistrySupplier<>(holder);
+        // R extends T, so reading values through RegistrySupplier<R> is sound;
+        // the holder itself already produces R instances at runtime.
+        return (RegistrySupplier<R>) new NeoForgeRegistrySupplier<T>(holder);
     }
 
     @Override
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public <M extends net.minecraft.world.inventory.AbstractContainerMenu> RegistrySupplier<net.minecraft.world.inventory.MenuType<M>> menuType(
             String name, MenuTypeFactory<M> factory) {
         return register(Registries.MENU, name,

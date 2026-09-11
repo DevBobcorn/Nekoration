@@ -218,13 +218,14 @@ public class TallDoorBlock extends NekoDoorBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation") // Vanilla's own getSeed impl calls Mth.getSeed; no replacement exists.
     protected long getSeed(BlockState state, BlockPos pos) {
         int offset = switch (state.getValue(SEGMENT)) {
             case LOWER -> 0;
             case MIDDLE -> 1;
             case UPPER -> 2;
         };
-        return Mth.getSeed(pos.getX(), pos.below(offset).getY(), pos.getZ());
+        return Mth.getSeed(pos.below(offset));
     }
 
     @Override

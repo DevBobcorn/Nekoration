@@ -3,8 +3,6 @@ package io.devbobcorn.nekoration.items;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.annotation.Nullable;
-
 import io.devbobcorn.nekoration.client.ClientHelper;
 import io.devbobcorn.nekoration.entities.PaintingEntity;
 

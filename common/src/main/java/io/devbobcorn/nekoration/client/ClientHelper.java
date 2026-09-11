@@ -10,11 +10,9 @@ import io.devbobcorn.nekoration.network.PaintingInitPayload;
 
 import java.awt.Color;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 

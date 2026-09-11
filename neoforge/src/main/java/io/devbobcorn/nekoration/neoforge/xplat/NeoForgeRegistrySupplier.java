@@ -10,18 +10,15 @@ import io.devbobcorn.nekoration.xplat.RegistrySupplier;
  * Registry supplier wrapping a NeoForge {@link DeferredHolder}.
  */
 final class NeoForgeRegistrySupplier<T> implements RegistrySupplier<T> {
-    @SuppressWarnings("rawtypes")
-    private final DeferredHolder holder;
+    private final DeferredHolder<T, ? extends T> holder;
 
-    @SuppressWarnings("rawtypes")
-    NeoForgeRegistrySupplier(DeferredHolder holder) {
+    NeoForgeRegistrySupplier(DeferredHolder<T, ? extends T> holder) {
         this.holder = holder;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public T get() {
-        return (T) holder.get();
+        return holder.get();
     }
 
     @Override
@@ -30,14 +27,14 @@ final class NeoForgeRegistrySupplier<T> implements RegistrySupplier<T> {
     }
 
     @Override
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public ResourceKey<T> getKey() {
-        return (ResourceKey<T>) holder.getKey();
+        return holder.getKey();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Holder<T> holder() {
+        // DeferredHolder<T, ? extends T> is a Holder<T> already; the cast is
+        // only needed because of the wildcard.
         return (Holder<T>) holder;
     }
 }

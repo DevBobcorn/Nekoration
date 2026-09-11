@@ -16,16 +16,16 @@ public final class NekorationNetwork {
     public static void register(final RegisterPayloadHandlersEvent event) {
         final var registrar = event.registrar("1");
         registrar.playToServer(EaselMenuUpdatePayload.TYPE, EaselMenuUpdatePayload.STREAM_CODEC,
-                (payload, ctx) -> payload.handle(payload, adapt(ctx)));
+                (payload, ctx) -> EaselMenuUpdatePayload.handle(payload, adapt(ctx)));
         // Painting...
         registrar.playToServer(PaintingDataUpdatePayload.TYPE, PaintingDataUpdatePayload.STREAM_CODEC,
-                (payload, ctx) -> payload.handle(payload, adapt(ctx)));
+                (payload, ctx) -> PaintingDataUpdatePayload.handle(payload, adapt(ctx)));
         registrar.playToServer(PaintingSizeUpdatePayload.TYPE, PaintingSizeUpdatePayload.STREAM_CODEC,
-                (payload, ctx) -> payload.handle(payload, adapt(ctx)));
+                (payload, ctx) -> PaintingSizeUpdatePayload.handle(payload, adapt(ctx)));
         registrar.playToServer(PaletteUpdatePayload.TYPE, PaletteUpdatePayload.STREAM_CODEC,
-                (payload, ctx) -> payload.handle(payload, adapt(ctx)));
+                (payload, ctx) -> PaletteUpdatePayload.handle(payload, adapt(ctx)));
         registrar.playToClient(PaintingDataBroadcastPayload.TYPE, PaintingDataBroadcastPayload.STREAM_CODEC,
-                (payload, ctx) -> payload.handle(payload, adapt(ctx)));
+                (payload, ctx) -> PaintingDataBroadcastPayload.handle(payload, adapt(ctx)));
     }
 
     private static PayloadContext adapt(IPayloadContext context) {
