@@ -56,12 +56,20 @@ processResources {
 }
 
 repositories {
+    maven { url = "https://api.modrinth.com/maven" }
     // JEI and other BlameJared-hosted mods.
     maven { url = "https://maven.blamejared.com/" }
 }
 
 // JEI for runtime testing only: available in the dev game instance, but not
 // a compile or published dependency (modLocalRuntime, not modImplementation).
+// Biomes O' Plenty and its required libraries likewise, for world-gen testing.
 dependencies {
     modLocalRuntime "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
+    // Jade for runtime testing (no compile-time use on Fabric; the Jade plugin is NeoForge-only).
+    modLocalRuntime "maven.modrinth:jade:${jade_version}+fabric"
+
+    modLocalRuntime "maven.modrinth:biomes-o-plenty:${biomes_o_plenty_modrinth_version_id_fabric}"
+    modLocalRuntime "maven.modrinth:glitchcore:${glitchcore_modrinth_version_id_fabric}"
+    modLocalRuntime "maven.modrinth:terrablender:${terrablender_modrinth_version_id_fabric}"
 }
