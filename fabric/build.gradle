@@ -59,6 +59,8 @@ repositories {
     maven { url = "https://api.modrinth.com/maven" }
     // JEI and other BlameJared-hosted mods.
     maven { url = "https://maven.blamejared.com/" }
+    // Night Config and TypeResolver libraries.
+    mavenCentral()
 }
 
 // JEI for runtime testing only: available in the dev game instance, but not
@@ -72,4 +74,12 @@ dependencies {
     modLocalRuntime "maven.modrinth:biomes-o-plenty:${biomes_o_plenty_modrinth_version_id_fabric}"
     modLocalRuntime "maven.modrinth:glitchcore:${glitchcore_modrinth_version_id_fabric}"
     modLocalRuntime "maven.modrinth:terrablender:${terrablender_modrinth_version_id_fabric}"
+
+    // TerraBlender and GlitchCore bundle Night Config and TypeResolver as
+    // jar-in-jar for production, but Loom does not extract nested jars from
+    // external dependencies, so add them directly for the dev game instance
+    // (same versions as the bundled JiJs; not packaged with the mod itself).
+    runtimeOnly "com.electronwill.night-config:core:3.6.7"
+    runtimeOnly "com.electronwill.night-config:toml:3.6.7"
+    runtimeOnly "net.jodah:typetools:0.6.3"
 }
