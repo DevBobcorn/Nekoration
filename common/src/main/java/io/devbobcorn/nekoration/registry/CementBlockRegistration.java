@@ -45,7 +45,7 @@ public final class CementBlockRegistration {
     public static RegistrySupplier<DyeablePotBlock> CEMENT_POT;
     public static RegistrySupplier<DyeablePotBlock> CEMENT_PLANTER;
 
-    private static final String TAB_ICON_ITEM_ID = "paneled_cement";
+    private static final String TAB_ICON_ITEM_ID = "paneled_cement_base";
     private static RegistrySupplier<Item> tabIconItem;
 
     private static List<RegistrySupplier<Item>> blockItems;
