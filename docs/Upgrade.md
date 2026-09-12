@@ -74,9 +74,9 @@ Stone Blocks in v1 are reimplemented as Cement Blocks. Note that in v1 the dye c
 
 Not to be confused with Stone Blocks in v2, those are not relavant to Cement Blocks.
 
-When upgrading the data, turn `stone_frame`, `stone_frame_bottom`, `stone_pillar`, `stone_doric`, `stone_ionic`, `stone_corinthian` and `stone_pillar_bottom` all into `paneled_cement`. For these blocks whose id ends with `_bottom` from v1 data, set their `vertical_connection` property set to `s0` in new block data.
+When upgrading the data, `stone_frame` becomes the vertically connected `paneled_cement`, and `stone_pillar`, `stone_doric`, `stone_ionic` and `stone_corinthian` become the vertically connected `cement_pillar_simple`, `cement_pillar_doric`, `cement_pillar_ionic` and `cement_pillar_corinthian`, so preserve their `vertical_connection` property. The v1 bottom-cap blocks `stone_frame_bottom` and `stone_pillar_bottom` become the non-connected `paneled_cement_base` and `cement_pillar_base`, so drop their connection data.
 
-`stone_base` becomes `cement`, which is also vertically connected, so preserve its `vertical_connection` property. `stone_base_bottom` becomes the non-connected `trimmed_cement`, so drop its connection data. The v1 pots have no properties besides `level`.
+`stone_base` becomes `cement`, which is also vertically connected, so preserve its `vertical_connection` property. `stone_base_bottom` becomes the non-connected `cement_base`, so drop its connection data. The v1 pots have no properties besides `level`.
 
 **Beware of id collisions:** v2 also registers new, non-dyeable natural stone blocks named `stone_pot` and `stone_planter` (per-stone variants of the new Stone Blocks family). These are unrelated to the v1 blocks of the same names; always remap the v1 ids to the Cement Block ids instead of keeping them.
 
@@ -85,14 +85,14 @@ Block id mapping:
 |Old Name|Old Id|New Name|New Id|
 |--------|------|--------|------|
 |{Color} Stone Base|stone_base|{Color} Cement|cement|
-|{Color} Stone Base Bottom|stone_base_bottom|{Color} Trimmed Cement|trimmed_cement|
+|{Color} Stone Base Bottom|stone_base_bottom|{Color} Cement Base|cement_base|
 |{Color} Stone Frame|stone_frame|{Color} Paneled Cement|paneled_cement|
-|{Color} Stone Frame Bottom|stone_frame_bottom|{Color} Paneled Cement|paneled_cement|
-|{Color} Stone Pillar|stone_pillar|{Color} Paneled Cement|paneled_cement|
-|{Color} Doric Stone Pillar|stone_doric|{Color} Paneled Cement|paneled_cement|
-|{Color} Ionic Stone Pillar|stone_ionic|{Color} Paneled Cement|paneled_cement|
-|{Color} Corinthian Stone Pillar|stone_corinthian|{Color} Paneled Cement|paneled_cement|
-|{Color} Stone Pillar Bottom|stone_pillar_bottom|{Color} Paneled Cement|paneled_cement|
+|{Color} Stone Frame Bottom|stone_frame_bottom|{Color} Cement Base|paneled_cement_base|
+|{Color} Stone Pillar|stone_pillar|{Color} Simple Cement Pillar|cement_pillar_simple|
+|{Color} Doric Stone Pillar|stone_doric|{Color} Doric Cement Pillar|cement_pillar_doric|
+|{Color} Ionic Stone Pillar|stone_ionic|{Color} Ionic Cement Pillar|cement_pillar_ionic|
+|{Color} Corinthian Stone Pillar|stone_corinthian|{Color} Corinthian Cement Pillar|cement_pillar_corinthian|
+|{Color} Stone Pillar Bottom|stone_pillar_bottom|{Color} Paneled Cement|cement_pillar_base|
 |{Color} Layered Stone|stone_layered|{Color} Layered Cement|layered_cement|
 |{Color} Stone Pot|stone_pot|{Color} Cement Pot|cement_pot|
 |{Color} Stone Planter|stone_planter|{Color} Cement Planter|cement_planter|

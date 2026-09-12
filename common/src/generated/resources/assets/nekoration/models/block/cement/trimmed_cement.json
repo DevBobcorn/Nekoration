@@ -1,7 +1,0 @@
-{
-  "parent": "nekoration:block/cement/tintable_column",
-  "textures": {
-    "end": "nekoration:block/cement/cement_top",
-    "side": "nekoration:block/cement/trimmed_cement"
-  }
-}

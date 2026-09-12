@@ -24,11 +24,19 @@ import net.minecraft.world.level.block.Blocks;
 
 public final class CementBlockRegistration {
     private static final List<String> FULL_CUBE_BLOCK_IDS = List.of(
-        "cement", "trimmed_cement", "paneled_cement", "layered_cement");
+        "cement", "cement_base", "paneled_cement", "paneled_cement_base",
+        "cement_pillar_simple", "cement_pillar_doric", "cement_pillar_ionic",
+        "cement_pillar_corinthian", "cement_pillar_base", "layered_cement");
 
     public static RegistrySupplier<DyeableVerticalConnectedBlock> CEMENT;
-    public static RegistrySupplier<DyeableBlock> TRIMMED_CEMENT;
+    public static RegistrySupplier<DyeableBlock> CEMENT_BASE;
     public static RegistrySupplier<DyeableVerticalConnectedBlock> PANELED_CEMENT;
+    public static RegistrySupplier<DyeableBlock> PANELED_CEMENT_BASE;
+    public static RegistrySupplier<DyeableVerticalConnectedBlock> CEMENT_PILLAR_SIMPLE;
+    public static RegistrySupplier<DyeableVerticalConnectedBlock> CEMENT_PILLAR_DORIC;
+    public static RegistrySupplier<DyeableVerticalConnectedBlock> CEMENT_PILLAR_IONIC;
+    public static RegistrySupplier<DyeableVerticalConnectedBlock> CEMENT_PILLAR_CORINTHIAN;
+    public static RegistrySupplier<DyeableBlock> CEMENT_PILLAR_BASE;
     public static RegistrySupplier<DyeableBlock> LAYERED_CEMENT;
     public static RegistrySupplier<DyeableHorizontalConnectedBlock> CEMENT_FRAME_HEAD;
     public static RegistrySupplier<DyeableHorizontalConnectedBlock> CEMENT_FRAME_PEAK;
@@ -52,10 +60,22 @@ public final class CementBlockRegistration {
     public static void register(NekoRegistrar registrar) {
     CEMENT = registrar.block("cement", () -> new DyeableVerticalConnectedBlock(
         Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), VerticalConnectedBlock.ConnectionType.PILLAR, false));
-    TRIMMED_CEMENT = registrar.block("trimmed_cement",
+    CEMENT_BASE = registrar.block("cement_base",
         () -> new DyeableBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
     PANELED_CEMENT = registrar.block("paneled_cement", () -> new DyeableVerticalConnectedBlock(
         Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), VerticalConnectedBlock.ConnectionType.PILLAR, false));
+    PANELED_CEMENT_BASE = registrar.block("paneled_cement_base",
+        () -> new DyeableBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
+    CEMENT_PILLAR_SIMPLE = registrar.block("cement_pillar_simple", () -> new DyeableVerticalConnectedBlock(
+        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), VerticalConnectedBlock.ConnectionType.PILLAR, false));
+    CEMENT_PILLAR_DORIC = registrar.block("cement_pillar_doric", () -> new DyeableVerticalConnectedBlock(
+        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), VerticalConnectedBlock.ConnectionType.PILLAR, false));
+    CEMENT_PILLAR_IONIC = registrar.block("cement_pillar_ionic", () -> new DyeableVerticalConnectedBlock(
+        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), VerticalConnectedBlock.ConnectionType.PILLAR, false));
+    CEMENT_PILLAR_CORINTHIAN = registrar.block("cement_pillar_corinthian", () -> new DyeableVerticalConnectedBlock(
+        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), VerticalConnectedBlock.ConnectionType.PILLAR, false));
+    CEMENT_PILLAR_BASE = registrar.block("cement_pillar_base",
+        () -> new DyeableBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
     LAYERED_CEMENT = registrar.block("layered_cement",
         () -> new DyeableBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
     CEMENT_FRAME_HEAD = registrar.block("cement_frame_head", () -> new DyeableHorizontalConnectedBlock(
@@ -73,8 +93,14 @@ public final class CementBlockRegistration {
 
     blockItems = List.of(
         registerBlockItem(registrar, "cement", CEMENT),
-        registerBlockItem(registrar, "trimmed_cement", TRIMMED_CEMENT),
+        registerBlockItem(registrar, "cement_base", CEMENT_BASE),
         registerBlockItem(registrar, "paneled_cement", PANELED_CEMENT),
+        registerBlockItem(registrar, "paneled_cement_base", PANELED_CEMENT_BASE),
+        registerBlockItem(registrar, "cement_pillar_simple", CEMENT_PILLAR_SIMPLE),
+        registerBlockItem(registrar, "cement_pillar_doric", CEMENT_PILLAR_DORIC),
+        registerBlockItem(registrar, "cement_pillar_ionic", CEMENT_PILLAR_IONIC),
+        registerBlockItem(registrar, "cement_pillar_corinthian", CEMENT_PILLAR_CORINTHIAN),
+        registerBlockItem(registrar, "cement_pillar_base", CEMENT_PILLAR_BASE),
         registerBlockItem(registrar, "layered_cement", LAYERED_CEMENT),
         registerBlockItem(registrar, "cement_frame_head", CEMENT_FRAME_HEAD),
         registerBlockItem(registrar, "cement_frame_peak", CEMENT_FRAME_PEAK),
@@ -85,8 +111,14 @@ public final class CementBlockRegistration {
 
     cementBlocks = List.of(
         CEMENT,
-        TRIMMED_CEMENT,
+        CEMENT_BASE,
         PANELED_CEMENT,
+        PANELED_CEMENT_BASE,
+        CEMENT_PILLAR_SIMPLE,
+        CEMENT_PILLAR_DORIC,
+        CEMENT_PILLAR_IONIC,
+        CEMENT_PILLAR_CORINTHIAN,
+        CEMENT_PILLAR_BASE,
         LAYERED_CEMENT,
         CEMENT_FRAME_HEAD,
         CEMENT_FRAME_PEAK,
@@ -127,8 +159,14 @@ public final class CementBlockRegistration {
 
     public static boolean isFullCube(Block block) {
     return block == CEMENT.get()
-        || block == TRIMMED_CEMENT.get()
+        || block == CEMENT_BASE.get()
         || block == PANELED_CEMENT.get()
+        || block == PANELED_CEMENT_BASE.get()
+        || block == CEMENT_PILLAR_SIMPLE.get()
+        || block == CEMENT_PILLAR_DORIC.get()
+        || block == CEMENT_PILLAR_IONIC.get()
+        || block == CEMENT_PILLAR_CORINTHIAN.get()
+        || block == CEMENT_PILLAR_BASE.get()
         || block == LAYERED_CEMENT.get();
     }
 

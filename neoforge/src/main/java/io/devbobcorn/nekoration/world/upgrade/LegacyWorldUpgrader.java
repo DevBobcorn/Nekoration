@@ -77,14 +77,14 @@ public final class LegacyWorldUpgrader {
             Map.entry("window_top", "cement_frame_peak"),
             Map.entry("window_sill", "cement_frame_sill"),
             Map.entry("stone_base", "cement"),
-            Map.entry("stone_base_bottom", "trimmed_cement"),
+            Map.entry("stone_base_bottom", "cement_base"),
             Map.entry("stone_frame", "paneled_cement"),
-            Map.entry("stone_frame_bottom", "paneled_cement"),
-            Map.entry("stone_pillar", "paneled_cement"),
-            Map.entry("stone_doric", "paneled_cement"),
-            Map.entry("stone_ionic", "paneled_cement"),
-            Map.entry("stone_corinthian", "paneled_cement"),
-            Map.entry("stone_pillar_bottom", "paneled_cement"),
+            Map.entry("stone_frame_bottom", "paneled_cement_base"),
+            Map.entry("stone_pillar", "cement_pillar_simple"),
+            Map.entry("stone_doric", "cement_pillar_doric"),
+            Map.entry("stone_ionic", "cement_pillar_ionic"),
+            Map.entry("stone_corinthian", "cement_pillar_corinthian"),
+            Map.entry("stone_pillar_bottom", "cement_pillar_base"),
             Map.entry("stone_layered", "layered_cement"),
             Map.entry("stone_pot", "cement_pot"),
             Map.entry("stone_planter", "cement_planter"),
@@ -549,11 +549,7 @@ public final class LegacyWorldUpgrader {
                 && !oldPath.equals("window_frame")) {
             properties.remove("vertical_connection");
         }
-        if (oldPath.endsWith("_bottom") && oldPath.startsWith("stone_")
-                && !oldPath.equals("stone_base_bottom")) {
-            properties.putString("vertical_connection", "s0");
-        }
-        if (oldPath.equals("stone_base_bottom")) {
+        if (oldPath.startsWith("stone_") && oldPath.endsWith("_bottom")) {
             properties.remove("vertical_connection");
         }
         if (oldPath.startsWith("candle_holder_")) {

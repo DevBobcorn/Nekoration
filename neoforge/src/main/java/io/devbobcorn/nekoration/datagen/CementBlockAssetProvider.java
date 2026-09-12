@@ -36,8 +36,14 @@ public final class CementBlockAssetProvider implements DataProvider {
     public CompletableFuture<?> run(CachedOutput cachedOutput) {
         List<CompletableFuture<?>> writes = new ArrayList<>();
         generateConnected(cachedOutput, writes, "cement", "cement", false);
-        generateStandalone(cachedOutput, writes, "trimmed_cement", "trimmed_cement", "cement_top");
+        generateStandalone(cachedOutput, writes, "cement_base", "cement_base", "cement_top");
         generateConnected(cachedOutput, writes, "paneled_cement", "paneled_cement", true);
+        generateStandalone(cachedOutput, writes, "paneled_cement_base", "paneled_cement_base", "cement_top");
+        generateConnected(cachedOutput, writes, "cement_pillar_simple", "cement_pillar_simple", true);
+        generateConnected(cachedOutput, writes, "cement_pillar_doric", "cement_pillar_doric", true);
+        generateConnected(cachedOutput, writes, "cement_pillar_ionic", "cement_pillar_ionic", true);
+        generateConnected(cachedOutput, writes, "cement_pillar_corinthian", "cement_pillar_corinthian", true);
+        generateStandalone(cachedOutput, writes, "cement_pillar_base", "cement_pillar_base", "cement_top");
         generateStandalone(cachedOutput, writes, "layered_cement", "layered_cement", "cement_top");
         generateFrame(cachedOutput, writes, "cement_frame_head", "frame_head", false);
         generateFrame(cachedOutput, writes, "cement_frame_peak", "frame_peak", true);

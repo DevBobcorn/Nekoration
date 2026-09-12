@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=black": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=blue": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=brown": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=cyan": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=gray": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=green": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=light_blue": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=light_gray": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=lime": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=magenta": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=orange": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=pink": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=purple": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=red": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=white": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    },
+    "color=yellow": {
+      "model": "nekoration:block/cement/cement_pillar_base"
+    }
+  }
+}

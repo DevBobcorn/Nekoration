@@ -1,0 +1,15 @@
+{
+  "type": "nekoration:neko_stonecutting",
+  "ingredient": {
+    "item": "nekoration:cement"
+  },
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 0
+      }
+    },
+    "count": 1,
+    "id": "nekoration:cement_pillar_base"
+  }
+}

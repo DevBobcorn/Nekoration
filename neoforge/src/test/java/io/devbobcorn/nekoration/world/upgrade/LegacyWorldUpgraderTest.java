@@ -30,6 +30,32 @@ class LegacyWorldUpgraderTest {
         assertTrue(LegacyWorldUpgrader.upgradeBlockState(legacyStoneWithoutProperties));
         assertEquals("nekoration:cement", legacyStoneWithoutProperties.getString("Name"));
 
+        CompoundTag legacyDoric = state("stone_doric", "level", "14", "vertical_connection", "t1");
+        assertTrue(LegacyWorldUpgrader.upgradeBlockState(legacyDoric));
+        assertEquals("nekoration:cement_pillar_doric", legacyDoric.getString("Name"));
+        assertEquals("white", legacyDoric.getCompound("Properties").getString("color"));
+        assertEquals("t1", legacyDoric.getCompound("Properties").getString("vertical_connection"));
+
+        CompoundTag legacyPillarBottom = state("stone_pillar_bottom", "level", "14", "vertical_connection", "s0");
+        assertTrue(LegacyWorldUpgrader.upgradeBlockState(legacyPillarBottom));
+        assertEquals("nekoration:cement_pillar_base", legacyPillarBottom.getString("Name"));
+        assertEquals("white", legacyPillarBottom.getCompound("Properties").getString("color"));
+        assertFalse(legacyPillarBottom.getCompound("Properties").contains("vertical_connection"));
+
+        CompoundTag legacyBaseBottom = state("stone_base_bottom", "level", "14", "vertical_connection", "s0");
+        assertTrue(LegacyWorldUpgrader.upgradeBlockState(legacyBaseBottom));
+        assertEquals("nekoration:cement_base", legacyBaseBottom.getString("Name"));
+        assertFalse(legacyBaseBottom.getCompound("Properties").contains("vertical_connection"));
+
+        CompoundTag legacyFrameBottom = state("stone_frame_bottom", "level", "14");
+        assertTrue(LegacyWorldUpgrader.upgradeBlockState(legacyFrameBottom));
+        assertEquals("nekoration:paneled_cement_base", legacyFrameBottom.getString("Name"));
+
+        CompoundTag currentCementBase = state("trimmed_cement", "color", "white");
+        assertFalse(LegacyWorldUpgrader.upgradeBlockState(currentCementBase));
+        assertEquals("nekoration:trimmed_cement", currentCementBase.getString("Name"));
+        assertEquals("white", currentCementBase.getCompound("Properties").getString("color"));
+
         CompoundTag frame = state("window_frame", "level", "0", "frame_part", "middle",
                 "left", "true", "right", "false", "facing", "north");
         LegacyWorldUpgrader.upgradeBlockState(frame);
@@ -117,14 +143,15 @@ class LegacyWorldUpgraderTest {
         LegacyWorldUpgrader.upgradeChunk(chunk);
 
         ListTag upgradedPalette = blockStates.getList("palette", 10);
-        assertEquals(2, upgradedPalette.size());
+        assertEquals(3, upgradedPalette.size());
         assertEquals("minecraft:air", upgradedPalette.getCompound(0).getString("Name"));
         assertEquals("nekoration:paneled_cement", upgradedPalette.getCompound(1).getString("Name"));
+        assertEquals("nekoration:cement_pillar_simple", upgradedPalette.getCompound(2).getString("Name"));
         SimpleBitStorage storage = new SimpleBitStorage(4, values.length, blockStates.getLongArray("data"));
         assertEquals(0, storage.get(0));
         assertEquals(0, storage.get(1));
         assertEquals(1, storage.get(2));
-        assertEquals(1, storage.get(3));
+        assertEquals(2, storage.get(3));
     }
 
     @Test
@@ -136,8 +163,10 @@ class LegacyWorldUpgraderTest {
         for (int index = 0; index < 15; index++) {
             palette.add(minecraftState("test_" + index));
         }
-        palette.add(state("stone_frame", "level", "0"));
-        palette.add(state("stone_pillar", "level", "0"));
+        palette.add(state("window_frame", "level", "0", "frame_part", "middle",
+                "left", "true", "right", "true"));
+        palette.add(state("window_frame", "level", "0", "frame_part", "middle",
+                "left", "false", "right", "false"));
         blockStates.put("palette", palette);
         int[] values = new int[4096];
         values[0] = 15;
@@ -216,6 +245,11 @@ class LegacyWorldUpgraderTest {
         assertTrue(LegacyWorldUpgrader.upgradeItemStack(cement));
         assertEquals("nekoration:cement_pot", cement.getString("id"));
         assertEquals(0, cement.getCompound("tag").getByte("color"));
+
+        CompoundTag pillar = stack("stone_doric", "color", 1);
+        assertTrue(LegacyWorldUpgrader.upgradeItemStack(pillar));
+        assertEquals("nekoration:cement_pillar_doric", pillar.getString("id"));
+        assertEquals(12, pillar.getCompound("tag").getByte("color"));
 
         CompoundTag frame = stack("window_frame", "color", 1);
         LegacyWorldUpgrader.upgradeItemStack(frame);
@@ -394,10 +428,16 @@ class LegacyWorldUpgraderTest {
         currentCollision.putInt("count", 1);
         root.put("current", currentCollision);
 
+        CompoundTag currentCementBase = new CompoundTag();
+        currentCementBase.putString("id", "nekoration:trimmed_cement");
+        currentCementBase.putInt("count", 1);
+        root.put("current_cement_base", currentCementBase);
+
         LegacyWorldUpgrader.upgradeItemStacks(root);
 
         assertEquals("nekoration:dark_oak_bench", items.getCompound(0).getString("id"));
         assertEquals("nekoration:stone_pot", currentCollision.getString("id"));
+        assertEquals("nekoration:trimmed_cement", currentCementBase.getString("id"));
     }
 
     @Test

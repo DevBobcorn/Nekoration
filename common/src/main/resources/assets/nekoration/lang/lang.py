@@ -30,6 +30,10 @@ furniture2_ids = ["pumpkin_table","pumpkin_chair"]
 furnitures2_us = ["Pumpkin Table","Pumpkin Chair"]
 furnitures2_cn = ["南瓜桌","南瓜椅"]
 
+cement_ids = ["cement", "cement_base", "paneled_cement", "paneled_cement_base", "cement_pillar_simple", "cement_pillar_doric", "cement_pillar_ionic", "cement_pillar_corinthian", "cement_pillar_base", "layered_cement", "cement_frame_head", "cement_frame_peak", "cement_frame_side", "cement_frame_sill", "cement_pot", "cement_planter"]
+cements_us = ["%s Cement", "%s Cement Base", "%s Paneled Cement", "%s Paneled Cement Base", "%s Simple Cement Pillar", "%s Doric Cement Pillar", "%s Ionic Cement Pillar", "%s Corinthian Cement Pillar", "%s Cement Pillar Base", "%s Layered Cement", "%s Cement Frame Head", "%s Cement Frame Peak", "%s Cement Frame Side", "%s Cement Frame Sill", "%s Cement Pot", "%s Cement Planter"]
+cements_cn = ["%s水泥", "%s水泥基座", "%s镶板水泥", "%s镶板水泥基座", "%s简易水泥柱", "%s多立克水泥柱", "%s爱奥尼水泥柱", "%s科林斯水泥柱", "%s水泥柱基座", "%s层叠水泥", "%s水泥框顶边", "%s水泥框尖顶", "%s水泥框侧边", "%s水泥框底边", "%s水泥花盆", "%s水泥种植盆"]
+
 stone_ids = ["stone", "granite", "diorite", "andesite", "calcite", "dripstone", "tuff", "sandstone", "red_sandstone"]
 stones_us = ["Stone", "Granite", "Diorite", "Andesite", "Calcite", "Dripstone", "Tuff", "Sandstone", "Red Sandstone"]
 stones_cn = ["石头", "花岗岩", "闪长岩", "安山岩", "方解石", "滴水石", "凝灰岩", "砂岩", "红砂岩"]
@@ -129,10 +133,6 @@ for w_i in range(0, len(wood_ids)):
     obj_cn['wood.nekoration.' + wood_ids[w_i]] = woods_cn[w_i]
 
 # [CEMENT BLOCKS TAB]
-cement_ids = ["cement", "trimmed_cement", "paneled_cement", "layered_cement", "cement_frame_head", "cement_frame_peak", "cement_frame_side", "cement_frame_sill", "cement_pot", "cement_planter"]
-cements_us = ["%s Cement", "%s Trimmed Cement", "%s Paneled Cement", "%s Layered Cement", "%s Cement Frame Head", "%s Cement Frame Peak", "%s Cement Frame Side", "%s Cement Frame Sill", "%s Cement Pot", "%s Cement Planter"]
-cements_cn = ["%s水泥", "%s饰边水泥", "%s镶板水泥", "%s层叠水泥", "%s水泥框顶边", "%s水泥框尖顶", "%s水泥框侧边", "%s水泥框底边", "%s水泥花盆", "%s水泥种植盆"]
-
 for c_i in range(0, len(cement_ids)):
     obj_us['block.nekoration.' + cement_ids[c_i]] = cements_us[c_i]
     obj_cn['block.nekoration.' + cement_ids[c_i]] = cements_cn[c_i]

@@ -44,7 +44,9 @@ public final class NekoRecipeProvider extends RecipeProvider {
     private static final int SMELTING_TIME = 200;
     private static final float SMELTING_XP = 0.1F;
 
-    private static final List<String> CEMENT_VARIANTS = List.of("trimmed_cement", "paneled_cement", "layered_cement",
+    private static final List<String> CEMENT_VARIANTS = List.of("cement_base", "paneled_cement",
+            "paneled_cement_base", "cement_pillar_simple", "cement_pillar_doric", "cement_pillar_ionic",
+            "cement_pillar_corinthian", "cement_pillar_base", "layered_cement",
             "cement_frame_head", "cement_frame_peak", "cement_frame_sill", "cement_frame_side", "cement_pot",
             "cement_planter");
 
