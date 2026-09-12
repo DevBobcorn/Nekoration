@@ -250,6 +250,71 @@ obj_cn['tooltip.nekoration.direction_vertical'] = "垂直"
 obj_us['tooltip.nekoration.sneaking'] = "sneaking"
 obj_cn['tooltip.nekoration.sneaking'] = "潜行"
 
+# [JADE]
+# Jade builds a config entry per registered component with the key
+# "config.jade.plugin_<uid>" and asserts it is translated (JadeClient.onGui).
+obj_us['config.jade.plugin_nekoration.jade_object_name'] = "Nekoration Object Name"
+obj_cn['config.jade.plugin_nekoration.jade_object_name'] = "猫咪装饰对象名"
+
+# [CONFIG SCREEN]
+# NeoForge's built-in ConfigurationScreen looks up these keys:
+# - "<modid>.configuration.title"                       (main screen title, %s = mod display name)
+# - "<modid>.configuration.section.<modid>.<file>"      (section buttons)
+# - "<modid>.configuration.section.<modid>.<file>.title"(section screen titles)
+# - "<modid>.configuration.<path>" (+ ".tooltip")       (one per config entry)
+config_ids = [
+    "title",
+    "section.nekoration.client.toml",
+    "section.nekoration.client.toml.title",
+    "section.nekoration.server.toml",
+    "section.nekoration.server.toml.title",
+    "painting",
+    "useImageRendering",
+    "useImageRendering.tooltip",
+    "simplifyRendering",
+    "simplifyRendering.tooltip",
+    "debugMode",
+    "debugMode.tooltip",
+    "maxUndoLimit",
+    "maxUndoLimit.tooltip",
+]
+configs_us = [
+    "%s Configuration",
+    "Client Settings",
+    "%s Client Configuration",
+    "Server Settings",
+    "%s Server Configuration",
+    "Painting",
+    "Cache Paintings as Images",
+    "Whether to cache paintings to this client, and use them for rendering.",
+    "Simplify Rendering",
+    "Whether to simplify the lighting calculation when rendering paintings.",
+    "Debug Mode",
+    "Whether to display debug information at the bottom of paintings.",
+    "Maximum Undo Steps",
+    "The maximum undo/redo steps allowed on this client.",
+]
+configs_cn = [
+    "猫咪装饰配置",
+    "客户端设置",
+    "猫咪装饰客户端配置",
+    "服务端设置",
+    "猫咪装饰服务端配置",
+    "绘画",
+    "缓存绘画图像",
+    "是否将绘画缓存到此客户端并用于渲染。",
+    "简化渲染",
+    "是否在渲染绘画时简化光照计算。",
+    "调试模式",
+    "是否在绘画底部显示调试信息。",
+    "最大撤销步数",
+    "此客户端允许的最大撤销/重做步数。",
+]
+
+for cf_i in range(0, len(config_ids)):
+    obj_us['nekoration.configuration.' + config_ids[cf_i]] = configs_us[cf_i]
+    obj_cn['nekoration.configuration.' + config_ids[cf_i]] = configs_cn[cf_i]
+
 # Set cwd to file directory
 script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
