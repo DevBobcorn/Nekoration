@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cement": {
+    "has_cement_pillar_simple": {
       "conditions": {
         "items": [
           {
-            "items": "nekoration:cement"
+            "items": "nekoration:cement_pillar_simple"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "nekoration:cement_pillar_doric_from_cement_stonecutting"
+        "recipe": "nekoration:cement_pillar_doric_from_cement_pillar_simple_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_cement"
+      "has_cement_pillar_simple"
     ]
   ],
   "rewards": {
     "recipes": [
-      "nekoration:cement_pillar_doric_from_cement_stonecutting"
+      "nekoration:cement_pillar_doric_from_cement_pillar_simple_stonecutting"
     ]
   }
 }

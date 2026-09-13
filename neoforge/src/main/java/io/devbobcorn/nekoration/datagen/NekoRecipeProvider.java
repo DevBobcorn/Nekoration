@@ -50,6 +50,9 @@ public final class NekoRecipeProvider extends RecipeProvider {
             "cement_frame_head", "cement_frame_peak", "cement_frame_sill", "cement_frame_side", "cement_pot",
             "cement_planter");
 
+    private static final List<String> CEMENT_PILLAR_DECORATED_VARIANTS = List.of("cement_pillar_doric",
+            "cement_pillar_ionic", "cement_pillar_corinthian");
+
     private static final List<String[]> HALF_TIMBER_VARIANT_PATTERNS = List.of(
             new String[] { "  1", " 0 ", "1  " },
             new String[] { "1  ", " 0 ", "  1" },
@@ -182,8 +185,16 @@ public final class NekoRecipeProvider extends RecipeProvider {
     private void cementBlockRecipes(RecipeOutput output) {
         Item cement = modItem("cement");
         for (String variant : CEMENT_VARIANTS) {
+            if (CEMENT_PILLAR_DECORATED_VARIANTS.contains(variant)) {
+                continue;
+            }
             saveColorInheritStonecutting(output, modLoc(variant + "_from_cement_stonecutting"),
                     RecipeCategory.BUILDING_BLOCKS, cement, dyed(modItem(variant), EnumNekoColor.WHITE, 1));
+        }
+        Item cementPillarSimple = modItem("cement_pillar_simple");
+        for (String variant : CEMENT_PILLAR_DECORATED_VARIANTS) {
+            saveColorInheritStonecutting(output, modLoc(variant + "_from_cement_pillar_simple_stonecutting"),
+                    RecipeCategory.BUILDING_BLOCKS, cementPillarSimple, dyed(modItem(variant), EnumNekoColor.WHITE, 1));
         }
         for (EnumNekoColor color : EnumNekoColor.values()) {
             Item dye = vanillaItem(color.getSerializedName() + "_dye");

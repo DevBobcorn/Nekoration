@@ -35,15 +35,15 @@ public final class CementBlockAssetProvider implements DataProvider {
     @Override
     public CompletableFuture<?> run(CachedOutput cachedOutput) {
         List<CompletableFuture<?>> writes = new ArrayList<>();
-        generateConnected(cachedOutput, writes, "cement", "cement", false);
+        generateConnected(cachedOutput, writes, "cement", "cement", false, "cement_top");
         generateStandalone(cachedOutput, writes, "cement_base", "cement_base", "cement_top");
-        generateConnected(cachedOutput, writes, "paneled_cement", "paneled_cement", true);
-        generateStandalone(cachedOutput, writes, "paneled_cement_base", "paneled_cement_base", "cement_top");
-        generateConnected(cachedOutput, writes, "cement_pillar_simple", "cement_pillar_simple", true);
-        generateConnected(cachedOutput, writes, "cement_pillar_doric", "cement_pillar_doric", true);
-        generateConnected(cachedOutput, writes, "cement_pillar_ionic", "cement_pillar_ionic", true);
-        generateConnected(cachedOutput, writes, "cement_pillar_corinthian", "cement_pillar_corinthian", true);
-        generateStandalone(cachedOutput, writes, "cement_pillar_base", "cement_pillar_base", "cement_top");
+        generateConnected(cachedOutput, writes, "paneled_cement", "paneled_cement", true, "cement_frame");
+        generateStandalone(cachedOutput, writes, "paneled_cement_base", "paneled_cement_base", "cement_frame");
+        generateConnected(cachedOutput, writes, "cement_pillar_simple", "cement_pillar_simple", true, "cement_frame");
+        generateConnected(cachedOutput, writes, "cement_pillar_doric", "cement_pillar_doric", true, "cement_frame");
+        generateConnected(cachedOutput, writes, "cement_pillar_ionic", "cement_pillar_ionic", true, "cement_frame");
+        generateConnected(cachedOutput, writes, "cement_pillar_corinthian", "cement_pillar_corinthian", true, "cement_frame");
+        generateStandalone(cachedOutput, writes, "cement_pillar_base", "cement_pillar_base", "cement_frame");
         generateStandalone(cachedOutput, writes, "layered_cement", "layered_cement", "cement_top");
         generateFrame(cachedOutput, writes, "cement_frame_head", "frame_head", false);
         generateFrame(cachedOutput, writes, "cement_frame_peak", "frame_peak", true);
@@ -55,10 +55,10 @@ public final class CementBlockAssetProvider implements DataProvider {
     }
 
     private void generateConnected(CachedOutput output, List<CompletableFuture<?>> writes, String blockId,
-            String textureBase, boolean hasStandaloneTexture) {
+            String textureBase, boolean hasStandaloneTexture, String endTexture) {
         for (String part : List.of("s0", "t0", "t1", "t2")) {
             String textureSuffix = "s0".equals(part) ? "" : "_" + part;
-            writeColumnModel(output, writes, blockId + "_" + part, textureBase + textureSuffix, "cement_top");
+            writeColumnModel(output, writes, blockId + "_" + part, textureBase + textureSuffix, endTexture);
         }
 
         Map<String, Object> variants = new LinkedHashMap<>();

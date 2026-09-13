@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -57,10 +58,16 @@ public class CementCTBehaviour extends NekoConnectedTextureBehaviour {
     @Override
     @Nullable
     public NekoCTType getDataType(BlockAndTintGetter world, BlockPos pos, BlockState state, Direction direction) {
-        if (direction == Direction.UP && supportsSourceBlock(state)) {
+        if (direction == Direction.UP && hasConnectedTop(state.getBlock())) {
             return NekoCTTypes.POSITION;
         }
         return state.getBlock() == CementBlockRegistration.CEMENT.get() ? NekoCTTypes.POSITION : null;
+    }
+
+    private static boolean hasConnectedTop(Block block) {
+        return block == CementBlockRegistration.CEMENT.get()
+                || block == CementBlockRegistration.CEMENT_BASE.get()
+                || block == CementBlockRegistration.LAYERED_CEMENT.get();
     }
 
     protected boolean supportsSourceBlock(BlockState state) {
