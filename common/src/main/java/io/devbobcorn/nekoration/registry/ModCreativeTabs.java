@@ -28,9 +28,9 @@ public final class ModCreativeTabs {
     }
 
     public static void register(NekoRegistrar registrar) {
-        NEKORATION_CEMENT_BLOCKS_TAB = registrar.register(Registries.CREATIVE_MODE_TAB, "nekoration_cement_blocks",
+        NEKORATION_CEMENT_BLOCKS_TAB = registrar.register(Registries.CREATIVE_MODE_TAB, "nekoration_blocks_cement",
                 () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
-                        .title(Component.translatable("itemGroup.nekoration_cement_blocks"))
+                        .title(Component.translatable("itemGroup.nekoration_blocks_cement"))
                         .icon(() -> DyeableBlockItem.createCreativeTabStack(CementBlockRegistration.iconItem().get(),
                                 EnumNekoColor.WHITE))
                         .displayItems((parameters, output) -> CementBlockRegistration.blockItemsView()
@@ -41,9 +41,9 @@ public final class ModCreativeTabs {
                                 }))
                         .build());
 
-        NEKORATION_STONE_BLOCKS_TAB = registrar.register(Registries.CREATIVE_MODE_TAB, "nekoration_stone_blocks",
+        NEKORATION_STONE_BLOCKS_TAB = registrar.register(Registries.CREATIVE_MODE_TAB, "nekoration_blocks_stone",
                 () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
-                        .title(Component.translatable("itemGroup.nekoration_stone_blocks"))
+                        .title(Component.translatable("itemGroup.nekoration_blocks_stone"))
                         .icon(() -> DyeableBlockItem.createCreativeTabStack(StoneBlockRegistration.iconItem().get(),
                                 EnumNekoColor.WHITE))
                         .displayItems((parameters, output) -> {
@@ -55,9 +55,9 @@ public final class ModCreativeTabs {
                         })
                         .build());
 
-        NEKORATION_WOODEN_BLOCKS_TAB = registrar.register(Registries.CREATIVE_MODE_TAB, "nekoration_wooden_blocks",
+        NEKORATION_WOODEN_BLOCKS_TAB = registrar.register(Registries.CREATIVE_MODE_TAB, "nekoration_blocks_wooden",
                 () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
-                        .title(Component.translatable("itemGroup.nekoration_wooden_blocks"))
+                        .title(Component.translatable("itemGroup.nekoration_blocks_wooden"))
                         .icon(() -> DyeableBlockItem.createCreativeTabStack(WoodenBlockRegistration.iconItem().get(),
                                 EnumNekoColor.WHITE))
                         .displayItems((parameters, output) -> {
@@ -73,9 +73,9 @@ public final class ModCreativeTabs {
                         })
                         .build());
 
-        NEKORATION_ORNAMENTS_TAB = registrar.register(Registries.CREATIVE_MODE_TAB, "nekoration_ornaments",
+        NEKORATION_ORNAMENTS_TAB = registrar.register(Registries.CREATIVE_MODE_TAB, "nekoration_decor_ornaments",
                 () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
-                        .title(Component.translatable("itemGroup.nekoration_ornaments"))
+                        .title(Component.translatable("itemGroup.nekoration_decor_ornaments"))
                         .icon(() -> DyeableBlockItem.createCreativeTabStack(
                                 WoodenBlockRegistration.ornamentsTabIconItem().get(), EnumNekoColor.BLACK))
                         .displayItems((parameters, output) -> {

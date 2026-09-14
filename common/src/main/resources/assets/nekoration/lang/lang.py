@@ -76,7 +76,7 @@ misc_ids = ["iron_lamp_post","gold_lamp_post","quartz_lamp_post","iron_candle_ho
 miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Custom Block"]
 miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","自定义方块"]
 
-tab_ids = ["nekoration_cement_blocks","nekoration_stone_blocks","nekoration_wooden_blocks","nekoration_ornaments"]
+tab_ids = ["nekoration_blocks_cement","nekoration_blocks_stone","nekoration_blocks_wooden","nekoration_decor_ornaments"]
 tabs_us = ["Cement Blocks","Stone Blocks","Wooden Blocks","Ornaments"]
 tabs_cn = ["水泥方块","石质方块","木质方块","装饰"]
 
