@@ -377,17 +377,21 @@ public final class WoodenBlockRegistration {
         return containerCategoryIconItem;
     }
 
-    /** Add furniture stacks for all woods (Furniture category of the Ornaments tab, Wooden Blocks tab). */
+    /** Add furniture stacks for all creative-visible woods (Furniture category of the Ornaments tab, Wooden Blocks tab). */
     public static void addFurnitureCategoryStacks(Consumer<ItemStack> out) {
-        for (var holder : furnitureBlockItemsView()) {
-            addPlainOrDyedStacks(holder.get(), out);
+        for (NekoWood wood : NekoWood.values()) {
+            if (wood.isCreativeVisible()) {
+                addFurnitureStacksForWood(wood, out);
+            }
         }
     }
 
-    /** Add container and easel menu stacks for all woods, grouped by wood (Container category of the Ornaments tab, Wooden Blocks tab). */
+    /** Add container and easel menu stacks for all creative-visible woods, grouped by wood (Container category of the Ornaments tab, Wooden Blocks tab). */
     public static void addContainerCategoryStacks(Consumer<ItemStack> out) {
         for (NekoWood wood : NekoWood.values()) {
-            addContainerStacksForWood(wood, out);
+            if (wood.isCreativeVisible()) {
+                addContainerStacksForWood(wood, out);
+            }
         }
     }
 

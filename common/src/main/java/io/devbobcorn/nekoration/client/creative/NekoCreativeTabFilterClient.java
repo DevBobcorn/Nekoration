@@ -18,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import java.util.List;
 import java.util.function.Consumer;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -113,8 +114,8 @@ public final class NekoCreativeTabFilterClient {
                     refreshScrollButtonStates();
                 }
             } else {
-                NekoWood[] v = NekoWood.values();
-                if (woodStartIndex <= v.length - 4 - 1) {
+                List<NekoWood> v = NekoWood.creativeVisibleValues();
+                if (woodStartIndex <= v.size() - 4 - 1) {
                     woodStartIndex++;
                     updateWoodSlotButtons(creative);
                     refreshScrollButtonStates();
@@ -259,9 +260,9 @@ public final class NekoCreativeTabFilterClient {
             btnScrollUp.active = ornamentStartIndex > 0;
             btnScrollDown.active = ornamentStartIndex <= cv.length - 4 - 1;
         } else {
-            NekoWood[] v = NekoWood.values();
+            List<NekoWood> v = NekoWood.creativeVisibleValues();
             btnScrollUp.active = woodStartIndex > 0;
-            btnScrollDown.active = woodStartIndex <= v.length - 4 - 1;
+            btnScrollDown.active = woodStartIndex <= v.size() - 4 - 1;
         }
     }
 
@@ -271,11 +272,11 @@ public final class NekoCreativeTabFilterClient {
         }
         int left = CreativeInventoryReflection.getGuiLeft(creative);
         int top = CreativeInventoryReflection.getGuiTop(creative);
-        NekoWood[] v = NekoWood.values();
+        List<NekoWood> v = NekoWood.creativeVisibleValues();
         for (int i = 0; i < 4; i++) {
             int idx = woodStartIndex + i;
-            if (idx < v.length) {
-                NekoWood w = v[idx];
+            if (idx < v.size()) {
+                NekoWood w = v.get(idx);
                 woodSlots[i].bind(w, selectedWood == w, left - 28, top + 29 * i + 10);
             } else {
                 woodSlots[i].bind(null, true, 0, 0);
@@ -323,6 +324,19 @@ public final class NekoCreativeTabFilterClient {
         selectedWood = selected;
     }
 
+    /** Selected wood, falling back to the first creative-visible wood when the selection is config-hidden. */
+    private static NekoWood effectiveSelectedWood() {
+        if (selectedWood.isCreativeVisible()) {
+            return selectedWood;
+        }
+        for (NekoWood wood : NekoWood.values()) {
+            if (wood.isCreativeVisible()) {
+                return wood;
+            }
+        }
+        return NekoWood.values()[0];
+    }
+
     private static void selectStoneType(NekoStone selected) {
         selectedStone = selected;
     }
@@ -361,18 +375,19 @@ public final class NekoCreativeTabFilterClient {
             return;
         }
         if (isWoodenTab(tab)) {
+            NekoWood wood = effectiveSelectedWood();
             NonNullList<ItemStack> out = NonNullList.create();
-            for (var holder : WoodenBlockRegistration.dyedItemsForWood(selectedWood)) {
+            for (var holder : WoodenBlockRegistration.dyedItemsForWood(wood)) {
                 Item item = holder.get();
                 out.add(DyeableBlockItem.createCreativeTabStack(item, EnumNekoColor.WHITE));
             }
-            for (var holder : WoodenBlockRegistration.windowItemsForWood(selectedWood)) {
+            for (var holder : WoodenBlockRegistration.windowItemsForWood(wood)) {
                 out.add(new ItemStack(holder.get()));
             }
-            WoodenBlockRegistration.addFurnitureStacksForWood(selectedWood, out::add);
-            WoodenBlockRegistration.addContainerStacksForWood(selectedWood, out::add);
+            WoodenBlockRegistration.addFurnitureStacksForWood(wood, out::add);
+            WoodenBlockRegistration.addContainerStacksForWood(wood, out::add);
             out.sort(HalfTimberCreativeTabOrdering.stackComparator());
-            prependFilterIconIfMissing(new ItemStack(selectedWood.planks().asItem()), out);
+            prependFilterIconIfMissing(new ItemStack(wood.planks().asItem()), out);
             picker.items.clear();
             picker.items.addAll(out);
             picker.scrollTo(0f);

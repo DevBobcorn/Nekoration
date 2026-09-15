@@ -1,12 +1,34 @@
 package io.devbobcorn.nekoration;
 
+import java.util.Locale;
+
+import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.TranslatableEnum;
+
 import io.devbobcorn.nekoration.xplat.NekoConfigData;
 
 /**
  * Gameplay settings (server-synced where applicable).
  */
 public final class NekoConfig {
+
+    /**
+     * NeoForge-side mirror of {@link BopDisplayMode}; implements
+     * {@link TranslatableEnum} so the built-in config screen shows the
+     * translated option names.
+     */
+    public enum BopVariantDisplay implements TranslatableEnum {
+        ALWAYS,
+        WHEN_BOP_INSTALLED,
+        NEVER;
+
+        @Override
+        public Component getTranslatedName() {
+            return Component.translatable("nekoration.configuration.creative.bopVariants."
+                    + name().toLowerCase(Locale.ROOT));
+        }
+    }
 
     private static final ModConfigSpec.Builder SERVER_BUILDER = new ModConfigSpec.Builder();
 
@@ -17,6 +39,7 @@ public final class NekoConfig {
         public final ModConfigSpec.BooleanValue simplifyRendering;
         public final ModConfigSpec.BooleanValue debugMode;
         public final ModConfigSpec.IntValue maxUndoLimit;
+        public final ModConfigSpec.EnumValue<BopVariantDisplay> bopVariants;
 
         Client(ModConfigSpec.Builder builder) {
             builder.comment("Painting configuration settings").push("painting");
@@ -32,6 +55,11 @@ public final class NekoConfig {
             this.maxUndoLimit = builder
                     .comment("The maximum undo/redo steps allowed on this client.(Default to 15)")
                     .defineInRange("maxUndoLimit", 15, 2, 30);
+            builder.pop();
+            builder.comment("Creative inventory settings").push("creative");
+            this.bopVariants = builder
+                    .comment("When to show the Biomes O' Plenty wood variants (and their filter sub-tabs) in the creative inventory.(Default to WHEN_BOP_INSTALLED)")
+                    .defineEnum("bopVariants", BopVariantDisplay.WHEN_BOP_INSTALLED);
             builder.pop();
         }
     }
@@ -62,6 +90,11 @@ public final class NekoConfig {
         @Override
         public int maxUndoLimit() {
             return CLIENT.maxUndoLimit.get();
+        }
+
+        @Override
+        public BopDisplayMode bopDisplayMode() {
+            return BopDisplayMode.VALUES[CLIENT.bopVariants.get().ordinal()];
         }
     };
 

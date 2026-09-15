@@ -1,10 +1,15 @@
 package io.devbobcorn.nekoration.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import io.devbobcorn.nekoration.BopDisplayMode;
 
 /**
  * Vanilla plank-derived properties for wooden block variants (one block id per wood type).
@@ -72,6 +77,22 @@ public enum NekoWood {
 
     public boolean isBiomesOPlenty() {
         return ordinal() >= FIR.ordinal();
+    }
+
+    /** {@code false} when this BOP wood should not appear in the creative inventory per the client config. */
+    public boolean isCreativeVisible() {
+        return !isBiomesOPlenty() || BopDisplayMode.showBopVariants();
+    }
+
+    /** Woods shown in the creative inventory (config-filtered), in declaration order. */
+    public static List<NekoWood> creativeVisibleValues() {
+        List<NekoWood> woods = new ArrayList<>();
+        for (NekoWood wood : values()) {
+            if (wood.isCreativeVisible()) {
+                woods.add(wood);
+            }
+        }
+        return List.copyOf(woods);
     }
 
     /** Texture used by furniture models; BOP textures are bundled so the variants work without BOP. */

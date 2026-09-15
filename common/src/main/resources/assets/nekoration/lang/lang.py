@@ -277,6 +277,12 @@ config_ids = [
     "debugMode.tooltip",
     "maxUndoLimit",
     "maxUndoLimit.tooltip",
+    "creative",
+    "creative.bopVariants",
+    "creative.bopVariants.tooltip",
+    "creative.bopVariants.always",
+    "creative.bopVariants.when_bop_installed",
+    "creative.bopVariants.never",
 ]
 configs_us = [
     "%s Configuration",
@@ -293,6 +299,12 @@ configs_us = [
     "Whether to display debug information at the bottom of paintings.",
     "Maximum Undo Steps",
     "The maximum undo/redo steps allowed on this client.",
+    "Creative Inventory",
+    "Show BOP Variants",
+    "When to show the Biomes O' Plenty wood variants (and their filter sub-tabs) in the creative inventory.",
+    "Always",
+    "When BOP is Installed",
+    "Never",
 ]
 configs_cn = [
     "猫咪装饰配置",
@@ -309,6 +321,12 @@ configs_cn = [
     "是否在绘画底部显示调试信息。",
     "最大撤销步数",
     "此客户端允许的最大撤销/重做步数。",
+    "创造模式物品栏",
+    "显示超多生物群系 (BOP) 变体",
+    "何时在创造模式物品栏中显示超多生物群系 (BOP) 木材变体及其筛选子标签页。",
+    "始终",
+    "安装超多生物群系 (BOP) 时",
+    "从不",
 ]
 
 for cf_i in range(0, len(config_ids)):

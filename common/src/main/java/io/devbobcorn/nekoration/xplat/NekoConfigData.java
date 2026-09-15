@@ -1,5 +1,7 @@
 package io.devbobcorn.nekoration.xplat;
 
+import io.devbobcorn.nekoration.BopDisplayMode;
+
 /**
  * Loader-agnostic view of the client config values.
  * Replaces direct access to {@code NekoConfig.CLIENT} (a NeoForge
@@ -13,4 +15,6 @@ public interface NekoConfigData {
     boolean debugMode();
 
     int maxUndoLimit();
+
+    BopDisplayMode bopDisplayMode();
 }

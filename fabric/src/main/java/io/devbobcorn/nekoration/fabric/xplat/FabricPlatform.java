@@ -49,6 +49,11 @@ public final class FabricPlatform implements NekoPlatformImpl {
     }
 
     @Override
+    public boolean isModLoaded(String modId) {
+        return FabricLoader.getInstance().isModLoaded(modId);
+    }
+
+    @Override
     public NekoConfigData config() {
         return FabricConfig.get();
     }

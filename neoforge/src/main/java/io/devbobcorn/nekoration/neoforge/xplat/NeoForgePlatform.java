@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -26,6 +27,11 @@ public final class NeoForgePlatform implements NekoPlatformImpl {
     @Override
     public Path gameDir() {
         return FMLPaths.GAMEDIR.get();
+    }
+
+    @Override
+    public boolean isModLoaded(String modId) {
+        return ModList.get().isLoaded(modId);
     }
 
     @Override

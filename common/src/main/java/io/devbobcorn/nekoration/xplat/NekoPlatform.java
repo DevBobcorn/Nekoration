@@ -29,6 +29,10 @@ public final class NekoPlatform {
         return impl.gameDir();
     }
 
+    public static boolean isModLoaded(String modId) {
+        return impl.isModLoaded(modId);
+    }
+
     public static NekoConfigData config() {
         return impl.config();
     }

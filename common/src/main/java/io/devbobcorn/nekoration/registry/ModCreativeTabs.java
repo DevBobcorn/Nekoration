@@ -8,6 +8,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.HalfTimberCreativeTabOrdering;
+import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.xplat.NekoRegistrar;
 import io.devbobcorn.nekoration.xplat.RegistrySupplier;
@@ -62,12 +63,18 @@ public final class ModCreativeTabs {
                                 EnumNekoColor.WHITE))
                         .displayItems((parameters, output) -> {
                             ArrayList<ItemStack> halfTimberStacks = new ArrayList<>();
-                            WoodenBlockRegistration.halfTimberBlockItemsView().forEach(holder -> {
-                                halfTimberStacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.WHITE));
-                            });
+                            for (NekoWood wood : NekoWood.creativeVisibleValues()) {
+                                for (var holder : WoodenBlockRegistration.dyedItemsForWood(wood)) {
+                                    halfTimberStacks.add(DyeableBlockItem.createCreativeTabStack(holder.get(), EnumNekoColor.WHITE));
+                                }
+                            }
                             halfTimberStacks.sort(HalfTimberCreativeTabOrdering.stackComparator());
                             halfTimberStacks.forEach(output::accept);
-                            WoodenBlockRegistration.windowBlockItemsView().forEach(holder -> output.accept(new ItemStack(holder.get())));
+                            for (NekoWood wood : NekoWood.creativeVisibleValues()) {
+                                for (var holder : WoodenBlockRegistration.windowItemsForWood(wood)) {
+                                    output.accept(new ItemStack(holder.get()));
+                                }
+                            }
                             WoodenBlockRegistration.addFurnitureCategoryStacks(output::accept);
                             WoodenBlockRegistration.addContainerCategoryStacks(output::accept);
                         })

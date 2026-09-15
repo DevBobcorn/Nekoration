@@ -14,6 +14,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.ExtraCodecs;
+import io.devbobcorn.nekoration.BopDisplayMode;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.xplat.NekoConfigData;
 
@@ -26,7 +27,9 @@ public final class FabricConfig implements NekoConfigData {
             Codec.BOOL.fieldOf("useImageRendering").forGetter(c -> c.useImageRendering),
             Codec.BOOL.fieldOf("simplifyRendering").forGetter(c -> c.simplifyRendering),
             Codec.BOOL.fieldOf("debugMode").forGetter(c -> c.debugMode),
-            ExtraCodecs.intRange(2, 30).fieldOf("maxUndoLimit").forGetter(c -> c.maxUndoLimit))
+            ExtraCodecs.intRange(2, 30).fieldOf("maxUndoLimit").forGetter(c -> c.maxUndoLimit),
+            BopDisplayMode.CODEC.optionalFieldOf("bopDisplayMode", BopDisplayMode.WHEN_BOP_INSTALLED)
+                    .forGetter(c -> c.bopDisplayMode))
             .apply(instance, FabricConfig::new));
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -38,12 +41,15 @@ public final class FabricConfig implements NekoConfigData {
     private final boolean simplifyRendering;
     private final boolean debugMode;
     private final int maxUndoLimit;
+    private final BopDisplayMode bopDisplayMode;
 
-    private FabricConfig(boolean useImageRendering, boolean simplifyRendering, boolean debugMode, int maxUndoLimit) {
+    private FabricConfig(boolean useImageRendering, boolean simplifyRendering, boolean debugMode, int maxUndoLimit,
+            BopDisplayMode bopDisplayMode) {
         this.useImageRendering = useImageRendering;
         this.simplifyRendering = simplifyRendering;
         this.debugMode = debugMode;
         this.maxUndoLimit = maxUndoLimit;
+        this.bopDisplayMode = bopDisplayMode;
     }
 
     public static FabricConfig get() {
@@ -58,7 +64,7 @@ public final class FabricConfig implements NekoConfigData {
     }
 
     private static FabricConfig load() {
-        FabricConfig defaults = new FabricConfig(true, true, false, 15);
+        FabricConfig defaults = new FabricConfig(true, true, false, 15, BopDisplayMode.WHEN_BOP_INSTALLED);
         Path path = FabricLoader.getInstance().getConfigDir().resolve(FILE_NAME);
         if (!Files.exists(path)) {
             save(path, defaults);
@@ -101,5 +107,10 @@ public final class FabricConfig implements NekoConfigData {
     @Override
     public int maxUndoLimit() {
         return maxUndoLimit;
+    }
+
+    @Override
+    public BopDisplayMode bopDisplayMode() {
+        return bopDisplayMode;
     }
 }

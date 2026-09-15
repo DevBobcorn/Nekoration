@@ -14,6 +14,8 @@ public interface NekoPlatformImpl {
 
     Path gameDir();
 
+    boolean isModLoaded(String modId);
+
     NekoConfigData config();
 
     void sendToServer(CustomPacketPayload payload);
