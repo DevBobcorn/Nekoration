@@ -84,7 +84,6 @@ public final class NekoTextureAssetProvider implements DataProvider {
         Nekoration.LOGGER.info("Generating textures from {} to {}", templateTextureRoot, generatedBlockTextureRoot);
         try {
             generateBiomesOPlentyPlankTextures(cachedOutput);
-            generateBiomesOPlentyFurnitureTextures(cachedOutput);
             generatePaletteMappedTextures(cachedOutput);
             generateAwningTextures(cachedOutput);
             generateHalfTimberBackTextures(cachedOutput);
@@ -105,25 +104,6 @@ public final class NekoTextureAssetProvider implements DataProvider {
             if (wood.isBiomesOPlenty()) {
                 writeTexture(cachedOutput, wood.id() + "_planks",
                         readImage(sourceDir.resolve(wood.id() + "_planks.png")));
-            }
-        }
-    }
-
-    private void generateBiomesOPlentyFurnitureTextures(CachedOutput cachedOutput) throws IOException {
-        Path furnitureDir = templateTextureRoot.getParent()
-                .resolve("common/src/main/resources/assets/" + Nekoration.MODID + "/textures/block/furniture");
-        Path paletteDir = templateTextureRoot.resolve(PLANK_PALETTE_DIR);
-
-        for (NekoWood wood : NekoWood.values()) {
-            if (!wood.isBiomesOPlenty()) {
-                continue;
-            }
-            Path targetPalettePath = paletteDir.resolve(wood.id() + ".png");
-            Palette targetPalette = loadPalette(targetPalettePath);
-            for (String part : List.of("top", "round_top", "leg")) {
-                Path sourcePath = furnitureDir.resolve("oak_" + part + ".png");
-                writeTexture(cachedOutput, "furniture/" + wood.id() + "_" + part,
-                        remapImageByLuminance(readImage(sourcePath), targetPalette));
             }
         }
     }
@@ -419,32 +399,6 @@ public final class NekoTextureAssetProvider implements DataProvider {
                             + ". Unmapped color count: " + unmapped.size() + ". Example(s): " + preview);
         }
         return out;
-    }
-
-    private BufferedImage remapImageByLuminance(BufferedImage source, Palette targetPalette) {
-        BufferedImage out = new BufferedImage(source.getWidth(), source.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        List<Integer> colors = targetPalette.colors().stream()
-                .sorted(Comparator.comparingInt(NekoTextureAssetProvider::luminance))
-                .toList();
-        for (int y = 0; y < source.getHeight(); y++) {
-            for (int x = 0; x < source.getWidth(); x++) {
-                int argb = source.getRGB(x, y);
-                int alpha = argb >>> 24 & 0xFF;
-                if (alpha == 0) {
-                    continue;
-                }
-                int index = luminance(argb) * (colors.size() - 1) / 255;
-                out.setRGB(x, y, alpha << 24 | colors.get(index) & 0xFFFFFF);
-            }
-        }
-        return out;
-    }
-
-    private static int luminance(int argb) {
-        int red = argb >>> 16 & 0xFF;
-        int green = argb >>> 8 & 0xFF;
-        int blue = argb & 0xFF;
-        return (red * 54 + green * 183 + blue * 19) / 256;
     }
 
     private BufferedImage composeOverlay(BufferedImage mapped, BufferedImage overlay, Path sourcePath) {
