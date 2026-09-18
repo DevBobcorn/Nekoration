@@ -13,6 +13,7 @@ import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.recipes.ColorInheritShapedRecipe;
 import io.devbobcorn.nekoration.recipes.ColorInheritStonecuttingRecipe;
+import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
@@ -108,6 +109,16 @@ public final class NekoRecipeProvider extends RecipeProvider {
             saveWindowVariant(output, woodId, "cross", new String[] { " 1 ", "101", " 1 " }, windowBase, unlockWindow);
             saveWindowVariant(output, woodId, "lancet", new String[] { " 1 ", "101", "111" }, windowBase, unlockWindow);
             saveWindowVariant(output, woodId, "shade", new String[] { "111", "101", "111" }, windowBase, unlockWindow);
+
+            for (WoodenBlockRegistration.WindowVariant variant : WoodenBlockRegistration.WindowVariant.values()) {
+                Item window = modItem(woodId + "_window_" + variant.id());
+                String paneId = woodId + "_window_pane_" + variant.id();
+                ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, modItem(paneId), 16)
+                        .pattern("WWW").pattern("WWW")
+                        .define('W', window)
+                        .unlockedBy("has_" + woodId + "_window_" + variant.id(), has(window))
+                        .save(output, modLoc(paneId));
+            }
 
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, modItem(woodId + "_chair"), 4)
                     .pattern("#  ").pattern("###").pattern("# #")
