@@ -70,6 +70,9 @@ public final class NekoClientSetup {
                 DyeableBlockItem.getColor(stack).getNbtId();
         ResourceLocation colorId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "color");
         OrnamentRegistration.awningBlockItemsView().forEach(item -> registrar.register(item.get(), colorId, color));
+        ItemPropertyFunction candleColor = (stack, level, entity, seed) ->
+                DyeableBlockItem.hasColor(stack) ? DyeableBlockItem.getColor(stack).getNbtId() : -1.0F;
+        OrnamentRegistration.candleHolderBlockItemsView().forEach(item -> registrar.register(item.get(), colorId, candleColor));
         // Painting item: blank / painted / magic link model override...
         ItemPropertyFunction paintingType = (stack, level, entity, seed) -> (float) PaintingItem.getType(stack);
         ResourceLocation typeId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "type");

@@ -260,7 +260,7 @@ public final class OrnamentRegistration {
     public static void addMiscCategoryStacks(Consumer<ItemStack> out) {
         for (var holder : MISC_BLOCK_ITEMS) {
             BlockItem item = holder.get();
-            out.accept(item instanceof DyeableBlockItem dyeable
+            out.accept(item instanceof DyeableBlockItem dyeable && !(item.getBlock() instanceof CandleHolderBlock)
                     ? DyeableBlockItem.createCreativeTabStack(dyeable, EnumNekoColor.WHITE)
                     : new ItemStack(item));
         }

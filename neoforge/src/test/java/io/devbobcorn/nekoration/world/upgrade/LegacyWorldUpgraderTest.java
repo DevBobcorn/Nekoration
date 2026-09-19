@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import io.devbobcorn.nekoration.blocks.states.CandleColorType;
 import org.junit.jupiter.api.Test;
 
 import net.minecraft.SharedConstants;
@@ -410,6 +411,31 @@ class LegacyWorldUpgraderTest {
             LegacyWorldUpgrader.upgradeItemStack(item);
             assertEquals("nekoration:" + V1_WOODS[ordinal] + "_bench", item.getString("id"));
         }
+    }
+
+    @Test
+    void upgradesCandleHolderDyeColorAndFlame() {
+        CompoundTag holder = state("candle_holder_iron", "level", "13", "age", "2");
+        assertTrue(LegacyWorldUpgrader.upgradeBlockState(holder));
+        assertEquals("nekoration:iron_candle_holder", holder.getString("Name"));
+        assertEquals("red", holder.getCompound("Properties").getString("color"));
+        assertEquals("soul_flame", holder.getCompound("Properties").getString("flame"));
+        assertFalse(holder.getCompound("Properties").contains("level"));
+        assertFalse(holder.getCompound("Properties").contains("age"));
+
+        for (int ordinal = 0; ordinal < 16; ordinal++) {
+            CompoundTag colored = state("candle_holder_quartz", "level", Integer.toString(ordinal));
+            LegacyWorldUpgrader.upgradeBlockState(colored);
+            String colorName = colored.getCompound("Properties").getString("color");
+            assertTrue(java.util.stream.Stream.of(CandleColorType.values())
+                    .anyMatch(color -> color.getSerializedName().equals(colorName)),
+                    "v1 color " + ordinal + " upgrades to an unknown candle color: " + colorName);
+        }
+
+        CompoundTag item = stack("candle_holder_gold", "color", 13);
+        assertTrue(LegacyWorldUpgrader.upgradeItemStack(item));
+        assertEquals("nekoration:gold_candle_holder", item.getString("id"));
+        assertEquals(5, item.getCompound("tag").getByte("color"));
     }
 
     @Test

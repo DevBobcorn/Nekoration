@@ -6,7 +6,7 @@
       "item": "minecraft:gold_ingot"
     },
     "0": {
-      "item": "minecraft:honeycomb"
+      "item": "minecraft:candle"
     }
   },
   "pattern": [
@@ -15,11 +15,6 @@
     " # "
   ],
   "result": {
-    "components": {
-      "minecraft:custom_data": {
-        "color": 0
-      }
-    },
     "count": 1,
     "id": "nekoration:gold_candle_holder"
   }

@@ -46,7 +46,6 @@ public final class NekoTextureAssetProvider implements DataProvider {
             "drawer_chest_open_front.png", "drawer_chest_open_knob.png",
             "easel_menu.png", "easel_menu_board.png");
     private static final Map<String, String> MINERAL_OVERLAYS = Map.of(
-            "candle_holder.png", "candle_holder_candle.png",
             "flower_basket.png", "flower_basket_flowers.png");
     private static final Map<String, String> QUARTZ_DOOR_OVERLAYS = Map.of(
             "quartz_door_bottom.png", "knob.png",

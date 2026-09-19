@@ -194,7 +194,7 @@ In v2, the material part(`iron`, `gold` or `quartz`) of these block ids moved fr
 
 All block properties are carried over between v1 and v2, with two exceptions on Candle Holders:
 
-- They store their dye color in the `level` block property in v1, while v2 uses the `color` property as `EnumNekoColor`(like Cement Blocks). Convert their `level` property to the v2 `color` property using the [Colors](#colors) table.
+- They store their dye color in the `level` block property in v1, while v2 uses the `color` property as a dedicated candle color enum(`CandleColorType`; like the `EnumNekoColor` of Cement Blocks but with an extra `uncolored` value for plain vanilla candles). Since v1 candle holders always carried a dye color, converted states always end up with one of the 16 colors and never with `uncolored`. Convert their `level` property to the v2 `color` property using the [Colors](#colors) table.
 - Their flame level is stored in the `age` integer property in v1, while v2 uses a dedicated `flame` enum property. Convert their `age` value as follows:
 
 |v1 `age`|v2 `flame`|

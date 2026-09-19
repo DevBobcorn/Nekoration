@@ -101,9 +101,6 @@ public final class NekoColorHandlers {
         BlockColor awning = dyeableBlockColor(NekoColorPalette.CEMENT);
         registrar.accept(awning, OrnamentRegistration.awningBlockItemsView().stream()
                 .map(holder -> holder.get().getBlock()).toList());
-        BlockColor candleHolder = dyeableBlockColor(NekoColorPalette.HALF_TIMBER);
-        registrar.accept(candleHolder, OrnamentRegistration.candleHolderBlockItemsView().stream()
-                .map(holder -> holder.get().getBlock()).toList());
     }
 
     /** Registers every item color provider through the given registrar. */
@@ -118,9 +115,6 @@ public final class NekoColorHandlers {
                 .map(holder -> (Item) holder.get()).toList());
         registrar.accept(windowPlantItemColor(), List.of(OrnamentRegistration.windowPlantBlockItem().get()));
         registrar.accept(dyeableBlockItemColor(NekoColorPalette.CEMENT), OrnamentRegistration.awningBlockItemsView().stream()
-                .map(holder -> (Item) holder.get()).toList());
-        ItemColor candleHolder = dyeableBlockItemColor(NekoColorPalette.HALF_TIMBER);
-        registrar.accept(candleHolder, OrnamentRegistration.candleHolderBlockItemsView().stream()
                 .map(holder -> (Item) holder.get()).toList());
     }
 }

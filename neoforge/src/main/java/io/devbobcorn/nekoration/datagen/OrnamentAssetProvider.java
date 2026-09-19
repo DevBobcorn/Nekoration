@@ -11,6 +11,8 @@ import com.google.gson.GsonBuilder;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
+import io.devbobcorn.nekoration.blocks.states.CandleColorType;
+import io.devbobcorn.nekoration.blocks.states.CandleFlameType;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -133,17 +135,52 @@ public final class OrnamentAssetProvider implements DataProvider {
         String modelPath = "candle_holder/" + material + "_candle_holder";
         String texturePrefix = "block/mineral/" + material + "/";
 
+        // Uncolored candles inherit the vanilla uncolored candle texture from the template.
         writeModel(output, writes, modelPath, "candle_holder/candle_holder",
                 Map.of("0", modLoc(texturePrefix + "candle_holder"),
                         "1", modLoc(texturePrefix + "face")));
+        writeModel(output, writes, modelPath + "_lit", "candle_holder/candle_holder",
+                candleHolderTextures(texturePrefix, "block/candle_lit"));
+
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            String colorId = color.getSerializedName();
+            writeModel(output, writes, modelPath + "_" + colorId, "candle_holder/candle_holder",
+                    candleHolderTextures(texturePrefix, "block/" + colorId + "_candle"));
+            writeModel(output, writes, modelPath + "_" + colorId + "_lit", "candle_holder/candle_holder",
+                    candleHolderTextures(texturePrefix, "block/" + colorId + "_candle_lit"));
+        }
 
         Map<String, Object> variants = new LinkedHashMap<>();
-        variants.put("", facingVariant(modLoc("block/" + modelPath), 0));
+        for (CandleColorType color : CandleColorType.values()) {
+            for (CandleFlameType flame : CandleFlameType.values()) {
+                String modelId = modelPath + colorSuffix(color) + (flame.isLit() ? "_lit" : "");
+                variants.put("color=" + color.getSerializedName() + ",flame=" + flame.getSerializedName(),
+                        facingVariant(modLoc("block/" + modelId), 0));
+            }
+        }
         write(output, writes, blockstates, material + "_candle_holder", Map.of("variants", variants));
 
         Map<String, Object> itemBody = new LinkedHashMap<>();
         itemBody.put("parent", modLoc("block/" + modelPath));
+        List<Map<String, Object>> overrides = new ArrayList<>();
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            Map<String, Object> override = new LinkedHashMap<>();
+            override.put("predicate", Map.of("nekoration:color", (double) color.getNbtId()));
+            override.put("model", modLoc("block/" + modelPath + "_" + color.getSerializedName()));
+            overrides.add(override);
+        }
+        itemBody.put("overrides", overrides);
         write(output, writes, items, material + "_candle_holder", itemBody);
+    }
+
+    private static Map<String, String> candleHolderTextures(String texturePrefix, String candleTexture) {
+        return Map.of("0", modLoc(texturePrefix + "candle_holder"),
+                "1", modLoc(texturePrefix + "face"),
+                "2", candleTexture);
+    }
+
+    private static String colorSuffix(CandleColorType color) {
+        return color.isUncolored() ? "" : "_" + color.getDyeColor().getSerializedName();
     }
 
     private void generateFlowerBasket(CachedOutput output, List<CompletableFuture<?>> writes, String material) {

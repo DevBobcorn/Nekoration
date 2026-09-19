@@ -1,0 +1,8 @@
+{
+  "parent": "nekoration:block/candle_holder/candle_holder",
+  "textures": {
+    "0": "nekoration:block/mineral/gold/candle_holder",
+    "1": "nekoration:block/mineral/gold/face",
+    "2": "block/yellow_candle_lit"
+  }
+}

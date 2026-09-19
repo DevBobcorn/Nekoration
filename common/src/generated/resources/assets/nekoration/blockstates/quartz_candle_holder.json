@@ -1,7 +1,208 @@
 {
   "variants": {
-    "": {
+    "color=black,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_black_lit"
+    },
+    "color=black,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_black_lit"
+    },
+    "color=black,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_black"
+    },
+    "color=black,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_black_lit"
+    },
+    "color=blue,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_blue_lit"
+    },
+    "color=blue,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_blue_lit"
+    },
+    "color=blue,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_blue"
+    },
+    "color=blue,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_blue_lit"
+    },
+    "color=brown,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_brown_lit"
+    },
+    "color=brown,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_brown_lit"
+    },
+    "color=brown,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_brown"
+    },
+    "color=brown,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_brown_lit"
+    },
+    "color=cyan,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_cyan_lit"
+    },
+    "color=cyan,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_cyan_lit"
+    },
+    "color=cyan,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_cyan"
+    },
+    "color=cyan,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_cyan_lit"
+    },
+    "color=gray,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_gray_lit"
+    },
+    "color=gray,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_gray_lit"
+    },
+    "color=gray,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_gray"
+    },
+    "color=gray,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_gray_lit"
+    },
+    "color=green,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_green_lit"
+    },
+    "color=green,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_green_lit"
+    },
+    "color=green,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_green"
+    },
+    "color=green,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_green_lit"
+    },
+    "color=light_blue,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_light_blue_lit"
+    },
+    "color=light_blue,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_light_blue_lit"
+    },
+    "color=light_blue,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_light_blue"
+    },
+    "color=light_blue,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_light_blue_lit"
+    },
+    "color=light_gray,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_light_gray_lit"
+    },
+    "color=light_gray,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_light_gray_lit"
+    },
+    "color=light_gray,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_light_gray"
+    },
+    "color=light_gray,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_light_gray_lit"
+    },
+    "color=lime,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_lime_lit"
+    },
+    "color=lime,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_lime_lit"
+    },
+    "color=lime,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_lime"
+    },
+    "color=lime,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_lime_lit"
+    },
+    "color=magenta,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_magenta_lit"
+    },
+    "color=magenta,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_magenta_lit"
+    },
+    "color=magenta,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_magenta"
+    },
+    "color=magenta,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_magenta_lit"
+    },
+    "color=orange,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_orange_lit"
+    },
+    "color=orange,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_orange_lit"
+    },
+    "color=orange,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_orange"
+    },
+    "color=orange,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_orange_lit"
+    },
+    "color=pink,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_pink_lit"
+    },
+    "color=pink,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_pink_lit"
+    },
+    "color=pink,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_pink"
+    },
+    "color=pink,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_pink_lit"
+    },
+    "color=purple,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_purple_lit"
+    },
+    "color=purple,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_purple_lit"
+    },
+    "color=purple,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_purple"
+    },
+    "color=purple,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_purple_lit"
+    },
+    "color=red,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_red_lit"
+    },
+    "color=red,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_red_lit"
+    },
+    "color=red,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_red"
+    },
+    "color=red,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_red_lit"
+    },
+    "color=uncolored,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_lit"
+    },
+    "color=uncolored,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_lit"
+    },
+    "color=uncolored,flame=none": {
       "model": "nekoration:block/candle_holder/quartz_candle_holder"
+    },
+    "color=uncolored,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_lit"
+    },
+    "color=white,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_white_lit"
+    },
+    "color=white,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_white_lit"
+    },
+    "color=white,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_white"
+    },
+    "color=white,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_white_lit"
+    },
+    "color=yellow,flame=firework": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_yellow_lit"
+    },
+    "color=yellow,flame=flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_yellow_lit"
+    },
+    "color=yellow,flame=none": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_yellow"
+    },
+    "color=yellow,flame=soul_flame": {
+      "model": "nekoration:block/candle_holder/quartz_candle_holder_yellow_lit"
     }
   }
 }

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:gold_ingot"
+    },
+    "0": {
+      "item": "minecraft:cyan_candle"
+    }
+  },
+  "pattern": [
+    "000",
+    "###",
+    " # "
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 10
+      }
+    },
+    "count": 1,
+    "id": "nekoration:gold_candle_holder"
+  }
+}

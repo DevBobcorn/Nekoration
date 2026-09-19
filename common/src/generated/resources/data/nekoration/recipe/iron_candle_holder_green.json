@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "0": {
+      "item": "minecraft:green_candle"
+    }
+  },
+  "pattern": [
+    "000",
+    "###",
+    " # "
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 9
+      }
+    },
+    "count": 1,
+    "id": "nekoration:iron_candle_holder"
+  }
+}

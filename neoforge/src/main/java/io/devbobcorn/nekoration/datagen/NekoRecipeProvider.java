@@ -234,12 +234,20 @@ public final class NekoRecipeProvider extends RecipeProvider {
                     .define('0', ingot).define('#', block)
                     .unlockedBy(unlockBlock, has(block))
                     .save(output, modLoc(material + "_lamp_post"));
-            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,
-                    dyed(modItem(material + "_candle_holder"), EnumNekoColor.WHITE, 1))
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, modItem(material + "_candle_holder"), 1)
                     .pattern("000").pattern("###").pattern(" # ")
-                    .define('0', Items.HONEYCOMB).define('#', ingot)
+                    .define('0', Items.CANDLE).define('#', ingot)
                     .unlockedBy(unlockIngot, has(ingot))
                     .save(output, modLoc(material + "_candle_holder"));
+            for (EnumNekoColor color : EnumNekoColor.values()) {
+                ItemLike candle = vanillaItem(color.getSerializedName() + "_candle");
+                ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,
+                        dyed(modItem(material + "_candle_holder"), color, 1))
+                        .pattern("000").pattern("###").pattern(" # ")
+                        .define('0', candle).define('#', ingot)
+                        .unlockedBy(unlockIngot, has(ingot))
+                        .save(output, modLoc(material + "_candle_holder_" + color.getSerializedName()));
+            }
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, modItem(material + "_flower_basket"), 1)
                     .pattern(" # ").pattern("000").pattern("###")
                     .define('0', Ingredient.of(ItemTags.FLOWERS)).define('#', ingot)
