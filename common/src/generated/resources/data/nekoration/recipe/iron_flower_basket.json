@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "0": {
+      "tag": "minecraft:flowers"
+    }
+  },
+  "pattern": [
+    " # ",
+    "000",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "nekoration:iron_flower_basket"
+  }
+}

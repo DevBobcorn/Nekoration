@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:quartz_block"
+    },
+    "0": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "pattern": [
+    "0#0",
+    " # ",
+    " # "
+  ],
+  "result": {
+    "count": 16,
+    "id": "nekoration:quartz_lamp_post"
+  }
+}

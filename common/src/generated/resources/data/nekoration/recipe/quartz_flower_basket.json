@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:quartz"
+    },
+    "0": {
+      "tag": "minecraft:flowers"
+    }
+  },
+  "pattern": [
+    " # ",
+    "000",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "nekoration:quartz_flower_basket"
+  }
+}

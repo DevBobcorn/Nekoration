@@ -30,20 +30,23 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 
 /**
- * Recipe generator for wooden, cement and stone blocks, ported from
- * reference/nekoration-1.19.
+ * Recipe generator for wooden, cement and stone blocks.
  */
 public final class NekoRecipeProvider extends RecipeProvider {
     private static final int SMELTING_TIME = 200;
     private static final float SMELTING_XP = 0.1F;
+
+    private static final List<String> MINERAL_MATERIALS = List.of("iron", "gold", "quartz");
 
     private static final List<String> CEMENT_VARIANTS = List.of("cement_base", "paneled_cement",
             "paneled_cement_base", "cement_pillar_simple", "cement_pillar_doric", "cement_pillar_ionic",
@@ -74,6 +77,7 @@ public final class NekoRecipeProvider extends RecipeProvider {
         woodenBlockRecipes(output);
         cementBlockRecipes(output);
         stoneBlockRecipes(output);
+        mineralBlockRecipes(output);
     }
 
     private void woodenBlockRecipes(RecipeOutput output) {
@@ -216,6 +220,50 @@ public final class NekoRecipeProvider extends RecipeProvider {
                     .unlockedBy(hasName(dye), has(dye))
                     .save(output, modLoc("cement_" + color.getSerializedName()));
         }
+    }
+
+    private void mineralBlockRecipes(RecipeOutput output) {
+        for (String material : MINERAL_MATERIALS) {
+            ItemLike block = mineralBlockOf(material);
+            ItemLike ingot = mineralIngotOf(material);
+            String unlockBlock = "has_" + BuiltInRegistries.ITEM.getKey(block.asItem()).getPath();
+            String unlockIngot = "has_" + BuiltInRegistries.ITEM.getKey(ingot.asItem()).getPath();
+
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, modItem(material + "_lamp_post"), 16)
+                    .pattern("0#0").pattern(" # ").pattern(" # ")
+                    .define('0', ingot).define('#', block)
+                    .unlockedBy(unlockBlock, has(block))
+                    .save(output, modLoc(material + "_lamp_post"));
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,
+                    dyed(modItem(material + "_candle_holder"), EnumNekoColor.WHITE, 1))
+                    .pattern("000").pattern("###").pattern(" # ")
+                    .define('0', Items.HONEYCOMB).define('#', ingot)
+                    .unlockedBy(unlockIngot, has(ingot))
+                    .save(output, modLoc(material + "_candle_holder"));
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, modItem(material + "_flower_basket"), 1)
+                    .pattern(" # ").pattern("000").pattern("###")
+                    .define('0', Ingredient.of(ItemTags.FLOWERS)).define('#', ingot)
+                    .unlockedBy(unlockIngot, has(ingot))
+                    .save(output, modLoc(material + "_flower_basket"));
+        }
+    }
+
+    private static ItemLike mineralBlockOf(String material) {
+        return switch (material) {
+            case "iron" -> Blocks.IRON_BLOCK;
+            case "gold" -> Blocks.GOLD_BLOCK;
+            case "quartz" -> Blocks.QUARTZ_BLOCK;
+            default -> throw new IllegalArgumentException("No vanilla mineral block for " + material);
+        };
+    }
+
+    private static ItemLike mineralIngotOf(String material) {
+        return switch (material) {
+            case "iron" -> Items.IRON_INGOT;
+            case "gold" -> Items.GOLD_INGOT;
+            case "quartz" -> Items.QUARTZ;
+            default -> throw new IllegalArgumentException("No vanilla mineral ingot for " + material);
+        };
     }
 
     private void stoneBlockRecipes(RecipeOutput output) {

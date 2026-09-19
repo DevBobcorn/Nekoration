@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:iron_block"
+    },
+    "0": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "0#0",
+    " # ",
+    " # "
+  ],
+  "result": {
+    "count": 16,
+    "id": "nekoration:iron_lamp_post"
+  }
+}

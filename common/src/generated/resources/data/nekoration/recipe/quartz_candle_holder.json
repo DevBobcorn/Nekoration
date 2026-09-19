@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:quartz"
+    },
+    "0": {
+      "item": "minecraft:honeycomb"
+    }
+  },
+  "pattern": [
+    "000",
+    "###",
+    " # "
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 0
+      }
+    },
+    "count": 1,
+    "id": "nekoration:quartz_candle_holder"
+  }
+}
