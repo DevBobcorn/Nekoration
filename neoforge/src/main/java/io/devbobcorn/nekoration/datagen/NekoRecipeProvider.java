@@ -78,6 +78,7 @@ public final class NekoRecipeProvider extends RecipeProvider {
         cementBlockRecipes(output);
         stoneBlockRecipes(output);
         mineralBlockRecipes(output);
+        quartzDoorRecipes(output);
     }
 
     private void woodenBlockRecipes(RecipeOutput output) {
@@ -272,6 +273,30 @@ public final class NekoRecipeProvider extends RecipeProvider {
             case "quartz" -> Items.QUARTZ;
             default -> throw new IllegalArgumentException("No vanilla mineral ingot for " + material);
         };
+    }
+
+    /** Crafting recipes for the quartz doors: a 2x3 wall of the material makes three
+     * regular doors, a 1x3 column makes one tall door (as in the 1.19 version). */
+    private void quartzDoorRecipes(RecipeOutput output) {
+        saveDoorRecipe(output, Blocks.QUARTZ_BLOCK, "quartz_door", false);
+        saveDoorRecipe(output, Blocks.CHISELED_QUARTZ_BLOCK, "chiseled_quartz_door", false);
+        saveDoorRecipe(output, Blocks.QUARTZ_BRICKS, "quartz_bricks_door", false);
+        saveDoorRecipe(output, Blocks.QUARTZ_BLOCK, "tall_quartz_door", true);
+        saveDoorRecipe(output, Blocks.CHISELED_QUARTZ_BLOCK, "tall_chiseled_quartz_door", true);
+        saveDoorRecipe(output, Blocks.QUARTZ_BRICKS, "tall_quartz_bricks_door", true);
+    }
+
+    private void saveDoorRecipe(RecipeOutput output, ItemLike material, String doorId, boolean tall) {
+        ShapedRecipeBuilder builder = ShapedRecipeBuilder
+                .shaped(RecipeCategory.REDSTONE, modItem(doorId), tall ? 1 : 3)
+                .define('#', material)
+                .unlockedBy(hasName(material), has(material));
+        if (tall) {
+            builder.pattern("#").pattern("#").pattern("#");
+        } else {
+            builder.pattern("##").pattern("##").pattern("##");
+        }
+        builder.save(output, modLoc(doorId));
     }
 
     private void stoneBlockRecipes(RecipeOutput output) {

@@ -124,10 +124,24 @@ public final class OrnamentAssetProvider implements DataProvider {
         }
         write(output, writes, blockstates, id, Map.of("variants", variants));
 
-        // Door items show a plain white icon; their dye color only lives in the item data.
+        // Door item icons are palette-mapped per color (like the block textures); the
+        // model override picks the variant matching the stack's bottom-segment color NBT.
         Map<String, Object> itemBody = new LinkedHashMap<>();
         itemBody.put("parent", "item/generated");
-        itemBody.put("textures", Map.of("layer0", modLoc("item/" + id)));
+        // Fallback for stacks without color data: the white variant.
+        itemBody.put("textures", Map.of("layer0", modLoc("item/quartz_door/white/" + id)));
+        List<Map<String, Object>> overrides = new ArrayList<>();
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            String colorId = color.getSerializedName();
+            write(output, writes, items, "door/" + id + "_" + colorId,
+                    Map.of("parent", "item/generated",
+                            "textures", Map.of("layer0", modLoc("item/quartz_door/" + colorId + "/" + id))));
+            Map<String, Object> override = new LinkedHashMap<>();
+            override.put("predicate", Map.of("nekoration:color", (double) color.getNbtId()));
+            override.put("model", modLoc("item/door/" + id + "_" + colorId));
+            overrides.add(override);
+        }
+        itemBody.put("overrides", overrides);
         write(output, writes, items, id, itemBody);
     }
 

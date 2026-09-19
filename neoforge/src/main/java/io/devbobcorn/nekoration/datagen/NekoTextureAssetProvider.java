@@ -54,6 +54,13 @@ public final class NekoTextureAssetProvider implements DataProvider {
             "tall_quartz_door_bottom.png", "knob_tall.png",
             "tall_chiseled_quartz_door_bottom.png", "knob_tall.png",
             "tall_quartz_bricks_door_bottom.png", "knob_tall.png");
+    private static final Map<String, String> QUARTZ_DOOR_ITEM_OVERLAYS = Map.of(
+            "quartz_door.png", "knob.png",
+            "chiseled_quartz_door.png", "knob.png",
+            "quartz_bricks_door.png", "knob.png",
+            "tall_quartz_door.png", "knob_tall.png",
+            "tall_chiseled_quartz_door.png", "knob_tall.png",
+            "tall_quartz_bricks_door.png", "knob_tall.png");
     private static final String PLANK_PALETTE_DIR = "plank_palettes";
     private static final String STONE_PALETTE_DIR = "stone_palettes";
     private static final String MINERAL_PALETTE_DIR = "mineral_palettes";
@@ -64,6 +71,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
 
     private final Path templateTextureRoot;
     private final Path generatedBlockTextureRoot;
+    private final Path generatedItemTextureRoot;
     private final Path generatedGuiTextureRoot;
     private int writtenTextureCount;
 
@@ -74,6 +82,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
         Path assetsRoot = output.getOutputFolder()
                 .resolve("assets/" + Nekoration.MODID + "/textures");
         this.generatedBlockTextureRoot = assetsRoot.resolve("block");
+        this.generatedItemTextureRoot = assetsRoot.resolve("item");
         this.generatedGuiTextureRoot = assetsRoot.resolve("gui");
     }
 
@@ -127,6 +136,12 @@ public final class NekoTextureAssetProvider implements DataProvider {
         PaletteTargets quartzDoorPaletteTargets = resolvePaletteTargets(QUARTZ_DOOR_PALETTE_DIR);
         generateMappedTextureFolder(cachedOutput, "quartz_door", QUARTZ_DOOR_OVERLAYS,
                 quartzDoorPaletteTargets.sourcePalettePath(), quartzDoorPaletteTargets.targetPalettes());
+        // Door item icons are palette-mapped from their own templates and written next to
+        // the vanilla item texture folder, keyed per dye color.
+        generateMappedTextureFolder(cachedOutput, generatedItemTextureRoot,
+                "quartz_door_item_template", "quartz_door_item_overlay", "quartz_door",
+                QUARTZ_DOOR_ITEM_OVERLAYS, quartzDoorPaletteTargets.sourcePalettePath(),
+                quartzDoorPaletteTargets.targetPalettes());
 
         PaletteTargets woolPaletteTargets = resolvePaletteTargets(WOOL_PALETTE_DIR);
         generateMappedTextureFolder(cachedOutput, "wool", Map.of(),
@@ -192,11 +207,26 @@ public final class NekoTextureAssetProvider implements DataProvider {
             Path sourcePalettePath,
             List<Path> targetPalettes)
             throws IOException {
-        Path sourceDir = templateTextureRoot.resolve(textureFolder + "_template");
+        generateMappedTextureFolder(cachedOutput, generatedBlockTextureRoot,
+                textureFolder + "_template", textureFolder + "_overlay", textureFolder,
+                overlaysBySourceFile, sourcePalettePath, targetPalettes);
+    }
+
+    private void generateMappedTextureFolder(
+            CachedOutput cachedOutput,
+            Path outputRoot,
+            String sourceFolder,
+            String overlayFolder,
+            String outputFolder,
+            Map<String, String> overlaysBySourceFile,
+            Path sourcePalettePath,
+            List<Path> targetPalettes)
+            throws IOException {
+        Path sourceDir = templateTextureRoot.resolve(sourceFolder);
         if (!Files.isDirectory(sourceDir)) {
             return;
         }
-        Path overlayDir = templateTextureRoot.resolve(textureFolder + "_overlay");
+        Path overlayDir = templateTextureRoot.resolve(overlayFolder);
         List<Path> sourceImages = collectImages(sourceDir);
         Palette sourcePalette = loadPalette(sourcePalettePath);
 
@@ -223,7 +253,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
                 }
                 String targetVariantName = stripExtension(targetPalettePath.getFileName().toString());
                 String textureName = stripExtension(sourceImagePath.getFileName().toString());
-                writeTexture(cachedOutput, textureFolder + "/" + targetVariantName + "/" + textureName, mapped);
+                writeTexture(cachedOutput, outputRoot, outputFolder + "/" + targetVariantName + "/" + textureName, mapped);
             }
         }
     }

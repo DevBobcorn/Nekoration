@@ -73,6 +73,9 @@ public final class NekoClientSetup {
         ItemPropertyFunction candleColor = (stack, level, entity, seed) ->
                 DyeableBlockItem.hasColor(stack) ? DyeableBlockItem.getColor(stack).getNbtId() : -1.0F;
         OrnamentRegistration.candleHolderBlockItemsView().forEach(item -> registrar.register(item.get(), colorId, candleColor));
+        // Door icons follow the stack's bottom-segment color NBT; stacks without a color
+        // tag fall through to the plain white icon in the model's base texture.
+        OrnamentRegistration.doorBlockItemsView().forEach(item -> registrar.register(item.get(), colorId, color));
         // Painting item: blank / painted / magic link model override...
         ItemPropertyFunction paintingType = (stack, level, entity, seed) -> (float) PaintingItem.getType(stack);
         ResourceLocation typeId = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "type");

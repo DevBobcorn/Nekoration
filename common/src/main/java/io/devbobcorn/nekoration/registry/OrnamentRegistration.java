@@ -38,6 +38,7 @@ public final class OrnamentRegistration {
     public static RegistrySupplier<DyeableBlockItem> WINDOW_PLANT_BLOCK_ITEM;
     public static final List<RegistrySupplier<DyeableBlockItem>> AWNING_BLOCK_ITEMS = new ArrayList<>();
     public static final List<RegistrySupplier<DyeableBlockItem>> CANDLE_HOLDER_BLOCK_ITEMS = new ArrayList<>();
+    private static final List<RegistrySupplier<DyeableBlockItem>> DOOR_BLOCK_ITEMS = new ArrayList<>();
     public static final List<RegistrySupplier<BlockItem>> FURNITURE_BLOCK_ITEMS = new ArrayList<>();
     private static final List<RegistrySupplier<? extends BlockItem>> MISC_BLOCK_ITEMS = new ArrayList<>();
     private static final List<RegistrySupplier<Block>> LAMP_POST_BLOCKS = new ArrayList<>();
@@ -84,9 +85,9 @@ public final class OrnamentRegistration {
         registerDoor(registrar, "chiseled_quartz_door", tallChiseled);
         registerDoor(registrar, "quartz_bricks_door", tallBricks);
 
-        MISC_BLOCK_ITEMS.add(registerDyeableBlockItem(registrar, "tall_quartz_door", tallQuartz));
-        MISC_BLOCK_ITEMS.add(registerDyeableBlockItem(registrar, "tall_chiseled_quartz_door", tallChiseled));
-        MISC_BLOCK_ITEMS.add(registerDyeableBlockItem(registrar, "tall_quartz_bricks_door", tallBricks));
+        registerTallDoorItem(registrar, "tall_quartz_door", tallQuartz);
+        registerTallDoorItem(registrar, "tall_chiseled_quartz_door", tallChiseled);
+        registerTallDoorItem(registrar, "tall_quartz_bricks_door", tallBricks);
     }
 
     private static RegistrySupplier<Block> registerTallDoor(NekoRegistrar registrar, String id) {
@@ -99,8 +100,16 @@ public final class OrnamentRegistration {
             RegistrySupplier<Block> tallVariant) {
         RegistrySupplier<Block> block = registrar.block(id,
                 () -> new NekoDoorBlock(doorProperties(), () -> tallVariant.get()));
-        MISC_BLOCK_ITEMS.add(registerDyeableBlockItem(registrar, id, block));
+        RegistrySupplier<DyeableBlockItem> item = registerDyeableBlockItem(registrar, id, block);
+        MISC_BLOCK_ITEMS.add(item);
+        DOOR_BLOCK_ITEMS.add(item);
         DOOR_BLOCKS.add(block);
+    }
+
+    private static void registerTallDoorItem(NekoRegistrar registrar, String id, RegistrySupplier<Block> block) {
+        RegistrySupplier<DyeableBlockItem> item = registerDyeableBlockItem(registrar, id, block);
+        MISC_BLOCK_ITEMS.add(item);
+        DOOR_BLOCK_ITEMS.add(item);
     }
 
     private static BlockBehaviour.Properties doorProperties() {
@@ -184,6 +193,10 @@ public final class OrnamentRegistration {
 
     public static List<RegistrySupplier<DyeableBlockItem>> candleHolderBlockItemsView() {
         return Collections.unmodifiableList(CANDLE_HOLDER_BLOCK_ITEMS);
+    }
+
+    public static List<RegistrySupplier<DyeableBlockItem>> doorBlockItemsView() {
+        return Collections.unmodifiableList(DOOR_BLOCK_ITEMS);
     }
 
     public static List<RegistrySupplier<Block>> awningBlocksView() {
