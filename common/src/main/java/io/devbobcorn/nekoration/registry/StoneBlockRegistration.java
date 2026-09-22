@@ -41,6 +41,8 @@ public final class StoneBlockRegistration {
     private static final List<RegistrySupplier<Item>> POT_BLOCK_ITEMS = new ArrayList<>();
     /** All mod-registered stone blocks (mineable tags). */
     private static final List<RegistrySupplier<Block>> STONE_BLOCKS = new ArrayList<>();
+    /** All mod-registered stone pots and planters (dirt tag). */
+    private static final List<RegistrySupplier<Block>> POT_BLOCKS = new ArrayList<>();
     /** All mod-registered stone walls (walls tag). */
     private static final List<RegistrySupplier<Block>> STONE_WALL_BLOCKS = new ArrayList<>();
     
@@ -156,6 +158,7 @@ public final class StoneBlockRegistration {
         int radius, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         RegistrySupplier<Block> block = registrar.block(id, () -> new PotBlock(stone.stoneProperties(), radius));
         trackStoneBlock(block);
+        POT_BLOCKS.add(block);
         RegistrySupplier<Item> blockItem = registerBlockItem(registrar, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);
         POT_BLOCK_ITEMS.add(blockItem);
@@ -267,6 +270,11 @@ public final class StoneBlockRegistration {
     /** All mod-registered stone walls (vanilla-provided walls excluded). */
     public static List<RegistrySupplier<Block>> stoneWallBlocksView() {
         return Collections.unmodifiableList(STONE_WALL_BLOCKS);
+    }
+
+    /** All mod-registered stone pots and planters (vanilla-provided blocks excluded). */
+    public static List<RegistrySupplier<Block>> potBlocksView() {
+        return Collections.unmodifiableList(POT_BLOCKS);
     }
 
     /** Items for the creative stone tab when filtering by {@link io.devbobcorn.nekoration.blocks.NekoStone}. */

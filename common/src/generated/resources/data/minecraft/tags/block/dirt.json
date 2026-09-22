@@ -1,0 +1,27 @@
+{
+  "values": [
+    "nekoration:granite_pot",
+    "nekoration:granite_planter",
+    "nekoration:diorite_pot",
+    "nekoration:diorite_planter",
+    "nekoration:andesite_pot",
+    "nekoration:andesite_planter",
+    "nekoration:calcite_pot",
+    "nekoration:calcite_planter",
+    "nekoration:dripstone_pot",
+    "nekoration:dripstone_planter",
+    "nekoration:tuff_pot",
+    "nekoration:tuff_planter",
+    "nekoration:sandstone_pot",
+    "nekoration:sandstone_planter",
+    "nekoration:red_sandstone_pot",
+    "nekoration:red_sandstone_planter",
+    "nekoration:stone_pot",
+    "nekoration:stone_planter",
+    "nekoration:iron_flower_basket",
+    "nekoration:gold_flower_basket",
+    "nekoration:quartz_flower_basket",
+    "nekoration:cement_pot",
+    "nekoration:cement_planter"
+  ]
+}

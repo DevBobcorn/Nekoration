@@ -32,6 +32,11 @@ public final class NekorationBlockTagsProvider extends TagsProvider<Block> {
 
         tag(BlockTags.WALLS).addAll(keysOf(StoneBlockRegistration.stoneWallBlocksView()));
 
+        tag(BlockTags.DIRT)
+                .addAll(keysOf(StoneBlockRegistration.potBlocksView()))
+                .addAll(keysOf(OrnamentRegistration.flowerBasketBlocksView()))
+                .addAll(keysOf(List.of(CementBlockRegistration.CEMENT_POT, CementBlockRegistration.CEMENT_PLANTER)));
+
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .addAll(keysOf(WoodenBlockRegistration.woodenBlocksView()))
                 .addAll(keysOf(OrnamentRegistration.pumpkinFurnitureBlocksView()));
