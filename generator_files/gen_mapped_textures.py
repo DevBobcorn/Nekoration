@@ -1,22 +1,55 @@
 from pathlib import Path
 from PIL import Image
+import os
 
 IMAGE_SUFFIXES = {".png", ".bmp", ".webp"}
 
 # --- Config (no CLI needed) ---
-#TARGET_PALETTE_DIR = Path("plank_palettes")
-#SOURCE_PALETTE_FILENAME = "grayscale.png"
-TARGET_PALETTE_DIR = Path("stone_palettes")
+TARGET_PALETTE_DIR = Path("plank_palettes")
 SOURCE_PALETTE_FILENAME = "grayscale.png"
+# TARGET_PALETTE_DIR = Path("stone_palettes")
+# SOURCE_PALETTE_FILENAME = "grayscale.png"
 
 # SOURCE_IMAGE_DIR = Path("half_timber_template")
-# OUTPUT_DIR = Path("../src/generated/resources/assets/nekoration/textures/block/half_timber")
-SOURCE_IMAGE_DIR = Path("column_template")
-OUTPUT_DIR = Path("../src/generated/resources/assets/nekoration/textures/block/column")
+# OUTPUT_DIR = Path("../common/src/generated/resources/assets/nekoration/textures/block/half_timber")
+# SOURCE_IMAGE_DIR = Path("column_template")
+# OUTPUT_DIR = Path("../common/src/generated/resources/assets/nekoration/textures/block/column")
+SOURCE_IMAGE_DIR = Path("table_leg_template")
+OUTPUT_DIR = Path("../common/src/main/resources/assets/nekoration/textures/block/furniture")
+
 OVERLAY_DIR = Path("column_overlay")
 OVERLAY_TEXTURES = {
 }
 
+SPECIFY_TEMPLATE_FOR_EACH_PALETTE = True
+
+TEMPLATE_PALETTE_OUTPUT = [
+    ('type_a.png', 'acacia.png', 'acacia_leg.png'),
+    ('type_a.png', 'mahogany.png', 'mahogany_leg.png'),
+    ('type_a.png', 'palm.png', 'palm_leg.png'),
+    ('type_a.png', 'pine.png', 'pine_leg.png'),
+    ('type_b.png', 'bamboo.png', 'bamboo_leg.png'),
+    ('type_b.png', 'dark_oak.png', 'dark_oak_leg.png'),
+    ('type_b.png', 'oak.png', 'oak.png'),
+    ('type_c.png', 'birch.png', 'birch_leg.png'),
+    ('type_c.png', 'hellbark.png', 'hellbark_leg.png'),
+    ('type_c.png', 'magic.png', 'magic_leg.png'),
+    ('type_d.png', 'cherry.png', 'cherry_leg.png'),
+    ('type_d.png', 'dead.png', 'dead_leg.png'),
+    ('type_d.png', 'umbran.png', 'umbran_leg.png'),
+    ('type_e.png', 'crimson.png', 'crimson_leg.png'),
+    ('type_e.png', 'jacaranda.png', 'jacaranda_leg.png'),
+    ('type_e.png', 'maple.png', 'maple_leg.png'),
+    ('type_f.png', 'jungle.png', 'jungle_leg.png'),
+    ('type_f.png', 'empyreal.png', 'empyreal_leg.png'),
+    ('type_f.png', 'willow.png', 'willow_leg.png'),
+    ('type_g.png', 'spruce.png', 'spruce_leg.png'),
+    ('type_g.png', 'fir.png', 'fir_leg.png'),
+    ('type_g.png', 'redwood.png', 'redwood_leg.png'),
+    ('type_h.png', 'mangrove.png', 'mangrove_leg.png'),
+    # ('type_h.png', 'pumpkin.png', 'pumpkin_leg.png'),
+    ('type_h.png', 'warped.png', 'warped_leg.png'),
+]
 
 def load_palette(path: Path):
     with Image.open(path) as image:
@@ -154,6 +187,10 @@ def build_output_path(output_root: Path, source_image: Path, target_palette: Pat
 
 def main():
     script_dir = Path(__file__).resolve().parent
+
+    # Change CWD to script's directory
+    os.chdir(script_dir)
+
     target_palette_dir = script_dir / TARGET_PALETTE_DIR
     source_image_dir = script_dir / SOURCE_IMAGE_DIR
     output_dir = script_dir / OUTPUT_DIR
@@ -173,13 +210,27 @@ def main():
     print(f"Target palette count: {len(target_palettes)}")
     print(f"Source image count: {len(source_images)}")
 
-    for source_image in source_images:
-        image_size, source_pixels = load_source_image(source_image)
-        overlay_image = get_overlay_for_source(source_image, overlay_dir)
-        for target_palette in target_palettes:
+    if not SPECIFY_TEMPLATE_FOR_EACH_PALETTE:
+        # Remap all palettes with each and every template
+        for source_image in source_images:
+            image_size, source_pixels = load_source_image(source_image)
+            overlay_image = get_overlay_for_source(source_image, overlay_dir)
+            for target_palette in target_palettes:
+                mapping = build_color_mapping(source_palette, target_palette)
+                mapped_pixels = remap_pixels(source_pixels, mapping)
+                output_path = build_output_path(output_dir, source_image, target_palette)
+                save_mapped_image(image_size, mapped_pixels, output_path, overlay_image)
+                print(f"Mapped '{source_image.name}' with '{target_palette.name}' -> '{output_path}'")
+    else:
+        # Remap all palettes with only its specified template
+        for (source_filename, palette_filename, output_filename) in TEMPLATE_PALETTE_OUTPUT:
+            source_image = SOURCE_IMAGE_DIR / source_filename
+            image_size, source_pixels = load_source_image(source_image)
+            overlay_image = get_overlay_for_source(source_image, overlay_dir)
+            target_palette = TARGET_PALETTE_DIR / palette_filename
             mapping = build_color_mapping(source_palette, target_palette)
             mapped_pixels = remap_pixels(source_pixels, mapping)
-            output_path = build_output_path(output_dir, source_image, target_palette)
+            output_path = OUTPUT_DIR / output_filename
             save_mapped_image(image_size, mapped_pixels, output_path, overlay_image)
             print(f"Mapped '{source_image.name}' with '{target_palette.name}' -> '{output_path}'")
 
