@@ -13,8 +13,7 @@ import javax.annotation.Nullable;
 import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.NekoStone;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
-import io.devbobcorn.nekoration.blocks.stone.ColumnBlock;
-import io.devbobcorn.nekoration.blocks.stone.DirectionalColumnBlock;
+import io.devbobcorn.nekoration.blocks.stone.DirectionalThinPillarBlock;
 import io.devbobcorn.nekoration.blocks.stone.FrameSideBlock;
 import io.devbobcorn.nekoration.blocks.stone.PedestalBlock;
 import io.devbobcorn.nekoration.blocks.stone.PotBlock;
@@ -22,6 +21,7 @@ import io.devbobcorn.nekoration.blocks.stone.SelfDroppingBlock;
 import io.devbobcorn.nekoration.blocks.stone.SelfDroppingSlabBlock;
 import io.devbobcorn.nekoration.blocks.stone.SelfDroppingStairBlock;
 import io.devbobcorn.nekoration.blocks.stone.SelfDroppingWallBlock;
+import io.devbobcorn.nekoration.blocks.stone.ThinPillarBlock;
 import io.devbobcorn.nekoration.items.NekoBlockItem;
 import io.devbobcorn.nekoration.xplat.NekoRegistrar;
 import io.devbobcorn.nekoration.xplat.RegistrySupplier;
@@ -103,9 +103,9 @@ public final class StoneBlockRegistration {
             registerHorizontalConnectedBlock(registrar, "horizontal_chiseled_smooth_" + stoneId,
                     HorizontalConnectedBlock.ConnectionType.BEAM, 16, 16, 0, blockItemsByStone, stone);
             registerPedestalBlock(registrar, stoneId + "_pedestal", blockItemsByStone, stone);
-            registerColumnBlock(registrar, stoneId + "_column_doric", false, 3, blockItemsByStone, stone);
-            registerColumnBlock(registrar, stoneId + "_column_ionic", true, 7, blockItemsByStone, stone);
-            registerColumnBlock(registrar, stoneId + "_column_corinthian", false, 7, blockItemsByStone, stone);
+            registerThinPillarBlock(registrar, stoneId + "_thin_pillar_doric", false, 3, blockItemsByStone, stone);
+            registerThinPillarBlock(registrar, stoneId + "_thin_pillar_ionic", true, 7, blockItemsByStone, stone);
+            registerThinPillarBlock(registrar, stoneId + "_thin_pillar_corinthian", false, 7, blockItemsByStone, stone);
             registerPotBlock(registrar, stoneId + "_pot", 6, blockItemsByStone, stone);
             registerPotBlock(registrar, stoneId + "_planter", 8, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(registrar, stoneId + "_frame_head",
@@ -210,10 +210,10 @@ public final class StoneBlockRegistration {
         return block;
     }
 
-    private static RegistrySupplier<Block> registerColumnBlock(NekoRegistrar registrar, String id,
+    private static RegistrySupplier<Block> registerThinPillarBlock(NekoRegistrar registrar, String id,
             boolean hasHorizontalAxis, int topPartHeight, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
         RegistrySupplier<Block> block = registrar.block(id,
-                () -> hasHorizontalAxis ? new DirectionalColumnBlock(stone.stoneProperties(), topPartHeight) : new ColumnBlock(stone.stoneProperties(), topPartHeight));
+                () -> hasHorizontalAxis ? new DirectionalThinPillarBlock(stone.stoneProperties(), topPartHeight) : new ThinPillarBlock(stone.stoneProperties(), topPartHeight));
         trackStoneBlock(block);
         RegistrySupplier<Item> blockItem = registerBlockItem(registrar, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);

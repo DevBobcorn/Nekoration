@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/stone/thin_pillar_corinthian_t2",
+  "textures": {
+    "0": "nekoration:block/stone/red_sandstone/pillar_corinthian_t2",
+    "1": "nekoration:block/stone/red_sandstone_chiseled_smooth"
+  }
+}
