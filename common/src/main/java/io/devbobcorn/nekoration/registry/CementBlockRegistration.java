@@ -10,8 +10,10 @@ import io.devbobcorn.nekoration.blocks.DyeableHorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
+import io.devbobcorn.nekoration.blocks.cement.DyeableDirectionalThinPillarBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeablePotBlock;
+import io.devbobcorn.nekoration.blocks.cement.DyeableThinPillarBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.xplat.NekoRegistrar;
 import io.devbobcorn.nekoration.xplat.RegistrySupplier;
@@ -37,6 +39,10 @@ public final class CementBlockRegistration {
     public static RegistrySupplier<DyeableVerticalConnectedBlock> CEMENT_PILLAR_IONIC;
     public static RegistrySupplier<DyeableVerticalConnectedBlock> CEMENT_PILLAR_CORINTHIAN;
     public static RegistrySupplier<DyeableBlock> CEMENT_PILLAR_BASE;
+    public static RegistrySupplier<DyeableThinPillarBlock> CEMENT_THIN_PILLAR_SIMPLE;
+    public static RegistrySupplier<DyeableThinPillarBlock> CEMENT_THIN_PILLAR_DORIC;
+    public static RegistrySupplier<DyeableDirectionalThinPillarBlock> CEMENT_THIN_PILLAR_IONIC;
+    public static RegistrySupplier<DyeableThinPillarBlock> CEMENT_THIN_PILLAR_CORINTHIAN;
     public static RegistrySupplier<DyeableBlock> LAYERED_CEMENT;
     public static RegistrySupplier<DyeableHorizontalConnectedBlock> CEMENT_FRAME_HEAD;
     public static RegistrySupplier<DyeableHorizontalConnectedBlock> CEMENT_FRAME_PEAK;
@@ -76,6 +82,14 @@ public final class CementBlockRegistration {
         Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), VerticalConnectedBlock.ConnectionType.PILLAR, false));
     CEMENT_PILLAR_BASE = registrar.block("cement_pillar_base",
         () -> new DyeableBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
+    CEMENT_THIN_PILLAR_SIMPLE = registrar.block("cement_thin_pillar_simple", () -> new DyeableThinPillarBlock(
+        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 3));
+    CEMENT_THIN_PILLAR_DORIC = registrar.block("cement_thin_pillar_doric", () -> new DyeableThinPillarBlock(
+        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 3));
+    CEMENT_THIN_PILLAR_IONIC = registrar.block("cement_thin_pillar_ionic", () -> new DyeableDirectionalThinPillarBlock(
+        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 7));
+    CEMENT_THIN_PILLAR_CORINTHIAN = registrar.block("cement_thin_pillar_corinthian", () -> new DyeableThinPillarBlock(
+        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 7));
     LAYERED_CEMENT = registrar.block("layered_cement",
         () -> new DyeableBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
     CEMENT_FRAME_HEAD = registrar.block("cement_frame_head", () -> new DyeableHorizontalConnectedBlock(
@@ -101,6 +115,10 @@ public final class CementBlockRegistration {
         registerBlockItem(registrar, "cement_pillar_ionic", CEMENT_PILLAR_IONIC),
         registerBlockItem(registrar, "cement_pillar_corinthian", CEMENT_PILLAR_CORINTHIAN),
         registerBlockItem(registrar, "cement_pillar_base", CEMENT_PILLAR_BASE),
+        registerBlockItem(registrar, "cement_thin_pillar_simple", CEMENT_THIN_PILLAR_SIMPLE),
+        registerBlockItem(registrar, "cement_thin_pillar_doric", CEMENT_THIN_PILLAR_DORIC),
+        registerBlockItem(registrar, "cement_thin_pillar_ionic", CEMENT_THIN_PILLAR_IONIC),
+        registerBlockItem(registrar, "cement_thin_pillar_corinthian", CEMENT_THIN_PILLAR_CORINTHIAN),
         registerBlockItem(registrar, "layered_cement", LAYERED_CEMENT),
         registerBlockItem(registrar, "cement_frame_head", CEMENT_FRAME_HEAD),
         registerBlockItem(registrar, "cement_frame_peak", CEMENT_FRAME_PEAK),
@@ -119,6 +137,10 @@ public final class CementBlockRegistration {
         CEMENT_PILLAR_IONIC,
         CEMENT_PILLAR_CORINTHIAN,
         CEMENT_PILLAR_BASE,
+        CEMENT_THIN_PILLAR_SIMPLE,
+        CEMENT_THIN_PILLAR_DORIC,
+        CEMENT_THIN_PILLAR_IONIC,
+        CEMENT_THIN_PILLAR_CORINTHIAN,
         LAYERED_CEMENT,
         CEMENT_FRAME_HEAD,
         CEMENT_FRAME_PEAK,

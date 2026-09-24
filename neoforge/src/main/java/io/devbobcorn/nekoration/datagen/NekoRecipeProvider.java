@@ -50,12 +50,15 @@ public final class NekoRecipeProvider extends RecipeProvider {
 
     private static final List<String> CEMENT_VARIANTS = List.of("cement_base", "paneled_cement",
             "paneled_cement_base", "cement_pillar_simple", "cement_pillar_doric", "cement_pillar_ionic",
-            "cement_pillar_corinthian", "cement_pillar_base", "layered_cement",
+            "cement_pillar_corinthian", "cement_pillar_base", "cement_thin_pillar_simple", "layered_cement",
             "cement_frame_head", "cement_frame_peak", "cement_frame_sill", "cement_frame_side", "cement_pot",
             "cement_planter");
 
     private static final List<String> CEMENT_PILLAR_DECORATED_VARIANTS = List.of("cement_pillar_doric",
             "cement_pillar_ionic", "cement_pillar_corinthian");
+
+    private static final List<String> CEMENT_THIN_PILLAR_DECORATED_VARIANTS = List.of("cement_thin_pillar_doric",
+            "cement_thin_pillar_ionic", "cement_thin_pillar_corinthian");
 
     private static final List<String> STONE_THIN_PILLAR_DECORATED_VARIANTS = List.of("doric", "ionic",
             "corinthian");
@@ -214,6 +217,11 @@ public final class NekoRecipeProvider extends RecipeProvider {
         for (String variant : CEMENT_PILLAR_DECORATED_VARIANTS) {
             saveColorInheritStonecutting(output, modLoc(variant + "_from_cement_pillar_simple_stonecutting"),
                     RecipeCategory.BUILDING_BLOCKS, cementPillarSimple, dyed(modItem(variant), EnumNekoColor.WHITE, 1));
+        }
+        Item cementThinPillarSimple = modItem("cement_thin_pillar_simple");
+        for (String variant : CEMENT_THIN_PILLAR_DECORATED_VARIANTS) {
+            saveColorInheritStonecutting(output, modLoc(variant + "_from_cement_thin_pillar_simple_stonecutting"),
+                    RecipeCategory.BUILDING_BLOCKS, cementThinPillarSimple, dyed(modItem(variant), EnumNekoColor.WHITE, 1));
         }
         for (EnumNekoColor color : EnumNekoColor.values()) {
             Item dye = vanillaItem(color.getSerializedName() + "_dye");

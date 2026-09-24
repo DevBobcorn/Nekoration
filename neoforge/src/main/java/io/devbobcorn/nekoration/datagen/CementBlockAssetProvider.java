@@ -44,6 +44,10 @@ public final class CementBlockAssetProvider implements DataProvider {
         generateConnected(cachedOutput, writes, "cement_pillar_ionic", "cement_pillar_ionic", true, "cement_frame");
         generateConnected(cachedOutput, writes, "cement_pillar_corinthian", "cement_pillar_corinthian", true, "cement_frame");
         generateStandalone(cachedOutput, writes, "cement_pillar_base", "cement_pillar_base", "cement_frame");
+        generateThinPillar(cachedOutput, writes, "cement_thin_pillar_simple", "simple", false);
+        generateThinPillar(cachedOutput, writes, "cement_thin_pillar_doric", "doric", false);
+        generateThinPillar(cachedOutput, writes, "cement_thin_pillar_ionic", "ionic", true);
+        generateThinPillar(cachedOutput, writes, "cement_thin_pillar_corinthian", "corinthian", false);
         generateStandalone(cachedOutput, writes, "layered_cement", "layered_cement", "cement_top");
         generateFrame(cachedOutput, writes, "cement_frame_head", "frame_head", false);
         generateFrame(cachedOutput, writes, "cement_frame_peak", "frame_peak", true);
@@ -77,6 +81,40 @@ public final class CementBlockAssetProvider implements DataProvider {
         writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
         writeJson(output, writes, itemModelPathProvider, blockId,
                 Map.of("parent", modLoc("block/cement/" + blockId + (hasStandaloneTexture ? "_s0" : "_t2"))));
+    }
+
+    private void generateThinPillar(CachedOutput output, List<CompletableFuture<?>> writes, String blockId,
+            String variant, boolean hasHorizontalAxis) {
+        for (String part : List.of("t0", "t1", "t2")) {
+            Map<String, Object> textures = new LinkedHashMap<>();
+            textures.put("0", modLoc("block/cement/cement_pillar_" + variant + "_" + part));
+            textures.put("1", modLoc("block/cement/cement_frame"));
+            String parent = "t2".equals(part) ? "thin_pillar_" + variant + "_t2" : "thin_pillar_" + part;
+            writeJson(output, writes, blockModelPathProvider, "cement/" + blockId + "_" + part,
+                    Map.of("parent", modLoc("block/cement/" + parent), "textures", textures));
+        }
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            for (String connection : CONNECTION_IDS) {
+                String part = switch (connection) {
+                    case "d0", "t0" -> "t0";
+                    case "t1" -> "t1";
+                    default -> "t2";
+                };
+                String model = modLoc("block/cement/" + blockId + "_" + part);
+                String key = "color=" + color.getSerializedName() + ",vertical_connection=" + connection;
+                if (hasHorizontalAxis && ("s0".equals(connection) || "d1".equals(connection) || "t2".equals(connection))) {
+                    variants.put(key + ",axis=z", Map.of("model", model));
+                    variants.put(key + ",axis=x", Map.of("model", model, "y", 90, "uvlock", true));
+                } else {
+                    variants.put(key, Map.of("model", model));
+                }
+            }
+        }
+        writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
+        writeJson(output, writes, itemModelPathProvider, blockId,
+                Map.of("parent", modLoc("block/cement/" + blockId + "_t2")));
     }
 
     private void generateStandalone(CachedOutput output, List<CompletableFuture<?>> writes, String blockId,

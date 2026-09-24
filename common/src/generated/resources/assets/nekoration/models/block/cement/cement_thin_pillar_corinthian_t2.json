@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/cement/thin_pillar_corinthian_t2",
+  "textures": {
+    "0": "nekoration:block/cement/cement_pillar_corinthian_t2",
+    "1": "nekoration:block/cement/cement_frame"
+  }
+}

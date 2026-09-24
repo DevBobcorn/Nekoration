@@ -1,0 +1,15 @@
+{
+  "type": "nekoration:neko_stonecutting",
+  "ingredient": {
+    "item": "nekoration:cement_thin_pillar_simple"
+  },
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 0
+      }
+    },
+    "count": 1,
+    "id": "nekoration:cement_thin_pillar_ionic"
+  }
+}
