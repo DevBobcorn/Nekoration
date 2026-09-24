@@ -2,6 +2,6 @@
   "parent": "nekoration:block/stone/thin_pillar_corinthian_t2",
   "textures": {
     "0": "nekoration:block/stone/dripstone/pillar_corinthian_t2",
-    "1": "nekoration:block/stone/dripstone_chiseled_smooth"
+    "1": "nekoration:block/stone/dripstone/chiseled_smooth"
   }
 }

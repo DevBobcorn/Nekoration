@@ -61,6 +61,11 @@ public final class NekoTextureAssetProvider implements DataProvider {
             "tall_quartz_door.png", "knob_tall.png",
             "tall_chiseled_quartz_door.png", "knob_tall.png",
             "tall_quartz_bricks_door.png", "knob_tall.png");
+    private static final Map<String, String> STONE_UNDERLAYS = Map.of(
+            "chiseled_smooth.png", "{palette_name}_smooth.png",
+            "chiseled_smooth_t0.png", "{palette_name}_smooth.png",
+            "chiseled_smooth_t1.png", "{palette_name}_smooth.png",
+            "chiseled_smooth_t2.png", "{palette_name}_smooth.png");
     private static final String PLANK_PALETTE_DIR = "plank_palettes";
     private static final String STONE_PALETTE_DIR = "stone_palettes";
     private static final String MINERAL_PALETTE_DIR = "mineral_palettes";
@@ -71,6 +76,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
     private static final String PALETTE_NAME_PLACEHOLDER = "{palette_name}";
 
     private final Path templateTextureRoot;
+    private final Path stoneUnderlayRoot;
     private final Path generatedBlockTextureRoot;
     private final Path generatedItemTextureRoot;
     private final Path generatedGuiTextureRoot;
@@ -78,6 +84,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
 
     public NekoTextureAssetProvider(PackOutput output) {
         this.templateTextureRoot = resolveTemplateTextureRoot();
+        this.stoneUnderlayRoot = resolveStoneUnderlayRoot();
         // Derive the texture output from the data run's --output folder so the
         // provider follows it instead of a hardcoded source-tree location.
         Path assetsRoot = output.getOutputFolder()
@@ -127,7 +134,11 @@ public final class NekoTextureAssetProvider implements DataProvider {
                 plankPaletteTargets.sourcePalettePath(), plankPaletteTargets.targetPalettes());
 
         PaletteTargets stonePaletteTargets = resolvePaletteTargets(STONE_PALETTE_DIR);
-        generateMappedTextureFolder(cachedOutput, "stone", Map.of(),
+        generateMappedTextureFolder(cachedOutput, generatedBlockTextureRoot,
+                templateTextureRoot.resolve("stone_template"),
+                templateTextureRoot.resolve("stone_overlay"),
+                stoneUnderlayRoot, "stone",
+                Map.of(), STONE_UNDERLAYS,
                 stonePaletteTargets.sourcePalettePath(), stonePaletteTargets.targetPalettes());
         
         PaletteTargets mineralPaletteTargets = resolvePaletteTargets(MINERAL_PALETTE_DIR);
@@ -140,8 +151,10 @@ public final class NekoTextureAssetProvider implements DataProvider {
         // Door item icons are palette-mapped from their own templates and written next to
         // the vanilla item texture folder, keyed per dye color.
         generateMappedTextureFolder(cachedOutput, generatedItemTextureRoot,
-                "quartz_door_item_template", "quartz_door_item_overlay", "quartz_door",
-                QUARTZ_DOOR_ITEM_OVERLAYS, quartzDoorPaletteTargets.sourcePalettePath(),
+                templateTextureRoot.resolve("quartz_door_item_template"),
+                templateTextureRoot.resolve("quartz_door_item_overlay"),
+                templateTextureRoot.resolve("quartz_door_item_underlay"), "quartz_door",
+                QUARTZ_DOOR_ITEM_OVERLAYS, Map.of(), quartzDoorPaletteTargets.sourcePalettePath(),
                 quartzDoorPaletteTargets.targetPalettes());
 
         PaletteTargets woolPaletteTargets = resolvePaletteTargets(WOOL_PALETTE_DIR);
@@ -208,32 +221,48 @@ public final class NekoTextureAssetProvider implements DataProvider {
             Path sourcePalettePath,
             List<Path> targetPalettes)
             throws IOException {
+        generateMappedTextureFolder(cachedOutput, textureFolder, overlaysBySourceFile, Map.of(),
+                sourcePalettePath, targetPalettes);
+    }
+
+    private void generateMappedTextureFolder(
+            CachedOutput cachedOutput,
+            String textureFolder,
+            Map<String, String> overlaysBySourceFile,
+            Map<String, String> underlaysBySourceFile,
+            Path sourcePalettePath,
+            List<Path> targetPalettes)
+            throws IOException {
         generateMappedTextureFolder(cachedOutput, generatedBlockTextureRoot,
-                textureFolder + "_template", textureFolder + "_overlay", textureFolder,
-                overlaysBySourceFile, sourcePalettePath, targetPalettes);
+                templateTextureRoot.resolve(textureFolder + "_template"),
+                templateTextureRoot.resolve(textureFolder + "_overlay"),
+                templateTextureRoot.resolve(textureFolder + "_underlay"), textureFolder,
+                overlaysBySourceFile, underlaysBySourceFile, sourcePalettePath, targetPalettes);
     }
 
     private void generateMappedTextureFolder(
             CachedOutput cachedOutput,
             Path outputRoot,
-            String sourceFolder,
-            String overlayFolder,
+            Path sourceDir,
+            Path overlayDir,
+            Path underlayDir,
             String outputFolder,
             Map<String, String> overlaysBySourceFile,
+            Map<String, String> underlaysBySourceFile,
             Path sourcePalettePath,
             List<Path> targetPalettes)
             throws IOException {
-        Path sourceDir = templateTextureRoot.resolve(sourceFolder);
         if (!Files.isDirectory(sourceDir)) {
             return;
         }
-        Path overlayDir = templateTextureRoot.resolve(overlayFolder);
         List<Path> sourceImages = collectImages(sourceDir);
         Palette sourcePalette = loadPalette(sourcePalettePath);
 
         for (Path sourceImagePath : sourceImages) {
             BufferedImage sourceImage = readImage(sourceImagePath);
-            String overlayNameTemplate = overlaysBySourceFile.get(sourceImagePath.getFileName().toString());
+            String sourceFileName = sourceImagePath.getFileName().toString();
+            String overlayNameTemplate = overlaysBySourceFile.get(sourceFileName);
+            String underlayNameTemplate = underlaysBySourceFile.get(sourceFileName);
 
             for (Path targetPalettePath : targetPalettes) {
                 String targetVariantName = stripExtension(targetPalettePath.getFileName().toString());
@@ -243,19 +272,30 @@ public final class NekoTextureAssetProvider implements DataProvider {
                     Path overlayPath = overlayDir.resolve(overlayName);
                     if (!Files.isRegularFile(overlayPath)) {
                         throw new IllegalStateException("Missing overlay '" + overlayName + "' for source '"
-                                + sourceImagePath.getFileName() + "' in " + overlayDir);
+                                + sourceFileName + "' in " + overlayDir);
                     }
                     overlayImage = readImage(overlayPath);
+                }
+
+                BufferedImage underlayImage = null;
+                if (underlayNameTemplate != null) {
+                    String underlayName = interpolatePaletteName(underlayNameTemplate, targetVariantName);
+                    Path underlayPath = underlayDir.resolve(underlayName);
+                    if (!Files.isRegularFile(underlayPath)) {
+                        throw new IllegalStateException("Missing underlay '" + underlayName + "' for source '"
+                                + sourceFileName + "' in " + underlayDir);
+                    }
+                    underlayImage = readImage(underlayPath);
                 }
 
                 Palette targetPalette = loadPalette(targetPalettePath);
                 Map<Integer, Integer> colorMapping = buildColorMapping(
                         sourcePalette, targetPalette, sourcePalettePath, targetPalettePath);
-                BufferedImage mapped = remapImage(sourceImage, colorMapping, sourceImagePath);
+                BufferedImage mapped = remapImage(sourceImage, colorMapping, sourceImagePath, underlayImage);
                 if (overlayImage != null) {
                     mapped = composeOverlay(mapped, overlayImage, sourceImagePath);
                 }
-                String textureName = stripExtension(sourceImagePath.getFileName().toString());
+                String textureName = stripExtension(sourceFileName);
                 writeTexture(cachedOutput, outputRoot, outputFolder + "/" + targetVariantName + "/" + textureName, mapped);
             }
         }
@@ -337,7 +377,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
                 Palette targetPalette = loadPalette(targetPalettePath);
                 Map<Integer, Integer> colorMapping = buildColorMapping(
                         sourcePalette, targetPalette, sourcePalettePath, targetPalettePath);
-                BufferedImage mapped = remapImage(sourceImage, colorMapping, sourceImagePath);
+                BufferedImage mapped = remapImage(sourceImage, colorMapping, sourceImagePath, null);
                 String targetWoodName = stripExtension(targetPalettePath.getFileName().toString());
                 writeTexture(cachedOutput, generatedGuiTextureRoot, textureName + "/" + targetWoodName, mapped);
             }
@@ -400,7 +440,16 @@ public final class NekoTextureAssetProvider implements DataProvider {
         return mapping;
     }
 
-    private BufferedImage remapImage(BufferedImage source, Map<Integer, Integer> mapping, Path sourcePath) {
+    private BufferedImage remapImage(BufferedImage source, Map<Integer, Integer> mapping, Path sourcePath,
+            BufferedImage underlay) {
+        if (underlay != null
+                && (underlay.getWidth() != source.getWidth() || underlay.getHeight() != source.getHeight())) {
+            throw new IllegalStateException(
+                    "Underlay size " + underlay.getWidth() + "x" + underlay.getHeight()
+                            + " does not match source texture size " + source.getWidth() + "x" + source.getHeight()
+                            + " for " + sourcePath.getFileName());
+        }
+
         BufferedImage out = new BufferedImage(source.getWidth(), source.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Set<Integer> unmapped = new LinkedHashSet<>();
 
@@ -408,7 +457,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
             for (int x = 0; x < source.getWidth(); x++) {
                 int argb = source.getRGB(x, y);
                 if (((argb >>> 24) & 0xFF) == 0) {
-                    out.setRGB(x, y, argb);
+                    out.setRGB(x, y, underlay == null ? argb : underlay.getRGB(x, y));
                     continue;
                 }
 
@@ -577,6 +626,18 @@ public final class NekoTextureAssetProvider implements DataProvider {
             }
         }
         throw new IllegalStateException("Could not locate generator_files from " + probe);
+    }
+
+    private static Path resolveStoneUnderlayRoot() {
+        Path probe = Path.of("").toAbsolutePath();
+        for (Path current = probe; current != null; current = current.getParent()) {
+            Path candidate = current
+                    .resolve("common/src/main/resources/assets/" + Nekoration.MODID + "/textures/block/stone");
+            if (Files.isDirectory(candidate)) {
+                return candidate;
+            }
+        }
+        throw new IllegalStateException("Could not locate stone underlay textures from " + probe);
     }
 
     @Override

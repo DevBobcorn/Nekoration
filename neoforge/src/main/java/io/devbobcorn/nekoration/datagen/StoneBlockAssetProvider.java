@@ -171,7 +171,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
     private void generateChiseledStoneColumnAssets(CachedOutput cachedOutput, String variantId, String sideTextureId,
             String stoneId, List<CompletableFuture<?>> writes) {
         Map<String, Object> blockModelTextures = new LinkedHashMap<>();
-        blockModelTextures.put("end", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
+        blockModelTextures.put("end", modLoc("block/stone/" + stoneId + "/chiseled_smooth"));
         blockModelTextures.put("side", modLoc("block/stone/" + sideTextureId));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
                 Map.of("parent", "block/cube_column", "textures", blockModelTextures));
@@ -268,7 +268,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
 
         Map<String, Object> textures = new LinkedHashMap<>();
         textures.put("0", modLoc("block/stone/" + stoneId + "/" + variant));
-        textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
+        textures.put("1", modLoc("block/stone/" + stoneId + "/chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
                 Map.of("parent", modLoc("block/stone/" + variant), "textures", textures));
 
@@ -283,7 +283,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
     private void generateVerticalConnectedStoneCubeAssets(CachedOutput cachedOutput, String variant, boolean prefixedId,
             List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
-        String textureId = stoneId + "_" + variant;
+        String textureId = stoneId + "/" + variant;
 
         Map<String, Object> blockModelTextures = new LinkedHashMap<>();
         blockModelTextures.put("side", modLoc("block/stone/" + textureId));
@@ -318,7 +318,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
     private void generateHorizontalConnectedStoneCubeAssets(CachedOutput cachedOutput, String variant, String textureVariant, boolean prefixedId,
             List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = prefixedId ? variant + "_" + stoneId : stoneId + "_" + variant;
-        String textureId = stoneId + "_" + textureVariant;
+        String textureId = stoneId + "/" + textureVariant;
 
         Map<String, Object> blockModelTextures = new LinkedHashMap<>();
         blockModelTextures.put("front", modLoc("block/stone/" + textureId));
@@ -357,7 +357,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
 
     private void generateStonePedestalAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String stoneId) {
         Map<String, Object> pedestalTextures = new LinkedHashMap<>();
-        pedestalTextures.put("0", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
+        pedestalTextures.put("0", modLoc("block/stone/" + stoneId + "/chiseled_smooth"));
         pedestalTextures.put("1", modLoc("block/stone/" + stoneId + "_polished_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + stoneId + "_pedestal",
                 Map.of("parent", modLoc("block/stone/pedestal"), "textures", pedestalTextures));
@@ -377,19 +377,19 @@ public final class StoneBlockAssetProvider implements DataProvider {
 
         Map<String, Object> t0Textures = new LinkedHashMap<>();
         t0Textures.put("0", modLoc("block/stone/" + stoneId + "/" + pillarTexture + "_t0"));
-        t0Textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
+        t0Textures.put("1", modLoc("block/stone/" + stoneId + "/chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t0",
                 Map.of("parent", modLoc("block/stone/thin_pillar_t0"), "textures", t0Textures));
 
         Map<String, Object> t1Textures = new LinkedHashMap<>();
         t1Textures.put("0", modLoc("block/stone/" + stoneId + "/" + pillarTexture + "_t1"));
-        t1Textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
+        t1Textures.put("1", modLoc("block/stone/" + stoneId + "/chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t1",
                 Map.of("parent", modLoc("block/stone/thin_pillar_t1"), "textures", t1Textures));
         
         Map<String, Object> t2Textures = new LinkedHashMap<>();
         t2Textures.put("0", modLoc("block/stone/" + stoneId + "/" + pillarTexture + "_t2"));
-        t2Textures.put("1", modLoc("block/stone/" + stoneId + "_chiseled_smooth"));
+        t2Textures.put("1", modLoc("block/stone/" + stoneId + "/chiseled_smooth"));
         writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId + "_t2",
                 Map.of("parent", modLoc("block/stone/thin_pillar_" + variant + "_t2"), "textures", t2Textures));
 

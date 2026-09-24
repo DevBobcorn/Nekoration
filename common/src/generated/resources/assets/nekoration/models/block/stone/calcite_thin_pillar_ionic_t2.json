@@ -2,6 +2,6 @@
   "parent": "nekoration:block/stone/thin_pillar_ionic_t2",
   "textures": {
     "0": "nekoration:block/stone/calcite/pillar_ionic_t2",
-    "1": "nekoration:block/stone/calcite_chiseled_smooth"
+    "1": "nekoration:block/stone/calcite/chiseled_smooth"
   }
 }

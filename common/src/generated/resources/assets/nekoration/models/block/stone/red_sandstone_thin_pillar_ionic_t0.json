@@ -2,6 +2,6 @@
   "parent": "nekoration:block/stone/thin_pillar_t0",
   "textures": {
     "0": "nekoration:block/stone/red_sandstone/pillar_ionic_t0",
-    "1": "nekoration:block/stone/red_sandstone_chiseled_smooth"
+    "1": "nekoration:block/stone/red_sandstone/chiseled_smooth"
   }
 }

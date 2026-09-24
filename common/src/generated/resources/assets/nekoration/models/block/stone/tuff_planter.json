@@ -2,6 +2,6 @@
   "parent": "nekoration:block/stone/planter",
   "textures": {
     "0": "nekoration:block/stone/tuff/planter",
-    "1": "nekoration:block/stone/tuff_chiseled_smooth"
+    "1": "nekoration:block/stone/tuff/chiseled_smooth"
   }
 }

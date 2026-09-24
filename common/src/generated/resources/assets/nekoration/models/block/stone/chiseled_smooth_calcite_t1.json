@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_column",
   "textures": {
-    "end": "nekoration:block/stone/calcite_chiseled_smooth",
-    "side": "nekoration:block/stone/calcite_chiseled_smooth_t1"
+    "end": "nekoration:block/stone/calcite/chiseled_smooth",
+    "side": "nekoration:block/stone/calcite/chiseled_smooth_t1"
   }
 }

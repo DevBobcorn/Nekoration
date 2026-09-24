@@ -2,6 +2,6 @@
   "parent": "nekoration:block/stone/thin_pillar_t1",
   "textures": {
     "0": "nekoration:block/stone/stone/pillar_simple_t1",
-    "1": "nekoration:block/stone/stone_chiseled_smooth"
+    "1": "nekoration:block/stone/stone/chiseled_smooth"
   }
 }
