@@ -57,6 +57,9 @@ public final class NekoRecipeProvider extends RecipeProvider {
     private static final List<String> CEMENT_PILLAR_DECORATED_VARIANTS = List.of("cement_pillar_doric",
             "cement_pillar_ionic", "cement_pillar_corinthian");
 
+    private static final List<String> STONE_THIN_PILLAR_DECORATED_VARIANTS = List.of("doric", "ionic",
+            "corinthian");
+
     private static final List<String[]> HALF_TIMBER_VARIANT_PATTERNS = List.of(
             new String[] { "  1", " 0 ", "1  " },
             new String[] { "1  ", " 0 ", "  1" },
@@ -420,6 +423,12 @@ public final class NekoRecipeProvider extends RecipeProvider {
             }
             chiseledRecipe(output, smoothSlab, "chiseled_smooth_" + stoneId);
             stonecutting(output, smoothSource, "chiseled_smooth_" + stoneId);
+
+            Item thinPillarSimple = modItem(stoneId + "_thin_pillar_simple");
+            stonecutting(output, smoothSource, stoneId + "_thin_pillar_simple");
+            for (String variant : STONE_THIN_PILLAR_DECORATED_VARIANTS) {
+                stonecutting(output, thinPillarSimple, stoneId + "_thin_pillar_" + variant);
+            }
         }
     }
 

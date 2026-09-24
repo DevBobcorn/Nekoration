@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "nekoration:smooth_granite"
+  },
+  "result": {
+    "count": 1,
+    "id": "nekoration:granite_thin_pillar_simple"
+  }
+}

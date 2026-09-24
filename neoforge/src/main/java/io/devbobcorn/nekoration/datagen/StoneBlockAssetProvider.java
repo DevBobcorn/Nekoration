@@ -92,6 +92,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateHorizontalConnectedStoneCubeAssets(cachedOutput, "horizontal_chiseled_smooth", "chiseled_smooth", true, writes, stoneId);
 
             generateStonePedestalAssets(cachedOutput, writes, stoneId);
+            generateStoneThinPillarAssets(cachedOutput, "simple", false, writes, stoneId);
             generateStoneThinPillarAssets(cachedOutput, "doric", false, writes, stoneId);
             generateStoneThinPillarAssets(cachedOutput, "ionic", true, writes, stoneId);
             generateStoneThinPillarAssets(cachedOutput, "corinthian", false, writes, stoneId);
