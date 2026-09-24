@@ -68,6 +68,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
     private static final String QUARTZ_DOOR_PALETTE_DIR = "quartz_door_palettes";
     private static final String WOOL_MASK_DIR = "wool_masks";
     private static final int MASK_BLEND_SOURCE_COUNT = 3;
+    private static final String PALETTE_NAME_PLACEHOLDER = "{palette_name}";
 
     private final Path templateTextureRoot;
     private final Path generatedBlockTextureRoot;
@@ -232,18 +233,21 @@ public final class NekoTextureAssetProvider implements DataProvider {
 
         for (Path sourceImagePath : sourceImages) {
             BufferedImage sourceImage = readImage(sourceImagePath);
-            BufferedImage overlayImage = null;
-            String overlayName = overlaysBySourceFile.get(sourceImagePath.getFileName().toString());
-            if (overlayName != null) {
-                Path overlayPath = overlayDir.resolve(overlayName);
-                if (!Files.isRegularFile(overlayPath)) {
-                    throw new IllegalStateException("Missing overlay '" + overlayName + "' for source '"
-                            + sourceImagePath.getFileName() + "' in " + overlayDir);
-                }
-                overlayImage = readImage(overlayPath);
-            }
+            String overlayNameTemplate = overlaysBySourceFile.get(sourceImagePath.getFileName().toString());
 
             for (Path targetPalettePath : targetPalettes) {
+                String targetVariantName = stripExtension(targetPalettePath.getFileName().toString());
+                BufferedImage overlayImage = null;
+                if (overlayNameTemplate != null) {
+                    String overlayName = interpolatePaletteName(overlayNameTemplate, targetVariantName);
+                    Path overlayPath = overlayDir.resolve(overlayName);
+                    if (!Files.isRegularFile(overlayPath)) {
+                        throw new IllegalStateException("Missing overlay '" + overlayName + "' for source '"
+                                + sourceImagePath.getFileName() + "' in " + overlayDir);
+                    }
+                    overlayImage = readImage(overlayPath);
+                }
+
                 Palette targetPalette = loadPalette(targetPalettePath);
                 Map<Integer, Integer> colorMapping = buildColorMapping(
                         sourcePalette, targetPalette, sourcePalettePath, targetPalettePath);
@@ -251,7 +255,6 @@ public final class NekoTextureAssetProvider implements DataProvider {
                 if (overlayImage != null) {
                     mapped = composeOverlay(mapped, overlayImage, sourceImagePath);
                 }
-                String targetVariantName = stripExtension(targetPalettePath.getFileName().toString());
                 String textureName = stripExtension(sourceImagePath.getFileName().toString());
                 writeTexture(cachedOutput, outputRoot, outputFolder + "/" + targetVariantName + "/" + textureName, mapped);
             }
@@ -515,6 +518,15 @@ public final class NekoTextureAssetProvider implements DataProvider {
             throw new IOException("Failed to decode image file: " + path);
         }
         return image;
+    }
+
+    /**
+     * Replaces every {@value #PALETTE_NAME_PLACEHOLDER} token in an overlay file name with the
+     * given palette variant name. For example, {@code smooth_{palette_name}.png} becomes
+     * {@code smooth_andesite.png} when the target palette is {@code andesite.png}.
+     */
+    private static String interpolatePaletteName(String overlayName, String paletteName) {
+        return overlayName.replace(PALETTE_NAME_PLACEHOLDER, paletteName);
     }
 
     private static String stripExtension(String fileName) {
