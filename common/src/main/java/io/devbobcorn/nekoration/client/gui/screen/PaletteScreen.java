@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 
 public class PaletteScreen extends Screen {
@@ -45,6 +46,7 @@ public class PaletteScreen extends Screen {
 
     private int huePos = -1;
     private int[] colorPos = { -1, -1 };
+    private int dragArea = -1; // 0: Color Map, 1: Hue Picker
     private InteractionHand hand;
 
     public boolean renderColorText = false;
@@ -145,11 +147,17 @@ public class PaletteScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double x, double y, int type) {
-        if (type == 0 && !updateActiveSlot(x, y)) { // Left Mouse Only, and first update slots...
-            if (isOnColorMap(x, y))
-                getColor(x, y);
-            if (isOnHuePicker(x, y))
-                getHue(x, y);
+        if (type == 0) { // Left Mouse Only...
+            dragArea = -1;
+            if (!updateActiveSlot(x, y)) { // First update slots...
+                if (isOnColorMap(x, y)) {
+                    dragArea = 0;
+                    getColor(x, y);
+                } else if (isOnHuePicker(x, y)) {
+                    dragArea = 1;
+                    getHue(x, y);
+                }
+            }
         }
         return super.mouseClicked(x, y, type);
     }
@@ -157,12 +165,23 @@ public class PaletteScreen extends Screen {
     @Override
     public boolean mouseDragged(double x, double y, int type, double dx, double dy) {
         if (type == 0) {
-            if (isOnColorMap(x, y))
-                getColor(x, y);
-            if (isOnHuePicker(x, y))
-                getHue(x, y);
+            if (dragArea == 0) { // Started on the color map, keep picking at the clamped position...
+                double clampedX = Mth.clamp(x, this.leftPos + COLORMAP_LEFT, this.leftPos + COLORMAP_LEFT + COLORMAP_WIDTH);
+                double clampedY = Mth.clamp(y, this.topPos + COLORMAP_TOP, this.topPos + COLORMAP_TOP + COLORMAP_HEIGHT);
+                getColor(clampedX, clampedY);
+            } else if (dragArea == 1) { // Started on the hue picker, keep adjusting at the clamped position...
+                double clampedY = Mth.clamp(y, this.topPos + HUE_TOP, this.topPos + HUE_TOP + HUE_HEIGHT);
+                getHue(x, clampedY);
+            }
         }
         return super.mouseDragged(x, y, type, dx, dy);
+    }
+
+    @Override
+    public boolean mouseReleased(double x, double y, int type) {
+        if (type == 0)
+            dragArea = -1;
+        return super.mouseReleased(x, y, type);
     }
 
     private boolean isOnColorMap(double x, double y) {

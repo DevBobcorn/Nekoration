@@ -67,6 +67,7 @@ public class PaintingScreen extends Screen {
     private int opacity = 255;
     private int opacityPos;
     private byte activeTool = 0; // 0: Pencil, 1: Brush, 2: Eraser, 3: Bucket Fill
+    private int dragArea = -1; // 0: Painting, 1: Opacity Picker
     private static final int[] toolParams = { 1, 1, 2, 5 };
     private static final int[] MAX_PARAMS = { 10, 10, 16, 99 };
     public boolean renderDebugText = false;
@@ -401,20 +402,25 @@ public class PaintingScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double x, double y, int type) {
-        if (type == 0 && !updateActiveSlot(x, y)) { // Left Mouse Only, and first update slots...
-            if (isOnOpacityPicker(x, y)) {
-                getOpacity(x, y);
-                debugText = "Opacity: " + opacity;
-            } else if (isOnPainting(x, y)) {
-                history.offerFirst(Arrays.copyOf(paintingData.getPixels(), paintingData.getPixels().length));
-                if (history.size() > stepLimit)
-                    history.pollLast();
-                future.clear();
-                useTool(x, y);
-            } else {
-                for (byte idx = 0; idx < TOOLS_NUM; idx++) {
-                    if (isOn(x - TOOLS_LEFT - idx * 17, y - TOOLS_TOP, 16, 16))
-                        activeTool = idx;
+        if (type == 0) { // Left Mouse Only...
+            dragArea = -1;
+            if (!updateActiveSlot(x, y)) { // First update slots...
+                if (isOnOpacityPicker(x, y)) {
+                    dragArea = 1;
+                    getOpacity(x, y);
+                    debugText = "Opacity: " + opacity;
+                } else if (isOnPainting(x, y)) {
+                    dragArea = 0;
+                    history.offerFirst(Arrays.copyOf(paintingData.getPixels(), paintingData.getPixels().length));
+                    if (history.size() > stepLimit)
+                        history.pollLast();
+                    future.clear();
+                    useTool(x, y);
+                } else {
+                    for (byte idx = 0; idx < TOOLS_NUM; idx++) {
+                        if (isOn(x - TOOLS_LEFT - idx * 17, y - TOOLS_TOP, 16, 16))
+                            activeTool = idx;
+                    }
                 }
             }
         }
@@ -430,10 +436,13 @@ public class PaintingScreen extends Screen {
     @Override
     public boolean mouseDragged(double x, double y, int type, double dx, double dy) {
         if (type == 0) { // Left Button, draw...
-            if (isOnPainting(x, y)) {
-                useTool(x, y);
-            } else if (isOnOpacityPicker(x, y)) {
-                getOpacity(x, y);
+            if (dragArea == 0) { // Started on the painting, keep drawing at the clamped position...
+                double clampedX = Mth.clamp(x, this.leftPos + PAINTING_LEFT, this.leftPos + PAINTING_LEFT + PAINTING_WIDTH);
+                double clampedY = Mth.clamp(y, this.topPos + PAINTING_TOP, this.topPos + PAINTING_TOP + PAINTING_HEIGHT);
+                useTool(clampedX, clampedY);
+            } else if (dragArea == 1) { // Started on the opacity picker, keep adjusting at the clamped position...
+                double clampedY = Mth.clamp(y, this.topPos + OPACITY_TOP, this.topPos + OPACITY_TOP + OPACITY_HEIGHT);
+                getOpacity(x, clampedY);
                 debugText = "Opacity: " + opacity;
             }
         } else if (type == 2) { // Middle Button, drag...
@@ -442,6 +451,13 @@ public class PaintingScreen extends Screen {
             debugText = "Position: " + x + ", " + y + " -> " + dx + ", " + dy;
         }
         return super.mouseDragged(x, y, type, dx, dy);
+    }
+
+    @Override
+    public boolean mouseReleased(double x, double y, int type) {
+        if (type == 0)
+            dragArea = -1;
+        return super.mouseReleased(x, y, type);
     }
 
     private void useTool(double x, double y) {
