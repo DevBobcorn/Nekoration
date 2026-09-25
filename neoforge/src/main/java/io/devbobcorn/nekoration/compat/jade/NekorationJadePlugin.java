@@ -4,6 +4,7 @@ import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableHorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
+import io.devbobcorn.nekoration.blocks.cement.DyeablePedestalBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeablePotBlock;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaPlugin;
@@ -19,7 +20,8 @@ public final class NekorationJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(NekorationJadeNameProvider.INSTANCE, DyeableBlock.class);
         registration.registerBlockComponent(NekorationJadeNameProvider.INSTANCE, DyeableVerticalConnectedBlock.class);
         registration.registerBlockComponent(NekorationJadeNameProvider.INSTANCE, DyeableHorizontalConnectedBlock.class);
-        registration.registerBlockComponent(NekorationJadeNameProvider.INSTANCE, DyeableFrameSideBlock.class);
+        registration.registerBlockComponent(NekorationJadeNameProvider.INSTANCE, DyeablePedestalBlock.class);
         registration.registerBlockComponent(NekorationJadeNameProvider.INSTANCE, DyeablePotBlock.class);
+        registration.registerBlockComponent(NekorationJadeNameProvider.INSTANCE, DyeableFrameSideBlock.class);
     }
 }
