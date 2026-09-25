@@ -4,10 +4,10 @@ import colorsys
 
 # 15 Minecraft dye colors (excluding white) with vibrant HSL values
 VIBRANT_PALETTE = {
-    "orange": (0.08, 0.90, 0.47),
+    "orange": (0.08, 0.70, 0.52),
     "magenta": (0.83, 0.45, 0.67),
     "light_blue": (0.55, 0.60, 0.47),
-    "yellow": (0.13, 0.95, 0.47),
+    "yellow": (0.13, 0.65, 0.52),
     "lime": (0.22, 0.40, 0.47),
     "pink": (0.95, 0.80, 0.75),
     "gray": (0.0, 0.0, 0.50),
@@ -17,7 +17,7 @@ VIBRANT_PALETTE = {
     "blue": (0.62, 0.40, 0.47),
     "brown": (0.04, 0.30, 0.32),
     "green": (0.33, 0.35, 0.42),
-    "red": (0.0, 0.80, 0.47),
+    "red": (0.0, 0.60, 0.52),
     "black": (0.0, 0.0, 0.28)
 }
 
