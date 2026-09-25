@@ -37,6 +37,7 @@ public final class CementBlockAssetProvider implements DataProvider {
         List<CompletableFuture<?>> writes = new ArrayList<>();
         generateConnected(cachedOutput, writes, "cement", "cement", false, "cement_top");
         generateStandalone(cachedOutput, writes, "cement_base", "cement_base", "cement_top");
+        generateStandalone(cachedOutput, writes, "layered_cement", "layered_cement", "cement_top");
         generateConnected(cachedOutput, writes, "paneled_cement", "paneled_cement", true, "cement_frame");
         generateStandalone(cachedOutput, writes, "paneled_cement_base", "paneled_cement_base", "cement_frame");
         generateConnected(cachedOutput, writes, "cement_pillar_simple", "cement_pillar_simple", true, "cement_frame");
@@ -48,13 +49,13 @@ public final class CementBlockAssetProvider implements DataProvider {
         generateThinPillar(cachedOutput, writes, "cement_thin_pillar_doric", "doric", false);
         generateThinPillar(cachedOutput, writes, "cement_thin_pillar_ionic", "ionic", true);
         generateThinPillar(cachedOutput, writes, "cement_thin_pillar_corinthian", "corinthian", false);
-        generateStandalone(cachedOutput, writes, "layered_cement", "layered_cement", "cement_top");
+        generatePedestal(cachedOutput, writes, "cement_pedestal");
+        generatePot(cachedOutput, writes, "cement_pot", "pot");
+        generatePot(cachedOutput, writes, "cement_planter", "planter");
         generateFrame(cachedOutput, writes, "cement_frame_head", "frame_head", false);
         generateFrame(cachedOutput, writes, "cement_frame_peak", "frame_peak", true);
         generateFrame(cachedOutput, writes, "cement_frame_sill", "frame_sill", false);
         generateFrameSide(cachedOutput, writes, "cement_frame_side");
-        generatePot(cachedOutput, writes, "cement_pot", "pot");
-        generatePot(cachedOutput, writes, "cement_planter", "planter");
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
 
@@ -81,6 +82,28 @@ public final class CementBlockAssetProvider implements DataProvider {
         writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
         writeJson(output, writes, itemModelPathProvider, blockId,
                 Map.of("parent", modLoc("block/cement/" + blockId + (hasStandaloneTexture ? "_s0" : "_t2"))));
+    }
+
+    private void generateStandalone(CachedOutput output, List<CompletableFuture<?>> writes, String blockId,
+            String sideTexture, String endTexture) {
+        writeColumnModel(output, writes, blockId, sideTexture, endTexture);
+        Map<String, Object> variants = new LinkedHashMap<>();
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            variants.put("color=" + color.getSerializedName(),
+                    Map.of("model", modLoc("block/cement/" + blockId)));
+        }
+        writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
+        writeJson(output, writes, itemModelPathProvider, blockId,
+                Map.of("parent", modLoc("block/cement/" + blockId)));
+    }
+
+    private void writeColumnModel(CachedOutput output, List<CompletableFuture<?>> writes, String modelId,
+            String sideTexture, String endTexture) {
+        Map<String, Object> textures = new LinkedHashMap<>();
+        textures.put("side", modLoc("block/cement/" + sideTexture));
+        textures.put("end", modLoc("block/cement/" + endTexture));
+        writeJson(output, writes, blockModelPathProvider, "cement/" + modelId,
+                Map.of("parent", modLoc("block/cement/tintable_column"), "textures", textures));
     }
 
     private void generateThinPillar(CachedOutput output, List<CompletableFuture<?>> writes, String blockId,
@@ -117,9 +140,14 @@ public final class CementBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/cement/" + blockId + "_t2")));
     }
 
-    private void generateStandalone(CachedOutput output, List<CompletableFuture<?>> writes, String blockId,
-            String sideTexture, String endTexture) {
-        writeColumnModel(output, writes, blockId, sideTexture, endTexture);
+    private void generatePedestal(CachedOutput output, List<CompletableFuture<?>> writes, String blockId) {
+        Map<String, Object> textures = new LinkedHashMap<>();
+        textures.put("0", modLoc("block/cement/cement_frame"));
+        textures.put("1", modLoc("block/cement/cement_pillar_base"));
+
+        writeJson(output, writes, blockModelPathProvider, "cement/" + blockId,
+                Map.of("parent", modLoc("block/cement/tintable_pedestal"), "textures", textures));
+
         Map<String, Object> variants = new LinkedHashMap<>();
         for (EnumNekoColor color : EnumNekoColor.values()) {
             variants.put("color=" + color.getSerializedName(),
@@ -130,13 +158,22 @@ public final class CementBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/cement/" + blockId)));
     }
 
-    private void writeColumnModel(CachedOutput output, List<CompletableFuture<?>> writes, String modelId,
-            String sideTexture, String endTexture) {
+    private void generatePot(CachedOutput output, List<CompletableFuture<?>> writes, String blockId, String part) {
         Map<String, Object> textures = new LinkedHashMap<>();
-        textures.put("side", modLoc("block/cement/" + sideTexture));
-        textures.put("end", modLoc("block/cement/" + endTexture));
-        writeJson(output, writes, blockModelPathProvider, "cement/" + modelId,
-                Map.of("parent", modLoc("block/cement/tintable_column"), "textures", textures));
+        textures.put("0", modLoc("block/cement/" + blockId));
+        textures.put("1", modLoc("block/cement/cement_frame"));
+
+        writeJson(output, writes, blockModelPathProvider, "cement/" + blockId,
+                Map.of("parent", modLoc("block/cement/" + part), "textures", textures));
+
+        Map<String, Object> variants = new LinkedHashMap<>();
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            variants.put("color=" + color.getSerializedName(),
+                    Map.of("model", modLoc("block/cement/" + blockId)));
+        }
+        writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
+        writeJson(output, writes, itemModelPathProvider, blockId,
+                Map.of("parent", modLoc("block/cement/" + blockId)));
     }
 
     private void generateFrame(CachedOutput output, List<CompletableFuture<?>> writes, String blockId,
@@ -190,24 +227,6 @@ public final class CementBlockAssetProvider implements DataProvider {
         writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
         writeJson(output, writes, itemModelPathProvider, blockId,
                 Map.of("parent", modLoc("block/cement/" + blockId + "_both")));
-    }
-
-    private void generatePot(CachedOutput output, List<CompletableFuture<?>> writes, String blockId, String part) {
-        Map<String, Object> textures = new LinkedHashMap<>();
-        textures.put("0", modLoc("block/cement/" + blockId));
-        textures.put("1", modLoc("block/cement/cement_frame"));
-
-        writeJson(output, writes, blockModelPathProvider, "cement/" + blockId,
-                Map.of("parent", modLoc("block/cement/" + part), "textures", textures));
-
-        Map<String, Object> variants = new LinkedHashMap<>();
-        for (EnumNekoColor color : EnumNekoColor.values()) {
-            variants.put("color=" + color.getSerializedName(),
-                    Map.of("model", modLoc("block/cement/" + blockId)));
-        }
-        writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
-        writeJson(output, writes, itemModelPathProvider, blockId,
-                Map.of("parent", modLoc("block/cement/" + blockId)));
     }
 
     private static void putFacingVariants(Map<String, Object> variants, String keyPrefix, String model) {

@@ -10,6 +10,7 @@ import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.DyeableHorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
+import io.devbobcorn.nekoration.blocks.cement.DyeablePedestalBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeablePotBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.CementBlockRegistration;
@@ -48,6 +49,7 @@ public final class NekoColorHandlers {
                 || state.getBlock() instanceof DyeableVerticalConnectedBlock
                 || state.getBlock() instanceof DyeableHorizontalConnectedBlock
                 || state.getBlock() instanceof DyeableFrameSideBlock
+                || state.getBlock() instanceof DyeablePedestalBlock
                 || state.getBlock() instanceof DyeablePotBlock;
     }
 

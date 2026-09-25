@@ -12,6 +12,7 @@ import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableDirectionalThinPillarBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
+import io.devbobcorn.nekoration.blocks.cement.DyeablePedestalBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeablePotBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableThinPillarBlock;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
@@ -39,17 +40,18 @@ public final class CementBlockRegistration {
     public static RegistrySupplier<DyeableVerticalConnectedBlock> CEMENT_PILLAR_IONIC;
     public static RegistrySupplier<DyeableVerticalConnectedBlock> CEMENT_PILLAR_CORINTHIAN;
     public static RegistrySupplier<DyeableBlock> CEMENT_PILLAR_BASE;
+    public static RegistrySupplier<DyeablePedestalBlock> CEMENT_PEDESTAL;
     public static RegistrySupplier<DyeableThinPillarBlock> CEMENT_THIN_PILLAR_SIMPLE;
     public static RegistrySupplier<DyeableThinPillarBlock> CEMENT_THIN_PILLAR_DORIC;
     public static RegistrySupplier<DyeableDirectionalThinPillarBlock> CEMENT_THIN_PILLAR_IONIC;
     public static RegistrySupplier<DyeableThinPillarBlock> CEMENT_THIN_PILLAR_CORINTHIAN;
     public static RegistrySupplier<DyeableBlock> LAYERED_CEMENT;
+    public static RegistrySupplier<DyeablePotBlock> CEMENT_POT;
+    public static RegistrySupplier<DyeablePotBlock> CEMENT_PLANTER;
     public static RegistrySupplier<DyeableHorizontalConnectedBlock> CEMENT_FRAME_HEAD;
     public static RegistrySupplier<DyeableHorizontalConnectedBlock> CEMENT_FRAME_PEAK;
     public static RegistrySupplier<DyeableHorizontalConnectedBlock> CEMENT_FRAME_SILL;
     public static RegistrySupplier<DyeableFrameSideBlock> CEMENT_FRAME_SIDE;
-    public static RegistrySupplier<DyeablePotBlock> CEMENT_POT;
-    public static RegistrySupplier<DyeablePotBlock> CEMENT_PLANTER;
 
     private static final String TAB_ICON_ITEM_ID = "paneled_cement_base";
     private static RegistrySupplier<Item> tabIconItem;
@@ -67,6 +69,8 @@ public final class CementBlockRegistration {
     CEMENT = registrar.block("cement", () -> new DyeableVerticalConnectedBlock(
         Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), VerticalConnectedBlock.ConnectionType.PILLAR, false));
     CEMENT_BASE = registrar.block("cement_base",
+        () -> new DyeableBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
+    LAYERED_CEMENT = registrar.block("layered_cement",
         () -> new DyeableBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
     PANELED_CEMENT = registrar.block("paneled_cement", () -> new DyeableVerticalConnectedBlock(
         Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), VerticalConnectedBlock.ConnectionType.PILLAR, false));
@@ -90,8 +94,12 @@ public final class CementBlockRegistration {
         Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 7));
     CEMENT_THIN_PILLAR_CORINTHIAN = registrar.block("cement_thin_pillar_corinthian", () -> new DyeableThinPillarBlock(
         Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 7));
-    LAYERED_CEMENT = registrar.block("layered_cement",
-        () -> new DyeableBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
+    CEMENT_PEDESTAL = registrar.block("cement_pedestal",
+        () -> new DyeablePedestalBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
+    CEMENT_POT = registrar.block("cement_pot",
+        () -> new DyeablePotBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 6));
+    CEMENT_PLANTER = registrar.block("cement_planter",
+        () -> new DyeablePotBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 8));
     CEMENT_FRAME_HEAD = registrar.block("cement_frame_head", () -> new DyeableHorizontalConnectedBlock(
         Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), HorizontalConnectedBlock.ConnectionType.BEAM, false, 2, 3, 0));
     CEMENT_FRAME_PEAK = registrar.block("cement_frame_peak", () -> new DyeableHorizontalConnectedBlock(
@@ -100,14 +108,11 @@ public final class CementBlockRegistration {
         Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), HorizontalConnectedBlock.ConnectionType.BEAM, false, 4, 4, 12));
     CEMENT_FRAME_SIDE = registrar.block("cement_frame_side",
         () -> new DyeableFrameSideBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
-    CEMENT_POT = registrar.block("cement_pot",
-        () -> new DyeablePotBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 6));
-    CEMENT_PLANTER = registrar.block("cement_planter",
-        () -> new DyeablePotBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 8));
 
     blockItems = List.of(
         registerBlockItem(registrar, "cement", CEMENT),
         registerBlockItem(registrar, "cement_base", CEMENT_BASE),
+        registerBlockItem(registrar, "layered_cement", LAYERED_CEMENT),
         registerBlockItem(registrar, "paneled_cement", PANELED_CEMENT),
         registerBlockItem(registrar, "paneled_cement_base", PANELED_CEMENT_BASE),
         registerBlockItem(registrar, "cement_pillar_simple", CEMENT_PILLAR_SIMPLE),
@@ -119,17 +124,18 @@ public final class CementBlockRegistration {
         registerBlockItem(registrar, "cement_thin_pillar_doric", CEMENT_THIN_PILLAR_DORIC),
         registerBlockItem(registrar, "cement_thin_pillar_ionic", CEMENT_THIN_PILLAR_IONIC),
         registerBlockItem(registrar, "cement_thin_pillar_corinthian", CEMENT_THIN_PILLAR_CORINTHIAN),
-        registerBlockItem(registrar, "layered_cement", LAYERED_CEMENT),
+        registerBlockItem(registrar, "cement_pedestal", CEMENT_PEDESTAL),
+        registerPotItem(registrar, "cement_pot", CEMENT_POT),
+        registerPotItem(registrar, "cement_planter", CEMENT_PLANTER),
         registerBlockItem(registrar, "cement_frame_head", CEMENT_FRAME_HEAD),
         registerBlockItem(registrar, "cement_frame_peak", CEMENT_FRAME_PEAK),
         registerBlockItem(registrar, "cement_frame_sill", CEMENT_FRAME_SILL),
-        registerBlockItem(registrar, "cement_frame_side", CEMENT_FRAME_SIDE),
-        registerPotItem(registrar, "cement_pot", CEMENT_POT),
-        registerPotItem(registrar, "cement_planter", CEMENT_PLANTER));
+        registerBlockItem(registrar, "cement_frame_side", CEMENT_FRAME_SIDE));
 
     cementBlocks = List.of(
         CEMENT,
         CEMENT_BASE,
+        LAYERED_CEMENT,
         PANELED_CEMENT,
         PANELED_CEMENT_BASE,
         CEMENT_PILLAR_SIMPLE,
@@ -141,13 +147,13 @@ public final class CementBlockRegistration {
         CEMENT_THIN_PILLAR_DORIC,
         CEMENT_THIN_PILLAR_IONIC,
         CEMENT_THIN_PILLAR_CORINTHIAN,
-        LAYERED_CEMENT,
+        CEMENT_PEDESTAL,
+        CEMENT_POT,
+        CEMENT_PLANTER,
         CEMENT_FRAME_HEAD,
         CEMENT_FRAME_PEAK,
         CEMENT_FRAME_SILL,
-        CEMENT_FRAME_SIDE,
-        CEMENT_POT,
-        CEMENT_PLANTER);
+        CEMENT_FRAME_SIDE);
     }
 
     private static RegistrySupplier<Item> registerPotItem(NekoRegistrar registrar, String id,
@@ -182,14 +188,14 @@ public final class CementBlockRegistration {
     public static boolean isFullCube(Block block) {
     return block == CEMENT.get()
         || block == CEMENT_BASE.get()
+        || block == LAYERED_CEMENT.get()
         || block == PANELED_CEMENT.get()
         || block == PANELED_CEMENT_BASE.get()
         || block == CEMENT_PILLAR_SIMPLE.get()
         || block == CEMENT_PILLAR_DORIC.get()
         || block == CEMENT_PILLAR_IONIC.get()
         || block == CEMENT_PILLAR_CORINTHIAN.get()
-        || block == CEMENT_PILLAR_BASE.get()
-        || block == LAYERED_CEMENT.get();
+        || block == CEMENT_PILLAR_BASE.get();
     }
 
     /** Creative tab icon ({@value #TAB_ICON_ITEM_ID}). */

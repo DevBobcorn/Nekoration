@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=black": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=blue": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=brown": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=cyan": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=gray": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=green": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=light_blue": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=light_gray": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=lime": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=magenta": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=orange": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=pink": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=purple": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=red": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=white": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    },
+    "color=yellow": {
+      "model": "nekoration:block/cement/cement_pedestal"
+    }
+  }
+}

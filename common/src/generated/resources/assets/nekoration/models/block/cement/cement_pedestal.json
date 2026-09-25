@@ -1,0 +1,7 @@
+{
+  "parent": "nekoration:block/cement/tintable_pedestal",
+  "textures": {
+    "0": "nekoration:block/cement/cement_frame",
+    "1": "nekoration:block/cement/cement_pillar_base"
+  }
+}
