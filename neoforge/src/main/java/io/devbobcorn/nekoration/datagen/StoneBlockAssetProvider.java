@@ -334,8 +334,8 @@ public final class StoneBlockAssetProvider implements DataProvider {
             String connectionModelName = variantId + "_" + connectionId;
             String reversedSideSuffix = reversedTripleConnectionSuffixForConnection(connectionId);
             Map<String, Object> connectedTextures = new LinkedHashMap<>();
-            connectedTextures.put("front", modLoc("block/stone/" + textureId + "_" + reversedSideSuffix));
-            connectedTextures.put("back", modLoc("block/stone/" + textureId + "_" + connectionId));
+            connectedTextures.put("front", modLoc("block/stone/" + textureId + "_horizontal_" + connectionId));
+            connectedTextures.put("back", modLoc("block/stone/" + textureId + "_horizontal_" + reversedSideSuffix));
             connectedTextures.put("end", modLoc("block/stone/" + textureId));
             writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + connectionModelName,
                     Map.of("parent", modLoc("block/stone/cube_horizontal_column"), "textures", connectedTextures));

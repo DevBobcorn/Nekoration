@@ -18,6 +18,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Map.entry;
+
 import javax.imageio.ImageIO;
 
 import com.google.common.hash.HashCode;
@@ -61,11 +63,18 @@ public final class NekoTextureAssetProvider implements DataProvider {
             "tall_quartz_door.png", "knob_tall.png",
             "tall_chiseled_quartz_door.png", "knob_tall.png",
             "tall_quartz_bricks_door.png", "knob_tall.png");
-    private static final Map<String, String> STONE_UNDERLAYS = Map.of(
-            "chiseled_smooth.png", "{palette_name}_smooth.png",
-            "chiseled_smooth_t0.png", "{palette_name}_smooth.png",
-            "chiseled_smooth_t1.png", "{palette_name}_smooth.png",
-            "chiseled_smooth_t2.png", "{palette_name}_smooth.png");
+    private static final Map<String, String> STONE_UNDERLAYS = Map.ofEntries(
+            entry("chiseled_smooth.png", "{palette_name}_smooth.png"),
+            entry("chiseled_smooth_t0.png", "{palette_name}_smooth.png"),
+            entry("chiseled_smooth_t1.png", "{palette_name}_smooth.png"),
+            entry("chiseled_smooth_t2.png", "{palette_name}_smooth.png"),
+            entry("chiseled_smooth_horizontal_t0.png", "{palette_name}_smooth.png"),
+            entry("chiseled_smooth_horizontal_t1.png", "{palette_name}_smooth.png"),
+            entry("chiseled_smooth_horizontal_t2.png", "{palette_name}_smooth.png"),
+            entry("pillar_simple.png", "{palette_name}_smooth.png"),
+            entry("pillar_simple_t0.png", "{palette_name}_smooth.png"),
+            entry("pillar_simple_t1.png", "{palette_name}_smooth.png"),
+            entry("pillar_simple_t2.png", "{palette_name}_smooth.png"));
     private static final String PLANK_PALETTE_DIR = "plank_palettes";
     private static final String STONE_PALETTE_DIR = "stone_palettes";
     private static final String MINERAL_PALETTE_DIR = "mineral_palettes";

@@ -3,22 +3,22 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"front": "nekoration:block/stone/red_sandstone_chiseled_smooth_t0",
-		"back": "nekoration:block/stone/red_sandstone_chiseled_smooth_t2",
-		"end": "nekoration:block/stone/red_sandstone_chiseled_smooth",
-		"particle": "#end"
+		"front": "nekoration:block/stone/red_sandstone/chiseled_smooth_horizontal_t0",
+		"back": "nekoration:block/stone/red_sandstone/chiseled_smooth_horizontal_t2",
+		"particle": "nekoration:block/stone/red_sandstone/chiseled_smooth",
+		"end": "nekoration:block/stone/red_sandstone/chiseled_smooth"
 	},
 	"elements": [
 		{
 			"from": [0, 0, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [0, 16, 16, 0], "rotation": 90, "texture": "#front"},
+				"north": {"uv": [0, 0, 16, 16], "texture": "#front"},
 				"east": {"uv": [0, 0, 16, 16], "texture": "#end"},
-				"south": {"uv": [16, 0, 0, 16], "rotation": 270, "texture": "#back"},
+				"south": {"uv": [16, 16, 0, 0], "rotation": 180, "texture": "#back"},
 				"west": {"uv": [0, 0, 16, 16], "texture": "#end"},
-				"up": {"uv": [16, 0, 0, 16], "rotation": 90, "texture": "#front"},
-				"down": {"uv": [16, 0, 0, 16], "rotation": 270, "texture": "#back"}
+				"up": {"uv": [16, 16, 0, 0], "texture": "#front"},
+				"down": {"uv": [16, 16, 0, 0], "rotation": 180, "texture": "#back"}
 			}
 		}
 	],
