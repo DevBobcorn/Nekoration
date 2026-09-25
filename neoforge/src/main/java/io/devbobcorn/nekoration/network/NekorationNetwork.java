@@ -26,6 +26,8 @@ public final class NekorationNetwork {
                 (payload, ctx) -> PaletteUpdatePayload.handle(payload, adapt(ctx)));
         registrar.playToClient(PaintingDataBroadcastPayload.TYPE, PaintingDataBroadcastPayload.STREAM_CODEC,
                 (payload, ctx) -> PaintingDataBroadcastPayload.handle(payload, adapt(ctx)));
+        registrar.playToClient(PaintingInitPayload.TYPE, PaintingInitPayload.STREAM_CODEC,
+                (payload, ctx) -> PaintingInitPayload.handle(payload, adapt(ctx)));
     }
 
     private static PayloadContext adapt(IPayloadContext context) {
