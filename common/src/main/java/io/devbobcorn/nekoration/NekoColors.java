@@ -111,7 +111,7 @@ public final class NekoColors {
                 0xc0c060,
                 0x90c060,
                 0x60c090,
-                0x50b0c0,
+                0x70c0e0,
                 0x6090f0,
                 0xb090f0,
                 0xd090d0,
