@@ -39,9 +39,8 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
             return null;
         }
 
-        int slashIndex = path.lastIndexOf('/') + 1;
-        String textureName = path.substring(slashIndex);
-        if (!CT_TEXTURES.contains(textureName) || textureName.endsWith("_connected")) {
+        String textureName = path.substring(path.lastIndexOf('/') + 1);
+        if (textureName.endsWith("_connected") || !isConnectableWindowTexture(textureName)) {
             return null;
         }
 
@@ -49,6 +48,19 @@ public class WindowCTBehaviour extends NekoConnectedTextureBehaviour {
                 original.getNamespace(),
                 path + "_connected");
         return NekoCTSpriteShifter.getCT(NekoCTTypes.RECTANGLE, original, connected);
+    }
+
+    /**
+     * Window textures are flattened to {@code <wood>_window_<style>}, so the style is
+     * matched as a suffix of the sprite name rather than as the full last path segment.
+     */
+    private static boolean isConnectableWindowTexture(String textureName) {
+        for (String ctTexture : CT_TEXTURES) {
+            if (textureName.equals(ctTexture) || textureName.endsWith("_" + ctTexture)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
