@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "nekoration:chiseled_smooth_stone"
+  },
+  "result": {
+    "count": 1,
+    "id": "nekoration:stone_pillar_simple"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "nekoration:sandstone_pillar_simple"
+  },
+  "result": {
+    "count": 1,
+    "id": "nekoration:sandstone_pillar_doric"
+  }
+}

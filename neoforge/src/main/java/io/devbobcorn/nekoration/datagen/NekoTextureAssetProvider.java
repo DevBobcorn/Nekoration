@@ -74,7 +74,8 @@ public final class NekoTextureAssetProvider implements DataProvider {
             entry("pillar_simple.png", "{palette_name}_smooth.png"),
             entry("pillar_simple_t0.png", "{palette_name}_smooth.png"),
             entry("pillar_simple_t1.png", "{palette_name}_smooth.png"),
-            entry("pillar_simple_t2.png", "{palette_name}_smooth.png"));
+            entry("pillar_simple_t2.png", "{palette_name}_smooth.png"),
+            entry("pillar_base.png", "{palette_name}_smooth.png"));
     private static final String PLANK_PALETTE_DIR = "plank_palettes";
     private static final String STONE_PALETTE_DIR = "stone_palettes";
     private static final String MINERAL_PALETTE_DIR = "mineral_palettes";
@@ -85,7 +86,6 @@ public final class NekoTextureAssetProvider implements DataProvider {
     private static final String PALETTE_NAME_PLACEHOLDER = "{palette_name}";
 
     private final Path templateTextureRoot;
-    private final Path stoneUnderlayRoot;
     private final Path generatedBlockTextureRoot;
     private final Path generatedItemTextureRoot;
     private final Path generatedGuiTextureRoot;
@@ -93,7 +93,6 @@ public final class NekoTextureAssetProvider implements DataProvider {
 
     public NekoTextureAssetProvider(PackOutput output) {
         this.templateTextureRoot = resolveTemplateTextureRoot();
-        this.stoneUnderlayRoot = resolveStoneUnderlayRoot();
         // Derive the texture output from the data run's --output folder so the
         // provider follows it instead of a hardcoded source-tree location.
         Path assetsRoot = output.getOutputFolder()
@@ -146,7 +145,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
         generateMappedTextureFolder(cachedOutput, generatedBlockTextureRoot,
                 templateTextureRoot.resolve("stone_template"),
                 templateTextureRoot.resolve("stone_overlay"),
-                stoneUnderlayRoot, "stone",
+                resolveCommonTextureRoot("block/stone"), "stone",
                 Map.of(), STONE_UNDERLAYS,
                 stonePaletteTargets.sourcePalettePath(), stonePaletteTargets.targetPalettes());
         
@@ -637,11 +636,11 @@ public final class NekoTextureAssetProvider implements DataProvider {
         throw new IllegalStateException("Could not locate generator_files from " + probe);
     }
 
-    private static Path resolveStoneUnderlayRoot() {
+    private static Path resolveCommonTextureRoot(String path) {
         Path probe = Path.of("").toAbsolutePath();
         for (Path current = probe; current != null; current = current.getParent()) {
             Path candidate = current
-                    .resolve("common/src/main/resources/assets/" + Nekoration.MODID + "/textures/block/stone");
+                    .resolve("common/src/main/resources/assets/" + Nekoration.MODID + "/textures/" + path);
             if (Files.isDirectory(candidate)) {
                 return candidate;
             }

@@ -103,6 +103,15 @@ public final class StoneBlockRegistration {
             registerHorizontalConnectedBlock(registrar, "horizontal_chiseled_smooth_" + stoneId,
                     HorizontalConnectedBlock.ConnectionType.BEAM, 16, 16, 0, blockItemsByStone, stone);
             registerPedestalBlock(registrar, stoneId + "_pedestal", blockItemsByStone, stone);
+            registerVerticalConnectedBlock(registrar, stoneId + "_pillar_simple",
+                    VerticalConnectedBlock.ConnectionType.PILLAR, blockItemsByStone, stone);
+            registerVerticalConnectedBlock(registrar, stoneId + "_pillar_doric",
+                    VerticalConnectedBlock.ConnectionType.PILLAR, blockItemsByStone, stone);
+            registerVerticalConnectedBlock(registrar, stoneId + "_pillar_ionic",
+                    VerticalConnectedBlock.ConnectionType.PILLAR, blockItemsByStone, stone);
+            registerVerticalConnectedBlock(registrar, stoneId + "_pillar_corinthian",
+                    VerticalConnectedBlock.ConnectionType.PILLAR, blockItemsByStone, stone);
+            registerBlock(registrar, stoneId + "_pillar_base", blockItemsByStone, stone);
             registerThinPillarBlock(registrar, stoneId + "_thin_pillar_simple", false, 3, blockItemsByStone, stone);
             registerThinPillarBlock(registrar, stoneId + "_thin_pillar_doric", false, 3, blockItemsByStone, stone);
             registerThinPillarBlock(registrar, stoneId + "_thin_pillar_ionic", true, 7, blockItemsByStone, stone);

@@ -437,6 +437,14 @@ public final class NekoRecipeProvider extends RecipeProvider {
             for (String variant : STONE_THIN_PILLAR_DECORATED_VARIANTS) {
                 stonecutting(output, thinPillarSimple, stoneId + "_thin_pillar_" + variant);
             }
+
+            Item chiseledSmooth = modItem("chiseled_smooth_" + stoneId);
+            Item pillarSimple = modItem(stoneId + "_pillar_simple");
+            stonecutting(output, chiseledSmooth, stoneId + "_pillar_simple");
+            for (String variant : STONE_THIN_PILLAR_DECORATED_VARIANTS) {
+                stonecutting(output, pillarSimple, stoneId + "_pillar_" + variant);
+            }
+            stonecutting(output, chiseledSmooth, stoneId + "_pillar_base");
         }
     }
 

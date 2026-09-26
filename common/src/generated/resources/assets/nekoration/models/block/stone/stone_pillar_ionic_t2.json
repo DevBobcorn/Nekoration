@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "nekoration:block/stone/stone/chiseled_smooth",
+    "side": "nekoration:block/stone/stone/pillar_ionic_t2"
+  }
+}
