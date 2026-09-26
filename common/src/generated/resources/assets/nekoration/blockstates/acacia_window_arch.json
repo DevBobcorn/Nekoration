@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/window/acacia/window_arch"
+      "model": "nekoration:block/window/acacia_window_arch"
     }
   }
 }

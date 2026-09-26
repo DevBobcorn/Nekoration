@@ -1,6 +1,6 @@
 {
   "parent": "nekoration:block/lamp_post/base",
   "textures": {
-    "0": "nekoration:block/mineral/iron/face"
+    "0": "nekoration:block/mineral/iron_face"
   }
 }

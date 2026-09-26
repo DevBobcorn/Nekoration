@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/flower_basket/flower_basket",
   "textures": {
-    "0": "nekoration:block/mineral/quartz/flower_basket",
-    "2": "nekoration:block/mineral/quartz/face"
+    "0": "nekoration:block/mineral/quartz_flower_basket",
+    "2": "nekoration:block/mineral/quartz_face"
   }
 }

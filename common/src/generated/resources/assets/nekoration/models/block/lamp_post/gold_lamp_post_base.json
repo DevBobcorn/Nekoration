@@ -1,6 +1,6 @@
 {
   "parent": "nekoration:block/lamp_post/base",
   "textures": {
-    "0": "nekoration:block/mineral/gold/face"
+    "0": "nekoration:block/mineral/gold_face"
   }
 }

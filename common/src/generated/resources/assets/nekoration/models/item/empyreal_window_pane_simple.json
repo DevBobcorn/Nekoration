@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "nekoration:block/window/empyreal/window_simple"
+    "layer0": "nekoration:block/window/empyreal_window_simple"
   }
 }

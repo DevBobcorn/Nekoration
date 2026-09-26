@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/furniture/cherry/glass_table"
+      "model": "nekoration:block/furniture/cherry_glass_table"
     }
   }
 }

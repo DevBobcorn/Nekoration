@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"render_type": "cutout_mipped",
 	"textures": {
-		"0": "nekoration:block/mineral/iron/face",
+		"0": "nekoration:block/mineral/iron_face",
 		"particle": "#0"
 	},
 	"elements": [

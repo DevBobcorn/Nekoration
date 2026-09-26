@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,open=false": {
-      "model": "nekoration:block/container/cherry/cabinet",
+      "model": "nekoration:block/container/cherry_cabinet",
       "y": 90
     },
     "facing=east,open=true": {
-      "model": "nekoration:block/container/cherry/cabinet_open",
+      "model": "nekoration:block/container/cherry_cabinet_open",
       "y": 90
     },
     "facing=north,open=false": {
-      "model": "nekoration:block/container/cherry/cabinet"
+      "model": "nekoration:block/container/cherry_cabinet"
     },
     "facing=north,open=true": {
-      "model": "nekoration:block/container/cherry/cabinet_open"
+      "model": "nekoration:block/container/cherry_cabinet_open"
     },
     "facing=south,open=false": {
-      "model": "nekoration:block/container/cherry/cabinet",
+      "model": "nekoration:block/container/cherry_cabinet",
       "y": 180
     },
     "facing=south,open=true": {
-      "model": "nekoration:block/container/cherry/cabinet_open",
+      "model": "nekoration:block/container/cherry_cabinet_open",
       "y": 180
     },
     "facing=west,open=false": {
-      "model": "nekoration:block/container/cherry/cabinet",
+      "model": "nekoration:block/container/cherry_cabinet",
       "y": 270
     },
     "facing=west,open=true": {
-      "model": "nekoration:block/container/cherry/cabinet_open",
+      "model": "nekoration:block/container/cherry_cabinet_open",
       "y": 270
     }
   }

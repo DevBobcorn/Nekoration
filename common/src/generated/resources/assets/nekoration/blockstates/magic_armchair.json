@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "nekoration:block/furniture/magic/armchair",
+      "model": "nekoration:block/furniture/magic_armchair",
       "y": 90
     },
     "facing=north": {
-      "model": "nekoration:block/furniture/magic/armchair"
+      "model": "nekoration:block/furniture/magic_armchair"
     },
     "facing=south": {
-      "model": "nekoration:block/furniture/magic/armchair",
+      "model": "nekoration:block/furniture/magic_armchair",
       "y": 180
     },
     "facing=west": {
-      "model": "nekoration:block/furniture/magic/armchair",
+      "model": "nekoration:block/furniture/magic_armchair",
       "y": 270
     }
   }

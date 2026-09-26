@@ -1,6 +1,6 @@
 {
   "parent": "nekoration:block/lamp_post/plane_full",
   "textures": {
-    "0": "nekoration:block/mineral/quartz/lamp_post_side_down"
+    "0": "nekoration:block/mineral/quartz_lamp_post_side_down"
   }
 }

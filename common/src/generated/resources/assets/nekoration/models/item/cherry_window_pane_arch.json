@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "nekoration:block/window/cherry/window_arch"
+    "layer0": "nekoration:block/window/cherry_window_arch"
   }
 }

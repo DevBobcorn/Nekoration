@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_column",
   "textures": {
-    "end": "nekoration:block/stone/diorite/chiseled_smooth",
-    "side": "nekoration:block/stone/diorite/pillar_corinthian_t0"
+    "end": "nekoration:block/stone/diorite_chiseled_smooth",
+    "side": "nekoration:block/stone/diorite_pillar_corinthian_t0"
   }
 }

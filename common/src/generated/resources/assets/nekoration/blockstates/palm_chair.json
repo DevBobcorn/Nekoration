@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "nekoration:block/furniture/palm/chair",
+      "model": "nekoration:block/furniture/palm_chair",
       "y": 90
     },
     "facing=north": {
-      "model": "nekoration:block/furniture/palm/chair"
+      "model": "nekoration:block/furniture/palm_chair"
     },
     "facing=south": {
-      "model": "nekoration:block/furniture/palm/chair",
+      "model": "nekoration:block/furniture/palm_chair",
       "y": 180
     },
     "facing=west": {
-      "model": "nekoration:block/furniture/palm/chair",
+      "model": "nekoration:block/furniture/palm_chair",
       "y": 270
     }
   }

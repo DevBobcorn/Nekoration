@@ -4,7 +4,7 @@
     "textures": {
         "particle": "#side",
         "side": "nekoration:block/half_timber_back/halftimber_frame_p0",
-        "overlay": "nekoration:block/half_timber/oak/halftimber_frame_p0"
+        "overlay": "nekoration:block/half_timber/oak_halftimber_frame_p0"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

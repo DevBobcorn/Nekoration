@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "nekoration:block/furniture/acacia/chair",
+      "model": "nekoration:block/furniture/acacia_chair",
       "y": 90
     },
     "facing=north": {
-      "model": "nekoration:block/furniture/acacia/chair"
+      "model": "nekoration:block/furniture/acacia_chair"
     },
     "facing=south": {
-      "model": "nekoration:block/furniture/acacia/chair",
+      "model": "nekoration:block/furniture/acacia_chair",
       "y": 180
     },
     "facing=west": {
-      "model": "nekoration:block/furniture/acacia/chair",
+      "model": "nekoration:block/furniture/acacia_chair",
       "y": 270
     }
   }

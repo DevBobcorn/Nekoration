@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/window/birch/window_arch"
+      "model": "nekoration:block/window/birch_window_arch"
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "nekoration:item/quartz_door/gray/quartz_bricks_door"
+    "layer0": "nekoration:item/quartz_door/gray_quartz_bricks_door"
   }
 }

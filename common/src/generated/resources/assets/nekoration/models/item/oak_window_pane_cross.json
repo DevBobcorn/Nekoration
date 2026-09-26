@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "nekoration:block/window/oak/window_cross"
+    "layer0": "nekoration:block/window/oak_window_cross"
   }
 }

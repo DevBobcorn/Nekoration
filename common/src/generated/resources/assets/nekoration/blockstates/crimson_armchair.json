@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "nekoration:block/furniture/crimson/armchair",
+      "model": "nekoration:block/furniture/crimson_armchair",
       "y": 90
     },
     "facing=north": {
-      "model": "nekoration:block/furniture/crimson/armchair"
+      "model": "nekoration:block/furniture/crimson_armchair"
     },
     "facing=south": {
-      "model": "nekoration:block/furniture/crimson/armchair",
+      "model": "nekoration:block/furniture/crimson_armchair",
       "y": 180
     },
     "facing=west": {
-      "model": "nekoration:block/furniture/crimson/armchair",
+      "model": "nekoration:block/furniture/crimson_armchair",
       "y": 270
     }
   }

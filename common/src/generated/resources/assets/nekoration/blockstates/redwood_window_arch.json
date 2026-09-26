@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/window/redwood/window_arch"
+      "model": "nekoration:block/window/redwood_window_arch"
     }
   }
 }

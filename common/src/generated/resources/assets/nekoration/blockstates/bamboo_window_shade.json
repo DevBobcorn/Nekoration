@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/window/bamboo/window_shade"
+      "model": "nekoration:block/window/bamboo_window_shade"
     }
   }
 }

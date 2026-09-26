@@ -180,9 +180,7 @@ def get_source_palette(target_palette_dir: Path):
 
 
 def build_output_path(output_root: Path, source_image: Path, target_palette: Path):
-    target_dir = output_root / target_palette.stem
-    target_dir.mkdir(parents=True, exist_ok=True)
-    return target_dir / source_image.name
+    return output_root / f"{target_palette.stem}_{source_image.name}"
 
 
 def main():

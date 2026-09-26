@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/furniture/mahogany/round_table"
+      "model": "nekoration:block/furniture/mahogany_round_table"
     }
   }
 }

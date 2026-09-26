@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/furniture/dead/glass_table"
+      "model": "nekoration:block/furniture/dead_glass_table"
     }
   }
 }

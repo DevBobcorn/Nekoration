@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/window/jacaranda/window_simple"
+      "model": "nekoration:block/window/jacaranda_window_simple"
     }
   }
 }

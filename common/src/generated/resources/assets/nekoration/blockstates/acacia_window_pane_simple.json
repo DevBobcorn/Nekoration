@@ -2,12 +2,12 @@
   "multipart": [
     {
       "apply": {
-        "model": "nekoration:block/window/acacia/window_pane_simple_post"
+        "model": "nekoration:block/window/acacia_window_pane_simple_post"
       }
     },
     {
       "apply": {
-        "model": "nekoration:block/window/acacia/window_pane_simple_side"
+        "model": "nekoration:block/window/acacia_window_pane_simple_side"
       },
       "when": {
         "north": "true"
@@ -15,7 +15,7 @@
     },
     {
       "apply": {
-        "model": "nekoration:block/window/acacia/window_pane_simple_noside"
+        "model": "nekoration:block/window/acacia_window_pane_simple_noside"
       },
       "when": {
         "north": "false"
@@ -23,7 +23,7 @@
     },
     {
       "apply": {
-        "model": "nekoration:block/window/acacia/window_pane_simple_side_alt"
+        "model": "nekoration:block/window/acacia_window_pane_simple_side_alt"
       },
       "when": {
         "south": "true"
@@ -31,7 +31,7 @@
     },
     {
       "apply": {
-        "model": "nekoration:block/window/acacia/window_pane_simple_noside_alt",
+        "model": "nekoration:block/window/acacia_window_pane_simple_noside_alt",
         "y": 90
       },
       "when": {
@@ -40,7 +40,7 @@
     },
     {
       "apply": {
-        "model": "nekoration:block/window/acacia/window_pane_simple_side_alt",
+        "model": "nekoration:block/window/acacia_window_pane_simple_side_alt",
         "y": 90
       },
       "when": {
@@ -49,7 +49,7 @@
     },
     {
       "apply": {
-        "model": "nekoration:block/window/acacia/window_pane_simple_noside",
+        "model": "nekoration:block/window/acacia_window_pane_simple_noside",
         "y": 270
       },
       "when": {
@@ -58,7 +58,7 @@
     },
     {
       "apply": {
-        "model": "nekoration:block/window/acacia/window_pane_simple_side",
+        "model": "nekoration:block/window/acacia_window_pane_simple_side",
         "y": 90
       },
       "when": {
@@ -67,7 +67,7 @@
     },
     {
       "apply": {
-        "model": "nekoration:block/window/acacia/window_pane_simple_noside_alt"
+        "model": "nekoration:block/window/acacia_window_pane_simple_noside_alt"
       },
       "when": {
         "east": "false"

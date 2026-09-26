@@ -181,7 +181,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
         PaletteTargets woolPaletteTargets = resolvePaletteTargets(WOOL_PALETTE_DIR);
         for (Path targetPalettePath : woolPaletteTargets.targetPalettes()) {
             String color = stripExtension(targetPalettePath.getFileName().toString());
-            String colorTexture = color + "/awning.png";
+            String colorTexture = color + "_awning.png";
 
             String pureMask;
             String stripeMask;
@@ -190,13 +190,13 @@ public final class NekoTextureAssetProvider implements DataProvider {
             if (color.equals("white")) {
                 pureMask = "awning_pure_white.png";
                 stripeMask = "awning_stripe_white.png";
-                pureSources = List.of("white/awning.png", "yellow/awning.png", "white/awning.png");
-                stripeSources = List.of("white/awning.png", "yellow/awning.png", "pink/awning.png");
+                pureSources = List.of("white_awning.png", "yellow_awning.png", "white_awning.png");
+                stripeSources = List.of("white_awning.png", "yellow_awning.png", "pink_awning.png");
             } else {
                 pureMask = "awning_pure.png";
                 stripeMask = "awning_stripe.png";
-                pureSources = List.of(colorTexture, "white/awning.png", colorTexture);
-                stripeSources = List.of(colorTexture, "white/awning.png", colorTexture);
+                pureSources = List.of(colorTexture, "white_awning.png", colorTexture);
+                stripeSources = List.of(colorTexture, "white_awning.png", colorTexture);
             }
 
             writeTexture(cachedOutput, "awning/" + color + "_pure",
@@ -305,7 +305,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
                     mapped = composeOverlay(mapped, overlayImage, sourceImagePath);
                 }
                 String textureName = stripExtension(sourceFileName);
-                writeTexture(cachedOutput, outputRoot, outputFolder + "/" + targetVariantName + "/" + textureName, mapped);
+                writeTexture(cachedOutput, outputRoot, outputFolder + "/" + targetVariantName + "_" + textureName, mapped);
             }
         }
     }

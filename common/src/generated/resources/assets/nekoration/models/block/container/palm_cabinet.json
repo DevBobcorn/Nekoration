@@ -1,0 +1,9 @@
+{
+  "parent": "nekoration:block/container/cabinet",
+  "textures": {
+    "0": "nekoration:block/furniture/palm_top",
+    "1": "nekoration:block/container/palm_cabinet_front",
+    "3": "nekoration:block/container/palm_cabinet_side",
+    "4": "nekoration:block/container/palm_cabinet_back"
+  }
+}

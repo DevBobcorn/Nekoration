@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "nekoration:block/window/maple/window_lancet"
+    "layer0": "nekoration:block/window/maple_window_lancet"
   }
 }

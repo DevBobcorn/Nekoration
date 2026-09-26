@@ -1,7 +1,0 @@
-{
-  "parent": "nekoration:block/window/template_window_pane_noside_alt",
-  "textures": {
-    "edge": "nekoration:block/window/willow/window_top",
-    "pane": "nekoration:block/window/willow/window_cross"
-  }
-}

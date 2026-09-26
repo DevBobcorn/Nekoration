@@ -99,6 +99,6 @@
     }
   ],
   "textures": {
-    "layer0": "nekoration:item/quartz_door/white/chiseled_quartz_door"
+    "layer0": "nekoration:item/quartz_door/white_chiseled_quartz_door"
   }
 }

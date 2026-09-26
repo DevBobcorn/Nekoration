@@ -72,7 +72,7 @@ public final class OrnamentAssetProvider implements DataProvider {
 
         for (String color : COLORS) {
             String modelPrefix = "door/" + id + "_" + color;
-            String texturePrefix = "block/quartz_door/" + color + "/" + id;
+            String texturePrefix = "block/quartz_door/" + color + "_" + id;
 
             // The wide faces of the bottom segment use the bottom texture; the edges of the
             // regular door reuse the top texture, like the 1.19 version of this mod did.
@@ -129,13 +129,13 @@ public final class OrnamentAssetProvider implements DataProvider {
         Map<String, Object> itemBody = new LinkedHashMap<>();
         itemBody.put("parent", "item/generated");
         // Fallback for stacks without color data: the white variant.
-        itemBody.put("textures", Map.of("layer0", modLoc("item/quartz_door/white/" + id)));
+        itemBody.put("textures", Map.of("layer0", modLoc("item/quartz_door/white_" + id)));
         List<Map<String, Object>> overrides = new ArrayList<>();
         for (EnumNekoColor color : EnumNekoColor.values()) {
             String colorId = color.getSerializedName();
             write(output, writes, items, "door/" + id + "_" + colorId,
                     Map.of("parent", "item/generated",
-                            "textures", Map.of("layer0", modLoc("item/quartz_door/" + colorId + "/" + id))));
+                            "textures", Map.of("layer0", modLoc("item/quartz_door/" + colorId + "_" + id))));
             Map<String, Object> override = new LinkedHashMap<>();
             override.put("predicate", Map.of("nekoration:color", (double) color.getNbtId()));
             override.put("model", modLoc("item/door/" + id + "_" + colorId));
@@ -147,7 +147,7 @@ public final class OrnamentAssetProvider implements DataProvider {
 
     private void generateCandleHolder(CachedOutput output, List<CompletableFuture<?>> writes, String material) {
         String modelPath = "candle_holder/" + material + "_candle_holder";
-        String texturePrefix = "block/mineral/" + material + "/";
+        String texturePrefix = "block/mineral/" + material + "_";
 
         // Uncolored candles inherit the vanilla uncolored candle texture from the template.
         writeModel(output, writes, modelPath, "candle_holder/candle_holder",
@@ -199,7 +199,7 @@ public final class OrnamentAssetProvider implements DataProvider {
 
     private void generateFlowerBasket(CachedOutput output, List<CompletableFuture<?>> writes, String material) {
         String modelPath = "flower_basket/" + material + "_flower_basket";
-        String texturePrefix = "block/mineral/" + material + "/";
+        String texturePrefix = "block/mineral/" + material + "_";
 
         writeModel(output, writes, modelPath, "flower_basket/flower_basket",
                 Map.of("0", modLoc(texturePrefix + "flower_basket"),
@@ -217,7 +217,7 @@ public final class OrnamentAssetProvider implements DataProvider {
 
     private void generateLampPost(CachedOutput output, List<CompletableFuture<?>> writes, String material) {
         String modelPrefix = "lamp_post/" + material + "_lamp_post";
-        String texturePrefix = "block/mineral/" + material + "/";
+        String texturePrefix = "block/mineral/" + material + "_";
 
         writeModel(output, writes, modelPrefix + "_base", "lamp_post/base",
                 Map.of("0", modLoc(texturePrefix + "face")));

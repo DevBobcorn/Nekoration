@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/window/warped/window_simple"
+      "model": "nekoration:block/window/warped_window_simple"
     }
   }
 }

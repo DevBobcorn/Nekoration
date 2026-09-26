@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/window/dead/window_shade"
+      "model": "nekoration:block/window/dead_window_shade"
     }
   }
 }

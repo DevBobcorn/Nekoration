@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/window/oak/window_cross"
+      "model": "nekoration:block/window/oak_window_cross"
     }
   }
 }

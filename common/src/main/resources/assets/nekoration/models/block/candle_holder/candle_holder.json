@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"render_type": "cutout_mipped",
 	"textures": {
-		"0": "nekoration:block/mineral/iron/candle_holder",
-		"1": "nekoration:block/mineral/iron/face",
+		"0": "nekoration:block/mineral/iron_candle_holder",
+		"1": "nekoration:block/mineral/iron_face",
 		"2": "block/candle",
 		"particle": "#1"
 	},

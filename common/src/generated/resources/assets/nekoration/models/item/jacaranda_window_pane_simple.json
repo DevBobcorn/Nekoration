@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "nekoration:block/window/jacaranda/window_simple"
+    "layer0": "nekoration:block/window/jacaranda_window_simple"
   }
 }

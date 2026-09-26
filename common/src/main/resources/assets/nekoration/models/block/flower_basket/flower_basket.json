@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"render_type": "cutout_mipped",
 	"textures": {
-		"0": "nekoration:block/mineral/iron/flower_basket",
+		"0": "nekoration:block/mineral/iron_flower_basket",
 		"1": "nekoration:block/flower_basket_top",
-		"2": "nekoration:block/mineral/iron/face",
+		"2": "nekoration:block/mineral/iron_face",
 		"particle": "#0"
 	},
 	"elements": [

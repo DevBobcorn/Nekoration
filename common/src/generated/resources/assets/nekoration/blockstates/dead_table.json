@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/furniture/dead/table"
+      "model": "nekoration:block/furniture/dead_table"
     }
   }
 }

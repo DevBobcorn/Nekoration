@@ -1,6 +1,6 @@
 {
   "parent": "nekoration:block/stone/frame_side_both",
   "textures": {
-    "0": "nekoration:block/stone/andesite/frame_side"
+    "0": "nekoration:block/stone/andesite_frame_side"
   }
 }

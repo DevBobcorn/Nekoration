@@ -1,0 +1,10 @@
+{
+  "parent": "nekoration:block/container/drawer_chest_open",
+  "textures": {
+    "0": "nekoration:block/furniture/dark_oak_top",
+    "1": "nekoration:block/container/dark_oak_drawer_chest_front_open",
+    "2": "nekoration:block/container/dark_oak_drawer_chest_front",
+    "3": "nekoration:block/container/dark_oak_cabinet_side",
+    "4": "nekoration:block/container/dark_oak_cabinet_back"
+  }
+}

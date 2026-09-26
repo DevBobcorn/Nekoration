@@ -1,0 +1,8 @@
+{
+  "parent": "nekoration:block/container/cupboard_d0",
+  "textures": {
+    "0": "nekoration:block/furniture/spruce_top",
+    "1": "nekoration:block/container/spruce_cupboard_front_d0",
+    "4": "nekoration:block/container/spruce_cabinet_back"
+  }
+}

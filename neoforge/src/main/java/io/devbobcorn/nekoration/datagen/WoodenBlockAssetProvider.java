@@ -65,69 +65,69 @@ public final class WoodenBlockAssetProvider implements DataProvider {
     private void generateFurnitureAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, NekoWood wood) {
         String woodId = wood.id();
         String tableId = woodId + "_table";
-        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/table",
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "_table",
                 Map.of(
                         "parent", modLoc("block/furniture/table"),
                         "textures", Map.of(
                                 "top", furnitureTexture(wood, "top"))));
         writeJson(cachedOutput, writes, blockstatePathProvider, tableId,
-                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/table")))));
+                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "_table")))));
         writeJson(cachedOutput, writes, itemModelPathProvider, tableId,
-                Map.of("parent", modLoc("block/furniture/" + woodId + "/table")));
+                Map.of("parent", modLoc("block/furniture/" + woodId + "_table")));
         
         String roundTableId = woodId + "_round_table";
-        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/round_table",
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "_round_table",
                 Map.of(
                         "parent", modLoc("block/furniture/round_table"),
                         "textures", Map.of(
                                 "top", furnitureTexture(wood, "round_top"),
                                 "leg", furnitureTexture(wood, "leg"))));
         writeJson(cachedOutput, writes, blockstatePathProvider, roundTableId,
-                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/round_table")))));
+                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "_round_table")))));
         writeJson(cachedOutput, writes, itemModelPathProvider, roundTableId,
-                Map.of("parent", modLoc("block/furniture/" + woodId + "/round_table")));
+                Map.of("parent", modLoc("block/furniture/" + woodId + "_round_table")));
         
         String glassTableId = woodId + "_glass_table";
-        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/glass_table",
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "_glass_table",
                 Map.of(
                         "parent", modLoc("block/furniture/glass_table"),
                         "textures", Map.of(
                                 "top", furnitureTexture(wood, "top"))));
         writeJson(cachedOutput, writes, blockstatePathProvider, glassTableId,
-                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/glass_table")))));
+                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "_glass_table")))));
         writeJson(cachedOutput, writes, itemModelPathProvider, glassTableId,
-                Map.of("parent", modLoc("block/furniture/" + woodId + "/glass_table")));
+                Map.of("parent", modLoc("block/furniture/" + woodId + "_glass_table")));
         
         String roundGlassTableId = woodId + "_round_glass_table";
-        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/round_glass_table",
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "_round_glass_table",
                 Map.of(
                         "parent", modLoc("block/furniture/round_glass_table"),
                         "textures", Map.of(
                                 "top", modLoc("block/furniture/glass_round_top"),
                                 "leg", furnitureTexture(wood, "leg"))));
         writeJson(cachedOutput, writes, blockstatePathProvider, roundGlassTableId,
-                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "/round_glass_table")))));
+                Map.of("variants", Map.of("", Map.of("model", modLoc("block/furniture/" + woodId + "_round_glass_table")))));
         writeJson(cachedOutput, writes, itemModelPathProvider, roundGlassTableId,
-                Map.of("parent", modLoc("block/furniture/" + woodId + "/round_glass_table")));
+                Map.of("parent", modLoc("block/furniture/" + woodId + "_round_glass_table")));
 
         String chairId = woodId + "_chair";
-        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/chair",
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "_chair",
                 Map.of(
                         "parent", modLoc("block/furniture/chair"),
                         "textures", Map.of(
                                 "top", furnitureTexture(wood, "top"),
                                 "side", wood.plankTexture())));
         Map<String, Object> chairVariants = new LinkedHashMap<>();
-        chairVariants.put("facing=north", Map.of("model", modLoc("block/furniture/" + woodId + "/chair")));
-        chairVariants.put("facing=east", Map.of("model", modLoc("block/furniture/" + woodId + "/chair"), "y", 90));
-        chairVariants.put("facing=south", Map.of("model", modLoc("block/furniture/" + woodId + "/chair"), "y", 180));
-        chairVariants.put("facing=west", Map.of("model", modLoc("block/furniture/" + woodId + "/chair"), "y", 270));
+        chairVariants.put("facing=north", Map.of("model", modLoc("block/furniture/" + woodId + "_chair")));
+        chairVariants.put("facing=east", Map.of("model", modLoc("block/furniture/" + woodId + "_chair"), "y", 90));
+        chairVariants.put("facing=south", Map.of("model", modLoc("block/furniture/" + woodId + "_chair"), "y", 180));
+        chairVariants.put("facing=west", Map.of("model", modLoc("block/furniture/" + woodId + "_chair"), "y", 270));
         writeJson(cachedOutput, writes, blockstatePathProvider, chairId, Map.of("variants", chairVariants));
         writeJson(cachedOutput, writes, itemModelPathProvider, chairId,
-                Map.of("parent", modLoc("block/furniture/" + woodId + "/chair")));
+                Map.of("parent", modLoc("block/furniture/" + woodId + "_chair")));
 
         String armchairId = woodId + "_armchair";
-        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/armchair",
+        writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "_armchair",
                 Map.of("parent", modLoc("block/furniture/armchair"),
                         "textures", Map.of(
                             "top", furnitureTexture(wood, "top"),
@@ -135,15 +135,15 @@ public final class WoodenBlockAssetProvider implements DataProvider {
         Map<String, Object> armchairVariants = new LinkedHashMap<>();
         for (String facing : List.of("north", "east", "south", "west")) {
             armchairVariants.put("facing=" + facing,
-                    horizontalFacingVariant("block/furniture/" + woodId + "/armchair", horizontalRotationY(facing)));
+                    horizontalFacingVariant("block/furniture/" + woodId + "_armchair", horizontalRotationY(facing)));
         }
         writeJson(cachedOutput, writes, blockstatePathProvider, armchairId, Map.of("variants", armchairVariants));
         writeJson(cachedOutput, writes, itemModelPathProvider, armchairId,
-                Map.of("parent", modLoc("block/furniture/" + woodId + "/armchair")));
+                Map.of("parent", modLoc("block/furniture/" + woodId + "_armchair")));
 
         String benchId = woodId + "_bench";
         for (String modelSuffix : List.of("s0", "t0", "t1", "t2")) {
-            writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "/bench_" + modelSuffix,
+            writeJson(cachedOutput, writes, blockModelPathProvider, "furniture/" + woodId + "_bench_" + modelSuffix,
                     Map.of("parent", modLoc("block/furniture/bench_" + modelSuffix),
                             "textures", Map.of(
                                     "top", furnitureTexture(wood, "top"),
@@ -154,12 +154,12 @@ public final class WoodenBlockAssetProvider implements DataProvider {
             String modelName = "bench_" + connectedModelSuffix(connectionId);
             for (String facing : List.of("north", "east", "south", "west")) {
                 benchVariants.put("facing=" + facing + ",horizontal_connection=" + connectionId,
-                        horizontalFacingVariant("block/furniture/" + woodId + "/" + modelName, horizontalRotationY(facing)));
+                        horizontalFacingVariant("block/furniture/" + woodId + "_" + modelName, horizontalRotationY(facing)));
             }
         }
         writeJson(cachedOutput, writes, blockstatePathProvider, benchId, Map.of("variants", benchVariants));
         writeJson(cachedOutput, writes, itemModelPathProvider, benchId,
-                Map.of("parent", modLoc("block/furniture/" + woodId + "/bench_s0")));
+                Map.of("parent", modLoc("block/furniture/" + woodId + "_bench_s0")));
     }
 
     private void generateContainerAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, NekoWood wood) {
@@ -177,14 +177,14 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                         for (boolean open : List.of(false, true)) {
                             String modelName = open ? "cabinet_open" : "cabinet";
                             String key = "facing=" + facing + ",open=" + open;
-                            blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
+                            blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "_" + modelName, y));
                         }
                     }
 
                     writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
                             Map.of("variants", blockstateVariants));
                     writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
-                            Map.of("parent", modLoc("block/container/" + woodId + "/cabinet")));
+                            Map.of("parent", modLoc("block/container/" + woodId + "_cabinet")));
                 }
                 case CUPBOARD -> {
                     writeContainerModelFromTemplate(cachedOutput, writes, wood, "cupboard_d0", "cupboard_d0");
@@ -198,7 +198,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                                 String modelName = bottom ? "cupboard_d0" : "cupboard_d1";
                                 String key = "bottom=" + bottom + ",facing=" + facing + ",open=" + open;
                                 blockstateVariants.put(key,
-                                        horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
+                                        horizontalFacingVariant("block/container/" + woodId + "_" + modelName, y));
                             }
                         }
                     }
@@ -206,7 +206,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                     writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
                             Map.of("variants", blockstateVariants));
                     writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
-                            Map.of("parent", modLoc("block/container/" + woodId + "/cupboard_d1")));
+                            Map.of("parent", modLoc("block/container/" + woodId + "_cupboard_d1")));
                 }
                 case DRAWER -> {
                     writeContainerModelFromTemplate(cachedOutput, writes, wood, "drawer", "drawer");
@@ -218,14 +218,14 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                         for (boolean open : List.of(false, true)) {
                             String modelName = open ? "drawer_open" : "drawer";
                             String key = "facing=" + facing + ",open=" + open;
-                            blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
+                            blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "_" + modelName, y));
                         }
                     }
 
                     writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
                             Map.of("variants", blockstateVariants));
                     writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
-                            Map.of("parent", modLoc("block/container/" + woodId + "/drawer")));
+                            Map.of("parent", modLoc("block/container/" + woodId + "_drawer")));
                 }
                 case DRAWER_CHEST -> {
                     writeContainerModelFromTemplate(cachedOutput, writes, wood, "drawer_chest", "drawer_chest");
@@ -237,14 +237,14 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                         for (boolean open : List.of(false, true)) {
                             String modelName = open ? "drawer_chest_open" : "drawer_chest";
                             String key = "facing=" + facing + ",open=" + open;
-                            blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
+                            blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "_" + modelName, y));
                         }
                     }
 
                     writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
                             Map.of("variants", blockstateVariants));
                     writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
-                            Map.of("parent", modLoc("block/container/" + woodId + "/drawer_chest")));
+                            Map.of("parent", modLoc("block/container/" + woodId + "_drawer_chest")));
                 }
                 case EASEL_MENU -> {
                     writeContainerModelFromTemplate(cachedOutput, writes, wood, "easel_menu", "easel_menu");
@@ -253,13 +253,13 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                     for (String facing : List.of("north", "east", "south", "west")) {
                         int y = horizontalRotationY(facing);
                         String key = "facing=" + facing;
-                        blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "/easel_menu", y));
+                        blockstateVariants.put(key, horizontalFacingVariant("block/container/" + woodId + "_easel_menu", y));
                     }
 
                     writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
                             Map.of("variants", blockstateVariants));
                     writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
-                            Map.of("parent", modLoc("block/container/" + woodId + "/easel_menu")));
+                            Map.of("parent", modLoc("block/container/" + woodId + "_easel_menu")));
                 }
                 case WALL_SHELF -> {
                     writeContainerModelFromTemplate(cachedOutput, writes, wood, "wall_shelf_s0", "wall_shelf_s0");
@@ -275,7 +275,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                                 String modelName = "wall_shelf_" + connectedModelSuffix(connectionId);
                                 String key = "facing=" + facing + ",horizontal_connection=" + connectionId + ",open=" + open;
                                 blockstateVariants.put(key,
-                                        horizontalFacingVariant("block/container/" + woodId + "/" + modelName, y));
+                                        horizontalFacingVariant("block/container/" + woodId + "_" + modelName, y));
                             }
                         }
                     }
@@ -283,7 +283,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                     writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_" + variantId,
                             Map.of("variants", blockstateVariants));
                     writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_" + variantId,
-                            Map.of("parent", modLoc("block/container/" + woodId + "/wall_shelf_s0")));
+                            Map.of("parent", modLoc("block/container/" + woodId + "_wall_shelf_s0")));
                 }
             }
         }
@@ -299,39 +299,39 @@ public final class WoodenBlockAssetProvider implements DataProvider {
             Map<String, Object> model = new LinkedHashMap<>();
             model.put("parent", modLoc("block/window/window"));
             Map<String, Object> textures = new LinkedHashMap<>();
-            textures.put("side", modLoc("block/window/" + woodId + "/" + style));
-            textures.put("end", modLoc("block/window/" + woodId + "/window_top"));
+            textures.put("side", modLoc("block/window/" + woodId + "_" + style));
+            textures.put("end", modLoc("block/window/" + woodId + "_window_top"));
             model.put("textures", textures);
-            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + style, model);
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "_" + style, model);
 
             writeJson(cachedOutput, writes, blockstatePathProvider, woodId + "_window_" + variantId,
-                    Map.of("variants", Map.of("", Map.of("model", modLoc("block/window/" + woodId + "/" + style)))));
+                    Map.of("variants", Map.of("", Map.of("model", modLoc("block/window/" + woodId + "_" + style)))));
             writeJson(cachedOutput, writes, itemModelPathProvider, woodId + "_window_" + variantId,
-                    Map.of("parent", modLoc("block/window/" + woodId + "/" + style)));
+                    Map.of("parent", modLoc("block/window/" + woodId + "_" + style)));
 
-            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_post",
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "_" + paneStyle + "_post",
                     paneModel(modLoc("block/window/template_window_pane_post"), woodId, style));
-            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_side",
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "_" + paneStyle + "_side",
                     paneModel(modLoc("block/window/template_window_pane_side"), woodId, style));
-            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_side_alt",
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "_" + paneStyle + "_side_alt",
                     paneModel(modLoc("block/window/template_window_pane_side_alt"), woodId, style));
-            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_noside",
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "_" + paneStyle + "_noside",
                     paneModel(modLoc("block/window/template_window_pane_noside"), woodId, style));
-            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "/" + paneStyle + "_noside_alt",
+            writeJson(cachedOutput, writes, blockModelPathProvider, "window/" + woodId + "_" + paneStyle + "_noside_alt",
                     paneModel(modLoc("block/window/template_window_pane_noside_alt"), woodId, style));
 
             writeJson(cachedOutput, writes, blockstatePathProvider, paneId, windowPaneBlockstate(woodId, paneStyle));
             writeJson(cachedOutput, writes, itemModelPathProvider, paneId,
                     Map.of(
                             "parent", "minecraft:item/generated",
-                            "textures", Map.of("layer0", modLoc("block/window/" + woodId + "/" + style))));
+                            "textures", Map.of("layer0", modLoc("block/window/" + woodId + "_" + style))));
         }
     }
 
     private void generateHalfTimberAssets(CachedOutput cachedOutput, List<CompletableFuture<?>> writes, String woodId) {
         for (int patternIndex = 0; patternIndex <= 9; patternIndex++) {
             String baseModelName = "half_timber_p" + patternIndex;
-            writeJson(cachedOutput, writes, blockModelPathProvider, "half_timber/" + woodId + "/" + baseModelName,
+            writeJson(cachedOutput, writes, blockModelPathProvider, "half_timber/" + woodId + "_" + baseModelName,
                     halfTimberCubeModel(woodId, patternIndex));
 
             Map<String, Object> blockstateVariants = new LinkedHashMap<>();
@@ -341,7 +341,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                         continue;
                     }
                     String connectedModelName = baseModelName + "_" + connectionId;
-                    writeJson(cachedOutput, writes, blockModelPathProvider, "half_timber/" + woodId + "/" + connectedModelName,
+                    writeJson(cachedOutput, writes, blockModelPathProvider, "half_timber/" + woodId + "_" + connectedModelName,
                             halfTimberPillarModel(woodId, patternIndex, connectionId));
                 }
 
@@ -350,20 +350,20 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                         String modelName = baseModelName + ("s0".equals(connectionId) ? "" : "_" + connectionId);
                         String variantKey = "color=" + colorId + ",vertical_connection=" + connectionId;
                         blockstateVariants.put(variantKey,
-                                Map.of("model", modLoc("block/half_timber/" + woodId + "/" + modelName)));
+                                Map.of("model", modLoc("block/half_timber/" + woodId + "_" + modelName)));
                     }
                 }
             } else {
                 for (String colorId : COLOR_IDS) {
                     blockstateVariants.put("color=" + colorId,
-                            Map.of("model", modLoc("block/half_timber/" + woodId + "/" + baseModelName)));
+                            Map.of("model", modLoc("block/half_timber/" + woodId + "_" + baseModelName)));
                 }
             }
 
             String blockId = woodId + "_" + baseModelName;
             writeJson(cachedOutput, writes, blockstatePathProvider, blockId, Map.of("variants", blockstateVariants));
             writeJson(cachedOutput, writes, itemModelPathProvider, blockId,
-                    Map.of("parent", modLoc("block/half_timber/" + woodId + "/" + baseModelName)));
+                    Map.of("parent", modLoc("block/half_timber/" + woodId + "_" + baseModelName)));
         }
     }
 
@@ -373,7 +373,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
         Map<String, Object> model = new LinkedHashMap<>();
         model.put("parent", modLoc("block/container/" + templateModelName));
         model.put("textures", readContainerTemplateTextures(templateModelName, wood));
-        writeJson(cachedOutput, writes, blockModelPathProvider, "container/" + woodId + "/" + outputModelName, model);
+        writeJson(cachedOutput, writes, blockModelPathProvider, "container/" + woodId + "_" + outputModelName, model);
     }
 
     private Map<String, Object> readContainerTemplateTextures(String templateModelName, NekoWood wood) {
@@ -403,7 +403,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                     continue;
                 }
                 textures.put(entry.getKey(),
-                        textureValue.replace("generator_files/container_template/", "block/container/" + woodId + "/"));
+                        textureValue.replace("generator_files/container_template/", "block/container/" + woodId + "_"));
             }
             return textures;
         } catch (IOException e) {
@@ -443,8 +443,8 @@ public final class WoodenBlockAssetProvider implements DataProvider {
 
     private static Map<String, Object> paneModel(String parent, String woodId, String style) {
         Map<String, Object> textures = new LinkedHashMap<>();
-        textures.put("pane", modLoc("block/window/" + woodId + "/" + style));
-        textures.put("edge", modLoc("block/window/" + woodId + "/window_top"));
+        textures.put("pane", modLoc("block/window/" + woodId + "_" + style));
+        textures.put("edge", modLoc("block/window/" + woodId + "_window_top"));
         Map<String, Object> model = new LinkedHashMap<>();
         model.put("parent", parent);
         model.put("textures", textures);
@@ -452,7 +452,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
     }
 
     private static JsonElement windowPaneBlockstate(String woodId, String paneStyle) {
-        String modelPrefix = modLoc("block/window/" + woodId + "/" + paneStyle);
+        String modelPrefix = modLoc("block/window/" + woodId + "_" + paneStyle);
         List<Map<String, Object>> multipart = new ArrayList<>();
         multipart.add(Map.of("apply", Map.of("model", modelPrefix + "_post")));
         multipart.add(panePart(modelPrefix + "_side", "north", true, 0));
@@ -481,7 +481,7 @@ public final class WoodenBlockAssetProvider implements DataProvider {
     private static Map<String, Object> halfTimberCubeModel(String woodId, int patternIndex) {
         Map<String, Object> textures = new LinkedHashMap<>();
         textures.put("side", modLoc("block/half_timber_back/halftimber_frame_p" + patternIndex));
-        textures.put("overlay", modLoc("block/half_timber/" + woodId + "/halftimber_frame_p" + patternIndex));
+        textures.put("overlay", modLoc("block/half_timber/" + woodId + "_halftimber_frame_p" + patternIndex));
 
         Map<String, Object> model = new LinkedHashMap<>();
         model.put("parent", modLoc("block/half_timber/half_timber"));
@@ -493,9 +493,9 @@ public final class WoodenBlockAssetProvider implements DataProvider {
         String suffix = "_" + connectionId;
         Map<String, Object> textures = new LinkedHashMap<>();
         textures.put("side", modLoc("block/half_timber_back/halftimber_frame_p" + patternIndex + suffix));
-        textures.put("overlay", modLoc("block/half_timber/" + woodId + "/halftimber_frame_p" + patternIndex + suffix));
+        textures.put("overlay", modLoc("block/half_timber/" + woodId + "_halftimber_frame_p" + patternIndex + suffix));
         textures.put("end", modLoc("block/half_timber_back/halftimber_frame_p" + patternIndex));
-        textures.put("end_overlay", modLoc("block/half_timber/" + woodId + "/halftimber_frame_p" + patternIndex));
+        textures.put("end_overlay", modLoc("block/half_timber/" + woodId + "_halftimber_frame_p" + patternIndex));
 
         Map<String, Object> model = new LinkedHashMap<>();
         model.put("parent", modLoc("block/half_timber/half_timber_pillar"));

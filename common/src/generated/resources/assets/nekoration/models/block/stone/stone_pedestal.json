@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/stone/pedestal",
   "textures": {
-    "0": "nekoration:block/stone/stone/chiseled_smooth",
+    "0": "nekoration:block/stone/stone_chiseled_smooth",
     "1": "nekoration:block/stone/stone_polished_smooth"
   }
 }

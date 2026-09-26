@@ -1,8 +1,8 @@
 {
   "parent": "nekoration:block/candle_holder/candle_holder",
   "textures": {
-    "0": "nekoration:block/mineral/iron/candle_holder",
-    "1": "nekoration:block/mineral/iron/face",
+    "0": "nekoration:block/mineral/iron_candle_holder",
+    "1": "nekoration:block/mineral/iron_face",
     "2": "block/magenta_candle_lit"
   }
 }

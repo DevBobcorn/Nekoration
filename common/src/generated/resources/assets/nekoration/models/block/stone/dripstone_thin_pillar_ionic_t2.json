@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/stone/thin_pillar_ionic_t2",
   "textures": {
-    "0": "nekoration:block/stone/dripstone/pillar_ionic_t2",
-    "1": "nekoration:block/stone/dripstone/chiseled_smooth"
+    "0": "nekoration:block/stone/dripstone_pillar_ionic_t2",
+    "1": "nekoration:block/stone/dripstone_chiseled_smooth"
   }
 }

@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "nekoration:block/window/bamboo/window_lancet"
+      "model": "nekoration:block/window/bamboo_window_lancet"
     }
   }
 }

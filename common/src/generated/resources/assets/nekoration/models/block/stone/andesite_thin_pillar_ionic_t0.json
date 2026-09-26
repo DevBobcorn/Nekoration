@@ -1,7 +1,7 @@
 {
   "parent": "nekoration:block/stone/thin_pillar_t0",
   "textures": {
-    "0": "nekoration:block/stone/andesite/pillar_ionic_t0",
-    "1": "nekoration:block/stone/andesite/chiseled_smooth"
+    "0": "nekoration:block/stone/andesite_pillar_ionic_t0",
+    "1": "nekoration:block/stone/andesite_chiseled_smooth"
   }
 }
