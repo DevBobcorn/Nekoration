@@ -64,6 +64,7 @@ public final class NekoTextureAssetProvider implements DataProvider {
             "tall_chiseled_quartz_door.png", "knob_tall.png",
             "tall_quartz_bricks_door.png", "knob_tall.png");
     private static final Map<String, String> STONE_UNDERLAYS = Map.ofEntries(
+            entry("polished_smooth.png", "{palette_name}_smooth.png"),
             entry("chiseled_smooth.png", "{palette_name}_smooth.png"),
             entry("chiseled_smooth_t0.png", "{palette_name}_smooth.png"),
             entry("chiseled_smooth_t1.png", "{palette_name}_smooth.png"),
