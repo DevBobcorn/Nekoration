@@ -1,10 +1,8 @@
-![Poster](https://media.forgecdn.net/attachments/384/138/poster.png)
-
 ## <strong>Nekoration </strong> <img src="https://s2.loli.net/2022/08/03/qBVTAGy6JPKFxEl.png" width="32px">
 
 ## <span style="color: #cc99ff;">A Decoration Mod for Minecraft</span>
 
-## <span style="color: #ff6666;">Note</span>
+## <span style="color: #ff6666;">Upgrade Note</span>
 
 The development of Nekoration remained halted in the past few years, and there has not been new official releases for Minecraft 1.20 and later during the time period.
 
@@ -24,7 +22,7 @@ Here's a quick lookup table for you to check which version you can use for your 
   ALWAYS backup your save before opening it in a new game instance!
 </div>
 
-Since v2 is a complete rewrite from scratch, many ids and data values have changed from the previous version. You can see [here](https://github.com/DevBobcorn/Nekoration/blob/main/docs/Upgrade.md) for a technical breakdown of what has changed. A world data upgrader is implemented in Nekoration v2 to handle to data change automatically and you can just load in your old save with v1 mod and continue building. Do remember to backup your old save, just in case.
+Since v2 is a complete rewrite from scratch, many ids and data values have changed from the previous version. You can see [here](https://github.com/DevBobcorn/Nekoration/blob/main/docs/Upgrade.md) for a technical breakdown of what has changed. A world data upgrader is implemented in Nekoration v2 (Neo)Forge version to handle to data change automatically and you can just load in your old save with v1 mod and continue building. Do remember to backup your old save, just in case.
 
 ## <span style="color: #ff6600;">Introduction</span>
 Nekoration is a <span style="color: #ff6600;">NeoForge</span> &amp; <span style="color: #00b09b;">Fabric</span> mod for Minecraft which adds lots of decorational stuff to the game, allowing players to have a wider choice when building &amp; creating.
