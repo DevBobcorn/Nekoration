@@ -76,6 +76,13 @@ public final class FabricClientSetup {
             }
             return true;
         });
+        // Palette selection outline (replaces the vanilla outline while a palette is held).
+        WorldRenderEvents.BLOCK_OUTLINE.register((worldRenderContext, blockOutlineContext) ->
+                !io.devbobcorn.nekoration.client.PaletteSelectionOutlineRenderer.render(
+                        blockOutlineContext.blockPos(),
+                        new net.minecraft.world.phys.Vec3(blockOutlineContext.cameraX(),
+                                blockOutlineContext.cameraY(), blockOutlineContext.cameraZ()),
+                        worldRenderContext.matrixStack(), worldRenderContext.consumers()));
         // Creative tab filters.
         registerCreativeTabFilter();
         // Networking (client-to-server sending + server->client payloads + client receivers).

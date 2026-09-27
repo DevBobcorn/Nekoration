@@ -106,10 +106,10 @@ public class PaletteScreen extends Screen {
             Color color = colors[idx];
             graphics.setColor(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, 1.0F);
             graphics.blit(BACKGROUND, i + 8 + 18 * idx + (idx > 2 ? 34 : 0), j + 13, 172, 32, 16, 16); // Tinted Pure White Quad...
-            graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             if (idx == activeSlot) {
-                graphics.blit(BACKGROUND, i + 70, j + 13, 172, 32, 16, 16);
+                graphics.blit(BACKGROUND, i + 70, j + 13, 172, 32, 16, 16); // Fill the middle slot with the current color...
             }
+            graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         }
         // Step 2: Render the back ground...
         renderBg(graphics);
