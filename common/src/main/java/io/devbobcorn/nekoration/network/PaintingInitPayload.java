@@ -15,8 +15,8 @@ import net.minecraft.resources.ResourceLocation;
  * starts tracking the entity. Replaces NeoForge's entity spawn-data
  * ({@code IEntityWithComplexSpawn}) so the logic stays loader-agnostic.
  */
-public record PaintingInitPayload(int paintingId, int width, int height, int[] pixels, UUID dataUuid)
-        implements CustomPacketPayload {
+public record PaintingInitPayload(int paintingId, int width, int height, int[] pixels, UUID dataUuid,
+        String title, String author) implements CustomPacketPayload {
 
     public static final Type<PaintingInitPayload> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "painting_init"));
@@ -39,7 +39,10 @@ public record PaintingInitPayload(int paintingId, int width, int height, int[] p
         int height = buffer.readVarInt();
         int[] pixels = buffer.readVarIntArray();
         UUID uuid = buffer.readUUID();
-        return new PaintingInitPayload(id, width, height, pixels, uuid);
+        String title = buffer.readUtf();
+        String author = buffer.readUtf();
+        return new PaintingInitPayload(id, width, height, pixels, uuid,
+                title.isEmpty() ? null : title, author.isEmpty() ? null : author);
     }
 
     private void write(FriendlyByteBuf buffer) {
@@ -48,5 +51,7 @@ public record PaintingInitPayload(int paintingId, int width, int height, int[] p
         buffer.writeVarInt(height);
         buffer.writeVarIntArray(pixels);
         buffer.writeUUID(dataUuid);
+        buffer.writeUtf(title == null ? "" : title);
+        buffer.writeUtf(author == null ? "" : author);
     }
 }

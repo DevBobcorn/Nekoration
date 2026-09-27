@@ -35,7 +35,8 @@ public record PaintingDataUpdatePayload(int paintingId, byte partX, byte partY, 
                 return;
             }
             Entity entity = player.level().getEntity(payload.paintingId());
-            if (entity instanceof PaintingEntity painting) {
+            if (entity instanceof PaintingEntity painting && painting.data != null && !painting.data.isSigned()) {
+                // Signed paintings are final and reject further edits...
                 painting.data.setAreaPixels(payload.partX(), payload.partY(), payload.partW(), payload.partH(), payload.pixels());
                 final var broadcast = new PaintingDataBroadcastPayload(payload.paintingId(), payload.partX(), payload.partY(),
                         payload.partW(), payload.partH(), payload.pixels(), payload.compositeHash());

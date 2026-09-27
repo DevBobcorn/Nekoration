@@ -47,6 +47,10 @@ public class PaintingData {
     // indicate a painting's origin, enabling authorship/signiture features...
     private final UUID uuid;
 
+    // Signature data; null until the painting gets signed...
+    private String title;
+    private String author;
+
     public final boolean isClient;
 
     private int[] canvas;    // Fully Opaque, client-only
@@ -264,6 +268,24 @@ public class PaintingData {
         return this.uuid;
     }
 
+    /** A painting is considered signed once an author has been set. */
+    public boolean isSigned() {
+        return this.author != null;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getAuthor() {
+        return this.author;
+    }
+
+    public void setSignature(String title, String author) {
+        this.title = title;
+        this.author = author;
+    }
+
     public int getPaintingHash() {
         return paintingHash;
     }
@@ -273,12 +295,19 @@ public class PaintingData {
         tag.putShort("Height", data.height);
         tag.putIntArray("Pixels", data.pixels);
         tag.putUUID("DataID", data.uuid);
+        if (data.author != null) { // Signed...
+            tag.putString("Title", data.title == null ? "" : data.title);
+            tag.putString("Author", data.author);
+        }
     }
 
     public static PaintingData readFrom(CompoundTag tag, UUID defaultId) {
         // Used on server to initialize a Painting...
         UUID dataid = tag.hasUUID("DataID") ? tag.getUUID("DataID") : defaultId;
-        return new PaintingData(tag.getShort("Width"), tag.getShort("Height"), tag.getIntArray("Pixels"), false, dataid);
+        PaintingData data = new PaintingData(tag.getShort("Width"), tag.getShort("Height"), tag.getIntArray("Pixels"), false, dataid);
+        if (tag.contains("Author")) // Signed...
+            data.setSignature(tag.getString("Title"), tag.getString("Author"));
+        return data;
     }
 
     private boolean isLegal(int x, int y) {

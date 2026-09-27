@@ -1,5 +1,6 @@
 package io.devbobcorn.nekoration.client;
 
+import io.devbobcorn.nekoration.client.gui.screen.PaintingSignScreen;
 import io.devbobcorn.nekoration.client.gui.screen.PaletteScreen;
 import io.devbobcorn.nekoration.client.gui.screen.PaintingScreen;
 import io.devbobcorn.nekoration.client.gui.screen.PaintingSizeScreen;
@@ -26,6 +27,10 @@ public class ClientHelper {
 
     public static void showPaintingSizeScreen(InteractionHand hand, int count) {
         Minecraft.getInstance().setScreen(new PaintingSizeScreen(hand, count));
+    }
+
+    public static void showPaintingSignScreen(InteractionHand hand) {
+        Minecraft.getInstance().setScreen(new PaintingSignScreen(hand));
     }
 
     public static void showPaintingScreen(int painting) {

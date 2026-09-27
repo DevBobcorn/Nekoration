@@ -1,11 +1,13 @@
 package io.devbobcorn.nekoration.items;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import io.devbobcorn.nekoration.client.ClientHelper;
 import io.devbobcorn.nekoration.entities.PaintingEntity;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
@@ -31,6 +34,9 @@ public class PaintingItem extends Item {
     public static final String DATAID = "dataid";
     public static final String PIXELS = "pixels";
     public static final String ENTITYID = "entityid";
+    public static final String SIGNED = "signed";
+    public static final String TITLE = "title";
+    public static final String AUTHOR = "author";
 
     public enum Type {
         BLANK((byte) 0, "blank"),
@@ -80,8 +86,11 @@ public class PaintingItem extends Item {
             if (tag.getByte(TYPE) == Type.PAINTED.id) {
                 // Then make the painting with existing data...
                 painting = new PaintingEntity(level, attachedPos, direction, (short) (getWidth(stack) * 16), (short) (getHeight(stack) * 16), tag.getUUID(DATAID));
-                if (!level.isClientSide())
+                if (!level.isClientSide()) {
                     painting.data.setPixels(tag.getIntArray(PIXELS)); // Meanless to operate on client-side as it'll not be actually added into the world...
+                    if (isSigned(stack)) // Keep the signature when placing a signed painting...
+                        painting.data.setSignature(getTitle(stack), getAuthor(stack));
+                }
             } else if (tag.getByte(TYPE) == Type.MAGIC.id) {
                 painting = new PaintingEntity(level, attachedPos, direction, (short) (getWidth(stack) * 16), (short) (getHeight(stack) * 16), tag.getUUID(DATAID));
                 Entity entity = level.getEntity(tag.getInt(ENTITYID));
@@ -120,6 +129,10 @@ public class PaintingItem extends Item {
         if (!hasType || tag.getByte(TYPE) == Type.BLANK.id) { // If a blank one...
             if (level.isClientSide()) {
                 ClientHelper.showPaintingSizeScreen(hand, stack.getCount());
+            }
+        } else if (hasType && hasData(stack) && !isSigned(stack) && stack.getCount() == 1) { // If a single painted one with data, not signed yet...
+            if (level.isClientSide()) {
+                ClientHelper.showPaintingSignScreen(hand);
             }
         } else if (hasType && tag.getByte(TYPE) == Type.MAGIC.id) { // If a magic link...
             if (!level.isClientSide()) {
@@ -163,6 +176,32 @@ public class PaintingItem extends Item {
         return Type.BLANK.id;
     }
 
+    /** Whether this stack stores actual painting data, i.e. it's a painted painting. */
+    public static boolean hasData(ItemStack stack) {
+        CompoundTag tag = getTag(stack);
+        return tag.getByte(TYPE) == Type.PAINTED.id && tag.contains(PIXELS);
+    }
+
+    public static boolean isSigned(ItemStack stack) {
+        return getTag(stack).getBoolean(SIGNED);
+    }
+
+    public static String getTitle(ItemStack stack) {
+        return getTag(stack).getString(TITLE);
+    }
+
+    public static String getAuthor(ItemStack stack) {
+        return getTag(stack).getString(AUTHOR);
+    }
+
+    public static void setSignature(ItemStack stack, String title, String author) {
+        CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> {
+            tag.putBoolean(SIGNED, true);
+            tag.putString(TITLE, title);
+            tag.putString(AUTHOR, author);
+        });
+    }
+
     public static void setContent(ItemStack stack, short w, short h, UUID seed, int[] pixels) {
         CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> {
             tag.putByte(TYPE, Type.PAINTED.id);
@@ -170,6 +209,9 @@ public class PaintingItem extends Item {
             tag.putShort(HEIGHT, h);
             tag.putUUID(DATAID, seed);
             tag.putIntArray(PIXELS, pixels);
+            tag.remove(SIGNED);
+            tag.remove(TITLE);
+            tag.remove(AUTHOR);
         });
     }
 
@@ -178,6 +220,9 @@ public class PaintingItem extends Item {
             tag.putByte(TYPE, Type.BLANK.id);
             tag.putShort(WIDTH, w);
             tag.putShort(HEIGHT, h);
+            tag.remove(SIGNED);
+            tag.remove(TITLE);
+            tag.remove(AUTHOR);
         });
     }
 
@@ -188,12 +233,23 @@ public class PaintingItem extends Item {
             tag.putShort(HEIGHT, h);
             tag.putUUID(DATAID, dataId);
             tag.putInt(ENTITYID, entityId);
+            tag.remove(SIGNED);
+            tag.remove(TITLE);
+            tag.remove(AUTHOR);
         });
     }
 
     @Override
     public Component getName(ItemStack stack) {
+        if (isSigned(stack)) // Signed paintings are named after their titles...
+            return Component.literal(getTitle(stack));
         return Component.translatable(this.getDescriptionId(stack) + '.' + Type.fromId(getType(stack)).name, getWidth(stack), getHeight(stack));
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        if (isSigned(stack))
+            tooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(stack)).withStyle(ChatFormatting.GRAY));
     }
 
     @Override

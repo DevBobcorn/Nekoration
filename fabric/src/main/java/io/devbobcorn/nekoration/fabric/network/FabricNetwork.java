@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import io.devbobcorn.nekoration.network.EaselMenuUpdatePayload;
 import io.devbobcorn.nekoration.network.PaintingDataUpdatePayload;
+import io.devbobcorn.nekoration.network.PaintingSignUpdatePayload;
 import io.devbobcorn.nekoration.network.PaintingSizeUpdatePayload;
 import io.devbobcorn.nekoration.network.PaletteUpdatePayload;
 import io.devbobcorn.nekoration.xplat.PayloadContext;
@@ -24,6 +25,7 @@ public final class FabricNetwork {
         PayloadTypeRegistry.playC2S().register(EaselMenuUpdatePayload.TYPE, EaselMenuUpdatePayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(PaintingDataUpdatePayload.TYPE, PaintingDataUpdatePayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(PaintingSizeUpdatePayload.TYPE, PaintingSizeUpdatePayload.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(PaintingSignUpdatePayload.TYPE, PaintingSignUpdatePayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(PaletteUpdatePayload.TYPE, PaletteUpdatePayload.STREAM_CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(EaselMenuUpdatePayload.TYPE,
@@ -32,6 +34,8 @@ public final class FabricNetwork {
                 (payload, context) -> PaintingDataUpdatePayload.handle(payload, serverContext(context.player())));
         ServerPlayNetworking.registerGlobalReceiver(PaintingSizeUpdatePayload.TYPE,
                 (payload, context) -> PaintingSizeUpdatePayload.handle(payload, serverContext(context.player())));
+        ServerPlayNetworking.registerGlobalReceiver(PaintingSignUpdatePayload.TYPE,
+                (payload, context) -> PaintingSignUpdatePayload.handle(payload, serverContext(context.player())));
         ServerPlayNetworking.registerGlobalReceiver(PaletteUpdatePayload.TYPE,
                 (payload, context) -> PaletteUpdatePayload.handle(payload, serverContext(context.player())));
     }

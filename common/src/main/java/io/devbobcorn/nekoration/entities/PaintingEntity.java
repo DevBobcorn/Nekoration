@@ -116,8 +116,15 @@ public class PaintingEntity extends HangingEntity {
     public InteractionResult interact(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Level level = player.level();
+        boolean signed = this.data != null && this.data.isSigned();
+        boolean blankPainting = stack.getItem() == ModItems.PAINTING.get()
+                && PaintingItem.getType(stack) == PaintingItem.Type.BLANK.id;
         if (level.isClientSide()) {
             if (stack.getItem() == ModItems.PALETTE.get()) {
+                if (signed) { // Signed paintings are final and can no longer be edited...
+                    player.displayClientMessage(Component.translatable("gui.nekoration.message.painting_signed"), true);
+                    return InteractionResult.sidedSuccess(true);
+                }
                 // First get the existing data in this palette...
                 CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
                 if (tag.contains(PaletteItem.ACTIVE)) {
@@ -131,12 +138,13 @@ public class PaintingEntity extends HangingEntity {
                 } else {
                     ClientHelper.showPaintingScreen(this.getId());
                 }
+            } else if (blankPainting && signed) { // Signed paintings cannot be copied through links either...
+                player.displayClientMessage(Component.translatable("gui.nekoration.message.painting_signed"), true);
             } else if (stack.getItem() != ModItems.PAINTING.get()) {
                 player.displayClientMessage(Component.translatable("gui.nekoration.message.paint_with_palette"), true);
             }
         } else {
-            if (stack.getItem() == ModItems.PAINTING.get()
-                    && PaintingItem.getType(stack) == PaintingItem.Type.BLANK.id) { // A blank painting...
+            if (blankPainting && !signed) { // A blank painting...
                 // Turn it into a link to itself...
                 PaintingItem.setLink(stack, (short) (this.data.getWidth() / 16), (short) (this.data.getHeight() / 16), this.data.getUUID(), this.getId());
             }
@@ -152,6 +160,8 @@ public class PaintingEntity extends HangingEntity {
         }
         if (this.data.getWidth() <= 96 && this.data.getHeight() <= 96) { // The painting with its content
             PaintingItem.setContent(result, (short) (this.data.getWidth() / 16), (short) (this.data.getHeight() / 16), this.data.getUUID(), this.data.getPixels());
+            if (this.data.isSigned())
+                PaintingItem.setSignature(result, this.data.getTitle(), this.data.getAuthor());
         } else {
             // Create a link to this Painting Entity...
             PaintingItem.setLink(result, (short) (this.data.getWidth() / 16), (short) (this.data.getHeight() / 16), this.data.getUUID(), this.getId());
@@ -172,6 +182,8 @@ public class PaintingEntity extends HangingEntity {
         }
         if (this.data.getWidth() <= 96 && this.data.getHeight() <= 96) { // The painting with its content
             PaintingItem.setContent(result, (short) (this.data.getWidth() / 16), (short) (this.data.getHeight() / 16), this.data.getUUID(), this.data.getPixels());
+            if (this.data.isSigned()) // Keep the signature of the original painting...
+                PaintingItem.setSignature(result, this.data.getTitle(), this.data.getAuthor());
         } else {
             // Create a blank painting of the same size...
             PaintingItem.setSize(result, (short) (this.data.getWidth() / 16), (short) (this.data.getHeight() / 16));
@@ -233,13 +245,16 @@ public class PaintingEntity extends HangingEntity {
         super.startSeenByPlayer(player);
         if (this.data != null) {
             NekoPlatform.sendToClient(player, new PaintingInitPayload(this.getId(),
-                    this.data.getWidth(), this.data.getHeight(), this.data.getPixels(), this.data.getUUID()));
+                    this.data.getWidth(), this.data.getHeight(), this.data.getPixels(), this.data.getUUID(),
+                    this.data.getTitle(), this.data.getAuthor()));
         }
     }
 
     /** Applies the data received through {@link PaintingInitPayload} on the client. */
     public void initializeFromPayload(PaintingInitPayload payload) {
         this.data = new PaintingData((short) payload.width(), (short) payload.height(), payload.pixels(), true, payload.dataUuid());
+        if (payload.author() != null) // Signed...
+            this.data.setSignature(payload.title(), payload.author());
         // The bounding box got calculated with default width/height(data was null)...
         // Now that we've got the real size, recalculate it...
         this.recalculateBoundingBox();

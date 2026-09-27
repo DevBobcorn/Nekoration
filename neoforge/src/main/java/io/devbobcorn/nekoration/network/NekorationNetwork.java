@@ -22,6 +22,8 @@ public final class NekorationNetwork {
                 (payload, ctx) -> PaintingDataUpdatePayload.handle(payload, adapt(ctx)));
         registrar.playToServer(PaintingSizeUpdatePayload.TYPE, PaintingSizeUpdatePayload.STREAM_CODEC,
                 (payload, ctx) -> PaintingSizeUpdatePayload.handle(payload, adapt(ctx)));
+        registrar.playToServer(PaintingSignUpdatePayload.TYPE, PaintingSignUpdatePayload.STREAM_CODEC,
+                (payload, ctx) -> PaintingSignUpdatePayload.handle(payload, adapt(ctx)));
         registrar.playToServer(PaletteUpdatePayload.TYPE, PaletteUpdatePayload.STREAM_CODEC,
                 (payload, ctx) -> PaletteUpdatePayload.handle(payload, adapt(ctx)));
         registrar.playToClient(PaintingDataBroadcastPayload.TYPE, PaintingDataBroadcastPayload.STREAM_CODEC,
