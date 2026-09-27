@@ -2,6 +2,7 @@ package io.devbobcorn.nekoration.client.gui.screen;
 
 import io.devbobcorn.nekoration.xplat.NekoPlatform;
 import java.awt.Color;
+import java.io.File;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -13,6 +14,7 @@ import com.mojang.logging.LogUtils;
 import io.devbobcorn.nekoration.NekoColors;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.client.gui.widget.IconButton;
+import io.devbobcorn.nekoration.client.gui.widget.IconEditBox;
 import io.devbobcorn.nekoration.entities.PaintingData;
 import io.devbobcorn.nekoration.entities.PaintingEntity;
 import io.devbobcorn.nekoration.items.PaletteItem;
@@ -22,6 +24,7 @@ import io.devbobcorn.nekoration.utils.URLHelper;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
@@ -49,6 +52,14 @@ public class PaintingScreen extends Screen {
     public static final int TOOLS_LEFT = 148;
     public static final int TOOLS_TOP = 13;
     public static final int TOOLS_NUM = 4;
+
+    private static final int PARAM_FIELDS = 7;
+    private static final int PARAM_TOP = 28;
+    private static final int PARAM_ROW_HEIGHT = 20;
+    private static final int PARAM_RIGHT_MARGIN = 4;
+    private static final int PARAM_FIELD_WIDTH = 60;
+    private static final String[] paramDefaultValues = { "0", "0", "0", "0", "1", "", "" };
+    private static final String[] paramKeys = { "target_left_offset", "target_top_offset", "source_left_offset", "source_top_offset", "scale", "width_limit", "height_limit" };
 
     public static final int white = (255 << 24) + (255 << 16) + (255 << 8) + 255; // a, r, g, b...
     public static final int black = 255 << 24; // a, r, g, b...
@@ -80,7 +91,8 @@ public class PaintingScreen extends Screen {
 
     private EditBox nameInput;
     private boolean nameError = false;
-    private final IconButton[] buttons = new IconButton[5];
+    private final IconButton[] buttons = new IconButton[6];
+    private final EditBox[] paramInputs = new EditBox[PARAM_FIELDS];
 
     // Used on Client-Side only
     private static double hor = 0.0D, ver = 0.0D;
@@ -90,7 +102,7 @@ public class PaintingScreen extends Screen {
     private static int renderTime = 0;
     private static final int TIPS = 3;
     private final Component[] tipMessages = new Component[TIPS];
-    private static final String[] buttonKeys = { "save_painting", "save_painting_content", "load_image", "clear", "round_brush", "square_brush", "transp_add_up", "transp_overwrite" };
+    private static final String[] buttonKeys = { "save_painting", "save_painting_content", "load_image", "clear", "round_brush", "square_brush", "transp_add_up", "transp_overwrite", "open_folder" };
     private final Component[] buttonMessages = new Component[buttonKeys.length];
     private final Component[] paramMessages = new Component[TOOLS_NUM];
     private static int stepLimit;
@@ -143,11 +155,42 @@ public class PaintingScreen extends Screen {
             return new String[] { "nekopaint/" + file.substring(0, slashIdx + 1), file.substring(slashIdx + 1) };
     }
 
+    private int getIntParam(int index, int fallback) {
+        String value = paramInputs[index].getValue().trim();
+        if (value.isEmpty())
+            return fallback;
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+
+    private double getDoubleParam(int index, double fallback) {
+        String value = paramInputs[index].getValue().trim();
+        if (value.isEmpty())
+            return fallback;
+        try {
+            return Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+
+    private boolean isTextInputFocused() {
+        if (nameInput.isFocused())
+            return true;
+        for (EditBox input : paramInputs)
+            if (input != null && input.isFocused())
+                return true;
+        return false;
+    }
+
     protected void init() {
         super.init();
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (this.height - this.imageHeight) / 2;
-        this.nameInput = new EditBox(this.font, leftPos + 57, topPos - 18, 121, 16, Component.translatable("gui.nekoration.color"));
+        this.nameInput = new EditBox(this.font, leftPos + 47, topPos - 18, 121, 16, Component.translatable("gui.nekoration.color"));
         this.nameInput.setMaxLength(256);
         this.nameInput.setResponder(input -> {
             if (nameError) {
@@ -158,7 +201,7 @@ public class PaintingScreen extends Screen {
                 buttons[2].setMessage(buttonMessages[2]);
             }
         });
-        buttons[0] = new IconButton(leftPos + 180, topPos - 20, buttonMessages[0], button -> {
+        buttons[0] = new IconButton(leftPos + 170, topPos - 20, buttonMessages[0], button -> {
             // Save Image...
             try {
                 String[] location = getFileLocation();
@@ -167,7 +210,7 @@ public class PaintingScreen extends Screen {
                 e.printStackTrace();
             }
         }, ICONS, 0, 16);
-        buttons[1] = new IconButton(leftPos + 200, topPos - 20, buttonMessages[1], button -> {
+        buttons[1] = new IconButton(leftPos + 190, topPos - 20, buttonMessages[1], button -> {
             // Save Image Content...
             try {
                 String[] location = getFileLocation();
@@ -176,7 +219,7 @@ public class PaintingScreen extends Screen {
                 e.printStackTrace();
             }
         }, ICONS, 16, 16);
-        buttons[2] = new IconButton(leftPos + 220, topPos - 20, buttonMessages[2], button -> {
+        buttons[2] = new IconButton(leftPos + 210, topPos - 20, buttonMessages[2], button -> {
             if (nameError) { // It's a 'Clear' Button
                 nameInput.setValue("");
                 nameInput.setTextColor(0xFFFFFF);
@@ -191,13 +234,21 @@ public class PaintingScreen extends Screen {
                 nameInput.setValue("Input the name here...");
                 nameError = true;
             } else {
-                if (URLHelper.isURL(nameInput.getValue().split(">")[0].trim())) {
+                String fileName = nameInput.getValue().trim();
+                int dstLeft = getIntParam(0, 0);
+                int dstTop = getIntParam(1, 0);
+                int srcLeft = getIntParam(2, 0);
+                int srcTop = getIntParam(3, 0);
+                double scale = getDoubleParam(4, 1.0);
+                int widthLimit = getIntParam(5, Integer.MAX_VALUE);
+                int heightLimit = getIntParam(6, Integer.MAX_VALUE);
+                if (URLHelper.isURL(fileName)) {
                     // Looks like a url...
                     LOGGER.info("Looks like a url...");
-                    nameError = !paintingData.load("<url>", nameInput.getValue().trim());
+                    nameError = !paintingData.load("<url>", fileName, dstLeft, dstTop, srcLeft, srcTop, scale, widthLimit, heightLimit);
                 } else {
                     String[] location = getFileLocation();
-                    nameError = !paintingData.load(location[0], location[1]);
+                    nameError = !paintingData.load(location[0], location[1], dstLeft, dstTop, srcLeft, srcTop, scale, widthLimit, heightLimit);
                 }
             }
             if (nameError) {
@@ -209,18 +260,34 @@ public class PaintingScreen extends Screen {
             }
         }, ICONS, 32, 16);
         // Config Buttons...
-        buttons[3] = new IconButton(leftPos + 15, topPos - 20, roundBrush ? buttonMessages[4] : buttonMessages[5], button -> {
+        buttons[3] = new IconButton(leftPos + 5, topPos - 20, roundBrush ? buttonMessages[4] : buttonMessages[5], button -> {
             roundBrush = !roundBrush;
             buttons[3].setIcon(ICONS, roundBrush ? 48 : 64, 16);
             buttons[3].setMessage(roundBrush ? buttonMessages[4] : buttonMessages[5]);
         }, ICONS, roundBrush ? 48 : 64, 16);
-        buttons[4] = new IconButton(leftPos + 35, topPos - 20, transBlend ? buttonMessages[6] : buttonMessages[7], button -> {
+        buttons[4] = new IconButton(leftPos + 25, topPos - 20, transBlend ? buttonMessages[6] : buttonMessages[7], button -> {
             transBlend = !transBlend;
             buttons[4].setIcon(ICONS, transBlend ? 80 : 96, 16);
             buttons[4].setMessage(transBlend ? buttonMessages[6] : buttonMessages[7]);
         }, ICONS, transBlend ? 80 : 96, 16);
+        buttons[5] = new IconButton(leftPos + 230, topPos - 20, buttonMessages[8], button -> {
+            File folder = new File(NekoPlatform.gameDir().toFile(), "nekopaint");
+            if (!folder.exists())
+                folder.mkdirs();
+            Util.getPlatform().openFile(folder);
+        }, ICONS, 112, 16);
         this.addWidget(nameInput);
-        for (int btn = 0; btn < 5; btn++)
+        int paramX = leftPos - PARAM_RIGHT_MARGIN - IconEditBox.ICON_SIZE - IconEditBox.ICON_GAP - PARAM_FIELD_WIDTH;
+        for (int idx = 0; idx < PARAM_FIELDS; idx++) {
+            IconEditBox input = new IconEditBox(this.font, paramX, topPos + PARAM_TOP + idx * PARAM_ROW_HEIGHT, PARAM_FIELD_WIDTH, 16, Component.translatable("gui.nekoration.paint." + paramKeys[idx]), ICONS, idx * 16, 32);
+            input.setMaxLength(8);
+            input.setValue(paramDefaultValues[idx]);
+            if (idx >= 5)
+                input.setHint(Component.literal("\u221e"));
+            paramInputs[idx] = input;
+            this.addWidget(input);
+        }
+        for (int btn = 0; btn < buttons.length; btn++)
             this.addWidget(buttons[btn]);
         renderTime = 40;
     }
@@ -274,7 +341,7 @@ public class PaintingScreen extends Screen {
         if (keyCode == GLFW.GLFW_KEY_F1) {
             this.renderDebugText = !this.renderDebugText;
             return true;
-        } else if (this.nameInput.isFocused()) {
+        } else if (isTextInputFocused()) {
             return super.keyPressed(keyCode, scanCode, modifier);
         } else if (keyCode == GLFW.GLFW_KEY_W) {
             // Switch Tool...
@@ -356,13 +423,21 @@ public class PaintingScreen extends Screen {
         // Step 7: Render Active Tool Icon...
         graphics.blit(BACKGROUND, i + TOOLS_LEFT + activeTool * 17, j + TOOLS_TOP, 32 + activeTool * 16, 208, 16, 16);
         // Step 8: Render Import/Export Controls...
+        for (int idx = 0; idx < PARAM_FIELDS; idx++) {
+            paramInputs[idx].render(graphics, x, y, partialTicks);
+        }
         nameInput.render(graphics, x, y, partialTicks);
-        for (int btn = 0; btn < 5; btn++) {
+        for (int btn = 0; btn < buttons.length; btn++) {
             buttons[btn].render(graphics, x, y, partialTicks);
         }
-        for (int tip = 0; tip < 5; tip++) {
+        for (int tip = 0; tip < buttons.length; tip++) {
             if (buttons[tip].isMouseOver(x, y)) {
                 graphics.renderTooltip(this.font, buttons[tip].getMessage(), x, y);
+            }
+        }
+        for (int idx = 0; idx < PARAM_FIELDS; idx++) {
+            if (paramInputs[idx].isMouseOver(x, y)) {
+                graphics.renderTooltip(this.font, paramInputs[idx].getMessage(), x, y);
             }
         }
         // Step 9: Render Debug Text...

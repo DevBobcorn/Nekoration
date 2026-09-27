@@ -83,15 +83,15 @@ tabs_cn = ["水泥方块","石质方块","木质方块","装饰"]
 gui_ids = ["button.scroll_up","button.scroll_down","button.enable_all","button.disable_all","button.save_painting","button.save_painting_content","button.load_image","button.clear","paint.tool_param0","paint.tool_param1","paint.tool_param2","paint.tool_param3","message.scroll_change",
         "message.painting_saved","message.painting_content_saved","message.paint_with_palette","message.painting_load_failed","message.link_expired",
         "message.press_key_color_info","message.color_info","message.press_key_debug_info","message.press_key_undo_redo","message.press_key_change_tool","message.press_key_color_picker_on","message.press_key_color_picker_off","message.press_key_change_grid","message.painting_size_warning","message.painting_size_warning_help","message.size",
-        "button.enable_glow","button.disable_glow","button.round_brush","button.square_brush","button.transp_add_up","button.transp_overwrite"]
+        "button.enable_glow","button.disable_glow","button.round_brush","button.square_brush","button.transp_add_up","button.transp_overwrite","button.open_folder"]
 guis_us = ["Scroll Up","Scroll Down","Enable All","Disable All","Save Painting","Save Painting Content","Load Image File","Clear","Pencil Radius","Brush Radius","Eraser Radius","Selection Threshold","Scroll to change %s",
            "Painting saved as %s","Painting content saved as %s","Edit painting with a palette","Failed to load painting %s","Link expired: Failed to find the original painting.",
            "Press %s to toggle Color Info.","Color: %s R:%s G:%s B:%s","Press %s to view debug info.","Press %s to undo/redo.","Press %s to change active tool.","Press %s to show color picker.","Press %s to hide color picker.","Press %s to change grid size.","Painting of this size cannot be saved to a single item.","Use a Linked Painting to copy/move.","Size:  %sx%s",
-           "Enable Glowing Text", "Disable Glowing Text","Round Brush", "Square Brush", "Add up Transparency", "Overwrite Transparency"]
+           "Enable Glowing Text", "Disable Glowing Text","Round Brush", "Square Brush", "Add up Transparency", "Overwrite Transparency", "Open Folder"]
 guis_cn = ["向上","向下","选中所有","清除所有","保存绘画","保存绘画内容","读取图像文件","清除","铅笔直径","画笔直径","橡皮直径","选区阈值","使用鼠标滚轮调整%s",
            "已将绘画保存至%s","已将绘画内容保存至%s","请使用调色板编辑画作","绘画%s加载失败","链接已失效：无法找到原画作",
            "可按下%s键查看颜色信息","颜色：%s 红：%s 绿：%s 蓝：%s","可按下%s键查看调试信息","可按下%s键撤销/重做","可按下%s键切换工具","可按下%s键显示颜色选择器","可按下%s键隐藏颜色选择器","可按下%s键切换网格尺寸","此大小的绘画信息无法存入单个物品","请使用链接画复制或移动","尺寸:  %sx%s",
-           "启用发光文本","禁用发光文本","圆形画刷","方形画刷","叠加透明度","覆盖透明度"]
+           "启用发光文本","禁用发光文本","圆形画刷","方形画刷","叠加透明度","覆盖透明度","打开文件夹"]
 
 entity_ids = ["painting","wallpaper","seat"]
 entities_us = ["Painting","Wallpaper","Seat"]
@@ -232,6 +232,15 @@ for t_i in range(0, len(tab_ids)):
 for g_i in range(0, len(gui_ids)):
     obj_us['gui.nekoration.' + gui_ids[g_i]] = guis_us[g_i]
     obj_cn['gui.nekoration.' + gui_ids[g_i]] = guis_cn[g_i]
+
+# [PAINTING LOAD PARAMETERS]
+load_param_ids = ["target_left_offset", "target_top_offset", "source_left_offset", "source_top_offset", "scale", "width_limit", "height_limit"]
+load_params_us = ["Target Left Offset", "Target Top Offset", "Source Left Offset", "Source Top Offset", "Scale", "Width Limit", "Height Limit"]
+load_params_cn = ["目标左偏移", "目标上偏移", "源左偏移", "源上偏移", "缩放", "宽度限制", "高度限制"]
+
+for p_i in range(0, len(load_param_ids)):
+    obj_us['gui.nekoration.paint.' + load_param_ids[p_i]] = load_params_us[p_i]
+    obj_cn['gui.nekoration.paint.' + load_param_ids[p_i]] = load_params_cn[p_i]
 
 # [ENTITIES]
 for e_i in range(0, len(entity_ids)):

@@ -174,35 +174,12 @@ public class PaintingData {
     }
 
     @SuppressWarnings("null")
-    public boolean load(String path, String name) {
-        String[] params = name.split(">");
-        int[] offsetl = { 0, 0, 0, 0 };
-        double scalel = 1.0;
-        int[] sizel = { 99999, 99999 };
+    public boolean load(String path, String name, int dstLeft, int dstTop, int srcLeft, int srcTop, double scale, int widthLimit, int heightLimit) {
+        scale = Mth.clamp(scale, 0.01, 100.0);
+        srcLeft = Math.max(srcLeft, 0);
+        srcTop = Math.max(srcTop, 0);
 
         try {
-            // Apply parameters: fileName > dstOffsetX > dstOffsetY > srcOffsetX > srcOffsetY > scale
-            for (int p = 0; p < params.length; p++) {
-                params[p] = params[p].trim();
-                switch (p) {
-                    case 0:
-                        name = params[p];
-                        break;
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                        offsetl[p - 1] = Integer.parseInt(params[p]);
-                        break;
-                    case 5:
-                        scalel = Mth.clamp(Double.parseDouble(params[p]), 0.01, 100.0);
-                        break;
-                    case 6:
-                    case 7:
-                        sizel[p - 6] = Integer.parseInt(params[p]);
-                }
-            }
-
             BufferedImage image;
 
             if (path.equals("<url>")) { // Load from URL...
@@ -227,30 +204,24 @@ public class PaintingData {
                 return false;
             }
 
-            if ((offsetl[2] > 0 || offsetl[3] > 0 || sizel[0] != 99999 || sizel[1] != 99999) && (image.getWidth() > offsetl[2] && image.getHeight() > offsetl[3])) {
-                int cropW = Math.min(image.getWidth() - offsetl[2], sizel[0]);
-                int cropH = Math.min(image.getHeight() - offsetl[3], sizel[1]);
-                image = image.getSubimage(offsetl[2], offsetl[3], cropW, cropH);
+            if ((srcLeft > 0 || srcTop > 0 || widthLimit < image.getWidth() || heightLimit < image.getHeight()) && (srcLeft < image.getWidth() && srcTop < image.getHeight())) {
+                int cropW = Math.min(image.getWidth() - srcLeft, widthLimit);
+                int cropH = Math.min(image.getHeight() - srcTop, heightLimit);
+                if (cropW > 0 && cropH > 0)
+                    image = image.getSubimage(srcLeft, srcTop, cropW, cropH);
             }
 
-            if (scalel != 1.0) {
-                short newW = (short) Math.ceil(image.getWidth() * scalel);
-                short newH = (short) Math.ceil(image.getHeight() * scalel);
+            if (scale != 1.0) {
+                short newW = (short) Math.ceil(image.getWidth() * scale);
+                short newH = (short) Math.ceil(image.getHeight() * scale);
                 Image scaled = image.getScaledInstance(newW, newH, Image.SCALE_DEFAULT);
                 BufferedImage scaledImage = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
                 Graphics2D g2d = scaledImage.createGraphics();
                 g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
                 g2d.drawImage(scaled, 0, 0, newW, newH, null);
-
-                for (int i = offsetl[0]; i < Math.min(offsetl[0] + scaledImage.getWidth(), width); i++)
-                    for (int j = offsetl[1]; j < Math.min(offsetl[1] + scaledImage.getHeight(), height); j++) {
-                        pixels[j * width + i] = scaledImage.getRGB(i - offsetl[0], j - offsetl[1]);
-                    }
+                drawImage(scaledImage, dstLeft, dstTop);
             } else {
-                for (int i = offsetl[0]; i < Math.min(offsetl[0] + image.getWidth(), width); i++)
-                    for (int j = offsetl[1]; j < Math.min(offsetl[1] + image.getHeight(), height); j++) {
-                        pixels[j * width + i] = image.getRGB(i - offsetl[0], j - offsetl[1]);
-                    }
+                drawImage(image, dstLeft, dstTop);
             }
             recalculateComposite();
             LOGGER.info(String.format("Painting '%s' Loaded: %s x %s", name, image.getWidth(), image.getHeight()));
@@ -265,6 +236,12 @@ public class PaintingData {
             LOGGER.error(e.getMessage());
             return false;
         }
+    }
+
+    private void drawImage(BufferedImage image, int dstLeft, int dstTop) {
+        for (int i = Math.max(dstLeft, 0); i < Math.min(dstLeft + image.getWidth(), width); i++)
+            for (int j = Math.max(dstTop, 0); j < Math.min(dstTop + image.getHeight(), height); j++)
+                pixels[j * width + i] = image.getRGB(i - dstLeft, j - dstTop);
     }
 
     public boolean clearCache(int target) {
