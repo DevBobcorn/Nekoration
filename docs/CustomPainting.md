@@ -5,17 +5,17 @@
 They can either be found in the Creative Inventory, or be crafted in Survival Mode. With a palette, you can pick up to 6 colors at a time and use them when creating your painting. The size of blank painting items can be changed through a right click in the air.
 
 <span style="display: inline-block;">
-   <img src="https://s2.loli.net/2022/08/03/2RZ6CTB5QXepKNE.png" alt="Painting Recipe" width="160" height="90">
-   <img src="https://s2.loli.net/2022/08/03/NdDJ9Ep3X6LIeox.png" alt="Palette Recipe" width="160" height="90">
-   <img src="https://s2.loli.net/2022/08/03/vMEfgUJwTjh62t5.png" alt="Painting Size" width="160" height="90">
-   <img src="https://s2.loli.net/2022/08/03/Zyt5UhumIpaEg8f.png" alt="Palette Color" width="160" height="90">
+   <img src="https://files.seeusercontent.com/2026/09/27/Oj9b/2026-09-27_175616.png" alt="Painting Recipe" width="160" height="90">
+   <img src="https://files.seeusercontent.com/2026/09/27/9asX/2026-09-27_174853.png" alt="Palette Recipe" width="160" height="90">
+   <img src="https://files.seeusercontent.com/2026/09/27/M4yk/2026-09-27_180148.png" alt="Painting Size" width="160" height="90">
+   <img src="https://files.seeusercontent.com/2026/09/27/e1Cb/2026-09-27_180128.png" alt="Palette Color" width="160" height="90">
 </span>
 
 ## 2. Start to paint!
 
 Then, you can place your blank painting on a wall, and the size of this painting is fixed at this time and cannot be changed anymore. Simply right click on it with a palette in your hand, and you can start painting!
 
-![](https://s2.loli.net/2022/08/03/mQyVMzXEUO4sYou.png)
+![](https://files.seeusercontent.com/2026/09/27/4oXa/2026-09-27_174832.png)
 
 ## 3. Saving/Loading paintings
 
