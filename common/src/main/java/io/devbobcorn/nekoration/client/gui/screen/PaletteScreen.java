@@ -211,6 +211,9 @@ public class PaletteScreen extends Screen {
         float[] fl = Color.RGBtoHSB(nw.getRed(), nw.getGreen(), nw.getBlue(), null); // Hue, Saturation, Value(or to say Brightness)...
         this.huePos = HUE_TOP + (int) ((1.0F - fl[0]) * HUE_HEIGHT);
         this.colorMapColor = Color.getHSBColor(fl[0], 1.0F, 1.0F);
+        // Place the color cursor at the active color...
+        this.colorPos[0] = COLORMAP_LEFT + (int) (fl[1] * COLORMAP_WIDTH);
+        this.colorPos[1] = COLORMAP_TOP + (int) ((1.0F - fl[2]) * COLORMAP_HEIGHT);
     }
 
     private void getColor(double x, double y) {

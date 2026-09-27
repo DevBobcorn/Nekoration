@@ -41,13 +41,13 @@ public class PaintingScreen extends Screen {
 
     public static final int PAINTING_LEFT = 9;
     public static final int PAINTING_TOP = 38;
-    public static final int PAINTING_WIDTH = 225;
-    public static final int PAINTING_HEIGHT = 145;
+    public static final int PAINTING_WIDTH = 224;
+    public static final int PAINTING_HEIGHT = 143;
 
     public static final int OPACITY_LEFT = 241;
     public static final int OPACITY_TOP = 38;
     public static final int OPACITY_WIDTH = 6;
-    public static final int OPACITY_HEIGHT = 145;
+    public static final int OPACITY_HEIGHT = 141;
 
     public static final int TOOLS_LEFT = 148;
     public static final int TOOLS_TOP = 13;
