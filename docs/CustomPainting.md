@@ -28,4 +28,12 @@ You can input a path in the textfield at the top of the GUI, specifying the imag
 
 ![Painting Hints](https://s2.loli.net/2022/08/10/lTwZeQpnL7PF1Dk.png)
 
-## 4. Have fun!
+## 4. Signing a painting
+
+Like book and quill, custom paintings can be signed and given a title. Signed painting can be placed down again, but cannot be edited anymore.
+
+To sign a painting, take it down from the wall by breaking it. And right click in air while holding it, the signing screen will show up:
+
+![Painting Signing](https://files.seeusercontent.com/2026/09/27/eLk7/2026-09-27_212335.png)
+
+## 5. Have fun!

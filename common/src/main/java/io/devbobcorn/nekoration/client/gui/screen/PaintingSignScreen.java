@@ -1,5 +1,8 @@
 package io.devbobcorn.nekoration.client.gui.screen;
 
+import java.util.List;
+
+import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.network.PaintingSignUpdatePayload;
 import io.devbobcorn.nekoration.xplat.NekoPlatform;
 
@@ -9,25 +12,32 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.font.TextFieldHelper;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.InteractionHand;
 
 /**
- * The signing screen for painted paintings, styled after vanilla's book
- * signing UI. The author is always the signing player; only the title is
- * editable here.
+ * The signing screen for painted paintings. The author is always the signing
+ * player; only the title is editable here.
  */
 public class PaintingSignScreen extends Screen {
-    private static final int IMAGE_WIDTH = 192;
+    public static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "textures/gui/painting_signing.png");
+    public static final int BACKGROUND_WIDTH = 256;
+    public static final int BACKGROUND_HEIGHT = 128;
+
     private static final int TITLE_MAX_LENGTH = 32;
-    private static final Component EDIT_TITLE_LABEL = Component.translatable("book.editTitle");
+    private static final int WARNING_WIDTH = 200;
+    private static final int LABEL_COLOR = 0xFFFFFFFF;
+    private static final int TITLE_COLOR = 0xFFFFFFFF;
+    private static final int OWNER_COLOR = 0xFFAAAAAA;
+    private static final int WARNING_COLOR = 0xFFFF8080;
+    private static final Component EDIT_TITLE_LABEL = Component.translatable("gui.nekoration.message.sign_painting_title");
     private static final Component FINALIZE_WARNING_LABEL = Component.translatable("gui.nekoration.message.sign_painting_warning");
-    private static final FormattedCharSequence BLACK_CURSOR = FormattedCharSequence.forward("_", Style.EMPTY.withColor(ChatFormatting.BLACK));
-    private static final FormattedCharSequence GRAY_CURSOR = FormattedCharSequence.forward("_", Style.EMPTY.withColor(ChatFormatting.GRAY));
+    private static final FormattedCharSequence BRIGHT_CURSOR = FormattedCharSequence.forward("_", Style.EMPTY.withColor(ChatFormatting.WHITE));
+    private static final FormattedCharSequence DIM_CURSOR = FormattedCharSequence.forward("_", Style.EMPTY.withColor(ChatFormatting.GRAY));
 
     private final InteractionHand hand;
     private final Component ownerText;
@@ -41,20 +51,22 @@ public class PaintingSignScreen extends Screen {
         super(Component.translatable("gui.nekoration.message.sign_painting"));
         this.hand = hand;
         var player = Minecraft.getInstance().player;
-        this.ownerText = Component.translatable("book.byAuthor", player == null ? Component.empty() : player.getName())
-                .withStyle(ChatFormatting.DARK_GRAY);
+        this.ownerText = Component.translatable("book.byAuthor", player == null ? Component.empty() : player.getName());
     }
 
     @Override
     protected void init() {
+        super.init();
+        int leftPos = (this.width - BACKGROUND_WIDTH) / 2;
+        int topPos = (this.height - BACKGROUND_HEIGHT) / 2;
         this.finalizeButton = this.addRenderableWidget(Button.builder(Component.translatable("book.finalizeButton"), button -> {
             if (!this.title.isEmpty()) {
                 this.signPainting();
                 this.minecraft.setScreen(null);
             }
-        }).bounds(this.width / 2 - 100, 196, 98, 20).build());
+        }).bounds(leftPos + 28, topPos + 96, 98, 20).build());
         this.addRenderableWidget(Button.builder(CommonComponents.GUI_CANCEL, button -> this.minecraft.setScreen(null))
-                .bounds(this.width / 2 + 2, 196, 98, 20).build());
+                .bounds(leftPos + 130, topPos + 96, 98, 20).build());
         this.updateButtonVisibility();
     }
 
@@ -84,23 +96,25 @@ public class PaintingSignScreen extends Screen {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
-        int i = (this.width - IMAGE_WIDTH) / 2;
+        int centerX = this.width / 2;
+        int centerY = this.height / 2;
         boolean blink = this.frameTick / 6 % 2 == 0;
         FormattedCharSequence titleWithCursor = FormattedCharSequence.composite(
-                FormattedCharSequence.forward(this.title, Style.EMPTY), blink ? BLACK_CURSOR : GRAY_CURSOR);
-        int labelWidth = this.font.width(EDIT_TITLE_LABEL);
-        graphics.drawString(this.font, EDIT_TITLE_LABEL, i + 36 + (114 - labelWidth) / 2, 34, 0, false);
-        int titleWidth = this.font.width(titleWithCursor);
-        graphics.drawString(this.font, titleWithCursor, i + 36 + (114 - titleWidth) / 2, 50, 0, false);
-        int ownerWidth = this.font.width(this.ownerText);
-        graphics.drawString(this.font, this.ownerText, i + 36 + (114 - ownerWidth) / 2, 60, 0, false);
-        graphics.drawWordWrap(this.font, FINALIZE_WARNING_LABEL, i + 36, 82, 114, 0);
+                FormattedCharSequence.forward(this.title, Style.EMPTY), blink ? BRIGHT_CURSOR : DIM_CURSOR);
+        graphics.drawCenteredString(this.font, EDIT_TITLE_LABEL, centerX, centerY - 40, LABEL_COLOR);
+        graphics.drawString(this.font, titleWithCursor, centerX - this.font.width(titleWithCursor) / 2, centerY - 24, TITLE_COLOR, false);
+        graphics.drawCenteredString(this.font, this.ownerText, centerX, centerY - 12, OWNER_COLOR);
+        List<FormattedCharSequence> warningLines = this.font.split(FINALIZE_WARNING_LABEL, WARNING_WIDTH);
+        for (int idx = 0; idx < warningLines.size(); idx++) {
+            FormattedCharSequence line = warningLines.get(idx);
+            graphics.drawString(this.font, line, centerX - this.font.width(line) / 2, centerY + 4 + idx * 10, WARNING_COLOR, false);
+        }
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         this.renderTransparentBackground(graphics);
-        graphics.blit(BookViewScreen.BOOK_LOCATION, (this.width - IMAGE_WIDTH) / 2, 2, 0, 0, 192, 192);
+        graphics.blit(BACKGROUND, (this.width - BACKGROUND_WIDTH) / 2, (this.height - BACKGROUND_HEIGHT) / 2, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
     }
 
     @Override

@@ -241,15 +241,17 @@ public class PaintingItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        if (isSigned(stack)) // Signed paintings are named after their titles...
-            return Component.literal(getTitle(stack));
         return Component.translatable(this.getDescriptionId(stack) + '.' + Type.fromId(getType(stack)).name, getWidth(stack), getHeight(stack));
     }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        if (isSigned(stack))
-            tooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(stack)).withStyle(ChatFormatting.GRAY));
+        if (!isSigned(stack))
+            return;
+        // Format the tooltip the same way as vanilla paintings:
+        // title (yellow), author (gray) and dimensions (white)...
+        tooltipComponents.add(Component.literal(getTitle(stack)).withStyle(ChatFormatting.YELLOW));
+        tooltipComponents.add(Component.literal(getAuthor(stack)).withStyle(ChatFormatting.GRAY));
     }
 
     @Override
