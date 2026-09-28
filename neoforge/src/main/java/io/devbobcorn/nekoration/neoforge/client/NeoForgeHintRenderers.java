@@ -7,6 +7,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderHighlightEvent;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.client.AwningPlacementHintRenderer;
+import io.devbobcorn.nekoration.client.CustomBlockPlacementHintRenderer;
 import io.devbobcorn.nekoration.client.FrameSidePlacementHintRenderer;
 
 /**
@@ -23,6 +24,8 @@ public final class NeoForgeHintRenderers {
         AwningPlacementHintRenderer.render(hit, event.getCamera().getPosition(), event.getPoseStack(),
                 event.getMultiBufferSource());
         FrameSidePlacementHintRenderer.render(hit, event.getCamera().getPosition(), event.getPoseStack(),
+                event.getMultiBufferSource());
+        CustomBlockPlacementHintRenderer.render(hit, event.getCamera().getPosition(), event.getPoseStack(),
                 event.getMultiBufferSource());
     }
 }

@@ -21,11 +21,17 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Holds up to {@value #MAX_ENTRIES} display entries for a single Custom Block.
@@ -62,6 +68,40 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
         return entries[active];
     }
 
+    public int entryCount() {
+        int count = 0;
+        for (CustomEntry entry : entries) {
+            if (entry != null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /** Index of the entry the player is pointing at, or {@code -1} when none is hit. */
+    public int pointedEntry(BlockGetter level, BlockPos pos, Player player) {
+        Vec3 start = player.getEyePosition();
+        Vec3 end = start.add(player.getViewVector(1.0F).scale(player.blockInteractionRange() + 1.0));
+        int pointed = -1;
+        double closest = Double.MAX_VALUE;
+        CollisionContext context = CollisionContext.of(player);
+        for (int index = 0; index < MAX_ENTRIES; index++) {
+            CustomEntry entry = entries[index];
+            if (entry == null) {
+                continue;
+            }
+            BlockHitResult clip = entry.displayState().getShape(level, pos, context).clip(start, end, pos);
+            if (clip != null) {
+                double distance = clip.getLocation().distanceToSqr(start);
+                if (distance < closest) {
+                    closest = distance;
+                    pointed = index;
+                }
+            }
+        }
+        return pointed;
+    }
+
     public boolean showHint() {
         return showHint;
     }
@@ -93,6 +133,23 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
         if (index >= 0 && index < MAX_ENTRIES) {
             entries[index] = null;
         }
+    }
+
+    public boolean canAddEntry(BlockState displayState, BlockGetter level, BlockPos pos, CollisionContext context) {
+        VoxelShape interaction = displayState.getShape(level, pos, context);
+        VoxelShape collision = displayState.getCollisionShape(level, pos, context);
+        for (CustomEntry entry : entries) {
+            if (entry == null) {
+                continue;
+            }
+            BlockState existing = entry.displayState();
+            if (Shapes.joinIsNotEmpty(interaction, existing.getShape(level, pos, context), BooleanOp.AND)
+                    || Shapes.joinIsNotEmpty(collision, existing.getCollisionShape(level, pos, context),
+                            BooleanOp.AND)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void tintActive(int rgb) {

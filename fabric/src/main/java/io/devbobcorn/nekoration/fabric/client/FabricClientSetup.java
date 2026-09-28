@@ -73,16 +73,25 @@ public final class FabricClientSetup {
                 io.devbobcorn.nekoration.client.FrameSidePlacementHintRenderer.render(hit,
                         worldRenderContext.camera().getPosition(), worldRenderContext.matrixStack(),
                         worldRenderContext.consumers());
+                io.devbobcorn.nekoration.client.CustomBlockPlacementHintRenderer.render(hit,
+                        worldRenderContext.camera().getPosition(), worldRenderContext.matrixStack(),
+                        worldRenderContext.consumers());
             }
             return true;
         });
-        // Palette selection outline (replaces the vanilla outline while a palette is held).
-        WorldRenderEvents.BLOCK_OUTLINE.register((worldRenderContext, blockOutlineContext) ->
-                !io.devbobcorn.nekoration.client.PaletteSelectionOutlineRenderer.render(
-                        blockOutlineContext.blockPos(),
-                        new net.minecraft.world.phys.Vec3(blockOutlineContext.cameraX(),
-                                blockOutlineContext.cameraY(), blockOutlineContext.cameraZ()),
-                        worldRenderContext.matrixStack(), worldRenderContext.consumers()));
+        // Custom block entry outline and palette selection outline (both replace the vanilla outline).
+        WorldRenderEvents.BLOCK_OUTLINE.register((worldRenderContext, blockOutlineContext) -> {
+            net.minecraft.world.phys.Vec3 cameraPos = new net.minecraft.world.phys.Vec3(
+                    blockOutlineContext.cameraX(), blockOutlineContext.cameraY(), blockOutlineContext.cameraZ());
+            if (io.devbobcorn.nekoration.client.CustomBlockSelectionOutlineRenderer.render(
+                    blockOutlineContext.blockPos(), cameraPos, worldRenderContext.matrixStack(),
+                    worldRenderContext.consumers())) {
+                return false;
+            }
+            return !io.devbobcorn.nekoration.client.PaletteSelectionOutlineRenderer.render(
+                    blockOutlineContext.blockPos(), cameraPos, worldRenderContext.matrixStack(),
+                    worldRenderContext.consumers());
+        });
         // Creative tab filters.
         registerCreativeTabFilter();
         // Networking (client-to-server sending + server->client payloads + client receivers).

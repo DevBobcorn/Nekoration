@@ -2,9 +2,12 @@ package io.devbobcorn.nekoration.fabric;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.world.level.block.Block;
 import io.devbobcorn.nekoration.Nekoration;
+import io.devbobcorn.nekoration.blocks.CustomBlock;
 import io.devbobcorn.nekoration.fabric.xplat.FabricPlatform;
 import io.devbobcorn.nekoration.fabric.xplat.FabricRegistrar;
 import io.devbobcorn.nekoration.fabric.network.FabricNetwork;
@@ -28,6 +31,12 @@ public class NekorationFabric implements ModInitializer {
         Nekoration.init(registrar);
 
         FabricNetwork.registerCommon();
+
+        // Custom Block entries placed against a neighboring surface.
+        UseBlockCallback.EVENT.register(CustomBlock::addEntryFromPlacement);
+
+        // Custom Block entries broken one at a time.
+        PlayerBlockBreakEvents.BEFORE.register(CustomBlock::beforeBlockBreak);
 
         // Flammability via Fabric's registry (vanilla planks odds: 5/20, wool/leaves: 30/60).
         FlammableBlockRegistry flammable = FlammableBlockRegistry.getDefaultInstance();
