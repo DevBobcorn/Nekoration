@@ -3,10 +3,10 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"front": "nekoration:block/stone/red_sandstone/chiseled_smooth_horizontal_t0",
-		"back": "nekoration:block/stone/red_sandstone/chiseled_smooth_horizontal_t2",
-		"particle": "nekoration:block/stone/red_sandstone/chiseled_smooth",
-		"end": "nekoration:block/stone/red_sandstone/chiseled_smooth"
+		"front": "nekoration:block/stone/red_sandstone_chiseled_smooth_horizontal_t0",
+		"back": "nekoration:block/stone/red_sandstone_chiseled_smooth_horizontal_t2",
+		"end": "nekoration:block/stone/red_sandstone_chiseled_smooth",
+		"particle": "#end"
 	},
 	"elements": [
 		{
