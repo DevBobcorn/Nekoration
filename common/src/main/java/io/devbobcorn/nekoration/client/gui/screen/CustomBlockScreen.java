@@ -7,12 +7,15 @@ import java.util.Optional;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
+import io.devbobcorn.nekoration.blocks.DyeableBlock;
 import io.devbobcorn.nekoration.blocks.containers.CustomBlockMenu;
 import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import io.devbobcorn.nekoration.client.rendering.CustomRendererTintGetter;
+import io.devbobcorn.nekoration.common.ComponentCompat;
 import io.devbobcorn.nekoration.network.CustomBlockClearPayload;
 import io.devbobcorn.nekoration.network.CustomBlockUpdatePayload;
 import io.devbobcorn.nekoration.xplat.NekoPlatform;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -21,11 +24,13 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
@@ -40,7 +45,7 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
     private static final int ROW_HEIGHT = 18;
     private static final int PREVIEW_SIZE = 16;
     private static final int LABEL_X = LIST_X + PREVIEW_SIZE + 4;
-    private static final int LABEL_MAX_WIDTH = 140;
+    private static final int LABEL_MAX_WIDTH = 160;
     private static final int ACTIVE_BACKGROUND = 0x50000000;
     private static final int ACTIVE_ACCENT = 0xFFF0C000;
     private static final int ACTIVE_TEXT = 0xFFFFD700;
@@ -98,7 +103,7 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
                 continue;
             }
             int y = LIST_Y + row * ROW_HEIGHT;
-            String label = font.plainSubstrByWidth(stateLabel(entry.displayState()).getString(), labelWidth());
+            String label = font.plainSubstrByWidth(entryName(entry).getString(), labelWidth());
             boolean isActive = index == active;
             if (isActive) {
                 graphics.fill(LIST_X - 3, y - 1, LABEL_X + font.width(label) + 3, y + ROW_HEIGHT - 1,
@@ -149,10 +154,11 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
             return;
         }
         List<Component> lines = new ArrayList<>();
-        lines.add(Component.translatable("gui.nekoration.custom_block.entry", index + 1));
-        lines.add(stateLabel(entry.displayState()));
-        lines.add(Component.translatable("gui.nekoration.custom_block.select"));
-        lines.add(Component.translatable("gui.nekoration.custom_block.clear"));
+        BlockState state = entry.displayState();
+        lines.add(Component.literal(String.format("#%d %s", index, BuiltInRegistries.BLOCK.getKey(state.getBlock()))));
+        lines.addAll(propertyLabels(state));
+        lines.add(Component.translatable("gui.nekoration.custom_block.select").withStyle(ChatFormatting.AQUA));
+        lines.add(Component.translatable("gui.nekoration.custom_block.clear").withStyle(ChatFormatting.AQUA));
         graphics.renderTooltip(font, lines, Optional.empty(), mouseX, mouseY);
     }
 
@@ -219,21 +225,23 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         return mouseX >= LIST_X - 3 && mouseX <= LABEL_X + LABEL_MAX_WIDTH + 3;
     }
 
-    private static Component stateLabel(BlockState state) {
-        Component name = state.getBlock().getName();
-        if (state.getProperties().isEmpty()) {
-            return name;
+    /** Localized entry name, resolving the dye color placeholder in name translations. */
+    private static Component entryName(CustomBlockEntity.CustomEntry entry) {
+        BlockState state = entry.displayState();
+        Block block = state.getBlock();
+        if (state.hasProperty(DyeableBlock.COLOR)) {
+            String colorKey = "color.nekoration." + state.getValue(DyeableBlock.COLOR).getSerializedName();
+            return Component.translatable(block.getDescriptionId(), ComponentCompat.interpolationArg(colorKey));
         }
-        StringBuilder builder = new StringBuilder(name.getString()).append(" (");
-        boolean first = true;
+        return block.getName();
+    }
+
+    private static List<Component> propertyLabels(BlockState state) {
+        List<Component> lines = new ArrayList<>();
         for (Property<?> property : state.getProperties()) {
-            if (!first) {
-                builder.append(", ");
-            }
-            first = false;
-            builder.append(property.getName()).append('=').append(propertyValue(state, property));
+            lines.add(Component.literal(String.format("%s=%s", property.getName(), propertyValue(state, property))).withStyle(ChatFormatting.GRAY));
         }
-        return Component.literal(builder.append(')').toString());
+        return lines;
     }
 
     private static <T extends Comparable<T>> String propertyValue(BlockState state, Property<T> property) {
