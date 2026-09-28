@@ -104,7 +104,8 @@ public final class LegacyWorldUpgrader {
             Map.entry("door_3", "quartz_bricks_door"),
             Map.entry("door_tall_1", "tall_quartz_door"),
             Map.entry("door_tall_2", "tall_chiseled_quartz_door"),
-            Map.entry("door_tall_3", "tall_quartz_bricks_door"));
+            Map.entry("door_tall_3", "tall_quartz_bricks_door"),
+            Map.entry("custom", "custom_block"));
 
     private static final Set<String> COLOR_ITEMS = Set.of(
             "window_top", "window_sill", "window_frame", "window_plant",
@@ -134,6 +135,7 @@ public final class LegacyWorldUpgrader {
 
     public static void upgradeChunk(CompoundTag chunk) {
         upgradeItemStacks(chunk);
+        upgradeCustomBlockEntities(chunk);
         ListTag sections = chunk.getList("sections", Tag.TAG_COMPOUND);
         Map<Integer, SectionBlockStates> sectionsByY = new HashMap<>();
         for (int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++) {
@@ -189,6 +191,44 @@ public final class LegacyWorldUpgrader {
         if (insertedTallDoorTop) {
             chunk.remove("Heightmaps");
             chunk.remove("isLightOn");
+        }
+    }
+
+    private static void upgradeCustomBlockEntities(CompoundTag chunk) {
+        ListTag blockEntities = chunk.getList("block_entities", Tag.TAG_COMPOUND);
+        for (int index = 0; index < blockEntities.size(); index++) {
+            CompoundTag blockEntity = blockEntities.getCompound(index);
+            if (!blockEntity.getString("id").equals(PREFIX + "custom")) {
+                continue;
+            }
+            byte flags = blockEntity.contains("StateFlag", Tag.TAG_BYTE) ? blockEntity.getByte("StateFlag") : 0;
+            ListTag entries = new ListTag();
+            if (blockEntity.contains("Display", Tag.TAG_COMPOUND)) {
+                CompoundTag display = blockEntity.getCompound("Display").copy();
+                upgradeBlockState(display);
+                if (!isAir(display)) {
+                    CompoundTag entry = new CompoundTag();
+                    entry.put("Display", display);
+                    entry.putBoolean("Tinted", (flags & 1) > 0);
+                    int[] color = blockEntity.getIntArray("Color");
+                    int rgb = color.length >= 3
+                            ? ((color[0] & 0xFF) << 16) | ((color[1] & 0xFF) << 8) | (color[2] & 0xFF)
+                            : 0xFFFFFF;
+                    entry.putInt("Color", rgb);
+                    entry.putByte("Dir", blockEntity.getByte("Dir"));
+                    entry.putIntArray("Offset", blockEntity.getIntArray("Offset"));
+                    entries.add(entry);
+                }
+            }
+            blockEntity.putString("id", PREFIX + "custom_block");
+            blockEntity.put("Entries", entries);
+            blockEntity.putByte("Active", (byte) 0);
+            blockEntity.putBoolean("ShowHint", (flags & 2) > 0);
+            blockEntity.remove("Dir");
+            blockEntity.remove("Offset");
+            blockEntity.remove("StateFlag");
+            blockEntity.remove("Color");
+            blockEntity.remove("Display");
         }
     }
 
@@ -527,6 +567,11 @@ public final class LegacyWorldUpgrader {
         CompoundTag properties = state.contains("Properties", Tag.TAG_COMPOUND)
                 ? state.getCompound("Properties")
                 : new CompoundTag();
+        if (oldPath.equals("dream_was_taken")) {
+            state.putString("Name", "minecraft:air");
+            state.remove("Properties");
+            return true;
+        }
         if (COLLIDING_STONE_IDS.contains(oldPath) && !properties.contains("level", Tag.TAG_STRING)) {
             return false;
         }

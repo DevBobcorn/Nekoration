@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 
 /**
@@ -25,4 +26,6 @@ public interface NekoPlatformImpl {
     void sendToAllPlayers(CustomPacketPayload payload);
 
     void openEaselMenu(ServerPlayer player, EaselMenuBlockEntity easel);
+
+    void openCustomBlockMenu(ServerPlayer player, CustomBlockEntity customBlock);
 }

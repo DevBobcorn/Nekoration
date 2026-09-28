@@ -92,6 +92,18 @@ public final class ModCreativeTabs {
                             WoodenBlockRegistration.addContainerCategoryStacks(output::accept);
                             OrnamentRegistration.addPotsAndPlantersCategoryStacks(output::accept);
                             OrnamentRegistration.addMiscCategoryStacks(output::accept);
+                            // Custom Block and its transformation tools...
+                            output.accept(new ItemStack(CustomBlockRegistration.CUSTOM_BLOCK_ITEM.get()));
+                            output.accept(new ItemStack(ModItems.PAW.get()));
+                            output.accept(new ItemStack(ModItems.PAW_UP.get()));
+                            output.accept(new ItemStack(ModItems.PAW_DOWN.get()));
+                            output.accept(new ItemStack(ModItems.PAW_LEFT.get()));
+                            output.accept(new ItemStack(ModItems.PAW_RIGHT.get()));
+                            output.accept(new ItemStack(ModItems.PAW_NEAR.get()));
+                            output.accept(new ItemStack(ModItems.PAW_FAR.get()));
+                            output.accept(new ItemStack(ModItems.PAW_15.get()));
+                            output.accept(new ItemStack(ModItems.PAW_90.get()));
+                            output.accept(new ItemStack(ModItems.ARROW_HINT.get()));
                             // Paintings & Palettes...
                             output.accept(new ItemStack(ModItems.PAINTING.get()));
                             output.accept(new ItemStack(ModItems.PALETTE.get()));

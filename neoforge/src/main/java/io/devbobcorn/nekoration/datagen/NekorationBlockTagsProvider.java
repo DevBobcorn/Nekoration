@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.registry.CementBlockRegistration;
+import io.devbobcorn.nekoration.registry.CustomBlockRegistration;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 import io.devbobcorn.nekoration.registry.StoneBlockRegistration;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
@@ -39,7 +40,8 @@ public final class NekorationBlockTagsProvider extends TagsProvider<Block> {
 
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .addAll(keysOf(WoodenBlockRegistration.woodenBlocksView()))
-                .addAll(keysOf(OrnamentRegistration.pumpkinFurnitureBlocksView()));
+                .addAll(keysOf(OrnamentRegistration.pumpkinFurnitureBlocksView()))
+                .add(CustomBlockRegistration.CUSTOM_BLOCK.getKey());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .addAll(keysOf(StoneBlockRegistration.stoneBlocksView()))

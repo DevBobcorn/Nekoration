@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 
 import io.devbobcorn.nekoration.registry.CementBlockRegistration;
+import io.devbobcorn.nekoration.registry.CustomBlockRegistration;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
 import io.devbobcorn.nekoration.registry.ModCreativeTabs;
 import io.devbobcorn.nekoration.registry.ModEntities;
@@ -36,6 +37,7 @@ public final class Nekoration {
         StoneBlockRegistration.register(registrar);
         CementBlockRegistration.register(registrar);
         OrnamentRegistration.register(registrar);
+        CustomBlockRegistration.register(registrar);
         ModBlockEntities.register(registrar);
         ModEntities.register(registrar);
         ModMenuTypes.register(registrar);

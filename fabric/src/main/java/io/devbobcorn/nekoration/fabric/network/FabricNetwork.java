@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import io.devbobcorn.nekoration.network.CustomBlockClearPayload;
+import io.devbobcorn.nekoration.network.CustomBlockUpdatePayload;
 import io.devbobcorn.nekoration.network.EaselMenuUpdatePayload;
 import io.devbobcorn.nekoration.network.PaintingDataUpdatePayload;
 import io.devbobcorn.nekoration.network.PaintingSignUpdatePayload;
@@ -27,6 +29,8 @@ public final class FabricNetwork {
         PayloadTypeRegistry.playC2S().register(PaintingSizeUpdatePayload.TYPE, PaintingSizeUpdatePayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(PaintingSignUpdatePayload.TYPE, PaintingSignUpdatePayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(PaletteUpdatePayload.TYPE, PaletteUpdatePayload.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(CustomBlockUpdatePayload.TYPE, CustomBlockUpdatePayload.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(CustomBlockClearPayload.TYPE, CustomBlockClearPayload.STREAM_CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(EaselMenuUpdatePayload.TYPE,
                 (payload, context) -> EaselMenuUpdatePayload.handle(payload, serverContext(context.player())));
@@ -38,6 +42,10 @@ public final class FabricNetwork {
                 (payload, context) -> PaintingSignUpdatePayload.handle(payload, serverContext(context.player())));
         ServerPlayNetworking.registerGlobalReceiver(PaletteUpdatePayload.TYPE,
                 (payload, context) -> PaletteUpdatePayload.handle(payload, serverContext(context.player())));
+        ServerPlayNetworking.registerGlobalReceiver(CustomBlockUpdatePayload.TYPE,
+                (payload, context) -> CustomBlockUpdatePayload.handle(payload, serverContext(context.player())));
+        ServerPlayNetworking.registerGlobalReceiver(CustomBlockClearPayload.TYPE,
+                (payload, context) -> CustomBlockClearPayload.handle(payload, serverContext(context.player())));
     }
 
     public static void sendToClient(ServerPlayer player, CustomPacketPayload payload) {

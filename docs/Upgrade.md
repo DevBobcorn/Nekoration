@@ -249,6 +249,17 @@ Tall Doors changed from two block positions to three:
 
 Door item stacks only need their id renamed: v1 door items carried no dye color data. In v2, breaking a door drops an item that remembers the dye color of the lower half / segment it was broken from, and placing it restores that color.
 
+## Custom Blocks
+
+The v1 `custom` block becomes `custom_block` in v2. It keeps the `level`(light emission) property, so block states can be renamed without touching their properties. The v1 itemless `dream_was_taken` block only served as the empty custom block's fallback model and becomes air.
+
+The block entity type is also renamed from `custom` to `custom_block`, and its data changes from one display to a list of up to 16 entries:
+
+- `Dir`, `Offset`, `Color` and `Display` from the v1 block entity become the first entry of the v2 `Entries` list. The v1 `StateFlag` bit 0(the re-tint flag) becomes that entry's `Tinted` flag, and `Color` is converted from an RGB int array to a single packed RGB int.
+- The v1 `StateFlag` bit 1(the arrow hint flag) becomes the v2 `ShowHint` flag, and `Active` is set to 0.
+- A v1 display state id is converted like any other block state, so displays of v1 blocks(e.g. Window Frames) become their v2 counterparts.
+- `Display` states of air(including `dream_was_taken`) produce no entry.
+
 ## Item Stacks
 
 Item stacks found in inventories(chests, item frames, dropped items, etc.) need their ids renamed like their blocks, and dyeable items also carry color data in NBT that must be converted. In v1 the color is a `color` byte tag on the stack, in v2 it is a `color` byte tag inside the stack's custom data component.
@@ -258,7 +269,7 @@ Item stacks found in inventories(chests, item frames, dropped items, etc.) need 
 - Dyeable wooden items whose v1 `color` tag holds a wood type(Windows, Glass Tables, Armchairs, Benches, Drawers, Cabinets, Drawer Chests, Cupboards, Shelves, Wall Shelves): use the tag value with the wood type lookup table to build the new id, then drop the tag. When the tag is absent, default to `dark_oak`(index 0).
 - Easel Menu items follow the wooden rule for their wood type, and additionally set the new `color` tag to `black` for `easel_menu` and `white` for `easel_menu_white`.
 - Half-Timber items carry two tags: `color_0`(wood type, builds the new id) and `color_1`(dye color, becomes the new `color` tag via the [Colors](#colors) table).
-- Door items and the per-wood Table, Round Table and Chair items carried no color data; only rename their ids.
+- Door items and the per-wood Table, Round Table and Chair items carried no color data; only rename their ids. The same applies to `custom` items, which become `custom_block`.
 - Wallpaper items keep their id. Move `BlockEntityTag.Base` to the `minecraft:base_color` component and convert each `BlockEntityTag.Patterns` entry to the 1.21 `minecraft:banner_patterns` component, replacing legacy pattern hashes and numeric vanilla dye ids with registry ids and color names.
 
 ## Entities
@@ -273,7 +284,7 @@ The block entity type ids `cabinet`, `item_display` and `easel_menu` are unchang
 - `item_display`: v1 Cupboards, Shelves and Wall Shelves become `{wood_type_id}` Cupboards(v1 Shelves included, since `{wood_type_id}_cupboard` is an `item_display` entity block) and Wall Shelves.
 - `easel_menu`: v1 Easel Menus become `{wood_type_id}` Easel Menus.
 
-The v1 `phonograph`, `custom` and `prismap_table` block entity types have no v2 counterpart yet(see below).
+The v1 `phonograph` and `prismap_table` block entity types have no v2 counterpart yet(see below). The v1 `custom` block entity type becomes `custom_block`(see [Custom Blocks](#custom-blocks)).
 
 ## Not Yet Ported
 
@@ -281,7 +292,6 @@ The following v1 features have no v2 implementation yet, so their data cannot be
 
 - Thin Stone Blocks: `stone_bottom_thin`, `stone_pillar_thin`, `stone_doric_thin`, `stone_ionic_thin` and `stone_corinthian_thin`(dyeable; the four pillar variants also have `vertical_connection`).
 - Phonograph: the `phonograph` block and its block entity.
-- Custom Block: the `custom` block, its block entity and the itemless `dream_was_taken` block.
 - Prismap Table: the `prismap_table` block and its block entity.
-- Items: the Paw and Paw Tweak items(`paw`, `paw_up`, `paw_down`, `paw_left`, `paw_right`, `paw_near`, `paw_far`, `paw_15`, `paw_90`), `arrow_hint`, `palette`, `camera` and `painting`.
+- Items: the `camera` item.
 - Entity types: `painting` (v1 saves may contain saved entities of this type).

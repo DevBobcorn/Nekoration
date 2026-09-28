@@ -5,6 +5,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import io.devbobcorn.nekoration.xplat.NekoRegistrar;
 import io.devbobcorn.nekoration.xplat.RegistrySupplier;
 import io.devbobcorn.nekoration.blocks.entities.CabinetBlockEntity;
+import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import io.devbobcorn.nekoration.blocks.entities.ItemDisplayBlockEntity;
 
@@ -12,6 +13,7 @@ public final class ModBlockEntities {
     public static RegistrySupplier<BlockEntityType<CabinetBlockEntity>> CABINET;
     public static RegistrySupplier<BlockEntityType<ItemDisplayBlockEntity>> ITEM_DISPLAY;
     public static RegistrySupplier<BlockEntityType<EaselMenuBlockEntity>> EASEL_MENU;
+    public static RegistrySupplier<BlockEntityType<CustomBlockEntity>> CUSTOM_BLOCK;
 
     private ModBlockEntities() {
     }
@@ -26,5 +28,9 @@ public final class ModBlockEntities {
         EASEL_MENU = registrar.register(Registries.BLOCK_ENTITY_TYPE, "easel_menu", () -> BlockEntityType.Builder
                 .of((pos, state) -> new EaselMenuBlockEntity(pos, state), WoodenBlockRegistration.easelMenuBlocksForEntity())
                 .build(null));
+        CUSTOM_BLOCK = registrar.register(Registries.BLOCK_ENTITY_TYPE, "custom_block",
+                () -> BlockEntityType.Builder
+                        .of((pos, state) -> new CustomBlockEntity(pos, state), CustomBlockRegistration.CUSTOM_BLOCK.get())
+                        .build(null));
     }
 }

@@ -12,11 +12,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -47,7 +44,7 @@ public final class PaletteSelectionOutlineRenderer {
             return false;
         }
 
-        Color color = getActiveColor(stack);
+        Color color = NekoColors.getRGBColor(PaletteItem.getActiveColor(stack));
         VoxelShape shape = state.getShape(level, pos, CollisionContext.of(player));
 
         double x = pos.getX() - cameraPos.x;
@@ -76,20 +73,5 @@ public final class PaletteSelectionOutlineRenderer {
             consumer.addVertex(pose, (float) (x1 + originX), (float) (y1 + originY), (float) (z1 + originZ))
                     .setColor(red, green, blue, alpha).setNormal(pose, dx, dy, dz);
         });
-    }
-
-    private static Color getActiveColor(ItemStack stack) {
-        CustomData data = stack.get(DataComponents.CUSTOM_DATA);
-        if (data != null) {
-            CompoundTag tag = data.copyTag();
-            if (tag.contains(PaletteItem.ACTIVE)) {
-                byte active = tag.getByte(PaletteItem.ACTIVE);
-                int[] colors = tag.getIntArray(PaletteItem.COLORS);
-                if (active >= 0 && active < colors.length) {
-                    return NekoColors.getRGBColor(colors[active]);
-                }
-            }
-        }
-        return PaletteItem.DEFAULT_COLOR_SET[0];
     }
 }

@@ -8,6 +8,7 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.network.PacketDistributor;
+import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import io.devbobcorn.nekoration.NekoConfig;
 import io.devbobcorn.nekoration.xplat.NekoConfigData;
@@ -57,5 +58,10 @@ public final class NeoForgePlatform implements NekoPlatformImpl {
     @Override
     public void openEaselMenu(ServerPlayer player, EaselMenuBlockEntity easel) {
         player.openMenu(easel, easel.getBlockPos());
+    }
+
+    @Override
+    public void openCustomBlockMenu(ServerPlayer player, CustomBlockEntity customBlock) {
+        player.openMenu(customBlock, customBlock.getBlockPos());
     }
 }

@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": { 
+		"layer0": "nekoration:item/arrow_hint"
+	}
+}

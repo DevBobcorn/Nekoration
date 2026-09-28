@@ -56,6 +56,8 @@ public class NekorationNeoForgeClient {
     private static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(io.devbobcorn.nekoration.registry.ModMenuTypes.EASEL_MENU.get(),
                 io.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen::new);
+        event.register(io.devbobcorn.nekoration.registry.ModMenuTypes.CUSTOM_BLOCK.get(),
+                io.devbobcorn.nekoration.client.gui.screen.CustomBlockScreen::new);
     }
 
     private static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {

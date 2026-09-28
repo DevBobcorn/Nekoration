@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import io.devbobcorn.nekoration.client.gui.screen.MenuScreenConstructor;
+import io.devbobcorn.nekoration.client.rendering.CustomBlockEntityRenderer;
 import io.devbobcorn.nekoration.client.rendering.EaselMenuBlockEntityRenderer;
 import io.devbobcorn.nekoration.client.rendering.ItemDisplayBlockEntityRenderer;
 import io.devbobcorn.nekoration.client.rendering.SeatEntityRenderer;
@@ -44,6 +45,7 @@ public final class NekoClientSetup {
             BiConsumer<EntityType<?>, EntityRendererProvider> entityRegistrar) {
         blockEntityRegistrar.accept(ModBlockEntities.ITEM_DISPLAY.get(), ItemDisplayBlockEntityRenderer::new);
         blockEntityRegistrar.accept(ModBlockEntities.EASEL_MENU.get(), EaselMenuBlockEntityRenderer::new);
+        blockEntityRegistrar.accept(ModBlockEntities.CUSTOM_BLOCK.get(), CustomBlockEntityRenderer::new);
         entityRegistrar.accept(ModEntities.SEAT.get(), SeatEntityRenderer::new);
         entityRegistrar.accept(ModEntities.WALLPAPER.get(), WallpaperRenderer::new);
         entityRegistrar.accept(ModEntities.PAINTING.get(), PaintingRenderer::new);
@@ -60,6 +62,9 @@ public final class NekoClientSetup {
             BiConsumer<net.minecraft.world.inventory.MenuType<?>, MenuScreenConstructor<?, ?>> registrar) {
         registrar.accept(ModMenuTypes.EASEL_MENU.get(),
                 (MenuScreenConstructor<io.devbobcorn.nekoration.blocks.containers.EaselMenuMenu, EaselMenuScreen>) (menu, inventory, title) -> new EaselMenuScreen(
+                        menu, inventory, title));
+        registrar.accept(ModMenuTypes.CUSTOM_BLOCK.get(),
+                (MenuScreenConstructor<io.devbobcorn.nekoration.blocks.containers.CustomBlockMenu, io.devbobcorn.nekoration.client.gui.screen.CustomBlockScreen>) (menu, inventory, title) -> new io.devbobcorn.nekoration.client.gui.screen.CustomBlockScreen(
                         menu, inventory, title));
     }
 

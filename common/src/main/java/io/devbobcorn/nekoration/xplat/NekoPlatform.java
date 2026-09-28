@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 
 /**
@@ -52,5 +53,10 @@ public final class NekoPlatform {
     /** Opens the extended easel menu, carrying the block position as extra data. */
     public static void openEaselMenu(ServerPlayer player, EaselMenuBlockEntity easel) {
         impl.openEaselMenu(player, easel);
+    }
+
+    /** Opens the Custom Block entry selection screen, carrying its position. */
+    public static void openCustomBlockMenu(ServerPlayer player, CustomBlockEntity customBlock) {
+        impl.openCustomBlockMenu(player, customBlock);
     }
 }

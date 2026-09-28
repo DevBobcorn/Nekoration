@@ -72,6 +72,71 @@ class LegacyWorldUpgraderTest {
         CompoundTag upperDoor = state("door_tall_2", "level", "2", "half", "upper");
         LegacyWorldUpgrader.upgradeBlockState(upperDoor);
         assertEquals("middle", upperDoor.getCompound("Properties").getString("segment"));
+
+        CompoundTag customBlock = state("custom", "level", "4");
+        assertTrue(LegacyWorldUpgrader.upgradeBlockState(customBlock));
+        assertEquals("nekoration:custom_block", customBlock.getString("Name"));
+        assertEquals("4", customBlock.getCompound("Properties").getString("level"));
+
+        CompoundTag dreamWasTaken = state("dream_was_taken");
+        assertTrue(LegacyWorldUpgrader.upgradeBlockState(dreamWasTaken));
+        assertEquals("minecraft:air", dreamWasTaken.getString("Name"));
+    }
+
+    @Test
+    void upgradesCustomBlockEntities() {
+        CompoundTag chunk = new CompoundTag();
+        CompoundTag custom = new CompoundTag();
+        custom.putString("id", "nekoration:custom");
+        custom.putByte("Dir", (byte) 7);
+        custom.putIntArray("Offset", new int[] { 2, -1, 4 });
+        custom.putByte("StateFlag", (byte) 3);
+        custom.putIntArray("Color", new int[] { 255, 128, 0 });
+        custom.put("Display", state("window_plant", "level", "15", "facing", "south"));
+        ListTag blockEntities = new ListTag();
+        blockEntities.add(custom);
+        chunk.put("block_entities", blockEntities);
+
+        LegacyWorldUpgrader.upgradeChunk(chunk);
+
+        assertEquals("nekoration:custom_block", custom.getString("id"));
+        assertEquals((byte) 0, custom.getByte("Active"));
+        assertTrue(custom.getBoolean("ShowHint"));
+        assertFalse(custom.contains("Dir"));
+        assertFalse(custom.contains("Offset"));
+        assertFalse(custom.contains("StateFlag"));
+        assertFalse(custom.contains("Color"));
+        assertFalse(custom.contains("Display"));
+
+        ListTag entries = custom.getList("Entries", 10);
+        assertEquals(1, entries.size());
+        CompoundTag entry = entries.getCompound(0);
+        assertTrue(entry.getBoolean("Tinted"));
+        assertEquals(0xFF8000, entry.getInt("Color"));
+        assertEquals((byte) 7, entry.getByte("Dir"));
+        assertEquals(2, entry.getIntArray("Offset")[0]);
+        assertEquals("yellow", entry.getCompound("Display").getCompound("Properties").getString("color"));
+        assertEquals("south", entry.getCompound("Display").getCompound("Properties").getString("facing"));
+
+        CompoundTag upgraded = chunk.copy();
+        LegacyWorldUpgrader.upgradeChunk(chunk);
+        assertEquals(upgraded, chunk);
+    }
+
+    @Test
+    void skipsEmptyCustomBlockDisplays() {
+        CompoundTag chunk = new CompoundTag();
+        CompoundTag custom = new CompoundTag();
+        custom.putString("id", "nekoration:custom");
+        custom.put("Display", minecraftState("air"));
+        ListTag blockEntities = new ListTag();
+        blockEntities.add(custom);
+        chunk.put("block_entities", blockEntities);
+
+        LegacyWorldUpgrader.upgradeChunk(chunk);
+
+        assertEquals("nekoration:custom_block", custom.getString("id"));
+        assertEquals(0, custom.getList("Entries", 10).size());
     }
 
     @Test
@@ -272,6 +337,10 @@ class LegacyWorldUpgraderTest {
         CompoundTag door = stack("door_tall_3");
         LegacyWorldUpgrader.upgradeItemStack(door);
         assertEquals("nekoration:tall_quartz_bricks_door", door.getString("id"));
+
+        CompoundTag custom = stack("custom");
+        assertTrue(LegacyWorldUpgrader.upgradeItemStack(custom));
+        assertEquals("nekoration:custom_block", custom.getString("id"));
     }
 
     @Test

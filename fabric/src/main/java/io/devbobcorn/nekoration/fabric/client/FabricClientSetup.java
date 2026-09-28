@@ -177,12 +177,17 @@ public final class FabricClientSetup {
                     new Class<?>[]{constructorInterface},
                     (proxy, method, args) -> {
                         if (method.getName().equals("create") && args != null && args.length == 3) {
+                            if (args[0] instanceof io.devbobcorn.nekoration.blocks.containers.CustomBlockMenu customBlockMenu) {
+                                return new io.devbobcorn.nekoration.client.gui.screen.CustomBlockScreen(customBlockMenu,
+                                        (Inventory) args[1], (Component) args[2]);
+                            }
                             return new EaselMenuScreen((EaselMenuMenu) args[0], (Inventory) args[1],
                                     (Component) args[2]);
                         }
                         return defaultValue(method);
                     });
             register.invoke(null, io.devbobcorn.nekoration.registry.ModMenuTypes.EASEL_MENU.get(), screenConstructor);
+            register.invoke(null, io.devbobcorn.nekoration.registry.ModMenuTypes.CUSTOM_BLOCK.get(), screenConstructor);
         } catch (ReflectiveOperationException e) {
             throw new IllegalStateException("Failed to register easel menu screen", e);
         }

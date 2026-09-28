@@ -8,6 +8,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import io.devbobcorn.nekoration.fabric.network.FabricNetwork;
 import java.util.function.Consumer;
@@ -98,6 +99,28 @@ public final class FabricPlatform implements NekoPlatformImpl {
             @Override
             public net.minecraft.network.chat.Component getDisplayName() {
                 return easel.getDisplayName();
+            }
+        };
+        player.openMenu(provider);
+    }
+
+    @Override
+    public void openCustomBlockMenu(ServerPlayer player, CustomBlockEntity customBlock) {
+        ExtendedScreenHandlerFactory<net.minecraft.core.BlockPos> provider = new ExtendedScreenHandlerFactory<>() {
+            @Override
+            public net.minecraft.core.BlockPos getScreenOpeningData(ServerPlayer openingPlayer) {
+                return customBlock.getBlockPos();
+            }
+
+            @Override
+            public AbstractContainerMenu createMenu(int containerId, net.minecraft.world.entity.player.Inventory inventory,
+                    net.minecraft.world.entity.player.Player openingPlayer) {
+                return customBlock.createMenu(containerId, inventory, openingPlayer);
+            }
+
+            @Override
+            public net.minecraft.network.chat.Component getDisplayName() {
+                return customBlock.getDisplayName();
             }
         };
         player.openMenu(provider);

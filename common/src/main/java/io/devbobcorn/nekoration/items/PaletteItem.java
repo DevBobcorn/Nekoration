@@ -54,4 +54,17 @@ public class PaletteItem extends Item {
             tag.putIntArray(COLORS, colors);
         });
     }
+
+    /** The RGB color currently selected in the palette, falling back to red. */
+    public static int getActiveColor(ItemStack stack) {
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        if (tag.contains(ACTIVE)) {
+            byte active = tag.getByte(ACTIVE);
+            int[] colors = tag.getIntArray(COLORS);
+            if (active >= 0 && active < colors.length) {
+                return colors[active] & 0xFFFFFF;
+            }
+        }
+        return DEFAULT_COLOR_SET[0].getRGB() & 0xFFFFFF;
+    }
 }
