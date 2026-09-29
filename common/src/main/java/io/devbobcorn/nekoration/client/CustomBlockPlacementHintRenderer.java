@@ -24,7 +24,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * Draws a wireframe hint of the entry that a held block item would add to the
  * Custom Block being looked at, but only when the entry's interaction and
- * collision shapes would not overlap the ones already stored.
+ * collision shapes would not overlap the ones already stored. Reports whether
+ * a hint was drawn so other placement hints are skipped while it is shown.
  */
 public final class CustomBlockPlacementHintRenderer {
     private static final float RED = 0.3F;
@@ -36,15 +37,16 @@ public final class CustomBlockPlacementHintRenderer {
     }
 
     /**
-     * Renders the hint, if applicable. Platform listeners call this from their
-     * block-highlight render event with the event's data.
+     * Renders the hint, if applicable, and reports whether it was drawn. Platform
+     * listeners call this from their block-highlight render event with the
+     * event's data.
      */
-    public static void render(BlockHitResult hit, Vec3 cameraPos, PoseStack poseStack,
+    public static boolean render(BlockHitResult hit, Vec3 cameraPos, PoseStack poseStack,
             net.minecraft.client.renderer.MultiBufferSource bufferSource) {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
         if (player == null || minecraft.level == null) {
-            return;
+            return false;
         }
 
         ItemStack stack = player.getMainHandItem();
@@ -53,17 +55,25 @@ public final class CustomBlockPlacementHintRenderer {
             stack = player.getOffhandItem();
             hand = InteractionHand.OFF_HAND;
             if (!isEntryStack(stack)) {
-                return;
+                return false;
             }
         }
 
         BlockItem blockItem = (BlockItem) stack.getItem();
         BlockPlaceContext placeContext = new BlockPlaceContext(player, hand, stack, hit);
-        BlockPos pos = minecraft.level.getBlockState(hit.getBlockPos()).getBlock() instanceof CustomBlock
-                ? hit.getBlockPos()
-                : placeContext.getClickedPos();
+        // The entry goes to the Custom Block at the placement position when one
+        // is there, and to the clicked Custom Block otherwise.
+        BlockPos placement = placeContext.getClickedPos();
+        boolean atPlacement = minecraft.level.getBlockEntity(placement) instanceof CustomBlockEntity;
+        BlockPos pos = atPlacement ? placement : hit.getBlockPos();
         if (!(minecraft.level.getBlockEntity(pos) instanceof CustomBlockEntity customBlock)) {
-            return;
+            return false;
+        }
+        // Sneaking bypasses the clicked Custom Block and places the held block
+        // normally instead; only a Custom Block at the placement position still
+        // receives the entry.
+        if (!atPlacement && player.isSecondaryUseActive()) {
+            return false;
         }
 
         BlockState displayState = blockItem.getBlock().getStateForPlacement(placeContext);
@@ -73,7 +83,7 @@ public final class CustomBlockPlacementHintRenderer {
 
         CollisionContext context = CollisionContext.of(player);
         if (!customBlock.canAddEntry(displayState, minecraft.level, pos, context)) {
-            return;
+            return false;
         }
         VoxelShape shape = displayState.getShape(minecraft.level, pos, context);
 
@@ -88,6 +98,7 @@ public final class CustomBlockPlacementHintRenderer {
                     x + aabb.maxX, y + aabb.maxY, z + aabb.maxZ,
                     RED, GREEN, BLUE, ALPHA);
         }
+        return true;
     }
 
     private static boolean isEntryStack(ItemStack stack) {

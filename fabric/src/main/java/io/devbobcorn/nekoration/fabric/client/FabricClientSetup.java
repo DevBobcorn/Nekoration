@@ -73,13 +73,7 @@ public final class FabricClientSetup {
         // Placement hint renderers (the event hands us the vanilla block hit result).
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((worldRenderContext, hitResult) -> {
             if (hitResult instanceof BlockHitResult hit) {
-                io.devbobcorn.nekoration.client.AwningPlacementHintRenderer.render(hit,
-                        worldRenderContext.camera().getPosition(), worldRenderContext.matrixStack(),
-                        worldRenderContext.consumers());
-                io.devbobcorn.nekoration.client.FrameSidePlacementHintRenderer.render(hit,
-                        worldRenderContext.camera().getPosition(), worldRenderContext.matrixStack(),
-                        worldRenderContext.consumers());
-                io.devbobcorn.nekoration.client.CustomBlockPlacementHintRenderer.render(hit,
+                io.devbobcorn.nekoration.client.PlacementHintRenderers.render(hit,
                         worldRenderContext.camera().getPosition(), worldRenderContext.matrixStack(),
                         worldRenderContext.consumers());
             }

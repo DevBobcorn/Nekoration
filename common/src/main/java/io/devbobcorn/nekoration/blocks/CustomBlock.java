@@ -106,23 +106,25 @@ public class CustomBlock extends Block implements EntityBlock {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         if (stack.getItem() instanceof BlockItem blockItem && !(blockItem.getBlock() instanceof CustomBlock)) {
-            if (!level.isClientSide) {
-                BlockState displayState = entryState(blockItem,
-                        new BlockPlaceContext(player, hand, stack, hitResult));
-                if (customBlock.canAddEntry(displayState, level, pos, CollisionContext.of(player))) {
-                    customBlock.addEntry(displayState);
-                    customBlock.markUpdated();
-                }
+            if (!tryAddEntry(customBlock, blockItem, new BlockPlaceContext(player, hand, stack, hitResult), level,
+                    pos, player)) {
+                // The entry does not fit: let the block be placed normally.
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    /** Handles block items used on a neighbor surface whose placement position is a Custom Block. */
+    /**
+     * Handles block items whose placement position lands in a Custom Block,
+     * whether the clicked surface belongs to a normal block or to another
+     * Custom Block. In the latter case the entry goes to the block occupying
+     * the placement position, matching where the block would be placed.
+     */
     public static InteractionResult addEntryFromPlacement(Player player, Level level, InteractionHand hand,
             BlockHitResult hitResult) {
-        if (player.isSpectator() || level.getBlockState(hitResult.getBlockPos()).getBlock() instanceof CustomBlock) {
+        if (player.isSpectator()) {
             return InteractionResult.PASS;
         }
         ItemStack stack = player.getItemInHand(hand);
@@ -134,12 +136,24 @@ public class CustomBlock extends Block implements EntityBlock {
         if (!(level.getBlockEntity(pos) instanceof CustomBlockEntity customBlock)) {
             return InteractionResult.PASS;
         }
+        // The placement position is occupied by a Custom Block, so the entry is
+        // consumed here even when it does not fit: the block cannot be placed.
+        tryAddEntry(customBlock, blockItem, context, level, pos, player);
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    /** Stores the held block state as an entry when it fits, on the server only. */
+    private static boolean tryAddEntry(CustomBlockEntity customBlock, BlockItem blockItem, BlockPlaceContext context,
+            Level level, BlockPos pos, Player player) {
         BlockState displayState = entryState(blockItem, context);
-        if (!level.isClientSide && customBlock.canAddEntry(displayState, level, pos, CollisionContext.of(player))) {
+        if (!customBlock.canAddEntry(displayState, level, pos, CollisionContext.of(player))) {
+            return false;
+        }
+        if (!level.isClientSide) {
             customBlock.addEntry(displayState);
             customBlock.markUpdated();
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return true;
     }
 
     private static BlockState entryState(BlockItem blockItem, BlockPlaceContext context) {
