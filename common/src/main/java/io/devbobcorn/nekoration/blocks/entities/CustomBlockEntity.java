@@ -166,6 +166,13 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
+    public void toggleActiveTintAllFaces() {
+        CustomEntry entry = activeEntry();
+        if (entry != null) {
+            entry.toggleTintAllFaces();
+        }
+    }
+
     /** Moves the active entry along one axis, in 1/32 block units. */
     public void moveActive(int axis, int amount) {
         CustomEntry entry = activeEntry();
@@ -262,12 +269,14 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
     public static final class CustomEntry {
         private static final String DISPLAY = "Display";
         private static final String TINTED = "Tinted";
+        private static final String TINT_ALL_FACES = "TintAllFaces";
         private static final String COLOR = "Color";
         private static final String DIR = "Dir";
         private static final String OFFSET = "Offset";
 
         private final BlockState displayState;
         private boolean tinted;
+        private boolean tintAllFaces = true;
         private int color = 0xFFFFFF;
         private byte dir;
         private int[] offset = new int[3];
@@ -282,6 +291,10 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
 
         public boolean tinted() {
             return tinted;
+        }
+
+        public boolean tintAllFaces() {
+            return tintAllFaces;
         }
 
         public int color() {
@@ -305,6 +318,10 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
             tinted = false;
         }
 
+        public void toggleTintAllFaces() {
+            tintAllFaces = !tintAllFaces;
+        }
+
         public void move(int axis, int amount) {
             if (axis < 0 || axis > 2) {
                 return;
@@ -320,6 +337,7 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
             CompoundTag tag = new CompoundTag();
             tag.put(DISPLAY, NbtUtils.writeBlockState(displayState));
             tag.putBoolean(TINTED, tinted);
+            tag.putBoolean(TINT_ALL_FACES, tintAllFaces);
             tag.putInt(COLOR, color);
             tag.putByte(DIR, dir);
             tag.putIntArray(OFFSET, offset);
@@ -337,6 +355,7 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
             }
             CustomEntry entry = new CustomEntry(displayState);
             entry.tinted = tag.getBoolean(TINTED);
+            entry.tintAllFaces = !tag.contains(TINT_ALL_FACES, Tag.TAG_BYTE) || tag.getBoolean(TINT_ALL_FACES);
             entry.color = tag.contains(COLOR, Tag.TAG_ANY_NUMERIC) ? tag.getInt(COLOR) & 0xFFFFFF : 0xFFFFFF;
             entry.dir = (byte) Mth.positiveModulo(tag.getByte(DIR), DIRECTION_STEPS);
             int[] offset = tag.getIntArray(OFFSET);

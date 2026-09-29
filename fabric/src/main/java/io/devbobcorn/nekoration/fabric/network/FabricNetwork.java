@@ -6,6 +6,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import io.devbobcorn.nekoration.network.CustomBlockClearPayload;
+import io.devbobcorn.nekoration.network.CustomBlockEditPayload;
 import io.devbobcorn.nekoration.network.CustomBlockUpdatePayload;
 import io.devbobcorn.nekoration.network.EaselMenuUpdatePayload;
 import io.devbobcorn.nekoration.network.PaintingDataUpdatePayload;
@@ -31,6 +32,7 @@ public final class FabricNetwork {
         PayloadTypeRegistry.playC2S().register(PaletteUpdatePayload.TYPE, PaletteUpdatePayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(CustomBlockUpdatePayload.TYPE, CustomBlockUpdatePayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(CustomBlockClearPayload.TYPE, CustomBlockClearPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(CustomBlockEditPayload.TYPE, CustomBlockEditPayload.STREAM_CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(EaselMenuUpdatePayload.TYPE,
                 (payload, context) -> EaselMenuUpdatePayload.handle(payload, serverContext(context.player())));
@@ -46,6 +48,8 @@ public final class FabricNetwork {
                 (payload, context) -> CustomBlockUpdatePayload.handle(payload, serverContext(context.player())));
         ServerPlayNetworking.registerGlobalReceiver(CustomBlockClearPayload.TYPE,
                 (payload, context) -> CustomBlockClearPayload.handle(payload, serverContext(context.player())));
+        ServerPlayNetworking.registerGlobalReceiver(CustomBlockEditPayload.TYPE,
+                (payload, context) -> CustomBlockEditPayload.handle(payload, serverContext(context.player())));
     }
 
     public static void sendToClient(ServerPlayer player, CustomPacketPayload payload) {

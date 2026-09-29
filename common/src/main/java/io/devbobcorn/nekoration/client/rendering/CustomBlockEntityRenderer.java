@@ -45,7 +45,6 @@ public class CustomBlockEntityRenderer implements BlockEntityRenderer<CustomBloc
             return;
         }
         BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
-        CustomRendererTintGetter tintGetter = new CustomRendererTintGetter(level);
         RandomSource random = RandomSource.create();
         long seed = blockEntity.getBlockPos().asLong();
 
@@ -54,7 +53,7 @@ public class CustomBlockEntityRenderer implements BlockEntityRenderer<CustomBloc
             CustomBlockEntity.CustomEntry entry = blockEntity.entry(index);
             if (entry != null) {
                 hasEntries = true;
-                renderEntry(blockEntity, entry, index, level, dispatcher, tintGetter, poseStack, buffer, packedLight,
+                renderEntry(blockEntity, entry, index, level, dispatcher, poseStack, buffer, packedLight,
                         packedOverlay, random, seed);
             }
         }
@@ -74,7 +73,7 @@ public class CustomBlockEntityRenderer implements BlockEntityRenderer<CustomBloc
 
     @SuppressWarnings("deprecation")
     private static void renderEntry(CustomBlockEntity blockEntity, CustomBlockEntity.CustomEntry entry, int index,
-            Level level, BlockRenderDispatcher dispatcher, CustomRendererTintGetter tintGetter, PoseStack poseStack,
+            Level level, BlockRenderDispatcher dispatcher, PoseStack poseStack,
             MultiBufferSource buffer, int packedLight, int packedOverlay, RandomSource random, long seed) {
         BlockState state = entry.displayState();
         if (state.isAir()) {
@@ -90,14 +89,10 @@ public class CustomBlockEntityRenderer implements BlockEntityRenderer<CustomBloc
         // tesselateBlock already applies directional face shading. Entity render
         // layers shade normals again, making the displayed block too dark.
         RenderType renderType = ItemBlockRenderTypes.getChunkRenderType(state);
-        if (entry.tinted()) {
-            tintGetter.setCustomTint(entry.color());
-            dispatcher.getModelRenderer().tesselateBlock(tintGetter, model, state, blockEntity.getBlockPos(),
-                    poseStack, buffer.getBuffer(renderType), false, random, seed + index, packedOverlay);
-        } else {
-            dispatcher.getModelRenderer().tesselateBlock(level, model, state, blockEntity.getBlockPos(),
-                    poseStack, buffer.getBuffer(renderType), false, random, seed + index, packedOverlay);
-        }
+        var consumer = buffer.getBuffer(renderType);
+        dispatcher.getModelRenderer().tesselateBlock(level, model, state, blockEntity.getBlockPos(),
+                poseStack, entry.tinted() ? new ColorTintVertexConsumer(consumer, entry.color(), entry.tintAllFaces()) : consumer,
+                false, random, seed + index, packedOverlay);
         poseStack.popPose();
     }
 

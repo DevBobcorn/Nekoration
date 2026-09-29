@@ -30,6 +30,8 @@ public final class NekorationNetwork {
                 (payload, ctx) -> CustomBlockUpdatePayload.handle(payload, adapt(ctx)));
         registrar.playToServer(CustomBlockClearPayload.TYPE, CustomBlockClearPayload.STREAM_CODEC,
                 (payload, ctx) -> CustomBlockClearPayload.handle(payload, adapt(ctx)));
+        registrar.playToServer(CustomBlockEditPayload.TYPE, CustomBlockEditPayload.STREAM_CODEC,
+                (payload, ctx) -> CustomBlockEditPayload.handle(payload, adapt(ctx)));
         registrar.playToClient(PaintingDataBroadcastPayload.TYPE, PaintingDataBroadcastPayload.STREAM_CODEC,
                 (payload, ctx) -> PaintingDataBroadcastPayload.handle(payload, adapt(ctx)));
         registrar.playToClient(PaintingInitPayload.TYPE, PaintingInitPayload.STREAM_CODEC,
