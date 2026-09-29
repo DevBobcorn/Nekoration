@@ -127,7 +127,9 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         }
         BlockRenderDispatcher dispatcher = minecraft.getBlockRenderer();
         BakedModel model = dispatcher.getBlockModel(state);
-        RenderType renderType = ItemBlockRenderTypes.getRenderType(state, false);
+        // The world block layer keeps the tessellator's face shading from being
+        // applied a second time by an entity shader.
+        RenderType renderType = ItemBlockRenderTypes.getChunkRenderType(state);
         CustomRendererTintGetter tintGetter = new CustomRendererTintGetter(level);
         tintGetter.setFullBright(true);
         tintGetter.setTintPos(menu.getCustomBlock().getBlockPos());

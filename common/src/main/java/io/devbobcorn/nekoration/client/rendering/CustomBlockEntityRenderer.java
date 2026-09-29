@@ -87,7 +87,9 @@ public class CustomBlockEntityRenderer implements BlockEntityRenderer<CustomBloc
         poseStack.translate(-0.5D, 0.0D, -0.5D);
 
         BakedModel model = dispatcher.getBlockModel(state);
-        RenderType renderType = ItemBlockRenderTypes.getRenderType(state, false);
+        // tesselateBlock already applies directional face shading. Entity render
+        // layers shade normals again, making the displayed block too dark.
+        RenderType renderType = ItemBlockRenderTypes.getChunkRenderType(state);
         if (entry.tinted()) {
             tintGetter.setCustomTint(entry.color());
             dispatcher.getModelRenderer().tesselateBlock(tintGetter, model, state, blockEntity.getBlockPos(),
