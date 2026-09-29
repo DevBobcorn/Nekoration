@@ -16,6 +16,9 @@
     ],
     "client": [
       "io.devbobcorn.nekoration.fabric.NekorationFabricClient"
+    ],
+    "jade": [
+      "io.devbobcorn.nekoration.fabric.compat.jade.NekorationJadePlugin"
     ]
   },
   "depends": {

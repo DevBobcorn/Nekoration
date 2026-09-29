@@ -80,12 +80,23 @@ public final class FabricConfig implements NekoConfigData {
         }
     }
 
-    private static void save(Path path, FabricConfig config) {
+    private static boolean save(Path path, FabricConfig config) {
         try {
             JsonElement element = CODEC.encodeStart(JsonOps.INSTANCE, config).getOrThrow();
             Files.writeString(path, GSON.toJson(element));
+            return true;
         } catch (IOException | IllegalStateException e) {
             Nekoration.LOGGER.warn("Failed to write {}", FILE_NAME, e);
+            return false;
+        }
+    }
+
+    public static void update(boolean useImageRendering, boolean simplifyRendering, boolean debugMode,
+            int maxUndoLimit, BopDisplayMode bopDisplayMode) {
+        FabricConfig next = new FabricConfig(useImageRendering, simplifyRendering, debugMode,
+                maxUndoLimit, bopDisplayMode);
+        if (save(FabricLoader.getInstance().getConfigDir().resolve(FILE_NAME), next)) {
+            instance = next;
         }
     }
 

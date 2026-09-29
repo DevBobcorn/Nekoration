@@ -21,6 +21,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     // Annotations used by the common sources (on NeoForge's classpath out of the box).
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+    modCompileOnly "maven.modrinth:jade:${jade_version}+fabric"
 }
 
 loom {

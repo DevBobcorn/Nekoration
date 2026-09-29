@@ -14,6 +14,8 @@ import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,6 +29,7 @@ import io.devbobcorn.nekoration.client.rendering.PaintingTooltipRenderer;
 import io.devbobcorn.nekoration.client.rendering.WallpaperItemRenderer;
 import io.devbobcorn.nekoration.fabric.client.ct.FabricModelSwapper;
 import io.devbobcorn.nekoration.fabric.client.network.FabricClientNetwork;
+import io.devbobcorn.nekoration.fabric.client.config.FabricConfigScreen;
 import io.devbobcorn.nekoration.blocks.containers.EaselMenuMenu;
 import io.devbobcorn.nekoration.items.PaintingTooltipComponent;
 import io.devbobcorn.nekoration.registry.ModItems;
@@ -65,7 +68,8 @@ public final class FabricClientSetup {
         BuiltinItemRendererRegistry.INSTANCE.register(ModItems.WALLPAPER.get(), (stack, mode, matrices, consumers,
                 light, overlay) -> wallpaperRenderer().renderByItem(stack, mode, matrices, consumers, light, overlay));
         // Painting tooltip preview.
-        TooltipComponentCallback.EVENT.register(component -> new PaintingTooltipRenderer((PaintingTooltipComponent) component));
+        TooltipComponentCallback.EVENT.register(component -> component instanceof PaintingTooltipComponent painting
+                ? new PaintingTooltipRenderer(painting) : null);
         // Placement hint renderers (the event hands us the vanilla block hit result).
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((worldRenderContext, hitResult) -> {
             if (hitResult instanceof BlockHitResult hit) {
@@ -96,6 +100,7 @@ public final class FabricClientSetup {
         });
         // Creative tab filters.
         registerCreativeTabFilter();
+        registerConfigScreen();
         // Networking (client-to-server sending + server->client payloads + client receivers).
         FabricClientNetwork.register();
         // Menu screens (vanilla register API is private: reflect once).
@@ -122,6 +127,17 @@ public final class FabricClientSetup {
             }
         });
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> NekoCreativeTabFilterClient.reset());
+    }
+
+    private static void registerConfigScreen() {
+        ScreenEvents.AFTER_INIT.register((minecraft, screen, scaledWidth, scaledHeight) -> {
+            if (screen instanceof OptionsScreen) {
+                Screens.getButtons(screen).add(Button.builder(
+                        Component.literal("Nekoration"),
+                        button -> minecraft.setScreen(new FabricConfigScreen(screen)))
+                        .bounds(scaledWidth - 104, 6, 98, 20).build());
+            }
+        });
     }
 
     /**
