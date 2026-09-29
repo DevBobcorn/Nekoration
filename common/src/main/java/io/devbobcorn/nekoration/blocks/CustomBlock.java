@@ -1,9 +1,8 @@
 package io.devbobcorn.nekoration.blocks;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-
-import javax.annotation.Nullable;
 
 import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import io.devbobcorn.nekoration.items.PaletteItem;
@@ -11,9 +10,7 @@ import io.devbobcorn.nekoration.items.TweakItem;
 import io.devbobcorn.nekoration.registry.ModItems;
 import io.devbobcorn.nekoration.xplat.NekoPlatform;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -25,6 +22,7 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,7 +32,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -66,8 +66,7 @@ public class CustomBlock extends Block implements EntityBlock {
         }
         if (player.isSecondaryUseActive()) {
             if (!level.isClientSide) {
-                customBlock.toggleShowHint();
-                customBlock.markUpdated();
+                dropPointedEntry(level, pos, player, customBlock);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -149,42 +148,36 @@ public class CustomBlock extends Block implements EntityBlock {
     }
 
     /**
-     * Peels the pointed entry off the Custom Block. Returns {@code false} to cancel
-     * the break while entries remain, and {@code true} to let the last one break
-     * the block itself.
+     * Drops the entry the player is pointing at and removes it from the block.
+     * Unlike block breaking, this always drops the entry, even in Creative mode.
+     * The block itself stays in place, so removing its last entry leaves it in
+     * the empty state rendered by its default model. When no entry is pointed
+     * at, the arrow hint is toggled instead.
      */
-    public static boolean beforeBlockBreak(Level level, Player player, BlockPos pos, BlockState state,
-            @Nullable BlockEntity blockEntity) {
-        if (!(blockEntity instanceof CustomBlockEntity customBlock)) {
-            return true;
-        }
+    private static void dropPointedEntry(Level level, BlockPos pos, Player player, CustomBlockEntity customBlock) {
         int pointed = customBlock.pointedEntry(level, pos, player);
         CustomBlockEntity.CustomEntry entry = customBlock.entry(pointed);
         if (entry == null) {
-            return true;
-        }
-        if (!level.isClientSide && !player.isCreative()) {
-            ItemStack drop = new ItemStack(entry.displayState().getBlock());
-            if (!drop.isEmpty()) {
-                Block.popResource(level, pos, drop);
-            }
-        }
-        if (customBlock.entryCount() <= 1) {
-            return true;
-        }
-        if (!level.isClientSide) {
-            customBlock.removeEntry(pointed);
+            customBlock.toggleShowHint();
             customBlock.markUpdated();
-            level.scheduleTick(pos, state.getBlock(), 2);
+            return;
         }
-        return false;
+        ItemStack drop = entryItem(entry.displayState(), level, pos);
+        if (!drop.isEmpty()) {
+            Block.popResource(level, pos, drop);
+        }
+        customBlock.removeEntry(pointed);
+        customBlock.markUpdated();
     }
 
-    @Override
-    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (level.getBlockEntity(pos) instanceof CustomBlockEntity customBlock) {
-            customBlock.markUpdated();
-        }
+    /**
+     * Item form of a display entry, built like the block it displays would be
+     * picked or dropped, so data components such as the dye color are kept.
+     * Empty when the displayed block has no item form.
+     */
+    @SuppressWarnings("deprecation")
+    private static ItemStack entryItem(BlockState displayState, LevelReader level, BlockPos pos) {
+        return displayState.getBlock().getCloneItemStack(level, pos, displayState);
     }
 
     @Override
@@ -227,7 +220,23 @@ public class CustomBlock extends Block implements EntityBlock {
 
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        return List.of(new ItemStack(asItem()));
+        List<ItemStack> drops = new ArrayList<>();
+        drops.add(new ItemStack(asItem()));
+        if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof CustomBlockEntity customBlock) {
+            Vec3 origin = builder.getOptionalParameter(LootContextParams.ORIGIN);
+            BlockPos pos = origin == null ? customBlock.getBlockPos() : BlockPos.containing(origin);
+            for (int index = 0; index < CustomBlockEntity.MAX_ENTRIES; index++) {
+                CustomBlockEntity.CustomEntry entry = customBlock.entry(index);
+                if (entry == null) {
+                    continue;
+                }
+                ItemStack drop = entryItem(entry.displayState(), builder.getLevel(), pos);
+                if (!drop.isEmpty()) {
+                    drops.add(drop);
+                }
+            }
+        }
+        return drops;
     }
 
     @Override
