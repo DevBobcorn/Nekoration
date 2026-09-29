@@ -10,7 +10,7 @@ import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.network.PacketDistributor;
 import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
-import io.devbobcorn.nekoration.NekoConfig;
+import io.devbobcorn.nekoration.neoforge.NekoConfig;
 import io.devbobcorn.nekoration.xplat.NekoConfigData;
 import io.devbobcorn.nekoration.xplat.NekoPlatformImpl;
 

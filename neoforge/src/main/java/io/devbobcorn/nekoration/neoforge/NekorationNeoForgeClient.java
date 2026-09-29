@@ -17,7 +17,7 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.client.NekoClientSetup;
-import io.devbobcorn.nekoration.client.ct.NekoModelSwapper;
+import io.devbobcorn.nekoration.neoforge.client.ct.NekoModelSwapper;
 import io.devbobcorn.nekoration.client.rendering.WallpaperItemRenderer;
 import io.devbobcorn.nekoration.client.rendering.PaintingTooltipRenderer;
 import io.devbobcorn.nekoration.items.PaintingTooltipComponent;

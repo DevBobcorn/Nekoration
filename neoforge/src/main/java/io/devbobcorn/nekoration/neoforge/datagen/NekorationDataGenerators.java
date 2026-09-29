@@ -1,0 +1,38 @@
+package io.devbobcorn.nekoration.neoforge.datagen;
+
+import io.devbobcorn.nekoration.Nekoration;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+
+@EventBusSubscriber(modid = Nekoration.MODID)
+public final class NekorationDataGenerators {
+    private NekorationDataGenerators() {
+    }
+
+    @SubscribeEvent
+    public static void gatherData(GatherDataEvent event) {
+        event.getGenerator().addProvider(
+                event.includeClient(),
+                new StoneBlockAssetProvider(event.getGenerator().getPackOutput()));
+        event.getGenerator().addProvider(
+                event.includeClient(),
+                new CementBlockAssetProvider(event.getGenerator().getPackOutput()));
+        event.getGenerator().addProvider(
+                event.includeClient(),
+                new WoodenBlockAssetProvider(event.getGenerator().getPackOutput()));
+        event.getGenerator().addProvider(
+                event.includeClient(),
+                new NekoTextureAssetProvider(event.getGenerator().getPackOutput()));
+        event.getGenerator().addProvider(
+                event.includeClient(),
+                new OrnamentAssetProvider(event.getGenerator().getPackOutput()));
+        event.getGenerator().addProvider(
+                event.includeServer(),
+                new NekorationBlockTagsProvider(event.getGenerator().getPackOutput(), event.getLookupProvider(),
+                        event.getExistingFileHelper()));
+        event.getGenerator().addProvider(
+                event.includeServer(),
+                new NekoRecipeProvider(event.getGenerator().getPackOutput(), event.getLookupProvider()));
+    }
+}

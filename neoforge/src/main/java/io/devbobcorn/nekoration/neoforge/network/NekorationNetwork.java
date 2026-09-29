@@ -1,0 +1,64 @@
+package io.devbobcorn.nekoration.neoforge.network;
+
+import io.devbobcorn.nekoration.network.CustomBlockClearPayload;
+import io.devbobcorn.nekoration.network.CustomBlockEditPayload;
+import io.devbobcorn.nekoration.network.CustomBlockUpdatePayload;
+import io.devbobcorn.nekoration.network.EaselMenuUpdatePayload;
+import io.devbobcorn.nekoration.network.PaintingDataBroadcastPayload;
+import io.devbobcorn.nekoration.network.PaintingDataUpdatePayload;
+import io.devbobcorn.nekoration.network.PaintingInitPayload;
+import io.devbobcorn.nekoration.network.PaintingSignUpdatePayload;
+import io.devbobcorn.nekoration.network.PaintingSizeUpdatePayload;
+import io.devbobcorn.nekoration.network.PaletteUpdatePayload;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import io.devbobcorn.nekoration.xplat.PayloadContext;
+
+/**
+ * NeoForge payload channel registration. The payload records and their
+ * handling logic live in common; only this wiring is loader-specific.
+ */
+public final class NekorationNetwork {
+    private NekorationNetwork() {
+    }
+
+    public static void register(final RegisterPayloadHandlersEvent event) {
+        final var registrar = event.registrar("1");
+        registrar.playToServer(EaselMenuUpdatePayload.TYPE, EaselMenuUpdatePayload.STREAM_CODEC,
+                (payload, ctx) -> EaselMenuUpdatePayload.handle(payload, adapt(ctx)));
+        // Painting...
+        registrar.playToServer(PaintingDataUpdatePayload.TYPE, PaintingDataUpdatePayload.STREAM_CODEC,
+                (payload, ctx) -> PaintingDataUpdatePayload.handle(payload, adapt(ctx)));
+        registrar.playToServer(PaintingSizeUpdatePayload.TYPE, PaintingSizeUpdatePayload.STREAM_CODEC,
+                (payload, ctx) -> PaintingSizeUpdatePayload.handle(payload, adapt(ctx)));
+        registrar.playToServer(PaintingSignUpdatePayload.TYPE, PaintingSignUpdatePayload.STREAM_CODEC,
+                (payload, ctx) -> PaintingSignUpdatePayload.handle(payload, adapt(ctx)));
+        registrar.playToServer(PaletteUpdatePayload.TYPE, PaletteUpdatePayload.STREAM_CODEC,
+                (payload, ctx) -> PaletteUpdatePayload.handle(payload, adapt(ctx)));
+        registrar.playToServer(CustomBlockUpdatePayload.TYPE, CustomBlockUpdatePayload.STREAM_CODEC,
+                (payload, ctx) -> CustomBlockUpdatePayload.handle(payload, adapt(ctx)));
+        registrar.playToServer(CustomBlockClearPayload.TYPE, CustomBlockClearPayload.STREAM_CODEC,
+                (payload, ctx) -> CustomBlockClearPayload.handle(payload, adapt(ctx)));
+        registrar.playToServer(CustomBlockEditPayload.TYPE, CustomBlockEditPayload.STREAM_CODEC,
+                (payload, ctx) -> CustomBlockEditPayload.handle(payload, adapt(ctx)));
+        registrar.playToClient(PaintingDataBroadcastPayload.TYPE, PaintingDataBroadcastPayload.STREAM_CODEC,
+                (payload, ctx) -> PaintingDataBroadcastPayload.handle(payload, adapt(ctx)));
+        registrar.playToClient(PaintingInitPayload.TYPE, PaintingInitPayload.STREAM_CODEC,
+                (payload, ctx) -> PaintingInitPayload.handle(payload, adapt(ctx)));
+    }
+
+    private static PayloadContext adapt(IPayloadContext context) {
+        return new PayloadContext() {
+            @Override
+            public Player player() {
+                return context.player();
+            }
+
+            @Override
+            public void enqueue(Runnable work) {
+                context.enqueueWork(work);
+            }
+        };
+    }
+}

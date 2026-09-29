@@ -5,11 +5,11 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import io.devbobcorn.nekoration.NekoConfig;
+import io.devbobcorn.nekoration.neoforge.NekoConfig;
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.neoforge.xplat.NeoForgeRegistrar;
 import io.devbobcorn.nekoration.neoforge.xplat.NeoForgePlatform;
-import io.devbobcorn.nekoration.network.NekorationNetwork;
+import io.devbobcorn.nekoration.neoforge.network.NekorationNetwork;
 import io.devbobcorn.nekoration.xplat.NekoPlatform;
 
 /**

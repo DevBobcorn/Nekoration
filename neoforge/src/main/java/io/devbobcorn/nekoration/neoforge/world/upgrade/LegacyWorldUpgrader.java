@@ -1,0 +1,697 @@
+package io.devbobcorn.nekoration.neoforge.world.upgrade;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import io.devbobcorn.nekoration.Nekoration;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.util.SimpleBitStorage;
+
+/** Rewrites v1 data before Minecraft attempts to resolve its registry ids. */
+public final class LegacyWorldUpgrader {
+    private static final String PREFIX = Nekoration.MODID + ":";
+    private static final String[] V1_COLOR_NAMES = {
+            "black", "blue", "brown", "cyan", "gray", "green", "light_blue", "light_gray",
+            "lime", "magenta", "orange", "pink", "purple", "red", "white", "yellow"
+    };
+    private static final String[] V1_WOODS = {
+            "dark_oak", "magic", "spruce", "warped", "jungle", "pine", "magic", "oak",
+            "willow", "crimson", "acacia", "cherry", "umbran", "redwood", "birch", "palm"
+    };
+    private static final byte[] V2_COLOR_IDS = {
+            3, 12, 4, 10, 2, 9, 11, 1, 8, 14, 6, 15, 13, 5, 0, 7
+    };
+    private static final String[] VANILLA_DYE_NAMES = {
+            "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
+            "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black"
+    };
+    private static final Map<String, String> BANNER_PATTERN_IDS = Map.ofEntries(
+            Map.entry("b", "minecraft:base"),
+            Map.entry("bl", "minecraft:square_bottom_left"),
+            Map.entry("br", "minecraft:square_bottom_right"),
+            Map.entry("tl", "minecraft:square_top_left"),
+            Map.entry("tr", "minecraft:square_top_right"),
+            Map.entry("bs", "minecraft:stripe_bottom"),
+            Map.entry("ts", "minecraft:stripe_top"),
+            Map.entry("ls", "minecraft:stripe_left"),
+            Map.entry("rs", "minecraft:stripe_right"),
+            Map.entry("cs", "minecraft:stripe_center"),
+            Map.entry("ms", "minecraft:stripe_middle"),
+            Map.entry("drs", "minecraft:stripe_downright"),
+            Map.entry("dls", "minecraft:stripe_downleft"),
+            Map.entry("ss", "minecraft:small_stripes"),
+            Map.entry("cr", "minecraft:cross"),
+            Map.entry("sc", "minecraft:straight_cross"),
+            Map.entry("bt", "minecraft:triangle_bottom"),
+            Map.entry("tt", "minecraft:triangle_top"),
+            Map.entry("bts", "minecraft:triangles_bottom"),
+            Map.entry("tts", "minecraft:triangles_top"),
+            Map.entry("ld", "minecraft:diagonal_left"),
+            Map.entry("rd", "minecraft:diagonal_up_right"),
+            Map.entry("lud", "minecraft:diagonal_up_left"),
+            Map.entry("rud", "minecraft:diagonal_right"),
+            Map.entry("mc", "minecraft:circle"),
+            Map.entry("mr", "minecraft:rhombus"),
+            Map.entry("vh", "minecraft:half_vertical"),
+            Map.entry("hh", "minecraft:half_horizontal"),
+            Map.entry("vhr", "minecraft:half_vertical_right"),
+            Map.entry("hhb", "minecraft:half_horizontal_bottom"),
+            Map.entry("bo", "minecraft:border"),
+            Map.entry("cbo", "minecraft:curly_border"),
+            Map.entry("gra", "minecraft:gradient"),
+            Map.entry("gru", "minecraft:gradient_up"),
+            Map.entry("bri", "minecraft:bricks"),
+            Map.entry("glb", "minecraft:globe"),
+            Map.entry("cre", "minecraft:creeper"),
+            Map.entry("sku", "minecraft:skull"),
+            Map.entry("flo", "minecraft:flower"),
+            Map.entry("moj", "minecraft:mojang"),
+            Map.entry("pig", "minecraft:piglin"));
+
+    private static final Map<String, String> SIMPLE_RENAMES = Map.ofEntries(
+            Map.entry("window_top", "cement_frame_peak"),
+            Map.entry("window_sill", "cement_frame_sill"),
+            Map.entry("stone_base", "cement"),
+            Map.entry("stone_base_bottom", "cement_base"),
+            Map.entry("stone_frame", "paneled_cement"),
+            Map.entry("stone_frame_bottom", "paneled_cement_base"),
+            Map.entry("stone_pillar", "cement_pillar_simple"),
+            Map.entry("stone_doric", "cement_pillar_doric"),
+            Map.entry("stone_ionic", "cement_pillar_ionic"),
+            Map.entry("stone_corinthian", "cement_pillar_corinthian"),
+            Map.entry("stone_pillar_bottom", "cement_pillar_base"),
+            Map.entry("stone_layered", "layered_cement"),
+            Map.entry("stone_pot", "cement_pot"),
+            Map.entry("stone_planter", "cement_planter"),
+            Map.entry("lamp_post_iron", "iron_lamp_post"),
+            Map.entry("lamp_post_gold", "gold_lamp_post"),
+            Map.entry("lamp_post_quartz", "quartz_lamp_post"),
+            Map.entry("candle_holder_iron", "iron_candle_holder"),
+            Map.entry("candle_holder_gold", "gold_candle_holder"),
+            Map.entry("candle_holder_quartz", "quartz_candle_holder"),
+            Map.entry("flower_basket_iron", "iron_flower_basket"),
+            Map.entry("flower_basket_gold", "gold_flower_basket"),
+            Map.entry("flower_basket_quartz", "quartz_flower_basket"),
+            Map.entry("awning_pure_short", "short_awning_pure"),
+            Map.entry("awning_stripe_short", "short_awning_stripe"),
+            Map.entry("door_1", "quartz_door"),
+            Map.entry("door_2", "chiseled_quartz_door"),
+            Map.entry("door_3", "quartz_bricks_door"),
+            Map.entry("door_tall_1", "tall_quartz_door"),
+            Map.entry("door_tall_2", "tall_chiseled_quartz_door"),
+            Map.entry("door_tall_3", "tall_quartz_bricks_door"),
+            Map.entry("custom", "custom_block"));
+
+    private static final Set<String> COLOR_ITEMS = Set.of(
+            "window_top", "window_sill", "window_frame", "window_plant",
+            "stone_base", "stone_base_bottom", "stone_frame", "stone_frame_bottom", "stone_pillar",
+            "stone_doric", "stone_ionic", "stone_corinthian", "stone_pillar_bottom", "stone_layered",
+            "stone_pot", "stone_planter", "candle_holder_iron", "candle_holder_gold",
+            "candle_holder_quartz", "awning_pure", "awning_stripe", "awning_pure_short",
+            "awning_stripe_short");
+
+    private static final Set<String> COLOR_BLOCKS = Set.of(
+            "window_top", "window_sill", "window_frame", "window_plant",
+            "stone_base", "stone_base_bottom", "stone_frame", "stone_frame_bottom", "stone_pillar",
+            "stone_doric", "stone_ionic", "stone_corinthian", "stone_pillar_bottom", "stone_layered",
+            "stone_pot", "stone_planter", "candle_holder_iron", "candle_holder_gold",
+            "candle_holder_quartz", "awning_pure", "awning_stripe", "awning_pure_short",
+            "awning_stripe_short", "door_1", "door_2", "door_3", "door_tall_1", "door_tall_2",
+            "door_tall_3");
+
+    private static final Set<String> WOODEN_BLOCKS = Set.of(
+            "window_simple", "window_arch", "window_cross", "window_shade", "window_lancet",
+            "glass_table", "glass_round_table", "arm_chair", "bench", "drawer", "cabinet",
+            "drawer_chest", "cupboard", "shelf", "wall_shelf", "easel_menu", "easel_menu_white");
+    private static final Set<String> COLLIDING_STONE_IDS = Set.of("stone_pot", "stone_planter");
+
+    private LegacyWorldUpgrader() {
+    }
+
+    public static void upgradeChunk(CompoundTag chunk) {
+        upgradeItemStacks(chunk);
+        upgradeCustomBlockEntities(chunk);
+        ListTag sections = chunk.getList("sections", Tag.TAG_COMPOUND);
+        Map<Integer, SectionBlockStates> sectionsByY = new HashMap<>();
+        for (int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++) {
+            CompoundTag section = sections.getCompound(sectionIndex);
+            SectionBlockStates blockStates = SectionBlockStates.read(section);
+            if (blockStates != null) {
+                sectionsByY.putIfAbsent((int) section.getByte("Y"), blockStates);
+            }
+        }
+
+        boolean insertedTallDoorTop = false;
+        for (Map.Entry<Integer, SectionBlockStates> entry : sectionsByY.entrySet()) {
+            int sectionY = entry.getKey();
+            SectionBlockStates source = entry.getValue();
+            if (source.values == null) {
+                continue;
+            }
+            for (int index = 0; index < source.values.length; index++) {
+                CompoundTag state = source.palette.get(source.values[index]);
+                if (!isLegacyTallDoorUpper(state)) {
+                    continue;
+                }
+
+                int localY = index >> 8;
+                SectionBlockStates target = localY < 15 ? source : sectionsByY.get(sectionY + 1);
+                if (target == null || target.values == null) {
+                    continue;
+                }
+                int targetIndex = localY < 15 ? index + 256 : index & 255;
+                CompoundTag upperState = state.copy();
+                upgradeBlockState(upperState);
+                upperState.getCompound("Properties").putString("segment", "upper");
+                CompoundTag targetState = target.palette.get(target.values[targetIndex]);
+                if (targetState.equals(upperState)) {
+                    continue;
+                }
+                if (!isAir(targetState)) {
+                    continue;
+                }
+                target.values[targetIndex] = target.palette.size();
+                target.palette.add(upperState);
+                target.dirty = true;
+                insertedTallDoorTop = true;
+            }
+        }
+
+        for (SectionBlockStates section : sectionsByY.values()) {
+            for (CompoundTag state : section.palette) {
+                section.dirty |= upgradeBlockState(state);
+            }
+            section.write();
+        }
+        if (insertedTallDoorTop) {
+            chunk.remove("Heightmaps");
+            chunk.remove("isLightOn");
+        }
+    }
+
+    private static void upgradeCustomBlockEntities(CompoundTag chunk) {
+        ListTag blockEntities = chunk.getList("block_entities", Tag.TAG_COMPOUND);
+        for (int index = 0; index < blockEntities.size(); index++) {
+            CompoundTag blockEntity = blockEntities.getCompound(index);
+            if (!blockEntity.getString("id").equals(PREFIX + "custom")) {
+                continue;
+            }
+            byte flags = blockEntity.contains("StateFlag", Tag.TAG_BYTE) ? blockEntity.getByte("StateFlag") : 0;
+            ListTag entries = new ListTag();
+            if (blockEntity.contains("Display", Tag.TAG_COMPOUND)) {
+                CompoundTag display = blockEntity.getCompound("Display").copy();
+                upgradeBlockState(display);
+                if (!isAir(display)) {
+                    CompoundTag entry = new CompoundTag();
+                    entry.put("Display", display);
+                    entry.putBoolean("Tinted", (flags & 1) > 0);
+                    int[] color = blockEntity.getIntArray("Color");
+                    int rgb = color.length >= 3
+                            ? ((color[0] & 0xFF) << 16) | ((color[1] & 0xFF) << 8) | (color[2] & 0xFF)
+                            : 0xFFFFFF;
+                    entry.putInt("Color", rgb);
+                    entry.putByte("Dir", blockEntity.getByte("Dir"));
+                    entry.putIntArray("Offset", blockEntity.getIntArray("Offset"));
+                    entries.add(entry);
+                }
+            }
+            blockEntity.putString("id", PREFIX + "custom_block");
+            blockEntity.put("Entries", entries);
+            blockEntity.putByte("Active", (byte) 0);
+            blockEntity.putBoolean("ShowHint", (flags & 2) > 0);
+            blockEntity.remove("Dir");
+            blockEntity.remove("Offset");
+            blockEntity.remove("StateFlag");
+            blockEntity.remove("Color");
+            blockEntity.remove("Display");
+        }
+    }
+
+    private static boolean isLegacyTallDoorUpper(CompoundTag state) {
+        String name = state.getString("Name");
+        if (!name.equals(PREFIX + "door_tall_1") && !name.equals(PREFIX + "door_tall_2")
+                && !name.equals(PREFIX + "door_tall_3")) {
+            return false;
+        }
+        return state.getCompound("Properties").getString("half").equals("upper");
+    }
+
+    private static boolean isAir(CompoundTag state) {
+        return switch (state.getString("Name")) {
+            case "minecraft:air", "minecraft:cave_air", "minecraft:void_air" -> true;
+            default -> false;
+        };
+    }
+
+    private static void writePalette(CompoundTag blockStates, List<CompoundTag> palette, int[] values) {
+        List<CompoundTag> uniqueStates = new ArrayList<>();
+        int[] remappedPalette = new int[palette.size()];
+        for (int oldIndex = 0; oldIndex < palette.size(); oldIndex++) {
+            CompoundTag state = palette.get(oldIndex);
+            int newIndex = uniqueStates.indexOf(state);
+            if (newIndex < 0) {
+                newIndex = uniqueStates.size();
+                uniqueStates.add(state);
+            }
+            remappedPalette[oldIndex] = newIndex;
+        }
+        for (int index = 0; index < values.length; index++) {
+            values[index] = remappedPalette[values[index]];
+        }
+
+        ListTag newPalette = new ListTag();
+        newPalette.addAll(uniqueStates);
+        blockStates.put("palette", newPalette);
+        if (uniqueStates.size() == 1) {
+            blockStates.remove("data");
+        } else {
+            SimpleBitStorage newStorage = new SimpleBitStorage(
+                    serializedBlockStateBits(uniqueStates.size()), values.length, values);
+            blockStates.putLongArray("data", newStorage.getRaw());
+        }
+    }
+
+    private static int serializedBlockStateBits(int paletteSize) {
+        return Math.max(4, 32 - Integer.numberOfLeadingZeros(paletteSize - 1));
+    }
+
+    private static final class SectionBlockStates {
+        private final CompoundTag blockStates;
+        private final List<CompoundTag> palette;
+        private final int[] values;
+        private boolean dirty;
+
+        private SectionBlockStates(CompoundTag blockStates, List<CompoundTag> palette, int[] values) {
+            this.blockStates = blockStates;
+            this.palette = palette;
+            this.values = values;
+        }
+
+        private static SectionBlockStates read(CompoundTag section) {
+            if (!section.contains("block_states", Tag.TAG_COMPOUND)) {
+                return null;
+            }
+            CompoundTag blockStates = section.getCompound("block_states");
+            ListTag paletteTag = blockStates.getList("palette", Tag.TAG_COMPOUND);
+            if (paletteTag.isEmpty()) {
+                return null;
+            }
+            List<CompoundTag> palette = new ArrayList<>(paletteTag.size());
+            for (int index = 0; index < paletteTag.size(); index++) {
+                palette.add(paletteTag.getCompound(index));
+            }
+
+            int[] values = new int[4096];
+            if (palette.size() > 1) {
+                if (!blockStates.contains("data", Tag.TAG_LONG_ARRAY)) {
+                    return new SectionBlockStates(blockStates, palette, null);
+                }
+                try {
+                    SimpleBitStorage storage = new SimpleBitStorage(
+                            serializedBlockStateBits(palette.size()), values.length, blockStates.getLongArray("data"));
+                    storage.unpack(values);
+                } catch (RuntimeException exception) {
+                    return new SectionBlockStates(blockStates, palette, null);
+                }
+                for (int value : values) {
+                    if (value >= palette.size()) {
+                        return new SectionBlockStates(blockStates, palette, null);
+                    }
+                }
+            }
+            return new SectionBlockStates(blockStates, palette, values);
+        }
+
+        private void write() {
+            if (values != null && (dirty || palette.size() != Set.copyOf(palette).size())) {
+                writePalette(blockStates, palette, values);
+            }
+        }
+    }
+
+    /** Rewrites every legacy-format item stack nested in the supplied saved data. */
+    public static void upgradeItemStacks(CompoundTag data) {
+        upgradeNestedTag(data);
+    }
+
+    /** Moves custom item data left outside components by data fixes for modded containers. */
+    public static void finalizeItemStacks(CompoundTag data) {
+        finalizeNestedTag(data);
+    }
+
+    private static void upgradeNestedTag(Tag tag) {
+        if (tag instanceof CompoundTag compound) {
+            upgradeItemStack(compound);
+            upgradeWallpaperEntity(compound);
+            for (String key : Set.copyOf(compound.getAllKeys())) {
+                upgradeNestedTag(compound.get(key));
+            }
+        } else if (tag instanceof ListTag list) {
+            for (int index = 0; index < list.size(); index++) {
+                upgradeNestedTag(list.get(index));
+            }
+        }
+    }
+
+    private static void finalizeNestedTag(Tag tag) {
+        if (tag instanceof CompoundTag compound) {
+            finalizeItemStack(compound);
+            for (String key : Set.copyOf(compound.getAllKeys())) {
+                finalizeNestedTag(compound.get(key));
+            }
+        } else if (tag instanceof ListTag list) {
+            for (int index = 0; index < list.size(); index++) {
+                finalizeNestedTag(list.get(index));
+            }
+        }
+    }
+
+    static boolean finalizeItemStack(CompoundTag stack) {
+        boolean legacyCount = stack.contains("Count", Tag.TAG_ANY_NUMERIC);
+        if ((!legacyCount && !stack.contains("count", Tag.TAG_ANY_NUMERIC))
+                || !stack.getString("id").startsWith(PREFIX)) {
+            return false;
+        }
+
+        if (legacyCount) {
+            stack.putInt("count", stack.getInt("Count"));
+            stack.remove("Count");
+        }
+
+        boolean movedLegacyTag = false;
+        if (stack.contains("tag", Tag.TAG_COMPOUND)) {
+            CompoundTag legacyTag = stack.getCompound("tag");
+            CompoundTag components = stack.contains("components", Tag.TAG_COMPOUND)
+                    ? stack.getCompound("components")
+                    : new CompoundTag();
+            if (stack.getString("id").equals(PREFIX + "wallpaper")) {
+                moveWallpaperItemData(legacyTag, components);
+            }
+            if (!legacyTag.isEmpty()) {
+                CompoundTag customData = components.contains("minecraft:custom_data", Tag.TAG_COMPOUND)
+                        ? components.getCompound("minecraft:custom_data")
+                        : new CompoundTag();
+                customData.merge(legacyTag);
+                components.put("minecraft:custom_data", customData);
+            }
+            stack.put("components", components);
+            stack.remove("tag");
+            movedLegacyTag = true;
+        }
+        if (stack.getString("id").equals(PREFIX + "wallpaper")
+                && stack.contains("components", Tag.TAG_COMPOUND)) {
+            CompoundTag components = stack.getCompound("components");
+            if (components.contains("minecraft:custom_data", Tag.TAG_COMPOUND)) {
+                CompoundTag customData = components.getCompound("minecraft:custom_data");
+                movedLegacyTag |= moveWallpaperItemData(customData, components);
+                if (customData.isEmpty()) {
+                    components.remove("minecraft:custom_data");
+                }
+            }
+        }
+        return legacyCount || movedLegacyTag;
+    }
+
+    static boolean upgradeItemStack(CompoundTag stack) {
+        // V1 stacks use Count; requiring it also distinguishes colliding v2 item ids after migration.
+        if (!stack.contains("Count", Tag.TAG_ANY_NUMERIC)) {
+            return false;
+        }
+        String id = stack.getString("id");
+        if (!id.startsWith(PREFIX)) {
+            return false;
+        }
+
+        String oldPath = id.substring(PREFIX.length());
+        String newPath = SIMPLE_RENAMES.getOrDefault(oldPath, oldPath);
+        CompoundTag itemTag = stack.contains("tag", Tag.TAG_COMPOUND)
+                ? stack.getCompound("tag")
+                : new CompoundTag();
+        boolean recognized = SIMPLE_RENAMES.containsKey(oldPath) || COLOR_ITEMS.contains(oldPath)
+                || oldPath.equals("wallpaper");
+
+        if (oldPath.startsWith("half_timber_p")) {
+            String wood = V1_WOODS[getItemOrdinal(itemTag, "color_0", 0)];
+            String pattern = oldPath.replace("half_timber_pillar_", "half_timber_");
+            newPath = wood + "_" + pattern;
+            itemTag.putByte("color", V2_COLOR_IDS[getItemOrdinal(itemTag, "color_1", 0)]);
+            itemTag.remove("color_0");
+            itemTag.remove("color_1");
+            recognized = true;
+        } else if (WOODEN_BLOCKS.contains(oldPath)) {
+            String wood = V1_WOODS[getItemOrdinal(itemTag, "color", 0)];
+            itemTag.remove("color");
+            String suffix = switch (oldPath) {
+                case "glass_round_table" -> "round_glass_table";
+                case "arm_chair" -> "armchair";
+                case "shelf" -> "cupboard";
+                case "easel_menu_white" -> "easel_menu";
+                default -> oldPath;
+            };
+            newPath = wood + "_" + suffix;
+            if (oldPath.equals("easel_menu") || oldPath.equals("easel_menu_white")) {
+                itemTag.putByte("color", oldPath.equals("easel_menu_white") ? (byte) 0 : (byte) 3);
+            }
+            recognized = true;
+        } else if (COLOR_ITEMS.contains(oldPath)) {
+            itemTag.putByte("color", V2_COLOR_IDS[getItemOrdinal(itemTag, "color", 0)]);
+            if (oldPath.equals("window_frame")) {
+                newPath = "cement_frame_side";
+            }
+        } else if (oldPath.equals("wallpaper")) {
+            CompoundTag components = stack.contains("components", Tag.TAG_COMPOUND)
+                    ? stack.getCompound("components")
+                    : new CompoundTag();
+            if (moveWallpaperItemData(itemTag, components)) {
+                stack.put("components", components);
+            }
+        }
+
+        if (!recognized) {
+            return false;
+        }
+        stack.putString("id", PREFIX + newPath);
+        if (!itemTag.isEmpty()) {
+            stack.put("tag", itemTag);
+        }
+        return true;
+    }
+
+    static boolean upgradeWallpaperEntity(CompoundTag entity) {
+        if (!entity.getString("id").equals(PREFIX + "wallpaper")
+                || (!entity.contains("Base", Tag.TAG_ANY_NUMERIC)
+                        && !entity.contains("Patterns", Tag.TAG_LIST))) {
+            return false;
+        }
+
+        CompoundTag item = entity.contains("Item", Tag.TAG_COMPOUND)
+                ? entity.getCompound("Item")
+                : new CompoundTag();
+        item.putString("id", PREFIX + "wallpaper");
+        item.putInt("count", 1);
+        CompoundTag components = item.contains("components", Tag.TAG_COMPOUND)
+                ? item.getCompound("components")
+                : new CompoundTag();
+        moveWallpaperPatternData(entity, components);
+        item.put("components", components);
+        entity.put("Item", item);
+        entity.remove("Base");
+        entity.remove("Patterns");
+        return true;
+    }
+
+    private static boolean moveWallpaperItemData(CompoundTag itemTag, CompoundTag components) {
+        if (!itemTag.contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
+            return false;
+        }
+        CompoundTag wallpaperData = itemTag.getCompound("BlockEntityTag");
+        boolean moved = moveWallpaperPatternData(wallpaperData, components);
+        if (moved) {
+            wallpaperData.remove("Base");
+            wallpaperData.remove("Patterns");
+            if (wallpaperData.isEmpty()) {
+                itemTag.remove("BlockEntityTag");
+            }
+        }
+        return moved;
+    }
+
+    private static boolean moveWallpaperPatternData(CompoundTag legacyData, CompoundTag components) {
+        boolean moved = false;
+        if (legacyData.contains("Base", Tag.TAG_ANY_NUMERIC)) {
+            components.putString("minecraft:base_color", vanillaDyeName(legacyData.getInt("Base")));
+            moved = true;
+        }
+        if (legacyData.contains("Patterns", Tag.TAG_LIST)) {
+            ListTag oldPatterns = legacyData.getList("Patterns", Tag.TAG_COMPOUND);
+            ListTag newPatterns = new ListTag();
+            for (int index = 0; index < oldPatterns.size(); index++) {
+                CompoundTag oldPattern = oldPatterns.getCompound(index);
+                CompoundTag newPattern = new CompoundTag();
+                String pattern = oldPattern.getString("Pattern");
+                newPattern.putString("pattern", BANNER_PATTERN_IDS.getOrDefault(pattern, pattern));
+                newPattern.putString("color", vanillaDyeName(oldPattern.getInt("Color")));
+                newPatterns.add(newPattern);
+            }
+            components.put("minecraft:banner_patterns", newPatterns);
+            moved = true;
+        }
+        return moved;
+    }
+
+    private static String vanillaDyeName(int id) {
+        return VANILLA_DYE_NAMES[id >= 0 && id < VANILLA_DYE_NAMES.length ? id : 0];
+    }
+
+    private static int getItemOrdinal(CompoundTag itemTag, String key, int defaultValue) {
+        if (!itemTag.contains(key, Tag.TAG_ANY_NUMERIC)) {
+            return defaultValue;
+        }
+        int ordinal = itemTag.getInt(key);
+        return ordinal >= 0 && ordinal < 16 ? ordinal : defaultValue;
+    }
+
+    static boolean upgradeBlockState(CompoundTag state) {
+        String id = state.getString("Name");
+        if (!id.startsWith(PREFIX)) {
+            return false;
+        }
+
+        String oldPath = id.substring(PREFIX.length());
+        CompoundTag original = state.copy();
+        CompoundTag properties = state.contains("Properties", Tag.TAG_COMPOUND)
+                ? state.getCompound("Properties")
+                : new CompoundTag();
+        if (oldPath.equals("dream_was_taken")) {
+            state.putString("Name", "minecraft:air");
+            state.remove("Properties");
+            return true;
+        }
+        if (COLLIDING_STONE_IDS.contains(oldPath) && !properties.contains("level", Tag.TAG_STRING)) {
+            return false;
+        }
+        String newPath = SIMPLE_RENAMES.getOrDefault(oldPath, oldPath);
+
+        if (COLOR_BLOCKS.contains(oldPath)) {
+            renameColorProperty(properties, "level", "color");
+        }
+
+        if (oldPath.equals("window_frame")) {
+            newPath = upgradeWindowFrame(properties);
+        } else if (oldPath.startsWith("half_timber_p")) {
+            newPath = upgradeHalfTimber(oldPath, properties);
+        } else if (WOODEN_BLOCKS.contains(oldPath)) {
+            newPath = upgradeWoodenBlock(oldPath, properties);
+        }
+
+        if (oldPath.startsWith("window_") && !oldPath.equals("window_plant")
+                && !oldPath.equals("window_top") && !oldPath.equals("window_sill")
+                && !oldPath.equals("window_frame")) {
+            properties.remove("vertical_connection");
+        }
+        if (oldPath.startsWith("stone_") && oldPath.endsWith("_bottom")) {
+            properties.remove("vertical_connection");
+        }
+        if (oldPath.startsWith("candle_holder_")) {
+            properties.putString("flame", switch (properties.getString("age")) {
+                case "1" -> "flame";
+                case "2" -> "soul_flame";
+                case "3" -> "firework";
+                default -> "none";
+            });
+            properties.remove("age");
+        }
+        if (oldPath.startsWith("door_tall_")) {
+            String segment = properties.getString("half").equals("upper") ? "middle" : "lower";
+            properties.putString("segment", segment);
+            properties.putString("half", segment.equals("lower") ? "lower" : "upper");
+        }
+
+        state.putString("Name", newPath.equals("minecraft:air") ? newPath : PREFIX + newPath);
+        if (properties.isEmpty()) {
+            state.remove("Properties");
+        } else {
+            state.put("Properties", properties);
+        }
+        return !state.equals(original);
+    }
+
+    private static String upgradeWindowFrame(CompoundTag properties) {
+        String framePart = properties.getString("frame_part");
+        boolean left = properties.getString("left").equals("true");
+        boolean right = properties.getString("right").equals("true");
+        if (!framePart.equals("middle") && (!left || !right)) {
+            for (String key : Set.copyOf(properties.getAllKeys())) {
+                properties.remove(key);
+            }
+            return "minecraft:air";
+        }
+        String newPath = switch (framePart) {
+            case "top" -> "cement_frame_head";
+            case "middle" -> "cement_frame_side";
+            default -> "cement_frame_sill";
+        };
+        if (framePart.equals("middle")) {
+            properties.putString("frame_connection", left == right ? "both" : left ? "right" : "left");
+        } else {
+            properties.putString("horizontal_connection", "s0");
+        }
+        properties.remove("frame_part");
+        properties.remove("left");
+        properties.remove("right");
+        return newPath;
+    }
+
+    private static String upgradeHalfTimber(String oldPath, CompoundTag properties) {
+        String wood = removeWood(properties);
+        renameColorProperty(properties, "age", "color");
+        String pattern = oldPath.replace("half_timber_pillar_", "half_timber_");
+        if (!oldPath.startsWith("half_timber_pillar_")) {
+            properties.putString("vertical_connection", "s0");
+        }
+        return wood + "_" + pattern;
+    }
+
+    private static String upgradeWoodenBlock(String oldPath, CompoundTag properties) {
+        String wood = removeWood(properties);
+        if (oldPath.equals("easel_menu") || oldPath.equals("easel_menu_white")) {
+            properties.putString("color", oldPath.equals("easel_menu_white") ? "white" : "black");
+        }
+        String suffix = switch (oldPath) {
+            case "glass_round_table" -> "round_glass_table";
+            case "arm_chair" -> "armchair";
+            case "shelf" -> "cupboard";
+            case "easel_menu_white" -> "easel_menu";
+            default -> oldPath;
+        };
+        return wood + "_" + suffix;
+    }
+
+    private static String removeWood(CompoundTag properties) {
+        int oldColor = parseOrdinal(properties.getString("level"));
+        properties.remove("level");
+        return V1_WOODS[oldColor];
+    }
+
+    private static void renameColorProperty(CompoundTag properties, String oldName, String newName) {
+        if (!properties.contains(oldName, Tag.TAG_STRING)) {
+            return;
+        }
+        properties.putString(newName, V1_COLOR_NAMES[parseOrdinal(properties.getString(oldName))]);
+        properties.remove(oldName);
+    }
+
+    private static int parseOrdinal(String value) {
+        try {
+            int ordinal = Integer.parseInt(value);
+            return ordinal >= 0 && ordinal < 16 ? ordinal : 0;
+        } catch (NumberFormatException ignored) {
+            return 0;
+        }
+    }
+}

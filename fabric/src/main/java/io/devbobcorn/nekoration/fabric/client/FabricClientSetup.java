@@ -25,6 +25,8 @@ import io.devbobcorn.nekoration.client.creative.NekoCreativeTabFilterClient;
 import io.devbobcorn.nekoration.client.gui.screen.EaselMenuScreen;
 import io.devbobcorn.nekoration.client.rendering.PaintingTooltipRenderer;
 import io.devbobcorn.nekoration.client.rendering.WallpaperItemRenderer;
+import io.devbobcorn.nekoration.fabric.client.ct.FabricModelSwapper;
+import io.devbobcorn.nekoration.fabric.client.network.FabricClientNetwork;
 import io.devbobcorn.nekoration.blocks.containers.EaselMenuMenu;
 import io.devbobcorn.nekoration.items.PaintingTooltipComponent;
 import io.devbobcorn.nekoration.registry.ModItems;
@@ -95,46 +97,9 @@ public final class FabricClientSetup {
         // Creative tab filters.
         registerCreativeTabFilter();
         // Networking (client-to-server sending + server->client payloads + client receivers).
-        io.devbobcorn.nekoration.fabric.xplat.FabricPlatform.setClientSender(
-                net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking::send);
-        registerClientNetworking();
+        FabricClientNetwork.register();
         // Menu screens (vanilla register API is private: reflect once).
         registerScreens();
-    }
-
-    private static void registerClientNetworking() {
-        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.playS2C().register(
-                io.devbobcorn.nekoration.network.PaintingDataBroadcastPayload.TYPE,
-                io.devbobcorn.nekoration.network.PaintingDataBroadcastPayload.STREAM_CODEC);
-        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.playS2C().register(
-                io.devbobcorn.nekoration.network.PaintingInitPayload.TYPE,
-                io.devbobcorn.nekoration.network.PaintingInitPayload.STREAM_CODEC);
-        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
-                io.devbobcorn.nekoration.network.PaintingDataBroadcastPayload.TYPE,
-                (payload, context) -> io.devbobcorn.nekoration.network.PaintingDataBroadcastPayload.handle(payload, new io.devbobcorn.nekoration.xplat.PayloadContext() {
-                    @Override
-                    public net.minecraft.world.entity.player.Player player() {
-                        return context.player();
-                    }
-
-                    @Override
-                    public void enqueue(Runnable work) {
-                        Minecraft.getInstance().execute(work);
-                    }
-                }));
-        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
-                io.devbobcorn.nekoration.network.PaintingInitPayload.TYPE,
-                (payload, context) -> io.devbobcorn.nekoration.network.PaintingInitPayload.handle(payload, new io.devbobcorn.nekoration.xplat.PayloadContext() {
-                    @Override
-                    public net.minecraft.world.entity.player.Player player() {
-                        return context.player();
-                    }
-
-                    @Override
-                    public void enqueue(Runnable work) {
-                        Minecraft.getInstance().execute(work);
-                    }
-                }));
     }
 
     private static volatile BlockEntityWithoutLevelRenderer wallpaperRendererInstance;
