@@ -2,6 +2,7 @@ package io.devbobcorn.nekoration.client.gui.screen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -49,7 +50,9 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
     private static final int PANEL_COLOR = 0xB9000000;
     private static final int PANEL_BORDER = 0x805C5C5C;
     private static final int PANEL_WIDTH = 170;
-    private static final int CONTROL_HEIGHT = 224;
+    private static final int ENTRY_PANEL_HEIGHT = 151;
+    private static final int BLOCK_PANEL_GAP = 4;
+    private static final int BLOCK_PANEL_HEIGHT = 60;
     private static final int ROW_HEIGHT = 18;
     private static final int PREVIEW_SIZE = 16;
     private static final int LABEL_X = LIST_X + PREVIEW_SIZE + 4;
@@ -60,9 +63,10 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
     private static final int TEXT = 0xFFFFFFFF;
 
     private int scrollRow;
+    private boolean defaultSelectionApplied;
+    private boolean colorInputFocused;
+    private boolean updatingColorInput;
     private EditBox colorInput;
-    private Button tintButton;
-    private Button clearTintButton;
     private Button tintAllFacesButton;
     private Button aoButton;
     private final List<Button> entryButtons = new ArrayList<>();
@@ -84,33 +88,34 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
 
         int x = controlsX();
         int w = controlsWidth();
-        addStepButtons(x, w, 39, CustomBlockEditPayload.MOVE_X, entryButtons);
-        addStepButtons(x, w, 60, CustomBlockEditPayload.MOVE_Y, entryButtons);
-        addStepButtons(x, w, 81, CustomBlockEditPayload.MOVE_Z, entryButtons);
-        addStepButtons(x, w, 102, CustomBlockEditPayload.ROTATE, entryButtons);
+        addStepButtons(x, w, 37, CustomBlockEditPayload.MOVE_X, entryButtons);
+        addStepButtons(x, w, 56, CustomBlockEditPayload.MOVE_Y, entryButtons);
+        addStepButtons(x, w, 75, CustomBlockEditPayload.MOVE_Z, entryButtons);
+        addStepButtons(x, w, 94, CustomBlockEditPayload.ROTATE, entryButtons);
 
-        colorInput = new EditBox(font, x + 8, PANEL_Y + 132, Math.max(36, w - 73), 18,
+        colorInput = new EditBox(font, x + w - 57, PANEL_Y + 107, 48, 18,
                 Component.translatable("gui.nekoration.custom_block.color"));
         colorInput.setMaxLength(7);
-        colorInput.setFilter(value -> value.matches("#?[0-9a-fA-F]*"));
+        colorInput.setFilter(value -> value.matches("#?[0-9a-fA-F]{0,6}"));
+        colorInput.setResponder(this::onColorInputChanged);
+        if (!defaultSelectionApplied) {
+            defaultSelectionApplied = true;
+            selectPointedEntry();
+        }
         loadActiveColor();
         addRenderableWidget(colorInput);
-        tintButton = addRenderableWidget(Button.builder(Component.translatable("gui.nekoration.custom_block.apply"),
-                button -> applyColor()).bounds(x + w - 60, PANEL_Y + 132, 52, 18).build());
-        clearTintButton = addRenderableWidget(Button.builder(Component.translatable("gui.nekoration.custom_block.clear_color"),
-                button -> edit(CustomBlockEditPayload.CLEAR_TINT, 0))
-                .bounds(x + 8, PANEL_Y + 154, (w - 20) / 2, 18).build());
         tintAllFacesButton = addRenderableWidget(Button.builder(Component.empty(),
                 button -> edit(CustomBlockEditPayload.TOGGLE_TINT_ALL_FACES, 0))
-                .bounds(x + 10 + (w - 20) / 2, PANEL_Y + 154, (w - 20) / 2, 18).build());
+                .bounds(x + 8, PANEL_Y + 127, w - 16, 18).build());
         aoButton = addRenderableWidget(Button.builder(Component.empty(), button -> edit(CustomBlockEditPayload.TOGGLE_AO, 0))
-                .bounds(x + 8, PANEL_Y + 177, w - 16, 18).build());
-        addStepButtons(x, w, 203, CustomBlockEditPayload.CHANGE_LIGHT, lightButtons);
+                .bounds(x + 8, blockPanelTop() + 17, w - 16, 18).build());
+        addStepButtons(x, w, blockPanelTop() + 40, CustomBlockEditPayload.CHANGE_LIGHT, lightButtons);
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        // Keep the world visible around the two editor panels.
+        // Skip the vanilla blur/dark backdrop so the world stays visible, but still draw the panels.
+        renderBg(graphics, partialTick, mouseX, mouseY);
     }
 
     @Override
@@ -118,34 +123,35 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         panel(graphics, LIST_X - 3, PANEL_Y, LIST_X - 3 + listWidth(), height - 5);
         int x = controlsX();
         int w = controlsWidth();
-        panel(graphics, x, PANEL_Y, x + w, PANEL_Y + CONTROL_HEIGHT);
+        int blockTop = blockPanelTop();
+        panel(graphics, x, PANEL_Y, x + w, PANEL_Y + ENTRY_PANEL_HEIGHT);
+        panel(graphics, x, blockTop, x + w, blockTop + BLOCK_PANEL_HEIGHT);
         graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.entries"), LIST_X, 11, TEXT, false);
-        graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.controls"), x + 8, 11, TEXT, false);
+        graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.entry"), x + 8, 11, TEXT, false);
+        graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.controls"), x + 8, blockTop + 5, TEXT, false);
 
         CustomBlockEntity customBlock = menu.getCustomBlock();
         CustomBlockEntity.CustomEntry active = customBlock.activeEntry();
         String selected = active == null ? "-" : font.plainSubstrByWidth(entryName(active).getString(), w - 17);
         graphics.drawString(font, selected, x + 8, 25, ACTIVE_TEXT, false);
         if (active != null) {
-            graphics.drawString(font, "X: " + active.offset(0), x + 8, 45, TEXT, false);
-            graphics.drawString(font, "Y: " + active.offset(1), x + 8, 66, TEXT, false);
-            graphics.drawString(font, "Z: " + active.offset(2), x + 8, 87, TEXT, false);
+            graphics.drawString(font, "X: " + active.offset(0), x + 8, 43, TEXT, false);
+            graphics.drawString(font, "Y: " + active.offset(1), x + 8, 62, TEXT, false);
+            graphics.drawString(font, "Z: " + active.offset(2), x + 8, 81, TEXT, false);
             graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.rotation", active.dir() * 15),
-                    x + 8, 108, TEXT, false);
+                    x + 8, 100, TEXT, false);
         }
-        graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.color"), x + 8, 126, TEXT, false);
+        graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.color"), x + 8, 119, TEXT, false);
         int light = customBlock.getBlockState().getValue(CustomBlock.LIGHT);
         graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.light", light),
-                x + 8, 211, TEXT, false);
-        boolean ao = customBlock.getBlockState().getValue(CustomBlock.AMBIENT_OCCLUSION);
-        aoButton.setMessage(Component.translatable("gui.nekoration.custom_block.ao", Component.translatable(
+                x + 8, blockTop + 48, TEXT, false);
+        boolean ao = customBlock.getBlockState().getValue(CustomBlock.CAST_AO);
+        aoButton.setMessage(Component.translatable("gui.nekoration.custom_block.cast_ao", Component.translatable(
                 ao ? "options.on" : "options.off")));
-        tintAllFacesButton.setMessage(Component.translatable("gui.nekoration.custom_block.all_faces",
+        tintAllFacesButton.setMessage(Component.translatable("gui.nekoration.custom_block.tint_all_faces",
                 Component.translatable(active != null && active.tintAllFaces() ? "options.on" : "options.off")));
         boolean hasEntry = active != null;
         for (Button button : entryButtons) button.active = hasEntry;
-        tintButton.active = hasEntry;
-        clearTintButton.active = hasEntry && active.tinted();
         tintAllFacesButton.active = hasEntry;
         colorInput.active = hasEntry;
     }
@@ -156,14 +162,17 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         graphics.fill(x1, y2 - 1, x2, y2, PANEL_BORDER);
     }
 
-    private void addStepButtons(int x, int w, int y, int action, List<Button> buttons) {
-        int buttonY = PANEL_Y + y - 6;
+    private void addStepButtons(int x, int w, int buttonY, int action, List<Button> buttons) {
         for (int step : new int[]{-1, 1}) {
             int buttonX = x + w - (step < 0 ? 57 : 32);
             Button button = addRenderableWidget(Button.builder(Component.literal(step < 0 ? "-" : "+"),
                     ignored -> edit(action, step)).bounds(buttonX, buttonY, 23, 17).build());
             buttons.add(button);
         }
+    }
+
+    private static int blockPanelTop() {
+        return PANEL_Y + ENTRY_PANEL_HEIGHT + BLOCK_PANEL_GAP;
     }
 
     private void edit(int action, int value) {
@@ -185,16 +194,66 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         NekoPlatform.sendToServer(new CustomBlockEditPayload(customBlock.getBlockPos(), customBlock.activeIndex(), action, value));
     }
 
-    private void applyColor() {
-        String value = colorInput.getValue().replaceFirst("^#", "");
-        if (value.length() == 6) {
-            edit(CustomBlockEditPayload.TINT, Integer.parseInt(value, 16));
+    /** Uppercases typed hex digits and applies the color as soon as it is valid. */
+    private void onColorInputChanged(String value) {
+        if (updatingColorInput) {
+            return;
+        }
+        String upper = value.toUpperCase(Locale.ROOT);
+        if (!upper.equals(value)) {
+            int cursor = colorInput.getCursorPosition();
+            updatingColorInput = true;
+            colorInput.setValue(upper);
+            colorInput.setCursorPosition(cursor);
+            updatingColorInput = false;
+        }
+        String hex = upper.replaceFirst("^#", "");
+        if (!hex.isEmpty()) {
+            int color = Integer.parseInt(hex, 16);
+            colorInput.setTextColor(0xFF000000 | color);
+            edit(CustomBlockEditPayload.TINT, color);
+        } else {
+            colorInput.setTextColor(0xFFFFFF);
+        }
+    }
+
+    /** True while the input holds a color between 0 and FFFFFF; entries render white until then. */
+    public boolean hasValidColorInput() {
+        String hex = colorInput == null ? "" : colorInput.getValue().replaceFirst("^#", "");
+        return !hex.isEmpty() && hex.length() <= 6;
+    }
+
+    /** Sets the active entry's color to white when the input is left empty. */
+    private void revertInvalidColor() {
+        if (!hasValidColorInput()) {
+            updatingColorInput = true;
+            colorInput.setValue("FFFFFF");
+            updatingColorInput = false;
+            colorInput.setTextColor(0xFFFFFF);
+            edit(CustomBlockEditPayload.TINT, 0xFFFFFF);
         }
     }
 
     private void loadActiveColor() {
         CustomBlockEntity.CustomEntry active = menu.getCustomBlock().activeEntry();
-        colorInput.setValue(String.format("%06X", active == null ? 0xFFFFFF : active.color()));
+        int color = active == null ? 0xFFFFFF : active.color();
+        updatingColorInput = true;
+        colorInput.setValue(String.format("%06X", color));
+        updatingColorInput = false;
+        colorInput.setTextColor(0xFF000000 | color);
+    }
+
+    /** Selects the entry the player is pointing at when the screen first opens. */
+    private void selectPointedEntry() {
+        if (minecraft == null || minecraft.level == null || minecraft.player == null) {
+            return;
+        }
+        CustomBlockEntity customBlock = menu.getCustomBlock();
+        int pointed = customBlock.pointedEntry(minecraft.level, customBlock.getBlockPos(), minecraft.player);
+        if (pointed >= 0 && pointed != customBlock.activeIndex()) {
+            customBlock.setActive(pointed);
+            sendUpdate();
+        }
     }
 
     @Override
@@ -204,6 +263,10 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
+        if (colorInputFocused && !colorInput.isFocused()) {
+            revertInvalidColor();
+        }
+        colorInputFocused = colorInput.isFocused();
         List<Integer> entries = visibleEntries();
         int visibleRows = visibleRowCount();
         scrollRow = Mth.clamp(scrollRow, 0, Math.max(0, entries.size() - visibleRows));
@@ -232,13 +295,13 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
                         ACTIVE_BACKGROUND);
                 graphics.fill(LIST_X - 3, y - 1, LIST_X - 1, y + ROW_HEIGHT - 1, ACTIVE_ACCENT);
             }
-            renderPreview(graphics, entry, LIST_X, y);
+            renderPreview(graphics, entry, LIST_X, y, isActive && !hasValidColorInput());
             graphics.drawString(font, label, LABEL_X, y + 5, isActive ? ACTIVE_TEXT : TEXT, true);
         }
     }
 
     @SuppressWarnings("deprecation")
-    private void renderPreview(GuiGraphics graphics, CustomBlockEntity.CustomEntry entry, int x, int y) {
+    private void renderPreview(GuiGraphics graphics, CustomBlockEntity.CustomEntry entry, int x, int y, boolean white) {
         Level level = minecraft != null ? minecraft.level : null;
         if (level == null) {
             return;
@@ -264,7 +327,9 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         pose.translate(-0.5F, -0.5F, -0.5F);
         var consumer = graphics.bufferSource().getBuffer(renderType);
         dispatcher.getModelRenderer().tesselateBlock(tintGetter, model, state, BlockPos.ZERO, pose,
-                entry.tinted() ? new ColorTintVertexConsumer(consumer, entry.color(), entry.tintAllFaces()) : consumer,
+                entry.tinted() || white
+                        ? new ColorTintVertexConsumer(consumer, white ? 0xFFFFFF : entry.color(), entry.tintAllFaces())
+                        : consumer,
                 false, RandomSource.create(), 42L, OverlayTexture.NO_OVERLAY);
         graphics.flush();
         pose.popPose();

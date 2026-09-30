@@ -45,16 +45,16 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  */
 public class CustomBlock extends Block implements EntityBlock {
     public static final IntegerProperty LIGHT = BlockStateProperties.LEVEL;
-    public static final BooleanProperty AMBIENT_OCCLUSION = BooleanProperty.create("ambient_occlusion");
+    public static final BooleanProperty CAST_AO = BooleanProperty.create("cast_ao");
 
     public CustomBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState().setValue(AMBIENT_OCCLUSION, true));
+        registerDefaultState(defaultBlockState().setValue(CAST_AO, true));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(LIGHT, AMBIENT_OCCLUSION);
+        builder.add(LIGHT, CAST_AO);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class CustomBlock extends Block implements EntityBlock {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         if (stack.getItem() instanceof PickaxeItem) {
-            level.setBlock(pos, state.cycle(AMBIENT_OCCLUSION), Block.UPDATE_ALL);
+            level.setBlock(pos, state.cycle(CAST_AO), Block.UPDATE_ALL);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         if (stack.getItem() instanceof BlockItem blockItem && !(blockItem.getBlock() instanceof CustomBlock)) {
@@ -212,7 +212,7 @@ public class CustomBlock extends Block implements EntityBlock {
 
     @Override
     protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(AMBIENT_OCCLUSION) ? 0.2F : 1.0F;
+        return state.getValue(CAST_AO) ? 0.2F : 1.0F;
     }
 
     private static VoxelShape mergedEntryShapes(BlockGetter level, BlockPos pos, Function<BlockState, VoxelShape> shape) {

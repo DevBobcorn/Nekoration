@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
+import io.devbobcorn.nekoration.client.gui.screen.CustomBlockScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -17,7 +18,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Draws the shape of the entry a player is pointing at in white, and the
- * shapes of the other entries of the same Custom Block in black.
+ * shapes of the other entries of the same Custom Block in black. While the
+ * editor screen is open all entries are drawn in black.
  */
 public final class CustomBlockSelectionOutlineRenderer {
     private static final float WHITE_ALPHA = 0.5F;
@@ -37,7 +39,11 @@ public final class CustomBlockSelectionOutlineRenderer {
             return false;
         }
 
-        int pointed = customBlock.pointedEntry(level, pos, player);
+        // While the editor is open every entry is drawn alike; the selected one
+        // is marked by the yellow outline in the block entity renderer instead.
+        boolean editing = minecraft.screen instanceof CustomBlockScreen screen
+                && screen.getMenu().getCustomBlock().getBlockPos().equals(pos);
+        int pointed = editing ? -1 : customBlock.pointedEntry(level, pos, player);
         double x = pos.getX() - cameraPos.x;
         double y = pos.getY() - cameraPos.y;
         double z = pos.getZ() - cameraPos.z;

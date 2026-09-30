@@ -52,7 +52,7 @@ public record CustomBlockEditPayload(BlockPos pos, int entry, int action, int va
                 return;
             }
             if (payload.action() == TOGGLE_AO) {
-                player.level().setBlock(payload.pos(), state.cycle(CustomBlock.AMBIENT_OCCLUSION), Block.UPDATE_ALL);
+                player.level().setBlock(payload.pos(), state.cycle(CustomBlock.CAST_AO), Block.UPDATE_ALL);
                 return;
             }
             if (payload.action() == CHANGE_LIGHT) {
