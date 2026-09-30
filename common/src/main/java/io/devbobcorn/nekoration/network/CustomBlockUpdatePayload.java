@@ -13,9 +13,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 
 /**
- * Client -> server sync packet for the Custom Block's active entry and hint flag.
+ * Client -> server sync packet for the Custom Block's active entry.
  */
-public record CustomBlockUpdatePayload(BlockPos pos, int active, boolean showHint) implements CustomPacketPayload {
+public record CustomBlockUpdatePayload(BlockPos pos, int active) implements CustomPacketPayload {
 
     public static final Type<CustomBlockUpdatePayload> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(Nekoration.MODID, "custom_block_update"));
@@ -38,7 +38,6 @@ public record CustomBlockUpdatePayload(BlockPos pos, int active, boolean showHin
             }
             CustomBlockEntity customBlock = menu.getCustomBlock();
             customBlock.setActive(Mth.clamp(payload.active(), 0, CustomBlockEntity.MAX_ENTRIES - 1));
-            customBlock.setShowHint(payload.showHint());
             customBlock.markUpdated();
         });
     }
@@ -46,13 +45,11 @@ public record CustomBlockUpdatePayload(BlockPos pos, int active, boolean showHin
     private static CustomBlockUpdatePayload read(FriendlyByteBuf buffer) {
         BlockPos pos = buffer.readBlockPos();
         int active = buffer.readByte();
-        boolean showHint = buffer.readBoolean();
-        return new CustomBlockUpdatePayload(pos, active, showHint);
+        return new CustomBlockUpdatePayload(pos, active);
     }
 
     private void write(FriendlyByteBuf buffer) {
         buffer.writeBlockPos(pos);
         buffer.writeByte(active);
-        buffer.writeBoolean(showHint);
     }
 }

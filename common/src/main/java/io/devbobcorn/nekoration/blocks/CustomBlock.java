@@ -6,7 +6,6 @@ import java.util.function.Function;
 
 import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import io.devbobcorn.nekoration.items.PaletteItem;
-import io.devbobcorn.nekoration.items.TweakItem;
 import io.devbobcorn.nekoration.registry.ModItems;
 import io.devbobcorn.nekoration.xplat.NekoPlatform;
 import net.minecraft.core.BlockPos;
@@ -79,8 +78,7 @@ public class CustomBlock extends Block implements EntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hitResult) {
-        if (!(level.getBlockEntity(pos) instanceof CustomBlockEntity customBlock)
-                || stack.getItem() instanceof TweakItem) {
+        if (!(level.getBlockEntity(pos) instanceof CustomBlockEntity customBlock)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         if (stack.is(ModItems.PALETTE.get())) {
@@ -165,15 +163,12 @@ public class CustomBlock extends Block implements EntityBlock {
      * Drops the entry the player is pointing at and removes it from the block.
      * Unlike block breaking, this always drops the entry, even in Creative mode.
      * The block itself stays in place, so removing its last entry leaves it in
-     * the empty state rendered by its default model. When no entry is pointed
-     * at, the arrow hint is toggled instead.
+     * the empty state rendered by its default model.
      */
     private static void dropPointedEntry(Level level, BlockPos pos, Player player, CustomBlockEntity customBlock) {
         int pointed = customBlock.pointedEntry(level, pos, player);
         CustomBlockEntity.CustomEntry entry = customBlock.entry(pointed);
         if (entry == null) {
-            customBlock.toggleShowHint();
-            customBlock.markUpdated();
             return;
         }
         ItemStack drop = entryItem(entry.displayState(), level, pos);

@@ -382,7 +382,7 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
     private void sendUpdate() {
         CustomBlockEntity customBlock = menu.getCustomBlock();
         NekoPlatform.sendToServer(new CustomBlockUpdatePayload(customBlock.getBlockPos(),
-                customBlock.activeIndex(), customBlock.showHint()));
+                customBlock.activeIndex()));
     }
 
     private List<Integer> visibleEntries() {

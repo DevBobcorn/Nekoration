@@ -68,9 +68,9 @@ decortype_ids = ["window_attachment", "furniture", "container", "pots_and_plante
 decortypes_us = ["Window Attachment", "Furniture", "Container", "Pots and Planters", "Misc"]
 decortypes_cn = ["窗饰", "家具", "收纳", "花盆与种植盆", "杂项"]
 
-item_ids = ["brochure","paw","paw_up","paw_down","paw_left","paw_right","paw_near","paw_far","paw_15","paw_90","palette","painting.blank","painting.painted","painting.magic","wallpaper","camera"]
-items_us = ["Neko Brochure [WIP]","Cat's Paw","Move Up","Move Down","Move Left","Move Right","Move Near","Move Far","Rotate 15 Degrees","Rotate 90 Degrees","Palette","Blank Painting (%sx%s)","Painting (%sx%s)","Linked Painting (%sx%s)","%s Wallpaper","Camera"]
-items_cn = ["猫咪手册[WIP]","猫爪","上移","下移","左移","右移","前移","后移","旋转15度","旋转90度","调色板","空白画(%sx%s)","画(%sx%s)","链接画(%sx%s)","%s墙纸","相机"]
+item_ids = ["brochure","paw","palette","painting.blank","painting.painted","painting.magic","wallpaper","camera"]
+items_us = ["Neko Brochure [WIP]","Cat's Paw","Palette","Blank Painting (%sx%s)","Painting (%sx%s)","Linked Painting (%sx%s)","%s Wallpaper","Camera"]
+items_cn = ["猫咪手册[WIP]","猫爪","调色板","空白画(%sx%s)","画(%sx%s)","链接画(%sx%s)","%s墙纸","相机"]
 
 misc_ids = ["iron_lamp_post","gold_lamp_post","quartz_lamp_post","iron_candle_holder","gold_candle_holder","quartz_candle_holder","iron_flower_basket","gold_flower_basket","quartz_flower_basket","custom_block"]
 miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Custom Block"]

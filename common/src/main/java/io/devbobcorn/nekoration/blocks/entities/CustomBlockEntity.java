@@ -44,11 +44,9 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
 
     private static final String ENTRIES = "Entries";
     private static final String ACTIVE = "Active";
-    private static final String SHOW_HINT = "ShowHint";
 
     private final CustomEntry[] entries = new CustomEntry[MAX_ENTRIES];
     private int active;
-    private boolean showHint;
 
     public CustomBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.CUSTOM_BLOCK.get(), pos, state);
@@ -102,20 +100,8 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
         return pointed;
     }
 
-    public boolean showHint() {
-        return showHint;
-    }
-
     public void setActive(int index) {
         active = Mth.clamp(index, 0, MAX_ENTRIES - 1);
-    }
-
-    public void setShowHint(boolean value) {
-        showHint = value;
-    }
-
-    public void toggleShowHint() {
-        showHint = !showHint;
     }
 
     /** Adds a state to the first free slot, replacing the active entry when full. */
@@ -227,7 +213,6 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
         }
         tag.put(ENTRIES, list);
         tag.putByte(ACTIVE, (byte) active);
-        tag.putBoolean(SHOW_HINT, showHint);
     }
 
     @Override
@@ -240,7 +225,6 @@ public class CustomBlockEntity extends BlockEntity implements MenuProvider {
             entries[index] = CustomEntry.load(list.getCompound(index), blocks);
         }
         active = Mth.clamp(tag.getByte(ACTIVE), 0, MAX_ENTRIES - 1);
-        showHint = tag.getBoolean(SHOW_HINT);
     }
 
     @Override

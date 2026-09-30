@@ -223,7 +223,6 @@ public final class LegacyWorldUpgrader {
             blockEntity.putString("id", PREFIX + "custom_block");
             blockEntity.put("Entries", entries);
             blockEntity.putByte("Active", (byte) 0);
-            blockEntity.putBoolean("ShowHint", (flags & 2) > 0);
             blockEntity.remove("Dir");
             blockEntity.remove("Offset");
             blockEntity.remove("StateFlag");

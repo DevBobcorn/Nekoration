@@ -79,16 +79,11 @@ public final class FabricClientSetup {
             }
             return true;
         });
-        // Custom block entry outline and palette selection outline (both replace the vanilla outline).
+        // Custom block entry outline (replaces the vanilla outline).
         WorldRenderEvents.BLOCK_OUTLINE.register((worldRenderContext, blockOutlineContext) -> {
             net.minecraft.world.phys.Vec3 cameraPos = new net.minecraft.world.phys.Vec3(
                     blockOutlineContext.cameraX(), blockOutlineContext.cameraY(), blockOutlineContext.cameraZ());
-            if (io.devbobcorn.nekoration.client.CustomBlockSelectionOutlineRenderer.render(
-                    blockOutlineContext.blockPos(), cameraPos, worldRenderContext.matrixStack(),
-                    worldRenderContext.consumers())) {
-                return false;
-            }
-            return !io.devbobcorn.nekoration.client.PaletteSelectionOutlineRenderer.render(
+            return !io.devbobcorn.nekoration.client.CustomBlockSelectionOutlineRenderer.render(
                     blockOutlineContext.blockPos(), cameraPos, worldRenderContext.matrixStack(),
                     worldRenderContext.consumers());
         });

@@ -101,18 +101,9 @@ public final class ModCreativeTabs {
                         .title(Component.translatable("itemGroup.nekoration_tools"))
                         .icon(() -> new ItemStack(ModItems.PAW.get()))
                         .displayItems((parameters, output) -> {
-                            // Custom Block and its transformation tools...
+                            // Custom Block and its paw...
                             output.accept(new ItemStack(CustomBlockRegistration.CUSTOM_BLOCK_ITEM.get()));
                             output.accept(new ItemStack(ModItems.PAW.get()));
-                            output.accept(new ItemStack(ModItems.PAW_UP.get()));
-                            output.accept(new ItemStack(ModItems.PAW_DOWN.get()));
-                            output.accept(new ItemStack(ModItems.PAW_LEFT.get()));
-                            output.accept(new ItemStack(ModItems.PAW_RIGHT.get()));
-                            output.accept(new ItemStack(ModItems.PAW_NEAR.get()));
-                            output.accept(new ItemStack(ModItems.PAW_FAR.get()));
-                            output.accept(new ItemStack(ModItems.PAW_15.get()));
-                            output.accept(new ItemStack(ModItems.PAW_90.get()));
-                            output.accept(new ItemStack(ModItems.ARROW_HINT.get()));
                             // Wallpaper...
                             output.accept(new ItemStack(ModItems.WALLPAPER.get()));
                             // Paintings & Palettes...

@@ -256,7 +256,7 @@ The v1 `custom` block becomes `custom_block` in v2. It keeps the `level`(light e
 The block entity type is also renamed from `custom` to `custom_block`, and its data changes from one display to a list of up to 16 entries:
 
 - `Dir`, `Offset`, `Color` and `Display` from the v1 block entity become the first entry of the v2 `Entries` list. The v1 `StateFlag` bit 0(the re-tint flag) becomes that entry's `Tinted` flag, and `Color` is converted from an RGB int array to a single packed RGB int.
-- The v1 `StateFlag` bit 1(the arrow hint flag) becomes the v2 `ShowHint` flag, and `Active` is set to 0.
+- `Active` is set to 0, and the v1 `StateFlag` bit 1(the arrow hint flag) is dropped along with the removed hint feature.
 - A v1 display state id is converted like any other block state, so displays of v1 blocks(e.g. Window Frames) become their v2 counterparts.
 - `Display` states of air(including `dream_was_taken`) produce no entry.
 

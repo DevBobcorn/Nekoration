@@ -2,7 +2,6 @@ package io.devbobcorn.nekoration.neoforge.client;
 
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.client.CustomBlockSelectionOutlineRenderer;
-import io.devbobcorn.nekoration.client.PaletteSelectionOutlineRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -16,11 +15,6 @@ public final class NeoForgeOutlineRenderers {
     @SubscribeEvent
     public static void onRenderBlockHighlight(RenderHighlightEvent.Block event) {
         if (CustomBlockSelectionOutlineRenderer.render(event.getTarget().getBlockPos(),
-                event.getCamera().getPosition(), event.getPoseStack(), event.getMultiBufferSource())) {
-            event.setCanceled(true);
-            return;
-        }
-        if (PaletteSelectionOutlineRenderer.render(event.getTarget().getBlockPos(),
                 event.getCamera().getPosition(), event.getPoseStack(), event.getMultiBufferSource())) {
             event.setCanceled(true);
         }

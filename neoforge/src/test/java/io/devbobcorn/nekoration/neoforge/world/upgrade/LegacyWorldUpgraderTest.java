@@ -101,7 +101,7 @@ class LegacyWorldUpgraderTest {
 
         assertEquals("nekoration:custom_block", custom.getString("id"));
         assertEquals((byte) 0, custom.getByte("Active"));
-        assertTrue(custom.getBoolean("ShowHint"));
+        assertFalse(custom.contains("ShowHint"));
         assertFalse(custom.contains("Dir"));
         assertFalse(custom.contains("Offset"));
         assertFalse(custom.contains("StateFlag"));
