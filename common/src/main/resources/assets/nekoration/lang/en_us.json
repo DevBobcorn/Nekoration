@@ -1263,6 +1263,7 @@
     "itemGroup.nekoration_blocks_stone": "Nekoration: Stone Blocks",
     "itemGroup.nekoration_blocks_wooden": "Nekoration: Wooden Blocks",
     "itemGroup.nekoration_decor_ornaments": "Nekoration: Ornaments",
+    "itemGroup.nekoration_tools": "Nekoration: Tools",
     "nekoration.configuration.bopVariants": "Show BOP Variants",
     "nekoration.configuration.creative": "Creative Inventory",
     "nekoration.configuration.creative.bopVariants.always": "Always",

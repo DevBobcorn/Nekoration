@@ -24,6 +24,7 @@ public final class ModCreativeTabs {
     public static RegistrySupplier<CreativeModeTab> NEKORATION_STONE_BLOCKS_TAB;
     public static RegistrySupplier<CreativeModeTab> NEKORATION_WOODEN_BLOCKS_TAB;
     public static RegistrySupplier<CreativeModeTab> NEKORATION_ORNAMENTS_TAB;
+    public static RegistrySupplier<CreativeModeTab> NEKORATION_TOOLS_TAB;
 
     private ModCreativeTabs() {
     }
@@ -92,6 +93,14 @@ public final class ModCreativeTabs {
                             WoodenBlockRegistration.addContainerCategoryStacks(output::accept);
                             OrnamentRegistration.addPotsAndPlantersCategoryStacks(output::accept);
                             OrnamentRegistration.addMiscCategoryStacks(output::accept);
+                        })
+                        .build());
+
+        NEKORATION_TOOLS_TAB = registrar.register(Registries.CREATIVE_MODE_TAB, "nekoration_tools",
+                () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
+                        .title(Component.translatable("itemGroup.nekoration_tools"))
+                        .icon(() -> new ItemStack(ModItems.PAW.get()))
+                        .displayItems((parameters, output) -> {
                             // Custom Block and its transformation tools...
                             output.accept(new ItemStack(CustomBlockRegistration.CUSTOM_BLOCK_ITEM.get()));
                             output.accept(new ItemStack(ModItems.PAW.get()));
@@ -104,6 +113,8 @@ public final class ModCreativeTabs {
                             output.accept(new ItemStack(ModItems.PAW_15.get()));
                             output.accept(new ItemStack(ModItems.PAW_90.get()));
                             output.accept(new ItemStack(ModItems.ARROW_HINT.get()));
+                            // Wallpaper...
+                            output.accept(new ItemStack(ModItems.WALLPAPER.get()));
                             // Paintings & Palettes...
                             output.accept(new ItemStack(ModItems.PAINTING.get()));
                             output.accept(new ItemStack(ModItems.PALETTE.get()));

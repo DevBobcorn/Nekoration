@@ -76,9 +76,9 @@ misc_ids = ["iron_lamp_post","gold_lamp_post","quartz_lamp_post","iron_candle_ho
 miscs_us = ["Iron Lamp Post","Gold Lamp Post","Quartz Lamp Post","Iron Candle Holder","Gold Candle Holder","Quartz Candle Holder","Hanging Plants","Hanging Plants","Hanging Plants","Custom Block"]
 miscs_cn = ["铁灯柱","金灯柱","石英灯柱","铁烛台","金烛台","石英烛台","吊盆植物","吊盆植物","吊盆植物","自定义方块"]
 
-tab_ids = ["nekoration_blocks_cement","nekoration_blocks_stone","nekoration_blocks_wooden","nekoration_decor_ornaments"]
-tabs_us = ["Cement Blocks","Stone Blocks","Wooden Blocks","Ornaments"]
-tabs_cn = ["水泥方块","石质方块","木质方块","装饰"]
+tab_ids = ["nekoration_blocks_cement","nekoration_blocks_stone","nekoration_blocks_wooden","nekoration_decor_ornaments","nekoration_tools"]
+tabs_us = ["Cement Blocks","Stone Blocks","Wooden Blocks","Ornaments","Tools"]
+tabs_cn = ["水泥方块","石质方块","木质方块","装饰","工具"]
 
 gui_ids = ["button.scroll_up","button.scroll_down","button.enable_all","button.disable_all","button.save_painting","button.save_painting_content","button.load_image","button.clear","paint.tool_param0","paint.tool_param1","paint.tool_param2","paint.tool_param3","message.scroll_change",
         "message.painting_saved","message.painting_content_saved","message.paint_with_palette","message.painting_load_failed","message.link_expired",
