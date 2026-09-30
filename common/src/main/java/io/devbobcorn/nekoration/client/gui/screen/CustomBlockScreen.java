@@ -68,7 +68,7 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
     private boolean updatingColorInput;
     private EditBox colorInput;
     private Button tintAllFacesButton;
-    private Button aoButton;
+    private Button castAoButton;
     private final List<Button> entryButtons = new ArrayList<>();
     private final List<Button> lightButtons = new ArrayList<>();
 
@@ -98,6 +98,7 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         colorInput.setMaxLength(7);
         colorInput.setFilter(value -> value.matches("#?[0-9a-fA-F]{0,6}"));
         colorInput.setResponder(this::onColorInputChanged);
+        colorInput.setTextColor(0xFFFFFFFF);
         if (!defaultSelectionApplied) {
             defaultSelectionApplied = true;
             selectPointedEntry();
@@ -107,7 +108,7 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         tintAllFacesButton = addRenderableWidget(Button.builder(Component.empty(),
                 button -> edit(CustomBlockEditPayload.TOGGLE_TINT_ALL_FACES, 0))
                 .bounds(x + 8, PANEL_Y + 127, w - 16, 18).build());
-        aoButton = addRenderableWidget(Button.builder(Component.empty(), button -> edit(CustomBlockEditPayload.TOGGLE_AO, 0))
+        castAoButton = addRenderableWidget(Button.builder(Component.empty(), button -> edit(CustomBlockEditPayload.TOGGLE_AO, 0))
                 .bounds(x + 8, blockPanelTop() + 17, w - 16, 18).build());
         addStepButtons(x, w, blockPanelTop() + 40, CustomBlockEditPayload.CHANGE_LIGHT, lightButtons);
     }
@@ -142,11 +143,12 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
                     x + 8, 100, TEXT, false);
         }
         graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.color"), x + 8, 119, TEXT, false);
+        renderColorSwatch(graphics, x, w);
         int light = customBlock.getBlockState().getValue(CustomBlock.LIGHT);
         graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.light", light),
                 x + 8, blockTop + 48, TEXT, false);
         boolean ao = customBlock.getBlockState().getValue(CustomBlock.CAST_AO);
-        aoButton.setMessage(Component.translatable("gui.nekoration.custom_block.cast_ao", Component.translatable(
+        castAoButton.setMessage(Component.translatable("gui.nekoration.custom_block.cast_ao", Component.translatable(
                 ao ? "options.on" : "options.off")));
         tintAllFacesButton.setMessage(Component.translatable("gui.nekoration.custom_block.tint_all_faces",
                 Component.translatable(active != null && active.tintAllFaces() ? "options.on" : "options.off")));
@@ -209,12 +211,21 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         }
         String hex = upper.replaceFirst("^#", "");
         if (!hex.isEmpty()) {
-            int color = Integer.parseInt(hex, 16);
-            colorInput.setTextColor(0xFF000000 | color);
-            edit(CustomBlockEditPayload.TINT, color);
-        } else {
-            colorInput.setTextColor(0xFFFFFF);
+            edit(CustomBlockEditPayload.TINT, Integer.parseInt(hex, 16));
         }
+    }
+
+    /** Draws a small white-bordered swatch of the current input color next to the hex field. */
+    private void renderColorSwatch(GuiGraphics graphics, int x, int w) {
+        if (colorInput == null) {
+            return;
+        }
+        String hex = colorInput.getValue().replaceFirst("^#", "");
+        int color = hex.isEmpty() ? 0xFFFFFF : Integer.parseInt(hex, 16);
+        int left = x + w - 79;
+        int top = PANEL_Y + 108;
+        graphics.fill(left - 1, top - 1, left + 17, top + 17, 0xFFFFFFFF);
+        graphics.fill(left, top, left + 16, top + 16, 0xFF000000 | color);
     }
 
     /** True while the input holds a color between 0 and FFFFFF; entries render white until then. */
@@ -229,7 +240,6 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
             updatingColorInput = true;
             colorInput.setValue("FFFFFF");
             updatingColorInput = false;
-            colorInput.setTextColor(0xFFFFFF);
             edit(CustomBlockEditPayload.TINT, 0xFFFFFF);
         }
     }
@@ -240,7 +250,6 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         updatingColorInput = true;
         colorInput.setValue(String.format("%06X", color));
         updatingColorInput = false;
-        colorInput.setTextColor(0xFF000000 | color);
     }
 
     /** Selects the entry the player is pointing at when the screen first opens. */
@@ -291,7 +300,7 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
             String label = font.plainSubstrByWidth(entryName(entry).getString(), labelWidth());
             boolean isActive = index == active;
             if (isActive) {
-                graphics.fill(LIST_X - 3, y - 1, LABEL_X + font.width(label) + 3, y + ROW_HEIGHT - 1,
+                graphics.fill(LIST_X - 3, y - 1, LIST_X - 3 + listWidth(), y + ROW_HEIGHT - 1,
                         ACTIVE_BACKGROUND);
                 graphics.fill(LIST_X - 3, y - 1, LIST_X - 1, y + ROW_HEIGHT - 1, ACTIVE_ACCENT);
             }
@@ -345,7 +354,7 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         lines.add(Component.literal(String.format("#%d %s", index, BuiltInRegistries.BLOCK.getKey(state.getBlock()))));
         lines.addAll(propertyLabels(state));
         lines.add(Component.translatable("gui.nekoration.custom_block.select").withStyle(ChatFormatting.AQUA));
-        lines.add(Component.translatable("gui.nekoration.custom_block.clear").withStyle(ChatFormatting.AQUA));
+        lines.add(Component.translatable("gui.nekoration.custom_block.remove").withStyle(ChatFormatting.AQUA));
         graphics.renderTooltip(font, lines, Optional.empty(), mouseX, mouseY);
     }
 

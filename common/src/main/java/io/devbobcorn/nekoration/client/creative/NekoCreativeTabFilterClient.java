@@ -7,7 +7,6 @@ import io.devbobcorn.nekoration.blocks.NekoWood;
 import io.devbobcorn.nekoration.blocks.OrnamentCategory;
 import io.devbobcorn.nekoration.items.DyeableBlockItem;
 import io.devbobcorn.nekoration.registry.ModCreativeTabs;
-import io.devbobcorn.nekoration.registry.ModItems;
 import io.devbobcorn.nekoration.registry.OrnamentRegistration;
 import io.devbobcorn.nekoration.registry.StoneBlockRegistration;
 import io.devbobcorn.nekoration.registry.WoodenBlockRegistration;
@@ -414,11 +413,7 @@ public final class NekoCreativeTabFilterClient {
                     OrnamentRegistration.addFurnitureCategoryStacks(out::add);
                 }
                 case CONTAINER -> WoodenBlockRegistration.addContainerCategoryStacks(out::add);
-                case MISC -> {
-                    OrnamentRegistration.addMiscCategoryStacks(out::add);
-                    out.add(new ItemStack(ModItems.PAINTING.get()));
-                    out.add(new ItemStack(ModItems.PALETTE.get()));
-                }
+                case MISC -> OrnamentRegistration.addMiscCategoryStacks(out::add);
             }
             picker.items.clear();
             picker.items.addAll(out);

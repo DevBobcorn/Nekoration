@@ -2,6 +2,7 @@ package io.devbobcorn.nekoration.client.gui.screen;
 
 import io.devbobcorn.nekoration.xplat.NekoPlatform;
 import java.awt.Color;
+import java.util.Locale;
 import java.util.Objects;
 
 import com.mojang.math.Axis;
@@ -13,6 +14,7 @@ import io.devbobcorn.nekoration.network.PaletteUpdatePayload;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -48,16 +50,14 @@ public class PaletteScreen extends Screen {
     private int[] colorPos = { -1, -1 };
     private int dragArea = -1; // 0: Color Map, 1: Hue Picker
     private InteractionHand hand;
-
-    public boolean renderColorText = false;
-
-    private Component tipMessage;
+    private EditBox colorInput;
+    private boolean updatingColorInput;
+    private boolean applyingColorInput;
 
     public PaletteScreen(InteractionHand hand, byte active, Color[] oldColors) {
         super(Component.literal("PALETTE"));
         this.hand = hand;
         this.colors = oldColors;
-        tipMessage = Component.translatable("gui.nekoration.message.press_key_color_info", "'E'");
         setActiveSlot(active);
     }
 
@@ -65,6 +65,14 @@ public class PaletteScreen extends Screen {
         super.init();
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (this.height - this.imageHeight) / 2;
+        colorInput = new EditBox(font, leftPos + imageWidth - 48, topPos + imageHeight + 4, 48, 18,
+                Component.translatable("gui.nekoration.palette.hex"));
+        colorInput.setMaxLength(7);
+        colorInput.setFilter(value -> value.matches("#?[0-9a-fA-F]{0,6}"));
+        colorInput.setResponder(this::onColorInputChanged);
+        colorInput.setTextColor(0xFFFFFFFF);
+        addRenderableWidget(colorInput);
+        syncColorInput();
     }
 
     @Override
@@ -84,10 +92,6 @@ public class PaletteScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifier) {
-        if (keyCode == GLFW.GLFW_KEY_E) {
-            this.renderColorText = !this.renderColorText;
-            return true;
-        }
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).closeContainer();
         }
@@ -127,15 +131,11 @@ public class PaletteScreen extends Screen {
             graphics.blit(BACKGROUND, i + HUE_LEFT - 1, huePos + this.topPos - 1, 156, 48, 8, 4); // Hue Cursor...
         if (colorPos[0] >= 0)
             graphics.blit(BACKGROUND, this.leftPos + colorPos[0] - 2, this.topPos + colorPos[1] - 2, 172, 48, 4, 4); // Color Cursor...
-        // Step 6: Render Debug Color Value...
-        graphics.pose().pushPose();
-        graphics.pose().mulPose(Axis.ZP.rotationDegrees(90.0F));
-        graphics.pose().translate(j, -i - 167, 0);
-        if (renderColorText)
-            graphics.drawString(this.font, Component.translatable("gui.nekoration.message.color_info", colors[activeSlot].getRGB(), colors[activeSlot].getRed(), colors[activeSlot].getGreen(), colors[activeSlot].getBlue()), 1, 1, colors[activeSlot].getRGB());
-        else
-            graphics.drawString(this.font, tipMessage, 1, 1, (150 << 24) + (255 << 16) + (255 << 8) + 255);
-        graphics.pose().popPose();
+        // Step 6: Render the hex input...
+        if (!colorInput.isFocused()) {
+            syncColorInput();
+        }
+        colorInput.render(graphics, x, y, partialTicks);
     }
 
     protected void renderBg(GuiGraphics graphics) {
@@ -152,9 +152,11 @@ public class PaletteScreen extends Screen {
             if (!updateActiveSlot(x, y)) { // First update slots...
                 if (isOnColorMap(x, y)) {
                     dragArea = 0;
+                    setFocused(null);
                     getColor(x, y);
                 } else if (isOnHuePicker(x, y)) {
                     dragArea = 1;
+                    setFocused(null);
                     getHue(x, y);
                 }
             }
@@ -196,8 +198,11 @@ public class PaletteScreen extends Screen {
             int r = l + 16;
             int t = this.topPos + 13;
             int b = t + 16;
-            if (x >= l && x <= r && y >= t && y <= b && this.activeSlot != idx) {
-                setActiveSlot(idx);
+            if (x >= l && x <= r && y >= t && y <= b) {
+                setFocused(null);
+                if (this.activeSlot != idx) {
+                    setActiveSlot(idx);
+                }
                 return true;
             }
         }
@@ -214,6 +219,42 @@ public class PaletteScreen extends Screen {
         // Place the color cursor at the active color...
         this.colorPos[0] = COLORMAP_LEFT + (int) (fl[1] * COLORMAP_WIDTH);
         this.colorPos[1] = COLORMAP_TOP + (int) ((1.0F - fl[2]) * COLORMAP_HEIGHT);
+        syncColorInput();
+    }
+
+    /** Uppercases typed hex digits and applies the color to the active slot immediately. */
+    private void onColorInputChanged(String value) {
+        if (updatingColorInput) {
+            return;
+        }
+        String upper = value.toUpperCase(Locale.ROOT);
+        if (!upper.equals(value)) {
+            int cursor = colorInput.getCursorPosition();
+            updatingColorInput = true;
+            colorInput.setValue(upper);
+            colorInput.setCursorPosition(cursor);
+            updatingColorInput = false;
+        }
+        String hex = upper.replaceFirst("^#", "");
+        if (!hex.isEmpty()) {
+            applyingColorInput = true;
+            colors[activeSlot] = new Color(Integer.parseInt(hex, 16));
+            setActiveSlot(activeSlot);
+            applyingColorInput = false;
+        }
+    }
+
+    /** Mirrors the active slot's color into the hex field, unless the input itself caused the change. */
+    private void syncColorInput() {
+        if (colorInput == null || applyingColorInput) {
+            return;
+        }
+        String hex = String.format("%06X", colors[activeSlot].getRGB() & 0xFFFFFF);
+        if (!hex.equals(colorInput.getValue())) {
+            updatingColorInput = true;
+            colorInput.setValue(hex);
+            updatingColorInput = false;
+        }
     }
 
     private void getColor(double x, double y) {
@@ -225,6 +266,7 @@ public class PaletteScreen extends Screen {
                 colors[activeSlot] = NekoColors.getRGBColorBetween(yi, c1, Color.BLACK);
                 colorPos[0] = (int) x - leftPos;
                 colorPos[1] = (int) y - topPos;
+                syncColorInput();
             }
         }
     }
@@ -252,6 +294,7 @@ public class PaletteScreen extends Screen {
         // Update Active Color...
         updateColor();
         this.huePos = (int) y - this.topPos;
+        syncColorInput();
     }
 
     @Override
