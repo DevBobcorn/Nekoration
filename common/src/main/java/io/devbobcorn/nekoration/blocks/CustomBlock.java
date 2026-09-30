@@ -151,6 +151,7 @@ public class CustomBlock extends Block implements EntityBlock {
             customBlock.addEntry(displayState);
             customBlock.markUpdated();
         }
+        context.getItemInHand().consume(1, player);
         return true;
     }
 
@@ -160,22 +161,34 @@ public class CustomBlock extends Block implements EntityBlock {
     }
 
     /**
-     * Drops the entry the player is pointing at and removes it from the block.
-     * Unlike block breaking, this always drops the entry, even in Creative mode.
-     * The block itself stays in place, so removing its last entry leaves it in
-     * the empty state rendered by its default model.
+     * Gives the entry the player is pointing at to the player and removes it
+     * from the block. Unlike block breaking, this always gives the entry, even
+     * in Creative mode. The block itself stays in place, so removing its last
+     * entry leaves it in the empty state rendered by its default model.
      */
     private static void dropPointedEntry(Level level, BlockPos pos, Player player, CustomBlockEntity customBlock) {
-        int pointed = customBlock.pointedEntry(level, pos, player);
-        CustomBlockEntity.CustomEntry entry = customBlock.entry(pointed);
+        collectEntry(level, pos, player, customBlock, customBlock.pointedEntry(level, pos, player));
+    }
+
+    /**
+     * Removes one entry from the block and gives its item form to the player,
+     * dropping whatever does not fit in the inventory. The item is always
+     * given, even in Creative mode. The block itself stays in place.
+     */
+    public static void collectEntry(Level level, BlockPos pos, Player player, CustomBlockEntity customBlock,
+            int index) {
+        CustomBlockEntity.CustomEntry entry = customBlock.entry(index);
         if (entry == null) {
             return;
         }
         ItemStack drop = entryItem(entry.displayState(), level, pos);
         if (!drop.isEmpty()) {
-            Block.popResource(level, pos, drop);
+            player.getInventory().add(drop);
+            if (!drop.isEmpty()) {
+                Block.popResource(level, pos, drop);
+            }
         }
-        customBlock.removeEntry(pointed);
+        customBlock.removeEntry(index);
         customBlock.markUpdated();
     }
 

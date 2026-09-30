@@ -1,6 +1,7 @@
 package io.devbobcorn.nekoration.network;
 
 import io.devbobcorn.nekoration.Nekoration;
+import io.devbobcorn.nekoration.blocks.CustomBlock;
 import io.devbobcorn.nekoration.blocks.containers.CustomBlockMenu;
 import io.devbobcorn.nekoration.blocks.entities.CustomBlockEntity;
 import io.devbobcorn.nekoration.xplat.PayloadContext;
@@ -36,8 +37,7 @@ public record CustomBlockClearPayload(BlockPos pos, int index) implements Custom
                 return;
             }
             CustomBlockEntity customBlock = menu.getCustomBlock();
-            customBlock.removeEntry(payload.index());
-            customBlock.markUpdated();
+            CustomBlock.collectEntry(player.level(), customBlock.getBlockPos(), player, customBlock, payload.index());
         });
     }
 

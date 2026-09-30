@@ -1201,7 +1201,7 @@
     "gui.nekoration.button.transp_add_up": "Odd Op Tranzparency",
     "gui.nekoration.button.transp_overwrite": "Ouvarwrite transpoaency",
     "gui.nekoration.custom_block.cast_ao": "Cazt ao: %s",
-    "gui.nekoration.custom_block.color": "Tint (hex)",
+    "gui.nekoration.custom_block.color": "Teent:",
     "gui.nekoration.custom_block.controls": "Coztom block contruls",
     "gui.nekoration.custom_block.entries": "Entriez",
     "gui.nekoration.custom_block.entry": "Selected entry",

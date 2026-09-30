@@ -136,9 +136,9 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         String selected = active == null ? "-" : font.plainSubstrByWidth(entryName(active).getString(), w - 17);
         graphics.drawString(font, selected, x + 8, 25, ACTIVE_TEXT, false);
         if (active != null) {
-            graphics.drawString(font, "X: " + active.offset(0), x + 8, 43, TEXT, false);
-            graphics.drawString(font, "Y: " + active.offset(1), x + 8, 62, TEXT, false);
-            graphics.drawString(font, "Z: " + active.offset(2), x + 8, 81, TEXT, false);
+            graphics.drawString(font, "X: " + blockOffset(active.offset(0)), x + 8, 43, TEXT, false);
+            graphics.drawString(font, "Y: " + blockOffset(active.offset(1)), x + 8, 62, TEXT, false);
+            graphics.drawString(font, "Z: " + blockOffset(active.offset(2)), x + 8, 81, TEXT, false);
             graphics.drawString(font, Component.translatable("gui.nekoration.custom_block.rotation", active.dir() * 15),
                     x + 8, 100, TEXT, false);
         }
@@ -156,6 +156,13 @@ public class CustomBlockScreen extends AbstractContainerScreen<CustomBlockMenu> 
         for (Button button : entryButtons) button.active = hasEntry;
         tintAllFacesButton.active = hasEntry;
         colorInput.active = hasEntry;
+    }
+
+    private static String blockOffset(int units) {
+        if (units % 32 == 0) {
+            return Integer.toString(units / 32);
+        }
+        return String.format(Locale.ROOT, "%.5f", units / 32.0D).replaceAll("0+$", "");
     }
 
     private static void panel(GuiGraphics graphics, int x1, int y1, int x2, int y2) {

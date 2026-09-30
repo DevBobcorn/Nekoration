@@ -1201,7 +1201,7 @@
     "gui.nekoration.button.transp_add_up": "Add up Transparency",
     "gui.nekoration.button.transp_overwrite": "Overwrite Transparency",
     "gui.nekoration.custom_block.cast_ao": "Cast AO: %s",
-    "gui.nekoration.custom_block.color": "Tint (hex)",
+    "gui.nekoration.custom_block.color": "Tint:",
     "gui.nekoration.custom_block.controls": "Custom Block Controls",
     "gui.nekoration.custom_block.entries": "Entries",
     "gui.nekoration.custom_block.entry": "Selected Entry",

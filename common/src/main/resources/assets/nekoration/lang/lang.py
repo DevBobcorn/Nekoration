@@ -92,14 +92,14 @@ guis_us = ["Scroll Up","Scroll Down","Enable All","Disable All","Save Painting",
            "Press %s to view debug info","Press %s to undo/redo","Press %s to change active tool","Press %s to show color picker","Press %s to hide color picker","Press %s to change grid size","Painting of this size cannot be saved to a single item","Use a Linked Painting to copy/move","Size:  %sx%s",
            "Enable Glowing Text", "Disable Glowing Text","Round Brush", "Square Brush", "Add up Transparency", "Overwrite Transparency", "Open Folder",
            "Sign Painting","Enter Painting Title:","Note! Once you sign the painting, it will no longer be editable.","This painting is signed and can no longer be edited","Right click to remove","Left click to select",
-           "Entries","Custom Block Controls","Selected Entry","Rotation: %s°","Tint (hex)","Tint all Faces: %s","Cast AO: %s","Light Level: %s",
+           "Entries","Custom Block Controls","Selected Entry","Rotation: %s°","Tint:","Tint all Faces: %s","Cast AO: %s","Light Level: %s",
            "Hex"]
 guis_cn = ["向上","向下","选中所有","清除所有","保存绘画","保存绘画内容","读取图像文件","清除","铅笔半径","画笔半径","橡皮半径","选区阈值","使用鼠标滚轮调整%s",
            "已将绘画保存至%s","已将绘画内容保存至%s","请使用调色板编辑画作","绘画%s加载失败","链接已失效：无法找到原画作",
            "可按下%s键查看调试信息","可按下%s键撤销/重做","可按下%s键切换工具","可按下%s键显示颜色选择器","可按下%s键隐藏颜色选择器","可按下%s键切换网格尺寸","此大小的绘画信息无法存入单个物品","请使用链接画复制或移动","尺寸:  %sx%s",
            "启用发光文本","禁用发光文本","圆形画刷","方形画刷","叠加透明度","覆盖透明度","打开文件夹",
            "为画作署名","输入画名：","注意！在你署名后，它将不能再被修改。","此画作已署名，无法再编辑","点击右键以移除","点击左键以选中",
-           "方块列表","自定义方块控制","选中的条目","旋转：%s°","染色（十六进制）","染色全部表面：%s","投射环境光遮蔽：%s","亮度等级：%s",
+           "方块列表","自定义方块控制","选中的条目","旋转：%s°","染色：","染色全部表面：%s","投射环境光遮蔽：%s","亮度等级：%s",
            "十六进制"]
 
 entity_ids = ["painting","wallpaper","seat"]

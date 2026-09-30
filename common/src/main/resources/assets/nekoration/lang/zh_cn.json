@@ -1201,7 +1201,7 @@
     "gui.nekoration.button.transp_add_up": "叠加透明度",
     "gui.nekoration.button.transp_overwrite": "覆盖透明度",
     "gui.nekoration.custom_block.cast_ao": "投射环境光遮蔽：%s",
-    "gui.nekoration.custom_block.color": "染色（十六进制）",
+    "gui.nekoration.custom_block.color": "染色：",
     "gui.nekoration.custom_block.controls": "自定义方块控制",
     "gui.nekoration.custom_block.entries": "方块列表",
     "gui.nekoration.custom_block.entry": "选中的条目",
