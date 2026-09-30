@@ -3,26 +3,21 @@ package io.devbobcorn.nekoration.blocks.stone;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import io.devbobcorn.nekoration.blocks.HorizontalBlock;
 import io.devbobcorn.nekoration.blocks.states.FrameConnection;
 import io.devbobcorn.nekoration.blocks.states.ModStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -33,9 +28,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  */
 public class FrameSideBlock extends HorizontalBlock {
     public static final EnumProperty<FrameConnection> CONNECTION = ModStateProperties.FRAME_CONNECTION;
-
-    /** Pending BOTH -> single-side reconnects (server side only), see {@link #playerWillDestroy}. */
-    private static final Map<BlockPos, FrameConnection> RECONNECTED = new ConcurrentHashMap<>();
 
     private final Map<Direction, Map<FrameConnection, VoxelShape>> shapes;
 
@@ -136,51 +128,6 @@ public class FrameSideBlock extends HorizontalBlock {
         return state.getBlock() == this
                 && stack.getItem() instanceof BlockItem item
                 && item.getBlock() == this;
-    }
-
-    /**
-     * Breaking a BOTH-connected strip converts it to its remaining connection
-     * instead of fully destroying it. Vanilla has no cancellable destroy hook,
-     * so the reconnection happens in {@link #playerDestroy} after the removal.
-     */
-    @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide() && player != null && state.getValue(CONNECTION) == FrameConnection.BOTH) {
-            FrameConnection remaining = getRemainingConnection(state, level, pos, player);
-            if (remaining != null) {
-                RECONNECTED.put(pos.immutable(), remaining);
-            }
-        }
-        return super.playerWillDestroy(level, pos, state, player);
-    }
-
-    @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
-            @javax.annotation.Nullable net.minecraft.world.level.block.entity.BlockEntity blockEntity, ItemStack tool) {
-        FrameConnection remaining = RECONNECTED.remove(pos);
-        if (remaining != null) {
-            player.awardStat(Stats.BLOCK_MINED.get(this));
-            player.causeFoodExhaustion(0.005F);
-            Block.popResource(level, pos, this.getCloneItemStack(level, pos, state));
-            level.setBlock(pos, state.setValue(CONNECTION, remaining), Block.UPDATE_ALL);
-            return;
-        }
-        super.playerDestroy(level, player, pos, state, blockEntity, tool);
-    }
-
-    private static FrameConnection getRemainingConnection(BlockState state, Level level, BlockPos pos, Player player) {
-        Vec3 start = player.getEyePosition();
-        Vec3 end = start.add(player.getViewVector(1.0F).scale(player.blockInteractionRange() + 1.0));
-        BlockHitResult hit = state.getShape(level, pos).clip(start, end, pos);
-        if (hit == null) {
-            return null;
-        }
-
-        Vec3 location = hit.getLocation();
-        double x = location.x - pos.getX();
-        double z = location.z - pos.getZ();
-        FrameConnection broken = getConnectionAt(state.getValue(FACING), x, z);
-        return broken == FrameConnection.LEFT ? FrameConnection.RIGHT : FrameConnection.LEFT;
     }
 
     private static Direction getFacingAt(double x, double z) {
