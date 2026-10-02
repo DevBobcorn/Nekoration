@@ -12,6 +12,7 @@ import com.google.gson.JsonElement;
 
 import io.devbobcorn.nekoration.Nekoration;
 import io.devbobcorn.nekoration.blocks.NekoStone;
+import io.devbobcorn.nekoration.blocks.states.FrameAlignment;
 import io.devbobcorn.nekoration.blocks.states.VerticalConnection;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -106,9 +107,9 @@ public final class StoneBlockAssetProvider implements DataProvider {
             generateStonePotAssets(cachedOutput, "pot", writes, stoneId);
             generateStonePotAssets(cachedOutput, "planter", writes, stoneId);
 
-            generateStoneFrameAssets(cachedOutput, "frame_head", writes, stoneId);
-            generateStoneFrameAssets(cachedOutput, "frame_peak", writes, stoneId);
-            generateStoneFrameAssets(cachedOutput, "frame_sill", writes, stoneId);
+            generateStoneFrameAssets(cachedOutput, "frame_head", FrameAlignment.BOTTOM, writes, stoneId);
+            generateStoneFrameAssets(cachedOutput, "frame_peak", null, writes, stoneId);
+            generateStoneFrameAssets(cachedOutput, "frame_sill", FrameAlignment.TOP, writes, stoneId);
             generateStoneFrameSideAssets(cachedOutput, "frame_side", writes, stoneId);
         }
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
@@ -473,7 +474,7 @@ public final class StoneBlockAssetProvider implements DataProvider {
                 Map.of("parent", modLoc("block/stone/" + variantId + "_t2")));
     }
 
-    private void generateStoneFrameAssets(CachedOutput cachedOutput, String variant,
+    private void generateStoneFrameAssets(CachedOutput cachedOutput, String variant, FrameAlignment naturalAlignment,
         List<CompletableFuture<?>> writes, String stoneId) {
         String variantId = stoneId + "_" + variant;
 
@@ -491,30 +492,62 @@ public final class StoneBlockAssetProvider implements DataProvider {
             textures.put("1", smoothTextureId);
         }
 
-        writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
-        Map.of("parent", modLoc("block/stone/" + variant), "textures", textures));
+        if (naturalAlignment == null) {
+            writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + variantId,
+                    Map.of("parent", modLoc("block/stone/" + variant), "textures", textures));
 
-        for (String connectionId : HORIZONTAL_CONNECTION_IDS) {
-            if ("s0".equals(connectionId) || "d0".equals(connectionId) || "d1".equals(connectionId)) {
-                continue;
+            for (String connectionId : HORIZONTAL_CONNECTION_IDS) {
+                if ("s0".equals(connectionId) || "d0".equals(connectionId) || "d1".equals(connectionId)) {
+                    continue;
+                }
+                String connectionModelName = variantId + "_" + connectionId;
+                writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + connectionModelName,
+                        Map.of("parent", modLoc("block/stone/" + variant + "_" + connectionId), "textures", textures));
             }
-            String connectionModelName = variantId + "_" + connectionId;
-            writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + connectionModelName,
-                    Map.of("parent", modLoc("block/stone/" + variant + "_" + connectionId), "textures", textures));
+
+            Map<String, Object> variants = new LinkedHashMap<>();
+            for (String connectionId : HORIZONTAL_CONNECTION_IDS) {
+                String modelName = "s0".equals(connectionId) ? variantId : variantId + "_" + tripleConnectionSuffixForConnection(connectionId);
+                putFacingVariants(variants, "horizontal_connection=" + connectionId, modLoc("block/stone/" + modelName));
+            }
+            writeJson(cachedOutput, writes, blockstatePathProvider, variantId, Map.of("variants", variants));
+
+            writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
+                    Map.of("parent", modLoc("block/stone/" + variantId)));
+            return;
+        }
+
+        for (FrameAlignment alignment : FrameAlignment.values()) {
+            String alignmentSuffix = "_" + alignment.getSerializedName();
+            String alignedVariantId = variantId + alignmentSuffix;
+            writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + alignedVariantId,
+                    Map.of("parent", modLoc("block/stone/" + variant + alignmentSuffix), "textures", textures));
+
+            for (String connectionId : HORIZONTAL_CONNECTION_IDS) {
+                if ("s0".equals(connectionId) || "d0".equals(connectionId) || "d1".equals(connectionId)) {
+                    continue;
+                }
+                String connectionModelName = alignedVariantId + "_" + connectionId;
+                writeJson(cachedOutput, writes, blockModelPathProvider, "stone/" + connectionModelName,
+                        Map.of("parent", modLoc("block/stone/" + variant + alignmentSuffix + "_" + connectionId), "textures", textures));
+            }
         }
 
         Map<String, Object> variants = new LinkedHashMap<>();
-        for (String connectionId : HORIZONTAL_CONNECTION_IDS) {
-            String modelName = "s0".equals(connectionId) ? variantId : variantId + "_" + tripleConnectionSuffixForConnection(connectionId);
-            variants.put("horizontal_connection=" + connectionId + ",facing=north", Map.of("model", modLoc("block/stone/" + modelName)));
-            variants.put("horizontal_connection=" + connectionId + ",facing=east", Map.of("model", modLoc("block/stone/" + modelName), "y", 90));
-            variants.put("horizontal_connection=" + connectionId + ",facing=south", Map.of("model", modLoc("block/stone/" + modelName), "y", 180));
-            variants.put("horizontal_connection=" + connectionId + ",facing=west", Map.of("model", modLoc("block/stone/" + modelName), "y", 270));
+        for (FrameAlignment alignment : FrameAlignment.values()) {
+            String alignmentSuffix = "_" + alignment.getSerializedName();
+            for (String connectionId : HORIZONTAL_CONNECTION_IDS) {
+                String modelName = variantId + alignmentSuffix
+                        + ("s0".equals(connectionId) ? "" : "_" + tripleConnectionSuffixForConnection(connectionId));
+                putFacingVariants(variants,
+                        "part=" + alignment.getSerializedName() + ",horizontal_connection=" + connectionId,
+                        modLoc("block/stone/" + modelName));
+            }
         }
         writeJson(cachedOutput, writes, blockstatePathProvider, variantId, Map.of("variants", variants));
 
         writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
-                Map.of("parent", modLoc("block/stone/" + variantId)));
+                Map.of("parent", modLoc("block/stone/" + variantId + "_" + naturalAlignment.getSerializedName())));
     }
 
     private void generateStoneFrameSideAssets(CachedOutput cachedOutput, String variant,
@@ -536,15 +569,28 @@ public final class StoneBlockAssetProvider implements DataProvider {
         Map<String, Object> variants = new LinkedHashMap<>();
         for (String connectionId : FRAME_CONNECTION_IDS) {
             String modelName = variantId + "_" + connectionId;
-            variants.put("frame_connection=" + connectionId + ",facing=north", Map.of("model", modLoc("block/stone/" + modelName)));
-            variants.put("frame_connection=" + connectionId + ",facing=east", Map.of("model", modLoc("block/stone/" + modelName), "y", 90));
-            variants.put("frame_connection=" + connectionId + ",facing=south", Map.of("model", modLoc("block/stone/" + modelName), "y", 180));
-            variants.put("frame_connection=" + connectionId + ",facing=west", Map.of("model", modLoc("block/stone/" + modelName), "y", 270));
+            variants.put("part=" + connectionId + ",facing=north", Map.of("model", modLoc("block/stone/" + modelName)));
+            variants.put("part=" + connectionId + ",facing=east", Map.of("model", modLoc("block/stone/" + modelName), "y", 90));
+            variants.put("part=" + connectionId + ",facing=south", Map.of("model", modLoc("block/stone/" + modelName), "y", 180));
+            variants.put("part=" + connectionId + ",facing=west", Map.of("model", modLoc("block/stone/" + modelName), "y", 270));
         }
         writeJson(cachedOutput, writes, blockstatePathProvider, variantId, Map.of("variants", variants));
 
         writeJson(cachedOutput, writes, itemModelPathProvider, variantId,
                 Map.of("parent", modLoc("block/stone/" + variantId + "_both")));
+    }
+
+    private static void putFacingVariants(Map<String, Object> variants, String keyPrefix, String model) {
+        int i = 0;
+        for (String facing : List.of("north", "east", "south", "west")) {
+            Map<String, Object> variant = new LinkedHashMap<>();
+            variant.put("model", model);
+            if (i != 0) {
+                variant.put("y", i * 90);
+            }
+            variants.put(keyPrefix + ",facing=" + facing, variant);
+            i++;
+        }
     }
 
     private static String tripleConnectionSuffixForConnection(String connectionId) {

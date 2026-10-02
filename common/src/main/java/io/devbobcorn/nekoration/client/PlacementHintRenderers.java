@@ -10,7 +10,7 @@ import net.minecraft.world.phys.Vec3;
  * Picks the placement hint to draw for the surface the player is looking at.
  * The Custom Block entry hint takes priority; when the held block cannot be
  * stored in a Custom Block there, the hints of that block's own placement
- * rules (awning, frame side) are checked instead.
+ * rules (awning, frame side, frame head and sill) are checked instead.
  */
 public final class PlacementHintRenderers {
     private PlacementHintRenderers() {
@@ -22,5 +22,6 @@ public final class PlacementHintRenderers {
         }
         AwningPlacementHintRenderer.render(hit, cameraPos, poseStack, bufferSource);
         FrameSidePlacementHintRenderer.render(hit, cameraPos, poseStack, bufferSource);
+        FrameHeadSillPlacementHintRenderer.render(hit, cameraPos, poseStack, bufferSource);
     }
 }

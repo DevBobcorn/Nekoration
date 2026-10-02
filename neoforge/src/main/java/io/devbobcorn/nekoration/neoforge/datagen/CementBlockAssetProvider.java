@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 
 import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.Nekoration;
+import io.devbobcorn.nekoration.blocks.states.FrameAlignment;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -52,9 +53,9 @@ public final class CementBlockAssetProvider implements DataProvider {
         generatePedestal(cachedOutput, writes, "cement_pedestal");
         generatePot(cachedOutput, writes, "cement_pot", "pot");
         generatePot(cachedOutput, writes, "cement_planter", "planter");
-        generateFrame(cachedOutput, writes, "cement_frame_head", "frame_head", false);
-        generateFrame(cachedOutput, writes, "cement_frame_peak", "frame_peak", true);
-        generateFrame(cachedOutput, writes, "cement_frame_sill", "frame_sill", false);
+        generateFrame(cachedOutput, writes, "cement_frame_head", "frame_head", FrameAlignment.BOTTOM, false);
+        generateFrame(cachedOutput, writes, "cement_frame_peak", "frame_peak", null, true);
+        generateFrame(cachedOutput, writes, "cement_frame_sill", "frame_sill", FrameAlignment.TOP, false);
         generateFrameSide(cachedOutput, writes, "cement_frame_side");
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
@@ -177,35 +178,66 @@ public final class CementBlockAssetProvider implements DataProvider {
     }
 
     private void generateFrame(CachedOutput output, List<CompletableFuture<?>> writes, String blockId,
-            String part, boolean hasBackTexture) {
+            String part, FrameAlignment naturalAlignment, boolean hasBackTexture) {
         Map<String, Object> textures = new LinkedHashMap<>();
         textures.put("0", modLoc("block/cement/" + blockId));
         if (hasBackTexture) {
             textures.put("1", modLoc("block/cement/cement_top"));
         }
 
-        writeJson(output, writes, blockModelPathProvider, "cement/" + blockId,
-                Map.of("parent", modLoc("block/cement/" + part), "textures", textures));
+        if (naturalAlignment == null) {
+            writeJson(output, writes, blockModelPathProvider, "cement/" + blockId,
+                    Map.of("parent", modLoc("block/cement/" + part), "textures", textures));
 
-        for (String connectionId : CONNECTION_IDS) {
-            if ("s0".equals(connectionId) || "d0".equals(connectionId) || "d1".equals(connectionId)) {
-                continue;
+            for (String connectionId : CONNECTION_IDS) {
+                if ("s0".equals(connectionId) || "d0".equals(connectionId) || "d1".equals(connectionId)) {
+                    continue;
+                }
+                writeJson(output, writes, blockModelPathProvider, "cement/" + blockId + "_" + connectionId,
+                        Map.of("parent", modLoc("block/cement/" + part + "_" + connectionId), "textures", textures));
             }
-            writeJson(output, writes, blockModelPathProvider, "cement/" + blockId + "_" + connectionId,
-                    Map.of("parent", modLoc("block/cement/" + part + "_" + connectionId), "textures", textures));
+        } else {
+            for (FrameAlignment alignment : FrameAlignment.values()) {
+                String alignmentSuffix = "_" + alignment.getSerializedName();
+                writeJson(output, writes, blockModelPathProvider, "cement/" + blockId + alignmentSuffix,
+                        Map.of("parent", modLoc("block/cement/" + part + alignmentSuffix), "textures", textures));
+
+                for (String connectionId : CONNECTION_IDS) {
+                    if ("s0".equals(connectionId) || "d0".equals(connectionId) || "d1".equals(connectionId)) {
+                        continue;
+                    }
+                    writeJson(output, writes, blockModelPathProvider, "cement/" + blockId + alignmentSuffix + "_" + connectionId,
+                            Map.of("parent", modLoc("block/cement/" + part + alignmentSuffix + "_" + connectionId), "textures", textures));
+                }
+            }
         }
 
         Map<String, Object> variants = new LinkedHashMap<>();
         for (EnumNekoColor color : EnumNekoColor.values()) {
-            for (String connectionId : CONNECTION_IDS) {
-                String modelName = "s0".equals(connectionId) ? blockId : blockId + "_" + tripleConnectionSuffixForConnection(connectionId);
-                putFacingVariants(variants, "color=" + color.getSerializedName() + ",horizontal_connection=" + connectionId,
-                        modLoc("block/cement/" + modelName));
+            if (naturalAlignment == null) {
+                for (String connectionId : CONNECTION_IDS) {
+                    String modelName = "s0".equals(connectionId) ? blockId : blockId + "_" + tripleConnectionSuffixForConnection(connectionId);
+                    putFacingVariants(variants, "color=" + color.getSerializedName() + ",horizontal_connection=" + connectionId,
+                            modLoc("block/cement/" + modelName));
+                }
+            } else {
+                for (FrameAlignment alignment : FrameAlignment.values()) {
+                    String alignmentSuffix = "_" + alignment.getSerializedName();
+                    for (String connectionId : CONNECTION_IDS) {
+                        String modelName = "s0".equals(connectionId) ? blockId + alignmentSuffix
+                                : blockId + alignmentSuffix + "_" + tripleConnectionSuffixForConnection(connectionId);
+                        putFacingVariants(variants,
+                                "color=" + color.getSerializedName() + ",part=" + alignment.getSerializedName()
+                                        + ",horizontal_connection=" + connectionId,
+                                modLoc("block/cement/" + modelName));
+                    }
+                }
             }
         }
         writeJson(output, writes, blockstatePathProvider, blockId, Map.of("variants", variants));
+        String itemModelId = naturalAlignment == null ? blockId : blockId + "_" + naturalAlignment.getSerializedName();
         writeJson(output, writes, itemModelPathProvider, blockId,
-                Map.of("parent", modLoc("block/cement/" + blockId)));
+                Map.of("parent", modLoc("block/cement/" + itemModelId)));
     }
 
     private void generateFrameSide(CachedOutput output, List<CompletableFuture<?>> writes, String blockId) {
@@ -220,7 +252,7 @@ public final class CementBlockAssetProvider implements DataProvider {
         Map<String, Object> variants = new LinkedHashMap<>();
         for (EnumNekoColor color : EnumNekoColor.values()) {
             for (String connectionId : FRAME_CONNECTION_IDS) {
-                putFacingVariants(variants, "color=" + color.getSerializedName() + ",frame_connection=" + connectionId,
+                putFacingVariants(variants, "color=" + color.getSerializedName() + ",part=" + connectionId,
                         modLoc("block/cement/" + blockId + "_" + connectionId));
             }
         }

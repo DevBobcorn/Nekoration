@@ -30,10 +30,14 @@ public class DyeableHorizontalConnectedBlock extends HorizontalConnectedBlock {
 
     public DyeableHorizontalConnectedBlock(Properties settings, ConnectionType type, boolean connectOtherVariant, int thickness, int height, int bottom) {
         super(settings, type, connectOtherVariant, thickness, height, bottom);
-        this.registerDefaultState(this.stateDefinition.any()
+        BlockState defaultState = this.stateDefinition.any()
                 .setValue(DyeableBlock.COLOR, EnumNekoColor.WHITE)
                 .setValue(FACING, Direction.NORTH)
-                .setValue(CONNECTION, HorizontalConnection.S0));
+                .setValue(CONNECTION, HorizontalConnection.S0);
+        if (hasFrameConnection()) {
+            defaultState = defaultState.setValue(FRAME_CONNECTION, defaultFrameConnection());
+        }
+        this.registerDefaultState(defaultState);
     }
 
     @Override

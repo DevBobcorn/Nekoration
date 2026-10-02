@@ -6,6 +6,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
@@ -14,7 +15,9 @@ import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.NekoStone;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.stone.DirectionalThinPillarBlock;
+import io.devbobcorn.nekoration.blocks.stone.FrameHeadBlock;
 import io.devbobcorn.nekoration.blocks.stone.FrameSideBlock;
+import io.devbobcorn.nekoration.blocks.stone.FrameSillBlock;
 import io.devbobcorn.nekoration.blocks.stone.PedestalBlock;
 import io.devbobcorn.nekoration.blocks.stone.PotBlock;
 import io.devbobcorn.nekoration.blocks.stone.SelfDroppingBlock;
@@ -119,11 +122,11 @@ public final class StoneBlockRegistration {
             registerPotBlock(registrar, stoneId + "_pot", 6, blockItemsByStone, stone);
             registerPotBlock(registrar, stoneId + "_planter", 8, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(registrar, stoneId + "_frame_head",
-                    HorizontalConnectedBlock.ConnectionType.BEAM, 2, 3, 0, blockItemsByStone, stone);
+                    FrameHeadBlock::new, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(registrar, stoneId + "_frame_peak",
                     HorizontalConnectedBlock.ConnectionType.TRIPLE, 5, 12, 0, blockItemsByStone, stone);
             registerHorizontalConnectedBlock(registrar, stoneId + "_frame_sill",
-                    HorizontalConnectedBlock.ConnectionType.BEAM, 4, 4, 12, blockItemsByStone, stone);
+                    FrameSillBlock::new, blockItemsByStone, stone);
             registerFrameSideBlock(registrar, stoneId + "_frame_side", blockItemsByStone, stone);
         }
     }
@@ -189,8 +192,14 @@ public final class StoneBlockRegistration {
 
     private static RegistrySupplier<Block> registerHorizontalConnectedBlock(NekoRegistrar registrar, String id,
             HorizontalConnectedBlock.ConnectionType connectionType, int thickness, int height, int bottom, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
-        RegistrySupplier<Block> block = registrar.block(id,
-                () -> new HorizontalConnectedBlock(stone.stoneProperties(), connectionType, false, thickness, height, bottom));
+        return registerHorizontalConnectedBlock(registrar, id,
+                properties -> new HorizontalConnectedBlock(properties, connectionType, false, thickness, height, bottom),
+                blockItemsByStone, stone);
+    }
+
+    private static RegistrySupplier<Block> registerHorizontalConnectedBlock(NekoRegistrar registrar, String id,
+            Function<Block.Properties, Block> factory, List<Supplier<? extends Item>> blockItemsByStone, NekoStone stone) {
+        RegistrySupplier<Block> block = registrar.block(id, () -> factory.apply(stone.stoneProperties()));
         trackStoneBlock(block);
         RegistrySupplier<Item> blockItem = registerBlockItem(registrar, id, block);
         STONE_BLOCK_ITEMS.add(blockItem);

@@ -11,7 +11,9 @@ import io.devbobcorn.nekoration.blocks.DyeableVerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.HorizontalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.VerticalConnectedBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableDirectionalThinPillarBlock;
+import io.devbobcorn.nekoration.blocks.cement.DyeableFrameHeadBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSideBlock;
+import io.devbobcorn.nekoration.blocks.cement.DyeableFrameSillBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeablePedestalBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeablePotBlock;
 import io.devbobcorn.nekoration.blocks.cement.DyeableThinPillarBlock;
@@ -100,12 +102,12 @@ public final class CementBlockRegistration {
         () -> new DyeablePotBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 6));
     CEMENT_PLANTER = registrar.block("cement_planter",
         () -> new DyeablePotBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), 8));
-    CEMENT_FRAME_HEAD = registrar.block("cement_frame_head", () -> new DyeableHorizontalConnectedBlock(
-        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), HorizontalConnectedBlock.ConnectionType.BEAM, false, 2, 3, 0));
+    CEMENT_FRAME_HEAD = registrar.block("cement_frame_head", () -> new DyeableFrameHeadBlock(
+        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
     CEMENT_FRAME_PEAK = registrar.block("cement_frame_peak", () -> new DyeableHorizontalConnectedBlock(
         Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), HorizontalConnectedBlock.ConnectionType.TRIPLE, false, 5, 12, 0));
-    CEMENT_FRAME_SILL = registrar.block("cement_frame_sill", () -> new DyeableHorizontalConnectedBlock(
-        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE), HorizontalConnectedBlock.ConnectionType.BEAM, false, 4, 4, 12));
+    CEMENT_FRAME_SILL = registrar.block("cement_frame_sill", () -> new DyeableFrameSillBlock(
+        Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
     CEMENT_FRAME_SIDE = registrar.block("cement_frame_side",
         () -> new DyeableFrameSideBlock(Block.Properties.ofFullCopy(Blocks.WHITE_CONCRETE)));
 

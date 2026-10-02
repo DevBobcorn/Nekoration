@@ -61,7 +61,7 @@ class LegacyWorldUpgraderTest {
                 "left", "true", "right", "false", "facing", "north");
         LegacyWorldUpgrader.upgradeBlockState(frame);
         assertEquals("nekoration:cement_frame_side", frame.getString("Name"));
-        assertEquals("right", frame.getCompound("Properties").getString("frame_connection"));
+        assertEquals("right", frame.getCompound("Properties").getString("part"));
 
         CompoundTag timber = state("half_timber_pillar_p2", "level", "11", "age", "13",
                 "vertical_connection", "t1");

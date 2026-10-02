@@ -636,7 +636,7 @@ public final class LegacyWorldUpgrader {
             default -> "cement_frame_sill";
         };
         if (framePart.equals("middle")) {
-            properties.putString("frame_connection", left == right ? "both" : left ? "right" : "left");
+            properties.putString("part", left == right ? "both" : left ? "right" : "left");
         } else {
             properties.putString("horizontal_connection", "s0");
         }

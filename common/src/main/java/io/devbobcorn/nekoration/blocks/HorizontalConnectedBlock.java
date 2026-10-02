@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.devbobcorn.nekoration.blocks.states.FrameAlignment;
 import io.devbobcorn.nekoration.blocks.states.HorizontalConnection;
 import io.devbobcorn.nekoration.blocks.states.ModStateProperties;
 import net.minecraft.core.BlockPos;
@@ -28,8 +29,11 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
     }
 
     public static final EnumProperty<HorizontalConnection> CONNECTION = ModStateProperties.HORIZONTAL_CONNECTION;
+    public static final EnumProperty<FrameAlignment> FRAME_CONNECTION = ModStateProperties.FRAME_ALIGNMENT;
 
     private final Map<Direction, VoxelShape> shapes;
+    private final Map<Direction, VoxelShape> bottomAlignedShapes;
+    private final Map<Direction, VoxelShape> topAlignedShapes;
     public final ConnectionType type;
     public final boolean connectOtherVariant;
 
@@ -41,20 +45,41 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
         super(settings);
         this.type = type;
         this.connectOtherVariant = connectOtherVariant;
-        this.registerDefaultState(this.stateDefinition.any()
+        BlockState defaultState = this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(CONNECTION, HorizontalConnection.S0));
+                .setValue(CONNECTION, HorizontalConnection.S0);
+        if (hasFrameConnection()) {
+            defaultState = defaultState.setValue(FRAME_CONNECTION, defaultFrameConnection());
+        }
+        this.registerDefaultState(defaultState);
         this.shapes = getAABBs(thickness, height, bottom);
+        this.bottomAlignedShapes = hasFrameConnection() ? getAABBs(thickness, height, 0.0D) : this.shapes;
+        this.topAlignedShapes = hasFrameConnection() ? getAABBs(thickness, height, 16.0D - height) : this.shapes;
+    }
+
+    public boolean hasFrameConnection() {
+        return false;
+    }
+
+    protected FrameAlignment defaultFrameConnection() {
+        return FrameAlignment.BOTTOM;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CONNECTION);
+        if (hasFrameConnection()) {
+            builder.add(FRAME_CONNECTION);
+        }
     }
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (hasFrameConnection()) {
+            return (state.getValue(FRAME_CONNECTION) == FrameAlignment.TOP ? topAlignedShapes : bottomAlignedShapes)
+                    .get(state.getValue(FACING));
+        }
         return shapes.get(state.getValue(FACING));
     }
 
@@ -63,6 +88,12 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
         BlockState placed = super.getStateForPlacement(ctx);
         if (placed == null) {
             return null;
+        }
+
+        if (hasFrameConnection()) {
+            double clickY = ctx.getClickLocation().y - ctx.getClickedPos().getY();
+            placed = placed.setValue(FRAME_CONNECTION,
+                    clickY >= 0.5D ? FrameAlignment.TOP : FrameAlignment.BOTTOM);
         }
 
         if (ctx.getPlayer() != null && ctx.getPlayer().isShiftKeyDown()) {
@@ -74,11 +105,11 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
 
         BlockPos leftPos = getLeftBlock(pos, facing);
         BlockState leftState = ctx.getLevel().getBlockState(leftPos);
-        boolean connectLeft = canConnectTo(leftState, facing);
+        boolean connectLeft = canConnectTo(placed, leftState, facing);
 
         BlockPos rightPos = getRightBlock(pos, facing);
         BlockState rightState = ctx.getLevel().getBlockState(rightPos);
-        boolean connectRight = canConnectTo(rightState, facing);
+        boolean connectRight = canConnectTo(placed, rightState, facing);
 
         if (connectLeft && connectRight) {
             Direction leftDir = getLeftDir(facing);
@@ -120,14 +151,14 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
         boolean flag2 = direction == getLeftDir(facing);
 
         boolean connect = flag1 || flag2;
-        if (connect && canConnectTo(neighborState, facing)) {
+        if (connect && canConnectTo(state, neighborState, facing)) {
             BlockState stateRef;
             if (flag1) {
                 stateRef = level.getBlockState(getLeftBlock(pos, facing));
                 return switch (neighborState.getValue(CONNECTION)) {
                     case D1 -> res.setValue(CONNECTION, HorizontalConnection.D0);
                     case T1 -> res.setValue(CONNECTION,
-                            (type == ConnectionType.BEAM && canConnectTo(stateRef, facing)
+                            (type == ConnectionType.BEAM && canConnectTo(state, stateRef, facing)
                                     && connectsRight(stateRef.getValue(CONNECTION)))
                                     ? HorizontalConnection.T1
                                     : HorizontalConnection.T0);
@@ -139,7 +170,7 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
                 return switch (neighborState.getValue(CONNECTION)) {
                     case D0 -> res.setValue(CONNECTION, HorizontalConnection.D1);
                     case T1 -> res.setValue(CONNECTION,
-                            (type == ConnectionType.BEAM && canConnectTo(stateRef, facing)
+                            (type == ConnectionType.BEAM && canConnectTo(state, stateRef, facing)
                                     && connectsLeft(stateRef.getValue(CONNECTION)))
                                     ? HorizontalConnection.T1
                                     : HorizontalConnection.T2);
@@ -172,17 +203,19 @@ public class HorizontalConnectedBlock extends HorizontalBlock {
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
-    protected boolean canConnectTo(BlockState state, Direction facing) {
-        return state.getBlock() instanceof HorizontalConnectedBlock
-                && (connectOtherVariant || state.getBlock() == this)
-                && state.getValue(FACING) == facing;
+    protected boolean canConnectTo(BlockState state, BlockState neighborState, Direction facing) {
+        return neighborState.getBlock() instanceof HorizontalConnectedBlock
+                && (connectOtherVariant || neighborState.getBlock() == this)
+                && neighborState.getValue(FACING) == facing
+                && (!hasFrameConnection()
+                        || state.getValue(FRAME_CONNECTION) == neighborState.getValue(FRAME_CONNECTION));
     }
 
     private static boolean canMutuallyConnect(BlockState a, BlockState b) {
         if (!(a.getBlock() instanceof HorizontalConnectedBlock aBlock) || !(b.getBlock() instanceof HorizontalConnectedBlock bBlock)) {
             return false;
         }
-        return aBlock.canConnectTo(b, a.getValue(FACING)) && bBlock.canConnectTo(a, b.getValue(FACING));
+        return aBlock.canConnectTo(a, b, a.getValue(FACING)) && bBlock.canConnectTo(b, a, b.getValue(FACING));
     }
 
     private static boolean connectsRight(HorizontalConnection connection) {

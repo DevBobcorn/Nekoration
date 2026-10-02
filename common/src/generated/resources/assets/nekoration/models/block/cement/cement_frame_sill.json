@@ -1,6 +1,0 @@
-{
-  "parent": "nekoration:block/cement/frame_sill",
-  "textures": {
-    "0": "nekoration:block/cement/cement_frame_sill"
-  }
-}
