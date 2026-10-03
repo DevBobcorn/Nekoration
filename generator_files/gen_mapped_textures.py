@@ -14,7 +14,7 @@ SOURCE_PALETTE_FILENAME = "grayscale.png"
 # OUTPUT_DIR = Path("../common/src/generated/resources/assets/nekoration/textures/block/half_timber")
 # SOURCE_IMAGE_DIR = Path("column_template")
 # OUTPUT_DIR = Path("../common/src/generated/resources/assets/nekoration/textures/block/column")
-SOURCE_IMAGE_DIR = Path("table_leg_template")
+SOURCE_IMAGE_DIR = Path("wall_stand_template")
 OUTPUT_DIR = Path("../common/src/main/resources/assets/nekoration/textures/block/furniture")
 
 OVERLAY_DIR = Path("column_overlay")
@@ -23,7 +23,7 @@ OVERLAY_TEXTURES = {
 
 SPECIFY_TEMPLATE_FOR_EACH_PALETTE = True
 
-'''
+
 TEMPLATE_PALETTE_OUTPUT = [
     ('type_a.png', 'acacia.png', 'acacia_stand.png'),
     ('type_a.png', 'mahogany.png', 'mahogany_stand.png'),
@@ -78,7 +78,7 @@ TEMPLATE_PALETTE_OUTPUT = [
     # ('type_h.png', 'pumpkin.png', 'pumpkin_leg.png'),
     ('type_h.png', 'warped.png', 'warped_leg.png'),
 ]
-
+'''
 
 def load_palette(path: Path):
     with Image.open(path) as image:
