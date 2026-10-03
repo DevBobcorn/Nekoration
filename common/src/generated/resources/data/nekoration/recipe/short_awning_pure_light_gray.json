@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:light_gray_wool"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "  #",
+    " # ",
+    "# 1"
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 1
+      }
+    },
+    "count": 3,
+    "id": "nekoration:short_awning_pure"
+  }
+}

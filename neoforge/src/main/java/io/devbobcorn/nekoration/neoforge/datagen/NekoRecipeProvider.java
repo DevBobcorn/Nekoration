@@ -85,6 +85,42 @@ public final class NekoRecipeProvider extends RecipeProvider {
         stoneBlockRecipes(output);
         mineralBlockRecipes(output);
         quartzDoorRecipes(output);
+        awningRecipes(output);
+    }
+
+    /** Awning recipes from v1: three diagonal wool make three awnings of that color,
+     * short awnings additionally need a stick, and pure/stripe variants convert into
+     * each other while inheriting the color of the ingredient. */
+    private void awningRecipes(RecipeOutput output) {
+        Item pure = modItem("awning_pure");
+        Item stripe = modItem("awning_stripe");
+        Item shortPure = modItem("short_awning_pure");
+        Item shortStripe = modItem("short_awning_stripe");
+
+        for (EnumNekoColor color : EnumNekoColor.values()) {
+            String colorName = color.getSerializedName();
+            Item wool = vanillaItem(colorName + "_wool");
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, dyed(pure, color, 3))
+                    .pattern("  #").pattern(" # ").pattern("#  ")
+                    .define('#', wool)
+                    .unlockedBy(hasName(wool), has(wool))
+                    .save(output, modLoc("awning_pure_" + colorName));
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, dyed(shortPure, color, 3))
+                    .pattern("  #").pattern(" # ").pattern("# 1")
+                    .define('#', wool).define('1', Items.STICK)
+                    .unlockedBy(hasName(wool), has(wool))
+                    .save(output, modLoc("short_awning_pure_" + colorName));
+        }
+
+        String[] single = { "0" };
+        saveColorInheritShaped(output, modLoc("awning_pure_to_stripe"), RecipeCategory.DECORATIONS,
+                dyed(stripe, EnumNekoColor.WHITE, 1), single, pure, pure);
+        saveColorInheritShaped(output, modLoc("awning_stripe_to_pure"), RecipeCategory.DECORATIONS,
+                dyed(pure, EnumNekoColor.WHITE, 1), single, stripe, stripe);
+        saveColorInheritShaped(output, modLoc("short_awning_pure_to_stripe"), RecipeCategory.DECORATIONS,
+                dyed(shortStripe, EnumNekoColor.WHITE, 1), single, shortPure, shortPure);
+        saveColorInheritShaped(output, modLoc("short_awning_stripe_to_pure"), RecipeCategory.DECORATIONS,
+                dyed(shortPure, EnumNekoColor.WHITE, 1), single, shortStripe, shortStripe);
     }
 
     private void woodenBlockRecipes(RecipeOutput output) {
@@ -346,6 +382,13 @@ public final class NekoRecipeProvider extends RecipeProvider {
                     stairsRecipe(output, smoothSource, "smooth_stone_stairs");
                 }
             }
+            stonecutting(output, smoothSource, stoneId + "_pot");
+            stonecutting(output, smoothSource, stoneId + "_planter");
+            stonecutting(output, smoothSource, stoneId + "_frame_head");
+            stonecutting(output, smoothSource, stoneId + "_frame_peak");
+            stonecutting(output, smoothSource, stoneId + "_frame_sill");
+            stonecutting(output, smoothSource, stoneId + "_frame_side");
+
             String polishedSmoothId = "polished_smooth_" + stoneId;
             Item polishedSmooth = modItem(polishedSmoothId);
             stonecutting(output, smoothSource, polishedSmoothId);
@@ -515,7 +558,9 @@ public final class NekoRecipeProvider extends RecipeProvider {
     private void saveColorInheritShaped(RecipeOutput output, ResourceLocation id, RecipeCategory category,
             ItemStack result, String[] pattern, Item keyIngredient, ItemLike unlockItem) {
         Map<Character, Ingredient> key = new LinkedHashMap<>();
-        key.put('1', Ingredient.of(Items.STICK));
+        if (Arrays.stream(pattern).anyMatch(row -> row.indexOf('1') >= 0)) {
+            key.put('1', Ingredient.of(Items.STICK));
+        }
         key.put('0', Ingredient.of(keyIngredient));
         ShapedRecipePattern shapedPattern = ShapedRecipePattern.of(key, Arrays.asList(pattern));
         AdvancementHolder advancement = output.advancement()

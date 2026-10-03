@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:blue_wool"
+    }
+  },
+  "pattern": [
+    "  #",
+    " # ",
+    "#  "
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 12
+      }
+    },
+    "count": 3,
+    "id": "nekoration:awning_pure"
+  }
+}

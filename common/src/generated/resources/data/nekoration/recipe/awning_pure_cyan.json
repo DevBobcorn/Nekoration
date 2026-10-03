@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:cyan_wool"
+    }
+  },
+  "pattern": [
+    "  #",
+    " # ",
+    "#  "
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 10
+      }
+    },
+    "count": 3,
+    "id": "nekoration:awning_pure"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "nekoration:neko_color_inherit",
+  "category": "misc",
+  "key": {
+    "0": {
+      "item": "nekoration:awning_pure"
+    }
+  },
+  "pattern": [
+    "0"
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "color": 0
+      }
+    },
+    "count": 1,
+    "id": "nekoration:awning_stripe"
+  }
+}
