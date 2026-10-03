@@ -41,6 +41,7 @@ public final class NekorationBlockTagsProvider extends TagsProvider<Block> {
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .addAll(keysOf(WoodenBlockRegistration.woodenBlocksView()))
                 .addAll(keysOf(OrnamentRegistration.pumpkinFurnitureBlocksView()))
+                .add(OrnamentRegistration.windowPlantBlock().getKey())
                 .add(CustomBlockRegistration.CUSTOM_BLOCK.getKey());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -50,9 +51,6 @@ public final class NekorationBlockTagsProvider extends TagsProvider<Block> {
                 .addAll(keysOf(OrnamentRegistration.lampPostBlocksView()))
                 .addAll(keysOf(OrnamentRegistration.candleHolderBlocksView()))
                 .addAll(keysOf(OrnamentRegistration.flowerBasketBlocksView()));
-
-        tag(BlockTags.MINEABLE_WITH_HOE)
-                .add(OrnamentRegistration.windowPlantBlock().getKey());
     }
 
     /** Reinterprets wildcard supplier keys as concrete block registry keys (safe: keys carry no static type). */
