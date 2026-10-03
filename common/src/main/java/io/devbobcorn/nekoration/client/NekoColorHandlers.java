@@ -70,7 +70,7 @@ public final class NekoColorHandlers {
                 }
                 return 0xFF000000 | BiomeColors.getAverageFoliageColor(level, pos);
             }
-            if (tintIndex == 1 && state.getBlock() instanceof DyeableBlock) {
+            if (tintIndex == 1 && isDyeableBlock(state)) {
                 return 0xFF000000 | state.getValue(DyeableBlock.COLOR).getColor();
             }
             return 0xFFFFFFFF;
