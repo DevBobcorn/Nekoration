@@ -1,14 +1,14 @@
 {
 	"format_version": "1.21.11",
-	"render_type": "minecraft:cutout",
 	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
 	"textures": {
 		"0": "nekoration:generator_files/container_template/easel_menu",
 		"particle": "#0"
 	},
 	"elements": [
 		{
-			"name": "board",
+			"name": "left_leg",
 			"from": [13, -1.62359, 3.91969],
 			"to": [15, 14.37641, 5.91969],
 			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 8, 8]},
@@ -22,7 +22,7 @@
 			}
 		},
 		{
-			"name": "left_leg",
+			"name": "right_leg",
 			"from": [0.99, -1.62359, 3.91969],
 			"to": [3, 14.37641, 5.91969],
 			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 8, 8]},
@@ -36,7 +36,7 @@
 			}
 		},
 		{
-			"name": "right_leg",
+			"name": "board",
 			"from": [3, 1.37641, 4.91969],
 			"to": [13, 14.37641, 5.91969],
 			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 8, 8]},
@@ -50,7 +50,7 @@
 			}
 		},
 		{
-			"name": "board",
+			"name": "right_leg",
 			"from": [13, -1.62359, 10.08031],
 			"to": [15.01, 14.37641, 12.08031],
 			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8]},
@@ -78,7 +78,7 @@
 			}
 		},
 		{
-			"name": "right_leg",
+			"name": "board",
 			"from": [3, 1.37641, 10.08031],
 			"to": [13, 14.37641, 11.08031],
 			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8]},

@@ -14,7 +14,7 @@ SOURCE_PALETTE_FILENAME = "grayscale.png"
 # OUTPUT_DIR = Path("../common/src/generated/resources/assets/nekoration/textures/block/half_timber")
 # SOURCE_IMAGE_DIR = Path("column_template")
 # OUTPUT_DIR = Path("../common/src/generated/resources/assets/nekoration/textures/block/column")
-SOURCE_IMAGE_DIR = Path("table_leg_template")
+SOURCE_IMAGE_DIR = Path("wall_stand_template")
 OUTPUT_DIR = Path("../common/src/main/resources/assets/nekoration/textures/block/furniture")
 
 OVERLAY_DIR = Path("column_overlay")
@@ -24,31 +24,31 @@ OVERLAY_TEXTURES = {
 SPECIFY_TEMPLATE_FOR_EACH_PALETTE = True
 
 TEMPLATE_PALETTE_OUTPUT = [
-    ('type_a.png', 'acacia.png', 'acacia_leg.png'),
-    ('type_a.png', 'mahogany.png', 'mahogany_leg.png'),
-    ('type_a.png', 'palm.png', 'palm_leg.png'),
-    ('type_a.png', 'pine.png', 'pine_leg.png'),
-    ('type_b.png', 'bamboo.png', 'bamboo_leg.png'),
-    ('type_b.png', 'dark_oak.png', 'dark_oak_leg.png'),
+    ('type_a.png', 'acacia.png', 'acacia_stand.png'),
+    ('type_a.png', 'mahogany.png', 'mahogany_stand.png'),
+    ('type_a.png', 'palm.png', 'palm_stand.png'),
+    ('type_a.png', 'pine.png', 'pine_stand.png'),
+    ('type_b.png', 'bamboo.png', 'bamboo_stand.png'),
+    ('type_b.png', 'dark_oak.png', 'dark_oak_stand.png'),
     ('type_b.png', 'oak.png', 'oak.png'),
-    ('type_c.png', 'birch.png', 'birch_leg.png'),
-    ('type_c.png', 'hellbark.png', 'hellbark_leg.png'),
-    ('type_c.png', 'magic.png', 'magic_leg.png'),
-    ('type_d.png', 'cherry.png', 'cherry_leg.png'),
-    ('type_d.png', 'dead.png', 'dead_leg.png'),
-    ('type_d.png', 'umbran.png', 'umbran_leg.png'),
-    ('type_e.png', 'crimson.png', 'crimson_leg.png'),
-    ('type_e.png', 'jacaranda.png', 'jacaranda_leg.png'),
-    ('type_e.png', 'maple.png', 'maple_leg.png'),
-    ('type_f.png', 'jungle.png', 'jungle_leg.png'),
-    ('type_f.png', 'empyreal.png', 'empyreal_leg.png'),
-    ('type_f.png', 'willow.png', 'willow_leg.png'),
-    ('type_g.png', 'spruce.png', 'spruce_leg.png'),
-    ('type_g.png', 'fir.png', 'fir_leg.png'),
-    ('type_g.png', 'redwood.png', 'redwood_leg.png'),
-    ('type_h.png', 'mangrove.png', 'mangrove_leg.png'),
-    # ('type_h.png', 'pumpkin.png', 'pumpkin_leg.png'),
-    ('type_h.png', 'warped.png', 'warped_leg.png'),
+    ('type_c.png', 'birch.png', 'birch_stand.png'),
+    ('type_c.png', 'hellbark.png', 'hellbark_stand.png'),
+    ('type_c.png', 'magic.png', 'magic_stand.png'),
+    ('type_d.png', 'cherry.png', 'cherry_stand.png'),
+    ('type_d.png', 'dead.png', 'dead_stand.png'),
+    ('type_d.png', 'umbran.png', 'umbran_stand.png'),
+    ('type_e.png', 'crimson.png', 'crimson_stand.png'),
+    ('type_e.png', 'jacaranda.png', 'jacaranda_stand.png'),
+    ('type_e.png', 'maple.png', 'maple_stand.png'),
+    ('type_f.png', 'jungle.png', 'jungle_stand.png'),
+    ('type_f.png', 'empyreal.png', 'empyreal_stand.png'),
+    ('type_f.png', 'willow.png', 'willow_stand.png'),
+    ('type_g.png', 'spruce.png', 'spruce_stand.png'),
+    ('type_g.png', 'fir.png', 'fir_stand.png'),
+    ('type_g.png', 'redwood.png', 'redwood_stand.png'),
+    ('type_h.png', 'mangrove.png', 'mangrove_stand.png'),
+    # ('type_h.png', 'pumpkin.png', 'pumpkin_stand.png'),
+    ('type_h.png', 'warped.png', 'warped_stand.png'),
 ]
 
 def load_palette(path: Path):
