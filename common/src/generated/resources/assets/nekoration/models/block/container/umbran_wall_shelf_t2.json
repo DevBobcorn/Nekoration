@@ -1,6 +1,7 @@
 {
   "parent": "nekoration:block/container/wall_shelf_t2",
   "textures": {
-    "0": "nekoration:block/furniture/umbran_top"
+    "0": "nekoration:block/furniture/umbran_top",
+    "1": "nekoration:block/furniture/umbran_stand"
   }
 }

@@ -30,7 +30,7 @@ TEMPLATE_PALETTE_OUTPUT = [
     ('type_a.png', 'pine.png', 'pine_stand.png'),
     ('type_b.png', 'bamboo.png', 'bamboo_stand.png'),
     ('type_b.png', 'dark_oak.png', 'dark_oak_stand.png'),
-    ('type_b.png', 'oak.png', 'oak.png'),
+    ('type_b.png', 'oak.png', 'oak_stand.png'),
     ('type_c.png', 'birch.png', 'birch_stand.png'),
     ('type_c.png', 'hellbark.png', 'hellbark_stand.png'),
     ('type_c.png', 'magic.png', 'magic_stand.png'),

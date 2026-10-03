@@ -399,6 +399,12 @@ public final class WoodenBlockAssetProvider implements DataProvider {
                     continue;
                 }
 
+                // Use per-wood wall shelf stand textures generated from the wall stand template
+                if (textureValue.contains("generator_files/wall_stand_template/")) {
+                    textures.put(entry.getKey(), furnitureTexture(wood, "stand"));
+                    continue;
+                }
+
                 if (!textureValue.contains("generator_files/container_template/")) {
                     continue;
                 }
