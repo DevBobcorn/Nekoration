@@ -2,6 +2,7 @@ package io.devbobcorn.nekoration.blocks.containers;
 
 import javax.annotation.Nullable;
 
+import io.devbobcorn.nekoration.NekoColors.EnumNekoColor;
 import io.devbobcorn.nekoration.blocks.DyeableHorizontalBlock;
 import io.devbobcorn.nekoration.blocks.entities.EaselMenuBlockEntity;
 import io.devbobcorn.nekoration.registry.ModBlockEntities;
@@ -10,9 +11,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -33,10 +37,28 @@ import net.minecraft.server.level.ServerPlayer;
 public class EaselMenuBlock extends DyeableHorizontalBlock implements EntityBlock {
     public static final DirectionProperty FACING = DyeableHorizontalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+    private static final DyeColor[] WHITE_MENU_DEFAULT_COLORS = {
+            DyeColor.PURPLE,
+            DyeColor.PINK,
+            DyeColor.ORANGE,
+            DyeColor.YELLOW,
+            DyeColor.LIME,
+            DyeColor.LIGHT_BLUE,
+            DyeColor.CYAN,
+            DyeColor.BLUE
+    };
 
     public EaselMenuBlock(Properties properties) {
         super(properties.noOcclusion());
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        if (state.getValue(COLOR) == EnumNekoColor.WHITE && level.getBlockEntity(pos) instanceof EaselMenuBlockEntity easel) {
+            easel.setColors(WHITE_MENU_DEFAULT_COLORS);
+        }
     }
 
     @Override
