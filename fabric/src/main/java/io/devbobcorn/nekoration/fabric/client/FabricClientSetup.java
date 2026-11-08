@@ -16,10 +16,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import io.devbobcorn.nekoration.client.NekoClientSetup;
 import io.devbobcorn.nekoration.client.NekoColorHandlers;
@@ -50,10 +56,9 @@ public final class FabricClientSetup {
                 EntityRendererRegistry::register);
         // Model layers.
         NekoClientSetup.registerLayerDefinitions((layer, supplier) -> EntityModelLayerRegistry.registerModelLayer(layer, supplier::get));
-        // Item model overrides (on Fabric the public overload takes a clamped provider).
+        // Item model overrides (Fabric exposes vanilla's clamped provider overload).
         NekoClientSetup.registerItemProperties((item, id, property) ->
-                net.minecraft.client.renderer.item.ItemProperties.register(item, id,
-                        (stack, level, entity, seed) -> property.call(stack, level, entity, seed)));
+                ItemProperties.register(item, id, unclamped(property)));
         // CT models.
         ModelLoadingPlugin.register(new FabricModelSwapper());
         // Block render layers from model "render_type" (Fabric has no per-model
@@ -94,6 +99,25 @@ public final class FabricClientSetup {
         FabricClientNetwork.register();
         // Menu screens (vanilla register API is private: reflect once).
         registerScreens();
+    }
+
+    /**
+     * Adapts an unclamped property function. Vanilla's clamped interface clamps
+     * {@code call} to [0, 1] by default, which would collapse every color variant
+     * above light gray into the same override.
+     */
+    private static ClampedItemPropertyFunction unclamped(ItemPropertyFunction property) {
+        return new ClampedItemPropertyFunction() {
+            @Override
+            public float call(ItemStack stack, ClientLevel level, LivingEntity entity, int seed) {
+                return property.call(stack, level, entity, seed);
+            }
+
+            @Override
+            public float unclampedCall(ItemStack stack, ClientLevel level, LivingEntity entity, int seed) {
+                return property.call(stack, level, entity, seed);
+            }
+        };
     }
 
     private static volatile BlockEntityWithoutLevelRenderer wallpaperRendererInstance;
